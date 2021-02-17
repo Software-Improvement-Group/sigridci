@@ -75,13 +75,13 @@ Finally, note that you need to perform this step for every project where you wis
 
 Once Sigrid CI has been enabled, you can access it from the list of pipeline runs by accessing "Pipelines" from your repository's menu:
 
-<img src="images/bitbucket-list.png" width="300" />
+<img src="images/bitbucket-list.png" width="500" />
 
-<img src="images/bitbucket-pipeline-indicator.png" width="300" />
+<img src="images/bitbucket-pipeline-indicator.png" width="400" />
 
 The check will succeed if the code quality meets the specified target, and will fail otherwise. In addition to this central overview, you can also find the Sigrid CI indicator next to all commits:
 
-<img src="images/bitbucket-commits.png" width="500" />
+<img src="images/bitbucket-commits.png" width="700" />
 
 You can access the results by clicking on the pipeline's success/failure indicator. Sigrid CI provides multiple levels of feedback. The first and fastest type of feedback is directly produced in the CI output, as shown in the following screenshot:
 
