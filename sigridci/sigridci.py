@@ -117,6 +117,7 @@ class SystemUploadPacker:
         "build/",
         "dist/",
         "node_modules/",
+        "sigridci/",
         "sigrid-ci-output/",
         "target/",
         ".idea/",
