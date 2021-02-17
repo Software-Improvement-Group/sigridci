@@ -1,7 +1,7 @@
-Integrating Sigrid CI with GitLab
-=================================
+Integrating Sigrid CI with BitBucket Pipelines
+==============================================
 
-This guide explains how to integrate Sigrid into your GitLab continuous integration pipeline. Make sure you have also read the [general Sigrid CI documentation](README.md) before starting this guide.
+This guide explains how to integrate Sigrid into your BitBucket Pipelines continuous integration pipeline. Make sure you have also read the [general Sigrid CI documentation](README.md) before starting this guide.
 
 ---
 
@@ -27,50 +27,39 @@ Once the account has been created, you can use Sigrid's user management feature 
 
 **Step 1: Configure Sigrid credentials to environment variables**
 
-Sigrid CI reads your Sigrid account credentials from two environment variables, called `SIGRID_CI_ACCOUNT` and `SIGRID_CI_TOKEN`. To add them to your GitLab CI pipeline, follow these steps:
+Sigrid CI reads your Sigrid account credentials from two environment variables, called `SIGRID_CI_ACCOUNT` and `SIGRID_CI_TOKEN`. You can make these environment variables available to BitBucket Pipelines by creating "secrets" in your repository:
 
-- Select "Settings" in your GitLab project's menu
-- Select "CI/CD" in the settings menu
-- Locate the section named "Variables"
-- Click the "Add variable" button
-- Add an environment variable `SIGRID_CI_ACCOUNT` with the account name you have received
+- Open "Repository settings" in your project menu
+- Select "Repository variables" located in the section "Pipelines"
+- Create a secret named `SIGRID_CI_ACCOUNT` with the account name you have received
 
-<img src="images/gitlab-env.png" width="400" />
+<img src="images/bitbucket-env.png" width="300" />
 
-- Add another environment variable, `SIGRID_CI_TOKEN`, and add the Sigrid CI token you have received
+- Add another secret named `SIGRID_CI_TOKEN` with the token you have received.
 
-These instructions describe how to configure a single GitLab project, but you can follow the same steps to configure the entire GitLab group, which will make the environment variables available to all projects within that group.
+**Step 2: Create a BitBucket Pipeline for Sigrid CI**
 
-**Step 2: Download the Sigrid CI client scripts and make them available to your Sigrid CI environment**
+Sigrid CI consists of a number of Python-based client scripts, that interact with Sigrid in order to analyze your project's source code and provide feedback based on the results. These client scripts need to be available to the CI environment, in order to call the scripts *from* the CI pipeline. You can configure your Piepline to both download the Sigrid CI client scripts and then run Sigrid CI. 
 
-Sigrid CI consists of a number of Python-based client scripts, that interact with Sigrid in order to analyze your project's source code and provide feedback based on the results. These client scripts need to be available to your GitLab runners, in order to call the scripts *from* the CI pipeline. 
-
-The scripts can be obtained by either cloning or downloading this repository, and moving the `sigridci` directory to a location that is available to the GitLab runners. 
-
-**Step 3: Add Sigrid CI to your project's CI pipeline**
-
-Next, you need to edit your project's CI configuration, in order to add Sigrid CI as an extra step. Open `.gitlab-ci.yml` in your project's root directory and add the following:
+In your BitBucket repository, create a file `bitbucket-pipelines.yml` and give it the following contents:
 
 ```
-stages:  
-(...)
-- report
+image: python:3.9-buster
 
-(...)
-
-sigridci:
-  stage: report
-  script:
-  - /path/to/sigridci/sigridci.py --customer opensource --system junit --source . --targetquality 3.5
-  allow_failure: true
-  artifacts:
-    paths:
-    - "sigrid-ci-output/*"
-    expire_in: 1 week
-    when: always
+pipelines:
+  default:
+  - step:
+      name: Sigrid CI
+      script:
+      - "git clone https://github.com/Software-Improvement-Group/sigridci.git sigridci"
+      - "./sigridci/sigridci/sigridci.py --customer opensource --system junit --source . --targetquality 3.5"
 ```
 
-The relevant command is the call to the `sigridci.py` script, which will call Sigrid CI. The script takes the following arguments:
+**Security note:** This example downlaods the Sigrid CI client scripts directly from GitHub. That might be acceptable for some projects, and is in fact increasingly common. However, some projects might not allow this as part of their security policy. In those cases, you can simply download the `sigridci` directory in this repository, and make it available to your runners (either by placing the scripts in a known location, or packaging them into a Docker container). 
+
+Refer to the [BitBucket Pipelines documentation](https://support.atlassian.com/bitbucket-cloud/docs/get-started-with-bitbucket-pipelines/) for more information on when and how these steps will be performed. The [bitbucket-pipelines.yml documentation](https://support.atlassian.com/bitbucket-cloud/docs/configure-bitbucket-pipelinesyml/) describes the file format used for the configuration file.
+
+The relevant command that starts Sigrid CI is the call to the `sigridci.py` script, which will call Sigrid CI. The script takes the following arguments:
 
 | Argument        | Required | Example value | Description                                                                                         |
 |-----------------|----------|---------------|-----------------------------------------------------------------------------------------------------|
@@ -84,11 +73,17 @@ Finally, note that you need to perform this step for every project where you wis
 
 ## Usage
 
-Once you have configured the integration, Sigrid CI will show up as a new step in your GitLab CI pipeline. The step will succeed if the code quality meets the specified target, and will fail otherwise. 
+Once Sigrid CI has been enabled, you can access it from the list of pipeline runs by accessing "Pipelines" from your repository's menu:
 
-<img src="images/ci-pipeline.png" width="300" />
+<img src="images/bitbucket-list.png" width="300" />
 
-Sigrid CI provides multiple levels of feedback. The first and fastest type of feedback is directly produced in the CI output, as shown in the following screenshot:
+<img src="images/bitbucket-pipeline-indicator.png" width="300" />
+
+The check will succeed if the code quality meets the specified target, and will fail otherwise. In addition to this central overview, you can also find the Sigrid CI indicator next to all commits:
+
+<img src="images/bitbucket-commits.png" width="300" />
+
+You can access the results by clicking on the pipeline's success/failure indicator. Sigrid CI provides multiple levels of feedback. The first and fastest type of feedback is directly produced in the CI output, as shown in the following screenshot:
 
 <img src="images/feedback-ci-environment.png" width="600" />
 
@@ -98,11 +93,7 @@ The output consists of the following:
 - An overview of all ratings, compared against the system as a whole. This allows you to check if your changes improved the system, or accidentally made things worse.
 - The final conclusion on whether your changes and merge request meet the quality target.
 
-In addition to the textual output, Sigrid CI also generates a static HTML file that shows the results in a more graphical form. This is similar to test coverage tools, which also tend to produce a HTML report. You can download this report form GitLab using the "download" button on the right side of the CI results view:
-
-<img src="images/gitlab-download.png" width="300" />
-
-The information in the HTML report is based on the aforementioned list, though it includes slightly more detail.
+In addition to the textual output, Sigrid CI also generates a static HTML file that shows the results in a more graphical form. This is similar to test coverage tools, which also tend to produce a HTML report. The information in the HTML report is based on the aforementioned list, though it includes slightly more detail.
 
 <img src="images/feedback-report.png" width="600" />
 

@@ -46,7 +46,7 @@ In addition to the generic instructions, we have also prepared specific instruct
 
 - [Integrating Sigrid CI with GitHub Actions](github-actions.md)
 - [Integrating Sigrid CI with GitLab](gitlab.md)
-- Integrating Sigrid CI with Bitbucket Pipelines *(coming soon)*
+- [Integrating Sigrid CI with Bitbucket Pipelines](bitbucket-pipelines.md)
 - Integrating Sigrid CI with Azure DevOps *(coming soon)*
 - Integrating Sigrid CI with Jenkins *(coming soon)*
 

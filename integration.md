@@ -11,9 +11,17 @@ This guide explains how to integrate Sigrid into your continuous integration pip
 
 ## Prerequisites
 
-- You have credentials to submit your code to Sigrid. [Request a Sigrid CI account](mailto:support@softwareimprovementgroup.com) if this is not the case.
+- You have a Sigrid user account. Sigrid CI requires Sigrid, it is currently not supported to *only* use the CI integration without using Sigrid itself.
 - You have on-boarded your system, i.e. your system is available in Sigrid. [Request your system to be added](mailto:support@softwareimprovementgroup.com) if this is not yet the case.
 - [Python 3](https://www.python.org) needs to be available in the CI environment. The client scripts for Sigrid CI are based on Python.
+
+## Request a Sigrid CI account
+
+The account you use to submit code to Sigrid CI is different from your normal Sigrid user account. The account consists of an account name and a token, which you add to your CI environment's configuration in the next step. 
+
+You can obtain a Sigrid CI account by requesting one from [mailto:support@softwareimprovementgroup.com](mailto:support@softwareimprovementgroup.com). Support for creating Sigrid CI accounts yourself will be added in a future version.
+
+Once the account has been created, you can use Sigrid's user management feature to control which systems it is allowed to access. Similar to normal Sigrid user accounts, Sigrid CI accounts can either serve a specific system, a group of systems, or all systems in your portfolio.
 
 ## Configuration
 

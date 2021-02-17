@@ -11,6 +11,7 @@ Sigrid CI: Frequently Asked Questions
 - [What branch or commit does Sigrid CI compare against?](#what-branch-or-commit-does-sigrid-ci-compare-against)
 - [Why am I being penalized for problems that were already there?](#why-am-i-being-penalized-for-problems-that-were-already-there)
 - [Should we fail the build if the Sigrid CI check fails?](#should-we-fail-the-build-if-the-sigrid-ci-check-fails)
+- [Why doesn't deleted code influence the rating?](#why-doesnt-deleted-code-influence-the-rating)
 
 ---
 
@@ -65,6 +66,12 @@ That's obviously your decision and something that depends on your development pr
 One of Sigrid's key goals is making software quality advice *reasonable*. It's easy to invent a thousand quality checks and making them all mandatory, failing the build as soon as a single violation is found. It's obviously possible to fix every single issue, but it's probably not worth it considering what you get in return. Sigrid focuses on a relatively limited set of metrics, to avoid overloading developers with tons of instructions. Moreover, a small amount of non-conformities is tolerated, as long as the overall quality doesn't drop below a certain level. 
 
 We therefore believe in a comply-or-explain model. Obviously, you should still strive to pass the Sigrid CI check in the overwhelming majority of cases. However, in the rare cases the check fails, it's perfectly OK for the reviewer to overrule the check and accept the pull request, as long as the reviewer finds that the author had good reasons for deviating from the best practice in that particular case.
+
+## Why doesn't deleted code influence the rating?
+
+In general, deleting code improves maintainability. The less code you have, the less you have to maintain. Having less code also makes it easier to make structural changes, since such changes will require less effort.
+
+So why does Sigrid CI only give ratings based on new and changed code, but doesn't reward you for deleting code? This is mostly to keep the rating simple: combining code quality and deleted code into a single metric would make it hard to understand. Also, the majority of pull requests are about adding new code or changing existing code, deleting code is less common, so we have chosen to not optimize for that scenario.
 
 ## Contact and support
 
