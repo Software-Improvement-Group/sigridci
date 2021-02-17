@@ -38,7 +38,7 @@ This document describes how to integrate Sigrid into your continuous integration
 
 Using Sigrid CI requires a Sigrid account. If you do not have an account yet, [contact SIG](https://www.softwareimprovementgroup.com/contact/) to obtain it. Note that your credentials for personally signing in to Sigrid are different from the account you'll to submit code from your CI environment.
 
-There are two ways to integrate SI into your pipeline. The first is a set of generic instructions that should work for every modern Continuous Integration environment:
+There are two ways to integrate Sigrid CI into your pipeline. The first is a set of generic instructions that should work for every modern Continuous Integration environment:
 
 - [Integrating Sigrid CI into your continuous integration pipeline](integration.md)
 
