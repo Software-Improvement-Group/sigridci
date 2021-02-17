@@ -43,13 +43,13 @@ Some files and directories are already excluded by default, based on common conv
 
 ### Do Sigrid CI uploads get added to the Sigrid dashboard?
 
-No. This is intentional: Sigrid CI tends to operate on pull requests, which are often branches that are a work-in-progress and still need to be reviewed. Adding every single build to the Sigrid dashboard would create a lot of noise, which makes it harder to use the dashboard for spotting trends and reporting. This is why there are two separate streams of uploads: one used for Sigrid CI (based on branches/pull requests), and one used to feed the Sigrid dashboard (based on a relatively stable branch, such as master).
+No. This is intentional: Sigrid CI tends to operate on pull requests, which are often branches that are a work-in-progress and still need to be reviewed. Adding every single build to the Sigrid dashboard would create a lot of noise, which makes it harder to use the dashboard for spotting trends and reporting. This is why there are two separate streams of uploads: one used for Sigrid CI (based on branches/pull requests), and one used to feed the Sigrid dashboard (based on a relatively stable branch, such as main).
 
 Of course, one size doesn't fit all. Post-beta versions of Sigrid CI will at least give the *option* to also publish uploads to the Sigrid dashboard, so that every team can decide for themselves which uploads should be visible in the dashboard and which should not.
 
 ### What branch or commit does Sigrid CI compare against?
 
-Feedback is based on comparing the source code against the current baseline in Sigrid. In other words, this depends on the branch you're using to populate the Sigrid dashboard. This would typically be the master branch, though for some teams the baseline could also be based on a release branch, the development branch, or an improvement branch. The baseline therefore depends on the team's way of working and branching strategy. 
+Feedback is based on comparing the source code against the current baseline in Sigrid. In other words, this depends on the branch you're using to populate the Sigrid dashboard. This would typically be the main branch, though for some teams the baseline could also be based on a release branch, the development branch, or an improvement branch. The baseline therefore depends on the team's way of working and branching strategy. 
 
 ### Why am I being penalized for problems that were already there?
 
