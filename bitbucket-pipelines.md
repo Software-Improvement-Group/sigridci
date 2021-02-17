@@ -19,7 +19,7 @@ This guide explains how to integrate Sigrid into your BitBucket Pipelines contin
 
 The account you use to submit code to Sigrid CI is different from your normal Sigrid user account. The account consists of an account name and a token, which you add to your CI environment's configuration in the next step. 
 
-You can obtain a Sigrid CI account by requesting one from [mailto:support@softwareimprovementgroup.com](mailto:support@softwareimprovementgroup.com). Support for creating Sigrid CI accounts yourself will be added in a future version.
+You can obtain a Sigrid CI account by requesting one from [support@softwareimprovementgroup.com](mailto:support@softwareimprovementgroup.com). Support for creating Sigrid CI accounts yourself will be added in a future version.
 
 Once the account has been created, you can use Sigrid's user management feature to control which systems it is allowed to access. Similar to normal Sigrid user accounts, Sigrid CI accounts can either serve a specific system, a group of systems, or all systems in your portfolio.
 
@@ -33,7 +33,7 @@ Sigrid CI reads your Sigrid account credentials from two environment variables, 
 - Select "Repository variables" located in the section "Pipelines"
 - Create a secret named `SIGRID_CI_ACCOUNT` with the account name you have received
 
-<img src="images/bitbucket-env.png" width="300" />
+<img src="images/bitbucket-env.png" width="500" />
 
 - Add another secret named `SIGRID_CI_TOKEN` with the token you have received.
 
@@ -81,7 +81,7 @@ Once Sigrid CI has been enabled, you can access it from the list of pipeline run
 
 The check will succeed if the code quality meets the specified target, and will fail otherwise. In addition to this central overview, you can also find the Sigrid CI indicator next to all commits:
 
-<img src="images/bitbucket-commits.png" width="300" />
+<img src="images/bitbucket-commits.png" width="500" />
 
 You can access the results by clicking on the pipeline's success/failure indicator. Sigrid CI provides multiple levels of feedback. The first and fastest type of feedback is directly produced in the CI output, as shown in the following screenshot:
 

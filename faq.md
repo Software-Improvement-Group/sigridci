@@ -33,7 +33,7 @@ For training purposes, SIG also published a book on [building maintainable softw
 
 ### What is the maximum upload size?
 
-Sigrid CI is limited to uploads of 500 MB. This is mainly for performance reasons, since uploading and unpacking huge files takes some time, which endangers Sigrid CI's goal of providing quick feedback. Note that based our experience 99% of repositories easily fit within this limit. Also, Sigrid will only measure the actual source code, binaries or other non-source files are excluded.
+Sigrid CI is limited to uploads of 500 MB. This is mainly for performance reasons, since uploading and unpacking huge files takes some time, which endangers Sigrid CI's goal of providing quick feedback. Note that based on our experience 99% of repositories easily fit within this limit. Also, Sigrid will only measure the actual source code, binaries or other non-source files are excluded.
 
 ### Can I exclude certain files from being uploaded?
 
