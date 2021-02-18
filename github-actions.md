@@ -98,7 +98,7 @@ Select "Details" to see the output from the Sigrid CI check:
 
 Sigrid CI provides multiple levels of feedback. The first and fastest type of feedback is directly produced in the CI output, as shown in the following screenshot:
 
-<img src="github-action-feedback.png" width="600" />
+<img src="images/github-action-feedback.png" width="600" />
 
 The output consists of the following:
 
