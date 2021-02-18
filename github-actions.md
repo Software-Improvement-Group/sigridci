@@ -110,7 +110,7 @@ In addition to the textual output, Sigrid CI also generates a static HTML file t
 
 <img src="images/feedback-report.png" width="600" />
 
-Finally, if you want to have more information on the system as a whole, you can also access [Sigrid](http://sigrid-says.com/), which gives you ore information on the overall quality of the system, its architecture, and more.
+Finally, if you want to have more information on the system as a whole, you can also access [Sigrid](http://sigrid-says.com/), which gives you more information on the overall quality of the system, its architecture, and more.
 
 ## Contact and support
 
