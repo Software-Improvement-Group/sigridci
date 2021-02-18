@@ -41,6 +41,12 @@ Sigrid CI reads your Sigrid account credentials from two environment variables, 
 
 <img src="images/github-env-secrets.png" width="400" />
 
+This example explained how to add secrets for a single repository. However, if you have a GitHub organization with many repositories it can be cumbersome to repeat these steps for every repository. You can solve this by adding secrets to your GitHub organization. The process is the same as explained above, though you should access the "secrets" menu for your GitHub organization instead of the "secrets" page for the repository.
+
+<img src="images/github-org-secrets.jpg" width="400" />
+
+In this screenshot, the repository-level secrets and the organization-level secrets have been given different names, to make it easier to tell which is which.
+
 **Step 2: Create a GitHub Actions workflow for Sigrid CI**
 
 Sigrid CI consists of a number of Python-based client scripts, that interact with Sigrid in order to analyze your project's source code and provide feedback based on the results. These client scripts need to be available to the CI environment, in order to call the scripts *from* the CI pipeline. You can configure your GitHub Actions to both download the Sigrid CI client scripts and then run Sigrid CI. 
@@ -62,6 +68,13 @@ jobs:
           SIGRID_CI_ACCOUNT: "${{ secrets.SIGRID_CI_ACCOUNT }}"
           SIGRID_CI_TOKEN: "${{ secrets.SIGRID_CI_TOKEN }}"
         run: "./sigridci/sigridci/sigridci.py --customer examplecustomername --system examplesystemname --source . --targetquality 3.5"
+```
+
+This example assumes you're using the repository-level secrets. If you want to use the organization-level secrets instead, you can change the following lines:
+
+```
+SIGRID_CI_ACCOUNT: "${{ secrets.SIGRID_CI_ORG_ACCOUNT }}"
+SIGRID_CI_TOKEN: "${{ secrets.SIGRID_CI_ORG_TOKEN }}"
 ```
 
 **Security note:** This example downloads the Sigrid CI client scripts directly from GitHub. That might be acceptable for some projects, and is in fact increasingly common. However, some projects might not allow this as part of their security policy. In those cases, you can simply download the `sigridci` directory in this repository, and make it available to your runners (either by placing the scripts in a known location, or packaging them into a Docker container). 
@@ -111,6 +124,25 @@ In addition to the textual output, Sigrid CI also generates a static HTML file t
 <img src="images/feedback-report.png" width="600" />
 
 Finally, if you want to have more information on the system as a whole, you can also access [Sigrid](http://sigrid-says.com/), which gives you more information on the overall quality of the system, its architecture, and more.
+
+### Adding a Sigrid CI badge to your repository
+
+Once you have used Sigrid CI for the first time, GitHub allows you to create a badge showing the current status. You can create the badge using the following steps:
+
+- Click on "Actions" in your repository
+- Select Sigrid CI in the menu on the left
+- Use the "..." menu on the top right
+- Select "Create status badge"
+
+<img src="images/github-create-badge.jpg" width="300" />
+
+- Copy the Markdown code, and add it to your repository's README file
+
+<img src="images/github-badge-markdown.png" width="400" />
+
+Your Sigrid CI badge will now appear in your project's home page.
+
+<img src="images/github-badge.png" width="300" />
 
 ## Contact and support
 
