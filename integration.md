@@ -68,7 +68,7 @@ unittests:
 sigridci:
   stage: report
   script:
-  - /path/to/sigridci/sigridci.py --customer opensource --system junit --source . --targetquality 3.5
+  - /path/to/sigridci/sigridci.py --customer examplecustomername --system examplesystemname --source . --targetquality 3.5
   allow_failure: true
   artifacts:
     paths:
