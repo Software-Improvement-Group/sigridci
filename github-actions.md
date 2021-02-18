@@ -49,11 +49,13 @@ In your GitHub repository, create a file `.github/workflows/sigridci.yml` and gi
 
 ```
 name: sigridci
-on: [push]
+on: [push, pull_request]
 jobs:
   sigridci:
     runs-on: ubuntu-latest
     steps:
+      - name: Check out repository
+        uses: actions/checkout@v2
       - run: "git clone https://github.com/Software-Improvement-Group/sigridci.git sigridci"
       - name: "Run Sigrid CI" 
         env:
