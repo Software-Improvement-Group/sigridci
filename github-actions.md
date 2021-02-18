@@ -134,7 +134,7 @@ Once you have used Sigrid CI for the first time, GitHub allows you to create a b
 - Use the "..." menu on the top right
 - Select "Create status badge"
 
-<img src="images/github-create-badge.jpg" width="400" />
+<img src="images/github-create-badge.jpg" width="300" />
 
 - Copy the Markdown code, and add it to your repository's README file
 
