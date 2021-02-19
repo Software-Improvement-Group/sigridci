@@ -21,25 +21,30 @@ Sigrid CI: Frequently Asked Questions
 
 ### Which technologies do you support?
 
-Sigrid supports almost 300 different technologies, so we are pretty confident that we are able to support most projects out-of-the-box. Moreover, we are constantly adding support for new technologies, and extending our support for existing ones. This includes some pretty specific technologies, such as proprietary programming languages developed in-house at our clients. 
+Sigrid supports almost 300 different technologies, so we are pretty confident that we are able to support most projects out-of-the-box. Moreover, we are constantly adding support for new technologies, and extending our support for existing ones. This even includes some pretty specific technologies with a focused group of target users, such as proprietary programming languages developed in-house at our clients. 
 
 If you are using a technology that you believe we do not support, please contact us using the contact information below, and we'll see what we can do.
 
 ### Where can I find more information about your metrics?
 
-Sigrid itself includes a brief explanation of all metrics in the "refactoring candidates" page. If you need more information, you can find the [Guidance for producers](https://www.softwareimprovementgroup.com/wp-content/uploads/2019/11/20190919-SIG-TUViT-Evaluation-Criteria-Trusted-Product-Maintainability.pdf) on our website, which provides more detailes on what is measured and why.
+Sigrid itself includes a brief explanation of all metrics in the "refactoring candidates" page. If you need more information, you can find the [Guidance for producers](https://www.softwareimprovementgroup.com/wp-content/uploads/2019/11/20190919-SIG-TUViT-Evaluation-Criteria-Trusted-Product-Maintainability.pdf) on our website, which provides more details on what is measured and why.
 
 For training purposes, SIG also published a book on [building maintainable software](https://www.amazon.com/Building-Maintainable-Software-Java-Future-Proof/dp/1491953527/ref=sr_1_7?dchild=1&qid=1610456817&refinements=p_27%3AJoost+Visser&s=books&sr=1-7&text=Joost+Visser), which contains detailed explanations on the metrics. It is not necessary to read the book to use Sigrid, but having training material available can be useful when training new or junior developers.
 
 ### What is the maximum upload size?
 
-Sigrid CI is limited to uploads of 500 MB. This is mainly for performance reasons, since uploading and unpacking huge files takes some time, which endangers Sigrid CI's goal of providing quick feedback. Note that based on our experience 99% of repositories easily fit within this limit. Also, Sigrid will only measure the actual source code, binaries or other non-source files are excluded.
+Sigrid CI is limited to uploads of 500 MB. This is mainly for performance reasons, since uploading and unpacking huge files takes some time, which endangers Sigrid CI's goal of providing quick feedback. Note that based on our experience 99% of repositories easily fit within this limit. Also, Sigrid will only measure the actual source code maintained by your development team. Other artifacts, such as libraries, binaries, or other non-source files are excluded.
 
 ### Can I exclude certain files from being uploaded?
 
 Yes. In general, we only need to receive the actual source code, configuration and data is not required to perform the analysis and can be excluded from the upload.
 
-Some files and directories are already excluded by default, based on common conventions for common technologies. In addition to that, you can also exclude files and directories specifically for your project. This is done using the `--exclude` parameter, which is explained in the [configuration documentation](integration.md) page.
+Some files and directories are already excluded by default, based on common conventions for common technologies. For example, the following would be excluded automatically:
+
+- The `node_modules` directory is excluded by default as it contains [NPM](https://www.npmjs.com) libraries
+- The `target` directory is excluded as it contains build output from [Maven](https://maven.apache.org)
+
+In addition to that, you can also exclude files and directories specifically for your project. This is done using the `--exclude` parameter, which is explained in the [configuration documentation](integration.md) page.
 
 ### Do Sigrid CI uploads get added to the Sigrid dashboard?
 
@@ -55,9 +60,9 @@ Feedback is based on comparing the source code against the current baseline in S
 
 We created Sigrid CI to be used during code reviews, so the feedback is based on only the files you touched during your pull request, not the whole system. 
 
-However, we do consider the *entire* contents of those files, not only the lines that you personally wrote. This is because of the [boy scout rule](https://www.oreilly.com/library/view/97-things-every/9780596809515/ch08.html): *"Always leave the campground cleaner than you found it."*. Refactoring and regular work are not two separate activities, they belong together. Having separate tickets to refactor certain areas is OK, but it indicates that something went wrong earlier in the process, that led to those issues being introduced in the first place. Ideally, small refactorings should be done *during* regular tickets. That means that any ticket affected existing files doesn't *only* consist of implementing the new behavior. You should also strive to make small refactorings that relate to the code you're currently working on. You have the files open anyway! 
+However, we do consider the *entire* contents of those files, not only the lines that you personally wrote. This is because of the [boy scout rule](https://www.oreilly.com/library/view/97-things-every/9780596809515/ch08.html): *"Always leave the campground cleaner than you found it."*. Refactoring and regular work are not two separate activities, they belong together. Having separate tickets to refactor certain areas is OK, but it indicates that something went wrong earlier in the process, that led to those issues being introduced in the first place. Ideally, small refactorings should be done *during* regular tickets. That means that any tickets affecting existing files should not *only* consist of implementing the new behavior. You should also strive to make small refactorings that relate to the code you're currently working on. You have the files open anyway! 
 
-Obviously, there are still limits to the amount of refactoring you can do in the context of a single ticket. It's probably not a good idea to change the entire architecture while working on a bugfix. This is why Sigrid CI only reports on a subset of [SIG's maintainability quality model](https://www.softwareimprovementgroup.com/methodologies/iso-iec-25010-2011-standard/): the code-level metrics are in scope, but the architecture-level metrics are not. This is due to the difference in *local* versus *global* refactorings. Making some changes in the context of a file tend to be fairly local, in that they don't affect a lot of other people. This is why those types of refactoring are fine to work on during regular development work. In contrast, architectural refactoring will have a big impact on a lot of people, so this is something that needs more consideration and needs to be planned separately.
+Obviously, there are still limits to the amount of refactoring you can do in the context of a single ticket. It's probably not a good idea to change the entire architecture while working on a bug fix. This is why Sigrid CI reports on a subset of [SIG's maintainability quality model](https://www.softwareimprovementgroup.com/methodologies/iso-iec-25010-2011-standard/): the code-level metrics are in scope, but the architecture-level metrics are not. This is due to the difference in *local* versus *global* refactorings. Making some changes in the context of a file tend to be fairly local, in that they don't affect a lot of other people. This is why those types of refactoring are fine to work on during regular development work. In contrast, architectural refactoring will have a big impact on a lot of people, so this is something that needs more consideration and needs to be planned separately.
 
 ### Should we fail the build if the Sigrid CI check fails?
 
