@@ -14,9 +14,10 @@
 
 import os
 import tempfile
+import types
 import unittest
 import zipfile
-from sigridci.sigridci import SystemUploadPacker
+from sigridci.sigridci import SystemUploadPacker, SigridApiClient
 
 class SigridCiTest(unittest.TestCase):
 
@@ -128,6 +129,13 @@ class SigridCiTest(unittest.TestCase):
         uploadPacker.MAX_UPLOAD_SIZE_MB = 1
     
         self.assertRaises(Exception, uploadPacker.prepareUpload, sourceDir, outputFile)
+        
+    def testForceLowerCaseForCustomerAndSystemName(self):
+        args = types.SimpleNamespace(partner="sig", customer="Aap", system="NOOT", sigridurl="")
+        apiClient = SigridApiClient(args)
+        
+        self.assertEqual(apiClient.urlCustomerName, "aap")
+        self.assertEqual(apiClient.urlSystemName, "noot")
 
     def createTempFile(self, dir, name, contents):
         writer = open(dir + "/" + name, "w")

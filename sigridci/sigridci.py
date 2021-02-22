@@ -42,9 +42,9 @@ class SigridApiClient:
         self.account = os.environ["SIGRID_CI_ACCOUNT"]
         self.token = os.environ["SIGRID_CI_TOKEN"]
         
-        self.urlPartnerName = urllib.parse.quote_plus(args.partner)
-        self.urlCustomerName = urllib.parse.quote_plus(args.customer)
-        self.urlSystemName = urllib.parse.quote_plus(args.system)
+        self.urlPartnerName = urllib.parse.quote_plus(args.partner.lower())
+        self.urlCustomerName = urllib.parse.quote_plus(args.customer.lower())
+        self.urlSystemName = urllib.parse.quote_plus(args.system.lower())
         
     def callSigridAPI(self, api, path):
         url = f"{self.baseURL}/rest/{api}{path}"
