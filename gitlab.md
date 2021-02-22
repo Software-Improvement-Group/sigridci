@@ -77,8 +77,8 @@ The relevant command is the call to the `sigridci.py` script, which will call Si
 
 | Argument        | Required | Example value | Description                                                                                         |
 |-----------------|----------|---------------|-----------------------------------------------------------------------------------------------------|
-| --customer      | Yes      | mycompany     | Name of your organization's Sigrid account. Contact SIG support if you're not sure on this.         |
-| --system        | Yes      | junit         | Name of your system in Sigrid. Contact SIG support if you're not sure on this.                      |
+| --customer      | Yes      | examplecustomername     | Name of your organization's Sigrid account. Contact SIG support if you're not sure on this. Value should be lowercase.        |
+| --system        | Yes      | examplesystemname         | Name of your system in Sigrid. Contact SIG support if you're not sure on this. Value should be lowercase.                      |
 | --source        | Yes      | .             | Path of your project's source code. Use "." for current directory.                                  |
 | --targetquality | No       | 3.5           | Target quality level, not meeting this target will cause the CI step to fail. Default is 3.5 stars. |
 | --exclude       | No       | /build/,.png  | Comma-separated list of file and/or directory names that should be excluded from the upload.        |
