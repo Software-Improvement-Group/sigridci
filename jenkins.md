@@ -96,11 +96,11 @@ Again, these instructions assume that you needed to create a new Jenkins pipelin
 
 You can schedule your Jenkins pipeline to indicate *when* it should run: the typical strategy is to run it automatically after every commit, but you can also schedule it to run periodically. You can also start your pipeline manually using the "Build now" button.
 
-<img src="images/jenkins-build-now.png" width="300" />
+<img src="images/jenkins-build-now.png" width="200" />
 
 Once you have configured the integration, Sigrid CI will show up as a new step in your CI pipeline. The step will succeed if the code quality meets the specified target, and will fail otherwise.. Your can access the build status from the "build history" section in the menu:
 
-<img src="images/jenkins-build-history.png" width="400" />
+<img src="images/jenkins-build-history.png" width="300" />
 
 Clicking on the build output will provide more information. Sigrid CI provides multiple levels of feedback. The first and fastest type of feedback is directly produced in the CI output, as shown in the following screenshot:
 
