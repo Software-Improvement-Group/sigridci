@@ -89,7 +89,7 @@ The relevant command that starts Sigrid CI is the call to the `sigridci.py` scri
 | --system        | Yes      | examplesystemname         | Name of your system in Sigrid. Contact SIG support if you're not sure on this. Value should be lowercase.                      |
 | --source        | Yes      | .             | Path of your project's source code. Use "." for current directory.                                  |
 | --targetquality | No       | 3.5           | Target quality level, not meeting this target will cause the CI step to fail. Default is 3.5 stars. |
-| --exclude       | No       | /build/,.png  | Comma-separated list of file and/or directory names that should be excluded from the upload.        |
+| --exclude       | No       | /build/,.png  | Comma-separated list of file and/or directory names that should be excluded from the upload. This is on top of the existing scope file in Sigrid        |
 
 Finally, note that you need to perform this step for every project where you wish to use Sigrid CI. Be aware that you can set a project-specific target quality, you don't necessarily have to use the same target for every project.
 
