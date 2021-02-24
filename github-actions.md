@@ -126,7 +126,7 @@ The output consists of the following:
 
 In addition to the textual output, Sigrid CI also generates a static HTML file that shows the results in a more graphical form. This is similar to test coverage tools, which also tend to produce a HTML report. You can download this HTML report from the "artifacts" section in the GitHub Actions page:
 
-<img src="images/github-artifacts.png" width="400" />
+<img src="images/github-artifacts.png" width="300" />
 
 The information in the HTML report is based on the aforementioned list, though it includes slightly more detail.
 
