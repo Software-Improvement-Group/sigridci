@@ -81,7 +81,7 @@ When done, add another variables named `SIGRID_CI_TOKEN` with the authentication
 
 From this point, Sigrid CI will run as part of the pipeline. When the pipeline is triggered depends on the configuration: by default it will run after every commit, but you can also trigger it periodically or run it manually.
 
-<img src="images/azure-build-status.png" width="500" />
+<img src="images/azure-build-status.png" width="700" />
 
 # Usage
 
