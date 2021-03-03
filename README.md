@@ -10,7 +10,7 @@ Sigrid CI
 
 ---
 
-**Sigrid CI is ready to be rolled out to our first customers. Please [contact us](mailto:support@softwareimprovementgroup.com) if you have suggestions on how to make it more useful to you and your team. We are working hard to get SigridCI of beta really soon**
+**Sigrid CI is ready to be rolled out to our first customers. Please [contact us](mailto:support@softwareimprovementgroup.com) if you have suggestions on how to make it more useful to you and your team.**
 
 ---
 
