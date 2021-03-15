@@ -232,12 +232,12 @@ class StaticHtmlReport(Report):
         if not os.path.exists("sigrid-ci-output"):
             os.mkdir("sigrid-ci-output")
     
-        with open(os.path.dirname(__file__) + "/sigridci-feedback-template.html", "r") as templateRef:
+        with open(os.path.dirname(__file__) + "/sigridci-feedback-template.html", encoding="utf-8", mode="r") as templateRef:
             template = templateRef.read()
             template = self.renderHtmlFeedback(template, feedback, args)
 
         reportFile = os.path.abspath("sigrid-ci-output/index.html")
-        writer = open(reportFile, "w")
+        writer = open(reportFile, encoding="utf-8", mode="w")
         writer.write(template)
         writer.close()
         

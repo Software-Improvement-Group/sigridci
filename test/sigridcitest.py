@@ -136,6 +136,10 @@ class SigridCiTest(unittest.TestCase):
         
         self.assertEqual(apiClient.urlCustomerName, "aap")
         self.assertEqual(apiClient.urlSystemName, "noot")
+        
+    def testFeedbackTemplateOnlyContainsAsciiCharacters(self):
+        with open("sigridci/sigridci-feedback-template.html", mode="r", encoding="ascii") as templateRef:
+            template = templateRef.read()
 
     def createTempFile(self, dir, name, contents):
         writer = open(dir + "/" + name, "w")
