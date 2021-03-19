@@ -8,12 +8,6 @@ Sigrid CI
 - [Frequently asked questions](#frequently-asked-questions)
 - [Contact and support](#contact-and-support)
 
----
-
-**Sigrid CI (beta) is ready to be rolled out to our first customers. Please [contact us](mailto:support@softwareimprovementgroup.com) if you have suggestions on how to make it more useful to you and your team.**
-
----
-
 <img src="images/sigrid-dashboard.png" width="650" />
 
 ## Sigrid: your software quality made measurable
