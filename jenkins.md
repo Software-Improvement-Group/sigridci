@@ -113,6 +113,8 @@ Next, navigate to the section "Pipeline", and select the option "Pipeline script
 
 Again, these instructions assume that you needed to create a new Jenkins pipeline from scratch. If you already had an existing pipeline, simply add the required steps to it.
 
+The Sigrid CI output uses color to communicate whether the ratings meet the target: system properties that meet the target are shown in green, while ratings below the target are shown in red. Jenkins does not support colored text by default, meaning this information is lost. Using the [Jenkins ANSI color plugin](https://plugins.jenkins.io/ansicolor/) will allow Jenkins to show colored text.
+
 ## Usage
 
 You can schedule your Jenkins pipeline to indicate *when* it should run: the typical strategy is to run it automatically after every commit, but you can also schedule it to run periodically. You can also start your pipeline manually using the "Build now" button.
