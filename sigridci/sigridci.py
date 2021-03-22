@@ -169,6 +169,10 @@ class Report:
             return "N/A"
         return "%.1f" % ratings[metric]
         
+    def formatBaseline(self, feedback):
+        snapshotDate = datetime.datetime.strptime(feedback["baseline"], "%Y%m%d")
+        return snapshotDate.strftime("%Y-%m-%d")
+        
     def isPassed(self, feedback, metric, targetRating):
         value = feedback["newCodeRatings"].get(metric, None)
         return value == None or value >= targetRating
@@ -184,7 +188,7 @@ class TextReport(Report):
     ANSI_YELLOW = "\033[33m"
     ANSI_RED = "\033[91m"
     ANSI_BLUE = "\033[96m"
-    LINE_WIDTH = 77
+    LINE_WIDTH = 81
 
     def generate(self, feedback, args):
         print("-" * self.LINE_WIDTH)
@@ -201,12 +205,12 @@ class TextReport(Report):
         print("-" * self.LINE_WIDTH)
         print("Maintainability ratings")
         print("-" * self.LINE_WIDTH)
-        print("System property".ljust(40) + "Overall quality".ljust(20) + "New code quality")
+        print("System property".ljust(40) + f"Baseline ({self.formatBaseline(feedback)})    New code quality")
         for metric in self.METRICS:
             if metric == "MAINTAINABILITY":
                 print("-" * self.LINE_WIDTH)
             self.printRatingColor(metric.title().replace("_", " ").ljust(40) + \
-                "(" + self.formatRating(feedback["overallRatings"], metric) + ")".ljust(16) + \
+                "(" + self.formatRating(feedback["overallRatings"], metric) + ")".ljust(21) + \
                 self.formatRating(feedback["newCodeRatings"], metric), feedback["newCodeRatings"].get(metric))
     
     def printRatingColor(self, message, rating):
@@ -254,6 +258,7 @@ class StaticHtmlReport(Report):
         template = template.replace("@@@SYSTEM", args.system)
         template = template.replace("@@@TARGET", "%.1f" % args.targetquality)
         template = template.replace("@@@LINES_OF_CODE_TOUCHED", "%d" % feedback.get("newCodeLinesOfCode", 0))
+        template = template.replace("@@@BASELINE", self.formatBaseline(feedback))
         template = template.replace("@@@SIGRID_LINK", self.getSigridUrl(args))
         for metric in self.METRICS:
             template = template.replace("@@@" + metric + "_OVERALL", self.formatRating(feedback["overallRatings"], metric))
