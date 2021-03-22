@@ -63,7 +63,28 @@ pipeline {
         }
     }
 }
+```
 
+The previous example uses a Docker image to run the pipeline. While recommended, this is *not* a requirement for using Sigrid CI. It is also possible to use Sigrid CI with a local agent, which is shown in the following example:
+
+```
+pipeline {
+    agent any
+
+    environment {
+        SIGRID_CI_ACCOUNT = credentials('SIGRID_CI_ACCOUNT')
+        SIGRID_CI_TOKEN = credentials('SIGRID_CI_TOKEN')
+    }
+
+    stages {
+        stage('build') {
+            steps {
+                sh 'git clone https://github.com/Software-Improvement-Group/sigridci.git sigridci'
+                sh './sigridci/sigridci/sigridci.py --customer examplecustomername --system examplesystemname --source . --targetquality 3.5'
+            }
+        }
+    }
+}
 ```
 
 **Security note:** This example downloads the Sigrid CI client scripts directly from GitHub. That might be acceptable for some projects, and is in fact increasingly common. However, some projects might not allow this as part of their security policy. In those cases, you can simply download the `sigridci` directory in this repository, and make it available to your runners (either by placing the scripts in a known location, or packaging them into a Docker container). 
