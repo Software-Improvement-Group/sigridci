@@ -63,7 +63,7 @@ jobs:
           SIGRID_CI_TOKEN: "${{ secrets.SIGRID_CI_TOKEN }}"
         run: "./sigridci/sigridci/sigridci.py --customer examplecustomername --system examplesystemname --source . --targetquality 3.5"
       - name: "Save Sigrid CI results"
-        if: ${{ !cancelled() }}
+        if: ${{ success() || failure() }}
         uses: actions/upload-artifact@v2
         with:
           path: "sigrid-ci-output/**"
