@@ -16,6 +16,7 @@ import os
 import tempfile
 import types
 import unittest
+import urllib
 import zipfile
 from sigridci.sigridci import SystemUploadPacker, SigridApiClient
 
@@ -140,6 +141,15 @@ class SigridCiTest(unittest.TestCase):
     def testFeedbackTemplateOnlyContainsAsciiCharacters(self):
         with open("sigridci/sigridci-feedback-template.html", mode="r", encoding="ascii") as templateRef:
             template = templateRef.read()
+            
+    def testOnlyThrowExceptionForClientError(self):
+        args = types.SimpleNamespace(partner="sig", customer="Aap", system="NOOT", sigridurl="")
+        apiClient = SigridApiClient(args)
+        apiClient.processHttpError(urllib.error.HTTPError("http://www.sig.eu", 404, "", {}, None))
+        apiClient.processHttpError(urllib.error.HTTPError("http://www.sig.eu", 502, "", {}, None))
+        
+        self.assertRaises(Exception, apiClient.processHttpError, \
+            urllib.error.HTTPError("http://www.sig.eu", 400, "", {}, None))
 
     def createTempFile(self, dir, name, contents):
         writer = open(dir + "/" + name, "w")

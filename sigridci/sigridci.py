@@ -99,14 +99,21 @@ class SigridApiClient:
                 if response != {}:
                     return response            
             except urllib.error.HTTPError as e:
-                if e.code != 404:
-                    raise Exception(f"Received HTTP status {e.code}")
+                self.processHttpError(e)
             
             log("Waiting for analysis results")
             time.sleep(self.POLL_INTERVAL)
             
         log("Analysis failed: waiting for analysis results took too long")
         sys.exit(1)
+        
+    def processHttpError(self, e):
+        if e.code == 404:
+            log("Analysis results not yet available")
+        elif e.code >= 500:
+            log("HTTP status {e.code} when connecting to Sigrid, retrying")
+        else:
+            raise Exception(f"Received HTTP status {e.code}")
         
 
 class SystemUploadPacker:
