@@ -22,6 +22,10 @@ from sigridci.sigridci import SystemUploadPacker, SigridApiClient
 
 class SigridCiTest(unittest.TestCase):
 
+    def setUp(self):
+        os.environ["SIGRID_CI_ACCOUNT"] = "dummy"
+        os.environ["SIGRID_CI_TOKEN"] = "dummy"
+
     def testCreateZipFromDirectory(self):
         sourceDir = tempfile.mkdtemp()
         self.createTempFile(sourceDir, "a.py", "a")
