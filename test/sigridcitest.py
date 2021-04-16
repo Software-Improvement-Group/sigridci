@@ -142,14 +142,17 @@ class SigridCiTest(unittest.TestCase):
         with open("sigridci/sigridci-feedback-template.html", mode="r", encoding="ascii") as templateRef:
             template = templateRef.read()
             
-    def testOnlyThrowExceptionForClientError(self):
+    def testDoNotThrowExeptionFor404(self):
         args = types.SimpleNamespace(partner="sig", customer="Aap", system="NOOT", sigridurl="")
         apiClient = SigridApiClient(args)
         apiClient.processHttpError(urllib.error.HTTPError("http://www.sig.eu", 404, "", {}, None))
-        apiClient.processHttpError(urllib.error.HTTPError("http://www.sig.eu", 502, "", {}, None))
+            
+    def testDoThrowExceptionForClientError(self):
+        args = types.SimpleNamespace(partner="sig", customer="Aap", system="NOOT", sigridurl="")
+        apiClient = SigridApiClient(args)
         
         self.assertRaises(Exception, apiClient.processHttpError, \
-            urllib.error.HTTPError("http://www.sig.eu", 400, "", {}, None))
+            urllib.error.HTTPError("http://www.sig.eu", 400, "", {}, None), True)
 
     def createTempFile(self, dir, name, contents):
         writer = open(dir + "/" + name, "w")

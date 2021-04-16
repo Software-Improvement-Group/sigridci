@@ -69,11 +69,15 @@ class SigridApiClient:
         uploadPacker.prepareUpload(sourceDir, upload)
     
         log("Preparing upload")
-        requestUploadResponse = self.callSigridAPI("inboundresults",
-            f"/{self.urlPartnerName}/{self.urlCustomerName}/{self.urlSystemName}/ci/uploads/{self.PROTOCOL_VERSION}")
-        uploadUrl = requestUploadResponse["uploadUrl"]
-        analysisId = requestUploadResponse["ciRunId"]
-        log(f"Sigrid CI analysis ID: {analysisId}")
+        
+        try:
+            requestUploadResponse = self.callSigridAPI("inboundresults",
+                f"/{self.urlPartnerName}/{self.urlCustomerName}/{self.urlSystemName}/ci/uploads/{self.PROTOCOL_VERSION}")
+            uploadUrl = requestUploadResponse["uploadUrl"]
+            analysisId = requestUploadResponse["ciRunId"]
+            log(f"Sigrid CI analysis ID: {analysisId}")
+        except urllib.error.HTTPError as e:
+            self.processHttpError(e)
         
         log("Submitting upload")
         if not self.uploadBinaryFile(uploadUrl, upload):
@@ -108,11 +112,15 @@ class SigridApiClient:
         sys.exit(1)
         
     def processHttpError(self, e):
-        if e.code == 404:
-            log("Analysis results not yet available")
+        if e.code in [401, 403]:
+            log("You are not authorized to access Sigrid for this system")
+            sys.exit(1)
         elif e.code >= 500:
-            log("HTTP status {e.code} when connecting to Sigrid, retrying")
-        else:
+            log(f"Sigrid is currently not available (HTTP status {e.code})")
+            sys.exit(1)
+        elif e.code == 404:
+            log("Analysis results not yet available")
+        else:      
             raise Exception(f"Received HTTP status {e.code}")
         
 
