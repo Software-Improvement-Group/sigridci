@@ -49,7 +49,7 @@ In your GitHub repository, create a file `.github/workflows/sigridci.yml` and gi
 
 ```
 name: sigridci
-on: [push, pull_request]
+on: [pull_request]
 jobs:
   sigridci:
     runs-on: ubuntu-latest
@@ -63,6 +63,7 @@ jobs:
           SIGRID_CI_TOKEN: "${{ secrets.SIGRID_CI_TOKEN }}"
         run: "./sigridci/sigridci/sigridci.py --customer examplecustomername --system examplesystemname --source . --targetquality 3.5"
       - name: "Save Sigrid CI results"
+        if: ${{ success() || failure() }}
         uses: actions/upload-artifact@v2
         with:
           path: "sigrid-ci-output/**"
