@@ -12,12 +12,7 @@ Sigrid CI: Frequently Asked Questions
 - [Why am I being penalized for problems that were already there?](#why-am-i-being-penalized-for-problems-that-were-already-there)
 - [Should we fail the build if the Sigrid CI check fails?](#should-we-fail-the-build-if-the-sigrid-ci-check-fails)
 - [Why doesn't deleted code influence the rating?](#why-doesnt-deleted-code-influence-the-rating)
-
----
-
-**Sigrid CI is currently in beta. Please [contact us](mailto:support@softwareimprovementgroup.com) if you have suggestions on how to make it more useful to you and your team.**
-
----
+- [We have a multi-repo project, can I still use Sigrid CI?](#we-have-a-multi-repo-project-can-i-still-use-sigrid-ci)
 
 ### Which technologies do you support?
 
@@ -77,6 +72,15 @@ We therefore believe in a comply-or-explain model. Obviously, you should still s
 In general, deleting code improves maintainability. The less code you have, the less you have to maintain. Having less code also makes it easier to make structural changes, since such changes will require less effort.
 
 So why does Sigrid CI only give ratings based on new and changed code, but doesn't reward you for deleting code? This is mostly to keep the rating simple: combining code quality and deleted code into a single metric would make it hard to understand. Also, the majority of pull requests are about adding new code or changing existing code, deleting code is less common, so we have chosen to not optimize for that scenario.
+
+## We have a multi-repo project, can I still use Sigrid CI?
+
+Yes. In some situations, the view of your project/system in Sigrid might differ from your repository structure. For example, you might have separate repositories for your back-end and front-end, yet Sigrid combines them into one big system. 
+
+There are two ways to use Sigrid CI in such a situation. 
+
+- You can change the structure in Sigrid to match your repositories. This is the simplest option, but different roles can have different opinions on what is a suitable structure in Sigrid (though development teams tend to prefer Sigrid matching their repositories).
+- Even when *not* changing the Sigrid structure, it is still possible to run Sigrid CI for your repository. You can use the `--prefixpath` option to explain Sigrid CI how your repository structure should be matched to your Sigrid configuration. This option is explained in [using the Sigrid CI client script](client-script-usage.md).
 
 ## Contact and support
 
