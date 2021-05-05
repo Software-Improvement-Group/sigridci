@@ -301,9 +301,11 @@ class ExitCodeReport(Report):
     def generate(self, feedback, args):
         asciiArt = TextReport()
         if self.isPassed(feedback, "MAINTAINABILITY", args.targetquality):
-            asciiArt.printColor("\n** MAINTAINABILITY CHECK PASSED **\n", asciiArt.ANSI_BOLD + asciiArt.ANSI_GREEN)
+            asciiArt.printColor("\n** SIGRID CI RUN COMPLETE: YOU WROTE MAINTAINABLE CODE AND REACHED THE TARGET **\n", \
+                asciiArt.ANSI_BOLD + asciiArt.ANSI_GREEN)
         else:
-            asciiArt.printColor("\n** MAINTAINABILITY CHECK FAILED **\n", asciiArt.ANSI_BOLD + asciiArt.ANSI_RED)
+            asciiArt.printColor("\n** SIGRID CI RUN COMPLETE: YOU DID NOT MANAGE TO WRITE MAINTAINABLE CODE **\n", \
+                asciiArt.ANSI_BOLD + asciiArt.ANSI_YELLOW)
             sys.exit(1)
                 
 
