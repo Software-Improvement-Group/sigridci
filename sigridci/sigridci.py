@@ -304,7 +304,7 @@ class ExitCodeReport(Report):
             asciiArt.printColor("\n** SIGRID CI RUN COMPLETE: YOU WROTE MAINTAINABLE CODE AND REACHED THE TARGET **\n", \
                 asciiArt.ANSI_BOLD + asciiArt.ANSI_GREEN)
         else:
-            asciiArt.printColor("\n** SIGRID CI RUN COMPLETE: YOU DID NOT MANAGE TO WRITE MAINTAINABLE CODE **\n", \
+            asciiArt.printColor("\n** SIGRID CI RUN COMPLETE: THE CODE YOU WROTE DID NOT MEET THE TARGET FOR MAINTAINABLE CODE **\n", \
                 asciiArt.ANSI_BOLD + asciiArt.ANSI_YELLOW)
             sys.exit(1)
                 
