@@ -20,6 +20,7 @@ import urllib
 import zipfile
 from sigridci.sigridci import SystemUploadPacker, SigridApiClient
 
+
 class SigridCiTest(unittest.TestCase):
 
     def setUp(self):
@@ -85,7 +86,7 @@ class SigridCiTest(unittest.TestCase):
         
         outputFile = tempfile.mkstemp()[1]
         
-        uploadPacker = SystemUploadPacker(["b/"])
+        uploadPacker = SystemUploadPacker(excludePatterns=["b/"])
         uploadPacker.prepareUpload(sourceDir, outputFile)
 
         self.assertEqual(os.path.exists(outputFile), True)
@@ -134,6 +135,41 @@ class SigridCiTest(unittest.TestCase):
         uploadPacker.MAX_UPLOAD_SIZE_MB = 1
     
         self.assertRaises(Exception, uploadPacker.prepareUpload, sourceDir, outputFile)
+        
+    def testUsePathPrefixInUpload(self):
+        sourceDir = tempfile.mkdtemp()
+        subDirA = sourceDir + "/a"
+        os.mkdir(subDirA)
+        self.createTempFile(subDirA, "a.py", "a")
+        subDirB = sourceDir + "/b"
+        os.mkdir(subDirB)
+        self.createTempFile(subDirB, "b.py", "b")
+        
+        outputFile = tempfile.mkstemp()[1]
+        
+        uploadPacker = SystemUploadPacker(pathPrefix="frontend")
+        uploadPacker.prepareUpload(sourceDir, outputFile)
+        
+        entries = zipfile.ZipFile(outputFile).namelist()
+        entries.sort()
+
+        self.assertEqual(os.path.exists(outputFile), True)
+        self.assertEqual(entries, ["frontend/a/a.py", "frontend/b/b.py"])
+        
+    def testPathPrefixDoesNotLeadToDoubleSlash(self):
+        sourceDir = tempfile.mkdtemp()
+        self.createTempFile(sourceDir, "a.py", "a")
+        
+        outputFile = tempfile.mkstemp()[1]
+        
+        uploadPacker = SystemUploadPacker(pathPrefix="/backend/")
+        uploadPacker.prepareUpload(sourceDir, outputFile)
+        
+        entries = zipfile.ZipFile(outputFile).namelist()
+        entries.sort()
+
+        self.assertEqual(os.path.exists(outputFile), True)
+        self.assertEqual(entries, ["backend/a.py"])
         
     def testForceLowerCaseForCustomerAndSystemName(self):
         args = types.SimpleNamespace(partner="sig", customer="Aap", system="NOOT", sigridurl="")

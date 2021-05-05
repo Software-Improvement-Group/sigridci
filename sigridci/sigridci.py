@@ -62,9 +62,9 @@ class SigridApiClient:
             return {}
         return json.loads(responseBody)
         
-    def submitUpload(self, sourceDir, excludePatterns, useRepoHistory):
+    def submitUpload(self, sourceDir, excludePatterns, useRepoHistory, pathPrefix):
         log("Creating upload")
-        uploadPacker = SystemUploadPacker(excludePatterns, useRepoHistory)
+        uploadPacker = SystemUploadPacker(excludePatterns, useRepoHistory, pathPrefix)
         upload = "sigrid-upload-" + datetime.datetime.now().strftime("%Y%m%d-%H%M%S") + ".zip"
         uploadPacker.prepareUpload(sourceDir, upload)
     
@@ -140,12 +140,14 @@ class SystemUploadPacker:
         ".png"
     ]
     
-    def __init__(self, excludePatterns=[], useRepoHistory=True):
+    def __init__(self, excludePatterns=[], useRepoHistory=True, pathPrefix=""):
         self.excludePatterns = []
         self.excludePatterns += self.DEFAULT_EXCLUDES
         self.excludePatterns += [excl for excl in excludePatterns if excl != ""]
         if not useRepoHistory:
             self.excludePatterns += [".git"]
+
+        self.pathPrefix = pathPrefix.strip("/")
 
     def prepareUpload(self, sourceDir, outputFile):
         zipFile = zipfile.ZipFile(outputFile, "w", zipfile.ZIP_DEFLATED)
@@ -155,7 +157,8 @@ class SystemUploadPacker:
                 filePath = os.path.join(root, file)
                 if file != outputFile and not self.isExcluded(filePath):
                     relativePath = os.path.relpath(os.path.join(root, file), sourceDir)
-                    zipFile.write(filePath, relativePath)
+                    uploadPath = self.getUploadFilePath(relativePath)
+                    zipFile.write(filePath, uploadPath)
         
         zipFile.close()
         
@@ -163,6 +166,11 @@ class SystemUploadPacker:
         log(f"Upload size is {uploadSizeMB} MB")
         if uploadSizeMB > self.MAX_UPLOAD_SIZE_MB:
             raise Exception(f"Upload exceeds maximum size of {self.MAX_UPLOAD_SIZE_MB} MB")
+            
+    def getUploadFilePath(self, relativePath):
+        if self.pathPrefix == "":
+            return relativePath
+        return f"{self.pathPrefix}/{relativePath}"
         
     def isExcluded(self, filePath):
         normalizedPath = filePath.replace("\\", "/")
@@ -315,6 +323,7 @@ if __name__ == "__main__":
     parser.add_argument("--source", type=str)
     parser.add_argument("--targetquality", type=float, default=3.5)
     parser.add_argument("--exclude", type=str, default="")
+    parser.add_argument("--pathprefix", type=str, default="")
     parser.add_argument("--history", type=str, default="none")
     parser.add_argument("--sigridurl", type=str, default="https://sigrid-says.com")
     args = parser.parse_args()
@@ -337,7 +346,7 @@ if __name__ == "__main__":
     
     log("Starting Sigrid CI")
     apiClient = SigridApiClient(args)
-    analysisId = apiClient.submitUpload(args.source, args.exclude.split(","), args.history != "none")
+    analysisId = apiClient.submitUpload(args.source, args.exclude.split(","), args.history != "none", args.pathprefix)
     feedback = apiClient.fetchAnalysisResults(analysisId)
     
     for report in [TextReport(), StaticHtmlReport(), ExitCodeReport()]:

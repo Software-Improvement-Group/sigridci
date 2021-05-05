@@ -59,7 +59,7 @@ pipeline {
 }
 ```
 
-The previous example uses a Docker image to run the pipeline. While recommended, this is *not* a requirement for using Sigrid CI. It is also possible to use Sigrid CI with a local agent, which is shown in the following example:
+The previous example uses a Docker image to run the pipeline. The example uses the Docker container `python:3.9-buster`, but any Docker container that contains Python 3 will do. While recommended, using Docker is *not* a requirement for using Sigrid CI. It is also possible to use Sigrid CI with a local agent, which is shown in the following example:
 
 ```
 pipeline {
@@ -85,15 +85,9 @@ pipeline {
 
 In this example we're assuming you don't have a Jenkins configuration yet, hence we create it from scratch. If you already have an existing Jenkins configuration, simply add the contents of the example to your configuration.
 
-Sigrid CI consists of a number of Python-based client scripts, that interact with Sigrid in order to analyze your project's source code and provide feedback based on the results. These client scripts need to be available to the CI environment, in order to call the scripts *from* the CI pipeline. The script takes the following arguments:
+Sigrid CI consists of a number of Python-based client scripts, that interact with Sigrid in order to analyze your project's source code and provide feedback based on the results. These client scripts need to be available to the CI environment, in order to call the scripts *from* the CI pipeline. 
 
-| Argument        | Required | Example value       | Description                                                                                         |
-|-----------------|----------|---------------------|-----------------------------------------------------------------------------------------------------|
-| --customer      | Yes      | examplecustomername | Name of your organization's Sigrid account. Contact SIG support if you're not sure on this.         |
-| --system        | Yes      | examplesystemname   | Name of your system in Sigrid. Contact SIG support if you're not sure on this.                      |
-| --source        | Yes      | .                   | Path of your project's source code. Use "." for current directory.                                  |
-| --targetquality | No       | 3.5                 | Target quality level, not meeting this target will cause the CI step to fail. Default is 3.5 stars. |
-| --exclude       | No       | /build/,.png        | Comma-separated list of file and/or directory names that should be excluded from the upload.        |
+The relevant command that starts Sigrid CI is the call to the `sigridci.py` script, which starts the Sigrid CI analysis. The scripts supports a number of arguments that you can use to configure your Sigrid CI run. The scripts and its command line interface are explained in [using the Sigrid CI client script](client-script-usage.md).
 
 **Step 3: Configure your Jenkins pipeline**
 
