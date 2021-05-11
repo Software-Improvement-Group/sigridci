@@ -5,7 +5,7 @@ Sigrid CI
 
 - [Sigrid](#sigrid-your-software-quality-made-measurable)
 - [Integrating Sigrid CI into your development pipeline](#integrating-sigrid-ci-into-your-development-pipeline)
-- [Frequently asked questions](https://github.com/Software-Improvement-Group/sigridci/blob/main/faq.md)
+- [Frequently asked questions](faq.md)
 - [Contact and support](#contact-and-support)
 
 <img src="images/sigrid-dashboard.png" width="650" />
