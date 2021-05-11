@@ -3,9 +3,10 @@ Sigrid CI: Frequently Asked Questions
 
 ## Table of contents
 
-- [Which technologies do you support?](#which0technologies-do-you-support)
+- [Which technologies do you support?](#which-technologies-do-you-support)
+- [What is my system name?](#what-is-my-system-name)
 - [Where can I find more information about your metrics?](#where-can-i-find-more-information-about-your-metrics)
-- [What is the maximum upload size?](#what-is-the-maximum-supported-upload-size)
+- [What is the maximum upload size?](#what-is-the-maximum-upload-size)
 - [Can I exclude certain files from being uploaded?](#can-i-exclude-certain-files-from-being-uploaded)
 - [Do Sigrid CI uploads get added to the Sigrid dashboard?](#do-sigrid-ci-uploads-get-added-to-the-sigrid-dashboard)
 - [What branch or commit does Sigrid CI compare against?](#what-branch-or-commit-does-sigrid-ci-compare-against)
@@ -19,6 +20,10 @@ Sigrid CI: Frequently Asked Questions
 Sigrid supports almost 300 different technologies, so we are pretty confident that we are able to support most projects out-of-the-box. Moreover, we are constantly adding support for new technologies, and extending our support for existing ones. This even includes some pretty specific technologies with a focused group of target users, such as proprietary programming languages developed in-house at our clients. 
 
 If you are using a technology that you believe we do not support, please contact us using the contact information below, and we'll see what we can do.
+
+### What is my system name?
+
+You will find the system name in the url of the monitor in Sigrid. The structure is https://sigrid-says.com/customer/systemname/-/maintainability
 
 ### Where can I find more information about your metrics?
 
