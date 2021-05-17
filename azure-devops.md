@@ -1,7 +1,7 @@
 Integrating Sigrid CI with Azure DevOps
 =======================================
 
-This guide explains how to integrate Sigrid into your Azure DevOps continuous integration pipeline, using GitHub Actions. Make sure you have also read the [general Sigrid CI documentation](README.md) before starting this guide.
+This guide explains how to integrate Sigrid into your Azure DevOps continuous integration pipeline. Make sure you have also read the [general Sigrid CI documentation](README.md) before starting this guide.
 
 ## Prerequisites
 

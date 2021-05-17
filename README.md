@@ -43,6 +43,7 @@ In addition to the generic instructions, we have also prepared specific instruct
 - [Integrating Sigrid CI with Bitbucket Pipelines](bitbucket-pipelines.md)
 - [Integrating Sigrid CI with Jenkins](jenkins.md)
 - [Integrating Sigrid CI with Azure DevOps](azure-devops.md)
+- [Integrating Sigrid CI with TeamCity](teamcity.md)
 
 ## More information
 
