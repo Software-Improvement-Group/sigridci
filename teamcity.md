@@ -46,7 +46,7 @@ This scripts supports a number of arguments that you can use to configure your S
 
 After performing these steps you should end up with the following configuration:
 
-<img src="images/teamcity-build-config.png" width="600" />
+<img src="images/teamcity-build-config.png" width="700" />
 
 ### Step 2: Configure account credentials
 
@@ -62,7 +62,7 @@ Now that we have created the new build step, we need to provide our Sigrid accou
 - Repeat the process for another environment variable `env.SIGRID_CI_TOKEN`, with the value based on the Sigrid CI authentication token you have received
 - You should now see the following parameters as part of your build configuration:
 
-<img src="images/teamcity-environment-variables.png" width="500" />
+<img src="images/teamcity-environment-variables.png" width="300" />
 
 ### Step 3: Run your pipeline
 
@@ -86,7 +86,7 @@ The output consists of the following:
 
 In addition to the textual output, Sigrid CI also generates a static HTML file that shows the results in a more graphical form. This is similar to test coverage tools, which also tend to produce a HTML report. You can access this report from the "artifacts" section in your build output:
 
-<img src="images/teamcity-artifacts.png" width="600" />
+<img src="images/teamcity-artifacts.png" width="500" />
 
 The information in the HTML report is based on the aforementioned list, though it includes slightly more detail.
 
