@@ -19,7 +19,7 @@ Once the account has been created, you can use Sigrid's user management feature 
 
 ## Configuration
 
-**Step 1: Configure Sigrid credentials to environment variables**
+### Step 1: Configure Sigrid credentials to environment variables
 
 Sigrid CI reads your Sigrid account credentials from two environment variables, called `SIGRID_CI_ACCOUNT` and `SIGRID_CI_TOKEN`. You can make these environment variables available to GitHub Actions by creating "secrets" in your GitHub repository:
 
@@ -41,7 +41,7 @@ This example explained how to add secrets for a single repository. However, if y
 
 In this screenshot, the repository-level secrets and the organization-level secrets have been given different names, to make it easier to tell which is which.
 
-**Step 2: Create a GitHub Actions workflow for Sigrid CI**
+### Step 2: Create a GitHub Actions workflow for Sigrid CI
 
 Sigrid CI consists of a number of Python-based client scripts, that interact with Sigrid in order to analyze your project's source code and provide feedback based on the results. These client scripts need to be available to the CI environment, in order to call the scripts *from* the CI pipeline. You can configure your GitHub Actions to both download the Sigrid CI client scripts and then run Sigrid CI. 
 
@@ -79,7 +79,7 @@ SIGRID_CI_TOKEN: "${{ secrets.SIGRID_CI_ORG_TOKEN }}"
 
 **Security note:** This example downloads the Sigrid CI client scripts directly from GitHub. That might be acceptable for some projects, and is in fact increasingly common. However, some projects might not allow this as part of their security policy. In those cases, you can simply download the `sigridci` directory in this repository, and make it available to your runners (either by placing the scripts in a known location, or packaging them into a Docker container). 
 
-Refer to the [GitHub Actions documentation](https://docs.github.com/en/actions/learn-github-actions/introduction-to-github-actions) for more information on when and how these actions should be performed.
+The example YAML file will trigger a Sigrid CI analysis on every pull request. It is also possible to limit Sigrid CI to specific branches, or trigger Sigrid CI after every push. The [GitHub Actions documentation](https://docs.github.com/en/actions/reference/workflow-syntax-for-github-actions) explains how to configure those scenarios in the YAML file.
 
 The relevant command that starts Sigrid CI is the call to the `sigridci.py` script, which starts the Sigrid CI analysis. The scripts supports a number of arguments that you can use to configure your Sigrid CI run. The scripts and its command line interface are explained in [using the Sigrid CI client script](client-script-usage.md).
 
