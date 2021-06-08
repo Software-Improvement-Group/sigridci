@@ -87,9 +87,15 @@ The output consists of the following:
 - An overview of all ratings, compared against the system as a whole. This allows you to check if your changes improved the system, or accidentally made things worse.
 - The final conclusion on whether your changes and merge request meet the quality target.
 
-In addition to the textual output, Sigrid CI also generates a static HTML file that shows the results in a more graphical form. This is similar to test coverage tools, which also tend to produce a HTML report. The pipeline does publish this report, but the Azure DevOps web interface does not currently support viewing published artifacts directly in the web interface itself. To obtain the published HTML report, refer to the [Azure DevOps documentation for downloading artifacts](https://docs.microsoft.com/en-us/azure/devops/pipelines/artifacts/artifacts-overview?view=azure-devops).
+In addition to the textual output, Sigrid CI also generates a static HTML file that shows the results in a more graphical form. This is similar to test coverage tools, which also tend to produce a HTML report. You can access the HTML report from the "published" section in the build summary.
 
-The information in the HTML report is based on the aforementioned list, though it includes slightly more detail.
+<img src="images/azure-artifacts.png" width="500" />
+
+In the list of published artifacts, expand the "sigrid-ci-output" section and download the index.html file to view the report.
+
+<img src="images/azure-artifact-download.png" width="600" />
+
+The information in the HTML report is similar to the command line output, though it includes slightly more detail.
 
 <img src="images/feedback-report.png" width="600" />
 
