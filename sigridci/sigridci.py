@@ -203,6 +203,16 @@ class Report:
     def getSigridUrl(self, args):
         return "https://sigrid-says.com/" + urllib.parse.quote_plus(args.customer) + "/" + \
             urllib.parse.quote_plus(args.system);
+            
+    def getRefactoringCandidates(self, feedback, metric):
+        refactoringCandidates = feedback.get("refactoringCandidates", [])
+        relevantRefactoringCandidates = [rc for rc in refactoringCandidates if rc["metric"] == metric]
+        
+        # Backward compatibility with the old response format
+        for rc in feedback["refactoringCandidatesPerType"].get(metric, []):
+            relevantRefactoringCandidates.append({"subject" : rc, "category" : "introduced", "metric" : metric})
+        
+        return relevantRefactoringCandidates
 
 
 class TextReport(Report):
@@ -218,10 +228,10 @@ class TextReport(Report):
         print("Refactoring candidates")
         print("-" * self.LINE_WIDTH)
         print("")
-        for metric in [metric for metric in self.METRICS if metric in feedback["refactoringCandidatesPerType"]]:
+        for metric in self.METRICS:
             print("")
             print(metric.replace("_PROP", "").title().replace("_", " "))
-            for rc in feedback["refactoringCandidatesPerType"][metric]:
+            for rc in self.getRefactoringCandidates(feedback, metric):
                 print("    - " + rc)
 
         print("")
@@ -290,7 +300,7 @@ class StaticHtmlReport(Report):
             template = template.replace("@@@" + metric + "_STARS_NEW", self.formatHtmlStars(feedback["newCodeRatings"], metric))
             passed = self.isPassed(feedback, metric, args.targetquality)
             template = template.replace("@@@" + metric + "_PASSED", "passed" if passed else "failed")
-            refactoringCandidates = feedback["refactoringCandidatesPerType"].get(metric, [])
+            refactoringCandidates = self.getRefactoringCandidates(feedback, metric)
             template = template.replace("@@@" + metric + "_REFACTORING_CANDIDATES",
                 "\n".join(["<span>" + html.escape(rc) + "</span>" for rc in refactoringCandidates]))
         return template

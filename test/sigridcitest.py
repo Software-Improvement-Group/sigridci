@@ -18,7 +18,7 @@ import types
 import unittest
 import urllib
 import zipfile
-from sigridci.sigridci import SystemUploadPacker, SigridApiClient
+from sigridci.sigridci import SystemUploadPacker, SigridApiClient, Report
 
 
 class SigridCiTest(unittest.TestCase):
@@ -193,6 +193,21 @@ class SigridCiTest(unittest.TestCase):
         
         self.assertRaises(Exception, apiClient.processHttpError, \
             urllib.error.HTTPError("http://www.sig.eu", 400, "", {}, None), True)
+            
+    def testGetRefactoringCandidatesForBothOldAndNewFormat(self):
+        feedback = {
+            "refactoringCandidates": [{"subject":"a/b.java::Duif.vuur()","category":"introduced","metric":"UNIT_SIZE"}],
+            "refactoringCandidatesPerType": {"UNIT_SIZE":["aap"]}
+        }
+        
+        report = Report()
+        unitSize = report.getRefactoringCandidates(feedback, "UNIT_SIZE")
+        unitComplexity = report.getRefactoringCandidates(feedback, "UNIT_COMPLEXITY")
+        
+        self.assertEqual(len(unitSize), 2)
+        self.assertEqual(unitSize[0]["subject"], "a/b.java::Duif.vuur()")
+        self.assertEqual(unitSize[1]["subject"], "aap")
+        self.assertEqual(len(unitComplexity), 0)
 
     def createTempFile(self, dir, name, contents):
         writer = open(dir + "/" + name, "w")
