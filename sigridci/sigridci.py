@@ -232,7 +232,7 @@ class TextReport(Report):
             print("")
             print(metric.replace("_PROP", "").title().replace("_", " "))
             for rc in self.getRefactoringCandidates(feedback, metric):
-                print("    - " + rc)
+                print("    - " + rc["subject"])
 
         print("")
         print("-" * self.LINE_WIDTH)
@@ -302,7 +302,7 @@ class StaticHtmlReport(Report):
             template = template.replace("@@@" + metric + "_PASSED", "passed" if passed else "failed")
             refactoringCandidates = self.getRefactoringCandidates(feedback, metric)
             template = template.replace("@@@" + metric + "_REFACTORING_CANDIDATES",
-                "\n".join(["<span>" + html.escape(rc) + "</span>" for rc in refactoringCandidates]))
+                "\n".join(["<span>" + html.escape(rc["subject"]) + "</span>" for rc in refactoringCandidates]))
         return template
         
     def formatHtmlStars(self, ratings, metric):
