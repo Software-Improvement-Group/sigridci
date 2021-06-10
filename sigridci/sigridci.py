@@ -183,6 +183,9 @@ class SystemUploadPacker:
 class Report:
     METRICS = ["VOLUME", "DUPLICATION", "UNIT_SIZE", "UNIT_COMPLEXITY", "UNIT_INTERFACING", "MODULE_COUPLING", \
                "COMPONENT_BALANCE_PROP", "COMPONENT_INDEPENDENCE", "COMPONENT_ENTANGLEMENT", "MAINTAINABILITY"]
+               
+    REFACTORING_CANDIDATE_METRICS = ["DUPLICATION", "UNIT_SIZE", "UNIT_COMPLEXITY", "UNIT_INTERFACING", \
+                                     "MODULE_COUPLING"]
 
     def generate(self, feedback, args):
         pass
@@ -228,7 +231,7 @@ class TextReport(Report):
         print("Refactoring candidates")
         print("-" * self.LINE_WIDTH)
         print("")
-        for metric in self.METRICS:
+        for metric in self.REFACTORING_CANDIDATE_METRICS:
             print("")
             print(metric.replace("_PROP", "").title().replace("_", " "))
             for rc in self.getRefactoringCandidates(feedback, metric):
