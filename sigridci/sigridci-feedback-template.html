@@ -148,11 +148,24 @@
             }
             
             .refactoringCandidates .tabContents span {
-                display: block;
+                display: flex;
                 margin-bottom: 4px;
                 border-bottom: 1px solid #C0C7CB;
                 padding-bottom: 8px;
                 padding-top: 8px;
+            }
+            
+            .refactoringCandidates .tabContents span div {
+                line-height: 18px;
+            }
+            
+            .refactoringCandidates .tabContents em {
+                flex: 0 0 150px;
+                font-style: normal;
+                color: #8269A4;
+                width: 150px;
+                display: inline-block;
+                font-weight: bold;
             }
             
             .passed {
