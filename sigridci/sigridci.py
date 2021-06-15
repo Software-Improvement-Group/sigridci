@@ -235,7 +235,7 @@ class TextReport(Report):
             print("")
             print(metric.replace("_PROP", "").title().replace("_", " "))
             for rc in self.getRefactoringCandidates(feedback, metric):
-                print("    - " + rc["subject"].replace("\n", "\n      "))
+                print(self.formatRefactoringCandidate(rc))
 
         print("")
         print("-" * self.LINE_WIDTH)
@@ -248,6 +248,11 @@ class TextReport(Report):
             self.printRatingColor(metric.title().replace("_", " ").ljust(40) + \
                 "(" + self.formatRating(feedback["overallRatings"], metric) + ")".ljust(21) + \
                 self.formatRating(feedback["newCodeRatings"], metric), feedback["newCodeRatings"].get(metric))
+                
+    def formatRefactoringCandidate(self, rc):
+        category = ("(" + rc["category"] + ")").ljust(14)
+        subject = rc["subject"].replace("\n", "\n" + (" " * 21))
+        return f"    - {category} {subject}"
     
     def printRatingColor(self, message, rating):
         ansiCodes = {
@@ -309,10 +314,9 @@ class StaticHtmlReport(Report):
         return template
         
     def formatRefactoringCandidate(self, rc):
-        subjectName = html.escape(rc["subject"])
-        if rc["metric"] == "DUPLICATION":
-            subjectName = subjectName.replace("\n", "<br />")
-        return f"<span>{subjectName}</span>"
+        subjectName = html.escape(rc["subject"]).replace("\n", "<br />").replace("::", "<br />")
+        category = html.escape(rc["category"])
+        return f"<span><em>({category})</em><div>{subjectName}</div></span>"
         
     def formatHtmlStars(self, ratings, metric):
         if ratings.get(metric, None) == None:

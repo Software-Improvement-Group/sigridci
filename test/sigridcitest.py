@@ -18,7 +18,7 @@ import types
 import unittest
 import urllib
 import zipfile
-from sigridci.sigridci import SystemUploadPacker, SigridApiClient, Report
+from sigridci.sigridci import SystemUploadPacker, SigridApiClient, Report, TextReport
 
 
 class SigridCiTest(unittest.TestCase):
@@ -208,6 +208,18 @@ class SigridCiTest(unittest.TestCase):
         self.assertEqual(unitSize[0]["subject"], "a/b.java::Duif.vuur()")
         self.assertEqual(unitSize[1]["subject"], "aap")
         self.assertEqual(len(unitComplexity), 0)
+        
+    def testFormatTextRefactoringCandidate(self):
+        rc1 = {"subject" : "aap", "category" : "introduced", "metric" : "UNIT_SIZE"}
+        rc2 = {"subject" : "noot\nmies", "category" : "worsened", "metric" : "DUPLICATION"}
+        
+        report = TextReport()
+        
+        self.assertEqual(report.formatRefactoringCandidate(rc1), \
+            "    - (introduced)   aap")
+        
+        self.assertEqual(report.formatRefactoringCandidate(rc2), \
+            "    - (worsened)     noot\n                     mies")
 
     def createTempFile(self, dir, name, contents):
         writer = open(dir + "/" + name, "w")
