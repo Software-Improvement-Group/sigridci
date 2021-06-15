@@ -251,7 +251,7 @@ class TextReport(Report):
                 
     def formatRefactoringCandidate(self, rc):
         category = ("(" + rc["category"] + ")").ljust(14)
-        subject = rc["subject"].replace("\n", "\n" + (" " * 21))
+        subject = rc["subject"].replace("\n", "\n" + (" " * 21)).replace("::", "\n" + (" " * 21))
         return f"    - {category} {subject}"
     
     def printRatingColor(self, message, rating):
