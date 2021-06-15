@@ -212,6 +212,7 @@ class SigridCiTest(unittest.TestCase):
     def testFormatTextRefactoringCandidate(self):
         rc1 = {"subject" : "aap", "category" : "introduced", "metric" : "UNIT_SIZE"}
         rc2 = {"subject" : "noot\nmies", "category" : "worsened", "metric" : "DUPLICATION"}
+        rc3 = {"subject" : "noot::mies", "category" : "worsened", "metric" : "UNIT_SIZE"}
         
         report = TextReport()
         
@@ -219,6 +220,9 @@ class SigridCiTest(unittest.TestCase):
             "    - (introduced)   aap")
         
         self.assertEqual(report.formatRefactoringCandidate(rc2), \
+            "    - (worsened)     noot\n                     mies")
+            
+        self.assertEqual(report.formatRefactoringCandidate(rc3), \
             "    - (worsened)     noot\n                     mies")
 
     def createTempFile(self, dir, name, contents):
