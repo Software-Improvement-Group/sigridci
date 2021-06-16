@@ -116,6 +116,8 @@ class SigridApiClient:
                     return response            
             except urllib.error.HTTPError as e:
                 self.processHttpError(e)
+            except json.JSONDecodeError as e:
+                log("Received incomplete analysis results")
             
             log("Waiting for analysis results")
             time.sleep(self.POLL_INTERVAL)
