@@ -3,6 +3,8 @@ Sigrid CI: Frequently Asked Questions
 
 ## Table of contents
 
+### Usage questions
+
 - [Which technologies do you support?](#which-technologies-do-you-support)
 - [What is my system name?](#what-is-my-system-name)
 - [Where can I find more information about your metrics?](#where-can-i-find-more-information-about-your-metrics)
@@ -14,6 +16,13 @@ Sigrid CI: Frequently Asked Questions
 - [Should we fail the build if the Sigrid CI check fails?](#should-we-fail-the-build-if-the-sigrid-ci-check-fails)
 - [Why doesn't deleted code influence the rating?](#why-doesnt-deleted-code-influence-the-rating)
 - [We have a multi-repo project, can I still use Sigrid CI?](#we-have-a-multi-repo-project-can-i-still-use-sigrid-ci)
+
+### Infrastructure and security questions
+
+- [How do you protect our source code?](#how-do-you-protect-our-source-code)
+- [Where is your service hosted?](#where-is-your-service-hosted)
+
+## Usage questions
 
 ### Which technologies do you support?
 
@@ -72,13 +81,13 @@ One of Sigrid's key goals is making software quality advice *reasonable*. It's e
 
 We therefore believe in a comply-or-explain model. Obviously, you should still strive to pass the Sigrid CI check in the overwhelming majority of cases. However, in the rare cases the check fails, it's perfectly OK for the reviewer to overrule the check and accept the pull request, as long as the reviewer finds that the author had good reasons for deviating from the best practice in that particular case.
 
-## Why doesn't deleted code influence the rating?
+### Why doesn't deleted code influence the rating?
 
 In general, deleting code improves maintainability. The less code you have, the less you have to maintain. Having less code also makes it easier to make structural changes, since such changes will require less effort.
 
 So why does Sigrid CI only give ratings based on new and changed code, but doesn't reward you for deleting code? This is mostly to keep the rating simple: combining code quality and deleted code into a single metric would make it hard to understand. Also, the majority of pull requests are about adding new code or changing existing code, deleting code is less common, so we have chosen to not optimize for that scenario.
 
-## We have a multi-repo project, can I still use Sigrid CI?
+### We have a multi-repo project, can I still use Sigrid CI?
 
 Yes. In some situations, the view of your project/system in Sigrid might differ from your repository structure. For example, you might have separate repositories for your back-end and front-end, yet Sigrid combines them into one big system. 
 
@@ -86,6 +95,18 @@ There are two ways to use Sigrid CI in such a situation.
 
 - You can change the structure in Sigrid to match your repositories. This is the simplest option, but different roles can have different opinions on what is a suitable structure in Sigrid (though development teams tend to prefer Sigrid matching their repositories).
 - Even when *not* changing the Sigrid structure, it is still possible to run Sigrid CI for your repository. You can use the `--prefixpath` option to explain Sigrid CI how your repository structure should be matched to your Sigrid configuration. This option is explained in [using the Sigrid CI client script](client-script-usage.md).
+
+## Infrastructure and security questions
+
+### How do you protect our source code?
+
+SIG is ISO/IEC 27001 certified, to ensure information security management and appropriate levels of confidentiality, integrity, and availability of your data.
+
+You can find more information on SIG's infrastructure and security protections in the [Information Security Policy](https://www.softwareimprovementgroup.com/wp-content/uploads/SIG_Information_Security_Policy.pdf).
+
+### Where is your service hosted?
+
+Sigrid, including Sigrid CI, is hosted on Amazon Web Services. If you have specific questions on our infrastructure, please [contact us](mailto:support@softwareimprovementgroup.com). 
 
 ## Contact and support
 
