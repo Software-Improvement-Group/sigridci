@@ -36,6 +36,7 @@ class SigridApiClient:
     PROTOCOL_VERSION = "v1"
     POLL_INTERVAL = 60
     POLL_ATTEMPTS = 30
+    RETRY_ATTEMPTS = 5
 
     def __init__(self, args):
         self.baseURL = args.sigridurl
@@ -69,21 +70,32 @@ class SigridApiClient:
         uploadPacker.prepareUpload(sourceDir, upload)
     
         log("Preparing upload")
-        
-        try:
-            requestUploadResponse = self.callSigridAPI("inboundresults",
-                f"/{self.urlPartnerName}/{self.urlCustomerName}/{self.urlSystemName}/ci/uploads/{self.PROTOCOL_VERSION}")
-            uploadUrl = requestUploadResponse["uploadUrl"]
-            analysisId = requestUploadResponse["ciRunId"]
-            log(f"Sigrid CI analysis ID: {analysisId}")
-        except urllib.error.HTTPError as e:
-            self.processHttpError(e)
+        uploadLocation = self.obtainUploadLocation()
+        uploadUrl = uploadLocation["uploadUrl"]
+        analysisId = uploadLocation["ciRunId"]
+        log(f"Sigrid CI analysis ID: {analysisId}")
         
         log("Submitting upload")
         if not self.uploadBinaryFile(uploadUrl, upload):
             raise Exception("Uploading file failed")
             
         return analysisId
+        
+    def obtainUploadLocation(self):
+        path = f"/{self.urlPartnerName}/{self.urlCustomerName}/{self.urlSystemName}/ci/uploads/{self.PROTOCOL_VERSION}"
+    
+        for attempt in range(self.RETRY_ATTEMPTS):
+            try:
+                return self.callSigridAPI("inboundresults", path)
+            except urllib.error.HTTPError as e:
+                if e.code == 502:
+                    log("Retrying")
+                    time.sleep(self.POLL_INTERVAL)
+                else:
+                    self.processHttpError(e)
+                    
+        log("Sigrid is currently unavailable")
+        sys.exit(1)
         
     def uploadBinaryFile(self, url, upload):
         with open(upload, "rb") as uploadRef:
@@ -104,6 +116,8 @@ class SigridApiClient:
                     return response            
             except urllib.error.HTTPError as e:
                 self.processHttpError(e)
+            except json.JSONDecodeError as e:
+                log("Received incomplete analysis results")
             
             log("Waiting for analysis results")
             time.sleep(self.POLL_INTERVAL)
@@ -115,11 +129,11 @@ class SigridApiClient:
         if e.code in [401, 403]:
             log("You are not authorized to access Sigrid for this system")
             sys.exit(1)
+        elif e.code == 404:
+            log("Analysis results not yet available")
         elif e.code >= 500:
             log(f"Sigrid is currently not available (HTTP status {e.code})")
             sys.exit(1)
-        elif e.code == 404:
-            log("Analysis results not yet available")
         else:      
             raise Exception(f"Received HTTP status {e.code}")
         
