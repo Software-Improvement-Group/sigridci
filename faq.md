@@ -7,6 +7,7 @@ Sigrid CI: Frequently Asked Questions
 
 - [Which technologies do you support?](#which-technologies-do-you-support)
 - [What is my system name?](#what-is-my-system-name)
+- [How to get a token and account?](#how-to-get-a-token-and-account)
 - [Where can I find more information about your metrics?](#where-can-i-find-more-information-about-your-metrics)
 - [What is the maximum upload size?](#what-is-the-maximum-upload-size)
 - [Can I exclude certain files from being uploaded?](#can-i-exclude-certain-files-from-being-uploaded)
@@ -33,6 +34,10 @@ If you are using a technology that you believe we do not support, please contact
 ### What is my system name?
 
 You will find the system name in the url of the monitor in Sigrid. The structure is https://sigrid-says.com/customer/systemname/-/maintainability
+
+### How to get a token and account?
+
+Please send and email to support@softwareimprovementgroup.com and mention your name, your company and the system name(s) that you need a token for. We will send the account via mail and the token via sms.
 
 ### Where can I find more information about your metrics?
 
