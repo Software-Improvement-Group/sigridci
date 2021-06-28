@@ -18,7 +18,7 @@ Once the `sigridci.py` script is available within your CI environment, you can c
 
 [1] By default, Sigrid already excludes a number of files and directories from being analyzed. This includes third party libraries (for example `/node_modules/` for NPM libraries, build output (for example `/target/` for Maven builds), and generated code. Using the `--exclude` option will exclude additional files and directories *on top of* the ones that were already excluded.
 
-[2] The `--pathprefix` option can be used in cases where your repository used a different directory structure from the one that is known to Sigrid. For example, you might have combined your back-end and front-end repositories within a single system in Sigrid, but you still want to get specific feedback for your front-end repository in Sigrid CI. In this case you would use `--prefix frontend` so that Sigrid CI knows the location of your repository within the larger directory structure.
+[2] The `--pathprefix` option can be used in cases where your repository used a different directory structure from the one that is known to Sigrid. For example, you might have combined your back-end and front-end repositories within a single system in Sigrid, so that in Sigrid there are two top-level folders: `backend` and `frontend` containing the contents of your two repositories. However, you still want to get specific feedback for your front-end repository in Sigrid CI. In this case you would use `--pathprefix frontend` so that Sigrid CI knows the location of your repository within the larger directory structure.
 
 ## Contact and support
 

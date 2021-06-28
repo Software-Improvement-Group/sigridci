@@ -99,7 +99,7 @@ Yes. In some situations, the view of your project/system in Sigrid might differ 
 There are two ways to use Sigrid CI in such a situation. 
 
 - You can change the structure in Sigrid to match your repositories. This is the simplest option, but different roles can have different opinions on what is a suitable structure in Sigrid (though development teams tend to prefer Sigrid matching their repositories).
-- Even when *not* changing the Sigrid structure, it is still possible to run Sigrid CI for your repository. You can use the `--prefixpath` option to explain Sigrid CI how your repository structure should be matched to your Sigrid configuration. This option is explained in [using the Sigrid CI client script](client-script-usage.md).
+- Even when *not* changing the Sigrid structure, it is still possible to run Sigrid CI for your repository. You can use the `--pathprefix` option to explain Sigrid CI how your repository structure should be matched to your Sigrid configuration. This option is explained in [using the Sigrid CI client script](client-script-usage.md).
 
 ## Infrastructure and security questions
 
