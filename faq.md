@@ -17,6 +17,7 @@ Sigrid CI: Frequently Asked Questions
 - [Should we fail the build if the Sigrid CI check fails?](#should-we-fail-the-build-if-the-sigrid-ci-check-fails)
 - [Why doesn't deleted code influence the rating?](#why-doesnt-deleted-code-influence-the-rating)
 - [We have a multi-repo project, can I still use Sigrid CI?](#we-have-a-multi-repo-project-can-i-still-use-sigrid-ci)
+- [Can I see which files are upload to Sigrid?](#can-i-see-which-files-are-uploaded-to-sigrid)
 
 ### Infrastructure and security questions
 
@@ -100,6 +101,10 @@ There are two ways to use Sigrid CI in such a situation.
 
 - You can change the structure in Sigrid to match your repositories. This is the simplest option, but different roles can have different opinions on what is a suitable structure in Sigrid (though development teams tend to prefer Sigrid matching their repositories).
 - Even when *not* changing the Sigrid structure, it is still possible to run Sigrid CI for your repository. You can use the `--pathprefix` option to explain Sigrid CI how your repository structure should be matched to your Sigrid configuration. This option is explained in [using the Sigrid CI client script](client-script-usage.md).
+
+### Can I see which files are upload to Sigrid?
+
+Yes. You can add the `--showupload` option when calling the [client script](client-script-usage.md). This will add log output for every file that is included in the upload that is submitted to Sigrid.
 
 ## Infrastructure and security questions
 

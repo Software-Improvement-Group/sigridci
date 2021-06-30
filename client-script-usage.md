@@ -7,18 +7,18 @@ Sigrid CI consists of a number of Python-based client scripts, that interact wit
 
 Once the `sigridci.py` script is available within your CI environment, you can call the script to start the Sigrid CI run. The script can be configured by using a number of command line arguments:
 
-| Argument        | Required | Example value       | Description                                                                                                                              |
-|-----------------|----------|---------------------|------------------------------------------------------------------------------------------------------------------------------------------|
-| --customer      | Yes      | examplecustomername | Name of your organization's Sigrid account. Contact SIG support if you're not sure on this. Value should be lowercase.                   |
-| --system        | Yes      | examplesystemname   | Name of your system in Sigrid. Contact SIG support if you're not sure on this. Value should be lowercase.                                |
-| --source        | Yes      | .                   | Path of your project's source code. Use "." for current directory.                                                                       |
-| --targetquality | No       | 3.5                 | Target quality level, not meeting this target will cause the CI step to fail. Default is 3.5 stars.                                      |
+| Argument        | Required | Example value       | Description                                                                                                                                  |
+|-----------------|----------|---------------------|----------------------------------------------------------------------------------------------------------------------------------------------|
+| --customer      | Yes      | examplecustomername | Name of your organization's Sigrid account. Contact SIG support if you're not sure on this. Value should be lowercase.                       |
+| --system        | Yes      | examplesystemname   | Name of your system in Sigrid. Contact SIG support if you're not sure on this. Value should be lowercase.                                    |
+| --source        | Yes      | .                   | Path of your project's source code. Use "." for current directory.                                                                           |
+| --targetquality | No       | 3.5                 | Target quality level, not meeting this target will cause the CI step to fail. Default is 3.5 stars.                                          |
 | --exclude       | No       | /build/,.png        | Comma-separated list of file and/or directory names that should be excluded from the upload, on top of files already excluded by Sigrid. [1] |
 | --pathprefix    | No       | frontend            | Used to map between repository directory structure versus the one known by Sigrid. [2]                                                       |
+| --showupload    | No       | N/A                 | Logs the contents of the upload before submitting it to Sigrid.                                                                              |
 
-[1] By default, Sigrid already excludes a number of files and directories from being analyzed. This includes third party libraries (for example `/node_modules/` for NPM libraries, build output (for example `/target/` for Maven builds), and generated code. Using the `--exclude` option will exclude additional files and directories *on top of* the ones that were already excluded.
-
-[2] The `--pathprefix` option can be used in cases where your repository used a different directory structure from the one that is known to Sigrid. For example, you might have combined your back-end and front-end repositories within a single system in Sigrid, so that in Sigrid there are two top-level folders: `backend` and `frontend` containing the contents of your two repositories. However, you still want to get specific feedback for your front-end repository in Sigrid CI. In this case you would use `--pathprefix frontend` so that Sigrid CI knows the location of your repository within the larger directory structure.
+[1] By default, Sigrid already excludes a number of files and directories from being analyzed. This includes third party libraries (for example `/node_modules/` for NPM libraries, build output (for example `/target/` for Maven builds), and generated code. Using the `--exclude` option will exclude additional files and directories *on top of* the ones that were already excluded.  
+[2] The `--pathprefix` option can be used in cases where your repository used a different directory structure from the one that is known to Sigrid. For example, you might have combined your back-end and front-end repositories within a single system in Sigrid, so that in Sigrid there are two top-level folders: `backend` and `frontend` containing the contents of your two repositories. However, you still want to get specific feedback for your front-end repository in Sigrid CI. In this case you would use `--pathprefix frontend` so that Sigrid CI knows the location of your repository within the larger directory structure.  
 
 ## Contact and support
 
