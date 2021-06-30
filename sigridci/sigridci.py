@@ -52,7 +52,7 @@ class SigridApiClient:
         request = urllib.request.Request(url, None)
         request.add_header("Accept", "application/json")
         request.add_header("Authorization", \
-            b"Basic " + base64.urlsafe_b64encode(f"{self.account}:{self.token}".encode("utf8")))
+            b"Basic " + base64.standard_b64encode(f"{self.account}:{self.token}".encode("utf8")))
             
         response = urllib.request.urlopen(request)
         if response.status == 204:

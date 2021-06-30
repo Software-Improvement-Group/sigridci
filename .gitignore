@@ -2,3 +2,5 @@ __pycache__/
 sigrid-ci-output/
 *.pptx
 *.zip
+.idea/
+*.iml
