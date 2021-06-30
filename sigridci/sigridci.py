@@ -40,7 +40,7 @@ def log(message):
 @dataclasses.dataclass
 class UploadOptions:
     sourceDir: str = None
-    excludePatterns: list[str] = None
+    excludePatterns: list[str] = dataclasses.field(default_factory=lambda: [])
     includeHistory: bool = False
     pathPrefix: str = ""
     showContents: bool = False
