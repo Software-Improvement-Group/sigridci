@@ -18,7 +18,7 @@ import types
 import unittest
 import urllib
 import zipfile
-from sigridci.sigridci import SystemUploadPacker, SigridApiClient, Report, TextReport
+from sigridci.sigridci import SystemUploadPacker, SigridApiClient, Report, TextReport, UploadOptions, LOG_HISTORY
 
 
 class SigridCiTest(unittest.TestCase):
@@ -34,7 +34,7 @@ class SigridCiTest(unittest.TestCase):
         
         outputFile = tempfile.mkstemp()[1]
         
-        uploadPacker = SystemUploadPacker()
+        uploadPacker = SystemUploadPacker(UploadOptions())
         uploadPacker.prepareUpload(sourceDir, outputFile)
 
         entries = zipfile.ZipFile(outputFile).namelist()
@@ -53,7 +53,7 @@ class SigridCiTest(unittest.TestCase):
         
         outputFile = tempfile.mkstemp()[1]
         
-        uploadPacker = SystemUploadPacker()
+        uploadPacker = SystemUploadPacker(UploadOptions())
         uploadPacker.prepareUpload(sourceDir, outputFile)
         
         entries = zipfile.ZipFile(outputFile).namelist()
@@ -71,7 +71,7 @@ class SigridCiTest(unittest.TestCase):
         
         outputFile = tempfile.mkstemp()[1]
         
-        uploadPacker = SystemUploadPacker()
+        uploadPacker = SystemUploadPacker(UploadOptions())
         uploadPacker.prepareUpload(sourceDir, outputFile)
 
         self.assertEqual(os.path.exists(outputFile), True)
@@ -86,7 +86,7 @@ class SigridCiTest(unittest.TestCase):
         
         outputFile = tempfile.mkstemp()[1]
         
-        uploadPacker = SystemUploadPacker(excludePatterns=["b/"])
+        uploadPacker = SystemUploadPacker(UploadOptions(excludePatterns=["b/"]))
         uploadPacker.prepareUpload(sourceDir, outputFile)
 
         self.assertEqual(os.path.exists(outputFile), True)
@@ -101,7 +101,7 @@ class SigridCiTest(unittest.TestCase):
         
         outputFile = tempfile.mkstemp()[1]
         
-        uploadPacker = SystemUploadPacker([], True)
+        uploadPacker = SystemUploadPacker(UploadOptions(includeHistory=True))
         uploadPacker.prepareUpload(sourceDir, outputFile)
         
         entries = zipfile.ZipFile(outputFile).namelist()
@@ -118,7 +118,7 @@ class SigridCiTest(unittest.TestCase):
         
         outputFile = tempfile.mkstemp()[1]
         
-        uploadPacker = SystemUploadPacker([], False)
+        uploadPacker = SystemUploadPacker(UploadOptions(includeHistory=False))
         uploadPacker.prepareUpload(sourceDir, outputFile)
 
         self.assertEqual(os.path.exists(outputFile), True)
@@ -128,13 +128,40 @@ class SigridCiTest(unittest.TestCase):
         sourceDir = tempfile.mkdtemp()
         with open(sourceDir + "/a.py", "wb") as f:
             f.write(os.urandom(2000000))
-
-        outputFile = tempfile.mkstemp()[1]
-        
-        uploadPacker = SystemUploadPacker()
+            
+        uploadPacker = SystemUploadPacker(UploadOptions())
         uploadPacker.MAX_UPLOAD_SIZE_MB = 1
     
-        self.assertRaises(Exception, uploadPacker.prepareUpload, sourceDir, outputFile)
+        self.assertRaises(Exception, uploadPacker.prepareUpload, sourceDir, tempfile.mkstemp()[1])
+        
+    def testLogMessageWhenUploadTooSmall(self):
+        LOG_HISTORY.clear()
+    
+        sourceDir = tempfile.mkdtemp()
+        with open(sourceDir + "/a.py", "wb") as f:
+            f.write(os.urandom(1))
+            
+        uploadPacker = SystemUploadPacker(UploadOptions())
+        uploadPacker.prepareUpload(sourceDir, tempfile.mkstemp()[1])
+
+        self.assertEqual(LOG_HISTORY, ["Upload size is 1 MB", \
+            "Warning: Upload is very small, source directory might not contain all source code"])
+            
+    def testLogUploadContents(self):
+        LOG_HISTORY.clear()
+    
+        sourceDir = tempfile.mkdtemp()
+        with open(sourceDir + "/a.py", "wb") as f:
+            f.write(os.urandom(1))
+        with open(sourceDir + "/b.py", "wb") as f:
+            f.write(os.urandom(1))
+            
+        uploadPacker = SystemUploadPacker(UploadOptions(showContents=True))
+        uploadPacker.prepareUpload(sourceDir, tempfile.mkstemp()[1])
+
+        self.assertEqual(LOG_HISTORY, ["Adding file to upload: a.py", "Adding file to upload: b.py", \
+            "Upload size is 1 MB", \
+            "Warning: Upload is very small, source directory might not contain all source code"])
         
     def testUsePathPrefixInUpload(self):
         sourceDir = tempfile.mkdtemp()
@@ -147,7 +174,7 @@ class SigridCiTest(unittest.TestCase):
         
         outputFile = tempfile.mkstemp()[1]
         
-        uploadPacker = SystemUploadPacker(pathPrefix="frontend")
+        uploadPacker = SystemUploadPacker(UploadOptions(pathPrefix="frontend"))
         uploadPacker.prepareUpload(sourceDir, outputFile)
         
         entries = zipfile.ZipFile(outputFile).namelist()
@@ -162,7 +189,7 @@ class SigridCiTest(unittest.TestCase):
         
         outputFile = tempfile.mkstemp()[1]
         
-        uploadPacker = SystemUploadPacker(pathPrefix="/backend/")
+        uploadPacker = SystemUploadPacker(UploadOptions(pathPrefix="/backend/"))
         uploadPacker.prepareUpload(sourceDir, outputFile)
         
         entries = zipfile.ZipFile(outputFile).namelist()

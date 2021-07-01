@@ -17,19 +17,34 @@
 import argparse
 import base64
 import datetime
+import dataclasses
 import html
 import json
 import os
 import sys
 import time
+import typing
 import urllib.parse
 import urllib.request
 import zipfile
 
 
+LOG_HISTORY = []
+
+
 def log(message):
     timestamp = datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")
     print(f"{timestamp}  {message}")
+    LOG_HISTORY.append(message)
+    
+    
+@dataclasses.dataclass
+class UploadOptions:
+    sourceDir: str = None
+    excludePatterns: typing.List[str] = dataclasses.field(default_factory=lambda: [])
+    includeHistory: bool = False
+    pathPrefix: str = ""
+    showContents: bool = False
 
 
 class SigridApiClient:
@@ -63,11 +78,11 @@ class SigridApiClient:
             return {}
         return json.loads(responseBody)
         
-    def submitUpload(self, sourceDir, excludePatterns, useRepoHistory, pathPrefix):
+    def submitUpload(self, options):
         log("Creating upload")
-        uploadPacker = SystemUploadPacker(excludePatterns, useRepoHistory, pathPrefix)
+        uploadPacker = SystemUploadPacker(options)
         upload = "sigrid-upload-" + datetime.datetime.now().strftime("%Y%m%d-%H%M%S") + ".zip"
-        uploadPacker.prepareUpload(sourceDir, upload)
+        uploadPacker.prepareUpload(options.sourceDir, upload)
     
         log("Preparing upload")
         uploadLocation = self.obtainUploadLocation()
@@ -154,14 +169,14 @@ class SystemUploadPacker:
         ".png"
     ]
     
-    def __init__(self, excludePatterns=[], useRepoHistory=True, pathPrefix=""):
-        self.excludePatterns = []
-        self.excludePatterns += self.DEFAULT_EXCLUDES
-        self.excludePatterns += [excl for excl in excludePatterns if excl != ""]
-        if not useRepoHistory:
+    def __init__(self, options):
+        self.excludePatterns = [] + (options.excludePatterns or []) + self.DEFAULT_EXCLUDES
+        self.excludePatterns = [excl for excl in self.excludePatterns if excl != ""]
+        if not options.includeHistory:
             self.excludePatterns += [".git"]
 
-        self.pathPrefix = pathPrefix.strip("/")
+        self.pathPrefix = options.pathPrefix.strip("/")
+        self.showContents = options.showContents
 
     def prepareUpload(self, sourceDir, outputFile):
         zipFile = zipfile.ZipFile(outputFile, "w", zipfile.ZIP_DEFLATED)
@@ -172,14 +187,24 @@ class SystemUploadPacker:
                 if file != outputFile and not self.isExcluded(filePath):
                     relativePath = os.path.relpath(os.path.join(root, file), sourceDir)
                     uploadPath = self.getUploadFilePath(relativePath)
+                    if self.showContents:
+                        log(f"Adding file to upload: {uploadPath}")
                     zipFile.write(filePath, uploadPath)
         
         zipFile.close()
         
-        uploadSizeMB = max(round(os.path.getsize(outputFile) / 1024 / 1024), 1)
+        self.checkUploadContents(outputFile)
+        
+    def checkUploadContents(self, outputFile):
+        uploadSizeBytes = os.path.getsize(outputFile)
+        uploadSizeMB = max(round(uploadSizeBytes / 1024 / 1024), 1)
         log(f"Upload size is {uploadSizeMB} MB")
+        
         if uploadSizeMB > self.MAX_UPLOAD_SIZE_MB:
             raise Exception(f"Upload exceeds maximum size of {self.MAX_UPLOAD_SIZE_MB} MB")
+            
+        if uploadSizeBytes < 50000:
+            log("Warning: Upload is very small, source directory might not contain all source code")
             
     def getUploadFilePath(self, relativePath):
         if self.pathPrefix == "":
@@ -195,10 +220,10 @@ class SystemUploadPacker:
         
         
 class Report:
-    METRICS = ["VOLUME", "DUPLICATION", "UNIT_SIZE", "UNIT_COMPLEXITY", "UNIT_INTERFACING", "MODULE_COUPLING", \
+    METRICS = ["VOLUME", "DUPLICATION", "UNIT_SIZE", "UNIT_COMPLEXITY", "UNIT_INTERFACING", "MODULE_COUPLING",
                "COMPONENT_BALANCE_PROP", "COMPONENT_INDEPENDENCE", "COMPONENT_ENTANGLEMENT", "MAINTAINABILITY"]
                
-    REFACTORING_CANDIDATE_METRICS = ["DUPLICATION", "UNIT_SIZE", "UNIT_COMPLEXITY", "UNIT_INTERFACING", \
+    REFACTORING_CANDIDATE_METRICS = ["DUPLICATION", "UNIT_SIZE", "UNIT_COMPLEXITY", "UNIT_INTERFACING",
                                      "MODULE_COUPLING"]
 
     def generate(self, feedback, args):
@@ -363,7 +388,8 @@ if __name__ == "__main__":
     parser.add_argument("--targetquality", type=float, default=3.5)
     parser.add_argument("--exclude", type=str, default="")
     parser.add_argument("--pathprefix", type=str, default="")
-    parser.add_argument("--history", type=str, default="none")
+    parser.add_argument("--showupload", action="store_true")
+    parser.add_argument("--history", action="store_true")
     parser.add_argument("--sigridurl", type=str, default="https://sigrid-says.com")
     args = parser.parse_args()
     
@@ -384,10 +410,10 @@ if __name__ == "__main__":
         sys.exit(1)
     
     log("Starting Sigrid CI")
+    options = UploadOptions(args.source, args.exclude.split(","), args.history, args.pathprefix, args.showupload)
     apiClient = SigridApiClient(args)
-    analysisId = apiClient.submitUpload(args.source, args.exclude.split(","), args.history != "none", args.pathprefix)
+    analysisId = apiClient.submitUpload(options)
     feedback = apiClient.fetchAnalysisResults(analysisId)
     
     for report in [TextReport(), StaticHtmlReport(), ExitCodeReport()]:
         report.generate(feedback, args)
-        
