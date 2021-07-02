@@ -23,6 +23,7 @@ Sigrid CI: Frequently Asked Questions
 
 - [How do you protect our source code?](#how-do-you-protect-our-source-code)
 - [Where is your service hosted?](#where-is-your-service-hosted)
+- [Do we need to update our firewall settings?](#do-we-need-to-update-our-firewall-settings)
 
 ## Usage questions
 
@@ -117,6 +118,10 @@ You can find more information on SIG's infrastructure and security protections i
 ### Where is your service hosted?
 
 Sigrid, including Sigrid CI, is hosted on Amazon Web Services. If you have specific questions on our infrastructure, please [contact us](mailto:support@softwareimprovementgroup.com). 
+
+### Do we need to update our firewall settings?
+
+Possibly. As mentioned above, Sigrid is hosted on AWS. This means your firewall needs to allow outgoing traffic in order to submit your project's source code to Sigrid. [Contact SIG](mailto:support@softwareimprovementgroup.com) if you need specific information on this setup.
 
 ## Contact and support
 
