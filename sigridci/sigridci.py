@@ -397,8 +397,8 @@ if __name__ == "__main__":
         parser.print_help()
         sys.exit(1)
     
-    if sys.version_info.major <= 2:
-        print("Sigrid CI requires Python 3")
+    if sys.version_info.major == 2 or sys.version_info.minor < 7:
+        print("Sigrid CI requires Python 3.7 or higher")
         sys.exit(1)
         
     if not "SIGRID_CI_ACCOUNT" in os.environ or not "SIGRID_CI_TOKEN" in os.environ:
