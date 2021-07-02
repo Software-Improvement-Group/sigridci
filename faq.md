@@ -18,6 +18,8 @@ Sigrid CI: Frequently Asked Questions
 - [Why doesn't deleted code influence the rating?](#why-doesnt-deleted-code-influence-the-rating)
 - [We have a multi-repo project, can I still use Sigrid CI?](#we-have-a-multi-repo-project-can-i-still-use-sigrid-ci)
 - [Can I see which files are upload to Sigrid?](#can-i-see-which-files-are-uploaded-to-sigrid)
+- [What to do when the script does not work?](#what-to-do-when-the-script-does-not-work)
+
 
 ### Infrastructure and security questions
 
@@ -106,6 +108,11 @@ There are two ways to use Sigrid CI in such a situation.
 ### Can I see which files are upload to Sigrid?
 
 Yes. You can add the `--showupload` option when calling the [client script](client-script-usage.md). This will add log output for every file that is included in the upload that is submitted to Sigrid.
+
+### What to do when the script does not work?
+
+The Sigrid CI Python script is currently under active development, which means that its subject to change, and namely, its dependencies are subject to change as we add new functionality.
+When not using Docker to run the script, this requires that the dependencies in the environment in which the script is being ran are in sync with the actual code, and, in order to do that, you can run either `pip install -r requirement.txt` or `pipenv install`, when using Python virtual environments.
 
 ## Infrastructure and security questions
 
