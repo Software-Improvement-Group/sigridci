@@ -18,8 +18,11 @@ Sigrid CI: Frequently Asked Questions
 - [Why doesn't deleted code influence the rating?](#why-doesnt-deleted-code-influence-the-rating)
 - [We have a multi-repo project, can I still use Sigrid CI?](#we-have-a-multi-repo-project-can-i-still-use-sigrid-ci)
 - [Can I see which files are upload to Sigrid?](#can-i-see-which-files-are-uploaded-to-sigrid)
-- [What to do when the script does not work?](#what-to-do-when-the-script-does-not-work)
 
+### Common problems
+
+- [What to do when the script does not work?](#what-to-do-when-the-script-does-not-work)
+- [I'm receiving an error message that certificate verification failed](#im-receiving-an-error-message-that-certificate-verification-failed)
 
 ### Infrastructure and security questions
 
@@ -109,10 +112,18 @@ There are two ways to use Sigrid CI in such a situation.
 
 Yes. You can add the `--showupload` option when calling the [client script](client-script-usage.md). This will add log output for every file that is included in the upload that is submitted to Sigrid.
 
+## Common problems
+
 ### What to do when the script does not work?
 
 The Sigrid CI Python script is currently under active development, which means that its subject to change, and namely, its dependencies are subject to change as we add new functionality.
 When not using Docker to run the script, this requires that the dependencies in the environment in which the script is being ran are in sync with the actual code, and, in order to do that, you can run either `pip install -r requirement.txt` or `pipenv install`, when using Python virtual environments.
+
+### I'm receiving an error message that certificate verification failed
+
+In some cases, the Sigrid CI client script might produce an error message `[SSL: CERTIFICATE_VERIFY_FAILED] certificate verify failed: unable to get local issuer certificate`. This indicates that Python is unable to access the system's certificate store. Sigrid CI does not need any special or custom certificates, access to the regualr system certificates is sufficient. 
+
+If your environment requires a certificate store in a custom location, the environment variables `openssl_cafile_env` and `openssl_capath_envz` can be used to point Python to the correct location. Refer to the [Python documentation on OpenSSL](https://docs.python.org/3/library/ssl.html) for more information
 
 ## Infrastructure and security questions
 
