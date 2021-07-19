@@ -14,6 +14,7 @@ Sigrid CI: Frequently Asked Questions
 - [Do Sigrid CI uploads get added to the Sigrid dashboard?](#do-sigrid-ci-uploads-get-added-to-the-sigrid-dashboard)
 - [What branch or commit does Sigrid CI compare against?](#what-branch-or-commit-does-sigrid-ci-compare-against)
 - [Why am I being penalized for problems that were already there?](#why-am-i-being-penalized-for-problems-that-were-already-there)
+- [Why are architecture metrics excluded from Sigrid CI?](#why-are-architecture-metrics-excluded-from-sigrid-ci)
 - [Should we fail the build if the Sigrid CI check fails?](#should-we-fail-the-build-if-the-sigrid-ci-check-fails)
 - [Why doesn't deleted code influence the rating?](#why-doesnt-deleted-code-influence-the-rating)
 - [We have a multi-repo project, can I still use Sigrid CI?](#we-have-a-multi-repo-project-can-i-still-use-sigrid-ci)
@@ -83,7 +84,11 @@ We created Sigrid CI to be used during code reviews, so the feedback is based on
 
 However, we do consider the *entire* contents of those files, not only the lines that you personally wrote. This is because of the [boy scout rule](https://www.oreilly.com/library/view/97-things-every/9780596809515/ch08.html): *"Always leave the campground cleaner than you found it."*. Refactoring and regular work are not two separate activities, they belong together. Having separate tickets to refactor certain areas is OK, but it indicates that something went wrong earlier in the process, that led to those issues being introduced in the first place. Ideally, small refactorings should be done *during* regular tickets. That means that any tickets affecting existing files should not *only* consist of implementing the new behavior. You should also strive to make small refactorings that relate to the code you're currently working on. You have the files open anyway! 
 
-Obviously, there are still limits to the amount of refactoring you can do in the context of a single ticket. It's probably not a good idea to change the entire architecture while working on a bug fix. This is why Sigrid CI reports on a subset of [SIG's maintainability quality model](https://www.softwareimprovementgroup.com/methodologies/iso-iec-25010-2011-standard/): the code-level metrics are in scope, but the architecture-level metrics are not. This is due to the difference in *local* versus *global* refactorings. Making some changes in the context of a file tend to be fairly local, in that they don't affect a lot of other people. This is why those types of refactoring are fine to work on during regular development work. In contrast, architectural refactoring will have a big impact on a lot of people, so this is something that needs more consideration and needs to be planned separately.
+### Why are architecture metrics excluded from Sigrid CI?
+
+There are limits to the amount of refactoring you can do in the context of a single ticket. It's probably not a good idea to change the entire architecture while working on a bug fix. This is why Sigrid CI reports on a subset of [SIG's maintainability quality model](https://www.softwareimprovementgroup.com/methodologies/iso-iec-25010-2011-standard/): the code-level metrics are in scope, but the architecture-level metrics are not. This is due to the difference in *local* versus *global* refactorings. Making some changes in the context of a file tend to be fairly local, in that they don't affect a lot of other people. This is why those types of refactoring are fine to work on during regular development work. In contrast, architectural refactoring will have a big impact on a lot of people, so this is something that needs more consideration and needs to be planned separately.
+
+Let us know if you believe we *should* provide feedback on architecture metrics in Sigrid CI, as we are considering to offer it as an option in a future version.
 
 ### Should we fail the build if the Sigrid CI check fails?
 
