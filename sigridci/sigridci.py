@@ -57,10 +57,10 @@ class SigridApiClient:
         self.baseURL = args.sigridurl
         self.account = os.environ["SIGRID_CI_ACCOUNT"]
         self.token = os.environ["SIGRID_CI_TOKEN"]
-        
         self.urlPartnerName = urllib.parse.quote_plus(args.partner.lower())
         self.urlCustomerName = urllib.parse.quote_plus(args.customer.lower())
         self.urlSystemName = urllib.parse.quote_plus(args.system.lower())
+        self.publish = args.publish
         
     def callSigridAPI(self, api, path):
         url = f"{self.baseURL}/rest/{api}{path}"
@@ -97,11 +97,9 @@ class SigridApiClient:
         return analysisId
         
     def obtainUploadLocation(self):
-        path = f"/{self.urlPartnerName}/{self.urlCustomerName}/{self.urlSystemName}/ci/uploads/{self.PROTOCOL_VERSION}"
-    
         for attempt in range(self.RETRY_ATTEMPTS):
             try:
-                return self.callSigridAPI("inboundresults", path)
+                return self.callSigridAPI("inboundresults", self.getRequestUploadPath())
             except urllib.error.HTTPError as e:
                 if e.code == 502:
                     log("Retrying")
@@ -111,6 +109,12 @@ class SigridApiClient:
                     
         log("Sigrid is currently unavailable")
         sys.exit(1)
+        
+    def getRequestUploadPath(self):
+        path = f"/{self.urlPartnerName}/{self.urlCustomerName}/{self.urlSystemName}/ci/uploads/{self.PROTOCOL_VERSION}"
+        if self.publish:
+            path += "/publish"
+        return path
         
     def uploadBinaryFile(self, url, upload):
         with open(upload, "rb") as uploadRef:
@@ -173,7 +177,7 @@ class SystemUploadPacker:
         self.excludePatterns = [] + (options.excludePatterns or []) + self.DEFAULT_EXCLUDES
         self.excludePatterns = [excl for excl in self.excludePatterns if excl != ""]
         if not options.includeHistory:
-            self.excludePatterns += [".git"]
+            self.excludePatterns += [".git/", ".gitmodules"]
 
         self.pathPrefix = options.pathPrefix.strip("/")
         self.showContents = options.showContents
@@ -248,13 +252,7 @@ class Report:
             
     def getRefactoringCandidates(self, feedback, metric):
         refactoringCandidates = feedback.get("refactoringCandidates", [])
-        relevantRefactoringCandidates = [rc for rc in refactoringCandidates if rc["metric"] == metric]
-        
-        # Backward compatibility with the old response format
-        for rc in feedback["refactoringCandidatesPerType"].get(metric, []):
-            relevantRefactoringCandidates.append({"subject" : rc, "category" : "introduced", "metric" : metric})
-        
-        return relevantRefactoringCandidates
+        return [rc for rc in refactoringCandidates if rc["metric"] == metric]
 
 
 class TextReport(Report):
@@ -271,22 +269,30 @@ class TextReport(Report):
         print("-" * self.LINE_WIDTH)
         print("")
         for metric in self.REFACTORING_CANDIDATE_METRICS:
-            print("")
-            print(metric.replace("_PROP", "").title().replace("_", " "))
-            for rc in self.getRefactoringCandidates(feedback, metric):
-                print(self.formatRefactoringCandidate(rc))
+            self.printMetric(feedback, metric)
 
         print("")
         print("-" * self.LINE_WIDTH)
         print("Maintainability ratings")
         print("-" * self.LINE_WIDTH)
-        print("System property".ljust(40) + f"Baseline ({self.formatBaselineDate(feedback)})    New code quality")
+        print("System property".ljust(40) + f"Baseline ({self.formatBaselineDate(feedback)})    New/changed code")
         for metric in self.METRICS:
             if metric == "MAINTAINABILITY":
                 print("-" * self.LINE_WIDTH)
-            self.printRatingColor(metric.title().replace("_", " ").ljust(40) + \
+            self.printRatingColor(metric.replace("_PROP", "").title().replace("_", " ").ljust(40) + \
                 "(" + self.formatRating(feedback["overallRatings"], metric) + ")".ljust(21) + \
                 self.formatRating(feedback["newCodeRatings"], metric), feedback["newCodeRatings"].get(metric))
+                
+    def printMetric(self, feedback, metric):
+        print("")
+        print(metric.replace("_PROP", "").title().replace("_", " "))
+        
+        refactoringCandidates = self.getRefactoringCandidates(feedback, metric)
+        if len(refactoringCandidates) == 0:
+            print("    None")
+        else:
+            for rc in refactoringCandidates:
+                print(self.formatRefactoringCandidate(rc))
                 
     def formatRefactoringCandidate(self, rc):
         category = ("(" + rc["category"] + ")").ljust(14)
@@ -341,16 +347,20 @@ class StaticHtmlReport(Report):
         template = template.replace("@@@BASELINE_DATE", self.formatBaselineDate(feedback))
         template = template.replace("@@@SIGRID_LINK", self.getSigridUrl(args))
         for metric in self.METRICS:
-            template = template.replace("@@@" + metric + "_OVERALL", self.formatRating(feedback["overallRatings"], metric))
-            template = template.replace("@@@" + metric + "_NEW", self.formatRating(feedback["newCodeRatings"], metric))
-            template = template.replace("@@@" + metric + "_STARS_OVERALL", self.formatHtmlStars(feedback["overallRatings"], metric))
-            template = template.replace("@@@" + metric + "_STARS_NEW", self.formatHtmlStars(feedback["newCodeRatings"], metric))
+            template = template.replace(f"@@@{metric}_OVERALL", self.formatRating(feedback["overallRatings"], metric))
+            template = template.replace(f"@@@{metric}_NEW", self.formatRating(feedback["newCodeRatings"], metric))
+            template = template.replace(f"@@@{metric}_STARS_OVERALL", self.formatHtmlStars(feedback["overallRatings"], metric))
+            template = template.replace(f"@@@{metric}_STARS_NEW", self.formatHtmlStars(feedback["newCodeRatings"], metric))
             passed = self.isPassed(feedback, metric, args.targetquality)
-            template = template.replace("@@@" + metric + "_PASSED", "passed" if passed else "failed")
-            refactoringCandidates = self.getRefactoringCandidates(feedback, metric)
-            template = template.replace("@@@" + metric + "_REFACTORING_CANDIDATES",
-                "\n".join([self.formatRefactoringCandidate(rc) for rc in refactoringCandidates]))
+            template = template.replace(f"@@@{metric}_PASSED", "passed" if passed else "failed")
+            template = template.replace(f"@@@{metric}_REFACTORING_CANDIDATES", self.formatRefactoringCandidates(feedback, metric))
         return template
+        
+    def formatRefactoringCandidates(self, feedback, metric):
+        refactoringCandidates = self.getRefactoringCandidates(feedback, metric)
+        if len(refactoringCandidates) == 0:
+            return "None"
+        return "\n".join([self.formatRefactoringCandidate(rc) for rc in refactoringCandidates])
         
     def formatRefactoringCandidate(self, rc):
         subjectName = html.escape(rc["subject"]).replace("\n", "<br />").replace("::", "<br />")
@@ -360,14 +370,14 @@ class StaticHtmlReport(Report):
     def formatHtmlStars(self, ratings, metric):
         if ratings.get(metric, None) == None:
             return "N/A"
-        stars = min(round(ratings[metric]), 5)
+        stars = min(int(ratings[metric] + 0.5), 5)
         fullStars = stars * self.HTML_STAR_FULL
         emptyStars = (5 - stars) * self.HTML_STAR_EMPTY
         rating = self.formatRating(ratings, metric)
         return f"<strong class=\"stars{stars}\">{fullStars}{emptyStars}</strong> &nbsp; " + rating
         
         
-class ExitCodeReport(Report):
+class ExitCodeReport(Report):   
     def generate(self, feedback, args):
         asciiArt = TextReport()
         if self.isPassed(feedback, "MAINTAINABILITY", args.targetquality):
@@ -376,7 +386,10 @@ class ExitCodeReport(Report):
         else:
             asciiArt.printColor("\n** SIGRID CI RUN COMPLETE: THE CODE YOU WROTE DID NOT MEET THE TARGET FOR MAINTAINABLE CODE **\n", \
                 asciiArt.ANSI_BOLD + asciiArt.ANSI_YELLOW)
-            sys.exit(1)
+            # Only break the build when not publishing to Sigrid,
+            # i.e. when running on a branch or pull request.
+            if not args.publish:
+                sys.exit(1)
                 
 
 if __name__ == "__main__":
@@ -386,6 +399,7 @@ if __name__ == "__main__":
     parser.add_argument("--system", type=str)
     parser.add_argument("--source", type=str)
     parser.add_argument("--targetquality", type=float, default=3.5)
+    parser.add_argument("--publish", action="store_true")
     parser.add_argument("--exclude", type=str, default="")
     parser.add_argument("--pathprefix", type=str, default="")
     parser.add_argument("--showupload", action="store_true")
