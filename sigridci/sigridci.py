@@ -261,13 +261,12 @@ class TextReport(Report):
     ANSI_YELLOW = "\033[33m"
     ANSI_RED = "\033[91m"
     ANSI_BLUE = "\033[96m"
-    LINE_WIDTH = 81
+    LINE_WIDTH = 89
 
     def generate(self, feedback, args):
         print("-" * self.LINE_WIDTH)
         print("Refactoring candidates")
         print("-" * self.LINE_WIDTH)
-        print("")
         for metric in self.REFACTORING_CANDIDATE_METRICS:
             self.printMetric(feedback, metric)
 
@@ -275,7 +274,7 @@ class TextReport(Report):
         print("-" * self.LINE_WIDTH)
         print("Maintainability ratings")
         print("-" * self.LINE_WIDTH)
-        print("System property".ljust(40) + f"Baseline ({self.formatBaselineDate(feedback)})    New/changed code")
+        print("System property".ljust(40) + f"Baseline ({self.formatBaselineDate(feedback)})    New/changed code quality")
         for metric in self.METRICS:
             if metric == "MAINTAINABILITY":
                 print("-" * self.LINE_WIDTH)
