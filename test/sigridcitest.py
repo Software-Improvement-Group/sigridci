@@ -22,6 +22,8 @@ from sigridci.sigridci import SystemUploadPacker, SigridApiClient, Report, TextR
 
 
 class SigridCiTest(unittest.TestCase):
+    
+    DEFAULT_ARGS = types.SimpleNamespace(partner="sig", customer="Aap", system="NOOT", sigridurl="", publish=False)
 
     def setUp(self):
         os.environ["SIGRID_CI_ACCOUNT"] = "dummy"
@@ -199,7 +201,7 @@ class SigridCiTest(unittest.TestCase):
         self.assertEqual(entries, ["backend/a.py"])
         
     def testForceLowerCaseForCustomerAndSystemName(self):
-        args = types.SimpleNamespace(partner="sig", customer="Aap", system="NOOT", sigridurl="")
+        args = types.SimpleNamespace(partner="sig", customer="Aap", system="NOOT", sigridurl="", publish=False)
         apiClient = SigridApiClient(args)
         
         self.assertEqual(apiClient.urlCustomerName, "aap")
@@ -210,31 +212,25 @@ class SigridCiTest(unittest.TestCase):
             template = templateRef.read()
             
     def testDoNotThrowExeptionFor404(self):
-        args = types.SimpleNamespace(partner="sig", customer="Aap", system="NOOT", sigridurl="")
-        apiClient = SigridApiClient(args)
+        apiClient = SigridApiClient(self.DEFAULT_ARGS)
         apiClient.processHttpError(urllib.error.HTTPError("http://www.sig.eu", 404, "", {}, None))
             
     def testDoThrowExceptionForClientError(self):
-        args = types.SimpleNamespace(partner="sig", customer="Aap", system="NOOT", sigridurl="")
-        apiClient = SigridApiClient(args)
+        apiClient = SigridApiClient(self.DEFAULT_ARGS)
         
         self.assertRaises(Exception, apiClient.processHttpError, \
             urllib.error.HTTPError("http://www.sig.eu", 400, "", {}, None), True)
             
-    def testGetRefactoringCandidatesForBothOldAndNewFormat(self):
+    def testGetRefactoringCandidatesForNewFormat(self):
         feedback = {
-            "refactoringCandidates": [{"subject":"a/b.java::Duif.vuur()","category":"introduced","metric":"UNIT_SIZE"}],
-            "refactoringCandidatesPerType": {"UNIT_SIZE":["aap"]}
+            "refactoringCandidates": [{"subject":"a/b.java::Duif.vuur()","category":"introduced","metric":"UNIT_SIZE"}]
         }
         
         report = Report()
         unitSize = report.getRefactoringCandidates(feedback, "UNIT_SIZE")
-        unitComplexity = report.getRefactoringCandidates(feedback, "UNIT_COMPLEXITY")
         
-        self.assertEqual(len(unitSize), 2)
+        self.assertEqual(len(unitSize), 1)
         self.assertEqual(unitSize[0]["subject"], "a/b.java::Duif.vuur()")
-        self.assertEqual(unitSize[1]["subject"], "aap")
-        self.assertEqual(len(unitComplexity), 0)
         
     def testFormatTextRefactoringCandidate(self):
         rc1 = {"subject" : "aap", "category" : "introduced", "metric" : "UNIT_SIZE"}
@@ -251,6 +247,20 @@ class SigridCiTest(unittest.TestCase):
             
         self.assertEqual(report.formatRefactoringCandidate(rc3), \
             "    - (worsened)     noot\n                     mies")
+            
+    def testRegularUploadPathDoesNotPublishByDefault(self):
+        args = types.SimpleNamespace(partner="sig", customer="aap", system="noot", sigridurl="https://example.com", \
+            publish=False)
+        apiClient = SigridApiClient(args)
+        
+        self.assertEqual(apiClient.getRequestUploadPath(), "/sig/aap/noot/ci/uploads/v1")
+        
+    def testPublishOptionChangesUploadPath(self):
+        args = types.SimpleNamespace(partner="sig", customer="aap", system="noot", sigridurl="https://example.com", \
+            publish=True)
+        apiClient = SigridApiClient(args)
+        
+        self.assertEqual(apiClient.getRequestUploadPath(), "/sig/aap/noot/ci/uploads/v1/publish")
 
     def createTempFile(self, dir, name, contents):
         writer = open(dir + "/" + name, "w")
