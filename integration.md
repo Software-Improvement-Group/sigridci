@@ -67,10 +67,26 @@ sigridci:
   allow_failure: true
   artifacts:
     paths:
-    - "sigrid-ci-output/*"
+      - "sigrid-ci-output/*"
     expire_in: 1 week
     when: always
+  except:
+    - master
+    
+sigridpublish:
+  stage: report
+  script:
+    - git clone https://github.com/Software-Improvement-Group/sigridci.git sigridci
+    - ./sigridci/sigridci/sigridci.py --customer examplecustomername --system examplesystemname --source . --targetquality 3.5 --publish
+  allow_failure: true
+  only:
+    - master
 ```
+
+This configures two additional build steps:
+
+- The `sigridci` step provides Sigrid feedback for pull request. This step is configured to run for every branch *except* the main/master branch.
+- The `sigridpublish` step publishes project snapshots to [sigrid-says.com](https://sigrid-says.com). This step only runs for the main/master branch.
 
 **Security note:** This example downloads the Sigrid CI client scripts directly from GitHub. That might be acceptable for some projects, and is in fact increasingly common. However, some projects might not allow this as part of their security policy. In those cases, you can simply download the `sigridci` directory in this repository, and make it available to your runners (either by placing the scripts in a known location, or packaging them into a Docker container). 
 

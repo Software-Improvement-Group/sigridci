@@ -1,6 +1,8 @@
 Sigrid CI
 =========
 
+<img src="images/sigrid-logo.png" width="200" />
+
 ## Table of contents
 
 - [Sigrid](#sigrid-your-software-quality-made-measurable)
@@ -16,7 +18,9 @@ Sigrid CI
 
 Sigrid performs code quality checks that have been designed by the [Software Improvement Group](https://www.softwareimprovementgroup.com/), which have been used by thousands of development teams over the past 20 years to help improve their software. SIG's approach is based on the ISO 25010 standard for software quality, and has been accredited to ensure alignment with the standard.
 
-Sigrid CI allows you to integrate Sigrid's feedback into your development pipeline. This enables you to fix quality issues right away as part of your code reviews, instead of having to spot and fix them after the fact.
+Sigrid CI allows you to integrate Sigrid's feedback into your development pipeline. This enables you to fix quality issues right away as part of your code reviews, instead of having to spot and fix them after the fact. You can access Sigrid's feedback through [sigrid-says.com](https://sigrid-says.com), or directly within your Continuous Integration environment.
+
+<img src="images/sigridci-features.png" width="600" />
 
 Compared to other tools that perform code quality checks, i.e. linters, using Sigrid has a number of advantages:
 
