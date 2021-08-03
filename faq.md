@@ -61,7 +61,7 @@ Please send and email to support@softwareimprovementgroup.com and mention your n
 
 ### What target quality should we use?
 
-Avoid setting an unreasonably high target quality level. While it seems appealing to be ambitious, this can be demotivating or frustrating to people, as it's not always possible to achieve such a high level in every single change. . 
+Avoid setting an unreasonably high target quality level. While it seems appealing to be ambitious, this can be demotivating or frustrating to people, as it's not always possible to achieve such a high level in every single change.
 
 For systems implemented in modern technologies, we recommend a target quality level of 3.5 stars. This strikes a balance between ambition and practicality. Note that 3.5 is already above the benchmark average of 3.0 stars, so this level is already asking developers to outperform the industry as a whole, and is therefore quite a high target.
 
