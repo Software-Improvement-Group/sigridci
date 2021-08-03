@@ -39,7 +39,7 @@ Sigrid CI: Frequently Asked Questions
 
 Yes! There are basically two usage scenarios for Sigrid CI, and you would typically use them both.
 
-The first Sigrid CI use case is to *publish* your project's source code to Sigrid, which makes the analysis results accessible on [https://sigrid-says.com](https://sigrid-says.com). You would typically use this for your project's main branch, which can be either `main`, `master`, or something project-specific.
+The first Sigrid CI use case is to *publish* your project's source code to Sigrid, which makes the analysis results accessible on [https://sigrid-says.com](https://sigrid-says.com). You would typically use this for your project's main branch, which can be `main`, `master`, or something project-specific.
 
 The second use case is to use Sigrid CI for feedback during code reviews on pull requests. In these situations, you would typically *not* publish the results to Sigrid, since the code review is usually been author and reviewer and does not require the entire team to see the results. 
 
@@ -61,7 +61,7 @@ Please send and email to support@softwareimprovementgroup.com and mention your n
 
 ### What target quality should we use?
 
-Avoid setting an unreasonably high target quality level. While it seems appealing to be ambitious, this can be demotivating or frustrating to people, as it's not always possible to achieve such a high level in every single change. . 
+Avoid setting an unreasonably high target quality level. While it seems appealing to be ambitious, this can be demotivating or frustrating to people, as it's not always possible to achieve such a high level in every single change.
 
 For systems implemented in modern technologies, we recommend a target quality level of 3.5 stars. This strikes a balance between ambition and practicality. Note that 3.5 is already above the benchmark average of 3.0 stars, so this level is already asking developers to outperform the industry as a whole, and is therefore quite a high target.
 
