@@ -39,7 +39,7 @@ Sigrid CI: Frequently Asked Questions
 
 Yes! There are basically two usage scenarios for Sigrid CI, and you would typically use them both.
 
-The first Sigrid CI use case is to *publish* your project's source code to Sigrid, which makes the analysis results accessible on [https://sigrid-says.com](https://sigrid-says.com). You would typically use this for your project's main branch, which can be either `main`, `master`, or something project-specific.
+The first Sigrid CI use case is to *publish* your project's source code to Sigrid, which makes the analysis results accessible on [https://sigrid-says.com](https://sigrid-says.com). You would typically use this for your project's main branch, which can be `main`, `master`, or something project-specific.
 
 The second use case is to use Sigrid CI for feedback during code reviews on pull requests. In these situations, you would typically *not* publish the results to Sigrid, since the code review is usually been author and reviewer and does not require the entire team to see the results. 
 
