@@ -5,9 +5,11 @@ Sigrid CI: Frequently Asked Questions
 
 ### Usage questions
 
+- [Do you support pull request integration?](#do-you-support-pull-request-integration)
 - [Which technologies do you support?](#which-technologies-do-you-support)
 - [What is my system name?](#what-is-my-system-name)
 - [How to get a token and account?](#how-to-get-a-token-and-account)
+- [What target quality should we use?](#what-target-quality-should-we-use)
 - [Where can I find more information about your metrics?](#where-can-i-find-more-information-about-your-metrics)
 - [What is the maximum upload size?](#what-is-the-maximum-upload-size)
 - [Can I exclude certain files from being uploaded?](#can-i-exclude-certain-files-from-being-uploaded)
@@ -33,6 +35,16 @@ Sigrid CI: Frequently Asked Questions
 
 ## Usage questions
 
+### Do you support pull request integration?
+
+Yes! There are basically two usage scenarios for Sigrid CI, and you would typically use them both.
+
+The first Sigrid CI use case is to *publish* your project's source code to Sigrid, which makes the analysis results accessible on [https://sigrid-says.com](https://sigrid-says.com). You would typically use this for your project's main branch, which can be `main`, `master`, or something project-specific. This is known as the *baseline version*.
+
+The second use case is to use Sigrid CI for feedback during code reviews on pull requests. This wil compare the contents of the pull request agains the baseline version, allowing you to identify improvement areas in the new and changed code.
+
+The [platform-specific documentation and examples](README.md) cover instructions for both scenarios. We generally recommend to use Sigrid CI for both scenarios, although it's also perfectly fine to use Sigrid CI for one scenario but not the other.
+
 ### Which technologies do you support?
 
 Sigrid supports almost 300 different technologies, so we are pretty confident that we are able to support most projects out-of-the-box. Moreover, we are constantly adding support for new technologies, and extending our support for existing ones. This even includes some pretty specific technologies with a focused group of target users, such as proprietary programming languages developed in-house at our clients. 
@@ -46,6 +58,14 @@ You will find the system name in the url of the monitor in Sigrid. The structure
 ### How to get a token and account?
 
 Please send and email to support@softwareimprovementgroup.com and mention your name, your company and the system name(s) that you need a token for. We will send the account via mail and the token via sms.
+
+### What target quality should we use?
+
+Avoid setting an unreasonably high target quality level. While it seems appealing to be ambitious, this can be demotivating or frustrating to people, as it's not always possible to achieve such a high level in every single change.
+
+For systems implemented in modern technologies, we recommend a target quality level of 3.5 stars. This strikes a balance between ambition and practicality. Note that 3.5 is already above the benchmark average of 3.0 stars, so this level is already asking developers to outperform the industry as a whole, and is therefore quite a high target.
+
+For legacy systems, the target quality should be in line with the system's current quality. If the system as a whole is currently at 2.1 stars, it's not realistic to ask every single code change to rate 4.0 stars or higher. The same applies to systems in domains where the technology makes it harder to write maintainable code, for example when using low-level languages like C.
 
 ### Where can I find more information about your metrics?
 
