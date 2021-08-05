@@ -48,7 +48,7 @@ Sigrid CI consists of a number of Python-based client scripts, that interact wit
 We will create two GitHub Action workflows: the first will publish the main/master branch to [sigrid-says.com](https://sigrid-says.com) after every commit. In your GitHub repository, create a file `.github/workflows/sigrid-publish.yml` and give it the following contents:
 
 ```
-name: sigridci-publish
+name: sigrid-publish
 on:
   push:
     branches:
