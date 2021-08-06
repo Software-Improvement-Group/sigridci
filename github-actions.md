@@ -70,7 +70,7 @@ jobs:
 
 Note the name of the branch, which is `main` in the example but might be different for your repository. In general, most older GitHub projects will use `master` as their main branch, while more recent GitHub projects will use `main`. 
 
-Next, we create a separate workflow for the pull request integration. This will compare the contents of the pull request against the main/master branch from the previous step. GitHub repository, create a file `.github/workflows/sigrid-pullrequest.yml` and give it the following contents:
+Next, we create a separate workflow for the pull request integration. This will compare the contents of the pull request against the main/master branch from the previous step. In the GitHub repository, create a file `.github/workflows/sigrid-pullrequest.yml` and give it the following contents:
 
 ```
 name: sigrid-pullrequest
