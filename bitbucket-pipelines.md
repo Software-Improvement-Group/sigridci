@@ -44,12 +44,13 @@ Sigrid CI consists of a number of Python-based client scripts, that interact wit
 In your BitBucket repository, create a file `bitbucket-pipelines.yml` and give it the following contents:
 
 ```
-image: python:3.9-buster
+image: atlassian/default-image:latest # Or any image you're using as build environment
 
 pipelines:
   default:
   - step:
       name: Sigrid CI
+      image: python:3.9 # The client scripts for Sigrid CI are based on Python.
       script:
       - "git clone https://github.com/Software-Improvement-Group/sigridci.git sigridci"
       - "./sigridci/sigridci/sigridci.py --customer examplecustomername --system examplesystemname --source . --targetquality 3.5"
