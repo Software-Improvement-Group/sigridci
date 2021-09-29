@@ -186,7 +186,7 @@ class SystemUploadPacker:
         zipFile = zipfile.ZipFile(outputFile, "w", zipfile.ZIP_DEFLATED)
         
         for root, dirs, files in os.walk(sourceDir):
-            for file in files:
+            for file in sorted(files):
                 filePath = os.path.join(root, file)
                 if file != outputFile and not self.isExcluded(filePath):
                     relativePath = os.path.relpath(os.path.join(root, file), sourceDir)
