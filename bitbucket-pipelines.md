@@ -21,7 +21,7 @@ Once the account has been created, you can use Sigrid's user management feature 
 
 ## Configuration
 
-**Step 1: Configure Sigrid credentials to environment variables**
+### Step 1: Configure Sigrid credentials to environment variables
 
 Sigrid CI reads your Sigrid account credentials from two environment variables, called `SIGRID_CI_ACCOUNT` and `SIGRID_CI_TOKEN`. You can make these environment variables available to BitBucket Pipelines by creating "secrets" in your repository:
 
@@ -33,24 +33,39 @@ Sigrid CI reads your Sigrid account credentials from two environment variables, 
 
 - Add another secret named `SIGRID_CI_TOKEN` with the token you have received.
 
-**Step 2: Create a BitBucket Pipeline for Sigrid CI**
+### Step 2: Create a BitBucket Pipeline for Sigrid CI
 
 Sigrid CI consists of a number of Python-based client scripts, that interact with Sigrid in order to analyze your project's source code and provide feedback based on the results. These client scripts need to be available to the CI environment, in order to call the scripts *from* the CI pipeline. You can configure your Pipeline to both download the Sigrid CI client scripts and then run Sigrid CI. 
 
-In your BitBucket repository, create a file `bitbucket-pipelines.yml` and give it the following contents:
+We will create two pipelines:
+
+- The first will publish the main/master branch to [sigrid-says.com](https://sigrid-says.com) after every commit. 
+- The second will provide pull request integration: it will compare the contents of the pull request against the main/master branch.
+
+In your BitBucket repository, create a file `bitbucket-pipelines.yml`. You can then configure both pipelines in the same configuration file:
 
 ```
-image: atlassian/default-image:latest # Or any image you're using as build environment
+image: atlassian/default-image:latest # Or any image you're using as build environment.
 
 pipelines:
-  default:
-  - step:
-      name: Sigrid CI
-      image: python:3.9 # The client scripts for Sigrid CI are based on Python.
-      script:
-      - "git clone https://github.com/Software-Improvement-Group/sigridci.git sigridci"
-      - "./sigridci/sigridci/sigridci.py --customer examplecustomername --system examplesystemname --source . --targetquality 3.5"
+  branches:
+    master:
+      - step:
+          name: Publish to Sigrid
+          image: python:3.9 # The client scripts for Sigrid CI are based on Python.
+          script:
+            - "git clone https://github.com/Software-Improvement-Group/sigridci.git sigridci"
+            - "./sigridci/sigridci/sigridci.py --customer examplecustomername --system examplesystemname --source . --publish"
+  pull-requests:
+    - step:
+        name: Sigrid CI
+        image: python:3.9 # The client scripts for Sigrid CI are based on Python.
+        script:
+          - "git clone https://github.com/Software-Improvement-Group/sigridci.git sigridci"
+          - "./sigridci/sigridci/sigridci.py --customer examplecustomername --system examplesystemname --source . --targetquality 3.5"
 ```
+
+Note the branch name `master` in the example. This should refer to your primary branch. In most projects this is called either `master` or `main`, but the default project name could be different for your project.
 
 The example uses the Docker container `python:3.9-buster`, but any Docker container that contains Python 3 will do.
 
