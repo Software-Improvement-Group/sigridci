@@ -47,10 +47,7 @@ Next, you need to edit your project's CI configuration, in order to add Sigrid C
 
 ```
 stages:  
-(...)
 - report
-
-(...)
 
 sigridci:
   stage: report

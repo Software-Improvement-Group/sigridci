@@ -26,6 +26,7 @@ Sigrid CI: Frequently Asked Questions
 
 - [What to do when the script does not work?](#what-to-do-when-the-script-does-not-work)
 - [I'm receiving an error message that certificate verification failed](#im-receiving-an-error-message-that-certificate-verification-failed)
+- [Why can't I use the publish and pathprefix options together?](#why-cant-i-use-the-publish-and-pathprefix-options-together)
 
 ### Infrastructure and security questions
 
@@ -150,6 +151,10 @@ When not using Docker to run the script, this requires that the dependencies in 
 In some cases, the Sigrid CI client script might produce an error message `[SSL: CERTIFICATE_VERIFY_FAILED] certificate verify failed: unable to get local issuer certificate`. This indicates that Python is unable to access the system's certificate store. Sigrid CI does not need any special or custom certificates, access to the regualr system certificates is sufficient. 
 
 If your environment requires a certificate store in a custom location, the environment variables `openssl_cafile_env` and `openssl_capath_envz` can be used to point Python to the correct location. Refer to the [Python documentation on OpenSSL](https://docs.python.org/3/library/ssl.html) for more information
+
+### Why can't I use the publish and pathprefix options together?
+
+You can either use the `--publish` option to publish your code to Sigrid, or you can use the `--pathprefix` option to receive feedback on a specific part of your codebase, but you cannot use both in combination with each other. The reason is that these two options relate to different usage scenarios. `--pathprefix` is for pull request integration, and indicates you want to use Sigrid CI for a *subset of your codebase*. In contrast, `--pathprefix` indicates you want to publish *your entire codebase* to Sigrid. This is why the combination doesn't really make sense, it would indicate you simultaneously consider your repository as the entire codebase (since you want to publish it) and a part of the codebase (since you're asking for more specific feedback). Please [contact us](mailto:support@softwareimprovementgroup.com) if you believe you have a need for using the combination of these two options.
 
 ## Infrastructure and security questions
 
