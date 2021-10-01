@@ -390,7 +390,7 @@ class ExitCodeReport(Report):
             if not args.publish:
                 sys.exit(1)
                 
-
+                
 if __name__ == "__main__":
     parser = argparse.ArgumentParser()
     parser.add_argument("--partner", type=str, default="sig")
@@ -420,6 +420,10 @@ if __name__ == "__main__":
         
     if not os.path.exists(args.source):
         print("Source code directory not found: " + args.source)
+        sys.exit(1)
+        
+    if args.publish and len(args.pathprefix) > 0:
+        print("You cannot use both --publish and --pathprefix at the same time, refer to the documentation for details")
         sys.exit(1)
     
     log("Starting Sigrid CI")
