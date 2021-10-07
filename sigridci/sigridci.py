@@ -60,7 +60,7 @@ class SigridApiClient:
         self.urlPartnerName = urllib.parse.quote_plus(args.partner.lower())
         self.urlCustomerName = urllib.parse.quote_plus(args.customer.lower())
         self.urlSystemName = urllib.parse.quote_plus(args.system.lower())
-        self.publish = args.publish
+        self.publish = args.publish or args.publishonly
         
     def callSigridAPI(self, api, path):
         url = f"{self.baseURL}/rest/{api}{path}"
@@ -89,8 +89,8 @@ class SigridApiClient:
         uploadUrl = uploadLocation["uploadUrl"]
         analysisId = uploadLocation["ciRunId"]
         log(f"Sigrid CI analysis ID: {analysisId}")
-        
-        log("Submitting upload")
+        log("Publishing upload" if self.publish else "Submitting upload")
+
         if not self.uploadBinaryFile(uploadUrl, upload):
             raise Exception("Uploading file failed")
             
@@ -399,6 +399,7 @@ if __name__ == "__main__":
     parser.add_argument("--source", type=str)
     parser.add_argument("--targetquality", type=float, default=3.5)
     parser.add_argument("--publish", action="store_true")
+    parser.add_argument("--publishonly", action="store_true")
     parser.add_argument("--exclude", type=str, default="")
     parser.add_argument("--pathprefix", type=str, default="")
     parser.add_argument("--showupload", action="store_true")
@@ -430,7 +431,11 @@ if __name__ == "__main__":
     options = UploadOptions(args.source, args.exclude.split(","), args.history, args.pathprefix, args.showupload)
     apiClient = SigridApiClient(args)
     analysisId = apiClient.submitUpload(options)
-    feedback = apiClient.fetchAnalysisResults(analysisId)
     
-    for report in [TextReport(), StaticHtmlReport(), ExitCodeReport()]:
-        report.generate(feedback, args)
+    if args.publishonly:
+        log("Your project's source code has been published to Sigrid")
+    else:
+        feedback = apiClient.fetchAnalysisResults(analysisId)
+    
+        for report in [TextReport(), StaticHtmlReport(), ExitCodeReport()]:
+            report.generate(feedback, args)

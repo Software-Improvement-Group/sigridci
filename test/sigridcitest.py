@@ -23,7 +23,8 @@ from sigridci.sigridci import SystemUploadPacker, SigridApiClient, Report, TextR
 
 class SigridCiTest(unittest.TestCase):
     
-    DEFAULT_ARGS = types.SimpleNamespace(partner="sig", customer="Aap", system="NOOT", sigridurl="", publish=False)
+    DEFAULT_ARGS = types.SimpleNamespace(partner="sig", customer="Aap", system="NOOT", sigridurl="", \
+                                         publish=False, publishonly=False)
 
     def setUp(self):
         os.environ["SIGRID_CI_ACCOUNT"] = "dummy"
@@ -201,7 +202,7 @@ class SigridCiTest(unittest.TestCase):
         self.assertEqual(entries, ["backend/a.py"])
         
     def testForceLowerCaseForCustomerAndSystemName(self):
-        args = types.SimpleNamespace(partner="sig", customer="Aap", system="NOOT", sigridurl="", publish=False)
+        args = types.SimpleNamespace(partner="sig", customer="Aap", system="NOOT", sigridurl="", publish=False, publishonly=False)
         apiClient = SigridApiClient(args)
         
         self.assertEqual(apiClient.urlCustomerName, "aap")
@@ -250,14 +251,14 @@ class SigridCiTest(unittest.TestCase):
             
     def testRegularUploadPathDoesNotPublishByDefault(self):
         args = types.SimpleNamespace(partner="sig", customer="aap", system="noot", sigridurl="https://example.com", \
-            publish=False)
+            publish=False, publishonly=False)
         apiClient = SigridApiClient(args)
         
         self.assertEqual(apiClient.getRequestUploadPath(), "/sig/aap/noot/ci/uploads/v1")
         
     def testPublishOptionChangesUploadPath(self):
         args = types.SimpleNamespace(partner="sig", customer="aap", system="noot", sigridurl="https://example.com", \
-            publish=True)
+            publish=True, publishonly=False)
         apiClient = SigridApiClient(args)
         
         self.assertEqual(apiClient.getRequestUploadPath(), "/sig/aap/noot/ci/uploads/v1/publish")

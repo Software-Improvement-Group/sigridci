@@ -21,6 +21,7 @@ Sigrid CI: Frequently Asked Questions
 - [Why doesn't deleted code influence the rating?](#why-doesnt-deleted-code-influence-the-rating)
 - [We have a multi-repo project, can I still use Sigrid CI?](#we-have-a-multi-repo-project-can-i-still-use-sigrid-ci)
 - [Can I see which files are upload to Sigrid?](#can-i-see-which-files-are-uploaded-to-sigrid)
+- [Why do you have both publish and publishonly options, what's the difference?](#why-do-you-have-both-publish-and-publishonly-options-whats-the-difference)
 
 ### Common problems
 
@@ -137,6 +138,15 @@ There are two ways to use Sigrid CI in such a situation.
 ### Can I see which files are upload to Sigrid?
 
 Yes. You can add the `--showupload` option when calling the [client script](client-script-usage.md). This will add log output for every file that is included in the upload that is submitted to Sigrid.
+
+### Why do you have both publish and publishonly options, what's the difference?
+
+The [list of Sigrid CI options](client-script-usage.md) lists two options with similar names and descriptions, `--publish` and `--publishonly`. These options support slightly different scenarios:
+
+- `--publish` publishes your project's source code to Sigrid, *and* provides feedback on your changes within your Continuous Integration environment.
+- `--publishonly` also publishes your code to Sigrid, but it *does not* provide feedback within the Continuous Integration environment.
+
+So which one should you use? That depends on your development process. If you use pull requests, you can use `--publishonly`. In this scenario, you've already received feedback for your pull request, so there is no need to receive the same feedback again when you merge your changes to your main/master branch. If you *don't* use pull requests, or if you're not sure, it's best to use `--publish` since it will give you the most feedback.
 
 ## Common problems
 

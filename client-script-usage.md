@@ -7,16 +7,17 @@ Sigrid CI consists of a number of Python-based client scripts, that interact wit
 
 Once the `sigridci.py` script is available within your CI environment, you can call the script to start the Sigrid CI run. The script can be configured by using a number of command line arguments:
 
-| Argument        | Required | Example value       | Description                                                                                                                                  |
-|-----------------|----------|---------------------|----------------------------------------------------------------------------------------------------------------------------------------------|
-| --customer      | Yes      | examplecustomername | Name of your organization's Sigrid account. Contact SIG support if you're not sure on this. Value should be lowercase.                       |
-| --system        | Yes      | examplesystemname   | Name of your system in Sigrid. Contact SIG support if you're not sure on this. Value should be lowercase.                                    |
-| --source        | Yes      | .                   | Path of your project's source code. Use "." for current directory.                                                                           |
-| --targetquality | No       | 3.5                 | Target quality level, not meeting this target will cause the CI step to fail. Default is 3.5 stars.                                          |
-| --publish       | No       | N/A                 | Automatically publishes analysis results to [https://sigrid-says.com](https://sigrid-says.com). [1]                                          |
-| --exclude       | No       | /build/,.png        | Comma-separated list of file and/or directory names that should be excluded from the upload, on top of files already excluded by Sigrid. [2] |
-| --pathprefix    | No       | frontend            | Used to map between repository directory structure versus the one known by Sigrid. [3]                                                       |
-| --showupload    | No       | N/A                 | Logs the contents of the upload before submitting it to Sigrid.                                                                              |
+| Argument        | Required | Example value       | Description                                                                                                                                         |
+|-----------------|----------|---------------------|-----------------------------------------------------------------------------------------------------------------------------------------------------|
+| --customer      | Yes      | examplecustomername | Name of your organization's Sigrid account. Contact SIG support if you're not sure on this. Value should be lowercase.                              |
+| --system        | Yes      | examplesystemname   | Name of your system in Sigrid. Contact SIG support if you're not sure on this. Value should be lowercase.                                           |
+| --source        | Yes      | .                   | Path of your project's source code. Use "." for current directory.                                                                                  |
+| --targetquality | No       | 3.5                 | Target quality level, not meeting this target will cause the CI step to fail. Default is 3.5 stars.                                                 |
+| --publish       | No       | N/A                 | Automatically publishes analysis results to [https://sigrid-says.com](https://sigrid-says.com). [1]                                                 |
+| --publishonly   | No       | N/A                 | Publishes analysis results to [https://sigrid-says.com](https://sigrid-says.com), but *does not* provide feedback in the CI environment itself. [1] |
+| --exclude       | No       | /build/,.png        | Comma-separated list of file and/or directory names that should be excluded from the upload, on top of files already excluded by Sigrid. [2]        |
+| --pathprefix    | No       | frontend            | Used to map between repository directory structure versus the one known by Sigrid. [3]                                                              |
+| --showupload    | No       | N/A                 | Logs the contents of the upload before submitting it to Sigrid.                                                                                     |
 
 [1] Typically, you would use the `--publish` option when committing to the main/master branch, and you would *not* use it for pull requests.  
 [2] By default, Sigrid already excludes a number of files and directories from being analyzed. This includes third party libraries (for example `/node_modules/` for NPM libraries, build output (for example `/target/` for Maven builds), and generated code. Using the `--exclude` option will exclude additional files and directories *on top of* the ones that were already excluded.  
