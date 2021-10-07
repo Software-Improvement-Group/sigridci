@@ -21,6 +21,7 @@ Sigrid CI: Frequently Asked Questions
 - [Why doesn't deleted code influence the rating?](#why-doesnt-deleted-code-influence-the-rating)
 - [We have a multi-repo project, can I still use Sigrid CI?](#we-have-a-multi-repo-project-can-i-still-use-sigrid-ci)
 - [Can I see which files are upload to Sigrid?](#can-i-see-which-files-are-uploaded-to-sigrid)
+- [Why do you have both publish and publishonly options, what's the difference?](#why-do-you-have-both-publish-and-publishonly-options-whats-the-difference)
 
 ### Common problems
 
