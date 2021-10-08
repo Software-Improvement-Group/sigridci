@@ -21,6 +21,11 @@ Once the account has been created, you can use Sigrid's user management feature 
 
 **Step 1: Create pipeline configuration file**
 
+We will create a pipeline that consists of two jobs:
+
+- One job that will publish the main/master branch to [sigrid-says.com](https://sigrid-says.com) after every commit.
+- One job to provide feedback on pull requests, which can be used as input for code reviews.
+
 In the root of your repository, create a file `azure-devops-pipeline.yaml` and add the following contents:
 
 ```
@@ -30,6 +35,7 @@ stages:
     - job: SigridCI
       container: python:3.9-buster
       continueOnError: true
+      condition: "ne(variables['Build.SourceBranch'], 'refs/heads/main')"
       steps:
       - bash: "git clone https://github.com/Software-Improvement-Group/sigridci.git sigridci"
       - bash: "./sigridci/sigridci/sigridci.py --customer examplecustomername --system examplesystemname --source . --targetquality 3.5"
@@ -39,7 +45,20 @@ stages:
         continueOnError: true
       - publish: sigrid-ci-output
         artifact: sigrid-ci-output
+    - job: SigridPublish
+      container: python:3.9-buster
+      continueOnError: true
+      condition: "eq(variables['Build.SourceBranch'], 'refs/heads/main')"
+      steps:
+      - bash: "git clone https://github.com/Software-Improvement-Group/sigridci.git sigridci"
+      - bash: "./sigridci/sigridci/sigridci.py --customer examplecustomername --system examplesystemname --source . --publish"
+        env:
+          SIGRID_CI_ACCOUNT: $(SIGRID_CI_ACCOUNT)
+          SIGRID_CI_TOKEN: $(SIGRID_CI_TOKEN)
+        continueOnError: true
 ```
+
+Note the name of the branch, which is `main` in the example but might be different for your repository. In general, most older projects will use `master` as their main branch, while more recent projects will use `main`. 
 
 The example uses the Docker container `python:3.9-buster`, but any Docker container that contains Python 3 will do.
 
