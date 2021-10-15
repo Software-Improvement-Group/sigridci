@@ -262,6 +262,13 @@ class SigridCiTest(unittest.TestCase):
         apiClient = SigridApiClient(args)
         
         self.assertEqual(apiClient.getRequestUploadPath(), "/sig/aap/noot/ci/uploads/v1/publish")
+        
+    def testFormatBaselineDate(self):
+        report = Report()
+        self.assertEqual(report.formatBaselineDate({"baseline" : "20211015"}), "2021-10-15")
+        self.assertEqual(report.formatBaselineDate({"baseline" : None}), "N/A")
+        self.assertEqual(report.formatBaselineDate({"baseline" : ""}), "N/A")
+        self.assertEqual(report.formatBaselineDate({}), "N/A")
 
     def createTempFile(self, dir, name, contents):
         writer = open(dir + "/" + name, "w")
