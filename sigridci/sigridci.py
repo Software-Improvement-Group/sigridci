@@ -239,6 +239,8 @@ class Report:
         return "%.1f" % ratings[metric]
         
     def formatBaselineDate(self, feedback):
+        if not feedback.get("baseline", None):
+            return "N/A"
         snapshotDate = datetime.datetime.strptime(feedback["baseline"], "%Y%m%d")
         return snapshotDate.strftime("%Y-%m-%d")
         
