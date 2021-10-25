@@ -269,6 +269,20 @@ class SigridCiTest(unittest.TestCase):
         self.assertEqual(report.formatBaselineDate({"baseline" : None}), "N/A")
         self.assertEqual(report.formatBaselineDate({"baseline" : ""}), "N/A")
         self.assertEqual(report.formatBaselineDate({}), "N/A")
+        
+    def testNormalModeOnlyRequiresOverallRatingToMeetTarget(self):
+        report = Report()
+        self.assertFalse(report.isOverallPassed({"newCodeRatings" : {"MAINTAINABILITY" : 3, "DUPLICATION" : 2}}, 3.5, False))
+        self.assertTrue(report.isOverallPassed({"newCodeRatings" : {"MAINTAINABILITY" : 4, "DUPLICATION" : 2}}, 3.5, False))
+        self.assertTrue(report.isOverallPassed({"newCodeRatings" : {"DUPLICATION" : 2}}, 3.5, False))
+        
+    def testStrictModeRequiresAllSystemPropertiesToMeetTarget(self):
+        report = Report()
+        self.assertFalse(report.isOverallPassed({"newCodeRatings" : {"MAINTAINABILITY" : 3, "DUPLICATION" : 2}}, 3.5, True))
+        self.assertFalse(report.isOverallPassed({"newCodeRatings" : {"MAINTAINABILITY" : 4, "DUPLICATION" : 2}}, 3.5, True))
+        self.assertFalse(report.isOverallPassed({"newCodeRatings" : {"MAINTAINABILITY" : 2, "DUPLICATION" : 4}}, 3.5, True))
+        self.assertTrue(report.isOverallPassed({"newCodeRatings" : {"MAINTAINABILITY" : 4, "DUPLICATION" : 4}}, 3.5, True))
+        self.assertTrue(report.isOverallPassed({"newCodeRatings" : {"DUPLICATION" : 2}}, 3.5, False))
 
     def createTempFile(self, dir, name, contents):
         writer = open(dir + "/" + name, "w")

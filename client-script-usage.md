@@ -13,6 +13,7 @@ Once the `sigridci.py` script is available within your CI environment, you can c
 | --system        | Yes      | examplesystemname   | Name of your system in Sigrid. Contact SIG support if you're not sure on this. Value should be lowercase.                                           |
 | --source        | Yes      | .                   | Path of your project's source code. Use "." for current directory.                                                                                  |
 | --targetquality | No       | 3.5                 | Target quality level, not meeting this target will cause the CI step to fail. Default is 3.5 stars.                                                 |
+" --strict        | No       | N/A                 | When used, requires *all* system properties to meet the target quality, instead of requiring only the overall rating to meet the target.            |
 | --publish       | No       | N/A                 | Automatically publishes analysis results to [https://sigrid-says.com](https://sigrid-says.com). [1]                                                 |
 | --publishonly   | No       | N/A                 | Publishes analysis results to [https://sigrid-says.com](https://sigrid-says.com), but *does not* provide feedback in the CI environment itself. [1] |
 | --exclude       | No       | /build/,.png        | Comma-separated list of file and/or directory names that should be excluded from the upload, on top of files already excluded by Sigrid. [2]        |
