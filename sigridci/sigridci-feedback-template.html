@@ -35,6 +35,26 @@
                 margin: 0px 0px 10px 0px;
             }
             
+            ul {
+                list-style: none;
+            }
+            
+            ul li {
+                margin-bottom: 4px;
+            }
+            
+            ul li::before {
+                content: "\25A0";
+                color: #DFC101;
+                display: inline-block;
+                width: 12px;
+                margin-left: -40px;
+            }
+            
+            li strong {
+                color: #8269A4;
+            }
+            
             .container {
                 width: 1200px;
                 margin-left: auto;
@@ -93,22 +113,10 @@
                 margin-top: 8px;
             }
             
-            .ratings > div:first-child {
-                width: 250px;
-            }
-            
-            .ratings > div {
-                width: 25%;
-            } 
-            
             .ratings span {
                 display: block;
                 height: 16px;
                 margin-bottom: 4px;
-            }
-            
-            .refactoringCandidates {
-                margin-top: 30px;
             }
             
             .sigridLink {
@@ -118,18 +126,25 @@
                 text-align: center;
             }
             
-            .sigridLink a {
+            .sigridLink a, li a {
                 color: #212c3c;
             }
             
-            .refactoringCandidates .tabs {
+            .explanation {
+                margin-top: 40px;
+                background-color: inherit !important;
+                box-shadow: none !important;
+            }
+            
+            .refactoringCandidates {
+                margin-top: 40px;
             }
             
             .refactoringCandidates .tabs div {
                 display: inline-block;
                 width: 170px;
                 text-align: center;
-                padding: 12px 10px 4px 10px;
+                padding: 10px 10px 6px 10px;
                 cursor: pointer;
                 background-color: #F2F2F2;
                 font-weight: bold;
@@ -253,7 +268,7 @@
                     <h2>Maintainability ratings</h2>
             
                     <div class="ratings">
-                        <div>
+                        <div style="width: 200px;">
                             <h3>System property</h3>
                             <span>Volume:</span>
                             <span>Duplication:</span>
@@ -266,7 +281,7 @@
                             <span>Component Entanglement:</span>
                             <span class="separator">Maintainability:</span>
                         </div>
-                        <div>
+                        <div style="width: 170px;">
                             <h3>Baseline (@@@BASELINE_DATE)</h3>
                             <span>@@@VOLUME_STARS_OVERALL</span>
                             <span>@@@DUPLICATION_STARS_OVERALL</span>
@@ -279,7 +294,7 @@
                             <span>@@@COMPONENT_ENTANGLEMENT_STARS_OVERALL</span>
                             <span class="separator">@@@MAINTAINABILITY_STARS_OVERALL</span>
                         </div>
-                        <div>
+                        <div style="width: 200px;">
                             <h3>New/changed code quality</h3>
                             <span>@@@VOLUME_STARS_NEW</span>
                             <span>@@@DUPLICATION_STARS_NEW</span>
@@ -307,6 +322,24 @@
                         </div>
                     </div>
                 </div>
+            </div>
+            
+            <div class="explanation tile">
+                Sigrid helps you to write maintainable code. It provides you with a definition of done for code 
+                quality, by comparing your system against the 6,000+ systems in our benchmark.
+                <ul>
+                    <li><strong>Trusted:</strong> Sigrid checks your code using SIG's
+                    <a href="https://www.softwareimprovementgroup.com/methodologies/iso-iec-25010-2011-standard/">
+                    maintainability quality model</a>, which is based on the ISO 25010 standard for software product 
+                    quality.</li>
+                    <li><strong>Holistic</strong>: SIG's maintainability model computes results for multiple metrics
+                    and technologies, consolidating them into a single overall rating that indicates your system's 
+                    maintainability.</li>
+                    <li><strong>Pragmatic:</strong> Sigrid does not reject your code if a solitary issue was found. 
+                    As long as you meet the overall maintainability target, it's OK to have some minor issues.</li>
+                    <li><strong>Benchmarked:</strong> Sigrid compares your system against other systems in the market,
+                    not against theoretical perfection or subjective rules.</li>
+                <ul>
             </div>
         
             <div class="refactoringCandidates tile">

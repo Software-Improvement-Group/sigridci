@@ -266,16 +266,11 @@ class TextReport(Report):
     LINE_WIDTH = 89
 
     def generate(self, feedback, args):
-        print("-" * self.LINE_WIDTH)
-        print("Refactoring candidates")
-        print("-" * self.LINE_WIDTH)
+        self.printHeader("Refactoring candidates")
         for metric in self.REFACTORING_CANDIDATE_METRICS:
             self.printMetric(feedback, metric)
 
-        print("")
-        print("-" * self.LINE_WIDTH)
-        print("Maintainability ratings")
-        print("-" * self.LINE_WIDTH)
+        self.printHeader("Maintainability ratings")
         print("System property".ljust(40) + f"Baseline ({self.formatBaselineDate(feedback)})    New/changed code quality")
         for metric in self.METRICS:
             if metric == "MAINTAINABILITY":
@@ -283,6 +278,12 @@ class TextReport(Report):
             self.printRatingColor(metric.replace("_PROP", "").title().replace("_", " ").ljust(40) + \
                 "(" + self.formatRating(feedback["overallRatings"], metric) + ")".ljust(21) + \
                 self.formatRating(feedback["newCodeRatings"], metric), feedback["newCodeRatings"].get(metric))
+                
+    def printHeader(self, header):
+        print("")
+        print("-" * self.LINE_WIDTH)
+        print(header)
+        print("-" * self.LINE_WIDTH)
                 
     def printMetric(self, feedback, metric):
         print("")
