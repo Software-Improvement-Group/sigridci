@@ -248,12 +248,6 @@ class Report:
         value = feedback["newCodeRatings"].get(metric, None)
         return value == None or value >= targetRating
         
-    def isOverallPassed(self, feedback, targetRating, strict):
-        relevantMetrics = ["MAINTAINABILITY"]
-        if strict:
-            relevantMetrics += self.REFACTORING_CANDIDATE_METRICS
-        return all(self.isPassed(feedback, metric, targetRating) for metric in relevantMetrics)
-        
     def getSigridUrl(self, args):
         return "https://sigrid-says.com/" + urllib.parse.quote_plus(args.customer) + "/" + \
             urllib.parse.quote_plus(args.system);
@@ -354,18 +348,15 @@ class StaticHtmlReport(Report):
         template = template.replace("@@@LINES_OF_CODE_TOUCHED", "%d" % feedback.get("newCodeLinesOfCode", 0))
         template = template.replace("@@@BASELINE_DATE", self.formatBaselineDate(feedback))
         template = template.replace("@@@SIGRID_LINK", self.getSigridUrl(args))
-        template = template.replace("@@@OVERALL_PASSED", self.formatPassed(self.isOverallPassed(feedback, args.targetquality, args.strict)))
         for metric in self.METRICS:
             template = template.replace(f"@@@{metric}_OVERALL", self.formatRating(feedback["overallRatings"], metric))
             template = template.replace(f"@@@{metric}_NEW", self.formatRating(feedback["newCodeRatings"], metric))
             template = template.replace(f"@@@{metric}_STARS_OVERALL", self.formatHtmlStars(feedback["overallRatings"], metric))
             template = template.replace(f"@@@{metric}_STARS_NEW", self.formatHtmlStars(feedback["newCodeRatings"], metric))
-            template = template.replace(f"@@@{metric}_PASSED", self.formatPassed(self.isPassed(feedback, metric, args.targetquality)))
+            passed = self.isPassed(feedback, metric, args.targetquality)
+            template = template.replace(f"@@@{metric}_PASSED", "passed" if passed else "failed")
             template = template.replace(f"@@@{metric}_REFACTORING_CANDIDATES", self.formatRefactoringCandidates(feedback, metric))
         return template
-        
-    def formatPassed(self, passed):
-        return "passed" if passed else "failed"
         
     def formatRefactoringCandidates(self, feedback, metric):
         refactoringCandidates = self.getRefactoringCandidates(feedback, metric)
@@ -391,7 +382,7 @@ class StaticHtmlReport(Report):
 class ExitCodeReport(Report):   
     def generate(self, feedback, args):
         asciiArt = TextReport()
-        if self.isOverallPassed(feedback, args.targetquality, args.strict):
+        if self.isPassed(feedback, "MAINTAINABILITY", args.targetquality):
             asciiArt.printColor("\n** SIGRID CI RUN COMPLETE: YOU WROTE MAINTAINABLE CODE AND REACHED THE TARGET **\n", \
                 asciiArt.ANSI_BOLD + asciiArt.ANSI_GREEN)
         else:
@@ -410,7 +401,6 @@ if __name__ == "__main__":
     parser.add_argument("--system", type=str)
     parser.add_argument("--source", type=str)
     parser.add_argument("--targetquality", type=float, default=3.5)
-    parser.add_argument("--strict", action="store_true")
     parser.add_argument("--publish", action="store_true")
     parser.add_argument("--publishonly", action="store_true")
     parser.add_argument("--exclude", type=str, default="")
