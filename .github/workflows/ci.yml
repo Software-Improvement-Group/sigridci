@@ -6,4 +6,4 @@ jobs:
     steps:
       - name: Check out repository
         uses: actions/checkout@v2
-      - run: "python3 -m unittest discover test -p '*.py'"
+      - run: "python3 -m unittest"
