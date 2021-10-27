@@ -264,13 +264,13 @@ class SigridCiTest(unittest.TestCase):
         
         self.assertEqual(apiClient.getRequestUploadPath(), "/sig/aap/noot/ci/uploads/v1/publish")
         
-    def testFormatBaselineDate(self):
+    def testFormatBaseline(self):
         report = Report()
 
-        self.assertEqual(report.formatBaselineDate({"baseline" : "20211015"}), "2021-10-15")
-        self.assertEqual(report.formatBaselineDate({"baseline" : None}), "N/A")
-        self.assertEqual(report.formatBaselineDate({"baseline" : ""}), "N/A")
-        self.assertEqual(report.formatBaselineDate({}), "N/A")
+        self.assertEqual(report.formatBaseline({"baseline" : "20211015"}), "2021-10-15")
+        self.assertEqual(report.formatBaseline({"baseline" : None}), "N/A")
+        self.assertEqual(report.formatBaseline({"baseline" : ""}), "N/A")
+        self.assertEqual(report.formatBaseline({}), "N/A")
         
     def testNormalModeOnlyRequiresOverallRatingToMeetTarget(self):
         target = TargetQuality("/tmp/nonexistent", 3.5)
