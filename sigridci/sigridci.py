@@ -21,6 +21,7 @@ import dataclasses
 import html
 import json
 import os
+import re
 import sys
 import time
 import typing
@@ -34,7 +35,7 @@ LOG_HISTORY = []
 
 def log(message):
     timestamp = datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")
-    print(f"{timestamp}  {message}")
+    print(f"{timestamp}  {message}", flush=True)
     LOG_HISTORY.append(message)
     
     
@@ -45,6 +46,32 @@ class UploadOptions:
     includeHistory: bool = False
     pathPrefix: str = ""
     showContents: bool = False
+    
+    
+@dataclasses.dataclass
+class TargetQuality:
+    ratings: typing.Dict[str, float]
+
+    def __init__(self, configFile, targetRating):
+        self.ratings = {"MAINTAINABILITY" : targetRating}
+        
+        if os.path.exists(configFile):
+            log(f"Loading target quality level from configuration file {configFile}")
+            # We can't use pyyaml because PIP is not available in the some of the
+            # very diverse set of customer environments where Sigrid CI is used.
+            targetPattern = re.compile("(" + "|".join(Report.METRICS) + "):\s*([\d\.]+)", re.IGNORECASE)
+            for line in open(configFile, "r"):
+                match = targetPattern.match(line.strip())
+                if match:
+                    self.ratings[match.group(1).upper()] = float(match.group(2))
+    
+    def isPassed(self, feedback, metric):
+        value = feedback["newCodeRatings"].get(metric, None)
+        targetRating = self.ratings.get(metric, None)
+        return value == None or targetRating == None or value >= targetRating
+        
+    def isOverallPassed(self, feedback):
+        return all(self.isPassed(feedback, metric) for metric in self.ratings)
 
 
 class SigridApiClient:
@@ -230,23 +257,19 @@ class Report:
     REFACTORING_CANDIDATE_METRICS = ["DUPLICATION", "UNIT_SIZE", "UNIT_COMPLEXITY", "UNIT_INTERFACING",
                                      "MODULE_COUPLING"]
 
-    def generate(self, feedback, args):
+    def generate(self, feedback, args, target):
         pass
         
-    def formatRating(self, ratings, metric):
+    def formatRating(self, ratings, metric, naText="N/A"):
         if ratings.get(metric, None) == None:
-            return "N/A"
+            return naText
         return "%.1f" % ratings[metric]
         
-    def formatBaselineDate(self, feedback):
+    def formatBaseline(self, feedback):
         if not feedback.get("baseline", None):
             return "N/A"
         snapshotDate = datetime.datetime.strptime(feedback["baseline"], "%Y%m%d")
         return snapshotDate.strftime("%Y-%m-%d")
-        
-    def isPassed(self, feedback, metric, targetRating):
-        value = feedback["newCodeRatings"].get(metric, None)
-        return value == None or value >= targetRating
         
     def getSigridUrl(self, args):
         return "https://sigrid-says.com/" + urllib.parse.quote_plus(args.customer) + "/" + \
@@ -263,21 +286,23 @@ class TextReport(Report):
     ANSI_YELLOW = "\033[33m"
     ANSI_RED = "\033[91m"
     ANSI_BLUE = "\033[96m"
-    LINE_WIDTH = 89
+    LINE_WIDTH = 91
 
-    def generate(self, feedback, args):
+    def generate(self, feedback, args, target):
         self.printHeader("Refactoring candidates")
         for metric in self.REFACTORING_CANDIDATE_METRICS:
             self.printMetric(feedback, metric)
 
         self.printHeader("Maintainability ratings")
-        print("System property".ljust(40) + f"Baseline ({self.formatBaselineDate(feedback)})    New/changed code quality")
+        print("System property".ljust(40) + f"Baseline ({self.formatBaseline(feedback)})    New/changed code    Target")
         for metric in self.METRICS:
             if metric == "MAINTAINABILITY":
                 print("-" * self.LINE_WIDTH)
-            self.printRatingColor(metric.replace("_PROP", "").title().replace("_", " ").ljust(40) + \
-                "(" + self.formatRating(feedback["overallRatings"], metric) + ")".ljust(21) + \
-                self.formatRating(feedback["newCodeRatings"], metric), feedback["newCodeRatings"].get(metric))
+            fields = (metric.replace("_PROP", "").title().replace("_", " "), \
+                "(" + self.formatRating(feedback["overallRatings"], metric) + ")", \
+                self.formatRating(feedback["newCodeRatings"], metric), \
+                str(target.ratings.get(metric, "")))
+            self.printColor("%-40s%-25s%-20s%s" % fields, self.getRatingColor(feedback, target, metric))
                 
     def printHeader(self, header):
         print("")
@@ -296,21 +321,18 @@ class TextReport(Report):
             for rc in refactoringCandidates:
                 print(self.formatRefactoringCandidate(rc))
                 
+    def getRatingColor(self, feedback, target, metric):
+        if feedback["newCodeRatings"].get(metric, None) == None:
+            return self.ANSI_BLUE
+        elif target.isPassed(feedback, metric):
+            return self.ANSI_GREEN
+        else:
+            return self.ANSI_RED
+                
     def formatRefactoringCandidate(self, rc):
         category = ("(" + rc["category"] + ")").ljust(14)
         subject = rc["subject"].replace("\n", "\n" + (" " * 21)).replace("::", "\n" + (" " * 21))
         return f"    - {category} {subject}"
-    
-    def printRatingColor(self, message, rating):
-        ansiCodes = {
-            self.ANSI_GREEN : rating != None and rating >= 3.5,
-            self.ANSI_YELLOW : rating != None and rating >= 2.5 and rating < 3.5,
-            self.ANSI_RED : rating != None and rating >= 0.0 and rating < 2.5,
-            self.ANSI_BLUE : rating == None
-        }
-
-        prefix = "".join([code for code in ansiCodes if ansiCodes[code]])
-        self.printColor(message, prefix)
 
     def printColor(self, message, ansiPrefix):
         print(ansiPrefix + message + "\033[0m")
@@ -320,13 +342,13 @@ class StaticHtmlReport(Report):
     HTML_STAR_FULL = "&#9733;"
     HTML_STAR_EMPTY = "&#9734;"
 
-    def generate(self, feedback, args):
+    def generate(self, feedback, args, target):
         if not os.path.exists("sigrid-ci-output"):
             os.mkdir("sigrid-ci-output")
     
         with open(os.path.dirname(__file__) + "/sigridci-feedback-template.html", encoding="utf-8", mode="r") as templateRef:
             template = templateRef.read()
-            template = self.renderHtmlFeedback(template, feedback, args)
+            template = self.renderHtmlFeedback(template, feedback, args, target)
 
         reportFile = os.path.abspath("sigrid-ci-output/index.html")
         writer = open(reportFile, encoding="utf-8", mode="w")
@@ -335,28 +357,43 @@ class StaticHtmlReport(Report):
         
         print("")
         print("You can find the full results here:")
-        print(reportFile)
+        print("    " + reportFile)
         print("")
         print("You can find more information about these results in Sigrid:")
-        print(self.getSigridUrl(args))
+        print("    " + self.getSigridUrl(args))
         print("")
         
-    def renderHtmlFeedback(self, template, feedback, args):
-        template = template.replace("@@@CUSTOMER", args.customer)
-        template = template.replace("@@@SYSTEM", args.system)
-        template = template.replace("@@@TARGET", "%.1f" % args.targetquality)
-        template = template.replace("@@@LINES_OF_CODE_TOUCHED", "%d" % feedback.get("newCodeLinesOfCode", 0))
-        template = template.replace("@@@BASELINE_DATE", self.formatBaselineDate(feedback))
-        template = template.replace("@@@SIGRID_LINK", self.getSigridUrl(args))
+    def renderHtmlFeedback(self, template, feedback, args, target):
+        placeholders = {
+            "CUSTOMER" : html.escape(args.customer),
+            "SYSTEM" : html.escape(args.system),
+            "TARGET" : "%.1f" % target.ratings["MAINTAINABILITY"],
+            "LINES_OF_CODE_TOUCHED" : "%d" % feedback.get("newCodeLinesOfCode", 0),
+            "BASELINE_DATE" : self.formatBaseline(feedback),
+            "SIGRID_LINK" : self.getSigridUrl(args),
+            "OVERALL_PASSED" : ("passed" if target.isOverallPassed(feedback) else "failed")
+        }
+        
         for metric in self.METRICS:
-            template = template.replace(f"@@@{metric}_OVERALL", self.formatRating(feedback["overallRatings"], metric))
-            template = template.replace(f"@@@{metric}_NEW", self.formatRating(feedback["newCodeRatings"], metric))
-            template = template.replace(f"@@@{metric}_STARS_OVERALL", self.formatHtmlStars(feedback["overallRatings"], metric))
-            template = template.replace(f"@@@{metric}_STARS_NEW", self.formatHtmlStars(feedback["newCodeRatings"], metric))
-            passed = self.isPassed(feedback, metric, args.targetquality)
-            template = template.replace(f"@@@{metric}_PASSED", "passed" if passed else "failed")
-            template = template.replace(f"@@@{metric}_REFACTORING_CANDIDATES", self.formatRefactoringCandidates(feedback, metric))
+            placeholders[f"{metric}_OVERALL"] = self.formatRating(feedback["overallRatings"], metric)
+            placeholders[f"{metric}_NEW"] = self.formatRating(feedback["newCodeRatings"], metric)
+            placeholders[f"{metric}_TARGET"] = self.formatRating(target.ratings, metric, "")
+            placeholders[f"{metric}_STARS_OVERALL"] = self.formatHtmlStars(feedback["overallRatings"], metric)
+            placeholders[f"{metric}_STARS_NEW"] = self.formatHtmlStars(feedback["newCodeRatings"], metric)
+            placeholders[f"{metric}_PASSED"] = self.formatPassed(feedback, target, metric)
+            placeholders[f"{metric}_REFACTORING_CANDIDATES"] = self.formatRefactoringCandidates(feedback, metric)
+        
+        return self.fillPlaceholders(template, placeholders)
+        
+    def fillPlaceholders(self, template, placeholders):
+        for placeholder, value in placeholders.items():
+            template = template.replace(f"@@@{placeholder}", value)
         return template
+        
+    def formatPassed(self, feedback, target, metric):
+        if target.ratings.get(metric, None) == None:
+            return ""
+        return "passed" if target.isPassed(feedback, metric) else "failed"
         
     def formatRefactoringCandidates(self, feedback, metric):
         refactoringCandidates = self.getRefactoringCandidates(feedback, metric)
@@ -380,9 +417,10 @@ class StaticHtmlReport(Report):
         
         
 class ExitCodeReport(Report):   
-    def generate(self, feedback, args):
+    def generate(self, feedback, args, target):
         asciiArt = TextReport()
-        if self.isPassed(feedback, "MAINTAINABILITY", args.targetquality):
+        
+        if target.isOverallPassed(feedback):
             asciiArt.printColor("\n** SIGRID CI RUN COMPLETE: YOU WROTE MAINTAINABLE CODE AND REACHED THE TARGET **\n", \
                 asciiArt.ANSI_BOLD + asciiArt.ANSI_GREEN)
         else:
@@ -390,7 +428,7 @@ class ExitCodeReport(Report):
                 asciiArt.ANSI_BOLD + asciiArt.ANSI_YELLOW)
             # Only break the build when not publishing to Sigrid,
             # i.e. when running on a branch or pull request.
-            if not args.publish:
+            if not args.publish and not args.publishonly:
                 sys.exit(1)
                 
                 
@@ -432,6 +470,7 @@ if __name__ == "__main__":
     
     log("Starting Sigrid CI")
     options = UploadOptions(args.source, args.exclude.split(","), args.history, args.pathprefix, args.showupload)
+    target = TargetQuality(f"{args.source}/sigrid.yaml", args.targetquality)
     apiClient = SigridApiClient(args)
     analysisId = apiClient.submitUpload(options)
     
@@ -441,4 +480,4 @@ if __name__ == "__main__":
         feedback = apiClient.fetchAnalysisResults(analysisId)
     
         for report in [TextReport(), StaticHtmlReport(), ExitCodeReport()]:
-            report.generate(feedback, args)
+            report.generate(feedback, args, target)
