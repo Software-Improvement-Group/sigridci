@@ -36,7 +36,7 @@ However, this workflow is still appropriate for smaller teams and projects, or f
 
 <img src="images/multi-branch-workflow.png" width="600" />
 
-**How to use Sigrid CI:** Sigrid does not natively support multiple parallel streams for the same project, since less that 1 percent of our clients use this model. Sigrid assumes a single "baseline" version of the system, which does not exist in this type of workflow. 
+**How to use Sigrid CI:** Sigrid does not natively support multiple parallel streams for the same project, since less than 1 percent of our clients use this model. Sigrid assumes a single "baseline" version of the system, which does not exist in this type of workflow. 
 
 However, it is still possible to use Sigrid in such a project: every parallel branch would be a separate system in Sigrid, which allows people to receive feedback for "their" branch. This also means that all branches will be visible as separate systems in the Sigrid dashboard on [sigrid-says.com](https://sigrid-says.com), since they are monitored separately.
 
