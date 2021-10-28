@@ -20,7 +20,7 @@ However, this workflow is still appropriate for smaller teams and projects, or f
 
 <img src="images/centralized-workflow.png" width="600" />
 
-**How to use Sigrid CI:** There are no pull requests, so Sigrid CI's pull request integration cannot be used. However, Sigrid CI can still provide feedback after every commit on the quality of the changes. This ensures that every developer receives feedback immediately after his/her change.
+**How to use Sigrid CI:** There are no pull requests, so Sigrid CI's pull request integration cannot be used. However, Sigrid CI can still provide feedback on the quality of the changes after every commit. This ensures that every developer receives feedback immediately after his/her change.
 
 ## Sigrid CI &amp; development branch workflow
 
