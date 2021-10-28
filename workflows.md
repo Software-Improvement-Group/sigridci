@@ -4,7 +4,7 @@ Sigrid CI provides development teams with software quality feedback at various p
 
 ## Sigrid CI &amp; feature branch workflow
 
-**How it works:** Developers make changes in feature branches. When a feature branch is considered ready to be integrated, a *pull request* is created. The pull request is then reviewed by a different developer, who typically use a combination of tool-based checks that are executed as part of the Continuous Integration pipeline, and manual code review. 
+**How it works:** Developers make changes in feature branches. When a feature branch is considered ready to be integrated, a *pull request* is created. The pull request is then reviewed by a different developer, who typically uses a combination of manual code review and tool-based checks that are executed as part of the Continuous Integration pipeline.
 
 This is the most common development workflow, both for commercial software development projects and for open source development on platforms like GitHub. 
 
