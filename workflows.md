@@ -30,7 +30,7 @@ However, this workflow is still appropriate for smaller teams and projects, or f
 
 <img src="images/development-branch-workflow.png" width="600" />
 
-**How to use Sigrid CI:** Teams typically do not use pull requests in this scenario, although they do perform code reviews before changes are merged. As such, Sigrid CI can be used to receive feedback on all changes made to the development branch. This feedback can be used as input to the reviewer.
+**How to use Sigrid CI:** Teams may or may not use pull requests in this scenario, but they do perform code reviews before changes are merged. If the team does *not* use pull requests, Sigrid CI can be used to receive feedback on all changes made to the development branch. This feedback can be used as input to the reviewer. If the team *does* use pull requests, the workflow is the same as described in *feature branch workflow*.
 
 ## Sigrid CI &amp; multi-branch workflow
 
