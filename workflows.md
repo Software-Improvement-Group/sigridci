@@ -24,7 +24,7 @@ However, this workflow is still appropriate for smaller teams and projects, or f
 
 ## Sigrid CI &amp; development branch workflow
 
-**How it works:** This is a variant of the *centralized workflow*, but uses two branches: a stable master branch, and a separate development branch where all changes are made. like the *feature branch workflow*, there is an explicit code review step before changes are merged from the development branch to the master branch. Unlike the feature branch workflow, all developers work in the same branch and are affected by each other's changes.
+**How it works:** This is a variant of the *centralized workflow*, but uses two branches: a stable master branch, and a separate development branch where all changes are made. Like the *feature branch workflow*, there is an explicit code review step before changes are merged from the development branch to the master branch. Unlike the feature branch workflow, all developers work in the same branch and are affected by each other's changes.
 
 <img src="images/development-branch-workflow.png" width="600" />
 
