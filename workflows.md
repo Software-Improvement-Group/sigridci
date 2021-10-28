@@ -12,6 +12,8 @@ This is the most common development workflow, both for commercial software devel
 
 **How to use Sigrid CI:** In this workflow, the pull request is the logical moment to receive software quality feedback, since this feedback can then be used while the pull request is being reviewed. This enables the reviewer to either request the developer to make changes before the pull request is accepted, or create a follow-up ticket to fix the discovered issues at a later time.
 
+After accepting the pull request, changes are merged to the master branch. After the merge, the master branch is then published to Sigrid to ensure the results at [sigrid-says.com](https://sigrid-says.com) reflect the codebase's current state.
+
 ## Sigrid CI &amp; centralized workflow
 
 **How it works:** Every team member commits directly to the master branch. This workflow used to be very common when [Subversion](https://subversion.apache.org) was the dominant version control system, but has been replaced by the *feature branch workflow* in recent years. The downside of the centralized workflow is that every commit immediately affects all team members, since everyone is working in the same branch. This makes it impossible to perform reviews *before* changes are merged.
@@ -20,7 +22,7 @@ However, this workflow is still appropriate for smaller teams and projects, or f
 
 <img src="images/centralized-workflow.png" width="600" />
 
-**How to use Sigrid CI:** There are no pull requests, so Sigrid CI's pull request integration cannot be used. However, Sigrid CI can still provide feedback on the quality of the changes after every commit. This ensures that every developer receives feedback immediately after his/her change.
+**How to use Sigrid CI:** There are no pull requests, so Sigrid CI's pull request integration cannot be used. However, Sigrid CI can still provide feedback on the quality of the changes after every commit, by publishing the codebase to Sigrid directly after the commit has been made. This ensures that every developer receives feedback immediately after his/her change.
 
 ## Sigrid CI &amp; development branch workflow
 
@@ -46,7 +48,7 @@ However, it is still possible to use Sigrid in such a project: every parallel br
 
 <img src="images/git-submodule-workflow.png" width="500" />
 
-**How to use Sigrid CI:** You can use Sigrid CI for projects that use Git submodules. That said, you want to make sure that teams only receive feedback on code they maintain. In the example above, that means the team working on repository B needs to configure Sigrid to exclude all code in the Git submodule, since that code is owned by the team that works on repository A.
+**How to use Sigrid CI:** You can use Sigrid CI for projects that use Git submodules. That said, you want to make sure that teams only receive feedback on code they maintain. In the example above, that means the team working on repository B needs to configure Sigrid CI to exclude all code in the Git submodule, since that code is owned by the team that works on repository A.
 
 ## Contact and support
 
