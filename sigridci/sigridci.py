@@ -50,7 +50,7 @@ class UploadOptions:
 class SigridApiClient:
     PROTOCOL_VERSION = "v1"
     POLL_INTERVAL = 60
-    POLL_ATTEMPTS = 30
+    POLL_ATTEMPTS = 60
     RETRY_ATTEMPTS = 5
 
     def __init__(self, args):
