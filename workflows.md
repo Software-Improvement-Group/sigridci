@@ -50,6 +50,17 @@ However, it is still possible to use Sigrid in such a project: every parallel br
 
 **How to use Sigrid CI:** You can use Sigrid CI for projects that use Git submodules. That said, you want to make sure that teams only receive feedback on code they maintain. In the example above, that means the team working on repository B needs to configure Sigrid CI to exclude all code in the Git submodule, since that code is owned by the team that works on repository A.
 
+## Combining multiple repositories into a single Sigrid system
+
+**How it works:** In certain situations, it might be desirable to combine multiple repositories into a single system in Sigrid. This is generally done for reporting purposes: in some projects reporting on every individual repository can seem excessively detailed, and providing a single conclusion simplifies things. 
+
+**How to use Sigrid CI:** Sigrid CI operates on the repository level. This makes sense, as Sigrid CI is integrated into the repository's continuous integration pipeline. However, this leads to a situation where different stakeholders require different views on the source code. 
+
+- For the development teams, use Sigrid CI to provide repository-level feedback as explained in this documentation.
+- For reporting purposes, SIG also supports [periodic SFTP uploads](https://www.softwareimprovementgroup.com/wp-content/uploads/Automatic-source-code-upload-instruction-for-Sigrid-systems.pdf). This is less suitable for developers as a daily feedback loop is considered too slow, but for reporting purposes a daily feedback loop is perfectly reasonable.
+
+<img src="images/sftp-upload-workflow.png" width="500" />
+
 ## Contact and support
 
 Feel free to contact [SIG's support department](mailto:support@softwareimprovementgroup.com) for any questions or issues you may have after reading this document, or when using Sigrid or Sigrid CI. Users in Europe can also contact us by phone at +31 20 314 0953.
