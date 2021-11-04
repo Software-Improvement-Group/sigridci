@@ -56,7 +56,7 @@ However, it is still possible to use Sigrid in such a project: every parallel br
 
 **How to use Sigrid CI:** Sigrid CI operates on the repository level. This makes sense, as Sigrid CI is integrated into the repository's continuous integration pipeline. However, this leads to a situation where different stakeholders require different views on the source code. 
 
-- For the development teams, use Sigrid CI to provide repository-level feedback as explained in this documentation.
+- For the development teams, use Sigrid CI to provide repository-level feedback as explained in [this documentation](faq.md#we-have-a-multi-repo-project-can-i-still-use-sigrid-ci).
 - For reporting purposes, SIG also supports [periodic SFTP uploads](https://www.softwareimprovementgroup.com/wp-content/uploads/Automatic-source-code-upload-instruction-for-Sigrid-systems.pdf). This is less suitable for developers as a daily feedback loop is considered too slow, but for reporting purposes a daily feedback loop is perfectly reasonable.
 
 <img src="images/sftp-upload-workflow.png" width="500" />
