@@ -6,6 +6,7 @@ Sigrid CI: Frequently Asked Questions
 ### Usage questions
 
 - [Do you support pull request integration?](#do-you-support-pull-request-integration)
+- [Does Sigrid CI fit in my workflow?](#does-sigrid-ci-fit-in-my-workflow)
 - [Which technologies do you support?](#which-technologies-do-you-support)
 - [What is my system name?](#what-is-my-system-name)
 - [How to get a token and account?](#how-to-get-a-token-and-account)
@@ -46,6 +47,10 @@ The first Sigrid CI use case is to *publish* your project's source code to Sigri
 The second use case is to use Sigrid CI for feedback during code reviews on pull requests. This wil compare the contents of the pull request agains the baseline version, allowing you to identify improvement areas in the new and changed code.
 
 The [platform-specific documentation and examples](README.md) cover instructions for both scenarios. We generally recommend to use Sigrid CI for both scenarios, although it's also perfectly fine to use Sigrid CI for one scenario but not the other.
+
+### Does Sigrid CI fit in my workflow?
+
+Different development teams use different workflows. Our [workflow documentation](workflows.md) covers different development/branch/CI workflows, and how Sigrid CI would fit into those workflows.
 
 ### Which technologies do you support?
 
