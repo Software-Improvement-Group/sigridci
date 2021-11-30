@@ -33,11 +33,18 @@ stages:
   - stage: Report
     jobs:
     - job: SigridCI
-      container: python:3.9-buster
+      pool:
+        vmImage: 'ubuntu-latest' #https://docs.microsoft.com/en-us/azure/devops/pipelines/agents/hosted?view=azure-devops&tabs=yaml#software
       continueOnError: true
       condition: "ne(variables['Build.SourceBranch'], 'refs/heads/main')"
       steps:
       - bash: "git clone https://github.com/Software-Improvement-Group/sigridci.git sigridci"
+        displayName: Clone SigridCI from Github
+      - task: UsePythonVersion@0
+        displayName: Get PythonTools 3.7
+        inputs:
+          versionSpec: '3.7'
+          addToPath: false
       - bash: "./sigridci/sigridci/sigridci.py --customer examplecustomername --system examplesystemname --source . --targetquality 3.5"
         env:
           SIGRID_CI_ACCOUNT: $(SIGRID_CI_ACCOUNT)
@@ -46,11 +53,18 @@ stages:
       - publish: sigrid-ci-output
         artifact: sigrid-ci-output
     - job: SigridPublish
-      container: python:3.9-buster
+      pool:
+        vmImage: 'ubuntu-latest'
       continueOnError: true
       condition: "eq(variables['Build.SourceBranch'], 'refs/heads/main')"
       steps:
       - bash: "git clone https://github.com/Software-Improvement-Group/sigridci.git sigridci"
+        displayName: Clone SigridCI from Github
+      - task: UsePythonVersion@0
+        displayName: Get PythonTools 3.7
+        inputs:
+          versionSpec: '3.7'
+          addToPath: false
       - bash: "./sigridci/sigridci/sigridci.py --customer examplecustomername --system examplesystemname --source . --publish"
         env:
           SIGRID_CI_ACCOUNT: $(SIGRID_CI_ACCOUNT)
