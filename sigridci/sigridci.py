@@ -371,7 +371,7 @@ class StaticHtmlReport(Report):
             "LINES_OF_CODE_TOUCHED" : "%d" % feedback.get("newCodeLinesOfCode", 0),
             "BASELINE_DATE" : self.formatBaseline(feedback),
             "SIGRID_LINK" : self.getSigridUrl(args),
-            "OVERALL_PASSED" : ("passed" if target.isOverallPassed(feedback) else "failed")
+            "MAINTAINABILITY_PASSED" : ("passed" if target.isOverallPassed(feedback) else "failed")
         }
         
         for metric in self.METRICS:
