@@ -50,7 +50,8 @@ In addition to the generic instructions, we have also prepared specific instruct
 
 - [Client script option reference](client-script-usage.md)
 - [Frequently asked questions](faq.md)
-- [Recording of SigridCI demonstration](https://www.youtube.com/watch?v=1QWWtFlB6cQ) 
+- [Using Sigrid CI as part of your development workflow](workflows.md)
+- [Sigrid CI demo recording](https://www.youtube.com/watch?v=1QWWtFlB6cQ) 
 
 ## Contact and support
 

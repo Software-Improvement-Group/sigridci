@@ -77,7 +77,7 @@ class TargetQuality:
 class SigridApiClient:
     PROTOCOL_VERSION = "v1"
     POLL_INTERVAL = 60
-    POLL_ATTEMPTS = 30
+    POLL_ATTEMPTS = 60
     RETRY_ATTEMPTS = 5
 
     def __init__(self, args):
@@ -426,9 +426,10 @@ class ExitCodeReport(Report):
         else:
             asciiArt.printColor("\n** SIGRID CI RUN COMPLETE: THE CODE YOU WROTE DID NOT MEET THE TARGET FOR MAINTAINABLE CODE **\n", \
                 asciiArt.ANSI_BOLD + asciiArt.ANSI_YELLOW)
-            # Only break the build when not publishing to Sigrid,
-            # i.e. when running on a branch or pull request.
-            if not args.publish and not args.publishonly:
+            
+            # If you publish(only) we never break the build
+            # We can break the build when running on a branch or pull request.
+            if not args.publish:
                 sys.exit(1)
                 
                 
