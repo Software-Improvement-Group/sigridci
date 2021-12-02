@@ -57,12 +57,13 @@ pipelines:
             - "git clone https://github.com/Software-Improvement-Group/sigridci.git sigridci"
             - "./sigridci/sigridci/sigridci.py --customer examplecustomername --system examplesystemname --source . --publish"
   pull-requests:
-    - step:
-        name: Sigrid CI
-        image: python:3.9 # The client scripts for Sigrid CI are based on Python.
-        script:
-          - "git clone https://github.com/Software-Improvement-Group/sigridci.git sigridci"
-          - "./sigridci/sigridci/sigridci.py --customer examplecustomername --system examplesystemname --source . --targetquality 3.5"
+    '**': #this runs as default for any branch not elsewhere defined
+      - step:
+          name: Sigrid CI
+          image: python:3.9 # The client scripts for Sigrid CI are based on Python.
+          script:
+            - "git clone https://github.com/Software-Improvement-Group/sigridci.git sigridci"
+            - "./sigridci/sigridci/sigridci.py --customer examplecustomername --system examplesystemname --source . --targetquality 3.5"
 ```
 
 Note the branch name `master` in the example. This should refer to your primary branch. In most projects this is called either `master` or `main`, but the default project name could be different for your project.
