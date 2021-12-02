@@ -65,13 +65,13 @@ class TargetQuality:
                 if match:
                     self.ratings[match.group(1).upper()] = float(match.group(2))
     
-    def isPassed(self, feedback, metric):
+    def meetsTargetQualityForMetric(self, feedback, metric):
         value = feedback["newCodeRatings"].get(metric, None)
         targetRating = self.ratings.get(metric, None)
         return value == None or targetRating == None or value >= targetRating
         
-    def isOverallPassed(self, feedback):
-        return all(self.isPassed(feedback, metric) for metric in self.ratings)
+    def meetsOverallQualityTarget(self, feedback):
+        return all(self.meetsTargetQualityForMetric(feedback, metric) for metric in self.ratings)
 
 
 class SigridApiClient:
@@ -324,7 +324,7 @@ class TextReport(Report):
     def getRatingColor(self, feedback, target, metric):
         if feedback["newCodeRatings"].get(metric, None) == None:
             return self.ANSI_BLUE
-        elif target.isPassed(feedback, metric):
+        elif target.meetsTargetQualityForMetric(feedback, metric):
             return self.ANSI_GREEN
         else:
             return self.ANSI_RED
@@ -371,7 +371,7 @@ class StaticHtmlReport(Report):
             "LINES_OF_CODE_TOUCHED" : "%d" % feedback.get("newCodeLinesOfCode", 0),
             "BASELINE_DATE" : self.formatBaseline(feedback),
             "SIGRID_LINK" : self.getSigridUrl(args),
-            "MAINTAINABILITY_PASSED" : ("passed" if target.isOverallPassed(feedback) else "failed")
+            "MAINTAINABILITY_PASSED" : ("passed" if target.meetsOverallQualityTarget(feedback) else "failed")
         }
         
         for metric in self.METRICS:
@@ -393,7 +393,7 @@ class StaticHtmlReport(Report):
     def formatPassed(self, feedback, target, metric):
         if target.ratings.get(metric, None) == None:
             return ""
-        return "passed" if target.isPassed(feedback, metric) else "failed"
+        return "passed" if target.meetsTargetQualityForMetric(feedback, metric) else "failed"
         
     def formatRefactoringCandidates(self, feedback, metric):
         refactoringCandidates = self.getRefactoringCandidates(feedback, metric)
@@ -420,7 +420,7 @@ class ExitCodeReport(Report):
     def generate(self, feedback, args, target):
         asciiArt = TextReport()
         
-        if target.isOverallPassed(feedback):
+        if target.meetsOverallQualityTarget(feedback):
             asciiArt.printColor("\n** SIGRID CI RUN COMPLETE: YOU WROTE MAINTAINABLE CODE AND REACHED THE TARGET **\n", \
                 asciiArt.ANSI_BOLD + asciiArt.ANSI_GREEN)
         else:

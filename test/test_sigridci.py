@@ -275,19 +275,19 @@ class SigridCiTest(unittest.TestCase):
     def testNormalModeOnlyRequiresOverallRatingToMeetTarget(self):
         target = TargetQuality("/tmp/nonexistent", 3.5)
 
-        self.assertFalse(target.isOverallPassed({"newCodeRatings" : {"MAINTAINABILITY" : 3, "DUPLICATION" : 2}}))
-        self.assertTrue(target.isOverallPassed({"newCodeRatings" : {"MAINTAINABILITY" : 4, "DUPLICATION" : 2}}))
-        self.assertTrue(target.isOverallPassed({"newCodeRatings" : {"DUPLICATION" : 2}}))
+        self.assertFalse(target.meetsOverallQualityTarget({"newCodeRatings" : {"MAINTAINABILITY" : 3, "DUPLICATION" : 2}}))
+        self.assertTrue(target.meetsOverallQualityTarget({"newCodeRatings" : {"MAINTAINABILITY" : 4, "DUPLICATION" : 2}}))
+        self.assertTrue(target.meetsOverallQualityTarget({"newCodeRatings" : {"DUPLICATION" : 2}}))
         
     def testTargetsForSpecificSystemProperties(self):
         target = TargetQuality("/tmp/nonexistent", 4)
         target.ratings["DUPLICATION"] = 4
 
-        self.assertFalse(target.isOverallPassed({"newCodeRatings" : {"MAINTAINABILITY" : 3, "DUPLICATION" : 2}}))
-        self.assertFalse(target.isOverallPassed({"newCodeRatings" : {"MAINTAINABILITY" : 4, "DUPLICATION" : 2}}))
-        self.assertFalse(target.isOverallPassed({"newCodeRatings" : {"DUPLICATION" : 2}}))
-        self.assertTrue(target.isOverallPassed({"newCodeRatings" : {"MAINTAINABILITY" : 4, "DUPLICATION" : 4}}))
-        self.assertTrue(target.isOverallPassed({"newCodeRatings" : {"DUPLICATION" : 5}}))
+        self.assertFalse(target.meetsOverallQualityTarget({"newCodeRatings" : {"MAINTAINABILITY" : 3, "DUPLICATION" : 2}}))
+        self.assertFalse(target.meetsOverallQualityTarget({"newCodeRatings" : {"MAINTAINABILITY" : 4, "DUPLICATION" : 2}}))
+        self.assertFalse(target.meetsOverallQualityTarget({"newCodeRatings" : {"DUPLICATION" : 2}}))
+        self.assertTrue(target.meetsOverallQualityTarget({"newCodeRatings" : {"MAINTAINABILITY" : 4, "DUPLICATION" : 4}}))
+        self.assertTrue(target.meetsOverallQualityTarget({"newCodeRatings" : {"DUPLICATION" : 5}}))
         
     def testUseTargetRatingIfNoConfigFileExists(self):
         sourceDir = tempfile.mkdtemp()
