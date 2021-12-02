@@ -55,7 +55,7 @@ pipelines:
           image: python:3.9 # The client scripts for Sigrid CI are based on Python.
           script:
             - "git clone https://github.com/Software-Improvement-Group/sigridci.git sigridci"
-            - "./sigridci/sigridci/sigridci.py --customer examplecustomername --system examplesystemname --source . --publish"
+            - "./sigridci/sigridci/sigridci.py --customer examplecustomername --system examplesystemname --source . --targetquality 3.5 --publish"
   pull-requests:
     - step:
         name: Sigrid CI
