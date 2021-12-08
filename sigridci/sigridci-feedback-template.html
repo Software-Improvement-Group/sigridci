@@ -186,7 +186,7 @@
             .passed {
                 background-color: #77C253;
                 color: #FFFFFF;
-                width: 16px;
+                width: 17px;
                 border-radius: 8px;
                 display: inline;
             }
@@ -199,7 +199,7 @@
             .failed {
                 background-color: #BB2D36;
                 color: #FFFFFF;
-                width: 16px;
+                width: 17px;
                 border-radius: 8px;
                 display: inline;
             }
@@ -207,6 +207,10 @@
             .failed:after {
                 content: "\2715";
                 white-space: pre;
+            }
+            
+            .targets span {
+                color: #829ab1;
             }
             
             .stars1 {
@@ -294,8 +298,8 @@
                             <span>@@@COMPONENT_ENTANGLEMENT_STARS_OVERALL</span>
                             <span class="separator">@@@MAINTAINABILITY_STARS_OVERALL</span>
                         </div>
-                        <div style="width: 200px;">
-                            <h3>New/changed code quality</h3>
+                        <div style="width: 170px;">
+                            <h3>New/changed code</h3>
                             <span>@@@VOLUME_STARS_NEW</span>
                             <span>@@@DUPLICATION_STARS_NEW</span>
                             <span>@@@UNIT_SIZE_STARS_NEW</span>
@@ -307,7 +311,20 @@
                             <span>@@@COMPONENT_ENTANGLEMENT_STARS_NEW</span>
                             <span class="separator">@@@MAINTAINABILITY_STARS_NEW</span>
                         </div>
-                        <div>
+                        <div style="width: 90px;" class="targets">
+                            <h3>Target</h3>
+                            <span>@@@VOLUME_TARGET</span>
+                            <span>@@@DUPLICATION_TARGET</span>
+                            <span>@@@UNIT_SIZE_TARGET</span>
+                            <span>@@@UNIT_COMPLEXITY_TARGET</span>
+                            <span>@@@UNIT_INTERFACING_TARGET</span>
+                            <span>@@@MODULE_COUPLING_TARGET</span>
+                            <span>@@@COMPONENT_BALANCE_PROP_TARGET</span>
+                            <span>@@@COMPONENT_INDEPENDENCE_TARGET</span>
+                            <span>@@@COMPONENT_ENTANGLEMENT_TARGET</span>
+                            <span class="separator"><span>@@@MAINTAINABILITY_TARGET</span></span>
+                        </div>
+                        <div style="width: 90px;">
                             <h3>Passed?</h3>
                             <span class="@@@VOLUME_PASSED">&nbsp;</span>
                             <span class="@@@DUPLICATION_PASSED">&nbsp;</span>

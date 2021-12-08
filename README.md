@@ -46,8 +46,9 @@ In addition to the generic instructions, we have also prepared specific instruct
 - [Integrating Sigrid CI with Azure DevOps](azure-devops.md)
 - [Integrating Sigrid CI with TeamCity](teamcity.md)
 
-## More information
+## Usage documentation
 
+- [Client script option reference](client-script-usage.md)
 - [Frequently asked questions](faq.md)
 - [Using Sigrid CI as part of your development workflow](workflows.md)
 - [Sigrid CI demo recording](https://www.youtube.com/watch?v=1QWWtFlB6cQ) 
