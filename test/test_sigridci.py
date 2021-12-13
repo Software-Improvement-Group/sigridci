@@ -312,6 +312,17 @@ class SigridCiTest(unittest.TestCase):
         self.assertEqual(target.ratings.get("MAINTAINABILITY", None), 4.0)
         self.assertEqual(target.ratings.get("DUPLICATION", None), 3.0)
         self.assertEqual(target.ratings.get("UNIT_SIZE", None), None)
+        
+    def testTextColorShouldOnlyApplyToMetricsThatHaveExplicitThreshold(self):
+        target = TargetQuality("/tmp/nonexistent", 3.5)
+        target.ratings["UNIT_SIZE"] = 3.5
+        
+        feedback = {"newCodeRatings" : {"MAINTAINABILITY" : 2.0, "DUPLICATION" : 3.0, "UNIT_SIZE" : 3.0}}
+        report = TextReport()
+        
+        self.assertEqual(report.getRatingColor(feedback, target, "MAINTAINABILITY"), report.ANSI_RED)
+        self.assertEqual(report.getRatingColor(feedback, target, "DUPLICATION"), report.ANSI_BLUE)
+        self.assertEqual(report.getRatingColor(feedback, target, "UNIT_SIZE"), report.ANSI_RED)
 
     def createTempFile(self, dir, name, contents):
         writer = open(dir + "/" + name, "w")

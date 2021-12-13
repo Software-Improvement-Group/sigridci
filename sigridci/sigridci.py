@@ -322,9 +322,10 @@ class TextReport(Report):
                 print(self.formatRefactoringCandidate(rc))
                 
     def getRatingColor(self, feedback, target, metric):
-        if feedback["newCodeRatings"].get(metric, None) == None:
+        if feedback["newCodeRatings"].get(metric, None) == None or not metric in target.ratings:
             return self.ANSI_BLUE
-        elif target.meetsTargetQualityForMetric(feedback, metric):
+        
+        if target.meetsTargetQualityForMetric(feedback, metric):
             return self.ANSI_GREEN
         else:
             return self.ANSI_RED
