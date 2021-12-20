@@ -260,6 +260,9 @@ class Report:
     def generate(self, feedback, args, target):
         pass
         
+    def formatMetricName(self, metric):
+        return metric.replace("_PROP", "").title().replace("_", " ")
+        
     def formatRating(self, ratings, metric, naText="N/A"):
         if ratings.get(metric, None) == None:
             return naText
@@ -286,23 +289,36 @@ class TextReport(Report):
     ANSI_YELLOW = "\033[33m"
     ANSI_RED = "\033[91m"
     ANSI_BLUE = "\033[96m"
-    LINE_WIDTH = 91
+    LINE_WIDTH = 89
 
     def generate(self, feedback, args, target):
         self.printHeader("Refactoring candidates")
         for metric in self.REFACTORING_CANDIDATE_METRICS:
             self.printMetric(feedback, metric)
-
+            
         self.printHeader("Maintainability ratings")
-        print("System property".ljust(40) + f"Baseline ({self.formatBaseline(feedback)})    New/changed code    Target")
+        self.printTableRow(["System property", f"Baseline on {self.formatBaseline(feedback)}", "New/changed code", "Target", "Overall"])
+        
         for metric in self.METRICS:
             if metric == "MAINTAINABILITY":
                 print("-" * self.LINE_WIDTH)
-            fields = (metric.replace("_PROP", "").title().replace("_", " "), \
-                "(" + self.formatRating(feedback["overallRatings"], metric) + ")", \
-                self.formatRating(feedback["newCodeRatings"], metric), \
-                str(target.ratings.get(metric, "")))
-            self.printColor("%-40s%-25s%-20s%s" % fields, self.getRatingColor(feedback, target, metric))
+            
+            row = [
+                self.formatMetricName(metric), 
+                "(" + self.formatRating(feedback["baselineRatings"], metric) + ")",
+                self.formatRating(feedback["newCodeRatings"], metric),
+                str(target.ratings.get(metric, "")),
+                self.formatRating(feedback["overallRatings"], metric)
+            ]
+            
+            self.printTableRow(row, self.getRatingColor(feedback, target, metric))
+            
+    def printTableRow(self, row, color=None):
+        formattedRow = "%-27s%-25s%-20s%-10s%-7s" % tuple(row)
+        if color:
+            self.printColor(formattedRow, color)
+        else:
+            print(formattedRow)
                 
     def printHeader(self, header):
         print("")
@@ -312,7 +328,7 @@ class TextReport(Report):
                 
     def printMetric(self, feedback, metric):
         print("")
-        print(metric.replace("_PROP", "").title().replace("_", " "))
+        print(self.formatMetricName(metric))
         
         refactoringCandidates = self.getRefactoringCandidates(feedback, metric)
         if len(refactoringCandidates) == 0:
