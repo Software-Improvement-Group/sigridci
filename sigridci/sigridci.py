@@ -324,8 +324,7 @@ class TextReport(Report):
     def getRatingColor(self, feedback, target, metric):
         if feedback["newCodeRatings"].get(metric, None) == None or not metric in target.ratings:
             return self.ANSI_BLUE
-        
-        if target.meetsTargetQualityForMetric(feedback, metric):
+        elif target.meetsTargetQualityForMetric(feedback, metric):
             return self.ANSI_GREEN
         else:
             return self.ANSI_RED
