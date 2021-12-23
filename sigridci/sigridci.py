@@ -28,6 +28,8 @@ import typing
 import urllib.parse
 import urllib.request
 import zipfile
+from dataclasses import dataclass
+from xml.dom import minidom
 
 
 LOG_HISTORY = []
@@ -39,7 +41,7 @@ def log(message):
     LOG_HISTORY.append(message)
     
     
-@dataclasses.dataclass
+@dataclass
 class UploadOptions:
     sourceDir: str = None
     excludePatterns: typing.List[str] = dataclasses.field(default_factory=lambda: [])
@@ -48,7 +50,7 @@ class UploadOptions:
     showContents: bool = False
     
     
-@dataclasses.dataclass
+@dataclass
 class TargetQuality:
     ratings: typing.Dict[str, float]
 
@@ -260,6 +262,9 @@ class Report:
     def generate(self, feedback, args, target):
         pass
         
+    def formatMetricName(self, metric):
+        return metric.replace("_PROP", "").title().replace("_", " ")
+        
     def formatRating(self, ratings, metric, naText="N/A"):
         if ratings.get(metric, None) == None:
             return naText
@@ -277,7 +282,7 @@ class Report:
             
     def getRefactoringCandidates(self, feedback, metric):
         refactoringCandidates = feedback.get("refactoringCandidates", [])
-        return [rc for rc in refactoringCandidates if rc["metric"] == metric]
+        return [rc for rc in refactoringCandidates if rc["metric"] == metric or metric == "MAINTAINABILITY"]
 
 
 class TextReport(Report):
@@ -343,9 +348,6 @@ class StaticHtmlReport(Report):
     HTML_STAR_EMPTY = "&#9734;"
 
     def generate(self, feedback, args, target):
-        if not os.path.exists("sigrid-ci-output"):
-            os.mkdir("sigrid-ci-output")
-    
         with open(os.path.dirname(__file__) + "/sigridci-feedback-template.html", encoding="utf-8", mode="r") as templateRef:
             template = templateRef.read()
             template = self.renderHtmlFeedback(template, feedback, args, target)
@@ -416,6 +418,42 @@ class StaticHtmlReport(Report):
         return f"<strong class=\"stars{stars}\">{fullStars}{emptyStars}</strong> &nbsp; " + rating
         
         
+class JUnitFormatReport(Report):
+    def generate(self, feedback, args, target):
+        allTestCases = self.getTestCases(feedback, target)
+        failedTestCases = [metric for metric in allTestCases.keys() if len(allTestCases[metric]) > 0]
+        
+        dom = minidom.Document()
+        testSuite = dom.createElement("testsuite")
+        testSuite.setAttribute("name", "Maintainability")
+        testSuite.setAttribute("tests", f"{len(allTestCases.keys())}")
+        testSuite.setAttribute("failures", f"{len(failedTestCases)}")
+        dom.appendChild(testSuite)
+        
+        for metric, failures in allTestCases.items():
+            testCase = dom.createElement("testcase")
+            testCase.setAttribute("classname", "Maintainability")
+            testCase.setAttribute("name", self.formatMetricName(metric))
+            testSuite.appendChild(testCase)
+            
+            if len(failures) > 0:
+                formattedCandidates = [f"- {rc['subject']} ({rc['category']})" for rc in failures]
+                failure = dom.createElement("failure")
+                failure.appendChild(dom.createTextNode("Refactoring candidates:\n\n" + "\n".join(formattedCandidates)))
+                testCase.appendChild(failure)
+    
+        with open("sigrid-ci-output/sigridci-junit-format-report.xml", "w") as fileRef:
+            fileRef.write(dom.toprettyxml(indent="    "))
+            
+    def getTestCases(self, feedback, target):
+        return {metric: self.getFailures(metric, feedback, target) for metric in target.ratings.keys()}
+        
+    def getFailures(self, metric, feedback, target):
+        if target.meetsTargetQualityForMetric(feedback, metric):
+            return []
+        return self.getRefactoringCandidates(feedback, metric)
+        
+        
 class ExitCodeReport(Report):   
     def generate(self, feedback, args, target):
         asciiArt = TextReport()
@@ -479,6 +517,9 @@ if __name__ == "__main__":
         log("Your project's source code has been published to Sigrid")
     else:
         feedback = apiClient.fetchAnalysisResults(analysisId)
+        
+        if not os.path.exists("sigrid-ci-output"):
+            os.mkdir("sigrid-ci-output")
     
-        for report in [TextReport(), StaticHtmlReport(), ExitCodeReport()]:
+        for report in [TextReport(), StaticHtmlReport(), JUnitFormatReport(), ExitCodeReport()]:
             report.generate(feedback, args, target)
