@@ -188,6 +188,7 @@ class SystemUploadPacker:
     MAX_UPLOAD_SIZE_MB = 500
 
     DEFAULT_EXCLUDES = [
+        "$tf/",
         "coverage/",
         "build/",
         "dist/",
