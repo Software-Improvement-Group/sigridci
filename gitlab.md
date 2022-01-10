@@ -108,6 +108,10 @@ The information in the HTML report is based on the aforementioned list, though i
 
 <img src="images/feedback-report.png" width="600" />
 
+Sigrid CI output is also included in GitLab's CI/CD pipeline page, which contains a *Tests* tab. The *Details* button will show the same list of refactoring candidates that is shown in the aforementioned textual output and HTML report.
+
+<img src="images/gitlab-ci-details.png" width="600" />
+
 Finally, if you want to have more information on the system as a whole, you can also access [Sigrid](http://sigrid-says.com/), which gives you more information on the overall quality of the system, its architecture, and more.
 
 ## Contact and support

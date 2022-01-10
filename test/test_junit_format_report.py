@@ -49,17 +49,17 @@ class JUnitReportTest(unittest.TestCase):
             
         expected = """
             <?xml version="1.0" ?>
-            <testsuite name="Sigrid CI" tests="5" errors="0" failures="1">
-                <testcase name="Duplication"/>
-                <testcase name="Unit Size"/>
-                <testcase name="Unit Complexity">
+            <testsuite name="Sigrid CI">
+                <testcase classname="Sigrid CI" name="Maintainability">
                     <failure>Refactoring candidates:
                     
-- Noot.java (introduced)
-- Mies.java (unchanged)</failure>
+- Aap.java
+  (Duplication, introduced)
+- Noot.java
+  (Unit Complexity, introduced)
+- Mies.java
+  (Unit Complexity, unchanged)</failure>
                 </testcase>
-                <testcase name="Unit Interfacing"/>
-                <testcase name="Module Coupling"/>
             </testsuite>
         """
         
@@ -83,12 +83,8 @@ class JUnitReportTest(unittest.TestCase):
             
         expected = """
             <?xml version="1.0" ?>
-            <testsuite name="Sigrid CI" tests="5" errors="0" failures="0">
-                <testcase name="Duplication"/>
-                <testcase name="Unit Size"/>
-                <testcase name="Unit Complexity"/>
-                <testcase name="Unit Interfacing"/>
-                <testcase name="Module Coupling"/>
+            <testsuite name="Sigrid CI">
+                <testcase classname="Sigrid CI" name="Maintainability"/>
             </testsuite>
         """
         

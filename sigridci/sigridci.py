@@ -420,38 +420,31 @@ class StaticHtmlReport(Report):
         
 class JUnitFormatReport(Report):
     def generate(self, feedback, args, target):
-        allTestCases = self.getTestCases(feedback, target)
-        failedTestCases = [metric for metric in allTestCases.keys() if len(allTestCases[metric]) > 0]
-        
-        dom = minidom.Document()
+        dom = minidom.Document()        
         testSuite = dom.createElement("testsuite")
-        testSuite.setAttribute("name", "Maintainability")
-        testSuite.setAttribute("tests", f"{len(allTestCases.keys())}")
-        testSuite.setAttribute("failures", f"{len(failedTestCases)}")
+        testSuite.setAttribute("name", "Sigrid CI")
         dom.appendChild(testSuite)
+                
+        testCase = dom.createElement("testcase")
+        testCase.setAttribute("classname", "Sigrid CI")
+        testCase.setAttribute("name", "Maintainability")
+        testSuite.appendChild(testCase)
         
-        for metric, failures in allTestCases.items():
-            testCase = dom.createElement("testcase")
-            testCase.setAttribute("classname", "Maintainability")
-            testCase.setAttribute("name", self.formatMetricName(metric))
-            testSuite.appendChild(testCase)
-            
-            if len(failures) > 0:
-                formattedCandidates = [f"- {rc['subject']} ({rc['category']})" for rc in failures]
-                failure = dom.createElement("failure")
-                failure.appendChild(dom.createTextNode("Refactoring candidates:\n\n" + "\n".join(formattedCandidates)))
-                testCase.appendChild(failure)
+        failures = self.getFailures(feedback, target)
+        if len(failures) > 0:
+            failure = dom.createElement("failure")
+            failure.appendChild(dom.createTextNode("Refactoring candidates:\n\n" + "\n".join(failures)))
+            testCase.appendChild(failure)
     
         with open("sigrid-ci-output/sigridci-junit-format-report.xml", "w") as fileRef:
             fileRef.write(dom.toprettyxml(indent="    "))
-            
-    def getTestCases(self, feedback, target):
-        return {metric: self.getFailures(metric, feedback, target) for metric in target.ratings.keys()}
         
-    def getFailures(self, metric, feedback, target):
-        if target.meetsTargetQualityForMetric(feedback, metric):
+    def getFailures(self, feedback, target):
+        if target.meetsOverallQualityTarget(feedback):
             return []
-        return self.getRefactoringCandidates(feedback, metric)
+            
+        formatFailure = lambda rc: f"- {rc['subject']}\n  ({self.formatMetricName(rc['metric'])}, {rc['category']})"
+        return [formatFailure(rc) for rc in self.getRefactoringCandidates(feedback, "MAINTAINABILITY")]
         
         
 class ExitCodeReport(Report):   
