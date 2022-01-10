@@ -81,6 +81,20 @@ class SigridCiTest(unittest.TestCase):
         self.assertEqual(os.path.exists(outputFile), True)
         self.assertEqual(zipfile.ZipFile(outputFile).namelist(), ["a.py"])
         
+    def testExcludeDollarTfDirectories(self):
+        sourceDir = tempfile.mkdtemp()
+        subDir = sourceDir + "/$tf"
+        os.mkdir(subDir)
+        self.createTempFile(subDir, "a.py", "a")
+        
+        outputFile = tempfile.mkstemp()[1]
+        
+        uploadPacker = SystemUploadPacker(UploadOptions())
+        uploadPacker.prepareUpload(sourceDir, outputFile)
+
+        self.assertEqual(os.path.exists(outputFile), True)
+        self.assertEqual(zipfile.ZipFile(outputFile).namelist(), [])
+        
     def testCustomExcludePatterns(self):
         sourceDir = tempfile.mkdtemp()
         self.createTempFile(sourceDir, "a.py", "a")
