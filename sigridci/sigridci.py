@@ -308,7 +308,7 @@ class TextReport(Report):
                 "(" + self.formatRating(feedback["baselineRatings"], metric) + ")",
                 self.formatRating(feedback["newCodeRatings"], metric),
                 str(target.ratings.get(metric, "")),
-                self.formatRating(feedback["overallRatings"], metric)
+                self.formatRating(feedback["baselineRatings"], metric)
             ]
             
             self.printTableRow(row, self.getRatingColor(feedback, target, metric))
@@ -391,10 +391,10 @@ class StaticHtmlReport(Report):
         }
         
         for metric in self.METRICS:
-            placeholders[f"{metric}_OVERALL"] = self.formatRating(feedback["overallRatings"], metric)
+            placeholders[f"{metric}_OVERALL"] = self.formatRating(feedback["baselineRatings"], metric)
             placeholders[f"{metric}_NEW"] = self.formatRating(feedback["newCodeRatings"], metric)
             placeholders[f"{metric}_TARGET"] = self.formatRating(target.ratings, metric, "")
-            placeholders[f"{metric}_STARS_OVERALL"] = self.formatHtmlStars(feedback["overallRatings"], metric)
+            placeholders[f"{metric}_STARS_OVERALL"] = self.formatHtmlStars(feedback["baselineRatings"], metric)
             placeholders[f"{metric}_STARS_NEW"] = self.formatHtmlStars(feedback["newCodeRatings"], metric)
             placeholders[f"{metric}_PASSED"] = self.formatPassed(feedback, target, metric)
             placeholders[f"{metric}_REFACTORING_CANDIDATES"] = self.formatRefactoringCandidates(feedback, metric)
