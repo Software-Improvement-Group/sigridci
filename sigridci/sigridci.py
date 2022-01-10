@@ -420,6 +420,10 @@ class StaticHtmlReport(Report):
         
 class JUnitFormatReport(Report):
     def generate(self, feedback, args, target):
+        with open("sigrid-ci-output/sigridci-junit-format-report.xml", "w") as fileRef:
+            fileRef.write(self.generateXML(feedback, target))
+            
+    def generateXML(self, feedback, target):
         dom = minidom.Document()        
         testSuite = dom.createElement("testsuite")
         testSuite.setAttribute("name", "Sigrid CI")
@@ -435,9 +439,8 @@ class JUnitFormatReport(Report):
             failure = dom.createElement("failure")
             failure.appendChild(dom.createTextNode("Refactoring candidates:\n\n" + "\n".join(failures)))
             testCase.appendChild(failure)
-    
-        with open("sigrid-ci-output/sigridci-junit-format-report.xml", "w") as fileRef:
-            fileRef.write(dom.toprettyxml(indent="    "))
+            
+        return dom.toprettyxml(indent="    ")
         
     def getFailures(self, feedback, target):
         if target.meetsOverallQualityTarget(feedback):

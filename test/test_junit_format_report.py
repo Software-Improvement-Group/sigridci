@@ -42,10 +42,7 @@ class JUnitReportTest(unittest.TestCase):
         target.ratings["DUPLICATION"] = 2.0
     
         report = JUnitFormatReport()
-        report.generate(feedback, None, target)
-        
-        with open("sigrid-ci-output/sigridci-junit-format-report.xml", "r") as f:
-            reportContents = f.read()
+        xml = report.generateXML(feedback, target)
             
         expected = """
             <?xml version="1.0" ?>
@@ -63,7 +60,7 @@ class JUnitReportTest(unittest.TestCase):
             </testsuite>
         """
         
-        self.assertEqual(reportContents.strip().replace("    ", ""), expected.strip().replace("    ", ""))
+        self.assertEqual(xml.strip().replace("    ", ""), expected.strip().replace("    ", ""))
         
     def testDoNotMarkAnyTestCasesFailedIfOverallRatingIsOK(self):
         tempDir = tempfile.mkdtemp()
@@ -76,10 +73,7 @@ class JUnitReportTest(unittest.TestCase):
         }
         
         report = JUnitFormatReport()
-        report.generate(feedback, None, TargetQuality(f"{tempDir}/sigrid.yaml", 3.5))
-        
-        with open("sigrid-ci-output/sigridci-junit-format-report.xml", "r") as f:
-            reportContents = f.read()
+        xml = report.generateXML(feedback, TargetQuality(f"{tempDir}/sigrid.yaml", 3.5))
             
         expected = """
             <?xml version="1.0" ?>
@@ -88,4 +82,4 @@ class JUnitReportTest(unittest.TestCase):
             </testsuite>
         """
         
-        self.assertEqual(reportContents.strip().replace("    ", ""), expected.strip().replace("    ", ""))
+        self.assertEqual(xml.strip().replace("    ", ""), expected.strip().replace("    ", ""))
