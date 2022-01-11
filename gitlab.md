@@ -58,6 +58,8 @@ sigridci:
   artifacts:
     paths:
       - "sigrid-ci-output/*"
+    reports:
+      junit: "sigrid-ci-output/sigridci-junit-format-report.xml"
     expire_in: 1 week
     when: always
   except:
