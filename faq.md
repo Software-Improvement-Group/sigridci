@@ -174,7 +174,7 @@ You can either use the `--publish` option to publish your code to Sigrid, or you
 
 ### Where do I find the Sigrid CI output ?
 
-The results of the SigridCI run are logged in the terminal output and optional as a html artefact. For the artefact to be stored you will need to specify the Sigrid CI output path in your yml. Check out the expamples for GitHub and GitLab. 
+The results of the SigridCI run are logged in the terminal output and optional as a html artefact. For the artefact to be stored you will need to specify the Sigrid CI output path in your yml. Check out the examples for GitHub and GitLab. 
 
 ## Infrastructure and security questions
 
