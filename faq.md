@@ -29,7 +29,7 @@ Sigrid CI: Frequently Asked Questions
 - [What to do when the script does not work?](#what-to-do-when-the-script-does-not-work)
 - [I'm receiving an error message that certificate verification failed](#im-receiving-an-error-message-that-certificate-verification-failed)
 - [Why can't I use the publish and pathprefix options together?](#why-cant-i-use-the-publish-and-pathprefix-options-together)
-- [Where do I find the Sigrid CI output?](#Where-do-I-find-the-Sigrid-CI-output)
+- [Where do I find the Sigrid CI output?](#where-do-i-find-the-sigrid-ci-output)
 
 ### Infrastructure and security questions
 
