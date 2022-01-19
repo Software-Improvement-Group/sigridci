@@ -290,6 +290,9 @@ class TextReport(Report):
     ANSI_RED = "\033[91m"
     ANSI_BLUE = "\033[96m"
     LINE_WIDTH = 89
+    
+    def __init__(self, output=sys.stdout):
+        self.output = output
 
     def generate(self, feedback, args, target):
         self.printHeader("Refactoring candidates")
@@ -297,20 +300,21 @@ class TextReport(Report):
             self.printMetric(feedback, metric)
             
         self.printHeader("Maintainability ratings")
-        self.printTableRow(["System property", f"Baseline on {self.formatBaseline(feedback)}", "New/changed code", "Target", "Overall"])
+        self.printTableRow(["System property", f"Baseline on {self.formatBaseline(feedback)}", \
+            "New/changed code", "Target", "Overall" if args.publish else ""] )
         
         for metric in self.METRICS:
             if metric == "MAINTAINABILITY":
-                print("-" * self.LINE_WIDTH)
+                self.printSeparator()
             
             row = [
                 self.formatMetricName(metric), 
                 "(" + self.formatRating(feedback["baselineRatings"], metric) + ")",
                 self.formatRating(feedback["newCodeRatings"], metric),
                 str(target.ratings.get(metric, "")),
-                self.formatRating(feedback["baselineRatings"], metric)
+                self.formatRating(feedback["baselineRatings"], metric) if args.publish else ""
             ]
-            
+        
             self.printTableRow(row, self.getRatingColor(feedback, target, metric))
             
     def printTableRow(self, row, color=None):
@@ -318,27 +322,30 @@ class TextReport(Report):
         if color:
             self.printColor(formattedRow, color)
         else:
-            print(formattedRow)
+            print(formattedRow, file=self.output)
                 
     def printHeader(self, header):
-        print("")
-        print("-" * self.LINE_WIDTH)
-        print(header)
-        print("-" * self.LINE_WIDTH)
+        print("", file=self.output)
+        self.printSeparator()
+        print(header, file=self.output)
+        self.printSeparator()
+        
+    def printSeparator(self):
+        print("-" * self.LINE_WIDTH, file=self.output)
                 
     def printMetric(self, feedback, metric):
-        print("")
-        print(self.formatMetricName(metric))
+        print("", file=self.output)
+        print(self.formatMetricName(metric), file=self.output)
         
         refactoringCandidates = self.getRefactoringCandidates(feedback, metric)
         if len(refactoringCandidates) == 0:
-            print("    None")
+            print("    None", file=self.output)
         else:
             for rc in refactoringCandidates:
-                print(self.formatRefactoringCandidate(rc))
+                print(self.formatRefactoringCandidate(rc), file=self.output)
                 
     def getRatingColor(self, feedback, target, metric):
-        if feedback["newCodeRatings"].get(metric, None) == None:
+        if feedback["newCodeRatings"].get(metric, None) == None or not metric in target.ratings:
             return self.ANSI_BLUE
         elif target.meetsTargetQualityForMetric(feedback, metric):
             return self.ANSI_GREEN
@@ -351,7 +358,7 @@ class TextReport(Report):
         return f"    - {category} {subject}"
 
     def printColor(self, message, ansiPrefix):
-        print(ansiPrefix + message + "\033[0m")
+        print(ansiPrefix + message + "\033[0m", file=self.output)
         
         
 class StaticHtmlReport(Report):
