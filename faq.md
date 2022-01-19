@@ -29,6 +29,7 @@ Sigrid CI: Frequently Asked Questions
 - [What to do when the script does not work?](#what-to-do-when-the-script-does-not-work)
 - [I'm receiving an error message that certificate verification failed](#im-receiving-an-error-message-that-certificate-verification-failed)
 - [Why can't I use the publish and pathprefix options together?](#why-cant-i-use-the-publish-and-pathprefix-options-together)
+- [Where do I find the Sigrid CI output?](#Where-do-I-find-the-Sigrid-CI-output)
 
 ### Infrastructure and security questions
 
@@ -170,6 +171,10 @@ If your environment requires a certificate store in a custom location, the envir
 ### Why can't I use the publish and pathprefix options together?
 
 You can either use the `--publish` option to publish your code to Sigrid, or you can use the `--pathprefix` option to receive feedback on a specific part of your codebase, but you cannot use both in combination with each other. The reason is that these two options relate to different usage scenarios. `--pathprefix` is for pull request integration, and indicates you want to use Sigrid CI for a *subset of your codebase*. In contrast, `--publish` indicates you want to publish *your entire codebase* to Sigrid. This is why the combination doesn't really make sense, it would indicate you simultaneously consider your repository as the entire codebase (since you want to publish it) and a part of the codebase (since you're asking for more specific feedback). Please [contact us](mailto:support@softwareimprovementgroup.com) if you believe you have a need for using the combination of these two options.
+
+### Where do I find the Sigrid CI output ?
+
+The results of the SigridCI run are logged in the terminal output and optional as a html artefact. For the artefact to be stored you will need to specify the Sigrid CI output path in your yml. Check out the expamples for GitHub and GitLab. 
 
 ## Infrastructure and security questions
 
