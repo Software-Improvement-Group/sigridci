@@ -65,7 +65,12 @@ jobs:
           SIGRID_CI_ACCOUNT: "${{ secrets.SIGRID_CI_ACCOUNT }}"
           SIGRID_CI_TOKEN: "${{ secrets.SIGRID_CI_TOKEN }}"
         run: "./sigridci/sigridci/sigridci.py --customer examplecustomername --system examplesystemname --source . --targetquality 3.0 --publish" 
-
+      - name: "Save Sigrid CI results"
+        if: ${{ success() || failure() }}
+        uses: actions/upload-artifact@v2
+        with:
+          path: "sigrid-ci-output/**"
+          retention-days: 7
 ```
 
 Note the name of the branch, which is `main` in the example but might be different for your repository. In general, most older GitHub projects will use `master` as their main branch, while more recent GitHub projects will use `main`. 
