@@ -46,6 +46,7 @@ class UploadOptions:
     includeHistory: bool = False
     pathPrefix: str = ""
     showContents: bool = False
+    publishOnly: bool = False
     
     
 @dataclasses.dataclass
@@ -105,14 +106,14 @@ class SigridApiClient:
             return {}
         return json.loads(responseBody)
         
-    def submitUpload(self, options):
+    def submitUpload(self, options, systemExists):
         log("Creating upload")
         uploadPacker = SystemUploadPacker(options)
         upload = "sigrid-upload-" + datetime.datetime.now().strftime("%Y%m%d-%H%M%S") + ".zip"
         uploadPacker.prepareUpload(options.sourceDir, upload)
     
         log("Preparing upload")
-        uploadLocation = self.obtainUploadLocation()
+        uploadLocation = self.obtainUploadLocation(systemExists)
         uploadUrl = uploadLocation["uploadUrl"]
         analysisId = uploadLocation["ciRunId"]
         log(f"Sigrid CI analysis ID: {analysisId}")
@@ -123,10 +124,10 @@ class SigridApiClient:
             
         return analysisId
         
-    def obtainUploadLocation(self):
+    def obtainUploadLocation(self, systemExists):
         for attempt in range(self.RETRY_ATTEMPTS):
             try:
-                return self.callSigridAPI("inboundresults", self.getRequestUploadPath())
+                return self.callSigridAPI("inboundresults", self.getRequestUploadPath(systemExists))
             except urllib.error.HTTPError as e:
                 if e.code == 502:
                     log("Retrying")
@@ -137,9 +138,11 @@ class SigridApiClient:
         log("Sigrid is currently unavailable")
         sys.exit(1)
         
-    def getRequestUploadPath(self):
+    def getRequestUploadPath(self, systemExists):
         path = f"/{self.urlPartnerName}/{self.urlCustomerName}/{self.urlSystemName}/ci/uploads/{self.PROTOCOL_VERSION}"
-        if self.publish:
+        if not systemExists:
+            path += "/onboarding"
+        elif self.publish:
             path += "/publish"
         return path
         
@@ -152,6 +155,25 @@ class SigridApiClient:
             uploadRequest.add_header("x-amz-server-side-encryption", "AES256")
             uploadResponse = urllib.request.urlopen(uploadRequest)
             return uploadResponse.status in [200, 201, 202]
+            
+    def checkSystemExists(self):
+        for attempt in range(self.RETRY_ATTEMPTS):
+            try:
+                self.callSigridAPI("analysis-results", \
+                    f"/sigridci/{self.urlCustomerName}/{self.urlSystemName}/{self.PROTOCOL_VERSION}/ci")
+                return True
+            except urllib.error.HTTPError as e:
+                if e.code == 404:
+                    return False
+                elif e.code == 502:
+                    log("Retrying")
+                    time.sleep(self.POLL_INTERVAL)
+                else:
+                    self.processHttpError(e)
+                    
+        log("Sigrid is currently unavailable")
+        sys.exit(1)
+            
         
     def fetchAnalysisResults(self, analysisId):
         for attempt in range(self.POLL_ATTEMPTS):
@@ -434,6 +456,21 @@ class ExitCodeReport(Report):
                 sys.exit(1)
                 
                 
+class SigridCiRunner:
+    def run(self, apiClient, options, target, reports):
+        systemExists = apiClient.checkSystemExists()
+        analysisId = apiClient.submitUpload(options, systemExists)
+
+        if not systemExists:
+            log(f"System '{apiClient.urlSystemName}' has been on-boarded to Sigrid")
+        elif options.publishOnly:
+            log("Your project's source code has been published to Sigrid")
+        else:
+            feedback = apiClient.fetchAnalysisResults(analysisId)
+            for report in reports:
+                report.generate(feedback, args, target)
+                
+                
 if __name__ == "__main__":
     parser = argparse.ArgumentParser()
     parser.add_argument("--partner", type=str, default="sig")
@@ -471,15 +508,11 @@ if __name__ == "__main__":
         sys.exit(1)
     
     log("Starting Sigrid CI")
-    options = UploadOptions(args.source, args.exclude.split(","), args.history, args.pathprefix, args.showupload)
+    options = UploadOptions(args.source, args.exclude.split(","), args.history, args.pathprefix, args.showupload, args.publishonly)
     target = TargetQuality(f"{args.source}/sigrid.yaml", args.targetquality)
     apiClient = SigridApiClient(args)
-    analysisId = apiClient.submitUpload(options)
+    reports = [TextReport(), StaticHtmlReport(), ExitCodeReport()]
     
-    if args.publishonly:
-        log("Your project's source code has been published to Sigrid")
-    else:
-        feedback = apiClient.fetchAnalysisResults(analysisId)
+    runner = SigridCiRunner()
+    runner.run(apiClient, options, target, reports)
     
-        for report in [TextReport(), StaticHtmlReport(), ExitCodeReport()]:
-            report.generate(feedback, args, target)
