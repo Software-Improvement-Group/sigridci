@@ -33,6 +33,17 @@ class TextReportTest(unittest.TestCase):
         self.assertEqual(report.formatRefactoringCandidate(rc1), "    - (introduced)   aap")
         self.assertEqual(report.formatRefactoringCandidate(rc2), "    - (worsened)     noot\n                     mies")
         self.assertEqual(report.formatRefactoringCandidate(rc3), "    - (worsened)     noot\n                     mies")
+        
+    def testTextColorShouldOnlyApplyToMetricsThatHaveExplicitThreshold(self):
+        target = TargetQuality("/tmp/nonexistent", 3.5)
+        target.ratings["UNIT_SIZE"] = 3.5
+        
+        feedback = {"newCodeRatings" : {"MAINTAINABILITY" : 2.0, "DUPLICATION" : 3.0, "UNIT_SIZE" : 3.0}}
+        report = TextReport()
+        
+        self.assertEqual(report.getRatingColor(feedback, target, "MAINTAINABILITY"), report.ANSI_RED)
+        self.assertEqual(report.getRatingColor(feedback, target, "DUPLICATION"), report.ANSI_BLUE)
+        self.assertEqual(report.getRatingColor(feedback, target, "UNIT_SIZE"), report.ANSI_RED)
 
     def testPrintRegularReport(self):
         feedback = {
