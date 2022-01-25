@@ -18,8 +18,7 @@ import types
 import unittest
 import urllib
 import zipfile
-from sigridci.sigridci import SystemUploadPacker, SigridApiClient, Report, TextReport, UploadOptions, \
-                              TargetQuality, LOG_HISTORY
+from sigridci.sigridci import SystemUploadPacker, SigridApiClient, Report, UploadOptions, TargetQuality, LOG_HISTORY
 
 
 class SigridCiTest(unittest.TestCase):
@@ -247,22 +246,6 @@ class SigridCiTest(unittest.TestCase):
         
         self.assertEqual(len(unitSize), 1)
         self.assertEqual(unitSize[0]["subject"], "a/b.java::Duif.vuur()")
-        
-    def testFormatTextRefactoringCandidate(self):
-        rc1 = {"subject" : "aap", "category" : "introduced", "metric" : "UNIT_SIZE"}
-        rc2 = {"subject" : "noot\nmies", "category" : "worsened", "metric" : "DUPLICATION"}
-        rc3 = {"subject" : "noot::mies", "category" : "worsened", "metric" : "UNIT_SIZE"}
-        
-        report = TextReport()
-        
-        self.assertEqual(report.formatRefactoringCandidate(rc1), \
-            "    - (introduced)   aap")
-        
-        self.assertEqual(report.formatRefactoringCandidate(rc2), \
-            "    - (worsened)     noot\n                     mies")
-            
-        self.assertEqual(report.formatRefactoringCandidate(rc3), \
-            "    - (worsened)     noot\n                     mies")
             
     def testRegularUploadPathDoesNotPublishByDefault(self):
         args = types.SimpleNamespace(partner="sig", customer="aap", system="noot", sigridurl="https://example.com", \
@@ -339,8 +322,7 @@ class SigridCiTest(unittest.TestCase):
         self.assertEqual(report.getRatingColor(feedback, target, "UNIT_SIZE"), report.ANSI_RED)
 
     def createTempFile(self, dir, name, contents):
-        writer = open(dir + "/" + name, "w")
-        writer.write(contents)
-        writer.close()
-        return dir + "/" + name
+        with open(f"{dir}/{name}", "w") as fileRef:
+            fileRef.write(contents)
+        return f"{dir}/{name}"
     

@@ -261,6 +261,9 @@ class Report:
     def generate(self, feedback, args, target):
         pass
         
+    def formatMetricName(self, metric):
+        return metric.replace("_PROP", "").title().replace("_", " ")
+        
     def formatRating(self, ratings, metric, naText="N/A"):
         if ratings.get(metric, None) == None:
             return naText
@@ -287,40 +290,60 @@ class TextReport(Report):
     ANSI_YELLOW = "\033[33m"
     ANSI_RED = "\033[91m"
     ANSI_BLUE = "\033[96m"
-    LINE_WIDTH = 91
+    LINE_WIDTH = 89
+    
+    def __init__(self, output=sys.stdout):
+        self.output = output
 
     def generate(self, feedback, args, target):
         self.printHeader("Refactoring candidates")
         for metric in self.REFACTORING_CANDIDATE_METRICS:
             self.printMetric(feedback, metric)
-
+            
         self.printHeader("Maintainability ratings")
-        print("System property".ljust(40) + f"Baseline ({self.formatBaseline(feedback)})    New/changed code    Target")
+        self.printTableRow(["System property", f"Baseline on {self.formatBaseline(feedback)}", \
+            "New/changed code", "Target", "Overall" if args.publish else ""] )
+        
         for metric in self.METRICS:
             if metric == "MAINTAINABILITY":
-                print("-" * self.LINE_WIDTH)
-            fields = (metric.replace("_PROP", "").title().replace("_", " "), \
-                "(" + self.formatRating(feedback["overallRatings"], metric) + ")", \
-                self.formatRating(feedback["newCodeRatings"], metric), \
-                str(target.ratings.get(metric, "")))
-            self.printColor("%-40s%-25s%-20s%s" % fields, self.getRatingColor(feedback, target, metric))
+                self.printSeparator()
+            
+            row = [
+                self.formatMetricName(metric), 
+                "(" + self.formatRating(feedback["baselineRatings"], metric) + ")",
+                self.formatRating(feedback["newCodeRatings"], metric),
+                str(target.ratings.get(metric, "")),
+                self.formatRating(feedback["baselineRatings"], metric) if args.publish else ""
+            ]
+        
+            self.printTableRow(row, self.getRatingColor(feedback, target, metric))
+            
+    def printTableRow(self, row, color=None):
+        formattedRow = "%-27s%-25s%-20s%-10s%-7s" % tuple(row)
+        if color:
+            self.printColor(formattedRow, color)
+        else:
+            print(formattedRow, file=self.output)
                 
     def printHeader(self, header):
-        print("")
-        print("-" * self.LINE_WIDTH)
-        print(header)
-        print("-" * self.LINE_WIDTH)
+        print("", file=self.output)
+        self.printSeparator()
+        print(header, file=self.output)
+        self.printSeparator()
+        
+    def printSeparator(self):
+        print("-" * self.LINE_WIDTH, file=self.output)
                 
     def printMetric(self, feedback, metric):
-        print("")
-        print(metric.replace("_PROP", "").title().replace("_", " "))
+        print("", file=self.output)
+        print(self.formatMetricName(metric), file=self.output)
         
         refactoringCandidates = self.getRefactoringCandidates(feedback, metric)
         if len(refactoringCandidates) == 0:
-            print("    None")
+            print("    None", file=self.output)
         else:
             for rc in refactoringCandidates:
-                print(self.formatRefactoringCandidate(rc))
+                print(self.formatRefactoringCandidate(rc), file=self.output)
                 
     def getRatingColor(self, feedback, target, metric):
         if feedback["newCodeRatings"].get(metric, None) == None or not metric in target.ratings:
@@ -336,7 +359,7 @@ class TextReport(Report):
         return f"    - {category} {subject}"
 
     def printColor(self, message, ansiPrefix):
-        print(ansiPrefix + message + "\033[0m")
+        print(ansiPrefix + message + "\033[0m", file=self.output)
         
         
 class StaticHtmlReport(Report):
@@ -376,10 +399,10 @@ class StaticHtmlReport(Report):
         }
         
         for metric in self.METRICS:
-            placeholders[f"{metric}_OVERALL"] = self.formatRating(feedback["overallRatings"], metric)
+            placeholders[f"{metric}_OVERALL"] = self.formatRating(feedback["baselineRatings"], metric)
             placeholders[f"{metric}_NEW"] = self.formatRating(feedback["newCodeRatings"], metric)
             placeholders[f"{metric}_TARGET"] = self.formatRating(target.ratings, metric, "")
-            placeholders[f"{metric}_STARS_OVERALL"] = self.formatHtmlStars(feedback["overallRatings"], metric)
+            placeholders[f"{metric}_STARS_OVERALL"] = self.formatHtmlStars(feedback["baselineRatings"], metric)
             placeholders[f"{metric}_STARS_NEW"] = self.formatHtmlStars(feedback["newCodeRatings"], metric)
             placeholders[f"{metric}_PASSED"] = self.formatPassed(feedback, target, metric)
             placeholders[f"{metric}_REFACTORING_CANDIDATES"] = self.formatRefactoringCandidates(feedback, metric)
