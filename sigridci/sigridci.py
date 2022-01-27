@@ -93,8 +93,7 @@ class SigridApiClient:
         url = f"{self.baseURL}/rest/{api}{path}"
         request = urllib.request.Request(url, None)
         request.add_header("Accept", "application/json")
-        request.add_header("Authorization", \
-            b"Basic " + base64.standard_b64encode(f"{self.account}:{self.token}".encode("utf8")))
+        request.add_header("Authorization", self.getTokenHeaderValue())
             
         response = urllib.request.urlopen(request)
         if response.status == 204:
@@ -104,6 +103,12 @@ class SigridApiClient:
             log("Received empty response")
             return {}
         return json.loads(responseBody)
+        
+    def getTokenHeaderValue(self):
+        if len(self.token) >= 32:
+            return f"Bearer {self.token}".encode("utf8")
+        else:
+            return b"Basic " + base64.standard_b64encode(f"{self.account}:{self.token}".encode("utf8"))
         
     def submitUpload(self, options):
         log("Creating upload")

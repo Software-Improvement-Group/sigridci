@@ -222,6 +222,22 @@ class SigridCiTest(unittest.TestCase):
         self.assertEqual(apiClient.urlCustomerName, "aap")
         self.assertEqual(apiClient.urlSystemName, "noot")
         
+    def testOldTokenFormatShouldUseHttpBasicAuth(self):
+        args = types.SimpleNamespace(partner="sig", customer="aap", system="noot", sigridurl="", publish=False, publishonly=False)
+        os.environ["SIGRID_CI_TOKEN"] = "12456"
+        apiClient = SigridApiClient(args)
+        
+        self.assertEqual(apiClient.getTokenHeaderValue(), b"Basic ZHVtbXk6MTI0NTY=")
+        
+    def testJwtTokenFormatShouldUseHttpBearer(self):
+        args = types.SimpleNamespace(partner="sig", customer="aap", system="noot", sigridurl="", publish=False, publishonly=False)
+        os.environ["SIGRID_CI_TOKEN"] = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3" + \
+            "ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyfQ.SflKxwRJSMeKKF2QT4fwpMeJf36POk6yJV_adQssw5c"
+        apiClient = SigridApiClient(args)
+        
+        self.assertEqual(apiClient.getTokenHeaderValue(), b"Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0N" + \
+            b"TY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyfQ.SflKxwRJSMeKKF2QT4fwpMeJf36POk6yJV_adQssw5c")
+        
     def testFeedbackTemplateOnlyContainsAsciiCharacters(self):
         with open("sigridci/sigridci-feedback-template.html", mode="r", encoding="ascii") as templateRef:
             template = templateRef.read()
