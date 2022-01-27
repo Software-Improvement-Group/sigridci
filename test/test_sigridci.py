@@ -18,7 +18,7 @@ import types
 import unittest
 import urllib
 import zipfile
-from sigridci.sigridci import SystemUploadPacker, SigridApiClient, Report, UploadOptions, TargetQuality, LOG_HISTORY
+from sigridci.sigridci import SigridApiClient, Report, TextReport, UploadOptions, TargetQuality, LOG_HISTORY
 
 
 class SigridCiTest(unittest.TestCase):
@@ -29,192 +29,8 @@ class SigridCiTest(unittest.TestCase):
     def setUp(self):
         os.environ["SIGRID_CI_ACCOUNT"] = "dummy"
         os.environ["SIGRID_CI_TOKEN"] = "dummy"
-
-    def testCreateZipFromDirectory(self):
-        sourceDir = tempfile.mkdtemp()
-        self.createTempFile(sourceDir, "a.py", "a")
-        self.createTempFile(sourceDir, "b.py", "b")
-        
-        outputFile = tempfile.mkstemp()[1]
-        
-        uploadPacker = SystemUploadPacker(UploadOptions())
-        uploadPacker.prepareUpload(sourceDir, outputFile)
-
-        entries = zipfile.ZipFile(outputFile).namelist()
-        entries.sort()    
-
-        self.assertEqual(entries, ["a.py", "b.py"])
-
-    def testPreserveDirectoryStructureInUpload(self):
-        sourceDir = tempfile.mkdtemp()
-        subDirA = sourceDir + "/a"
-        os.mkdir(subDirA)
-        self.createTempFile(subDirA, "a.py", "a")
-        subDirB = sourceDir + "/b"
-        os.mkdir(subDirB)
-        self.createTempFile(subDirB, "b.py", "b")
-        
-        outputFile = tempfile.mkstemp()[1]
-        
-        uploadPacker = SystemUploadPacker(UploadOptions())
-        uploadPacker.prepareUpload(sourceDir, outputFile)
-        
-        entries = zipfile.ZipFile(outputFile).namelist()
-        entries.sort()
-
-        self.assertEqual(os.path.exists(outputFile), True)
-        self.assertEqual(entries, ["a/a.py", "b/b.py"])
-        
-    def testDefaultExcludePatterns(self):
-        sourceDir = tempfile.mkdtemp()
-        self.createTempFile(sourceDir, "a.py", "a")
-        subDir = sourceDir + "/node_modules"
-        os.mkdir(subDir)
-        self.createTempFile(subDir, "b.py", "b")
-        
-        outputFile = tempfile.mkstemp()[1]
-        
-        uploadPacker = SystemUploadPacker(UploadOptions())
-        uploadPacker.prepareUpload(sourceDir, outputFile)
-
-        self.assertEqual(os.path.exists(outputFile), True)
-        self.assertEqual(zipfile.ZipFile(outputFile).namelist(), ["a.py"])
-        
-    def testExcludeDollarTfDirectories(self):
-        sourceDir = tempfile.mkdtemp()
-        subDir = sourceDir + "/$tf"
-        os.mkdir(subDir)
-        self.createTempFile(subDir, "a.py", "a")
-        
-        outputFile = tempfile.mkstemp()[1]
-        
-        uploadPacker = SystemUploadPacker(UploadOptions())
-        uploadPacker.prepareUpload(sourceDir, outputFile)
-
-        self.assertEqual(os.path.exists(outputFile), True)
-        self.assertEqual(zipfile.ZipFile(outputFile).namelist(), [])
-        
-    def testCustomExcludePatterns(self):
-        sourceDir = tempfile.mkdtemp()
-        self.createTempFile(sourceDir, "a.py", "a")
-        subDir = sourceDir + "/b"
-        os.mkdir(subDir)
-        self.createTempFile(subDir, "b.py", "b")
-        
-        outputFile = tempfile.mkstemp()[1]
-        
-        uploadPacker = SystemUploadPacker(UploadOptions(excludePatterns=["b/"]))
-        uploadPacker.prepareUpload(sourceDir, outputFile)
-
-        self.assertEqual(os.path.exists(outputFile), True)
-        self.assertEqual(zipfile.ZipFile(outputFile).namelist(), ["a.py"])
-        
-    def testIncludeGitHistory(self):
-        sourceDir = tempfile.mkdtemp()
-        self.createTempFile(sourceDir, "a.py", "a")
-        subDir = sourceDir + "/.git"
-        os.mkdir(subDir)
-        self.createTempFile(subDir, "b.py", "b")
-        
-        outputFile = tempfile.mkstemp()[1]
-        
-        uploadPacker = SystemUploadPacker(UploadOptions(includeHistory=True))
-        uploadPacker.prepareUpload(sourceDir, outputFile)
-        
-        entries = zipfile.ZipFile(outputFile).namelist()
-        entries.sort()
-
-        self.assertEqual(entries, [".git/b.py", "a.py"])
-        
-    def testExcludeGitHistory(self):
-        sourceDir = tempfile.mkdtemp()
-        self.createTempFile(sourceDir, "a.py", "a")
-        subDir = sourceDir + "/.git"
-        os.mkdir(subDir)
-        self.createTempFile(subDir, "b.py", "b")
-        
-        outputFile = tempfile.mkstemp()[1]
-        
-        uploadPacker = SystemUploadPacker(UploadOptions(includeHistory=False))
-        uploadPacker.prepareUpload(sourceDir, outputFile)
-
-        self.assertEqual(os.path.exists(outputFile), True)
-        self.assertEqual(zipfile.ZipFile(outputFile).namelist(), ["a.py"])
-        
-    def testErrorIfUploadExceedsMaximumSize(self):
-        sourceDir = tempfile.mkdtemp()
-        with open(sourceDir + "/a.py", "wb") as f:
-            f.write(os.urandom(2000000))
-            
-        uploadPacker = SystemUploadPacker(UploadOptions())
-        uploadPacker.MAX_UPLOAD_SIZE_MB = 1
-    
-        self.assertRaises(Exception, uploadPacker.prepareUpload, sourceDir, tempfile.mkstemp()[1])
-        
-    def testLogMessageWhenUploadTooSmall(self):
         LOG_HISTORY.clear()
-    
-        sourceDir = tempfile.mkdtemp()
-        with open(sourceDir + "/a.py", "wb") as f:
-            f.write(os.urandom(1))
-            
-        uploadPacker = SystemUploadPacker(UploadOptions())
-        uploadPacker.prepareUpload(sourceDir, tempfile.mkstemp()[1])
 
-        self.assertEqual(LOG_HISTORY, ["Upload size is 1 MB", \
-            "Warning: Upload is very small, source directory might not contain all source code"])
-            
-    def testLogUploadContents(self):
-        LOG_HISTORY.clear()
-    
-        sourceDir = tempfile.mkdtemp()
-        with open(sourceDir + "/a.py", "wb") as f:
-            f.write(os.urandom(1))
-        with open(sourceDir + "/b.py", "wb") as f:
-            f.write(os.urandom(1))
-            
-        uploadPacker = SystemUploadPacker(UploadOptions(showContents=True))
-        uploadPacker.prepareUpload(sourceDir, tempfile.mkstemp()[1])
-
-        self.assertEqual(LOG_HISTORY, ["Adding file to upload: a.py", "Adding file to upload: b.py", \
-            "Upload size is 1 MB", \
-            "Warning: Upload is very small, source directory might not contain all source code"])
-        
-    def testUsePathPrefixInUpload(self):
-        sourceDir = tempfile.mkdtemp()
-        subDirA = sourceDir + "/a"
-        os.mkdir(subDirA)
-        self.createTempFile(subDirA, "a.py", "a")
-        subDirB = sourceDir + "/b"
-        os.mkdir(subDirB)
-        self.createTempFile(subDirB, "b.py", "b")
-        
-        outputFile = tempfile.mkstemp()[1]
-        
-        uploadPacker = SystemUploadPacker(UploadOptions(pathPrefix="frontend"))
-        uploadPacker.prepareUpload(sourceDir, outputFile)
-        
-        entries = zipfile.ZipFile(outputFile).namelist()
-        entries.sort()
-
-        self.assertEqual(os.path.exists(outputFile), True)
-        self.assertEqual(entries, ["frontend/a/a.py", "frontend/b/b.py"])
-        
-    def testPathPrefixDoesNotLeadToDoubleSlash(self):
-        sourceDir = tempfile.mkdtemp()
-        self.createTempFile(sourceDir, "a.py", "a")
-        
-        outputFile = tempfile.mkstemp()[1]
-        
-        uploadPacker = SystemUploadPacker(UploadOptions(pathPrefix="/backend/"))
-        uploadPacker.prepareUpload(sourceDir, outputFile)
-        
-        entries = zipfile.ZipFile(outputFile).namelist()
-        entries.sort()
-
-        self.assertEqual(os.path.exists(outputFile), True)
-        self.assertEqual(entries, ["backend/a.py"])
-        
     def testForceLowerCaseForCustomerAndSystemName(self):
         args = types.SimpleNamespace(partner="sig", customer="Aap", system="NOOT", sigridurl="", publish=False, publishonly=False)
         apiClient = SigridApiClient(args)
@@ -268,14 +84,14 @@ class SigridCiTest(unittest.TestCase):
             publish=False, publishonly=False)
         apiClient = SigridApiClient(args)
         
-        self.assertEqual(apiClient.getRequestUploadPath(), "/sig/aap/noot/ci/uploads/v1")
+        self.assertEqual(apiClient.getRequestUploadPath(True), "/sig/aap/noot/ci/uploads/v1")
         
     def testPublishOptionChangesUploadPath(self):
         args = types.SimpleNamespace(partner="sig", customer="aap", system="noot", sigridurl="https://example.com", \
             publish=True, publishonly=False)
         apiClient = SigridApiClient(args)
         
-        self.assertEqual(apiClient.getRequestUploadPath(), "/sig/aap/noot/ci/uploads/v1/publish")
+        self.assertEqual(apiClient.getRequestUploadPath(True), "/sig/aap/noot/ci/uploads/v1/publish")
         
     def testFormatBaseline(self):
         report = Report()
