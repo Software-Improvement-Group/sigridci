@@ -6,7 +6,7 @@ This guide explains how to integrate Sigrid into your Azure DevOps continuous in
 ## Prerequisites
 
 - You have a Sigrid user account. 
-- [Python 3.7 or higher](https://www.python.org) needs to be available in the CI environment. The client scripts for Sigrid CI are based on Python.
+- [Python 3.7 or higher](https://www.python.org) needs to be available in the CI environment. The client script for Sigrid CI is based on Python.
 
 ## Request a Sigrid CI account
 
