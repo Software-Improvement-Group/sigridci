@@ -490,6 +490,10 @@ class SigridCiRunner:
             log("Your project's source code has been published to Sigrid")
         else:
             feedback = apiClient.fetchAnalysisResults(analysisId)
+            
+            if not os.path.exists("sigrid-ci-output"):
+                os.mkdir("sigrid-ci-output")
+            
             for report in reports:
                 report.generate(feedback, args, target)
                 
