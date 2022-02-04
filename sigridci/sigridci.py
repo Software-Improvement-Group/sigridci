@@ -96,8 +96,11 @@ class SigridApiClient:
         request.add_header("Accept", "application/json")
         request.add_header("Authorization", \
             b"Basic " + base64.standard_b64encode(f"{self.account}:{self.token}".encode("utf8")))
-            
-        response = urllib.request.urlopen(request)
+
+        ctx = ssl.create_default_context()
+        ctx.check_hostname = False
+        ctx.verify_mode = ssl.CERT_NONE
+        response = urllib.request.urlopen(request, context=ctx)
         if response.status == 204:
             return {}
         responseBody = response.read().decode("utf8")
@@ -153,7 +156,11 @@ class SigridApiClient:
             uploadRequest.add_header("Content-Type", "application/zip")
             uploadRequest.add_header("Content-Length", "%d" % os.path.getsize(upload))
             uploadRequest.add_header("x-amz-server-side-encryption", "AES256")
-            uploadResponse = urllib.request.urlopen(uploadRequest)
+
+            ctx = ssl.create_default_context()
+            ctx.check_hostname = False
+            ctx.verify_mode = ssl.CERT_NONE
+            uploadResponse = urllib.request.urlopen(uploadRequest, context=ctx)
             return uploadResponse.status in [200, 201, 202]
             
     def checkSystemExists(self):
