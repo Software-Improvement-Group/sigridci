@@ -486,7 +486,7 @@ class SigridCiRunner:
         analysisId = apiClient.submitUpload(options, systemExists)
 
         if not systemExists:
-            log(f"System '{apiClient.urlSystemName}' has been on-boarded to Sigrid")
+            log(f"System '{apiClient.urlSystemName}' is on-boarded to Sigrid, and will appear in sigrid-says.com shortly")
         elif options.publishOnly:
             log("Your project's source code has been published to Sigrid")
         else:
