@@ -125,7 +125,7 @@ class SigridCiRunnerTest(unittest.TestCase):
             "Preparing upload", 
             "Sigrid CI analysis ID: 123",
             "Submitting upload",
-            "System 'noot' has been on-boarded to Sigrid"
+            "System 'noot' is on-boarded to Sigrid, and will appear in sigrid-says.com shortly"
         ]
         
         expectedCalls = [

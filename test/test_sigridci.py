@@ -18,7 +18,7 @@ import types
 import unittest
 import urllib
 import zipfile
-from sigridci.sigridci import SigridApiClient, Report, TextReport, UploadOptions, TargetQuality, LOG_HISTORY
+from sigridci.sigridci import SigridApiClient, Report, TextReport, UploadOptions, TargetQuality, LOG_HISTORY, SYSTEM_NAME_PATTERN
 
 
 class SigridCiTest(unittest.TestCase):
@@ -125,6 +125,24 @@ class SigridCiTest(unittest.TestCase):
         self.assertEqual(target.ratings.get("MAINTAINABILITY", None), 4.0)
         self.assertEqual(target.ratings.get("DUPLICATION", None), 3.0)
         self.assertEqual(target.ratings.get("UNIT_SIZE", None), None)
+    
+    def validateSystemNameAccordingToRules(self):
+        self.assertTrue(SYSTEM_NAME_PATTERN.match("aap"))
+        self.assertTrue(SYSTEM_NAME_PATTERN.match("aap-noot"))
+        self.assertTrue(SYSTEM_NAME_PATTERN.match("aap123"))
+        self.assertTrue(SYSTEM_NAME_PATTERN.match("AAP"))
+        
+        self.assertFalse(SYSTEM_NAME_PATTERN.match("aap_noot"))
+        self.assertFalse(SYSTEM_NAME_PATTERN.match("a"))
+        self.assertFalse(SYSTEM_NAME_PATTERN.match("$$$"))
+        self.assertFalse(SYSTEM_NAME_PATTERN.match("-aap"))
+        
+    def systemNameIsConvertedToLowerCaseInApiClient(self):
+        args = types.SimpleNamespace(partner="sig", customer="Aap", system="NOOT")
+        apiClient = SigridApiClient(args)
+        
+        self.assertEqual(apiClient.urlCustomerName, "aap")
+        self.assertEqual(apiClient.urlSystemName, "noot")
 
     def createTempFile(self, dir, name, contents):
         with open(f"{dir}/{name}", "w") as fileRef:
