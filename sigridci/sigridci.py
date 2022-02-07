@@ -31,7 +31,7 @@ import zipfile
 
 
 LOG_HISTORY = []
-SYSTEM_NAME_PATTERN = re.compile("[a-z0-9-]{2,}", re.IGNORECASE)
+SYSTEM_NAME_PATTERN = re.compile("[a-z0-9][a-z0-9-]+", re.IGNORECASE)
 
 
 def log(message):
@@ -536,7 +536,7 @@ if __name__ == "__main__":
         sys.exit(1)
         
     if not SYSTEM_NAME_PATTERN.match(args.system):
-        print(f"System name '{args.system}' is invalid, system names can only contain letters, numbers, and hyphens")
+        print("Invalid system name, system name can only contain letters/numbers/hyphens, and cannot start with a hyphen")
         sys.exit(1)
     
     log("Starting Sigrid CI")

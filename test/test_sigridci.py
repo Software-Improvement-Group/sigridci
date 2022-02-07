@@ -130,10 +130,19 @@ class SigridCiTest(unittest.TestCase):
         self.assertTrue(SYSTEM_NAME_PATTERN.match("aap"))
         self.assertTrue(SYSTEM_NAME_PATTERN.match("aap-noot"))
         self.assertTrue(SYSTEM_NAME_PATTERN.match("aap123"))
+        self.assertTrue(SYSTEM_NAME_PATTERN.match("AAP"))
         
         self.assertFalse(SYSTEM_NAME_PATTERN.match("aap_noot"))
         self.assertFalse(SYSTEM_NAME_PATTERN.match("a"))
         self.assertFalse(SYSTEM_NAME_PATTERN.match("$$$"))
+        self.assertFalse(SYSTEM_NAME_PATTERN.match("-aap"))
+        
+    def systemNameIsConvertedToLowerCaseInApiClient(self):
+        args = types.SimpleNamespace(partner="sig", customer="Aap", system="NOOT")
+        apiClient = SigridApiClient(args)
+        
+        self.assertEqual(apiClient.urlCustomerName, "aap")
+        self.assertEqual(apiClient.urlSystemName, "noot")
 
     def createTempFile(self, dir, name, contents):
         with open(f"{dir}/{name}", "w") as fileRef:
