@@ -16,15 +16,15 @@ This page will list all authentication tokens for your Sigrid account. If you're
 
 The dialog requires you to enter a name for the token. This name acts as a textual description for your token, which is helpful when managing multiple tokens. The name is only for information purposes, it does not influence what the token can or cannot do. After entering a name, use the "create" button.
 
-<img src="images/token-name.png" width="300" />
+<img src="images/token-name.png" width="400" />
 
 The next dialog will now show the created token. For security reasons, the token is only shown once, so you need to copy/paste or save it right away. If you lose the token after this point, you need to create a new one. Again, this is done for security reasons, and is similar to how e.g. GitHub API tokens are managed.
 
-<img src="images/token-shown.png" width="300" />
+<img src="images/token-shown.png" width="400" />
 
 After you've created the token it will be shown in the user settings page. 
 
-<img src="images/token-overview.png" width="500" />
+<img src="images/token-overview.png" width="600" />
 
 ## Revoking a token
 
