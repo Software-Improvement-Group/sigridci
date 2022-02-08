@@ -101,7 +101,8 @@ class SigridApiClient:
         ctx = ssl.create_default_context()
         ctx.check_hostname = False
         ctx.verify_mode = ssl.CERT_NONE
-        response = urllib.request.urlopen(request, context=ctx)
+        # response = urllib.request.urlopen(request, context=ctx)
+        response = urllib.request.urlopen(request)
         if response.status == 204:
             return {}
         responseBody = response.read().decode("utf8")
@@ -161,7 +162,8 @@ class SigridApiClient:
             ctx = ssl.create_default_context()
             ctx.check_hostname = False
             ctx.verify_mode = ssl.CERT_NONE
-            uploadResponse = urllib.request.urlopen(uploadRequest, context=ctx)
+            # uploadResponse = urllib.request.urlopen(uploadRequest, context=ctx)
+            uploadResponse = urllib.request.urlopen(uploadRequest)
             return uploadResponse.status in [200, 201, 202]
             
     def checkSystemExists(self):
