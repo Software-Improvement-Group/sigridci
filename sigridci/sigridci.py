@@ -29,8 +29,6 @@ import urllib.parse
 import urllib.request
 import ssl
 import zipfile
-import certifi
-
 
 LOG_HISTORY = []
 
@@ -102,7 +100,6 @@ class SigridApiClient:
         ctx = ssl.create_default_context()
         ctx.check_hostname = False
         ctx.verify_mode = ssl.CERT_NONE
-        print(certifi.where())
         # response = urllib.request.urlopen(request, context=ctx)
         response = urllib.request.urlopen(request)
         if response.status == 204:
@@ -164,7 +161,6 @@ class SigridApiClient:
             ctx = ssl.create_default_context()
             ctx.check_hostname = False
             ctx.verify_mode = ssl.CERT_NONE
-            print(certifi.where())
             # uploadResponse = urllib.request.urlopen(uploadRequest, context=ctx)
             uploadResponse = urllib.request.urlopen(uploadRequest)
             return uploadResponse.status in [200, 201, 202]
