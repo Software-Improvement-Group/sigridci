@@ -483,6 +483,7 @@ class ExitCodeReport(Report):
 class SigridCiRunner:
     def run(self, apiClient, options, target, reports):
         systemExists = apiClient.checkSystemExists()
+        log("Found system in Sigrid" if systemExists else "System is not yet on-boarded to Sigrid")
         analysisId = apiClient.submitUpload(options, systemExists)
 
         if not systemExists:
