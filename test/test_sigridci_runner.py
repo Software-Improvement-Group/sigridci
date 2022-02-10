@@ -35,6 +35,7 @@ class SigridCiRunnerTest(unittest.TestCase):
         runner.run(apiClient, options, target, [])
 
         expectedLog = [
+            "Found system in Sigrid",
             "Creating upload", 
             "Upload size is 1 MB", 
             "Warning: Upload is very small, source directory might not contain all source code", 
@@ -63,6 +64,7 @@ class SigridCiRunnerTest(unittest.TestCase):
         runner.run(apiClient, options, target, [])
 
         expectedLog = [
+            "Found system in Sigrid",
             "Creating upload", 
             "Upload size is 1 MB", 
             "Warning: Upload is very small, source directory might not contain all source code", 
@@ -91,6 +93,7 @@ class SigridCiRunnerTest(unittest.TestCase):
         runner.run(apiClient, options, target, [])
 
         expectedLog = [
+            "Found system in Sigrid",
             "Creating upload", 
             "Upload size is 1 MB", 
             "Warning: Upload is very small, source directory might not contain all source code", 
@@ -119,6 +122,7 @@ class SigridCiRunnerTest(unittest.TestCase):
         runner.run(apiClient, options, target, [])
 
         expectedLog = [
+            "System is not yet on-boarded to Sigrid",
             "Creating upload", 
             "Upload size is 1 MB", 
             "Warning: Upload is very small, source directory might not contain all source code", 
