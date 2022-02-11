@@ -65,7 +65,7 @@ You will find the system name in the url of the monitor in Sigrid. The structure
 
 ### How to get a token and account?
 
-Please send and email to support@softwareimprovementgroup.com and mention your name, your company and the system name(s) that you need a token for. We will send the account via mail and the token via sms.
+Follow the instructions on how to create your personal token [here](authentication-tokens.md)
 
 ### What target quality should we use?
 
