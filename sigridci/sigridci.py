@@ -98,6 +98,8 @@ class SigridApiClient:
         request.add_header("Authorization", \
             b"Basic " + base64.standard_b64encode(f"{self.account}:{self.token}".encode("utf8")))
 
+        cert = ssl.get_server_certificate(("sigrid-says.com", 443))
+        print (cert)
         ctx = ssl.create_default_context()
         ctx.check_hostname = False
         ctx.verify_mode = ssl.CERT_NONE
