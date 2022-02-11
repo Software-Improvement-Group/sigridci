@@ -36,7 +36,9 @@ Also note that tokens are automatically revoked after one year.
 
 The systems your tokens can access are inherited from your Sigrid account's permissions. That means that your permissions can be configured by your Sigrid administrator, from the user management page.
 
-These permissions also control whether your tokens are allowed to on-board new systems to Sigrid. If your user account is authorized to access the entire portfolio, your tokens will be able to on-board more systems. If your account is restricted to only accessing a specific set of systems, your tokens can only access those systems and will not be allowed to on-board new ones.
+## Token permissions for on-boarding new systems
+
+If your user account is authorized to access the entire portfolio, your tokens will be able to on-board more systems. If your account is restricted to only accessing a specific set of systems, your tokens can only access those systems and will not be allowed to on-board new ones.
 
 ## Contact and support
 
