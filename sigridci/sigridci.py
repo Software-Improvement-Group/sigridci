@@ -31,6 +31,7 @@ import zipfile
 
 
 LOG_HISTORY = []
+SYSTEM_NAME_PATTERN = re.compile("[a-z0-9][a-z0-9-]+", re.IGNORECASE)
 
 
 def log(message):
@@ -487,14 +488,19 @@ class ExitCodeReport(Report):
 class SigridCiRunner:
     def run(self, apiClient, options, target, reports):
         systemExists = apiClient.checkSystemExists()
+        log("Found system in Sigrid" if systemExists else "System is not yet on-boarded to Sigrid")
         analysisId = apiClient.submitUpload(options, systemExists)
 
         if not systemExists:
-            log(f"System '{apiClient.urlSystemName}' has been on-boarded to Sigrid")
+            log(f"System '{apiClient.urlSystemName}' is on-boarded to Sigrid, and will appear in sigrid-says.com shortly")
         elif options.publishOnly:
             log("Your project's source code has been published to Sigrid")
         else:
             feedback = apiClient.fetchAnalysisResults(analysisId)
+            
+            if not os.path.exists("sigrid-ci-output"):
+                os.mkdir("sigrid-ci-output")
+            
             for report in reports:
                 report.generate(feedback, args, target)
                 
@@ -533,6 +539,10 @@ if __name__ == "__main__":
         
     if args.publish and len(args.pathprefix) > 0:
         print("You cannot use both --publish and --pathprefix at the same time, refer to the documentation for details")
+        sys.exit(1)
+        
+    if not SYSTEM_NAME_PATTERN.match(args.system):
+        print("Invalid system name, system name can only contain letters/numbers/hyphens, and cannot start with a hyphen")
         sys.exit(1)
     
     log("Starting Sigrid CI")
