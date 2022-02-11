@@ -84,8 +84,6 @@ class SigridApiClient:
 
     def __init__(self, args):
         self.baseURL = args.sigridurl
-        self.account = os.environ["SIGRID_CI_ACCOUNT"]
-        self.token = os.environ["SIGRID_CI_TOKEN"]
         self.urlPartnerName = urllib.parse.quote_plus(args.partner.lower())
         self.urlCustomerName = urllib.parse.quote_plus(args.customer.lower())
         self.urlSystemName = urllib.parse.quote_plus(args.system.lower())
@@ -95,8 +93,7 @@ class SigridApiClient:
         url = f"{self.baseURL}/rest/{api}{path}"
         request = urllib.request.Request(url, None)
         request.add_header("Accept", "application/json")
-        request.add_header("Authorization", \
-            b"Basic " + base64.standard_b64encode(f"{self.account}:{self.token}".encode("utf8")))
+        request.add_header("Authorization", self.getTokenHeaderValue())
             
         response = urllib.request.urlopen(request)
         if response.status == 204:
@@ -106,6 +103,14 @@ class SigridApiClient:
             log("Received empty response")
             return {}
         return json.loads(responseBody)
+        
+    def getTokenHeaderValue(self):
+        token = os.environ["SIGRID_CI_TOKEN"]
+        if len(token) >= 32:
+            return f"Bearer {token}".encode("utf8")
+        else:
+            account = os.environ["SIGRID_CI_ACCOUNT"]
+            return b"Basic " + base64.standard_b64encode(f"{account}:{token}".encode("utf8"))
         
     def submitUpload(self, options, systemExists):
         log("Creating upload")
@@ -524,8 +529,8 @@ if __name__ == "__main__":
         print("Sigrid CI requires Python 3.7 or higher")
         sys.exit(1)
         
-    if not "SIGRID_CI_ACCOUNT" in os.environ or not "SIGRID_CI_TOKEN" in os.environ:
-        print("Sigrid account not found in environment variables SIGRID_CI_ACCOUNT and SIGRID_CI_TOKEN")
+    if not "SIGRID_CI_TOKEN" in os.environ:
+        print("Missing required environment variable SIGRID_CI_TOKEN")
         sys.exit(1)
         
     if not os.path.exists(args.source):
