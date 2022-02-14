@@ -16,16 +16,15 @@ On-boarding is done automatically when you first run Sigrid CI. As long as you h
 
 ### Step 1: Configure Sigrid credentials to environment variables
 
-Sigrid CI reads your Sigrid account credentials from two environment variables, called `SIGRID_CI_ACCOUNT` and `SIGRID_CI_TOKEN`. You can make these environment variables available to GitHub Actions by creating "secrets" in your GitHub repository:
+Sigrid CI reads your Sigrid account credentials from an environment variable called `SIGRID_CI_TOKEN`. You can make this environment variable available to GitHub Actions by creating "secrets" in your GitHub repository:
 
 - Open your project settings in GitHub
 - Select "Secrets" in the menu on the left
 - Use the "New repository secret" button
-- Create a secret named `SIGRID_CI_ACCOUNT` with the account name you have received
+- Create a secret named `SIGRID_CI_TOKEN` and use your [Sigrid authentication token](authentication-tokens.md) as value
 
 <img src="images/github-env.png" width="400" />
 
-- Add another secret named `SIGRID_CI_TOKEN` with the token you have received.
 - Your repository secrets should now look like this:
 
 <img src="images/github-env-secrets.png" width="400" />
@@ -57,7 +56,6 @@ jobs:
       - run: "git clone https://github.com/Software-Improvement-Group/sigridci.git sigridci"
       - name: "Run Sigrid CI" 
         env:
-          SIGRID_CI_ACCOUNT: "${{ secrets.SIGRID_CI_ACCOUNT }}"
           SIGRID_CI_TOKEN: "${{ secrets.SIGRID_CI_TOKEN }}"
         run: "./sigridci/sigridci/sigridci.py --customer examplecustomername --system examplesystemname --source . --targetquality 3.0 --publish" 
       - name: "Save Sigrid CI results"
@@ -84,7 +82,6 @@ jobs:
       - run: "git clone https://github.com/Software-Improvement-Group/sigridci.git sigridci"
       - name: "Run Sigrid CI" 
         env:
-          SIGRID_CI_ACCOUNT: "${{ secrets.SIGRID_CI_ACCOUNT }}"
           SIGRID_CI_TOKEN: "${{ secrets.SIGRID_CI_TOKEN }}"
         run: "./sigridci/sigridci/sigridci.py --customer examplecustomername --system examplesystemname --source . --targetquality 3.5"
       - name: "Save Sigrid CI results"
@@ -98,7 +95,6 @@ jobs:
 This example assumes you're using the repository-level secrets. If you want to use the organization-level secrets instead, you can change the following lines:
 
 ```
-SIGRID_CI_ACCOUNT: "${{ secrets.SIGRID_CI_ORG_ACCOUNT }}"
 SIGRID_CI_TOKEN: "${{ secrets.SIGRID_CI_ORG_TOKEN }}"
 ```
 

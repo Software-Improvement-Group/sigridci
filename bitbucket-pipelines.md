@@ -16,15 +16,13 @@ On-boarding is done automatically when you first run Sigrid CI. As long as you h
 
 ### Step 1: Configure Sigrid credentials to environment variables
 
-Sigrid CI reads your Sigrid account credentials from two environment variables, called `SIGRID_CI_ACCOUNT` and `SIGRID_CI_TOKEN`. You can make these environment variables available to BitBucket Pipelines by creating "secrets" in your repository:
+Sigrid CI reads your Sigrid account credentials from an environment variable called `SIGRID_CI_TOKEN`. You can make these environment variables available to BitBucket Pipelines by creating "secrets" in your repository:
 
 - Open "Repository settings" in your project menu
 - Select "Repository variables" located in the section "Pipelines"
-- Create a secret named `SIGRID_CI_ACCOUNT` with the account name you have received
+- Create a secret named `SIGRID_CI_TOKEN` and use your [Sigrid authentication token](authentication-tokens.md) as the value.
 
 <img src="images/bitbucket-env.png" width="500" />
-
-- Add another secret named `SIGRID_CI_TOKEN` with the token you have received.
 
 ### Step 2: Create a BitBucket Pipeline for Sigrid CI
 
