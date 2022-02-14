@@ -32,6 +32,7 @@ import zipfile
 import certifi
 
 LOG_HISTORY = []
+SYSTEM_NAME_PATTERN = re.compile("[a-z0-9][a-z0-9-]+", re.IGNORECASE)
 
 
 def log(message):
@@ -84,8 +85,6 @@ class SigridApiClient:
 
     def __init__(self, args):
         self.baseURL = args.sigridurl
-        self.account = os.environ["SIGRID_CI_ACCOUNT"]
-        self.token = os.environ["SIGRID_CI_TOKEN"]
         self.urlPartnerName = urllib.parse.quote_plus(args.partner.lower())
         self.urlCustomerName = urllib.parse.quote_plus(args.customer.lower())
         self.urlSystemName = urllib.parse.quote_plus(args.system.lower())
@@ -95,10 +94,8 @@ class SigridApiClient:
         url = f"{self.baseURL}/rest/{api}{path}"
         request = urllib.request.Request(url, None)
         request.add_header("Accept", "application/json")
-        request.add_header("Authorization", \
-            b"Basic " + base64.standard_b64encode(f"{self.account}:{self.token}".encode("utf8")))
-
-        print (certifi.where())
+        request.add_header("Authorization", self.getTokenHeaderValue())
+            
         ctx = ssl.create_default_context()
         ctx.check_hostname = False
         ctx.verify_mode = ssl.CERT_NONE
@@ -112,6 +109,14 @@ class SigridApiClient:
             return {}
         return json.loads(responseBody)
         
+    def getTokenHeaderValue(self):
+        token = os.environ["SIGRID_CI_TOKEN"]
+        if len(token) >= 32:
+            return f"Bearer {token}".encode("utf8")
+        else:
+            account = os.environ["SIGRID_CI_ACCOUNT"]
+            return b"Basic " + base64.standard_b64encode(f"{account}:{token}".encode("utf8"))
+
     def submitUpload(self, options, systemExists):
         log("Creating upload")
         uploadPacker = SystemUploadPacker(options)
@@ -493,10 +498,11 @@ class ExitCodeReport(Report):
 class SigridCiRunner:
     def run(self, apiClient, options, target, reports):
         systemExists = apiClient.checkSystemExists()
+        log("Found system in Sigrid" if systemExists else "System is not yet on-boarded to Sigrid")
         analysisId = apiClient.submitUpload(options, systemExists)
 
         if not systemExists:
-            log(f"System '{apiClient.urlSystemName}' has been on-boarded to Sigrid")
+            log(f"System '{apiClient.urlSystemName}' is on-boarded to Sigrid, and will appear in sigrid-says.com shortly")
         elif options.publishOnly:
             log("Your project's source code has been published to Sigrid")
         else:
@@ -533,8 +539,8 @@ if __name__ == "__main__":
         print("Sigrid CI requires Python 3.7 or higher")
         sys.exit(1)
         
-    if not "SIGRID_CI_ACCOUNT" in os.environ or not "SIGRID_CI_TOKEN" in os.environ:
-        print("Sigrid account not found in environment variables SIGRID_CI_ACCOUNT and SIGRID_CI_TOKEN")
+    if not "SIGRID_CI_TOKEN" in os.environ:
+        print("Missing required environment variable SIGRID_CI_TOKEN")
         sys.exit(1)
         
     if not os.path.exists(args.source):
@@ -544,7 +550,11 @@ if __name__ == "__main__":
     if args.publish and len(args.pathprefix) > 0:
         print("You cannot use both --publish and --pathprefix at the same time, refer to the documentation for details")
         sys.exit(1)
-    
+
+    if not SYSTEM_NAME_PATTERN.match(args.system):
+        print("Invalid system name, system name can only contain letters/numbers/hyphens, and cannot start with a hyphen")
+        sys.exit(1)
+
     log("Starting Sigrid CI")
     options = UploadOptions(args.source, args.exclude.split(","), args.history, args.pathprefix, args.showupload, args.publishonly)
     target = TargetQuality(f"{args.source}/sigrid.yaml", args.targetquality)
@@ -553,4 +563,3 @@ if __name__ == "__main__":
     
     runner = SigridCiRunner()
     runner.run(apiClient, options, target, reports)
-    

@@ -18,7 +18,7 @@ import types
 import unittest
 import urllib
 import zipfile
-from sigridci.sigridci import SigridApiClient, Report, TextReport, UploadOptions, TargetQuality, LOG_HISTORY
+from sigridci.sigridci import SigridApiClient, Report, TextReport, UploadOptions, TargetQuality, LOG_HISTORY, SYSTEM_NAME_PATTERN
 
 
 class SigridCiTest(unittest.TestCase):
@@ -37,6 +37,22 @@ class SigridCiTest(unittest.TestCase):
         
         self.assertEqual(apiClient.urlCustomerName, "aap")
         self.assertEqual(apiClient.urlSystemName, "noot")
+        
+    def testOldTokenFormatShouldUseHttpBasicAuth(self):
+        args = types.SimpleNamespace(partner="sig", customer="aap", system="noot", sigridurl="", publish=False, publishonly=False)
+        os.environ["SIGRID_CI_TOKEN"] = "12456"
+        apiClient = SigridApiClient(args)
+        
+        self.assertEqual(apiClient.getTokenHeaderValue(), b"Basic ZHVtbXk6MTI0NTY=")
+        
+    def testJwtTokenFormatShouldUseHttpBearer(self):
+        args = types.SimpleNamespace(partner="sig", customer="aap", system="noot", sigridurl="", publish=False, publishonly=False)
+        os.environ["SIGRID_CI_TOKEN"] = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3" + \
+            "ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyfQ.SflKxwRJSMeKKF2QT4fwpMeJf36POk6yJV_adQssw5c"
+        apiClient = SigridApiClient(args)
+        
+        self.assertEqual(apiClient.getTokenHeaderValue(), b"Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0N" + \
+            b"TY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyfQ.SflKxwRJSMeKKF2QT4fwpMeJf36POk6yJV_adQssw5c")
         
     def testFeedbackTemplateOnlyContainsAsciiCharacters(self):
         with open("sigridci/sigridci-feedback-template.html", mode="r", encoding="ascii") as templateRef:
@@ -125,6 +141,24 @@ class SigridCiTest(unittest.TestCase):
         self.assertEqual(target.ratings.get("MAINTAINABILITY", None), 4.0)
         self.assertEqual(target.ratings.get("DUPLICATION", None), 3.0)
         self.assertEqual(target.ratings.get("UNIT_SIZE", None), None)
+    
+    def validateSystemNameAccordingToRules(self):
+        self.assertTrue(SYSTEM_NAME_PATTERN.match("aap"))
+        self.assertTrue(SYSTEM_NAME_PATTERN.match("aap-noot"))
+        self.assertTrue(SYSTEM_NAME_PATTERN.match("aap123"))
+        self.assertTrue(SYSTEM_NAME_PATTERN.match("AAP"))
+        
+        self.assertFalse(SYSTEM_NAME_PATTERN.match("aap_noot"))
+        self.assertFalse(SYSTEM_NAME_PATTERN.match("a"))
+        self.assertFalse(SYSTEM_NAME_PATTERN.match("$$$"))
+        self.assertFalse(SYSTEM_NAME_PATTERN.match("-aap"))
+        
+    def systemNameIsConvertedToLowerCaseInApiClient(self):
+        args = types.SimpleNamespace(partner="sig", customer="Aap", system="NOOT")
+        apiClient = SigridApiClient(args)
+        
+        self.assertEqual(apiClient.urlCustomerName, "aap")
+        self.assertEqual(apiClient.urlSystemName, "noot")
 
     def createTempFile(self, dir, name, contents):
         with open(f"{dir}/{name}", "w") as fileRef:
