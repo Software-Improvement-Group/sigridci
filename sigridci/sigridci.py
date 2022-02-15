@@ -98,7 +98,8 @@ class SigridApiClient:
             
         ctx = ssl.create_default_context()
         ctx.check_hostname = False
-        ctx.verify_mode = ssl.CERT_NONE
+        #ctx.verify_mode = ssl.CERT_NONE
+        ctx.load_verify_locations("sigridci/sigridci/sigrid-says.pem")
         print (certifi.where())
         response = urllib.request.urlopen(request, context=ctx)
         # response = urllib.request.urlopen(request)
@@ -168,7 +169,8 @@ class SigridApiClient:
 
             ctx = ssl.create_default_context()
             ctx.check_hostname = False
-            ctx.verify_mode = ssl.CERT_NONE
+            #ctx.verify_mode = ssl.CERT_NONE
+            ctx.load_verify_locations("sigridci/sigridci/sigrid-says.pem")
             print (certifi.where())
             uploadResponse = urllib.request.urlopen(uploadRequest, context=ctx)
             # uploadResponse = urllib.request.urlopen(uploadRequest)
