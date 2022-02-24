@@ -20,6 +20,7 @@ Sigrid CI reads your Sigrid account credentials from an environment variable cal
 
 - Open your project settings in GitHub
 - Select "Secrets" in the menu on the left
+- Select "Actions" in the sub-menu that appears below "Secrets"
 - Use the "New repository secret" button
 - Create a secret named `SIGRID_CI_TOKEN` and use your [Sigrid authentication token](authentication-tokens.md) as value
 
@@ -64,6 +65,7 @@ jobs:
         with:
           path: "sigrid-ci-output/**"
           retention-days: 7
+          if-no-files-found: ignore
 ```
 
 Note the name of the branch, which is `main` in the example but might be different for your repository. In general, most older GitHub projects will use `master` as their main branch, while more recent GitHub projects will use `main`. 
@@ -90,6 +92,7 @@ jobs:
         with:
           path: "sigrid-ci-output/**"
           retention-days: 7
+          if-no-files-found: ignore
 ```
 
 This example assumes you're using the repository-level secrets. If you want to use the organization-level secrets instead, you can change the following lines:

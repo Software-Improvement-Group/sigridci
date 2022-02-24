@@ -51,12 +51,7 @@ Now that we have created the new build step, we need to provide our [Sigrid auth
 - Select "parameters" in the build menu on the left.
 - Click "add new parameter"
 - Add an environment variable with the kind "environment variable", the name `env.SIGRID_CI_TOKEN`, and your token as the value.
-
-<img src="images/teamcity-add-environment-variable.png" width="500" />
-
 - Save the environment variable
-
-<img src="images/teamcity-environment-variables.png" width="300" />
 
 ### Step 3: Run your pipeline
 

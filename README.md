@@ -29,15 +29,7 @@ You can find more information about Sigrid on its [product page](https://www.sof
 
 ## Integrating Sigrid CI into your development pipeline
 
-This document describes how to integrate Sigrid into your continuous integration pipeline, so that you can use it as input for your code reviews during merge requests. 
-
-Using Sigrid CI requires a Sigrid account. If you do not have an account yet, [contact SIG](https://www.softwareimprovementgroup.com/contact/) to obtain it. Note that your credentials for personally signing in to Sigrid are different from the account you'll to submit code from your CI environment.
-
-There are two ways to integrate Sigrid CI into your pipeline. The first is a set of generic instructions that should work for every modern Continuous Integration environment:
-
-- [Integrating Sigrid CI into your continuous integration pipeline](integration.md)
-
-In addition to the generic instructions, we have also prepared specific instructions for integrating Sigrid CI with popular development platforms:
+We provide specific instructions for integrating Sigrid CI with popular development platforms:
 
 - [Integrating Sigrid CI with GitHub Actions](github-actions.md)
 - [Integrating Sigrid CI with GitLab](gitlab.md)
@@ -45,6 +37,7 @@ In addition to the generic instructions, we have also prepared specific instruct
 - [Integrating Sigrid CI with Jenkins](jenkins.md)
 - [Integrating Sigrid CI with Azure DevOps](azure-devops.md)
 - [Integrating Sigrid CI with TeamCity](teamcity.md)
+- [Integrating Sigrid CI with other/custom CI environments](integration.md)
 
 ## Usage documentation
 
