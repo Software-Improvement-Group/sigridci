@@ -17,13 +17,12 @@ On-boarding is done automatically when you first run Sigrid CI. As long as you h
 
 **Step 1: Configure Sigrid credentials to environment variables**
 
-Sigrid CI reads your Sigrid account credentials from two environment variables, called `SIGRID_CI_ACCOUNT` and `SIGRID_CI_TOKEN`. You can either define these environment variables in the CI user's `~/.bashrc`, though some platforms also allow you to define environment variables using a graphical interface.
+Sigrid CI reads your [Sigrid authentication token](authentication-tokens.md) from an environment variable called `SIGRID_CI_TOKEN`. You can define this environment variable in the CI user's `~/.bashrc`, though some platforms also allow you to define environment variables using a graphical interface.
 
 The following example shows an example of the environment variables being added to `~/.bashrc`:
 
 ```
 # Leave existing contents of the file as they were, and add these lines
-export SIGRID_CI_ACCOUNT="j.doe+ci@example.com"
 export SIGRID_CI_TOKEN="EHHtLKgPQH3XfjNZfmKqABUR"
 ```
 

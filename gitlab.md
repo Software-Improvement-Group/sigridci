@@ -17,17 +17,15 @@ On-boarding is done automatically when you first run Sigrid CI. As long as you h
 
 **Step 1: Configure Sigrid credentials to environment variables**
 
-Sigrid CI reads your Sigrid account credentials from two environment variables, called `SIGRID_CI_ACCOUNT` and `SIGRID_CI_TOKEN`. To add them to your GitLab CI pipeline, follow these steps:
+Sigrid CI reads your Sigrid account credentials from an environment variable called `SIGRID_CI_TOKEN`. To add it to your GitLab CI pipeline, follow these steps:
 
 - Select "Settings" in your GitLab project's menu
 - Select "CI/CD" in the settings menu
 - Locate the section named "Variables"
 - Click the "Add variable" button
-- Add an environment variable `SIGRID_CI_ACCOUNT` with the account name you have received
+- Add an environment variable `SIGRID_CI_TOKEN` and use your [Sigrid authentication token](authentication-tokens.md) as the value.
 
 <img src="images/gitlab-env.png" width="400" />
-
-- Add another environment variable, `SIGRID_CI_TOKEN`, and add the Sigrid CI token you have received
 
 These instructions describe how to configure a single GitLab project, but you can follow the same steps to configure the entire GitLab group, which will make the environment variables available to all projects within that group.
 

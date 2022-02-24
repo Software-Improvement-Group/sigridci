@@ -46,19 +46,12 @@ After performing these steps you should end up with the following configuration:
 
 ### Step 2: Configure account credentials
 
-Now that we have created the new build step, we need to provide our Sigrid account name and authentication token:
+Now that we have created the new build step, we need to provide our [Sigrid authentication token](authentication-tokens.md):
 
 - Select "parameters" in the build menu on the left.
 - Click "add new parameter"
-- Add an environment variable with the kind "environment variable", the name `env.SIGRID_CI_ACCOUNT`, with value based on the account name you have received.
-
-<img src="images/teamcity-add-environment-variable.png" width="500" />
-
+- Add an environment variable with the kind "environment variable", the name `env.SIGRID_CI_TOKEN`, and your token as the value.
 - Save the environment variable
-- Repeat the process for another environment variable `env.SIGRID_CI_TOKEN`, with the value based on the Sigrid CI authentication token you have received
-- You should now see the following parameters as part of your build configuration:
-
-<img src="images/teamcity-environment-variables.png" width="300" />
 
 ### Step 3: Run your pipeline
 

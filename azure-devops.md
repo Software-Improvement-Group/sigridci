@@ -43,7 +43,6 @@ stages:
           addToPath: false
       - bash: "./sigridci/sigridci/sigridci.py --customer examplecustomername --system examplesystemname --source . --targetquality 3.5"
         env:
-          SIGRID_CI_ACCOUNT: $(SIGRID_CI_ACCOUNT)
           SIGRID_CI_TOKEN: $(SIGRID_CI_TOKEN)
         continueOnError: true
       - publish: sigrid-ci-output
@@ -63,7 +62,6 @@ stages:
           addToPath: false
       - bash: "./sigridci/sigridci/sigridci.py --customer examplecustomername --system examplesystemname --source . --publish"
         env:
-          SIGRID_CI_ACCOUNT: $(SIGRID_CI_ACCOUNT)
           SIGRID_CI_TOKEN: $(SIGRID_CI_TOKEN)
         continueOnError: true
 ```
@@ -90,11 +88,9 @@ Select the YAML file you created in the previous step:
 
 <img src="images/azure-selectyaml.png" width="500" />
 
-This will display the contents of the YAML file in the next screen. The final step is to add your account credentials to the pipeline. Click "Variables" in the top right corner. Create a secret named `SIGRID_CI_ACCOUNT` with the account name you have received:
+This will display the contents of the YAML file in the next screen. The final step is to add your account credentials to the pipeline. Click "Variables" in the top right corner. Create a secret named `SIGRID_CI_TOKEN` and use your [Sigrid authentication token](authentication-tokens.md) as the value.
 
 <img src="images/azure-variables.png" width="500" />
-
-When done, add another variables named `SIGRID_CI_TOKEN` with the authentication token you have received.
 
 From this point, Sigrid CI will run as part of the pipeline. When the pipeline is triggered depends on the configuration: by default it will run after every commit, but you can also trigger it periodically or run it manually.
 
