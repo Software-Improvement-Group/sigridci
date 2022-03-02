@@ -29,7 +29,6 @@ import urllib.parse
 import urllib.request
 import ssl
 import zipfile
-import certifi
 
 LOG_HISTORY = []
 SYSTEM_NAME_PATTERN = re.compile("[a-z0-9][a-z0-9-]+", re.IGNORECASE)
