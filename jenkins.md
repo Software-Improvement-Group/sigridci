@@ -17,11 +17,11 @@ On-boarding is done automatically when you first run Sigrid CI. As long as you h
 
 **Step 1: Configure Sigrid credentials to environment variables**
 
-Sigrid CI reads your Sigrid account credentials from two environment variables, called `SIGRID_CI_ACCOUNT` and `SIGRID_CI_TOKEN`. You need to make these two environment variables available Jenkins. To do this, navigate to the "Credentials" settings in your Jenkins setting page. Then select "Add credentials" with the type "secret text". You can then use this page to add `SIGRID_CI_ACCOUNT`:
+Sigrid CI reads your Sigrid credentials from one environment variables, called `SIGRID_CI_TOKEN`. You need to make this environment variable available Jenkins. To do this, navigate to the "Credentials" settings in your Jenkins setting page. Then select "Add credentials" with the type "secret text". You can then use this page to add `SIGRID_CI_TOKEN`:
 
 <img src="images/jenkins-credentials.png" width="600" />
 
-After saving, do the same for the `SIGRID_CI_TOKEN`. Note that you should have received both your account name and the token when your account was created, as described in the prerequisites section. After you've added both secrets they should be visible in the list:
+After saving, the secret should be visible in the list:
 
 <img src="images/jenkins-credentials-list.png" width="500" />
 
@@ -40,7 +40,6 @@ pipeline {
     }
     
     environment {
-        SIGRID_CI_ACCOUNT = credentials('SIGRID_CI_ACCOUNT')
         SIGRID_CI_TOKEN = credentials('SIGRID_CI_TOKEN')
     }
 
@@ -62,7 +61,6 @@ pipeline {
     agent any
 
     environment {
-        SIGRID_CI_ACCOUNT = credentials('SIGRID_CI_ACCOUNT')
         SIGRID_CI_TOKEN = credentials('SIGRID_CI_TOKEN')
     }
 
