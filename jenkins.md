@@ -15,9 +15,9 @@ On-boarding is done automatically when you first run Sigrid CI. As long as you h
 
 ## Configuration
 
-**Step 1: Configure Sigrid credentials to environment variables**
+**Step 1: Configure Sigrid credential to environment variable**
 
-Sigrid CI reads your Sigrid credentials from one environment variables, called `SIGRID_CI_TOKEN`. You need to make this environment variable available Jenkins. To do this, navigate to the "Credentials" settings in your Jenkins setting page. Then select "Add credentials" with the type "secret text". You can then use this page to add `SIGRID_CI_TOKEN`:
+Sigrid CI reads your Sigrid credential from one environment variable, called `SIGRID_CI_TOKEN`. You need to make this environment variable available Jenkins. To do this, navigate to the "Credentials" settings in your Jenkins setting page. Then select "Add credentials" with the type "secret text". You can then use this page to add `SIGRID_CI_TOKEN`:
 
 <img src="images/jenkins-credentials.png" width="600" />
 
