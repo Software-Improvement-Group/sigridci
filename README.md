@@ -1,16 +1,16 @@
-<img src="images/sigrid-logo.png" width="200" />
+<img src="docs/images/sigrid-logo.png" width="200" />
 
 ## Sigrid | Software Assurance Platform
 
 [Sigrid](https://www.softwareimprovementgroup.com/solutions/sigrid-software-assurance-platform/) helps you to improve your software by measuring your system's code quality, and then compares the results against a benchmark of 7,000 industry systems to give you concrete advice on areas where you can improve.
 
-<img src="images/sigrid-dashboard.png" width="800" />
+<img src="docs/images/sigrid-dashboard.png" width="800" />
 
 Sigrid performs code quality checks that have been designed by the [Software Improvement Group](https://www.softwareimprovementgroup.com/), which have been used by thousands of development teams over the past 20 years to help improve their software. SIG's approach is based on the ISO 25010 standard for software quality, and has been accredited to ensure alignment with the standard.
 
 Integrating Sigrid's feedback into your development pipeline enables you to fix quality issues right away during your code reviews, instead of having to spot and fix them after the fact. You can access Sigrid's feedback through [sigrid-says.com](https://sigrid-says.com), or directly within your Continuous Integration environment.
 
-<img src="images/sigridci-features.png" width="800" />
+<img src="docs/images/sigridci-features.png" width="800" />
 
 Compared to other tools that perform code quality checks, i.e. linters, using Sigrid has a number of advantages:
 
