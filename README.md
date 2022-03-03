@@ -22,19 +22,20 @@ Compared to other tools that perform code quality checks, i.e. linters, using Si
 
 We provide specific instructions for integrating Sigrid CI with popular development platforms:
 
-- [Integrating Sigrid CI with GitHub Actions](github-actions.md)
-- [Integrating Sigrid CI with GitLab](gitlab.md)
-- [Integrating Sigrid CI with Bitbucket Pipelines](bitbucket-pipelines.md)
-- [Integrating Sigrid CI with Jenkins](jenkins.md)
-- [Integrating Sigrid CI with Azure DevOps](azure-devops.md)
-- [Integrating Sigrid CI with TeamCity](teamcity.md)
-- [Integrating Sigrid CI with other/custom CI environments](integration.md)
+- [Integrating Sigrid CI with GitHub Actions](docs/github-actions.md)
+- [Integrating Sigrid CI with GitLab](docs/gitlab.md)
+- [Integrating Sigrid CI with Bitbucket Pipelines](docs/bitbucket-pipelines.md)
+- [Integrating Sigrid CI with Jenkins](docs/jenkins.md)
+- [Integrating Sigrid CI with Azure DevOps](docs/azure-devops.md)
+- [Integrating Sigrid CI with TeamCity](docs/teamcity.md)
+- [Integrating Sigrid CI with other/custom CI environments](docs/integration.md)
 
 ## Usage documentation
 
-- [Client script option reference](client-script-usage.md)
-- [Frequently asked questions](faq.md)
-- [Using Sigrid CI as part of your development workflow](workflows.md)
+- [Creating authentication tokens for Sigrid CI](docs/authentication-tokens.md)
+- [Client script option reference](docs/client-script-usage.md)
+- [Frequently asked questions](docs/faq.md)
+- [Using Sigrid CI as part of your development workflow](docs/workflows.md)
 - [Sigrid CI demo recording](https://www.youtube.com/watch?v=1QWWtFlB6cQ) 
 
 ## Contact and support
