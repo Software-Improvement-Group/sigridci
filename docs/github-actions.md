@@ -24,7 +24,7 @@ Sigrid CI reads your Sigrid account credentials from an environment variable cal
 
 <img src="images/github-env.png" width="400" />
 
-- Your repository secrets should now look like this:
+Your repository secret should now look like this:
 
 <img src="images/github-env-secrets.png" width="400" />
 
@@ -32,7 +32,7 @@ This example explained how to add secrets for a single repository. However, if y
 
 <img src="images/github-org-secrets.jpg" width="400" />
 
-In this screenshot, the repository-level secrets and the organization-level secrets have been given different names, to make it easier to tell which is which.
+The organization-level secret.
 
 ### Step 2: Create a GitHub Actions workflow for Sigrid CI
 
