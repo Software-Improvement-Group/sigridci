@@ -1,8 +1,6 @@
 Integrating Sigrid CI with BitBucket Pipelines
 ==============================================
 
-This guide explains how to integrate Sigrid into your BitBucket Pipelines continuous integration pipeline. Make sure you have also read the [general Sigrid CI documentation](README.md) before starting this guide.
-
 ## Prerequisites
 
 - You have a [Sigrid](https://sigrid-says.com) user account. 

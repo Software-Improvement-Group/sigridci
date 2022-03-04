@@ -1,9 +1,7 @@
 Using the Sigrid CI client script
 =================================
 
-This guide explains the command line interface for the Sigrid CI client script. Make sure you have also read the [general Sigrid CI documentation](README.md) before starting this guide.
-
-Sigrid CI consists of a number of Python-based client scripts, that interact with Sigrid in order to analyze your project's source code and provide feedback based on the results. These client scripts need to be available to the CI environment, in order to call the scripts *from* the CI pipeline. The [general Sigrid CI documentation](README.md) contain instructions on how to make this script available within various CI environments. 
+Sigrid CI consists of a number of Python-based client scripts, that interact with Sigrid in order to analyze your project's source code and provide feedback based on the results. These client scripts need to be available to the CI environment, in order to call the scripts *from* the CI pipeline. The [general Sigrid CI documentation](../README.md) contain instructions on how to make this script available within various CI environments. 
 
 Once the `sigridci.py` script is available within your CI environment, you can call the script to start the Sigrid CI run. 
 

@@ -47,7 +47,7 @@ The first Sigrid CI use case is to *publish* your project's source code to Sigri
 
 The second use case is to use Sigrid CI for feedback during code reviews on pull requests. This wil compare the contents of the pull request agains the baseline version, allowing you to identify improvement areas in the new and changed code.
 
-The [platform-specific documentation and examples](README.md) cover instructions for both scenarios. We generally recommend to use Sigrid CI for both scenarios, although it's also perfectly fine to use Sigrid CI for one scenario but not the other.
+The [platform-specific documentation and examples](../README.md) cover instructions for both scenarios. We generally recommend to use Sigrid CI for both scenarios, although it's also perfectly fine to use Sigrid CI for one scenario but not the other.
 
 ### Does Sigrid CI fit in my workflow?
 

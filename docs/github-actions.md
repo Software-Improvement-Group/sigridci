@@ -1,8 +1,6 @@
 Integrating Sigrid CI with GitHub Actions
 =========================================
 
-This guide explains how to integrate Sigrid into your GitHub continuous integration pipeline, using GitHub Actions. Make sure you have also read the [general Sigrid CI documentation](README.md) before starting this guide.
-
 ## Prerequisites
 
 - You have a [Sigrid](https://sigrid-says.com) user account. 
