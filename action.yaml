@@ -45,11 +45,11 @@ runs:
     - ${{ inputs.source }}
     - "--targetquality"
     - ${{ inputs.targetquality }}
-    - ${{ inputs.publish && "-publish" }}
-    - ${{ inputs.publishonly && "-publishonly" }}
+    - ${{ inputs.publish && '--publish' }}
+    - ${{ inputs.publishonly && '--publishonly' }}
     - "--exclude"
     - ${{ inputs.exclude }}
-    - ${{ inputs.showupload && "-showupload" }}
+    - ${{ inputs.showupload && '--showupload' }}
 
 branding:
   icon: hexagon
