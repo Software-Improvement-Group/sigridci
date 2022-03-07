@@ -2,8 +2,23 @@ name: ci
 on: [push]
 jobs:
   ci:
+    name: "Python unit tests"
     runs-on: ubuntu-latest
     steps:
       - name: Check out repository
         uses: actions/checkout@v2
       - run: "python3 -m unittest"
+  dockerci:
+    name: "Sigrid CI in Docker"
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v2
+      - name: Run Sigrid CI in Docker
+        uses: ./
+        id: dockertest
+        with:
+          customer: "sig"
+          system: "sigridci-client"
+          targetquality: "4"
+          
