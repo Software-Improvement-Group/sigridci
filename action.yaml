@@ -1,0 +1,57 @@
+name: "Sigrid CI"
+description: "Sigrid: getting software right"
+
+inputs:
+  customer:
+    description: "Your Sigrid customer name."
+    required: true
+  system:
+    description: "Your Sigrid system name."
+    required: true
+  source:
+    description: "Source code directory."
+    required: false
+    default: "."
+  targetquality:
+    description: "Minimum required star rating for new/changed code."
+    required: false
+    default: "3.5"
+  publish:
+    description: "Publishes your source code to Sigrid."
+    required: false
+    default: false
+  publishonly:
+    description: "Publishes your source code to Sigrid, without waiting for feedback."
+    required: false
+    default: false
+  exclude:
+    description: "Comma-separated list of files and directories that should not be uploaded."
+    required: false
+    default: "/bin/"
+  showupload:
+    description: "Outputs the list of files included in the upload to Sigrid, for troubleshooting."
+    required: false
+    default: false
+
+runs:
+  using: "docker"
+  image: "Dockerfile"
+  args:
+    - "--customer"
+    - ${{ inputs.customer }}
+    - "--system"
+    - ${{ inputs.system }}
+    - "--source"
+    - ${{ inputs.source }}
+    - "--targetquality"
+    - ${{ inputs.targetquality }}
+    - ${{ inputs.publish && '--publish' }}
+    - ${{ inputs.publishonly && '--publishonly' }}
+    - "--exclude"
+    - ${{ inputs.exclude }}
+    - ${{ inputs.showupload && '--showupload' }}
+
+branding:
+  icon: hexagon
+  color: purple
+  
