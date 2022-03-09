@@ -30,6 +30,7 @@ Sigrid CI: Frequently Asked Questions
 - [I'm receiving an error message that certificate verification failed](#im-receiving-an-error-message-that-certificate-verification-failed)
 - [Why can't I use the publish and pathprefix options together?](#why-cant-i-use-the-publish-and-pathprefix-options-together)
 - [Where do I find the Sigrid CI output?](#where-do-i-find-the-sigrid-ci-output)
+- [I started using Sigrid CI, and now I suddenly see more code in Sigrid](#i-started-using-sigrid-ci-and-now-i-suddenly-see-more-code-in-sigrid)
 
 ### Infrastructure and security questions
 
@@ -175,6 +176,12 @@ You can either use the `--publish` option to publish your code to Sigrid, or you
 ### Where do I find the Sigrid CI output ?
 
 The results of the SigridCI run are logged in the terminal output and optional as a html artefact. For the artefact to be stored you will need to specify the Sigrid CI output path in your yml. Check out the examples for GitHub and GitLab. 
+
+### I started using Sigrid CI, and now I suddenly see more code in Sigrid
+
+Sigrid supports multiple ways to upload source code. This documentation covers Sigrid CI, but we also support uploads via SFTP. If you previously used SFTP and then switch to Sigrid CI, you might see some differences. For example, you might suddenly see extra code, or extra components. This is caused by differences in how the upload is created. Unfortunately that means there is no "quick fix" outside of updating your configuration. We are happy to help you with identifying the changes, so please [contact us](mailto:support@softwareimprovementgroup.com) and we'll try to help you out.
+
+This also means that we recommend you to either use Sigrid CI or SFTP uploads, but not both. Using two ways of uploading means both uploads need to be consistent, otherwise you'll end up with expected changes in Sigrid. In practice this is not always convenient, so if you're using Sigrid CI we recommend you stop using SFTP and just Sigrid CI for all uploading/publishing to Sigrid.
 
 ## Infrastructure and security questions
 
