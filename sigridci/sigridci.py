@@ -109,6 +109,9 @@ class SigridApiClient:
         if len(token) >= 32:
             return f"Bearer {token}".encode("utf8")
         else:
+            log("WARNING: You are using an outdated Sigrid CI token that will be deactivated soon.")
+            log("         See https://github.com/Software-Improvement-Group/sigridci/blob/main/docs/authentication-tokens.md")
+            log("         for instructions on how you can create a new token.")
             account = os.environ["SIGRID_CI_ACCOUNT"]
             return b"Basic " + base64.standard_b64encode(f"{account}:{token}".encode("utf8"))
         
