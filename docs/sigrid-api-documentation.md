@@ -14,7 +14,7 @@ In addition to [Sigrid CI](../README.md), Sigrid also provides a more general-pu
 The following example shows how to call the Sigrid API using `curl`:
 
 ```
-curl -D -  -H 'Accept: application/json' -H 'Authorization: {SIGRID_CI_TOKEN}' https://sigrid-says.com/rest/api/clients/{customer}
+curl -D -  -H 'Accept: application/json' -H 'Authorization: {SIGRID_CI_TOKEN}' https://sigrid-says.com/rest/analysis-results/api/v1/maintainability/{customer}
 ```
 
 In the example, `{customer}` refers to your Sigrid account name, and `{SIGRID_CI_TOKEN}` refers to your authentication token.
@@ -23,7 +23,7 @@ In the example, `{customer}` refers to your Sigrid account name, and `{SIGRID_CI
 
 ### Maintainability ratings
 
-`GET https://sigrid-says.com/rest/api/clients/{customer}`
+`GET https://sigrid-says.com/rest/analysis-results/api/v1/maintainability/{customer}`
 
 Returns the maintainability ratings for all systems in your portfolio. The parameter `{customer}` refers to your Sigrid account name. 
 
@@ -53,7 +53,7 @@ The top-level `maintainability` and `maintainabilityDate` refer to the *current*
 
 ### Security findings
 
-`GET https://sigrid-says.com/rest/api/clients/{customer}/{system}/enrichedFindings`
+`GET https://sigrid-says.com/rest//analysis-results/api/{VERSION}/security-findings/{customer}/{system}`
 
 Returns all security findings for the specified system. The parameters `{customer}` and `{system}` refer to your Sigrid account name and system ID respectively. 
 
@@ -94,7 +94,7 @@ Example response:
 
 ### Vulnerable libraries in Open Source Health
 
-`GET https://sigrid-says.com/rest/api/clients/{customer}/{system}/open-source-health/vulnerable`
+`GET https://sigrid-says.com/rest/analysis-results/api/{VERSION}/osh-findings/{customer}/{system}/vulnerable`
 
 Returns all vulnerable open source libraries known to Sigrid. The output format is based on the [SBOM (software bill of materials)](https://en.wikipedia.org/wiki/Software_bill_of_materials) standard. The parameters `{customer}` and `{system}` refer to your Sigrid account name and system ID respectively. 
 
