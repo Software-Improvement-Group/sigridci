@@ -5,7 +5,7 @@ In addition to [Sigrid CI](../README.md), Sigrid also provides a more general-pu
 
 ## General usage
 
-- The Sigrid API base URL is `https://sigrid-says.com/rest/api/clients`. 
+- The Sigrid API base URL is `https://sigrid-says.com/rest/analysis-results/api/v1`. 
 - Authentication for the Sigrid API uses the same [authentication tokens](authentication-tokens.md) that are used by Sigrid CI. Your token's permissions are based on your user account, so the token can access the same systems that you can. 
 - You need to pass the authentication token to each request in the HTTP header `Authorization: Bearer {SIGRID_CI_TOKEN}`.
 - All end points will return HTTP status 401 if the token is invalid, or if the token is not authorized to access the portfolio and/or system.
