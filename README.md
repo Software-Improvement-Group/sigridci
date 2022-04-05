@@ -38,6 +38,10 @@ We provide specific instructions for integrating Sigrid CI with popular developm
 - [Using Sigrid CI as part of your development workflow](docs/workflows.md)
 - [Sigrid CI demo recording](https://www.youtube.com/watch?v=1QWWtFlB6cQ) 
 
+## Sigrid API access
+
+Most of this documentation refers to our recommended way to integrate Sigrid into your development process: add Sigrid to your pipeline, for both pull requests and publishing code. However, in some cases you might need a more flexible type of integration. The [Sigrid API documentation](docs/sigrid-api-documentation.md) contains an overview of the available data that you can obtain from Sigrid's API and integrate into your workflow.
+
 ## Contact and support
 
 Feel free to contact [SIG's support department](mailto:support@softwareimprovementgroup.com) for any questions or issues you may have after reading this document, or when using Sigrid or Sigrid CI. Users in Europe can also contact us by phone at +31 20 314 0953.
