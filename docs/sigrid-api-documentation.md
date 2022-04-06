@@ -14,7 +14,7 @@ In addition to [Sigrid CI](../README.md), Sigrid also provides a more general-pu
 The following example shows how to call the Sigrid API using `curl`:
 
 ```
-curl -D -  -H 'Accept: application/json' -H 'Authorization: {SIGRID_CI_TOKEN}' https://sigrid-says.com/rest/analysis-results/api/v1/maintainability/{customer}
+curl -D -  -H 'Accept: application/json' -H 'Authorization: Bearer {SIGRID_CI_TOKEN}' https://sigrid-says.com/rest/analysis-results/api/v1/maintainability/{customer}
 ```
 
 In the example, `{customer}` refers to your companies Sigrid account name, and `{SIGRID_CI_TOKEN}` refers to your authentication token.
