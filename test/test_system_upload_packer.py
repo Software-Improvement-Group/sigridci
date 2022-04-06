@@ -75,6 +75,7 @@ class SystemUploadPackerTest(unittest.TestCase):
         
     def testExcludeDollarTfDirectories(self):
         sourceDir = tempfile.mkdtemp()
+        self.createTempFile(sourceDir, "z.py", "z")
         subDir = sourceDir + "/$tf"
         os.mkdir(subDir)
         self.createTempFile(subDir, "a.py", "a")
@@ -85,7 +86,7 @@ class SystemUploadPackerTest(unittest.TestCase):
         uploadPacker.prepareUpload(sourceDir, outputFile)
 
         self.assertEqual(os.path.exists(outputFile), True)
-        self.assertEqual(zipfile.ZipFile(outputFile).namelist(), [])
+        self.assertEqual(zipfile.ZipFile(outputFile).namelist(), ["z.py"])
         
     def testCustomExcludePatterns(self):
         sourceDir = tempfile.mkdtemp()
@@ -143,18 +144,7 @@ class SystemUploadPackerTest(unittest.TestCase):
         uploadPacker.MAX_UPLOAD_SIZE_MB = 1
     
         self.assertRaises(Exception, uploadPacker.prepareUpload, sourceDir, tempfile.mkstemp()[1])
-        
-    def testLogMessageWhenUploadTooSmall(self):
-        sourceDir = tempfile.mkdtemp()
-        with open(sourceDir + "/a.py", "wb") as f:
-            f.write(os.urandom(1))
-            
-        uploadPacker = SystemUploadPacker(UploadOptions())
-        uploadPacker.prepareUpload(sourceDir, tempfile.mkstemp()[1])
-
-        self.assertEqual(LOG_HISTORY, ["Upload size is 1 MB", \
-            "Warning: Upload is very small, source directory might not contain all source code"])
-            
+           
     def testLogUploadContents(self):
         sourceDir = tempfile.mkdtemp()
         with open(sourceDir + "/a.py", "wb") as f:
@@ -165,9 +155,8 @@ class SystemUploadPackerTest(unittest.TestCase):
         uploadPacker = SystemUploadPacker(UploadOptions(showContents=True))
         uploadPacker.prepareUpload(sourceDir, tempfile.mkstemp()[1])
 
-        self.assertEqual(LOG_HISTORY, ["Adding file to upload: a.py", "Adding file to upload: b.py", \
-            "Upload size is 1 MB", \
-            "Warning: Upload is very small, source directory might not contain all source code"])
+        self.assertEqual(LOG_HISTORY, \
+            ["Adding file to upload: a.py", "Adding file to upload: b.py", "Upload size is 1 MB"])
         
     def testUsePathPrefixInUpload(self):
         sourceDir = tempfile.mkdtemp()
@@ -205,8 +194,7 @@ class SystemUploadPackerTest(unittest.TestCase):
         self.assertEqual(entries, ["backend/a.py"])
 
     def createTempFile(self, dir, name, contents):
-        writer = open(f"{dir}/{name}", "w")
-        writer.write(contents)
-        writer.close()
+        with open(f"{dir}/{name}", "w") as fileRef:
+            fileRef.write(contents)
         return f"{dir}/{name}"
     
