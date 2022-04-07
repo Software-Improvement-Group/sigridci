@@ -53,7 +53,7 @@ The top-level `maintainability` and `maintainabilityDate` refer to the *current*
 
 ### Security findings
 
-`GET https://sigrid-says.com/rest//analysis-results/api/{VERSION}/security-findings/{customer}/{system}`
+`GET https://sigrid-says.com/rest/analysis-results/api/{VERSION}/security-findings/{customer}/{system}`
 
 Returns all security findings for the specified system. The parameters `{customer}` and `{system}` refer to your Sigrid account name and system ID respectively. 
 
