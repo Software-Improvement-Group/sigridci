@@ -27,6 +27,8 @@ class SigridCiRunnerTest(unittest.TestCase):
 
     def testRegularRun(self):
         tempDir = tempfile.mkdtemp()    
+        self.createTempFile(tempDir, "a.py", "print(123)")
+        
         options = UploadOptions(sourceDir=tempDir)
         target = TargetQuality("/tmp/nonexistent", 3.5)
         apiClient = MockApiClient(publish=False)
@@ -37,8 +39,8 @@ class SigridCiRunnerTest(unittest.TestCase):
         expectedLog = [
             "Found system in Sigrid",
             "Creating upload", 
-            "Upload size is 1 MB", 
-            "Warning: Upload is very small, source directory might not contain all source code", 
+            "Upload size is 1 MB",
+            "Warning: Upload is very small, source directory might not contain all source code",
             "Preparing upload", 
             "Sigrid CI analysis ID: 123",
             "Submitting upload"
@@ -56,6 +58,8 @@ class SigridCiRunnerTest(unittest.TestCase):
         
     def testPublishRun(self):
         tempDir = tempfile.mkdtemp()    
+        self.createTempFile(tempDir, "a.py", "print(123)")
+        
         options = UploadOptions(sourceDir=tempDir, publishOnly=False)
         target = TargetQuality("/tmp/nonexistent", 3.5)
         apiClient = MockApiClient(publish=True)
@@ -66,8 +70,8 @@ class SigridCiRunnerTest(unittest.TestCase):
         expectedLog = [
             "Found system in Sigrid",
             "Creating upload", 
-            "Upload size is 1 MB", 
-            "Warning: Upload is very small, source directory might not contain all source code", 
+            "Upload size is 1 MB",
+            "Warning: Upload is very small, source directory might not contain all source code",
             "Preparing upload", 
             "Sigrid CI analysis ID: 123",
             "Publishing upload"
@@ -85,6 +89,8 @@ class SigridCiRunnerTest(unittest.TestCase):
         
     def testPublishOnlyRun(self):
         tempDir = tempfile.mkdtemp()    
+        self.createTempFile(tempDir, "a.py", "print(123)")
+        
         options = UploadOptions(sourceDir=tempDir, publishOnly=True)
         target = TargetQuality("/tmp/nonexistent", 3.5)
         apiClient = MockApiClient(publish=True)
@@ -95,8 +101,8 @@ class SigridCiRunnerTest(unittest.TestCase):
         expectedLog = [
             "Found system in Sigrid",
             "Creating upload", 
-            "Upload size is 1 MB", 
-            "Warning: Upload is very small, source directory might not contain all source code", 
+            "Upload size is 1 MB",
+            "Warning: Upload is very small, source directory might not contain all source code",
             "Preparing upload", 
             "Sigrid CI analysis ID: 123",
             "Publishing upload",
@@ -114,6 +120,8 @@ class SigridCiRunnerTest(unittest.TestCase):
         
     def testOnBoardingRun(self):
         tempDir = tempfile.mkdtemp()    
+        self.createTempFile(tempDir, "a.py", "print(123)")
+        
         options = UploadOptions(sourceDir=tempDir)
         target = TargetQuality("/tmp/nonexistent", 3.5)
         apiClient = MockApiClient(systemExists=False)
@@ -124,8 +132,8 @@ class SigridCiRunnerTest(unittest.TestCase):
         expectedLog = [
             "System is not yet on-boarded to Sigrid",
             "Creating upload", 
-            "Upload size is 1 MB", 
-            "Warning: Upload is very small, source directory might not contain all source code", 
+            "Upload size is 1 MB",
+            "Warning: Upload is very small, source directory might not contain all source code",
             "Preparing upload", 
             "Sigrid CI analysis ID: 123",
             "Submitting upload",
@@ -140,6 +148,21 @@ class SigridCiRunnerTest(unittest.TestCase):
 
         self.assertEqual(LOG_HISTORY, expectedLog)
         self.assertEqual(apiClient.called, expectedCalls)
+        
+    def testExitWithMessageIfUploadEmpty(self):
+        tempDir = tempfile.mkdtemp()    
+        options = UploadOptions(sourceDir=tempDir)
+        target = TargetQuality("/tmp/nonexistent", 3.5)
+        apiClient = MockApiClient(systemExists=False)
+        
+        runner = SigridCiRunner()
+        with self.assertRaises(SystemExit):
+            runner.run(apiClient, options, target, [])
+        
+    def createTempFile(self, dir, name, contents):
+        with open(f"{dir}/{name}", "w") as fileRef:
+            fileRef.write(contents)
+        return f"{dir}/{name}"
         
         
 class MockApiClient(SigridApiClient):
