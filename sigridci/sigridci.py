@@ -243,7 +243,7 @@ class SystemUploadPacker:
 
     def prepareUpload(self, sourceDir, outputFile):
         zipFile = zipfile.ZipFile(outputFile, "w", zipfile.ZIP_DEFLATED)
-        zipContents = []
+        hasContents = False
         
         for root, dirs, files in os.walk(sourceDir):
             for file in sorted(files):
@@ -251,26 +251,27 @@ class SystemUploadPacker:
                 if file != outputFile and not self.isExcluded(filePath):
                     relativePath = os.path.relpath(os.path.join(root, file), sourceDir)
                     uploadPath = self.getUploadFilePath(relativePath)
-                    zipContents.append(uploadPath)
+                    hasContents = True
                     if self.showContents:
                         log(f"Adding file to upload: {uploadPath}")
                     zipFile.write(filePath, uploadPath)
         
         zipFile.close()
         
-        self.checkUploadContents(outputFile, zipContents)
+        self.checkUploadContents(outputFile, hasContents)
         
-    def checkUploadContents(self, outputFile, zipContents):
+    def checkUploadContents(self, outputFile, hasContents):
         uploadSizeBytes = os.path.getsize(outputFile)
         uploadSizeMB = max(round(uploadSizeBytes / 1024 / 1024), 1)
         log(f"Upload size is {uploadSizeMB} MB")
         
         if uploadSizeMB > self.MAX_UPLOAD_SIZE_MB:
             raise Exception(f"Upload exceeds maximum size of {self.MAX_UPLOAD_SIZE_MB} MB")
-            
-        if len(zipContents) == 0:
+        elif not hasContents:
             print(f"No code found to upload, please check the directory used for --source")
             sys.exit(1)
+        elif uploadSizeBytes < 50000:
+            log("Warning: Upload is very small, source directory might not contain all source code")
             
     def getUploadFilePath(self, relativePath):
         if self.pathPrefix == "":

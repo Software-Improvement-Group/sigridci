@@ -40,6 +40,7 @@ class SigridCiRunnerTest(unittest.TestCase):
             "Found system in Sigrid",
             "Creating upload", 
             "Upload size is 1 MB",
+            "Warning: Upload is very small, source directory might not contain all source code",
             "Preparing upload", 
             "Sigrid CI analysis ID: 123",
             "Submitting upload"
@@ -70,6 +71,7 @@ class SigridCiRunnerTest(unittest.TestCase):
             "Found system in Sigrid",
             "Creating upload", 
             "Upload size is 1 MB",
+            "Warning: Upload is very small, source directory might not contain all source code",
             "Preparing upload", 
             "Sigrid CI analysis ID: 123",
             "Publishing upload"
@@ -100,6 +102,7 @@ class SigridCiRunnerTest(unittest.TestCase):
             "Found system in Sigrid",
             "Creating upload", 
             "Upload size is 1 MB",
+            "Warning: Upload is very small, source directory might not contain all source code",
             "Preparing upload", 
             "Sigrid CI analysis ID: 123",
             "Publishing upload",
@@ -130,6 +133,7 @@ class SigridCiRunnerTest(unittest.TestCase):
             "System is not yet on-boarded to Sigrid",
             "Creating upload", 
             "Upload size is 1 MB",
+            "Warning: Upload is very small, source directory might not contain all source code",
             "Preparing upload", 
             "Sigrid CI analysis ID: 123",
             "Submitting upload",

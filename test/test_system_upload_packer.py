@@ -154,9 +154,15 @@ class SystemUploadPackerTest(unittest.TestCase):
             
         uploadPacker = SystemUploadPacker(UploadOptions(showContents=True))
         uploadPacker.prepareUpload(sourceDir, tempfile.mkstemp()[1])
+        
+        expected = [
+            "Adding file to upload: a.py", 
+            "Adding file to upload: b.py", 
+            "Upload size is 1 MB", 
+            "Warning: Upload is very small, source directory might not contain all source code"
+        ]
 
-        self.assertEqual(LOG_HISTORY, \
-            ["Adding file to upload: a.py", "Adding file to upload: b.py", "Upload size is 1 MB"])
+        self.assertEqual(LOG_HISTORY, expected)
         
     def testUsePathPrefixInUpload(self):
         sourceDir = tempfile.mkdtemp()
