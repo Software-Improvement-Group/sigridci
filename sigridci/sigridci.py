@@ -156,12 +156,14 @@ class SigridApiClient:
     def uploadBinaryFile(self, url, upload):
         for attempt in range(self.RETRY_ATTEMPTS):
             try:
-                return self.attemptUpload(url, upload)
+                self.attemptUpload(url, upload)
+                log(f"Upload successful")
+                return
             except urllib.error.HTTPError as e:
                 log("Retrying upload")
                 time.sleep(self.POLL_INTERVAL)
         
-        log("Sigrid is currently unavailable")
+        log(f"Uploading file failed after {self.RETRY_ATTEMPTS} attempts")
         sys.exit(1)
         
     def attemptUpload(self, url, upload):
@@ -171,7 +173,7 @@ class SigridApiClient:
             uploadRequest.add_header("Content-Type", "application/zip")
             uploadRequest.add_header("Content-Length", "%d" % os.path.getsize(upload))
             uploadRequest.add_header("x-amz-server-side-encryption", "AES256")
-            return urllib.request.urlopen(uploadRequest)
+            urllib.request.urlopen(uploadRequest)
             
     def checkSystemExists(self):
         for attempt in range(self.RETRY_ATTEMPTS):

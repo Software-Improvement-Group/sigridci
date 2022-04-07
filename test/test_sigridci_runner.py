@@ -43,7 +43,8 @@ class SigridCiRunnerTest(unittest.TestCase):
             "Warning: Upload is very small, source directory might not contain all source code",
             "Preparing upload", 
             "Sigrid CI analysis ID: 123",
-            "Submitting upload"
+            "Submitting upload",
+            "Upload successful"
         ]
         
         expectedCalls = [
@@ -74,7 +75,8 @@ class SigridCiRunnerTest(unittest.TestCase):
             "Warning: Upload is very small, source directory might not contain all source code",
             "Preparing upload", 
             "Sigrid CI analysis ID: 123",
-            "Publishing upload"
+            "Publishing upload",
+            "Upload successful"
         ]
         
         expectedCalls = [
@@ -106,6 +108,7 @@ class SigridCiRunnerTest(unittest.TestCase):
             "Preparing upload", 
             "Sigrid CI analysis ID: 123",
             "Publishing upload",
+            "Upload successful",
             "Your project's source code has been published to Sigrid"
         ]
         
@@ -137,6 +140,7 @@ class SigridCiRunnerTest(unittest.TestCase):
             "Preparing upload", 
             "Sigrid CI analysis ID: 123",
             "Submitting upload",
+            "Upload successful",
             "System 'noot' is on-boarded to Sigrid, and will appear in sigrid-says.com shortly"
         ]
         
@@ -179,7 +183,8 @@ class SigridCiRunnerTest(unittest.TestCase):
             "Sigrid CI analysis ID: 123",
             "Submitting upload",
             "Retrying upload",
-            "Retrying upload"
+            "Retrying upload",
+            "Upload successful"
         ]
 
         self.assertEqual(LOG_HISTORY, expectedLog)
@@ -206,7 +211,7 @@ class SigridCiRunnerTest(unittest.TestCase):
             "Retrying upload",
             "Retrying upload",
             "Retrying upload",
-            "Sigrid is currently unavailable"
+            "Uploading file failed after 5 attempts"
         ]
         
         with self.assertRaises(SystemExit):
