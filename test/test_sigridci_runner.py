@@ -149,6 +149,16 @@ class SigridCiRunnerTest(unittest.TestCase):
         self.assertEqual(LOG_HISTORY, expectedLog)
         self.assertEqual(apiClient.called, expectedCalls)
         
+    def testExitWithMessageIfUploadEmpty(self):
+        tempDir = tempfile.mkdtemp()    
+        options = UploadOptions(sourceDir=tempDir)
+        target = TargetQuality("/tmp/nonexistent", 3.5)
+        apiClient = MockApiClient(systemExists=False)
+        
+        runner = SigridCiRunner()
+        with self.assertRaises(SystemExit):
+            runner.run(apiClient, options, target, [])
+        
     def createTempFile(self, dir, name, contents):
         with open(f"{dir}/{name}", "w") as fileRef:
             fileRef.write(contents)
