@@ -127,10 +127,8 @@ class SigridApiClient:
         analysisId = uploadLocation["ciRunId"]
         log(f"Sigrid CI analysis ID: {analysisId}")
         log("Publishing upload" if self.publish else "Submitting upload")
-
-        if not self.uploadBinaryFile(uploadUrl, upload):
-            raise Exception("Uploading file failed")
-            
+        self.uploadBinaryFile(uploadUrl, upload)
+        
         return analysisId
         
     def obtainUploadLocation(self, systemExists):
@@ -156,14 +154,24 @@ class SigridApiClient:
         return path
         
     def uploadBinaryFile(self, url, upload):
+        for attempt in range(self.RETRY_ATTEMPTS):
+            try:
+                return self.attemptUpload(url, upload)
+            except urllib.error.HTTPError as e:
+                log("Retrying upload")
+                time.sleep(self.POLL_INTERVAL)
+        
+        log("Sigrid is currently unavailable")
+        sys.exit(1)
+        
+    def attemptUpload(self, url, upload):
         with open(upload, "rb") as uploadRef:
-            uploadRequest = urllib.request.Request(url, data=uploadRef.read())
+            uploadRequest = urllib.request.Request(url, data=uploadRef)
             uploadRequest.method = "PUT"
             uploadRequest.add_header("Content-Type", "application/zip")
             uploadRequest.add_header("Content-Length", "%d" % os.path.getsize(upload))
             uploadRequest.add_header("x-amz-server-side-encryption", "AES256")
-            uploadResponse = urllib.request.urlopen(uploadRequest)
-            return uploadResponse.status in [200, 201, 202]
+            return urllib.request.urlopen(uploadRequest)
             
     def checkSystemExists(self):
         for attempt in range(self.RETRY_ATTEMPTS):

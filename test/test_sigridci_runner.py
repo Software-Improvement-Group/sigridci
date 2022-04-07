@@ -158,6 +158,58 @@ class SigridCiRunnerTest(unittest.TestCase):
         runner = SigridCiRunner()
         with self.assertRaises(SystemExit):
             runner.run(apiClient, options, target, [])
+            
+    def testRetryIfUploadFailsTheFirstTime(self):
+        tempDir = tempfile.mkdtemp()    
+        self.createTempFile(tempDir, "a.py", "print(123)")
+        
+        options = UploadOptions(sourceDir=tempDir)
+        target = TargetQuality("/tmp/nonexistent", 3.5)
+        apiClient = MockApiClient(systemExists=True, uploadAttempts=3)
+        
+        runner = SigridCiRunner()
+        runner.run(apiClient, options, target, [])
+
+        expectedLog = [
+            "Found system in Sigrid",
+            "Creating upload", 
+            "Upload size is 1 MB",
+            "Warning: Upload is very small, source directory might not contain all source code",
+            "Preparing upload", 
+            "Sigrid CI analysis ID: 123",
+            "Submitting upload",
+            "Retrying upload",
+            "Retrying upload"
+        ]
+
+        self.assertEqual(LOG_HISTORY, expectedLog)
+    
+    def testExitIfUploadKeepsFailing(self):
+        tempDir = tempfile.mkdtemp()    
+        self.createTempFile(tempDir, "a.py", "print(123)")
+        
+        options = UploadOptions(sourceDir=tempDir)
+        target = TargetQuality("/tmp/nonexistent", 3.5)
+        apiClient = MockApiClient(systemExists=True, uploadAttempts=99)
+        runner = SigridCiRunner()
+        
+        expectedLog = [
+            "Found system in Sigrid",
+            "Creating upload", 
+            "Upload size is 1 MB",
+            "Warning: Upload is very small, source directory might not contain all source code",
+            "Preparing upload", 
+            "Sigrid CI analysis ID: 123",
+            "Submitting upload",
+            "Retrying upload",
+            "Retrying upload",
+            "Retrying upload"
+            "Sigrid is currently unavailable"
+        ]
+        
+        with self.assertRaises(SystemExit):
+            runner.run(apiClient, options, target, [])
+        self.assertEqual(LOG_HISTORY, expectedLog)
         
     def createTempFile(self, dir, name, contents):
         with open(f"{dir}/{name}", "w") as fileRef:
@@ -166,13 +218,15 @@ class SigridCiRunnerTest(unittest.TestCase):
         
         
 class MockApiClient(SigridApiClient):
-    def __init__(self, publish=False, systemExists=True):
+    def __init__(self, publish=False, systemExists=True, uploadAttempts=0):
         self.called = []
         self.urlPartnerName = "sig"
         self.urlCustomerName = "aap"
         self.urlSystemName = "noot"
         self.publish = publish
         self.systemExists = systemExists
+        self.uploadAttempts = uploadAttempts
+        self.attempt = 0
         self.POLL_INTERVAL = 1
 
     def callSigridAPI(self, api, path):
@@ -187,7 +241,11 @@ class MockApiClient(SigridApiClient):
             "uploadUrl" : "dummy"
         }
         
-    def uploadBinaryFile(self, url, upload):
-        self.called.append("UPLOAD")
-        return True
+    def attemptUpload(self, url, upload):
+        self.attempt += 1
+        if self.attempt >= self.uploadAttempts:            
+            self.called.append("UPLOAD")
+            return True
+        else:
+            raise urllib.error.HTTPError("/upload", 500, "", {}, None)
      
