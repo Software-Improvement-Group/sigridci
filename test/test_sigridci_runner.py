@@ -204,6 +204,8 @@ class SigridCiRunnerTest(unittest.TestCase):
             "Retrying upload",
             "Retrying upload",
             "Retrying upload",
+            "Retrying upload",
+            "Retrying upload",
             "Sigrid is currently unavailable"
         ]
         
