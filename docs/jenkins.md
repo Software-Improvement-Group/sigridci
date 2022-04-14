@@ -121,6 +121,8 @@ In addition to the textual output, Sigrid CI also generates a static HTML file t
 
 <img src="images/feedback-report.png" width="600" />
 
+You might notice at this point that the report does not contain any styling, and is instead shown as black text on white background. If so, this is caused by your Jenkins configuration disallowing styling in build artifacts. You can enable this as described in the [Jenkins documentation](https://www.jenkins.io/doc/book/security/configuring-content-security-policy/). The Sigrid CI report only contains inline CSS, so the correct value to enable the styling is `default-src 'none'; img-src 'self'; style-src 'self' 'unsafe-inline';`. 
+
 Finally, if you want to have more information on the system as a whole, you can also access [Sigrid](http://sigrid-says.com/), which gives you more information on the overall quality of the system, its architecture, and more.
 
 ## Contact and support
