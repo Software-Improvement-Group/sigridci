@@ -147,11 +147,13 @@ class SigridCiTest(unittest.TestCase):
         self.assertTrue(SYSTEM_NAME_PATTERN.match("aap-noot"))
         self.assertTrue(SYSTEM_NAME_PATTERN.match("aap123"))
         self.assertTrue(SYSTEM_NAME_PATTERN.match("AAP"))
+        self.assertTrue(SYSTEM_NAME_PATTERN.match("a" * 64))
         
         self.assertFalse(SYSTEM_NAME_PATTERN.match("aap_noot"))
         self.assertFalse(SYSTEM_NAME_PATTERN.match("a"))
         self.assertFalse(SYSTEM_NAME_PATTERN.match("$$$"))
         self.assertFalse(SYSTEM_NAME_PATTERN.match("-aap"))
+        self.assertFalse(SYSTEM_NAME_PATTERN.match("a" * 65))
         
     def systemNameIsConvertedToLowerCaseInApiClient(self):
         args = types.SimpleNamespace(partner="sig", customer="Aap", system="NOOT")
