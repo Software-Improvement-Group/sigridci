@@ -31,7 +31,7 @@ import zipfile
 
 
 LOG_HISTORY = []
-SYSTEM_NAME_PATTERN = re.compile("[a-z0-9][a-z0-9-]+", re.IGNORECASE)
+SYSTEM_NAME_PATTERN = re.compile("[a-z0-9][a-z0-9-]{1,63}", re.IGNORECASE)
 
 
 def log(message):
