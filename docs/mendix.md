@@ -31,7 +31,7 @@ To add these to your GitLab CI pipeline, follow these steps:
 - Add an second environment variable `MENDIX_TOKEN` and use this Mendix app [warden.mendix.com](https://warden.mendix.com) to create a PAT with 'mx:modelrepository:repo:read' access only.
 
 <img src="images/gitlab-env.png" width="400" />
-
+<img src="images/mendix-credentials.png" width="600" />
 
 These instructions describe how to configure a single GitLab project, but you can follow the same steps to configure the entire GitLab group, which will make the environment variables available to all projects within that group.
 
