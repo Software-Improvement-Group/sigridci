@@ -6,8 +6,8 @@ Please note: `AQM` is the brand name used by Mendix, in this manual we will use 
 ## Prerequisites
 
 - You are not using the default Mendix teamserver, but you are using your own Git server for version control of your projects.
-- You would like to trigger te AQM analysis from within your own pipeline in Git.
-- Your runners are able to pull a public docker image, this image is used to process the Mendix code before uploading it to Sigrid.
+- You would like to trigger the AQM analysis from within your own pipeline in Git.
+- Your runners are able to pull this [public docker image](https://hub.docker.com/repository/docker/softwareimprovementgroup/mendixpreprocessor), the image is used to preprocess the Mendix code before uploading it to Sigrid.
 - You have an [AQM Sigrid](https://aqm.mendix.com) user account. 
 - You have created an [authentication token using Sigrid](authentication-tokens.md).
 - You have created a Personal access (PAT) token using [warden.mendix.com](https://warden.mendix.com)
