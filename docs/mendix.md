@@ -1,4 +1,4 @@
-Integrating AQM with Mendix on a Gitlab server
+Integrating AQM Sigrid with Mendix on a Gitlab server
 ==============================================
 
 Please note: `AQM or QSM` is the brand name used by Mendix, in this manual we will use `Sigrid`.
@@ -87,13 +87,7 @@ sigridpublish:
 
 ```
 
-Note: 
-
-the name of the branch, which is `main` in the example but might be different for your repository. In general, most older projects will use `master` as their main branch, while more recent projects will use `main`. 
-
-The example uses the Docker container `softwareimporvementgroup:mendixpreporcessor`.
-
-
+Note the name of the branch, which is `main` in the example but might be different for your repository. In general, most older projects will use `master` as their main branch, while more recent projects will use `main`. 
 
 Finally, note that you need to perform this step for every project where you wish to use Sigrid CI. Be aware that you can set a project-specific target quality, you don't necessarily have to use the same target for every project.
 
