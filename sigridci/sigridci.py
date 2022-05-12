@@ -31,7 +31,7 @@ import zipfile
 
 
 LOG_HISTORY = []
-SYSTEM_NAME_PATTERN = re.compile("[a-z0-9][a-z0-9-]{1,63}", re.IGNORECASE)
+SYSTEM_NAME_PATTERN = re.compile("^[a-z0-9][a-z0-9-]{1,63}$", re.IGNORECASE)
 
 
 def log(message):
@@ -504,6 +504,10 @@ class ExitCodeReport(Report):
                 
 class SigridCiRunner:
     def run(self, apiClient, options, target, reports):
+        if os.path.exists(f"{options.sourceDir}/sigrid.yml"):
+            log("Found sigrid.yml in repository. Did you mean sigrid.yaml?")
+            sys.exit(1)
+    
         systemExists = apiClient.checkSystemExists()
         log("Found system in Sigrid" if systemExists else "System is not yet on-boarded to Sigrid")
         analysisId = apiClient.submitUpload(options, systemExists)
