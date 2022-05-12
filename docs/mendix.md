@@ -1,14 +1,14 @@
 Integrating AQM with Mendix on a Gitlab server
 ==============================================
 
-Please note: `AQM` is the brand name used by Mendix, in this manual we will use `Sigrid`.
+Please note: `AQM or QSM` is the brand name used by Mendix, in this manual we will use `Sigrid`.
 
 ## Prerequisites
 
 - You are not using the default Mendix teamserver, but you are using your own Git server for version control of your projects.
-- You would like to trigger the AQM analysis from within your own pipeline in Git.
+- You would like to trigger the Sigrid analysis from within your own pipeline in Git.
 - Your runners are able to pull this [public docker image](https://hub.docker.com/repository/docker/softwareimprovementgroup/mendixpreprocessor), the image is used to preprocess the Mendix code before uploading it to Sigrid.
-- You have an [AQM Sigrid](https://aqm.mendix.com) user account. 
+- You have a [Sigrid](https://aqm.mendix.com) user account. 
 - You have created an [authentication token using Sigrid](authentication-tokens.md).
 - You have created a Personal access (PAT) token using [warden.mendix.com](https://warden.mendix.com)
 
@@ -40,7 +40,7 @@ These instructions describe how to configure a single GitLab project, but you ca
 
 We will create a pipeline that consists of two jobs:
 
-- One job that will publish the main/master branch to [sigrid-says.com](https://sigrid-says.com) after every commit to main/master.
+- One job that will publish the main branch to [sigrid-says.com](https://sigrid-says.com) after every commit to main.
 - One job to provide feedback on pull requests, which can be used as input for code reviews.
 
 
