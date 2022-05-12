@@ -3,8 +3,8 @@ Technology support
 
 This list described all technologies that can be analyzed by Sigrid. The list contains both the display name and the name that should be used in the [configuration file](analysis-scope-configuration.md).
 
-| Technology name in sigrid.yaml configuration file | 
-| --------------------------------------------------|----------------------------------------|
+| Technology name in sigrid.yaml configuration file | Technology name |
+| --------------------------------------------------|-----------------|
 | abap | ABAP |
 | abapsmartforms | ABAP SmartForms |
 | abl | Abl |
