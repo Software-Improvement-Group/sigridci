@@ -35,7 +35,6 @@ To add these to your GitLab CI pipeline, follow these steps:
 
 These instructions describe how to configure a single GitLab project, but you can follow the same steps to configure the entire GitLab group, which will make the environment variables available to all projects within that group.
 
-
 **Step 2: Create pipeline configuration file for Gitlab**
 
 We will create a pipeline that consists of two jobs:
@@ -91,23 +90,13 @@ Note the name of the branch, which is `main` in the example but might be differe
 
 Finally, note that you need to perform this step for every project where you wish to use Sigrid CI. Be aware that you can set a project-specific target quality, you don't necessarily have to use the same target for every project.
 
-
-
 The output consists of the following:
 
 - A list of refactoring candidates that were introduced in your merge request. This allows you to understand what quality issues you caused, which in turn allows you to fix them quickly. Note that quality is obviously important, but you are not expected to always fix every single issue. As long as you meet the target, it's fine.
 - An overview of all ratings, compared against the system as a whole. This allows you to check if your changes improved the system, or accidentally made things worse.
 - The final conclusion on whether your changes and merge request meet the quality target.
 
-In addition to the textual output, Sigrid CI also generates a static HTML file that shows the results in a more graphical form. This is similar to test coverage tools, which also tend to produce a HTML report. You can access the HTML report from the "published" section in the build summary.
-
-<img src="images/azure-artifacts.png" width="500" />
-
-In the list of published artifacts, expand the "sigrid-ci-output" section and download the index.html file to view the report.
-
-<img src="images/azure-artifact-download.png" width="600" />
-
-The information in the HTML report is similar to the command line output, though it includes slightly more detail.
+In addition to the textual output, Sigrid CI also generates a static HTML file that shows the results in a more graphical form. This is similar to test coverage tools, which also tend to produce a HTML report. Use the "download" button in the pipeline details screen to download the report. The information in the HTML report is similar to the command line output, though it includes slightly more detail.
 
 <img src="images/feedback-report.png" width="600" />
 
