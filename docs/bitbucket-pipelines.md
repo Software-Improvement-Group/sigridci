@@ -1,37 +1,26 @@
 Integrating Sigrid CI with BitBucket Pipelines
 ==============================================
 
-This guide explains how to integrate Sigrid into your BitBucket Pipelines continuous integration pipeline. Make sure you have also read the [general Sigrid CI documentation](README.md) before starting this guide.
-
-
-
 ## Prerequisites
 
-- You have a Sigrid user account. Sigrid CI requires Sigrid, it is currently not supported to *only* use the CI integration without using Sigrid itself.
-- You have on-boarded your system, i.e. your system is available in Sigrid. [Request your system to be added](mailto:support@softwareimprovementgroup.com) if this is not yet the case.
-- [Python 3.7 or higher](https://www.python.org) needs to be available in the CI environment. The client scripts for Sigrid CI are based on Python.
+- You have a [Sigrid](https://sigrid-says.com) user account. 
+- You have created an [authentication token for using Sigrid CI](authentication-tokens.md).
 
-## Request a Sigrid CI account
+## On-boarding your system to Sigrid
 
-The account you use to submit code to Sigrid CI is different from your normal Sigrid user account. The account consists of an account name and a token, which you add to your CI environment's configuration in the next step. 
-
-You can obtain a Sigrid CI account by requesting one from [support@softwareimprovementgroup.com](mailto:support@softwareimprovementgroup.com). Support for creating Sigrid CI accounts yourself will be added in a future version.
-
-Once the account has been created, you can use Sigrid's user management feature to control which systems it is allowed to access. Similar to normal Sigrid user accounts, Sigrid CI accounts can either serve a specific system, a group of systems, or all systems in your portfolio.
+On-boarding is done automatically when you first run Sigrid CI. As long as you have a valid token, and that token is authorized to on-board systems, you will receive the message *system has been on-boarded to Sigrid*. Subsequent runs will then be visible in both your CI environment and [sigrid-says.com](https://sigrid-says.com). 
 
 ## Configuration
 
 ### Step 1: Configure Sigrid credentials to environment variables
 
-Sigrid CI reads your Sigrid account credentials from two environment variables, called `SIGRID_CI_ACCOUNT` and `SIGRID_CI_TOKEN`. You can make these environment variables available to BitBucket Pipelines by creating "secrets" in your repository:
+Sigrid CI reads your Sigrid account credentials from an environment variable called `SIGRID_CI_TOKEN`. You can make these environment variables available to BitBucket Pipelines by creating "secrets" in your repository:
 
 - Open "Repository settings" in your project menu
 - Select "Repository variables" located in the section "Pipelines"
-- Create a secret named `SIGRID_CI_ACCOUNT` with the account name you have received
+- Create a secret named `SIGRID_CI_TOKEN` and use your [Sigrid authentication token](authentication-tokens.md) as the value.
 
 <img src="images/bitbucket-env.png" width="500" />
-
-- Add another secret named `SIGRID_CI_TOKEN` with the token you have received.
 
 ### Step 2: Create a BitBucket Pipeline for Sigrid CI
 

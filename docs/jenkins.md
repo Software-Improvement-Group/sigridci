@@ -1,31 +1,25 @@
 Integrating Sigrid CI into your Jenkins pipeline
 ================================================
 
-This guide explains how to integrate Sigrid into your Jenkins continuous integration pipeline. Make sure you have also read the [general Sigrid CI documentation](README.md) before starting this guide. 
-
 ## Prerequisites
 
-- You have a Sigrid user account. Sigrid CI requires Sigrid, it is currently not supported to *only* use the CI integration without using Sigrid itself.
-- You have on-boarded your system, i.e. your system is available in Sigrid. [Request your system to be added](mailto:support@softwareimprovementgroup.com) if this is not yet the case.
-- [Python 3.7 or higher](https://www.python.org) needs to be available to your Jenkins runners. The client scripts for Sigrid CI are based on Python.
+- You have a [Sigrid](https://sigrid-says.com) user account. 
+- You have created an [authentication token for using Sigrid CI](authentication-tokens.md).
+- [Python 3.7 or higher](https://www.python.org) needs to be available in the CI environment. 
 
-## Request a Sigrid CI account
+## On-boarding your system to Sigrid
 
-The account you use to submit code to Sigrid CI is different from your normal Sigrid user account. The account consists of an account name and a token, which you add to your CI environment's configuration in the next step. 
-
-You can obtain a Sigrid CI account by requesting one from [support@softwareimprovementgroup.com](mailto:support@softwareimprovementgroup.com). Support for creating Sigrid CI accounts yourself will be added in a future version.
-
-Once the account has been created, you can use Sigrid's user management feature to control which systems it is allowed to access. Similar to normal Sigrid user accounts, Sigrid CI accounts can either serve a specific system, a group of systems, or all systems in your portfolio.
+On-boarding is done automatically when you first run Sigrid CI. As long as you have a valid token, and that token is authorized to on-board systems, you will receive the message *system has been on-boarded to Sigrid*. Subsequent runs will then be visible in both your CI environment and [sigrid-says.com](https://sigrid-says.com).
 
 ## Configuration
 
-**Step 1: Configure Sigrid credentials to environment variables**
+**Step 1: Configure Sigrid credential to environment variable**
 
-Sigrid CI reads your Sigrid account credentials from two environment variables, called `SIGRID_CI_ACCOUNT` and `SIGRID_CI_TOKEN`. You need to make these two environment variables available Jenkins. To do this, navigate to the "Credentials" settings in your Jenkins setting page. Then select "Add credentials" with the type "secret text". You can then use this page to add `SIGRID_CI_ACCOUNT`:
+Sigrid CI reads your Sigrid credential from one environment variable, called `SIGRID_CI_TOKEN`. You need to make this environment variable available Jenkins. To do this, navigate to the "Credentials" settings in your Jenkins setting page. Then select "Add credentials" with the type "secret text". You can then use this page to add `SIGRID_CI_TOKEN`:
 
 <img src="images/jenkins-credentials.png" width="600" />
 
-After saving, do the same for the `SIGRID_CI_TOKEN`. Note that you should have received both your account name and the token when your account was created, as described in the prerequisites section. After you've added both secrets they should be visible in the list:
+After saving, the secret should be visible in the list:
 
 <img src="images/jenkins-credentials-list.png" width="500" />
 
@@ -44,7 +38,6 @@ pipeline {
     }
     
     environment {
-        SIGRID_CI_ACCOUNT = credentials('SIGRID_CI_ACCOUNT')
         SIGRID_CI_TOKEN = credentials('SIGRID_CI_TOKEN')
     }
 
@@ -52,7 +45,7 @@ pipeline {
         stage('build') {
             steps {
                 sh 'git clone https://github.com/Software-Improvement-Group/sigridci.git sigridci'
-                sh './sigridci/sigridci/sigridci.py --customer examplecustomername --system examplesystemname --source . --targetquality 3.5'
+                sh './sigridci/sigridci/sigridci.py --customer examplecustomername --system examplesystemname --source . --targetquality 3.5 --publish'
             }
         }
     }
@@ -66,7 +59,6 @@ pipeline {
     agent any
 
     environment {
-        SIGRID_CI_ACCOUNT = credentials('SIGRID_CI_ACCOUNT')
         SIGRID_CI_TOKEN = credentials('SIGRID_CI_TOKEN')
     }
 
@@ -128,6 +120,8 @@ The output consists of the following:
 In addition to the textual output, Sigrid CI also generates a static HTML file that shows the results in a more graphical form. This is similar to test coverage tools, which also tend to produce a HTML report. The information in the HTML report is based on the aforementioned list, though it includes slightly more detail.
 
 <img src="images/feedback-report.png" width="600" />
+
+You might notice at this point that the report does not contain any styling, and is instead shown as black text on white background. If so, this is caused by your Jenkins configuration disallowing styling in build artifacts. You can enable this as described in the [Jenkins documentation](https://www.jenkins.io/doc/book/security/configuring-content-security-policy/). The Sigrid CI report only contains inline CSS, so the correct value to enable the styling is `default-src 'none'; img-src 'self'; style-src 'self' 'unsafe-inline';`. 
 
 Finally, if you want to have more information on the system as a whole, you can also access [Sigrid](http://sigrid-says.com/), which gives you more information on the overall quality of the system, its architecture, and more.
 

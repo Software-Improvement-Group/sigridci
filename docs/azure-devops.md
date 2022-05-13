@@ -1,21 +1,15 @@
 Integrating Sigrid CI with Azure DevOps
 =======================================
 
-This guide explains how to integrate Sigrid into your Azure DevOps continuous integration pipeline. Make sure you have also read the [general Sigrid CI documentation](README.md) before starting this guide.
-
 ## Prerequisites
 
-- You have a Sigrid user account. Sigrid CI requires Sigrid, it is currently not supported to *only* use the CI integration without using Sigrid itself.
-- You have on-boarded your system, i.e. your system is available in Sigrid. [Request your system to be added](mailto:support@softwareimprovementgroup.com) if this is not yet the case.
-- [Python 3.7 or higher](https://www.python.org) needs to be available in the CI environment. The client scripts for Sigrid CI are based on Python.
+- You have a [Sigrid](https://sigrid-says.com) user account. 
+- You have created an [authentication token for using Sigrid CI](authentication-tokens.md).
+- [Python 3.7 or higher](https://www.python.org) needs to be available in the CI environment. The client script for Sigrid CI is based on Python.
 
-## Request a Sigrid CI account
+## On-boarding your system to Sigrid
 
-The account you use to submit code to Sigrid CI is different from your normal Sigrid user account. The account consists of an account name and a token, which you add to your CI environment's configuration in the next step. 
-
-You can obtain a Sigrid CI account by requesting one from [support@softwareimprovementgroup.com](mailto:support@softwareimprovementgroup.com). Support for creating Sigrid CI accounts yourself will be added in a future version.
-
-Once the account has been created, you can use Sigrid's user management feature to control which systems it is allowed to access. Similar to normal Sigrid user accounts, Sigrid CI accounts can either serve a specific system, a group of systems, or all systems in your portfolio.
+On-boarding is done automatically when you first run Sigrid CI. As long as you have a valid token, and that token is authorized to on-board systems, you will receive the message *system has been on-boarded to Sigrid*. Subsequent runs will then be visible in both your CI environment and [sigrid-says.com](https://sigrid-says.com). 
 
 ## Configuration
 
@@ -47,7 +41,6 @@ stages:
           addToPath: false
       - bash: "./sigridci/sigridci/sigridci.py --customer examplecustomername --system examplesystemname --source . --targetquality 3.5"
         env:
-          SIGRID_CI_ACCOUNT: $(SIGRID_CI_ACCOUNT)
           SIGRID_CI_TOKEN: $(SIGRID_CI_TOKEN)
         continueOnError: true
       - publish: sigrid-ci-output
@@ -67,7 +60,6 @@ stages:
           addToPath: false
       - bash: "./sigridci/sigridci/sigridci.py --customer examplecustomername --system examplesystemname --source . --publish"
         env:
-          SIGRID_CI_ACCOUNT: $(SIGRID_CI_ACCOUNT)
           SIGRID_CI_TOKEN: $(SIGRID_CI_TOKEN)
         continueOnError: true
 ```
@@ -94,11 +86,9 @@ Select the YAML file you created in the previous step:
 
 <img src="images/azure-selectyaml.png" width="500" />
 
-This will display the contents of the YAML file in the next screen. The final step is to add your account credentials to the pipeline. Click "Variables" in the top right corner. Create a secret named `SIGRID_CI_ACCOUNT` with the account name you have received:
+This will display the contents of the YAML file in the next screen. The final step is to add your account credentials to the pipeline. Click "Variables" in the top right corner. Create a secret named `SIGRID_CI_TOKEN` and use your [Sigrid authentication token](authentication-tokens.md) as the value.
 
 <img src="images/azure-variables.png" width="500" />
-
-When done, add another variables named `SIGRID_CI_TOKEN` with the authentication token you have received.
 
 From this point, Sigrid CI will run as part of the pipeline. When the pipeline is triggered depends on the configuration: by default it will run after every commit, but you can also trigger it periodically or run it manually.
 

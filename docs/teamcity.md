@@ -1,21 +1,15 @@
 Integrating Sigrid CI with TeamCity
 ===================================
 
-This guide explains how to integrate Sigrid into your TeamCity continuous integration pipeline. Make sure you have also read the [general Sigrid CI documentation](README.md) before starting this guide.
-
 ## Prerequisites
 
-- You have a Sigrid user account. Sigrid CI requires Sigrid, it is currently not supported to *only* use the CI integration without using Sigrid itself.
-- You have on-boarded your system, i.e. your system is available in Sigrid. [Request your system to be added](mailto:support@softwareimprovementgroup.com) if this is not yet the case.
-- [Python 3](https://www.python.org) needs to be available in the CI environment. The client scripts for Sigrid CI are based on Python.
+- You have a [Sigrid](https://sigrid-says.com) user account. 
+- You have created an [authentication token for using Sigrid CI](authentication-tokens.md).
+- [Python 3.7 or higher](https://www.python.org) needs to be available in the CI environment. The client scripts for Sigrid CI are based on Python.
 
-## Request a Sigrid CI account
+## On-boarding your system to Sigrid
 
-The account you use to submit code to Sigrid CI is different from your normal Sigrid user account. The account consists of an account name and a token, which you add to your CI environment's configuration in the next step. 
-
-You can obtain a Sigrid CI account by requesting one from [support@softwareimprovementgroup.com](mailto:support@softwareimprovementgroup.com). Support for creating Sigrid CI accounts yourself will be added in a future version.
-
-Once the account has been created, you can use Sigrid's user management feature to control which systems it is allowed to access. Similar to normal Sigrid user accounts, Sigrid CI accounts can either serve a specific system, a group of systems, or all systems in your portfolio.
+On-boarding is done automatically when you first run Sigrid CI. As long as you have a valid token, and that token is authorized to on-board systems, you will receive the message *system has been on-boarded to Sigrid*. Subsequent runs will then be visible in both your CI environment and [sigrid-says.com](https://sigrid-says.com). 
 
 ## Configuration
 
@@ -50,19 +44,12 @@ After performing these steps you should end up with the following configuration:
 
 ### Step 2: Configure account credentials
 
-Now that we have created the new build step, we need to provide our Sigrid account name and authentication token:
+Now that we have created the new build step, we need to provide our [Sigrid authentication token](authentication-tokens.md):
 
 - Select "parameters" in the build menu on the left.
 - Click "add new parameter"
-- Add an environment variable with the kind "environment variable", the name `env.SIGRID_CI_ACCOUNT`, with value based on the account name you have received.
-
-<img src="images/teamcity-add-environment-variable.png" width="500" />
-
+- Add an environment variable with the kind "environment variable", the name `env.SIGRID_CI_TOKEN`, and your token as the value.
 - Save the environment variable
-- Repeat the process for another environment variable `env.SIGRID_CI_TOKEN`, with the value based on the Sigrid CI authentication token you have received
-- You should now see the following parameters as part of your build configuration:
-
-<img src="images/teamcity-environment-variables.png" width="300" />
 
 ### Step 3: Run your pipeline
 

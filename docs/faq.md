@@ -29,6 +29,8 @@ Sigrid CI: Frequently Asked Questions
 - [What to do when the script does not work?](#what-to-do-when-the-script-does-not-work)
 - [I'm receiving an error message that certificate verification failed](#im-receiving-an-error-message-that-certificate-verification-failed)
 - [Why can't I use the publish and pathprefix options together?](#why-cant-i-use-the-publish-and-pathprefix-options-together)
+- [Where do I find the Sigrid CI output?](#where-do-i-find-the-sigrid-ci-output)
+- [I started using Sigrid CI, and now I suddenly see more code in Sigrid](#i-started-using-sigrid-ci-and-now-i-suddenly-see-more-code-in-sigrid)
 
 ### Infrastructure and security questions
 
@@ -46,7 +48,7 @@ The first Sigrid CI use case is to *publish* your project's source code to Sigri
 
 The second use case is to use Sigrid CI for feedback during code reviews on pull requests. This wil compare the contents of the pull request agains the baseline version, allowing you to identify improvement areas in the new and changed code.
 
-The [platform-specific documentation and examples](README.md) cover instructions for both scenarios. We generally recommend to use Sigrid CI for both scenarios, although it's also perfectly fine to use Sigrid CI for one scenario but not the other.
+The [platform-specific documentation and examples](../README.md) cover instructions for both scenarios. We generally recommend to use Sigrid CI for both scenarios, although it's also perfectly fine to use Sigrid CI for one scenario but not the other.
 
 ### Does Sigrid CI fit in my workflow?
 
@@ -64,7 +66,7 @@ You will find the system name in the url of the monitor in Sigrid. The structure
 
 ### How to get a token and account?
 
-Please send and email to support@softwareimprovementgroup.com and mention your name, your company and the system name(s) that you need a token for. We will send the account via mail and the token via sms.
+Follow the instructions on how to create your personal token [here](authentication-tokens.md)
 
 ### What target quality should we use?
 
@@ -163,13 +165,23 @@ When not using Docker to run the script, this requires that the dependencies in 
 
 ### I'm receiving an error message that certificate verification failed
 
-In some cases, the Sigrid CI client script might produce an error message `[SSL: CERTIFICATE_VERIFY_FAILED] certificate verify failed: unable to get local issuer certificate`. This indicates that Python is unable to access the system's certificate store. Sigrid CI does not need any special or custom certificates, access to the regualr system certificates is sufficient. 
+In some cases, the Sigrid CI client script might produce an error message `[SSL: CERTIFICATE_VERIFY_FAILED] certificate verify failed: unable to get local issuer certificate`. This indicates that Python is unable to access the system's certificate store. Sigrid CI does not need any special or custom certificates, access to the regular system certificates is sufficient. 
 
 If your environment requires a certificate store in a custom location, the environment variables `openssl_cafile_env` and `openssl_capath_envz` can be used to point Python to the correct location. Refer to the [Python documentation on OpenSSL](https://docs.python.org/3/library/ssl.html) for more information
 
 ### Why can't I use the publish and pathprefix options together?
 
 You can either use the `--publish` option to publish your code to Sigrid, or you can use the `--pathprefix` option to receive feedback on a specific part of your codebase, but you cannot use both in combination with each other. The reason is that these two options relate to different usage scenarios. `--pathprefix` is for pull request integration, and indicates you want to use Sigrid CI for a *subset of your codebase*. In contrast, `--publish` indicates you want to publish *your entire codebase* to Sigrid. This is why the combination doesn't really make sense, it would indicate you simultaneously consider your repository as the entire codebase (since you want to publish it) and a part of the codebase (since you're asking for more specific feedback). Please [contact us](mailto:support@softwareimprovementgroup.com) if you believe you have a need for using the combination of these two options.
+
+### Where do I find the Sigrid CI output ?
+
+The results of the SigridCI run are logged in the terminal output and optional as a html artefact. For the artefact to be stored you will need to specify the Sigrid CI output path in your yml. Check out the examples for GitHub and GitLab. 
+
+### I started using Sigrid CI, and now I suddenly see more code in Sigrid
+
+Sigrid supports multiple ways to upload source code. This documentation covers Sigrid CI, but we also support uploads via SFTP. If you previously used SFTP and then switch to Sigrid CI, you might see some differences. For example, you might suddenly see extra code, or extra components. This is caused by differences in how the upload is created. Unfortunately that means there is no "quick fix" outside of updating your configuration. We are happy to help you with identifying the changes, so please [contact us](mailto:support@softwareimprovementgroup.com) and we'll try to help you out.
+
+This also means that we recommend you to either use Sigrid CI or SFTP uploads, but not both. Using two ways of uploading means both uploads need to be consistent, otherwise you'll end up with expected changes in Sigrid. In practice this is not always convenient, so if you're using Sigrid CI we recommend you stop using SFTP and just Sigrid CI for all uploading/publishing to Sigrid.
 
 ## Infrastructure and security questions
 
