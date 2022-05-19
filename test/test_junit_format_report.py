@@ -39,7 +39,6 @@ class JUnitReportTest(unittest.TestCase):
         }
         
         target = TargetQuality(f"{tempDir}/sigrid.yaml", 3.5)
-        target.ratings["DUPLICATION"] = 2.0
     
         report = JUnitFormatReport()
         xml = report.generateXML(feedback, target)
@@ -79,6 +78,41 @@ class JUnitReportTest(unittest.TestCase):
             <?xml version="1.0" ?>
             <testsuite name="Sigrid CI">
                 <testcase classname="Sigrid CI" name="Maintainability"/>
+            </testsuite>
+        """
+        
+        self.assertEqual(xml.strip().replace("    ", ""), expected.strip().replace("    ", ""))
+        
+    def testOnlyReportRelevantSystemPropertiesIfMetricSpecificTargetsAreUsed(self):
+        tempDir = tempfile.mkdtemp()
+        
+        target = TargetQuality(f"{tempDir}/sigrid.yaml", 3.5)
+        target.ratings["UNIT_COMPLEXITY"] = 5.0
+        
+        feedback = {
+            "newCodeRatings": {
+                "MAINTAINABILITY" : 4.0,
+                "UNIT_SIZE" : 4.0,
+                "UNIT_COMPLEXITY" : 4.0
+            },
+            "refactoringCandidates": [
+                { "subject" : "Aap.java", "metric" : "UNIT_SIZE", "category" : "introduced" },
+                { "subject" : "Noot.java", "metric" : "UNIT_COMPLEXITY", "category" : "introduced" }
+            ]
+        }
+        
+        report = JUnitFormatReport()
+        xml = report.generateXML(feedback, target)
+            
+        expected = """
+            <?xml version="1.0" ?>
+            <testsuite name="Sigrid CI">
+                <testcase classname="Sigrid CI" name="Maintainability">
+                    <failure>Refactoring candidates:
+                    
+- Noot.java
+  (Unit Complexity, introduced)</failure>
+                </testcase>
             </testsuite>
         """
         

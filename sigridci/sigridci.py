@@ -76,6 +76,9 @@ class TargetQuality:
         
     def meetsOverallQualityTarget(self, feedback):
         return all(self.meetsTargetQualityForMetric(feedback, metric) for metric in self.ratings)
+        
+    def hasMetricSpecificTargets(self):
+        return list(self.ratings.keys()) != ["MAINTAINABILITY"]
 
 
 class SigridApiClient:
@@ -513,7 +516,9 @@ class JUnitFormatReport(Report):
             return []
             
         formatFailure = lambda rc: f"- {rc['subject']}\n  ({self.formatMetricName(rc['metric'])}, {rc['category']})"
-        return [formatFailure(rc) for rc in self.getRefactoringCandidates(feedback, "MAINTAINABILITY")]
+        candidates = self.getRefactoringCandidates(feedback, "MAINTAINABILITY")
+        metricTargets = target.hasMetricSpecificTargets()
+        return [formatFailure(rc) for rc in candidates if not metricTargets or rc["metric"] in target.ratings]
         
         
 class ExitCodeReport(Report):   
