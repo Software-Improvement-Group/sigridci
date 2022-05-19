@@ -83,12 +83,13 @@ class JUnitReportTest(unittest.TestCase):
         
         self.assertEqual(xml.strip().replace("    ", ""), expected.strip().replace("    ", ""))
         
-    def testOnlyReportRelevantSystemPropertiesIfMetricSpecificTargetsAreUsed(self):
+    def testOnlyReportRelevantSystemPropertiesIfOnlyMetricSpecificTargetsFail(self):
         tempDir = tempfile.mkdtemp()
         
         target = TargetQuality(f"{tempDir}/sigrid.yaml", 3.5)
+        target.ratings["UNIT_SIZE"] = 3.0
         target.ratings["UNIT_COMPLEXITY"] = 5.0
-        
+
         feedback = {
             "newCodeRatings": {
                 "MAINTAINABILITY" : 4.0,
@@ -116,4 +117,42 @@ class JUnitReportTest(unittest.TestCase):
             </testsuite>
         """
         
+        self.assertEqual(xml.strip().replace("    ", ""), expected.strip().replace("    ", ""))
+
+    def testReportAllSystemPropertiesIfMaintainabilityFailsEvenIfMetricSpecificTargetsFail(self):
+        tempDir = tempfile.mkdtemp()
+
+        target = TargetQuality(f"{tempDir}/sigrid.yaml", 3.5)
+        target.ratings["UNIT_SIZE"] = 3.0
+        target.ratings["UNIT_COMPLEXITY"] = 5.0
+
+        feedback = {
+            "newCodeRatings": {
+                "MAINTAINABILITY" : 3.0,
+                "UNIT_SIZE" : 4.0,
+                "UNIT_COMPLEXITY" : 4.0
+            },
+            "refactoringCandidates": [
+                { "subject" : "Aap.java", "metric" : "UNIT_SIZE", "category" : "introduced" },
+                { "subject" : "Noot.java", "metric" : "UNIT_COMPLEXITY", "category" : "introduced" }
+            ]
+        }
+
+        report = JUnitFormatReport()
+        xml = report.generateXML(feedback, target)
+
+        expected = """
+            <?xml version="1.0" ?>
+            <testsuite name="Sigrid CI">
+                <testcase classname="Sigrid CI" name="Maintainability">
+                    <failure>Refactoring candidates:
+                    
+- Aap.java
+  (Unit Size, introduced)
+- Noot.java
+  (Unit Complexity, introduced)</failure>
+                </testcase>
+            </testsuite>
+        """
+
         self.assertEqual(xml.strip().replace("    ", ""), expected.strip().replace("    ", ""))
