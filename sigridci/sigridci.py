@@ -74,7 +74,7 @@ class TargetQuality:
         targetRating = self.ratings.get(metric, None)
         return value == None or targetRating == None or value >= targetRating
         
-    def meetsOverallQualityTarget(self, feedback):
+    def meetsQualityTargets(self, feedback):
         return all(self.meetsTargetQualityForMetric(feedback, metric) for metric in self.ratings)
         
     def hasMetricSpecificTargets(self):
@@ -442,7 +442,7 @@ class StaticHtmlReport(Report):
             "LINES_OF_CODE_TOUCHED" : "%d" % feedback.get("newCodeLinesOfCode", 0),
             "BASELINE_DATE" : self.formatBaseline(feedback),
             "SIGRID_LINK" : self.getSigridUrl(args),
-            "MAINTAINABILITY_PASSED" : ("passed" if target.meetsOverallQualityTarget(feedback) else "failed")
+            "MAINTAINABILITY_PASSED" : ("passed" if target.meetsQualityTargets(feedback) else "failed")
         }
         
         for metric in self.METRICS:
@@ -512,7 +512,7 @@ class JUnitFormatReport(Report):
         return dom.toprettyxml(indent="    ")
         
     def getFailures(self, feedback, target):
-        if target.meetsOverallQualityTarget(feedback):
+        if target.meetsQualityTargets(feedback):
             return []
             
         formatFailure = lambda rc: f"- {rc['subject']}\n  ({self.formatMetricName(rc['metric'])}, {rc['category']})"
@@ -525,7 +525,7 @@ class ExitCodeReport(Report):
     def generate(self, feedback, args, target):
         asciiArt = TextReport()
         
-        if target.meetsOverallQualityTarget(feedback):
+        if target.meetsQualityTargets(feedback):
             asciiArt.printColor("\n** SIGRID CI RUN COMPLETE: YOU WROTE MAINTAINABLE CODE AND REACHED THE TARGET **\n", \
                 asciiArt.ANSI_BOLD + asciiArt.ANSI_GREEN)
         else:
