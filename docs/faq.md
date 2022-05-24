@@ -160,7 +160,8 @@ So which one should you use? That depends on your development process. If you us
 ### What to do when the script does not work?
 
 The Sigrid CI Python script is currently under active development, which means that its subject to change, and namely, its dependencies are subject to change as we add new functionality.
-Sigrid CI requires Python 3.7 or higher.
+Sigrid CI requires Python 3.7 or higher. 
+In some cases multiple python versions are installed in the environment and the wrong one (below 3.7) may be selected automatically. If that is the case, please make sure that the highest version is set to be the default.
 When not using Docker to run the script, this requires that the dependencies in the environment in which the script is being ran are in sync with the actual code, and, in order to do that, you can run either `pip install -r requirement.txt` or `pipenv install`, when using Python virtual environments.
 
 ### I'm receiving an error message that certificate verification failed
