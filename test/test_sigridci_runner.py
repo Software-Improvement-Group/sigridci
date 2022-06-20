@@ -218,6 +218,20 @@ class SigridCiRunnerTest(unittest.TestCase):
             runner.run(apiClient, options, target, [])
         self.assertEqual(LOG_HISTORY, expectedLog)
         
+    def testExitIfScopeFileHasWrongName(self):
+        tempDir = tempfile.mkdtemp()    
+        self.createTempFile(tempDir, "a.py", "print(123)")
+        self.createTempFile(tempDir, "sigrid.yml", "customer: aap\nsystem: noot")
+        
+        options = UploadOptions(sourceDir=tempDir)
+        target = TargetQuality("/tmp/nonexistent", 3.5)
+        apiClient = MockApiClient(systemExists=True)
+        runner = SigridCiRunner()
+        
+        with self.assertRaises(SystemExit):
+            runner.run(apiClient, options, target, [])
+        self.assertEqual(LOG_HISTORY, ["Found sigrid.yml in repository. Did you mean sigrid.yaml?"])
+        
     def createTempFile(self, dir, name, contents):
         with open(f"{dir}/{name}", "w") as fileRef:
             fileRef.write(contents)

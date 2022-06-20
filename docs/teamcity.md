@@ -59,6 +59,10 @@ After the pipeline has completed, Sigrid CI will be shown as part of the normal 
 
 <img src="images/teamcity-build-status.png" width="500" />
 
+## Optional: change the analysis scope configuration
+
+Sigrid will try to automatically detect the technologies you use, the component structure, and files/directories that should be excluded from the analysis. You can override the default configuration by creating a file called `sigrid.yaml` and adding it to the root of your repository. You can read more about the various options for custom configuration in the [configuration file documentation](analysis-scope-configuration.md).
+
 ## Usage
 
 In addition to the simple success/failure indicator, Sigrid CI provides multiple levels of feedback. To obtain feedback on your commit, click on the "Sigrid CI" step in the pipeline results screen:

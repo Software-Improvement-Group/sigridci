@@ -35,7 +35,9 @@ We provide specific instructions for integrating Sigrid CI with popular developm
 
 - [Creating authentication tokens for Sigrid CI](docs/authentication-tokens.md)
 - [Client script option reference](docs/client-script-usage.md)
+- [Changing the analysis scope configuration](docs/analysis-scope-configuration.md)
 - [Frequently asked questions](docs/faq.md)
+- [Supported technologies](docs/technology-support.md)
 - [Using Sigrid CI as part of your development workflow](docs/workflows.md)
 - [Sigrid CI demo recording](https://www.youtube.com/watch?v=1QWWtFlB6cQ) 
 

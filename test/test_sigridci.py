@@ -142,7 +142,7 @@ class SigridCiTest(unittest.TestCase):
         self.assertEqual(target.ratings.get("DUPLICATION", None), 3.0)
         self.assertEqual(target.ratings.get("UNIT_SIZE", None), None)
     
-    def validateSystemNameAccordingToRules(self):
+    def testValidateSystemNameAccordingToRules(self):
         self.assertTrue(SYSTEM_NAME_PATTERN.match("aap"))
         self.assertTrue(SYSTEM_NAME_PATTERN.match("aap-noot"))
         self.assertTrue(SYSTEM_NAME_PATTERN.match("aap123"))
@@ -155,8 +155,9 @@ class SigridCiTest(unittest.TestCase):
         self.assertFalse(SYSTEM_NAME_PATTERN.match("-aap"))
         self.assertFalse(SYSTEM_NAME_PATTERN.match("a" * 65))
         
-    def systemNameIsConvertedToLowerCaseInApiClient(self):
-        args = types.SimpleNamespace(partner="sig", customer="Aap", system="NOOT")
+    def testSystemNameIsConvertedToLowerCaseInApiClient(self):
+        args = types.SimpleNamespace(partner="sig", customer="Aap", system="NOOT", \
+            sigridurl="example.com", publish=False, publishonly=False)
         apiClient = SigridApiClient(args)
         
         self.assertEqual(apiClient.urlCustomerName, "aap")
