@@ -35,9 +35,9 @@ The script takes a limited number of mandatory arguments. However, Sigrid CI's b
 
 Sigrid CI compares the quality of the new/changed code against the configured target quality level. The simplest and recommended way to configure the target is by using the `--targetquality` command line argument. This will check the overall quality maintainability rating against the target. 
 
-The advanced approach requires a configuration file named `sigrid.yaml` located in the root of the repository. This approach allows you to specify a target quality level for both the overall maintainability level and every system property. You can use different targets for different metrics, so this allows you to both have an overall target, but also be more strict (or more lenient) for some of the underlying system properties. Using the configuration file provides more flexibility and more control, but it also makes the feedback more complicated. In general, it is recommended to use the overall target quality level, and only start defining specific thresholds for specific system properties when there are structural quality issues that cannot be addressed otherwise.
+The advanced approach requires you to add a section to the `sigrid.yaml` [configuration file](analysis-scope-configuration.md). This approach allows you to specify a target quality level for both the overall maintainability level and every system property. You can use different targets for different metrics, so this allows you to both have an overall target, but also be more strict (or more lenient) for some of the underlying system properties. Using the configuration file provides more flexibility and more control, but it also makes the feedback more complicated. In general, it is recommended to use the overall target quality level, and only start defining specific thresholds for specific system properties when there are structural quality issues that cannot be addressed otherwise.
 
-The following `sigrid.yaml` example configures a target for the overall maintainability rating, but also sets more lenient targets for certain system properties:
+Adding the following section to `sigrid.yaml` will configure a target for the overall maintainability rating, but also sets more lenient targets for certain system properties:
 
 ```
 sigridci:
