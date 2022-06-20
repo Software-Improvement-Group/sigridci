@@ -8,10 +8,6 @@ You can override the default configuration by creating a file called `sigrid.yam
 The following example shows a typical example of a configuration file:
 
 ```
-customer: "mycustomername"
-system: "mysystemname"
-repository: eu-central
-
 component_depth: 1
 exclude:
   - ".*/simulator/.*"
@@ -23,12 +19,9 @@ languages:
 
 ## Project metadata
 
-| Field        | Required | Description                                                                                                    |
-|--------------|----------|----------------------------------------------------------------------------------------------------------------|
-| `customer`   | Yes      | Your company's Sigrid account ID, in lowercase.                                                                |
-| `system`     | Yes      | Your project's system ID in Sigrid, in lowercase. Check Sigrid's system settings page if you're not sure.      |
-| `repository` | Yes      | Always set to `eu-central`, which indicates your source code will be hosted in the EU region.                  |
-| `model`      | No       | Version of the SIG quality model that should be used to analyze your project. Default value is latest version. |
+| Field              | Required | Description                                                                                                    |
+|--------------------|----------|----------------------------------------------------------------------------------------------------------------|
+| `model`            | No       | Version of the SIG quality model that should be used to analyze your project. Default is latest model version. |
 
 ## Excluding files and directories
 
