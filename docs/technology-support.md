@@ -5,8 +5,8 @@ This list described all technologies that can be analyzed by Sigrid. The list co
 
 The first column refers to the name of the technology that should be used in the `sigrid.yaml` configuration file, for example `csharp`. The second column is the technology's display name, for example "C#".
 
-| Name in configuration file     | Display name                   |
-|--------------------------------|--------------------------------|
+| Name in configuration file     | Display name                   | Notes |
+|--------------------------------|--------------------------------|-------|
 | `abap`                         | ABAP                           |
 | `abapsmartforms`               | ABAP SmartForms                |
 | `abl`                          | Abl                            |
@@ -48,7 +48,7 @@ The first column refers to the name of the technology that should be used in the
 | `bpm`                          | BPMN                           |
 | `brail`                        | Brail                          |
 | `bsp`                          | Bsp                            |
-| `c`                            | C                              |
+| `c`                            | C                              | (1) |
 | `cache`                        | Cache                          |
 | `cacheobjectscript`            | Cache ObjectScript             |
 | `ccl`                          | CCL                            |
@@ -64,7 +64,7 @@ The first column refers to the name of the technology that should be used in the
 | `coolgenc`                     | CoolGen C                      |
 | `coolgencobol`                 | CoolGen Cobol                  |
 | `cordysbpm`                    | Cordys BPM                     |
-| `cpp`                          | C++                            |
+| `cpp`                          | C++                            | (1) |
 | `csharp`                       | C#                             |
 | `csp`                          | CSP                            |
 | `css`                          | CSS                            |
@@ -118,15 +118,14 @@ The first column refers to the name of the technology that should be used in the
 | `jade`                         | Jade                           |
 | `java`                         | Java                           |
 | `javafx`                       | Java FX                        |
-| `javascript`                   | JavaScript                     |
-| `javascriptclassic`            | JavaScript (Classic)           |
+| `javascript`                   | JavaScript                     | (2) |
 | `jbc`                          | JBC                            |
 | `jbpm`                         | jBPM                           |
 | `jcl`                          | JCL                            |
 | `jcs`                          | JCS                            |
 | `jinja`                        | Jinja                          |
 | `jsf`                          | JSF                            |
-| `json`                         | JSON                           |
+| `json`                         | JSON                           | (4) |
 | `jsp`                          | JSP                            |
 | `kotlin`                       | Kotlin                         |
 | `less`                         | Less                           |
@@ -208,7 +207,7 @@ The first column refers to the name of the technology that should be used in the
 | `r`                            | R                              |
 | `radience`                     | Radience                       |
 | `razor`                        | Razor                          |
-| `react`                        | React                          |
+| `react`                        | React                          | (2) |
 | `regelspraak`                  | ALEF Regelspraak               |
 | `regelspraakhtml`              | ALEF Regelspraak               |
 | `rexx`                         | Rexx                           |
@@ -264,7 +263,7 @@ The first column refers to the name of the technology that should be used in the
 | `tripleforms`                  | TriplEforms                    |
 | `tsql`                         | T-SQL                          |
 | `turtle`                       | Turtle                         |
-| `typescript`                   | TypeScript                     |
+| `typescript`                   | TypeScript                     | (3) |
 | `uil`                          | UIL (Motif)                    |
 | `uniface`                      | Uniface                        |
 | `until`                        | Until                          |
@@ -277,8 +276,8 @@ The first column refers to the name of the technology that should be used in the
 | `visualforce`                  | VisualForce                    |
 | `visualrpg`                    | Visual RPG                     |
 | `visualobjects`                | Visual Objects                 |
-| `vuejs`                        | VueJS                          |
-| `vuets`                        | VueTS                          |
+| `vuejs`                        | VueJS                          | (2) |
+| `vuets`                        | VueTS                          | (3) |
 | `vulcan`                       | Vulcan.NET                     |
 | `webfocus`                     | WebFocus                       |
 | `webmethods`                   | WebMethods                     |
@@ -288,18 +287,25 @@ The first column refers to the name of the technology that should be used in the
 | `wsdl`                         | WSDL                           |
 | `wtx`                          | WTX                            |
 | `xaml`                         | XAML                           |
-| `xml`                          | XML                            |
+| `xml`                          | XML                            | (4) |
 | `xpdl`                         | Tibco ActiveMatrix BPM         |
 | `xpp`                          | X++                            |
 | `xquery`                       | Xquery                         |
 | `xsd`                          | XSD                            |
 | `xslt`                         | XSLT                           |
 | `xul`                          | XUL                            |
-| `yaml`                         | YAML                           |
+| `yaml`                         | YAML                           | (4) |
+
+Notes:
+
+1. Use either `c` or `cpp`, but not both. Prefer `cpp` if your system contains a combination of C and C++ code.
+2. Use either `javascript` or `react` or `vuejs`, but do not use multiple. Prefer `vuejs` if your system contains [Vue.js](https://vuejs.org) components that use the `.vue` file extension. Prefer `react` if your codebase contains [React](https://reactjs.org) and/or [JSX](https://reactjs.org/docs/introducing-jsx.html). Use `javascript` in all other cases.
+3. Use either `typescript` or `vuets`, but not both. Prefer `vuets` if you're using [Vue.js](https://vuejs.org) in combination with TypeScript code. Prefer `typescript` in all other cases.
+4. In most cases, configuration files are not considered part of production code and are therefore not relevant for Sigrid's maintainability analysis. Only add these technologies if you consider them part of the system's production code.
 
 ## Requesting additional technology support
 
-Even with 300 supported technologies, we are still continuously working on adding support for new technologies and frameworks, and updating our technology suport for new technology versions. You can contact us using the information provided below if you believe we should extend technology support for your project.
+Even with 300 supported technologies, we are still continuously working on adding support for new technologies and frameworks, and updating our technology suport for new technology versions. You can contact us using the information provided below if you believe we should extend technology support for your organization.
 
 ## Contact and support
 
