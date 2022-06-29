@@ -1,11 +1,15 @@
 Changing the analysis scope configuration
 =========================================
 
-Sigrid will try to automatically detect the technologies you use, the component structure, and files/directories that should be excluded from the analysis. 
+You can change Sigrid's configuration for your project, to make Sigrid's feedback as useful and actionable as possible. We call this configuration "the scope".
 
-You can override the default configuration by creating a file called `sigrid.yaml` and adding it to the root of your repository. Making changes to this file will then take effect from the next scan onwards.
+<a href="https://www.youtube.com/watch?v=Uomc7hUbRTw" target="_blank">
+  <img src="images/scoping-video.png" width="500" />
+</a>
 
-The following example shows a typical example of a configuration file:
+By default, Sigrid will try to automatically detect the technologies you use, the component structure, and files/directories that should be excluded from the analysis. However, you can override this standard configuration with your project-specific configuration. To do this, create a file called `sigrid.yaml` and add it to the root of your repository. When you merge changes to `sigrid.yaml`, Sigrid will pick up the new configuration and apply it to subsequent scans.
+
+The following example shows a typical example of the `sigrid.yaml` configuration file:
 
 ```
 component_depth: 1
