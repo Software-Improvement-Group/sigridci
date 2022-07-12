@@ -217,6 +217,57 @@ $ curl 'https://sigrid-says.com/rest/analysis-results/api/v1/system-metadata/{cu
 This example request _replaces_ the list of supplier names with the list consisting of one single supplier name (`Supplier 1`). It also _removes_ the remark. Next to this, it
 leaves all metadata as-is. For instance, if the external ID before executing this request is `ab12345`, after this request it still is. 
 
+The metadata fields are described by the following table. Note that the setting for `deploymentType` is used to assess impact of security findings.
+
+|Path|Type|Description|
+|----|----|-----------|
+|`divisionName`|`String`|The name of the division this system belongs to. Must be between 0 and 60 characters. Can contain blanks: true|
+|`displayName`|`String`|The display name of the system. Must be between 0 and 60 characters. Can contain blanks: true|
+|`supplierNames`|`Array`|Array of the names of the suppliers for this system|
+|`inProductionSince`|`Number`|The year the system went into production. Cannot be later than the current year, Must be at least 1960|
+|`businessCriticality`|`String`|Importance of the system in terms of the effects of it not being available on the user's business (CRITICAL, HIGH, MEDIUM, LOW)|
+|`lifecyclePhase`|`String`|The phase of its lifecycle the system is in (INITIAL, EVOLUTION, MAINTENANCE, EOL, DECOMMISSIONED)|
+|`targetIndustry`|`String`|The industry in which the system is normally used (ICD0500, ICD1750, ICD2350, ICD2710, ICD2730, ICD2750, ICD2770, ICD2790, ICD2797, ICD3350, ICD3500, ICD3700, ICD4500, ICD5300, ICD5500, ICD5700, ICD6500, ICD7500, ICD7577, ICD8300, ICD8500, ICD8630, ICD8700, ICD9530, ICD9570, SIG2200, SIG1200, SIG1000, SIG1100)|
+|`deploymentType`|`String`|The way in which the system is typically deployed (PUBLIC_FACING, CONNECTED, INTERNAL, PHYSICAL)|
+|`applicationType`|`String`|The type of the system (PROCESS_CONTROLLER, TRANSACTION_PROCESSING, RESOURCE_MANAGEMENT, CASE_MANAGEMENT, DESIGN_ENGINEERING_DEVELOPMENT, ANALYTICAL, AUTHENTICATION_AND_PORTALS, COMMUNICATION, FUNCTIONAL_APPLICATIONS, KNOWLEDGE_AND_DOCUMENT_MANAGEMENT, PERSONAL_PRODUCTIVITY_APPLICATIONS)|
+|`isDevelopmentOnly`|`Boolean`|If true, the system is not shown as part of customer's portfolio|
+|`remark`|`String`|Remark(s) about the system as (possibly empty) free-format text. Must be between 0 and 300 characters. Can contain blanks: true|
+|`externalID`|`String`|Allow customers to record an external identifier for a system. free-format text. Must be between 0 and 60 characters. Can contain blanks: true|
+
+The target industry identifiers have the following meaning:
+
+|Identifier|Industry|
+|----------|--------|
+|ICD0500|Oil & Gas|
+|ICD1750|Industrial Metals & Mining|
+|ICD2350|Construction & Materials|
+|ICD2710|Aerospace & Defense|
+|ICD2730|Electronic & Electrical Equipment|
+|ICD2750|Industrial Engineering|
+|ICD2770|Industrial Transportation|
+|ICD2790|Support Services|
+|ICD2797|Industrial Suppliers|
+|ICD3350|Automobiles & Part|
+|ICD3500|Food & Beverage|
+|ICD3700|Personal & Household Goods|
+|ICD4500|Health Care|
+|ICD5300|Retail|
+|ICD5500|Media|
+|ICD5700|Travel & Leisure|
+|ICD6500|Telecommunications|
+|ICD7500|Energy|
+|ICD7577|Water|
+|ICD8300|Banking|
+|ICD8500|Insurance|
+|ICD8630|Real Estate Investment & Services|
+|ICD8700|Financial Services|
+|ICD9530|Software & Computer Services|
+|ICD9570|Technology hardware & equipment|
+|SIG2200|Legal Services|
+|SIG1200|Research|
+|SIG1000|Government|
+|SIG1100|Education|
+
 ## Contact and support
 
 Feel free to contact [SIG's support department](mailto:support@softwareimprovementgroup.com) for any questions or issues you may have after reading this document, or when using Sigrid or Sigrid CI. Users in Europe can also contact us by phone at +31 20 314 0953.
