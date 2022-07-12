@@ -14,7 +14,7 @@ In addition to [Sigrid CI](../README.md), Sigrid also provides a more general-pu
 The following example shows how to call the Sigrid API using `curl`:
 
 ```
-curl -D -  -H 'Accept: application/json' -H 'Authorization: Bearer {SIGRID_CI_TOKEN}' https://sigrid-says.com/rest/analysis-results/api/v1/maintainability/{customer}
+curl -H 'Authorization: Bearer {SIGRID_CI_TOKEN}' https://sigrid-says.com/rest/analysis-results/api/v1/maintainability/{customer}
 ```
 
 In the example, `{customer}` refers to your companies Sigrid account name, and `{SIGRID_CI_TOKEN}` refers to your authentication token.
@@ -23,13 +23,16 @@ In the example, `{customer}` refers to your companies Sigrid account name, and `
 
 ### Maintainability ratings
 
-`GET https://sigrid-says.com/rest/analysis-results/api/v1/maintainability/{customer}`
+Maintainability ratings for a given customer are available via three endpoints:
+- `GET https://sigrid-says.com/rest/analysis-results/api/v1/maintainability/{customer}`: system-level maintainability ratings for all systems of the given customer the current user has access to.
+- `GET https://sigrid-says.com/rest/analysis-results/api/v1/maintainability/{customer}/{system}`: system-level maintainability ratings for the given system of the given customer.
+- `GET https://sigrid-says.com/rest/analysis-results/api/v1/maintainability/{customer}/{system}/components`: component-level maintainability ratings for the given system of the given customer.
 
-Returns the maintainability ratings for all systems in your portfolio. The parameter `{customer}` refers to your Sigrid account name. 
+The parameter `{customer}` refers to your Sigrid account name. 
 
 Example response:
 
-```
+```json
 {
     "name": "my-sigrid-account-name",
     "systems": [
@@ -53,13 +56,13 @@ The top-level `maintainability` and `maintainabilityDate` refer to the *current*
 
 ### Security findings
 
-`GET https://sigrid-says.com/rest/analysis-results/api/{VERSION}/security-findings/{customer}/{system}`
+`GET https://sigrid-says.com/rest/analysis-results/api/v1/security-findings/{customer}/{system}`
 
 Returns all security findings for the specified system. The parameters `{customer}` and `{system}` refer to your Sigrid account name and system ID respectively. 
 
 Example response:
 
-```
+```json
 [
     {
         "id": "00000000-0000-0000-0000-0000005d9c1e",
@@ -94,13 +97,18 @@ Example response:
 
 ### Vulnerable libraries in Open Source Health
 
-`GET https://sigrid-says.com/rest/analysis-results/api/{VERSION}/osh-findings/{customer}/{system}/vulnerable`
+A list of all third-party libraries used is available for a given system, or for all systems for a customer, using the following endpoints:
+- `GET https://sigrid-says.com/rest/analysis-results/api/v1/osh-findings/{customer}?vulnerable=true|false`: get all third-party libraries for all systems the current user has access to for the given customer.
+- `GET https://sigrid-says.com/rest/analysis-results/api/v1/osh-findings/{customer}/{system}?vulnerable=true|false`: get all third-party libraries for the given system and customer.
+- `GET https://sigrid-says.com/rest/analysis-results/api/v1/osh-findings/{customer}/{system}/vulnerable`: legacy endpoint; gives exactly the same results as `GET .../osh-findings/{customer}/{system}?vulnerable=true`.
 
-Returns all vulnerable open source libraries known to Sigrid. The output format is based on the [SBOM (software bill of materials)](https://en.wikipedia.org/wiki/Software_bill_of_materials) standard. The parameters `{customer}` and `{system}` refer to your Sigrid account name and system ID respectively. 
+The `vulnerable` URL query parameter is optional and defaults to `false`. The path parameters `{customer}` and `{system}` refer to your Sigrid account name and system ID respectively. 
 
-Example response:
+The response format is based on the CycloneDX format for an [SBOM (software bill of materials)](https://en.wikipedia.org/wiki/Software_bill_of_materials). 
 
-```
+Example response for a single system:
+
+```json
 {
     "bomFormat": "CycloneDX",
     "specVersion": "1.4",
@@ -146,8 +154,68 @@ Example response:
     ]
 }
 ```
+The endpoint that returns third-party vulnerabilities for all systems for the given customer returns an array of SBOMs, one for each system as follows:
+```json
+{
+    "portfolio" : "sig",
+    "exportDate" : "2022-07-12",
+    "systems" : [ {
+        "customerName" : "sig",
+        "systemName" : "bch",
+        "sbom" : {
+            ...                   // Same as the response format in the single-system case
+        }
+    ]
+}
+```
 
 More information on the SBOM format and the various fields is available from the [SBOM specification](https://github.com/CycloneDX/specification).
+
+### System metadata ratings
+
+System metadata can be viewed and updated using the following two endpoints:
+- `GET https://sigrid-says.com/rest/analysis-results/api/v1/system-metadata/{customer}/{system}`: get metadata of the given system of the given customer.
+- `PATCH https://sigrid-says.com/rest/analysis-results/api/v1/system-metadata/{customer}/{system}`: update metadata of the given system of the given customer.
+
+The path parameters `{customer}` and `{system}` refer to your Sigrid account name and system ID respectively.
+
+The response format of both endpoints is as follows:
+```json
+{
+  "divisionName" : "Division name",
+  "displayName" : "User-friendly system name",
+  "supplierNames" : [ "Supplier 1", "Dupplier 2" ],
+  "lifecyclePhase" : "EOL",
+  "inProductionSince" : 2012,
+  "businessCriticality" : "HIGH",
+  "targetIndustry" : "ICD9530",
+  "deploymentType" : "PUBLIC_FACING",
+  "applicationType" : "ANALYTICAL",
+  "remark" : "A remark",
+  "externalID" : "ab12345",
+  "isDevelopmentOnly" : false
+}
+```
+
+All properties can be null except for `supplierNames` (which is always an array, but possibly empty) and `isDevelopmentOnly` (which is always true or falls).
+
+For the `PATCH` endpoint, please take the following into account:
+- Only users with admin rights are allowed to change metadata.
+- A `PATCH` endpoint requires a body as well as a `Content-Type` header. This is best illustrated with the example below.
+- The `Content-Type` header needs to be set to `application/merge-patch+json` or `application/json`. The former is the official one, the latter behaves exactly the same. 
+
+```shell
+$ curl 'https://sigrid-says.com/rest/analysis-results/api/v1/system-metadata/{customer}/{system}' -X PATCH \
+    -H 'Content-Type: application/merge-patch+json' \
+    -H 'Authorization: Bearer {SIGRID_CI_TOKEN}' \
+    -d '{
+  "supplierNames" : [ "Supplier 1" ],
+  "remark" : null,
+}'
+```
+
+This example request _replaces_ the list of supplier names with the list consisting of one single supplier name (`Supplier 1`). It also _removes_ the remark. Next to this, it
+leaves all metadata as-is. For instance, if the external ID before executing this request is `ab12345`, after this request it still is. 
 
 ## Contact and support
 
