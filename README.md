@@ -1,10 +1,10 @@
-<img src="docs/images/sigrid-logo.png" width="200" />
+<img src="docs/images/sigrid-logo.png" width="150" />
 
 ## Sigrid | Software Assurance Platform
 
 [Sigrid](https://www.softwareimprovementgroup.com/solutions/sigrid-software-assurance-platform/) helps you to improve your software by measuring your system's code quality, and then compares the results against a benchmark of 7,000 industry systems to give you concrete advice on areas where you can improve.
 
-<img src="docs/images/sigrid-dashboard.png" width="800" />
+<img src="docs/images/sigrid-dashboard.png" width="700" />
 
 Sigrid performs code quality checks that have been designed by the [Software Improvement Group](https://www.softwareimprovementgroup.com/), which have been used by thousands of development teams over the past 20 years to help improve their software. SIG's approach is based on the ISO 25010 standard for software quality, and has been accredited to ensure alignment with the standard.
 
@@ -41,7 +41,7 @@ We provide specific instructions for integrating Sigrid CI with popular developm
 - [Using Sigrid CI as part of your development workflow](docs/workflows.md)
 - [Sigrid CI demo recording](https://www.youtube.com/watch?v=1QWWtFlB6cQ) 
 
-## Sigrid API access
+## Sigrid API
 
 Most of this documentation refers to our recommended way to integrate Sigrid into your development process: add Sigrid to your pipeline, for both pull requests and publishing code. However, in some cases you might need a more flexible type of integration. The [Sigrid API documentation](docs/sigrid-api-documentation.md) contains an overview of the available data that you can obtain from Sigrid's API and integrate into your workflow.
 
