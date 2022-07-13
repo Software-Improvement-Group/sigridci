@@ -68,7 +68,7 @@ This will download the default branch for every repository. This behavior is int
 
 You can now use the Sigrid CI client script to analyze the projects you downloaded in the previous step:
 
-    find . -type d -iname .git -exec bash -c 'echo ~/sigridci/sigridci/sigridci.py --customer <sigrid-account-name> --system $(basename $(dirname "$1"))  --source $(dirname "$1")  --publishonly' sh {} \;
+    find . -type d -iname .git -exec bash -c 'echo ~/sigridci/sigridci/sigridci.py --customer <sigrid-account-name> --system $(basename $(dirname "$1")) --source $(dirname "$1") --publishonly' sh {} \;
     
 Note we're starting the analysis asynchronously (this is done by adding the `--publishonly` option). In other words, we're not waiting for each analysis is done before starting the next one. Your organization might have dozens or even hundreds of projects, so it's not practical to wait for every single one.
 
