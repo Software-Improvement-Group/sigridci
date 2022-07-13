@@ -34,11 +34,11 @@ Example response:
 
 ```json
 {
-    "name": "my-sigrid-account-name",
+    "customer": "my-sigrid-account-name",
     "systems": [
         {
-            "name": "my-system-name",
-            "clientName": "my-sigrid-account-name",
+            "system": "my-system-name",
+            "customer": "my-sigrid-account-name",
             "maintainability": 5.24,
             "maintainabilityDate": "2022-02-08",
             "allRatings": [
@@ -100,9 +100,10 @@ Example response:
 A list of all third-party libraries used is available for a given system, or for all systems for a customer, using the following endpoints:
 - `GET https://sigrid-says.com/rest/analysis-results/api/v1/osh-findings/{customer}?vulnerable=true|false`: get all third-party libraries for all systems the current user has access to for the given customer.
 - `GET https://sigrid-says.com/rest/analysis-results/api/v1/osh-findings/{customer}/{system}?vulnerable=true|false`: get all third-party libraries for the given system and customer.
-- `GET https://sigrid-says.com/rest/analysis-results/api/v1/osh-findings/{customer}/{system}/vulnerable`: legacy endpoint; gives exactly the same results as `GET .../osh-findings/{customer}/{system}?vulnerable=true`.
 
-The `vulnerable` URL query parameter is optional and defaults to `false`. The path parameters `{customer}` and `{system}` refer to your Sigrid account name and system ID respectively. 
+The path parameters `{customer}` and `{system}` refer to your Sigrid account name and system ID respectively. The `vulnerable` URL query parameter is optional and defaults to `false`. The meaning is as follows:
+- `?vulnerable=false` or no query parameter: the endpoint returns the full list of third-party libraries detected by Sigrid for the given customer/system(s), including lists of known vulnerabilities per library if any. 
+- `?vulnerable=true`: the endpoint returns only those third-party libraries detected by Sigrid for the given customer/system(s) that have at least one known vulnerability. 
 
 The response format is based on the CycloneDX format for an [SBOM (software bill of materials)](https://en.wikipedia.org/wiki/Software_bill_of_materials). 
 
@@ -155,9 +156,9 @@ Example response for a single system:
 }
 ```
 The endpoint that returns third-party vulnerabilities for all systems for the given customer returns an array of SBOMs, one for each system as follows:
-```json
+```
 {
-    "portfolio" : "sig",
+    "customer" : "sig",
     "exportDate" : "2022-07-12",
     "systems" : [ {
         "customerName" : "sig",
@@ -224,19 +225,29 @@ The metadata fields are described by the following table. Note that the setting 
 |`divisionName`|`String`|The name of the division this system belongs to. Must be between 0 and 60 characters. Can contain blanks: true|
 |`displayName`|`String`|The display name of the system. Must be between 0 and 60 characters. Can contain blanks: true|
 |`supplierNames`|`Array`|Array of the names of the suppliers for this system|
-|`inProductionSince`|`Number`|The year the system went into production. Cannot be later than the current year, Must be at least 1960|
-|`businessCriticality`|`String`|Importance of the system in terms of the effects of it not being available on the user's business (CRITICAL, HIGH, MEDIUM, LOW)|
-|`lifecyclePhase`|`String`|The phase of its lifecycle the system is in (INITIAL, EVOLUTION, MAINTENANCE, EOL, DECOMMISSIONED)|
-|`targetIndustry`|`String`|The industry in which the system is normally used (ICD0500, ICD1750, ICD2350, ICD2710, ICD2730, ICD2750, ICD2770, ICD2790, ICD2797, ICD3350, ICD3500, ICD3700, ICD4500, ICD5300, ICD5500, ICD5700, ICD6500, ICD7500, ICD7577, ICD8300, ICD8500, ICD8630, ICD8700, ICD9530, ICD9570, SIG2200, SIG1200, SIG1000, SIG1100)|
-|`deploymentType`|`String`|The way in which the system is typically deployed (PUBLIC_FACING, CONNECTED, INTERNAL, PHYSICAL)|
-|`applicationType`|`String`|The type of the system (PROCESS_CONTROLLER, TRANSACTION_PROCESSING, RESOURCE_MANAGEMENT, CASE_MANAGEMENT, DESIGN_ENGINEERING_DEVELOPMENT, ANALYTICAL, AUTHENTICATION_AND_PORTALS, COMMUNICATION, FUNCTIONAL_APPLICATIONS, KNOWLEDGE_AND_DOCUMENT_MANAGEMENT, PERSONAL_PRODUCTIVITY_APPLICATIONS)|
+|`inProductionSince`|`Number`|The year the system went into production. Cannot be later than the current year, must be at least 1960|
+|`businessCriticality`|`String`|Importance of the system in terms of the effects of it not being available on the user's business. Must match any of the following values (case-sensitive): CRITICAL, HIGH, MEDIUM, LOW|
+|`lifecyclePhase`|`String`|The phase of its lifecycle the system is in. Must be an industry identifier from the table of lifecycle phase identifiers below (case-sensitive)|
+|`targetIndustry`|`String`|The industry in which the system is normally used. Must be an industry identifier from the table of target industry identifiers below (case-sensitive)|
+|`deploymentType`|`String`|The way in which the system is typically deployed. Must be an industry identifier from the table of deployment types below (case-sensitive)|
+|`applicationType`|`String`|The type of the system. Must be an industry identifier from the table of application types below (case-sensitive)|
 |`isDevelopmentOnly`|`Boolean`|If true, the system is not shown as part of customer's portfolio|
 |`remark`|`String`|Remark(s) about the system as (possibly empty) free-format text. Must be between 0 and 300 characters. Can contain blanks: true|
 |`externalID`|`String`|Allow customers to record an external identifier for a system. free-format text. Must be between 0 and 60 characters. Can contain blanks: true|
 
-The target industry identifiers have the following meaning:
+The lifecycle phase identifiers have the following meaning:
 
-|Identifier|Industry|
+|`lifecyclePhase` identifier|System lifecycle phase|
+|---------------------------|----------------------|
+|INITIAL|Initial development (pre-production)|
+|EVOLUTION|Evolution (post-production)|
+|MAINTENANCE|Servicing and maintenance|
+|EOL|End-of-life (in production but minimal maintenance)|
+|DECOMMISSIONED|Decommissioned / Phased out (no longer in production)|
+
+The target industry phase identifiers have the following meaning:
+
+|`targetIndustry` identifier|Industry|
 |----------|--------|
 |ICD0500|Oil & Gas|
 |ICD1750|Industrial Metals & Mining|
@@ -267,6 +278,31 @@ The target industry identifiers have the following meaning:
 |SIG1200|Research|
 |SIG1000|Government|
 |SIG1100|Education|
+
+The deployment type identifiers have the following meaning:
+
+|`deploymentType` identifier|Deployment Type|
+|---------------------------|---------------|
+|PUBLIC_FACING|A system that is accessible by users through the public internet|
+|CONNECTED|A system that interacts with a public-facing system via the network. The system is not accessible via the public internet|
+|INTERNAL|A system that can only be reached by users via VPN or the company intranet. The system has no interaction with public-facing systems|
+|PHYSICAL|A system that can only be reached by users with access to a physical location. The system cannot be reached from an internal network and has no interaction with public-facing systems|
+
+The possible application types are as follows:
+
+|`applicationType` identifier|
+|----------------------------|
+|PROCESS_CONTROLLER|
+|TRANSACTION_PROCESSING|
+|RESOURCE_MANAGEMENT|
+|CASE_MANAGEMENT|
+|DESIGN_ENGINEERING_DEVELOPMENT|
+|ANALYTICAL|
+|AUTHENTICATION_AND_PORTALS|
+|COMMUNICATION|
+|FUNCTIONAL_APPLICATIONS|
+|KNOWLEDGE_AND_DOCUMENT_MANAGEMENT|
+|PERSONAL_PRODUCTIVITY_APPLICATIONS|
 
 ## Contact and support
 
