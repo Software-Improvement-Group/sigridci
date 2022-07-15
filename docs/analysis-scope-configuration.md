@@ -59,6 +59,50 @@ In some projects, using directory depth will not accurately reflect the actual c
           
 In this example, regular expressions are used to define what files and directories belong to each component. The syntax is identical to the patterns used in the `exclude` section.
 
+## Open Source Health
+
+**Note: This requires a [Sigrid license for Open Source Health](https://www.softwareimprovementgroup.com/capabilities/sigrid-open-source-health/). Without this license, you will not be able to see security results in Sigrid.**
+
+Open Source Health allows you to scan all open sources libraries used by your system, and identify risks such as security vulnerabilities or heavily outdated libraries.
+
+    dependencychecker:
+      enabled: true
+      blacklist: 
+        - ".*mycompanyname.*"
+      transitive: true
+      exclude:
+        - ".*/scripts/.*"
+        
+Adding the `dependencychecker` section and enabling it using `enabled: true` will enable Open Source Health scanning. 
+
+- The *required* `blacklist` option refers a list of naming patterns for internal libraries that should not be scanned. 
+- The `transitive` option controls whether Sigrid should only scan your dependencies, or also the dependencies or your dependencies. For completeness, especially when considering security, it is recommended to set this option to `true`.
+- The `exclude` section is optional, and allows you to ignore certain files and directories for Open Source Health scanning.
+
+## Security
+
+**Note: This requires a [Sigrid license for Software Security](https://www.softwareimprovementgroup.com/solutions/sigrid-software-security/). Without this license, you will not be able to see security results in Sigrid.**
+
+Sigrid uses a combination of its own security checks and security checks performed by third party tools. It then combines the results, benchmarks them, and reports on the overall results.
+
+    thirdpartyfindings:
+      enabled: true
+      exclude:
+        - ".*/scripts/.*[.]sh"
+          
+Adding the `thirdpartyfindings` section and enabling it using `enabled: true` will enable security scanning for your system. 
+
+- The `exclude` section is optional. Adding file and directory patterns will exclude those files specifically for security scanning. In other words, it is possible to ignore certain files, for example development scripts, from security scanning even though they are still being scanned for maintainability.
+
+## Architecture Quality
+
+**Note: This requires an Architecture Quality license, which is currently restricted to a limited customer beta. Without this license, you will not be able to see security results in Sigrid.**
+
+    architecture:
+      enabled: true
+      
+Like the other capabilities, adding the `architecture` section and enabling it using `enabled: true` will enable Architecture Quality scanning.
+
 ## Contact and support
 
 Feel free to contact [SIG's support department](mailto:support@softwareimprovementgroup.com) for any questions or issues you may have after reading this document, or when using Sigrid or Sigrid CI. Users in Europe can also contact us by phone at +31 20 314 0953.
