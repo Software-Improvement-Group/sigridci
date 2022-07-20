@@ -67,17 +67,19 @@ Open Source Health allows you to scan all open sources libraries used by your sy
 
     dependencychecker:
       enabled: true
-      blacklist: 
-        - ".*mycompanyname.*"
+      blacklist: []
       transitive: true
       exclude:
         - ".*/scripts/.*"
         
-Adding the `dependencychecker` section and enabling it using `enabled: true` will enable Open Source Health scanning. 
+The `dependencychecker` section supports the following options:
 
-- The *required* `blacklist` option refers a list of naming patterns for internal libraries that should not be scanned. 
-- The `transitive` option controls whether Sigrid should only scan your dependencies, or also the dependencies or your dependencies. For completeness, especially when considering security, it is recommended to set this option to `true`.
-- The `exclude` section is optional, and allows you to ignore certain files and directories for Open Source Health scanning.
+| Option name  | Required? | Description                                                                                    |
+|--------------|-----------|------------------------------------------------------------------------------------------------|
+| `enabled`    | Yes       | Set to `true` to enable Open Source Health analysis.                                           |
+| `blacklist`  | Yes       | List of library names that should not be scanned. Typically used to ignore internal libraries. |
+| `transitive` | No        | When true, also scans the dependencies of your dependencies. Defaults to false.                |
+| `exclude`    | No        | List of file/directory patterns that should be excluded from the Open Source Health analysis.  |
 
 ## Security
 
@@ -90,9 +92,12 @@ Sigrid uses a combination of its own security checks and security checks perform
       exclude:
         - ".*/scripts/.*[.]sh"
           
-Adding the `thirdpartyfindings` section and enabling it using `enabled: true` will enable security scanning for your system. 
+The `thirdpartyfindings` section supports the following options:
 
-- The `exclude` section is optional. Adding file and directory patterns will exclude those files specifically for security scanning. In other words, it is possible to ignore certain files, for example development scripts, from security scanning even though they are still being scanned for maintainability.
+| Option name | Required? | Description                                                                         |
+|-------------|-----------|-------------------------------------------------------------------------------------|
+| `enabled`   | Yes       | Set to `true` to enable security analysis.                                          |
+| `exclude`   | No        | List of file/directory patterns that should be excluded from the security analysis. |
 
 ## Architecture Quality
 
@@ -101,7 +106,12 @@ Adding the `thirdpartyfindings` section and enabling it using `enabled: true` wi
     architecture:
       enabled: true
       
-Like the other capabilities, adding the `architecture` section and enabling it using `enabled: true` will enable Architecture Quality scanning.
+The `architecture` section supports the following options:
+
+| Option name | Required? | Description                                                                       |
+|-------------|-----------|-----------------------------------------------------------------------------------|
+| `enabled`   | Yes       | Set to `true` to enable architecture quality analysis.                            |
+| `model`     | No        | Version of the SIG Architecture Quality Model to use. Defaults to latest version. |
 
 ## Contact and support
 
