@@ -55,12 +55,10 @@ We will create two GitHub Action workflows: the first will publish the main/mast
 
 ```
 name: sigrid-publish
-
 on:
   push:
     branches:
-      - "master"
-
+      - "main"
 jobs:
   container:
     runs-on: ubuntu-latest
@@ -80,25 +78,38 @@ jobs:
 
 ```
 
-<!-- 
-sigridci:
-  image: 
-    name: softwareimprovementgroup/mendixpreprocessor:latest
-  variables:
-    SIGRID_CI_TARGET_QUALITY: '3.0'
-  stage: report
-  script: 
-    - ""
-  allow_failure: true
-  tags:
-    - run_docker
-  except:
-    variables:
-      - $CI_COMMIT_REF_NAME == $CI_DEFAULT_BRANCH
-
-``` -->
-
 Note the name of the branch, which is `main` in the example but might be different for your repository. In general, most older projects will use `master` as their main branch, while more recent projects will use `main`. 
+
+Next, we create a separate workflow for the pull request integration. This will compare the contents of the pull request against the main/master branch from the previous step. In your GitHub repository, create a file `.github/workflows/sigrid-pullrequest.yml` and give it the following contents:
+
+```
+name: sigrid-pullrequest
+on: [pull_request]
+jobs:
+  container:
+    runs-on: ubuntu-latest
+    container: softwareimprovementgroup/mendixpreprocessor:latest
+    env:
+      SIGRID_CI_CUSTOMER: 'examplecustomername'
+      SIGRID_CI_SYSTEM: 'examplesystemname'
+      SIGRID_CI_TOKEN: "${{ secrets.SIGRID_CI_TOKEN }}"
+      MENDIX_TOKEN: "${{ secrets.MENDIX_TOKEN }}"
+      SIGRID_CI_TARGET_QUALITY: '3.0'
+      CI_PROJECT_DIR: "."
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v2
+      - run: |
+          echo $SIGRID_CI_TOKEN
+          /usr/local/bin/entrypoint.sh
+```
+
+This example assumes you're using the repository-level secrets. If you want to use the organization-level secrets instead, you can change the following lines:
+
+```
+SIGRID_CI_TOKEN: "${{ secrets.SIGRID_CI_ORG_TOKEN }}"
+MENDIX_TOKEN: "${{ secrets.MENDIX_ORG_TOKEN }}"
+```
 
 Finally, note that you need to perform this step for every project where you wish to use Sigrid CI. Be aware that you can set a project-specific target quality, you don't necessarily have to use the same target for every project.
 
