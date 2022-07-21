@@ -55,21 +55,28 @@ We will create two GitHub Action workflows: the first will publish the main/mast
 
 ```
 name: sigrid-publish
+
 on:
   push:
     branches:
-      - "main"
+      - "master"
 
-inputs:
-  ciparams:
-    SIGRID_CI_CUSTOMER: 'examplecustomername'
-    SIGRID_CI_SYSTEM: 'examplesystemname'
-
-runs:
-  using: 'docker'
-  image: 'softwareimprovementgroup/mendixpreprocessor:latest'
-  args:
-    - ${{ inputs.ciparams }}
+jobs:
+  container:
+    runs-on: ubuntu-latest
+    container: softwareimprovementgroup/mendixpreprocessor:latest
+    env:
+      SIGRID_CI_CUSTOMER: 'examplecustomername'
+      SIGRID_CI_SYSTEM: 'examplesystemname'
+      SIGRID_CI_TOKEN: "${{ secrets.SIGRID_CI_TOKEN }}"
+      MENDIX_TOKEN: "${{ secrets.MENDIX_TOKEN }}"
+      CI_PROJECT_DIR: "."
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v2
+      - run: |
+          echo $SIGRID_CI_TOKEN
+          /usr/local/bin/entrypoint.sh
 
 ```
 
