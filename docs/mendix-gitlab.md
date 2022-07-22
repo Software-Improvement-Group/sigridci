@@ -1,4 +1,4 @@
-Integrating QSM Sigrid with Mendix on a Gitlab server
+Integrating Sigrid CI with Mendix QSM on a Gitlab server
 ==============================================
 
 Please note: `QSM` is the brand name used by Mendix, in this manual we will use `Sigrid`.
