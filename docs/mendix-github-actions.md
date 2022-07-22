@@ -21,7 +21,7 @@ On-boarding is done automatically when you first run Sigrid CI. As long as you h
 **Step 1: Configure both the Sigrid credential and the Mendix PAT to environment variables**
 
 Sigrid CI reads your credentials from 2 environment variables called `SIGRID_CI_TOKEN` and `MENDIX_TOKEN`. 
-To add these to your GitLab CI pipeline, follow these steps:
+To add these to your GitHub repository, follow these steps:
 
 - Open your project settings in GitHub
 - Select "Secrets" in the menu on the left
