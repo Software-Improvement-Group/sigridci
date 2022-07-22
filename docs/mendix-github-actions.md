@@ -64,12 +64,12 @@ jobs:
     runs-on: ubuntu-latest
     container: softwareimprovementgroup/mendixpreprocessor:latest
     env:
+      CI_PROJECT_DIR: "."
+      MENDIX_TOKEN: "${{ secrets.MENDIX_TOKEN }}"
       SIGRID_CI_CUSTOMER: 'examplecustomername'
+      SIGRID_CI_PUBLISH: 'publish'
       SIGRID_CI_SYSTEM: 'examplesystemname'
       SIGRID_CI_TOKEN: "${{ secrets.SIGRID_CI_TOKEN }}"
-      MENDIX_TOKEN: "${{ secrets.MENDIX_TOKEN }}"
-      CI_PROJECT_DIR: "."
-      SIGRID_CI_PUBLISH: 'publish'
     steps:
       - name: Check out repository
         uses: actions/checkout@v2
@@ -90,12 +90,12 @@ jobs:
     runs-on: ubuntu-latest
     container: softwareimprovementgroup/mendixpreprocessor:latest
     env:
+      CI_PROJECT_DIR: "."
+      MENDIX_TOKEN: "${{ secrets.MENDIX_TOKEN }}"
       SIGRID_CI_CUSTOMER: 'examplecustomername'
       SIGRID_CI_SYSTEM: 'examplesystemname'
-      SIGRID_CI_TOKEN: "${{ secrets.SIGRID_CI_TOKEN }}"
-      MENDIX_TOKEN: "${{ secrets.MENDIX_TOKEN }}"
       SIGRID_CI_TARGET_QUALITY: '3.5'
-      CI_PROJECT_DIR: "."
+      SIGRID_CI_TOKEN: "${{ secrets.SIGRID_CI_TOKEN }}"
     steps:
       - name: Check out repository
         uses: actions/checkout@v2
