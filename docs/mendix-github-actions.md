@@ -73,7 +73,6 @@ jobs:
       - name: Check out repository
         uses: actions/checkout@v2
       - run: |
-          echo $SIGRID_CI_TOKEN
           /usr/local/bin/entrypoint.sh
 
 ```
@@ -100,7 +99,6 @@ jobs:
       - name: Check out repository
         uses: actions/checkout@v2
       - run: |
-          echo $SIGRID_CI_TOKEN
           /usr/local/bin/entrypoint.sh
 ```
 
