@@ -60,7 +60,7 @@ on:
     branches:
       - "main"
 jobs:
-  container:
+  SigridCI-for-QSM:
     runs-on: ubuntu-latest
     container: softwareimprovementgroup/mendixpreprocessor:latest
     env:
@@ -86,7 +86,7 @@ Next, we create a separate workflow for the pull request integration. This will 
 name: sigrid-pullrequest
 on: [pull_request]
 jobs:
-  container:
+  SigridCI-for-QSM:
     runs-on: ubuntu-latest
     container: softwareimprovementgroup/mendixpreprocessor:latest
     env:
