@@ -1,14 +1,14 @@
-Integrating AQM Sigrid with Mendix on a Gitlab server
+Integrating Sigrid CI with Mendix QSM on a GitHub server
 ==============================================
 
-Please note: `AQM or QSM` is the brand name used by Mendix, in this manual we will use `Sigrid`.
+Please note: `QSM` is the brand name used by Mendix, in this manual we will use `Sigrid`.
 
 ## Prerequisites
 
 - You are not using the default Mendix teamserver, but you are using your own Git server for version control of your projects.
 - You would like to trigger the Sigrid analysis from within your own pipeline in Git.
 - Your runners are able to pull this [public docker image](https://hub.docker.com/r/softwareimprovementgroup/mendixpreprocessor), the image is used to preprocess the Mendix code before uploading it to Sigrid.
-- You have a [Sigrid](https://aqm.mendix.com) user account. 
+- You have a [Sigrid](https://qsm.mendix.com) user account. 
 - You have created an [authentication token using Sigrid](authentication-tokens.md).
 - You have created a Personal access (PAT) token using [warden.mendix.com](https://warden.mendix.com)
 
@@ -23,19 +23,27 @@ On-boarding is done automatically when you first run Sigrid CI. As long as you h
 Sigrid CI reads your credentials from 2 environment variables called `SIGRID_CI_TOKEN` and `MENDIX_TOKEN`. 
 To add these to your GitLab CI pipeline, follow these steps:
 
-- Select "Settings" in your GitLab project's menu
-- Select "CI/CD" in the settings menu
-- Locate the section named "Variables"
-- Click the "Add variable" button
+- Open your project settings in GitHub
+- Select "Secrets" in the menu on the left
+- Select "Actions" in the sub-menu that appears below "Secrets"
+- Use the "New repository secret" button
 - Add an first environment variable `SIGRID_CI_TOKEN` and use your [Sigrid authentication token](authentication-tokens.md) as the value.
 - Add an second environment variable `MENDIX_TOKEN` and use this Mendix app [warden.mendix.com](https://warden.mendix.com) to create a PAT with 'mx:modelrepository:repo:read' access only.
 
-<img src="images/gitlab-env.png" width="400" />
+<img src="images/github-env.png" width="400" />
 <img src="images/mendix-credentials.png" width="600" />
 
-These instructions describe how to configure a single GitLab project, but you can follow the same steps to configure the entire GitLab group, which will make the environment variables available to all projects within that group.
+Your repository secret should now look like this:
 
-**Step 2: Create pipeline configuration file for Gitlab**
+<img src="images/github-env-secrets.png" width="400" />
+
+This example explained how to add secrets for a single repository. However, if you have a GitHub organization with many repositories it can be cumbersome to repeat these steps for every repository. You can solve this by adding secrets to your GitHub organization. The process is the same as explained above, though you should access the "secrets" menu for your GitHub organization instead of the "secrets" page for the repository.
+
+<img src="images/github-org-secrets.jpg" width="400" />
+
+The organization-level secret.
+
+**Create a GitHub Actions workflow for Sigrid CI**
 
 We will create a pipeline that consists of two jobs:
 
@@ -43,50 +51,64 @@ We will create a pipeline that consists of two jobs:
 - One job to provide feedback on pull requests, which can be used as input for code reviews.
 
 
-In the root of your repository, create a file `.gitlab-ci.yml` and add the following contents:
-
+We will create two GitHub Action workflows: the first will publish the main/master branch to [sigrid-says.com](https://sigrid-says.com) after every commit. In your GitHub repository, create a file `.github/workflows/sigrid-publish.yml` and give it the following contents:
 
 ```
-stages:
- - report
-
-variables:
-  SIGRID_CI_CUSTOMER: 'examplecustomername'
-  SIGRID_CI_SYSTEM: 'examplesystemname'
-
-sigridci:
-  image: 
-    name: softwareimprovementgroup/mendixpreprocessor:latest
-  variables:
-    SIGRID_CI_TARGET_QUALITY: '3.0'
-  stage: report
-  script: 
-    - ""
-  allow_failure: true
-  tags:
-    - run_docker
-  except:
-    variables:
-      - $CI_COMMIT_REF_NAME == $CI_DEFAULT_BRANCH
-
-sigridpublish:
-  image: 
-    name: softwareimprovementgroup/mendixpreprocessor:latest
-  variables:
-    SIGRID_CI_PUBLISH: 'publishonly'
-  stage: report
-  script:
-    - ""
-  allow_failure: true
-  tags:
-    - run_docker
-  only:
-    variables:
-      - $CI_COMMIT_REF_NAME == $CI_DEFAULT_BRANCH
+name: sigrid-publish
+on:
+  push:
+    branches:
+      - "main"
+jobs:
+  SigridCI-for-QSM:
+    runs-on: ubuntu-latest
+    container: softwareimprovementgroup/mendixpreprocessor:latest
+    env:
+      CI_PROJECT_DIR: "."
+      MENDIX_TOKEN: "${{ secrets.MENDIX_TOKEN }}"
+      SIGRID_CI_CUSTOMER: 'examplecustomername'
+      SIGRID_CI_SYSTEM: 'examplesystemname'
+      SIGRID_CI_PUBLISH: 'publish'
+      SIGRID_CI_TOKEN: "${{ secrets.SIGRID_CI_TOKEN }}"
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v2
+      - run: |
+          /usr/local/bin/entrypoint.sh
 
 ```
 
 Note the name of the branch, which is `main` in the example but might be different for your repository. In general, most older projects will use `master` as their main branch, while more recent projects will use `main`. 
+
+Next, we create a separate workflow for the pull request integration. This will compare the contents of the pull request against the main/master branch from the previous step. In your GitHub repository, create a file `.github/workflows/sigrid-pullrequest.yml` and give it the following contents:
+
+```
+name: sigrid-pullrequest
+on: [pull_request]
+jobs:
+  SigridCI-for-QSM:
+    runs-on: ubuntu-latest
+    container: softwareimprovementgroup/mendixpreprocessor:latest
+    env:
+      CI_PROJECT_DIR: "."
+      MENDIX_TOKEN: "${{ secrets.MENDIX_TOKEN }}"
+      SIGRID_CI_CUSTOMER: 'examplecustomername'
+      SIGRID_CI_SYSTEM: 'examplesystemname'
+      SIGRID_CI_TARGET_QUALITY: '3.5'
+      SIGRID_CI_TOKEN: "${{ secrets.SIGRID_CI_TOKEN }}"
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v2
+      - run: |
+          /usr/local/bin/entrypoint.sh
+```
+
+This example assumes you're using the repository-level secrets. If you want to use the organization-level secrets instead, you can change the following lines:
+
+```
+SIGRID_CI_TOKEN: "${{ secrets.SIGRID_CI_ORG_TOKEN }}"
+MENDIX_TOKEN: "${{ secrets.MENDIX_ORG_TOKEN }}"
+```
 
 Finally, note that you need to perform this step for every project where you wish to use Sigrid CI. Be aware that you can set a project-specific target quality, you don't necessarily have to use the same target for every project.
 
