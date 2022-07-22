@@ -58,7 +58,7 @@ sigridci:
   image: 
     name: softwareimprovementgroup/mendixpreprocessor:latest
   variables:
-    SIGRID_CI_TARGET_QUALITY: '3.0'
+    SIGRID_CI_TARGET_QUALITY: '3.5'
   stage: report
   script: 
     - ""
