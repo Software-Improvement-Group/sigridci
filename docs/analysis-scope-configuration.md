@@ -113,6 +113,8 @@ The `architecture` section supports the following options:
 | `enabled`   | Yes       | Set to `true` to enable architecture quality analysis.                            |
 | `model`     | No        | Version of the SIG Architecture Quality Model to use. Defaults to latest version. |
 
+Architecture Quality also requires the repository history to be included in the upload. This requires the `--include-history` option to be enabled in the [Sigrid CI client script](client-script-usage.md).
+
 ## Contact and support
 
 Feel free to contact [SIG's support department](mailto:support@softwareimprovementgroup.com) for any questions or issues you may have after reading this document, or when using Sigrid or Sigrid CI. Users in Europe can also contact us by phone at +31 20 314 0953.
