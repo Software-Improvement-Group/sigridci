@@ -241,6 +241,7 @@ class SystemUploadPacker:
         "sigrid-ci-output/",
         "target/",
         ".git/",
+        ".gitattributes",
         ".gitignore",
         ".idea/",
         ".jpg",
@@ -254,7 +255,7 @@ class SystemUploadPacker:
         zipFile = zipfile.ZipFile(outputFile, "w", zipfile.ZIP_DEFLATED)
         hasContents = False
         
-        if self.options.includeHistory:
+        if self.options.includeHistory and os.path.exists(f"{sourceDir}/.git"):
             self.includeRepositoryHistory(sourceDir)
 
         for root, dirs, files in os.walk(sourceDir):
