@@ -22,6 +22,7 @@ import html
 import json
 import os
 import re
+import subprocess
 import sys
 import time
 import typing
@@ -244,23 +245,23 @@ class SystemUploadPacker:
         "sigridci/",
         "sigrid-ci-output/",
         "target/",
+        ".git/",
+        ".gitattributes",
+        ".gitignore",
         ".idea/",
         ".jpg",
         ".png"
     ]
 
     def __init__(self, options):
-        self.excludePatterns = [] + (options.excludePatterns or []) + self.DEFAULT_EXCLUDES
-        self.excludePatterns = [excl for excl in self.excludePatterns if excl != ""]
-        if not options.includeHistory:
-            self.excludePatterns += [".git/", ".gitmodules"]
-
-        self.pathPrefix = options.pathPrefix.strip("/")
-        self.showContents = options.showContents
+        self.options = options
 
     def prepareUpload(self, sourceDir, outputFile):
         zipFile = zipfile.ZipFile(outputFile, "w", zipfile.ZIP_DEFLATED)
         hasContents = False
+        
+        if self.options.includeHistory and os.path.exists(f"{sourceDir}/.git"):
+            self.includeRepositoryHistory(sourceDir)
 
         for root, dirs, files in os.walk(sourceDir):
             for file in sorted(files):
@@ -269,7 +270,7 @@ class SystemUploadPacker:
                     relativePath = os.path.relpath(os.path.join(root, file), sourceDir)
                     uploadPath = self.getUploadFilePath(relativePath)
                     hasContents = True
-                    if self.showContents:
+                    if self.options.showContents:
                         log(f"Adding file to upload: {uploadPath}")
                     zipFile.write(filePath, uploadPath)
 
@@ -291,17 +292,30 @@ class SystemUploadPacker:
             log("Warning: Upload is very small, source directory might not contain all source code")
 
     def getUploadFilePath(self, relativePath):
-        if self.pathPrefix == "":
-            return relativePath
-        return f"{self.pathPrefix}/{relativePath}"
+        pathPrefix = self.options.pathPrefix.strip("/")
+        return f"{pathPrefix}/{relativePath}" if pathPrefix else relativePath
 
     def isExcluded(self, filePath):
+        excludePatterns = self.DEFAULT_EXCLUDES + (self.options.excludePatterns or [])
         normalizedPath = filePath.replace("\\", "/")
-        for exclude in self.excludePatterns:
-            if exclude.strip() in normalizedPath:
+        for exclude in excludePatterns:
+            if exclude != "" and exclude.strip() in normalizedPath:
                 return True
         return False
-
+        
+    def includeRepositoryHistory(self, sourceDir):
+        gitCommand = ["git", "-C", sourceDir, "--no-pager", "log", "--date=iso", "--format='@@@;%H;%an;%ae;%ad;%s'", \
+                      "--numstat", "--no-merges"]
+        try:
+            output = subprocess.run(gitCommand, stdout=subprocess.PIPE)
+            if output.returncode == 0:
+                with open(f"{sourceDir}/git.log", "w") as f:
+                    f.write(output.stdout)
+            else:
+                log("Exporting repository history failed")
+        except Exception as e:
+            log("Error while trying to include repository history: " + str(e))
+    
 
 class Report:
     METRICS = ["VOLUME", "DUPLICATION", "UNIT_SIZE", "UNIT_COMPLEXITY", "UNIT_INTERFACING", "MODULE_COUPLING",
@@ -610,7 +624,7 @@ if __name__ == "__main__":
     parser.add_argument("--exclude", type=str, default="")
     parser.add_argument("--pathprefix", type=str, default="")
     parser.add_argument("--showupload", action="store_true")
-    parser.add_argument("--history", action="store_true")
+    parser.add_argument("--include-history", action="store_true")
     parser.add_argument("--sigridurl", type=str, default="https://sigrid-says.com")
     args = parser.parse_args()
 
@@ -639,7 +653,7 @@ if __name__ == "__main__":
         sys.exit(1)
 
     log("Starting Sigrid CI")
-    options = UploadOptions(args.source, args.exclude.split(","), args.history, args.pathprefix, args.showupload, args.publishonly)
+    options = UploadOptions(args.source, args.exclude.split(","), args.include_history, args.pathprefix, args.showupload, args.publishonly)
     target = TargetQuality(f"{args.source}/sigrid.yaml", args.targetquality)
     apiClient = SigridApiClient(args)
     reports = [TextReport(), StaticHtmlReport(), JUnitFormatReport(), ExitCodeReport()]
