@@ -61,22 +61,19 @@ class UploadOptions:
         return None
 
 
-@dataclass
 class TargetQuality:
-    ratings: typing.Dict[str, float]
-
-    def __init__(self, configFile, targetRating):
+    def __init__(self, scope, targetRating):
         self.ratings = {"MAINTAINABILITY" : targetRating}
-
-        if os.path.exists(configFile):
-            log(f"Loading target quality level from configuration file {configFile}")
-            # We can't use pyyaml because PIP is not available in the some of the
-            # very diverse set of customer environments where Sigrid CI is used.
-            targetPattern = re.compile("(" + "|".join(Report.METRICS) + "):\s*([\d\.]+)", re.IGNORECASE)
-            for line in open(configFile, "r"):
-                match = targetPattern.match(line.strip())
-                if match:
-                    self.ratings[match.group(1).upper()] = float(match.group(2))
+        
+        # We can't use pyyaml because PIP is not available in the some of the
+        # very diverse set of customer environments where Sigrid CI is used.
+        targetPattern = re.compile("(" + "|".join(Report.METRICS) + "):\s*([\d\.]+)", re.IGNORECASE)
+        
+        for line in scope.split(","):
+            match = targetPattern.match(line.strip())
+            if match:
+                log(f"Loading {match.group(1).upper()} target from scope configuration file")
+                self.ratings[match.group(1).upper()] = float(match.group(2))
 
     def meetsTargetQualityForMetric(self, feedback, metric):
         value = feedback["newCodeRatings"].get(metric, None)
@@ -91,7 +88,6 @@ class SigridApiClient:
     API_VERSION = "v1"
     POLL_INTERVAL = 60
     POLL_ATTEMPTS = 60
-    RETRY_ATTEMPTS = 5
 
     def __init__(self, args):
         self.baseURL = args.sigridurl
@@ -116,6 +112,27 @@ class SigridApiClient:
             log("Received empty response")
             return {}
         return json.loads(responseBody)
+        
+    def retry(self, operation, *, attempts=5, allow404=False, allowEmpty=True):
+        for attempt in range(attempts):
+            try:
+                response = operation()
+                if response != {} or allowEmpty:
+                    return response
+            except urllib.error.HTTPError as e:
+                if e.code in [401, 403]:
+                    log("You are not authorized to access Sigrid for this system")
+                    sys.exit(1)
+                elif e.code == 404 and allow404:
+                    return False
+            
+            # These statements are intentionally outside of the except-block,
+            # since we want to retry for empty response on some end points.
+            log("Retrying")
+            time.sleep(self.POLL_INTERVAL)
+        
+        log(f"Sigrid is currently unavailable, failed after {attempts} attempts")
+        sys.exit(1)
 
     def submitUpload(self, options, systemExists):
         log("Creating upload")
@@ -134,44 +151,21 @@ class SigridApiClient:
         return analysisId
 
     def obtainUploadLocation(self, systemExists):
-        for attempt in range(self.RETRY_ATTEMPTS):
-            try:
-                return self.callSigridAPI(self.getRequestUploadPath(systemExists))
-            except urllib.error.HTTPError as e:
-                if e.code == 502:
-                    log("Retrying")
-                    time.sleep(self.POLL_INTERVAL)
-                else:
-                    self.processHttpError(e)
-
-        log("Sigrid is currently unavailable")
-        sys.exit(1)
-
-    def getRequestUploadPath(self, systemExists):
         path = f"/inboundresults/{self.urlPartnerName}/{self.urlCustomerName}/{self.urlSystemName}/ci/uploads/{self.API_VERSION}"
         if not systemExists:
             path += "/onboarding"
         elif self.publish:
             path += "/publish"
-        return path
+    
+        return self.retry(lambda: self.callSigridAPI(path))
         
     def validateScopeFile(self, scopeFile):
-        return self.callSigridAPI( \
-            f"/inboundresults/{self.urlPartnerName}/{self.urlCustomerName}/{self.urlSystemName}/ci/validate/{self.API_VERSION}", \
-            scopeFile.encode("utf8"), "text/yaml")
+        path = f"/inboundresults/{self.urlPartnerName}/{self.urlCustomerName}/{self.urlSystemName}/ci/validate/{self.API_VERSION}"
+        return self.retry(lambda: self.callSigridAPI(path, scopeFile.encode("utf8"), "text/yaml"))
 
     def uploadBinaryFile(self, url, upload):
-        for attempt in range(self.RETRY_ATTEMPTS):
-            try:
-                self.attemptUpload(url, upload)
-                log(f"Upload successful")
-                return
-            except urllib.error.HTTPError as e:
-                log("Retrying upload")
-                time.sleep(self.POLL_INTERVAL)
-
-        log(f"Uploading file failed after {self.RETRY_ATTEMPTS} attempts")
-        sys.exit(1)
+        self.retry(lambda: self.attemptUpload(url, upload))
+        log(f"Upload successful")
 
     def attemptUpload(self, url, upload):
         with open(upload, "rb") as uploadRef:
@@ -183,54 +177,17 @@ class SigridApiClient:
             urllib.request.urlopen(uploadRequest)
 
     def checkSystemExists(self):
-        for attempt in range(self.RETRY_ATTEMPTS):
-            try:
-                self.callSigridAPI(f"/analysis-results/sigridci/{self.urlCustomerName}/{self.urlSystemName}/{self.API_VERSION}/ci")
-                return True
-            except urllib.error.HTTPError as e:
-                if e.code == 404:
-                    return False
-                elif e.code == 502:
-                    log("Retrying")
-                    time.sleep(self.POLL_INTERVAL)
-                else:
-                    self.processHttpError(e)
-
-        log("Sigrid is currently unavailable")
-        sys.exit(1)
-
+        path = f"/analysis-results/sigridci/{self.urlCustomerName}/{self.urlSystemName}/{self.API_VERSION}/ci"
+        return self.retry(lambda: self.callSigridAPI(path), allow404=True) != False
 
     def fetchAnalysisResults(self, analysisId):
-        for attempt in range(self.POLL_ATTEMPTS):
-            try:
-                response = self.callSigridAPI(f"/analysis-results/sigridci/{self.urlCustomerName}/{self.urlSystemName}/{self.API_VERSION}/ci/results/{analysisId}")
-                if response != {}:
-                    return response
-            except urllib.error.HTTPError as e:
-                self.processHttpError(e)
-            except json.JSONDecodeError as e:
-                log("Received incomplete analysis results")
-
-            log("Waiting for analysis results")
-            time.sleep(self.POLL_INTERVAL)
-
-        log("Analysis failed: waiting for analysis results took too long")
-        sys.exit(1)
+        print("Waiting for analysis results")
+        path = f"/analysis-results/sigridci/{self.urlCustomerName}/{self.urlSystemName}/{self.API_VERSION}/ci/results/{analysisId}"
+        return self.retry(lambda: self.callSigridAPI(path), attempts=self.POLL_ATTEMPTS, allowEmpty=False)
         
     def fetchMetadata(self):
-        return self.callSigridAPI(f"/analysis-results/api/{self.API_VERSION}/system-metadata/{self.urlCustomerName}/{self.urlSystemName}")
-
-    def processHttpError(self, e):
-        if e.code in [401, 403]:
-            log("You are not authorized to access Sigrid for this system")
-            sys.exit(1)
-        elif e.code == 404:
-            log("Analysis results not yet available")
-        elif e.code >= 500:
-            log(f"Sigrid is currently not available (HTTP status {e.code})")
-            sys.exit(1)
-        else:
-            raise Exception(f"Received HTTP status {e.code}")
+        path = f"/analysis-results/api/{self.API_VERSION}/system-metadata/{self.urlCustomerName}/{self.urlSystemName}"
+        return self.retry(lambda: self.callSigridAPI(path))
 
 
 class SystemUploadPacker:
@@ -654,7 +611,7 @@ if __name__ == "__main__":
 
     log("Starting Sigrid CI")
     options = UploadOptions(args.source, args.exclude.split(","), args.include_history, args.pathprefix, args.showupload, args.publishonly)
-    target = TargetQuality(f"{args.source}/sigrid.yaml", args.targetquality)
+    target = TargetQuality(options.readScopeFile() or "", args.targetquality)
     apiClient = SigridApiClient(args)
     reports = [TextReport(), StaticHtmlReport(), JUnitFormatReport(), ExitCodeReport()]
 

@@ -14,9 +14,10 @@
 
 import os
 import tempfile
+import types
 import unittest
 import urllib
-from sigridci.sigridci import SigridApiClient, SigridCiRunner, UploadOptions, TargetQuality, LOG_HISTORY
+from sigridci.sigridci import SigridApiClient, SigridCiRunner, UploadOptions, TargetQuality, LOG_HISTORY, SYSTEM_NAME_PATTERN
 
 class SigridCiRunnerTest(unittest.TestCase):
 
@@ -24,6 +25,34 @@ class SigridCiRunnerTest(unittest.TestCase):
         os.environ["SIGRID_CI_ACCOUNT"] = "dummy"
         os.environ["SIGRID_CI_TOKEN"] = "dummy"
         LOG_HISTORY.clear()
+        
+    def testForceLowerCaseForCustomerAndSystemName(self):
+        args = types.SimpleNamespace(partner="sig", customer="Aap", system="NOOT", sigridurl="", publish=False, publishonly=False)
+        apiClient = SigridApiClient(args)
+        
+        self.assertEqual(apiClient.urlCustomerName, "aap")
+        self.assertEqual(apiClient.urlSystemName, "noot")
+        
+    def testValidateSystemNameAccordingToRules(self):
+        self.assertTrue(SYSTEM_NAME_PATTERN.match("aap"))
+        self.assertTrue(SYSTEM_NAME_PATTERN.match("aap-noot"))
+        self.assertTrue(SYSTEM_NAME_PATTERN.match("aap123"))
+        self.assertTrue(SYSTEM_NAME_PATTERN.match("AAP"))
+        self.assertTrue(SYSTEM_NAME_PATTERN.match("a" * 64))
+        
+        self.assertFalse(SYSTEM_NAME_PATTERN.match("aap_noot"))
+        self.assertFalse(SYSTEM_NAME_PATTERN.match("a"))
+        self.assertFalse(SYSTEM_NAME_PATTERN.match("$$$"))
+        self.assertFalse(SYSTEM_NAME_PATTERN.match("-aap"))
+        self.assertFalse(SYSTEM_NAME_PATTERN.match("a" * 65))
+        
+    def testSystemNameIsConvertedToLowerCaseInApiClient(self):
+        args = types.SimpleNamespace(partner="sig", customer="Aap", system="NOOT", \
+            sigridurl="example.com", publish=False, publishonly=False)
+        apiClient = SigridApiClient(args)
+        
+        self.assertEqual(apiClient.urlCustomerName, "aap")
+        self.assertEqual(apiClient.urlSystemName, "noot")
 
     def testRegularRun(self):
         tempDir = tempfile.mkdtemp()    
@@ -185,8 +214,8 @@ class SigridCiRunnerTest(unittest.TestCase):
             "Preparing upload", 
             "Sigrid CI analysis ID: 123",
             "Submitting upload",
-            "Retrying upload",
-            "Retrying upload",
+            "Retrying",
+            "Retrying",
             "Upload successful"
         ]
 
@@ -209,12 +238,12 @@ class SigridCiRunnerTest(unittest.TestCase):
             "Preparing upload", 
             "Sigrid CI analysis ID: 123",
             "Submitting upload",
-            "Retrying upload",
-            "Retrying upload",
-            "Retrying upload",
-            "Retrying upload",
-            "Retrying upload",
-            "Uploading file failed after 5 attempts"
+            "Retrying",
+            "Retrying",
+            "Retrying",
+            "Retrying",
+            "Retrying",
+            "Sigrid is currently unavailable, failed after 5 attempts"
         ]
         
         with self.assertRaises(SystemExit):

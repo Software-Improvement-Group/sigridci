@@ -22,6 +22,25 @@ from sigridci.sigridci import Report, TextReport, TargetQuality
 class TextReportTest(unittest.TestCase):
 
     maxDiff = None
+    
+    def testGetRefactoringCandidatesForNewFormat(self):
+        feedback = {
+            "refactoringCandidates": [{"subject":"a/b.java::Duif.vuur()","category":"introduced","metric":"UNIT_SIZE"}]
+        }
+        
+        report = Report()
+        unitSize = report.getRefactoringCandidates(feedback, "UNIT_SIZE")
+        
+        self.assertEqual(len(unitSize), 1)
+        self.assertEqual(unitSize[0]["subject"], "a/b.java::Duif.vuur()")
+        
+    def testFormatBaseline(self):
+        report = Report()
+
+        self.assertEqual(report.formatBaseline({"baseline" : "20211015"}), "2021-10-15")
+        self.assertEqual(report.formatBaseline({"baseline" : None}), "N/A")
+        self.assertEqual(report.formatBaseline({"baseline" : ""}), "N/A")
+        self.assertEqual(report.formatBaseline({}), "N/A")
 
     def testFormatTextRefactoringCandidate(self):
         rc1 = {"subject" : "aap", "category" : "introduced", "metric" : "UNIT_SIZE"}
