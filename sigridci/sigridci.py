@@ -86,8 +86,8 @@ class TargetQuality:
 
 class SigridApiClient:
     API_VERSION = "v1"
-    POLL_INTERVAL = 60
-    POLL_ATTEMPTS = 60
+    POLL_INTERVAL = 30
+    POLL_ATTEMPTS = 120
 
     def __init__(self, args):
         self.baseURL = args.sigridurl
