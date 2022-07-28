@@ -48,10 +48,11 @@ class SigridCiRunnerTest(unittest.TestCase):
         ]
         
         expectedCalls = [
-            "analysis-results/sigridci/aap/noot/v1/ci", 
-            "inboundresults/sig/aap/noot/ci/uploads/v1", 
+            "/analysis-results/sigridci/aap/noot/v1/ci", 
+            "/inboundresults/sig/aap/noot/ci/uploads/v1", 
             "UPLOAD",
-            "analysis-results/sigridci/aap/noot/v1/ci/results/123"
+            "/analysis-results/sigridci/aap/noot/v1/ci/results/123",
+            "/analysis-results/api/v1/system-metadata/aap/noot"
         ]
 
         self.assertEqual(LOG_HISTORY, expectedLog)
@@ -80,10 +81,11 @@ class SigridCiRunnerTest(unittest.TestCase):
         ]
         
         expectedCalls = [
-            "analysis-results/sigridci/aap/noot/v1/ci", 
-            "inboundresults/sig/aap/noot/ci/uploads/v1/publish", 
+            "/analysis-results/sigridci/aap/noot/v1/ci", 
+            "/inboundresults/sig/aap/noot/ci/uploads/v1/publish", 
             "UPLOAD",
-            "analysis-results/sigridci/aap/noot/v1/ci/results/123"
+            "/analysis-results/sigridci/aap/noot/v1/ci/results/123",
+            "/analysis-results/api/v1/system-metadata/aap/noot"
         ]
 
         self.assertEqual(LOG_HISTORY, expectedLog)
@@ -113,9 +115,10 @@ class SigridCiRunnerTest(unittest.TestCase):
         ]
         
         expectedCalls = [
-            "analysis-results/sigridci/aap/noot/v1/ci", 
-            "inboundresults/sig/aap/noot/ci/uploads/v1/publish", 
-            "UPLOAD"
+            "/analysis-results/sigridci/aap/noot/v1/ci", 
+            "/inboundresults/sig/aap/noot/ci/uploads/v1/publish",             
+            "UPLOAD",
+            "/analysis-results/api/v1/system-metadata/aap/noot"
         ]
 
         self.assertEqual(LOG_HISTORY, expectedLog)
@@ -145,8 +148,8 @@ class SigridCiRunnerTest(unittest.TestCase):
         ]
         
         expectedCalls = [
-            "analysis-results/sigridci/aap/noot/v1/ci", 
-            "inboundresults/sig/aap/noot/ci/uploads/v1/onboarding", 
+            "/analysis-results/sigridci/aap/noot/v1/ci", 
+            "/inboundresults/sig/aap/noot/ci/uploads/v1/onboarding", 
             "UPLOAD"
         ]
 
@@ -218,19 +221,91 @@ class SigridCiRunnerTest(unittest.TestCase):
             runner.run(apiClient, options, target, [])
         self.assertEqual(LOG_HISTORY, expectedLog)
         
-    def testExitIfScopeFileHasWrongName(self):
+    def testReadScopeFileWhenInRepository(self):
         tempDir = tempfile.mkdtemp()    
-        self.createTempFile(tempDir, "a.py", "print(123)")
-        self.createTempFile(tempDir, "sigrid.yml", "customer: aap\nsystem: noot")
+        self.createTempFile(tempDir, "sigrid.yaml", "component_depth: 1")
+        uploadOptions = UploadOptions(sourceDir=tempDir)
         
-        options = UploadOptions(sourceDir=tempDir)
-        target = TargetQuality("/tmp/nonexistent", 3.5)
-        apiClient = MockApiClient(systemExists=True)
+        self.assertEquals(uploadOptions.readScopeFile(), "component_depth: 1")
+        
+    def testScopeFileIsNoneWhenNotInRepository(self):
+        tempDir = tempfile.mkdtemp()    
+        uploadOptions = UploadOptions(sourceDir=tempDir)
+        
+        self.assertIsNone(uploadOptions.readScopeFile())
+        
+    def testValidateScopeFile(self):
+        tempDir = tempfile.mkdtemp()    
+        self.createTempFile(tempDir, "sigrid.yaml", "languages:\n- java")
+        uploadOptions = UploadOptions(sourceDir=tempDir)
+        
+        apiClient = MockApiClient(publish=False)
+        apiClient.responses["/inboundresults/sig/aap/noot/ci/validate/v1"] = {"valid": True};
+        
         runner = SigridCiRunner()
+        runner.run(apiClient, uploadOptions, None, [])
         
+        expectedLog = [
+            "Found system in Sigrid",
+            "Validating scope configuration file",
+            "Validation passed",
+            "Creating upload", 
+            "Upload size is 1 MB",
+            "Warning: Upload is very small, source directory might not contain all source code",
+            "Preparing upload", 
+            "Sigrid CI analysis ID: 123",
+            "Submitting upload",
+            "Upload successful"
+        ]
+
+        self.assertEqual(LOG_HISTORY, expectedLog)
+    
+    def testFailIfScopeFileIsNotValid(self):
+        tempDir = tempfile.mkdtemp()    
+        self.createTempFile(tempDir, "sigrid.yaml", "languages:\n- aap")
+        uploadOptions = UploadOptions(sourceDir=tempDir)
+        
+        apiClient = MockApiClient(publish=False)
+        apiClient.responses["/inboundresults/sig/aap/noot/ci/validate/v1"] = {"valid" : False, "notes" : ["test"]};
+    
         with self.assertRaises(SystemExit):
-            runner.run(apiClient, options, target, [])
-        self.assertEqual(LOG_HISTORY, ["Found sigrid.yml in repository. Did you mean sigrid.yaml?"])
+            runner = SigridCiRunner()
+            runner.run(apiClient, uploadOptions, None, [])
+            
+        expectedLog = [
+            "Found system in Sigrid",
+            "Validating scope configuration file",
+            "--------------------------------------------------------------------------------",
+            "Invalid scope configuration file:",
+            "    - test",
+            "--------------------------------------------------------------------------------"
+        ]
+
+        self.assertEqual(LOG_HISTORY, expectedLog)
+        
+    def testDumpAvailableMetadataToOutput(self):
+        tempDir = tempfile.mkdtemp()    
+        self.createTempFile(tempDir, "sigrid.py", "print(123)")
+        uploadOptions = UploadOptions(sourceDir=tempDir)
+    
+        apiClient = MockApiClient(publish=False)
+        apiClient.responses["/analysis-results/api/v1/system-metadata/aap/noot"] = {"aap" : 2, "noot" : None};
+        
+        runner = SigridCiRunner()
+        runner.run(apiClient, uploadOptions, None, [])
+        
+        expectedLog = [
+            "Found system in Sigrid",
+            "Creating upload", 
+            "Upload size is 1 MB",
+            "Warning: Upload is very small, source directory might not contain all source code",
+            "Preparing upload", 
+            "Sigrid CI analysis ID: 123",
+            "Submitting upload",
+            "Upload successful"
+        ]
+
+        self.assertEqual(LOG_HISTORY, expectedLog)
         
     def createTempFile(self, dir, name, contents):
         with open(f"{dir}/{name}", "w") as fileRef:
@@ -248,19 +323,18 @@ class MockApiClient(SigridApiClient):
         self.systemExists = systemExists
         self.uploadAttempts = uploadAttempts
         self.attempt = 0
+        self.responses = {}
         self.POLL_INTERVAL = 1
 
-    def callSigridAPI(self, api, path):
-        self.called.append(f"{api}{path}")
+    def callSigridAPI(self, path, body=None, contentType=None):
+        self.called.append(path)
     
-        if not self.systemExists and path == "/sigridci/aap/noot/v1/ci":
+        if not self.systemExists and path.endswith("/sigridci/aap/noot/v1/ci"):
             # Mock a HTTP 404.
             raise urllib.error.HTTPError(path, 404, "", {}, None)
         
-        return {
-            "ciRunId" : "123",
-            "uploadUrl" : "dummy"
-        }
+        defaultResponse = {"ciRunId" : "123", "uploadUrl" : "dummy"}
+        return self.responses.get(path, defaultResponse)
         
     def attemptUpload(self, url, upload):
         self.attempt += 1

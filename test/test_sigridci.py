@@ -84,14 +84,14 @@ class SigridCiTest(unittest.TestCase):
             publish=False, publishonly=False)
         apiClient = SigridApiClient(args)
         
-        self.assertEqual(apiClient.getRequestUploadPath(True), "/sig/aap/noot/ci/uploads/v1")
+        self.assertEqual(apiClient.getRequestUploadPath(True), "/inboundresults/sig/aap/noot/ci/uploads/v1")
         
     def testPublishOptionChangesUploadPath(self):
         args = types.SimpleNamespace(partner="sig", customer="aap", system="noot", sigridurl="https://example.com", \
             publish=True, publishonly=False)
         apiClient = SigridApiClient(args)
         
-        self.assertEqual(apiClient.getRequestUploadPath(True), "/sig/aap/noot/ci/uploads/v1/publish")
+        self.assertEqual(apiClient.getRequestUploadPath(True), "/inboundresults/sig/aap/noot/ci/uploads/v1/publish")
         
     def testFormatBaseline(self):
         report = Report()

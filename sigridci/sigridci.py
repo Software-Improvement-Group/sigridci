@@ -34,6 +34,7 @@ from xml.dom import minidom
 
 LOG_HISTORY = []
 SYSTEM_NAME_PATTERN = re.compile("^[a-z0-9][a-z0-9-]{1,63}$", re.IGNORECASE)
+SCOPE_FILE_NAMES = ["sigrid.yaml", "sigrid.yml"]
 
 
 def log(message):
@@ -50,6 +51,13 @@ class UploadOptions:
     pathPrefix: str = ""
     showContents: bool = False
     publishOnly: bool = False
+    
+    def readScopeFile(self):
+        for file in SCOPE_FILE_NAMES:
+            if os.path.exists(f"{self.sourceDir}/{file}"):
+                with open(f"{self.sourceDir}/{file}", "r") as f:
+                    return f.read()
+        return None
 
 
 @dataclass
@@ -79,7 +87,7 @@ class TargetQuality:
 
 
 class SigridApiClient:
-    PROTOCOL_VERSION = "v1"
+    API_VERSION = "v1"
     POLL_INTERVAL = 60
     POLL_ATTEMPTS = 60
     RETRY_ATTEMPTS = 5
@@ -91,11 +99,13 @@ class SigridApiClient:
         self.urlSystemName = urllib.parse.quote_plus(args.system.lower())
         self.publish = args.publish or args.publishonly
 
-    def callSigridAPI(self, api, path):
-        url = f"{self.baseURL}/rest/{api}{path}"
-        request = urllib.request.Request(url, None)
+    def callSigridAPI(self, path, body=None, contentType=None):
+        url = f"{self.baseURL}/rest/{path}"
+        request = urllib.request.Request(url, body)
         request.add_header("Accept", "application/json")
         request.add_header("Authorization", self.getTokenHeaderValue())
+        if contentType != None:
+            request.add_header("Content-Type", contentType)
 
         response = urllib.request.urlopen(request)
         if response.status == 204:
@@ -136,7 +146,7 @@ class SigridApiClient:
     def obtainUploadLocation(self, systemExists):
         for attempt in range(self.RETRY_ATTEMPTS):
             try:
-                return self.callSigridAPI("inboundresults", self.getRequestUploadPath(systemExists))
+                return self.callSigridAPI(self.getRequestUploadPath(systemExists))
             except urllib.error.HTTPError as e:
                 if e.code == 502:
                     log("Retrying")
@@ -148,12 +158,17 @@ class SigridApiClient:
         sys.exit(1)
 
     def getRequestUploadPath(self, systemExists):
-        path = f"/{self.urlPartnerName}/{self.urlCustomerName}/{self.urlSystemName}/ci/uploads/{self.PROTOCOL_VERSION}"
+        path = f"/inboundresults/{self.urlPartnerName}/{self.urlCustomerName}/{self.urlSystemName}/ci/uploads/{self.API_VERSION}"
         if not systemExists:
             path += "/onboarding"
         elif self.publish:
             path += "/publish"
         return path
+        
+    def validateScopeFile(self, scopeFile):
+        return self.callSigridAPI( \
+            f"/inboundresults/{self.urlPartnerName}/{self.urlCustomerName}/{self.urlSystemName}/ci/validate/{self.API_VERSION}", \
+            scopeFile.encode("utf8"), "text/yaml")
 
     def uploadBinaryFile(self, url, upload):
         for attempt in range(self.RETRY_ATTEMPTS):
@@ -180,8 +195,7 @@ class SigridApiClient:
     def checkSystemExists(self):
         for attempt in range(self.RETRY_ATTEMPTS):
             try:
-                self.callSigridAPI("analysis-results", \
-                    f"/sigridci/{self.urlCustomerName}/{self.urlSystemName}/{self.PROTOCOL_VERSION}/ci")
+                self.callSigridAPI(f"/analysis-results/sigridci/{self.urlCustomerName}/{self.urlSystemName}/{self.API_VERSION}/ci")
                 return True
             except urllib.error.HTTPError as e:
                 if e.code == 404:
@@ -199,8 +213,7 @@ class SigridApiClient:
     def fetchAnalysisResults(self, analysisId):
         for attempt in range(self.POLL_ATTEMPTS):
             try:
-                response = self.callSigridAPI("analysis-results",
-                    f"/sigridci/{self.urlCustomerName}/{self.urlSystemName}/{self.PROTOCOL_VERSION}/ci/results/{analysisId}")
+                response = self.callSigridAPI(f"/analysis-results/sigridci/{self.urlCustomerName}/{self.urlSystemName}/{self.API_VERSION}/ci/results/{analysisId}")
                 if response != {}:
                     return response
             except urllib.error.HTTPError as e:
@@ -213,6 +226,9 @@ class SigridApiClient:
 
         log("Analysis failed: waiting for analysis results took too long")
         sys.exit(1)
+        
+    def fetchMetadata(self):
+        return self.callSigridAPI(f"/analysis-results/api/{self.API_VERSION}/system-metadata/{self.urlCustomerName}/{self.urlSystemName}")
 
     def processHttpError(self, e):
         if e.code in [401, 403]:
@@ -550,20 +566,47 @@ class SigridCiRunner:
     
         systemExists = apiClient.checkSystemExists()
         log("Found system in Sigrid" if systemExists else "System is not yet on-boarded to Sigrid")
+        
+        scope = options.readScopeFile()
+        if scope:
+            self.checkScopeFile(apiClient, scope)
+            
         analysisId = apiClient.submitUpload(options, systemExists)
 
         if not systemExists:
             log(f"System '{apiClient.urlSystemName}' is on-boarded to Sigrid, and will appear in sigrid-says.com shortly")
         elif options.publishOnly:
             log("Your project's source code has been published to Sigrid")
+            self.displayMetadata(apiClient)
         else:
             feedback = apiClient.fetchAnalysisResults(analysisId)
+            self.displayMetadata(apiClient)
 
             if not os.path.exists("sigrid-ci-output"):
                 os.mkdir("sigrid-ci-output")
 
             for report in reports:
                 report.generate(feedback, args, target)
+    
+    def checkScopeFile(self, apiClient, scope):
+        log("Validating scope configuration file")
+        validationResult = apiClient.validateScopeFile(scope)
+        if validationResult["valid"]:
+            log("Validation passed")
+        else:
+            log("-" * 80)
+            log("Invalid scope configuration file:")
+            for note in validationResult["notes"]:
+                log(f"    - {note}")
+            log("-" * 80)
+            sys.exit(1)
+            
+    def displayMetadata(self, apiClient):
+        print("")
+        print("Sigrid metadata for this system:")
+        for key, value in apiClient.fetchMetadata().items():
+            if value:
+                print(f"    {key}:".ljust(20) + str(value))
 
 
 if __name__ == "__main__":
