@@ -267,7 +267,7 @@ class SystemUploadPacker:
             output = subprocess.run(gitCommand, stdout=subprocess.PIPE)
             if output.returncode == 0:
                 with open(f"{sourceDir}/git.log", "w") as f:
-                    f.write(output.stdout)
+                    f.write(output.stdout.decode("utf8"))
             else:
                 log("Exporting repository history failed")
         except Exception as e:
