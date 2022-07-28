@@ -69,7 +69,7 @@ class TargetQuality:
         # very diverse set of customer environments where Sigrid CI is used.
         targetPattern = re.compile("(" + "|".join(Report.METRICS) + "):\s*([\d\.]+)", re.IGNORECASE)
         
-        for line in scope.split(","):
+        for line in scope.split("\n"):
             match = targetPattern.match(line.strip())
             if match:
                 log(f"Loading {match.group(1).upper()} target from scope configuration file")
@@ -181,7 +181,7 @@ class SigridApiClient:
         return self.retry(lambda: self.callSigridAPI(path), allow404=True) != False
 
     def fetchAnalysisResults(self, analysisId):
-        print("Waiting for analysis results")
+        log("Waiting for analysis results")
         path = f"/analysis-results/sigridci/{self.urlCustomerName}/{self.urlSystemName}/{self.API_VERSION}/ci/results/{analysisId}"
         return self.retry(lambda: self.callSigridAPI(path), attempts=self.POLL_ATTEMPTS, allowEmpty=False)
         

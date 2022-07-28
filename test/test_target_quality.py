@@ -12,7 +12,6 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-import tempfile
 import unittest
 from sigridci.sigridci import TargetQuality
 
@@ -20,7 +19,7 @@ from sigridci.sigridci import TargetQuality
 class TargetQualityTest(unittest.TestCase):
 
     def testNormalModeOnlyRequiresOverallRatingToMeetTarget(self):
-        target = TargetQuality("/tmp/nonexistent", 3.5)
+        target = TargetQuality("", 3.5)
 
         self.assertFalse(target.meetsQualityTargets({"newCodeRatings" : {"MAINTAINABILITY" : 3, "DUPLICATION" : 2}}))
         self.assertTrue(target.meetsQualityTargets({"newCodeRatings" : {"MAINTAINABILITY" : 4, "DUPLICATION" : 2}}))
@@ -37,9 +36,7 @@ class TargetQualityTest(unittest.TestCase):
         self.assertTrue(target.meetsQualityTargets({"newCodeRatings" : {"DUPLICATION" : 5}}))
         
     def testUseTargetRatingIfNoConfigFileExists(self):
-        sourceDir = tempfile.mkdtemp()
-        configFile = f"{sourceDir}/sigrid.yaml"
-        target = TargetQuality(configFile, 3.5)
+        target = TargetQuality("", 3.5)
         
         self.assertEqual(target.ratings.get("MAINTAINABILITY", None), 3.5)
         self.assertEqual(target.ratings.get("DUPLICATION", None), None)
@@ -52,15 +49,8 @@ class TargetQualityTest(unittest.TestCase):
                 DUPLICATION: 3
         """
     
-        sourceDir = tempfile.mkdtemp()
-        configFile = self.createTempFile(sourceDir, "sigrid.yaml", yaml)
-        target = TargetQuality(configFile, 3.5)
+        target = TargetQuality(yaml, 3.5)
         
         self.assertEqual(target.ratings.get("MAINTAINABILITY", None), 4.0)
         self.assertEqual(target.ratings.get("DUPLICATION", None), 3.0)
         self.assertEqual(target.ratings.get("UNIT_SIZE", None), None)
-
-    def createTempFile(self, dir, name, contents):
-        with open(f"{dir}/{name}", "w") as fileRef:
-            fileRef.write(contents)
-        return f"{dir}/{name}"

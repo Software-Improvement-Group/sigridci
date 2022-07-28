@@ -73,7 +73,8 @@ class SigridCiRunnerTest(unittest.TestCase):
             "Preparing upload", 
             "Sigrid CI analysis ID: 123",
             "Submitting upload",
-            "Upload successful"
+            "Upload successful",
+            "Waiting for analysis results"
         ]
         
         expectedCalls = [
@@ -106,7 +107,8 @@ class SigridCiRunnerTest(unittest.TestCase):
             "Preparing upload", 
             "Sigrid CI analysis ID: 123",
             "Publishing upload",
-            "Upload successful"
+            "Upload successful",
+            "Waiting for analysis results"
         ]
         
         expectedCalls = [
@@ -216,7 +218,8 @@ class SigridCiRunnerTest(unittest.TestCase):
             "Submitting upload",
             "Retrying",
             "Retrying",
-            "Upload successful"
+            "Upload successful",
+            "Waiting for analysis results"
         ]
 
         self.assertEqual(LOG_HISTORY, expectedLog)
@@ -284,7 +287,8 @@ class SigridCiRunnerTest(unittest.TestCase):
             "Preparing upload", 
             "Sigrid CI analysis ID: 123",
             "Submitting upload",
-            "Upload successful"
+            "Upload successful",
+            "Waiting for analysis results"
         ]
 
         self.assertEqual(LOG_HISTORY, expectedLog)
@@ -331,7 +335,8 @@ class SigridCiRunnerTest(unittest.TestCase):
             "Preparing upload", 
             "Sigrid CI analysis ID: 123",
             "Submitting upload",
-            "Upload successful"
+            "Upload successful",
+            "Waiting for analysis results"
         ]
 
         self.assertEqual(LOG_HISTORY, expectedLog)
