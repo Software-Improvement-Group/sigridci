@@ -117,7 +117,7 @@ class SigridApiClient:
         for attempt in range(attempts):
             try:
                 response = operation()
-                if response != {} or allowEmpty:
+                if allowEmpty or response != {}:
                     return response
             except urllib.error.HTTPError as e:
                 if e.code in [401, 403]:
