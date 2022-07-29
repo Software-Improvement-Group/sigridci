@@ -123,7 +123,7 @@ class SigridApiClient:
                 if e.code in [401, 403]:
                     log("You are not authorized to access Sigrid for this system")
                     sys.exit(1)
-                elif e.code == 404 and allow404:
+                elif allow404 and e.code == 404:
                     return False
             
             # These statements are intentionally outside of the except-block,
