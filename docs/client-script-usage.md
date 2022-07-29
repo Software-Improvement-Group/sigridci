@@ -19,7 +19,7 @@ The script takes a limited number of mandatory arguments. However, Sigrid CI's b
 | Argument            | Required | Example value       | Description                                                                                              |
 |---------------------|----------|---------------------|----------------------------------------------------------------------------------------------------------|
 | `--customer`        | Yes      | examplecustomername | Name of your organization's Sigrid account. Contact SIG support if you're not sure about this. [1]          |
-| `--system`          | Yes      | examplesystemname   | Name of your system in Sigrid. Contact SIG support if you're not sure on this. [2]                       |
+| `--system`          | Yes      | examplesystemname   | Name of your system in Sigrid. Contact SIG support if you're not sure about this. [2]                       |
 | `--source`          | Yes      | .                   | Path of your project's source code. Use "." for current directory.                                       |
 | `--targetquality`   | No       | 3.5                 | Target quality level, not meeting this target will cause the CI step to fail. Default is 3.5 stars.      |
 | `--publish`         | No       | N/A                 | Automatically publishes analysis results to Sigrid. [1]                                                  |
