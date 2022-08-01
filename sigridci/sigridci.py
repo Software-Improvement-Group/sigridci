@@ -22,6 +22,7 @@ import html
 import json
 import os
 import re
+import subprocess
 import sys
 import time
 import typing
@@ -34,6 +35,7 @@ from xml.dom import minidom
 
 LOG_HISTORY = []
 SYSTEM_NAME_PATTERN = re.compile("^[a-z0-9][a-z0-9-]{1,63}$", re.IGNORECASE)
+SCOPE_FILE_NAMES = ["sigrid.yaml", "sigrid.yml"]
 
 
 def log(message):
@@ -50,24 +52,28 @@ class UploadOptions:
     pathPrefix: str = ""
     showContents: bool = False
     publishOnly: bool = False
+    
+    def readScopeFile(self):
+        for file in SCOPE_FILE_NAMES:
+            if os.path.exists(f"{self.sourceDir}/{file}"):
+                with open(f"{self.sourceDir}/{file}", "r") as f:
+                    return f.read()
+        return None
 
 
-@dataclass
 class TargetQuality:
-    ratings: typing.Dict[str, float]
-
-    def __init__(self, configFile, targetRating):
+    def __init__(self, scope, targetRating):
         self.ratings = {"MAINTAINABILITY" : targetRating}
-
-        if os.path.exists(configFile):
-            log(f"Loading target quality level from configuration file {configFile}")
-            # We can't use pyyaml because PIP is not available in the some of the
-            # very diverse set of customer environments where Sigrid CI is used.
-            targetPattern = re.compile("(" + "|".join(Report.METRICS) + "):\s*([\d\.]+)", re.IGNORECASE)
-            for line in open(configFile, "r"):
-                match = targetPattern.match(line.strip())
-                if match:
-                    self.ratings[match.group(1).upper()] = float(match.group(2))
+        
+        # We can't use pyyaml because PIP is not available in the some of the
+        # very diverse set of customer environments where Sigrid CI is used.
+        targetPattern = re.compile("(" + "|".join(Report.METRICS) + "):\s*([\d\.]+)", re.IGNORECASE)
+        
+        for line in scope.split("\n"):
+            match = targetPattern.match(line.strip())
+            if match:
+                log(f"Loading {match.group(1).upper()} target from scope configuration file")
+                self.ratings[match.group(1).upper()] = float(match.group(2))
 
     def meetsTargetQualityForMetric(self, feedback, metric):
         value = feedback["newCodeRatings"].get(metric, None)
@@ -79,10 +85,9 @@ class TargetQuality:
 
 
 class SigridApiClient:
-    PROTOCOL_VERSION = "v1"
-    POLL_INTERVAL = 60
-    POLL_ATTEMPTS = 60
-    RETRY_ATTEMPTS = 5
+    API_VERSION = "v1"
+    POLL_INTERVAL = 30
+    POLL_ATTEMPTS = 120
 
     def __init__(self, args):
         self.baseURL = args.sigridurl
@@ -91,11 +96,13 @@ class SigridApiClient:
         self.urlSystemName = urllib.parse.quote_plus(args.system.lower())
         self.publish = args.publish or args.publishonly
 
-    def callSigridAPI(self, api, path):
-        url = f"{self.baseURL}/rest/{api}{path}"
-        request = urllib.request.Request(url, None)
+    def callSigridAPI(self, path, body=None, contentType=None):
+        url = f"{self.baseURL}/rest/{path}"
+        request = urllib.request.Request(url, body)
         request.add_header("Accept", "application/json")
-        request.add_header("Authorization", self.getTokenHeaderValue())
+        request.add_header("Authorization", f"Bearer {os.environ['SIGRID_CI_TOKEN']}".encode("utf8"))
+        if contentType != None:
+            request.add_header("Content-Type", contentType)
 
         response = urllib.request.urlopen(request)
         if response.status == 204:
@@ -105,17 +112,27 @@ class SigridApiClient:
             log("Received empty response")
             return {}
         return json.loads(responseBody)
-
-    def getTokenHeaderValue(self):
-        token = os.environ["SIGRID_CI_TOKEN"]
-        if len(token) >= 32:
-            return f"Bearer {token}".encode("utf8")
-        else:
-            log("WARNING: You are using an outdated Sigrid CI token that will be deactivated soon.")
-            log("         See https://github.com/Software-Improvement-Group/sigridci/blob/main/docs/authentication-tokens.md")
-            log("         for instructions on how you can create a new token.")
-            account = os.environ["SIGRID_CI_ACCOUNT"]
-            return b"Basic " + base64.standard_b64encode(f"{account}:{token}".encode("utf8"))
+        
+    def retry(self, operation, *, attempts=5, allow404=False, allowEmpty=True):
+        for attempt in range(attempts):
+            try:
+                response = operation()
+                if allowEmpty or response != {}:
+                    return response
+            except urllib.error.HTTPError as e:
+                if e.code in [401, 403]:
+                    log("You are not authorized to access Sigrid for this system")
+                    sys.exit(1)
+                elif allow404 and e.code == 404:
+                    return False
+            
+            # These statements are intentionally outside of the except-block,
+            # since we want to retry for empty response on some end points.
+            log("Retrying")
+            time.sleep(self.POLL_INTERVAL)
+        
+        log(f"Sigrid is currently unavailable, failed after {attempts} attempts")
+        sys.exit(1)
 
     def submitUpload(self, options, systemExists):
         log("Creating upload")
@@ -134,39 +151,21 @@ class SigridApiClient:
         return analysisId
 
     def obtainUploadLocation(self, systemExists):
-        for attempt in range(self.RETRY_ATTEMPTS):
-            try:
-                return self.callSigridAPI("inboundresults", self.getRequestUploadPath(systemExists))
-            except urllib.error.HTTPError as e:
-                if e.code == 502:
-                    log("Retrying")
-                    time.sleep(self.POLL_INTERVAL)
-                else:
-                    self.processHttpError(e)
-
-        log("Sigrid is currently unavailable")
-        sys.exit(1)
-
-    def getRequestUploadPath(self, systemExists):
-        path = f"/{self.urlPartnerName}/{self.urlCustomerName}/{self.urlSystemName}/ci/uploads/{self.PROTOCOL_VERSION}"
+        path = f"/inboundresults/{self.urlPartnerName}/{self.urlCustomerName}/{self.urlSystemName}/ci/uploads/{self.API_VERSION}"
         if not systemExists:
             path += "/onboarding"
         elif self.publish:
             path += "/publish"
-        return path
+    
+        return self.retry(lambda: self.callSigridAPI(path))
+        
+    def validateScopeFile(self, scopeFile):
+        path = f"/inboundresults/{self.urlPartnerName}/{self.urlCustomerName}/{self.urlSystemName}/ci/validate/{self.API_VERSION}"
+        return self.retry(lambda: self.callSigridAPI(path, scopeFile.encode("utf8"), "text/yaml"))
 
     def uploadBinaryFile(self, url, upload):
-        for attempt in range(self.RETRY_ATTEMPTS):
-            try:
-                self.attemptUpload(url, upload)
-                log(f"Upload successful")
-                return
-            except urllib.error.HTTPError as e:
-                log("Retrying upload")
-                time.sleep(self.POLL_INTERVAL)
-
-        log(f"Uploading file failed after {self.RETRY_ATTEMPTS} attempts")
-        sys.exit(1)
+        self.retry(lambda: self.attemptUpload(url, upload))
+        log(f"Upload successful")
 
     def attemptUpload(self, url, upload):
         with open(upload, "rb") as uploadRef:
@@ -178,53 +177,17 @@ class SigridApiClient:
             urllib.request.urlopen(uploadRequest)
 
     def checkSystemExists(self):
-        for attempt in range(self.RETRY_ATTEMPTS):
-            try:
-                self.callSigridAPI("analysis-results", \
-                    f"/sigridci/{self.urlCustomerName}/{self.urlSystemName}/{self.PROTOCOL_VERSION}/ci")
-                return True
-            except urllib.error.HTTPError as e:
-                if e.code == 404:
-                    return False
-                elif e.code == 502:
-                    log("Retrying")
-                    time.sleep(self.POLL_INTERVAL)
-                else:
-                    self.processHttpError(e)
-
-        log("Sigrid is currently unavailable")
-        sys.exit(1)
-
+        path = f"/analysis-results/sigridci/{self.urlCustomerName}/{self.urlSystemName}/{self.API_VERSION}/ci"
+        return self.retry(lambda: self.callSigridAPI(path), allow404=True) != False
 
     def fetchAnalysisResults(self, analysisId):
-        for attempt in range(self.POLL_ATTEMPTS):
-            try:
-                response = self.callSigridAPI("analysis-results",
-                    f"/sigridci/{self.urlCustomerName}/{self.urlSystemName}/{self.PROTOCOL_VERSION}/ci/results/{analysisId}")
-                if response != {}:
-                    return response
-            except urllib.error.HTTPError as e:
-                self.processHttpError(e)
-            except json.JSONDecodeError as e:
-                log("Received incomplete analysis results")
-
-            log("Waiting for analysis results")
-            time.sleep(self.POLL_INTERVAL)
-
-        log("Analysis failed: waiting for analysis results took too long")
-        sys.exit(1)
-
-    def processHttpError(self, e):
-        if e.code in [401, 403]:
-            log("You are not authorized to access Sigrid for this system")
-            sys.exit(1)
-        elif e.code == 404:
-            log("Analysis results not yet available")
-        elif e.code >= 500:
-            log(f"Sigrid is currently not available (HTTP status {e.code})")
-            sys.exit(1)
-        else:
-            raise Exception(f"Received HTTP status {e.code}")
+        log("Waiting for analysis results")
+        path = f"/analysis-results/sigridci/{self.urlCustomerName}/{self.urlSystemName}/{self.API_VERSION}/ci/results/{analysisId}"
+        return self.retry(lambda: self.callSigridAPI(path), attempts=self.POLL_ATTEMPTS, allowEmpty=False)
+        
+    def fetchMetadata(self):
+        path = f"/analysis-results/api/{self.API_VERSION}/system-metadata/{self.urlCustomerName}/{self.urlSystemName}"
+        return self.retry(lambda: self.callSigridAPI(path))
 
 
 class SystemUploadPacker:
@@ -239,23 +202,23 @@ class SystemUploadPacker:
         "sigridci/",
         "sigrid-ci-output/",
         "target/",
+        ".git/",
+        ".gitattributes",
+        ".gitignore",
         ".idea/",
         ".jpg",
         ".png"
     ]
 
     def __init__(self, options):
-        self.excludePatterns = [] + (options.excludePatterns or []) + self.DEFAULT_EXCLUDES
-        self.excludePatterns = [excl for excl in self.excludePatterns if excl != ""]
-        if not options.includeHistory:
-            self.excludePatterns += [".git/", ".gitmodules"]
-
-        self.pathPrefix = options.pathPrefix.strip("/")
-        self.showContents = options.showContents
+        self.options = options
 
     def prepareUpload(self, sourceDir, outputFile):
         zipFile = zipfile.ZipFile(outputFile, "w", zipfile.ZIP_DEFLATED)
         hasContents = False
+        
+        if self.options.includeHistory and os.path.exists(f"{sourceDir}/.git"):
+            self.includeRepositoryHistory(sourceDir)
 
         for root, dirs, files in os.walk(sourceDir):
             for file in sorted(files):
@@ -264,7 +227,7 @@ class SystemUploadPacker:
                     relativePath = os.path.relpath(os.path.join(root, file), sourceDir)
                     uploadPath = self.getUploadFilePath(relativePath)
                     hasContents = True
-                    if self.showContents:
+                    if self.options.showContents:
                         log(f"Adding file to upload: {uploadPath}")
                     zipFile.write(filePath, uploadPath)
 
@@ -286,17 +249,30 @@ class SystemUploadPacker:
             log("Warning: Upload is very small, source directory might not contain all source code")
 
     def getUploadFilePath(self, relativePath):
-        if self.pathPrefix == "":
-            return relativePath
-        return f"{self.pathPrefix}/{relativePath}"
+        pathPrefix = self.options.pathPrefix.strip("/")
+        return f"{pathPrefix}/{relativePath}" if pathPrefix else relativePath
 
     def isExcluded(self, filePath):
+        excludePatterns = self.DEFAULT_EXCLUDES + (self.options.excludePatterns or [])
         normalizedPath = filePath.replace("\\", "/")
-        for exclude in self.excludePatterns:
-            if exclude.strip() in normalizedPath:
+        for exclude in excludePatterns:
+            if exclude != "" and exclude.strip() in normalizedPath:
                 return True
         return False
-
+        
+    def includeRepositoryHistory(self, sourceDir):
+        gitCommand = ["git", "-C", sourceDir, "--no-pager", "log", "--date=iso", "--format='@@@;%H;%an;%ae;%ad;%s'", \
+                      "--numstat", "--no-merges"]
+        try:
+            output = subprocess.run(gitCommand, stdout=subprocess.PIPE)
+            if output.returncode == 0:
+                with open(f"{sourceDir}/git.log", "w") as f:
+                    f.write(output.stdout.decode("utf8"))
+            else:
+                log("Exporting repository history failed")
+        except Exception as e:
+            log("Error while trying to include repository history: " + str(e))
+    
 
 class Report:
     METRICS = ["VOLUME", "DUPLICATION", "UNIT_SIZE", "UNIT_COMPLEXITY", "UNIT_INTERFACING", "MODULE_COUPLING",
@@ -550,20 +526,47 @@ class SigridCiRunner:
     
         systemExists = apiClient.checkSystemExists()
         log("Found system in Sigrid" if systemExists else "System is not yet on-boarded to Sigrid")
+        
+        scope = options.readScopeFile()
+        if scope:
+            self.checkScopeFile(apiClient, scope)
+            
         analysisId = apiClient.submitUpload(options, systemExists)
 
         if not systemExists:
             log(f"System '{apiClient.urlSystemName}' is on-boarded to Sigrid, and will appear in sigrid-says.com shortly")
         elif options.publishOnly:
             log("Your project's source code has been published to Sigrid")
+            self.displayMetadata(apiClient)
         else:
             feedback = apiClient.fetchAnalysisResults(analysisId)
+            self.displayMetadata(apiClient)
 
             if not os.path.exists("sigrid-ci-output"):
                 os.mkdir("sigrid-ci-output")
 
             for report in reports:
                 report.generate(feedback, args, target)
+    
+    def checkScopeFile(self, apiClient, scope):
+        log("Validating scope configuration file")
+        validationResult = apiClient.validateScopeFile(scope)
+        if validationResult["valid"]:
+            log("Validation passed")
+        else:
+            log("-" * 80)
+            log("Invalid scope configuration file:")
+            for note in validationResult["notes"]:
+                log(f"    - {note}")
+            log("-" * 80)
+            sys.exit(1)
+            
+    def displayMetadata(self, apiClient):
+        print("")
+        print("Sigrid metadata for this system:")
+        for key, value in apiClient.fetchMetadata().items():
+            if value:
+                print(f"    {key}:".ljust(20) + str(value))
 
 
 if __name__ == "__main__":
@@ -578,7 +581,7 @@ if __name__ == "__main__":
     parser.add_argument("--exclude", type=str, default="")
     parser.add_argument("--pathprefix", type=str, default="")
     parser.add_argument("--showupload", action="store_true")
-    parser.add_argument("--history", action="store_true")
+    parser.add_argument("--include-history", action="store_true")
     parser.add_argument("--sigridurl", type=str, default="https://sigrid-says.com")
     args = parser.parse_args()
 
@@ -607,8 +610,8 @@ if __name__ == "__main__":
         sys.exit(1)
 
     log("Starting Sigrid CI")
-    options = UploadOptions(args.source, args.exclude.split(","), args.history, args.pathprefix, args.showupload, args.publishonly)
-    target = TargetQuality(f"{args.source}/sigrid.yaml", args.targetquality)
+    options = UploadOptions(args.source, args.exclude.split(","), args.include_history, args.pathprefix, args.showupload, args.publishonly)
+    target = TargetQuality(options.readScopeFile() or "", args.targetquality)
     apiClient = SigridApiClient(args)
     reports = [TextReport(), StaticHtmlReport(), JUnitFormatReport(), ExitCodeReport()]
 

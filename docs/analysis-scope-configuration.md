@@ -59,6 +59,62 @@ In some projects, using directory depth will not accurately reflect the actual c
           
 In this example, regular expressions are used to define what files and directories belong to each component. The syntax is identical to the patterns used in the `exclude` section.
 
+## Open Source Health
+
+**Note: This requires a [Sigrid license for Open Source Health](https://www.softwareimprovementgroup.com/capabilities/sigrid-open-source-health/). Without this license, you will not be able to see security results in Sigrid.**
+
+Open Source Health allows you to scan all open sources libraries used by your system, and identify risks such as security vulnerabilities or heavily outdated libraries.
+
+    dependencychecker:
+      enabled: true
+      blacklist: []
+      transitive: true
+      exclude:
+        - ".*/scripts/.*"
+        
+The `dependencychecker` section supports the following options:
+
+| Option name  | Required? | Description                                                                                    |
+|--------------|-----------|------------------------------------------------------------------------------------------------|
+| `enabled`    | Yes       | Set to `true` to enable Open Source Health analysis.                                           |
+| `blacklist`  | Yes       | List of library names that should not be scanned. Typically used to ignore internal libraries. |
+| `transitive` | No        | When true, also scans the dependencies of your dependencies. Defaults to false.                |
+| `exclude`    | No        | List of file/directory patterns that should be excluded from the Open Source Health analysis.  |
+
+## Security
+
+**Note: This requires a [Sigrid license for Software Security](https://www.softwareimprovementgroup.com/solutions/sigrid-software-security/). Without this license, you will not be able to see security results in Sigrid.**
+
+Sigrid uses a combination of its own security checks and security checks performed by third party tools. It then combines the results, benchmarks them, and reports on the overall results.
+
+    thirdpartyfindings:
+      enabled: true
+      exclude:
+        - ".*/scripts/.*[.]sh"
+          
+The `thirdpartyfindings` section supports the following options:
+
+| Option name | Required? | Description                                                                         |
+|-------------|-----------|-------------------------------------------------------------------------------------|
+| `enabled`   | Yes       | Set to `true` to enable security analysis.                                          |
+| `exclude`   | No        | List of file/directory patterns that should be excluded from the security analysis. |
+
+## Architecture Quality
+
+**Note: This requires an Architecture Quality license, which is currently restricted to a limited customer beta. Without this license, you will not be able to see security results in Sigrid.**
+
+    architecture:
+      enabled: true
+      
+The `architecture` section supports the following options:
+
+| Option name | Required? | Description                                                                       |
+|-------------|-----------|-----------------------------------------------------------------------------------|
+| `enabled`   | Yes       | Set to `true` to enable architecture quality analysis.                            |
+| `model`     | No        | Version of the SIG Architecture Quality Model to use. Defaults to latest version. |
+
+Architecture Quality also requires the repository history to be included in the upload. This requires the `--include-history` option to be enabled in the [Sigrid CI client script](client-script-usage.md).
+
 ## Contact and support
 
 Feel free to contact [SIG's support department](mailto:support@softwareimprovementgroup.com) for any questions or issues you may have after reading this document, or when using Sigrid or Sigrid CI. Users in Europe can also contact us by phone at +31 20 314 0953.

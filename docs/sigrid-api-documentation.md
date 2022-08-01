@@ -172,7 +172,7 @@ The endpoint that returns third-party vulnerabilities for all systems for the gi
 
 More information on the SBOM format and the various fields is available from the [SBOM specification](https://github.com/CycloneDX/specification).
 
-### System metadata ratings
+### System metadata
 
 System metadata can be viewed and updated using the following two endpoints:
 - `GET https://sigrid-says.com/rest/analysis-results/api/v1/system-metadata/{customer}/{system}`: get metadata of the given system of the given customer.

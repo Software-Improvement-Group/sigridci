@@ -8,6 +8,7 @@ This guide explains how to integrate Sigrid into your continuous integration pip
 - You have a [Sigrid](https://sigrid-says.com) user account. 
 - You have created an [authentication token for using Sigrid CI](authentication-tokens.md).
 - [Python 3.7 or higher](https://www.python.org) needs to be available in the CI environment. The client scripts for Sigrid CI are based on Python.
+- The examples assume [Git](https://git-scm.com) is available in the CI environment.
 
 ## On-boarding your system to Sigrid
 

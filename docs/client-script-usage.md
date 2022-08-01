@@ -7,7 +7,8 @@ Once the `sigridci.py` script is available within your CI environment, you can c
 
 ## Environment requirements
 
-Using the client script requires Python 3.7 or higher. 
+- Python 3.7 or higher
+- Git
 
 Sigrid CI is used in a wide variety of environments, including custom runners and on-premise installations. For this reason, the script intentionally does not have any dependencies, since [PIP](https://pypi.org/project/pip/) is not always available in the environments where Sigrid CI is used. This is also the reason why the client script is provided as a script that runs locally: Sigrid CI is used by many organizations that are unable to run [Docker](https://www.docker.com) containers in their environment. 
 
@@ -15,21 +16,26 @@ Sigrid CI is used in a wide variety of environments, including custom runners an
 
 The script takes a limited number of mandatory arguments. However, Sigrid CI's behavior can be configured and customized using a large number of optional arguments that can be used to align Sigrid CI's behavior to your development team's workflow. The following arguments are available:
 
-| Argument        | Required | Example value       | Description                                                                                                                                         |
-|-----------------|----------|---------------------|-----------------------------------------------------------------------------------------------------------------------------------------------------|
-| --customer      | Yes      | examplecustomername | Name of your organization's Sigrid account. Contact SIG support if you're not sure on this. Value should be lowercase.                              |
-| --system        | Yes      | examplesystemname   | Name of your system in Sigrid. Contact SIG support if you're not sure on this. Value should be lowercase.                                           |
-| --source        | Yes      | .                   | Path of your project's source code. Use "." for current directory.                                                                                  |
-| --targetquality | No       | 3.5                 | Target quality level, not meeting this target will cause the CI step to fail. Default is 3.5 stars.                                                 |
-| --publish       | No       | N/A                 | Automatically publishes analysis results to [https://sigrid-says.com](https://sigrid-says.com). [1]                                                 |
-| --publishonly   | No       | N/A                 | Publishes analysis results to [https://sigrid-says.com](https://sigrid-says.com), but *does not* provide feedback in the CI environment itself. [1] |
-| --exclude       | No       | /build/,.png        | Comma-separated list of file and/or directory names that should be excluded from the upload, on top of files already excluded by Sigrid. [2]        |
-| --pathprefix    | No       | frontend            | Used to map between repository directory structure versus the one known by Sigrid. [3]                                                              |
-| --showupload    | No       | N/A                 | Logs the contents of the upload before submitting it to Sigrid.                                                                                     |
+| Argument            | Required | Example value       | Description                                                                                              |
+|---------------------|----------|---------------------|----------------------------------------------------------------------------------------------------------|
+| `--customer`        | Yes      | examplecustomername | Name of your organization's Sigrid account. Contact SIG support if you're not sure about this. [1]          |
+| `--system`          | Yes      | examplesystemname   | Name of your system in Sigrid. Contact SIG support if you're not sure about this. [2]                       |
+| `--source`          | Yes      | .                   | Path of your project's source code. Use "." for current directory.                                       |
+| `--targetquality`   | No       | 3.5                 | Target quality level, not meeting this target will cause the CI step to fail. Default is 3.5 stars.      |
+| `--publish`         | No       | N/A                 | Automatically publishes analysis results to Sigrid. [1]                                                  |
+| `--publishonly`     | No       | N/A                 | Publishes analysis results to Sigrid, but *does not* provide feedback in the CI environment itself. [3]  |
+| `--exclude`         | No       | /build/,.png        | Comma-separated list of file and/or directory names that should be excluded from the upload. [4]         |
+| `--pathprefix`      | No       | frontend            | Used to map between repository directory structure versus the one known by Sigrid. [5]                   |
+| `--include-history` | No       | N/A                 | When enabled, includes the repository history in the upload. Required for architecture quality analysis. |
+| `--showupload`      | No       | N/A                 | Logs the contents of the upload before submitting it to Sigrid.                                          |
 
-[1] Typically, you would use the `--publish` option when committing to the main/master branch, and you would *not* use it for pull requests.  
-[2] By default, Sigrid already excludes a number of files and directories from being analyzed. This includes third party libraries (for example `/node_modules/` for NPM libraries, build output (for example `/target/` for Maven builds), and generated code. Using the `--exclude` option will exclude additional files and directories *on top of* the ones that were already excluded.  
-[3] The `--pathprefix` option can be used in cases where your repository used a different directory structure from the one that is known to Sigrid. For example, you might have combined your back-end and front-end repositories within a single system in Sigrid, so that in Sigrid there are two top-level folders: `backend` and `frontend` containing the contents of your two repositories. However, you still want to get specific feedback for your front-end repository in Sigrid CI. In this case you would use `--pathprefix frontend` so that Sigrid CI knows the location of your repository within the larger directory structure. Note that you cannot use this option if you're already using `--publish`.  
+Notes:
+
+1. Customer names can only contain lowercase letters and numbers.
+2. System names can only contain lowercase letters, numbers, and hyphens.
+3. Typically, you would use the `--publish` option when committing to the main/master branch, and you would *not* use it for pull requests.  
+4. These files and directories are excluded *on top of* Sigrid's default excludes. By default, Sigrid excludes things like third party libraries (e.g. `/node_modules/` for NPM libraries, build output (e.g. `/target/` for Maven builds), and generated code. 
+5. The `--pathprefix` option can be used in cases where your repository used a different directory structure from the one that is known to Sigrid. For example, you might have combined your back-end and front-end repositories within a single system in Sigrid, so that in Sigrid there are two top-level folders: `backend` and `frontend` containing the contents of your two repositories. However, you still want to get specific feedback for your front-end repository in Sigrid CI. In this case you would use `--pathprefix frontend` so that Sigrid CI knows the location of your repository within the larger directory structure. Note that you cannot use this option if you're already using `--publish`.  
 
 ## Specifying a quality target
 

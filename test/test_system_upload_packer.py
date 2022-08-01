@@ -14,6 +14,7 @@
 
 import os
 import tempfile
+import subprocess
 import unittest
 import zipfile
 from sigridci.sigridci import SystemUploadPacker, UploadOptions, LOG_HISTORY
@@ -104,21 +105,19 @@ class SystemUploadPackerTest(unittest.TestCase):
         self.assertEqual(zipfile.ZipFile(outputFile).namelist(), ["a.py"])
         
     def testIncludeGitHistory(self):
-        sourceDir = tempfile.mkdtemp()
-        self.createTempFile(sourceDir, "a.py", "a")
-        subDir = sourceDir + "/.git"
-        os.mkdir(subDir)
-        self.createTempFile(subDir, "b.py", "b")
+        tempDir = tempfile.mkdtemp()
+        subprocess.call(["git", "clone", "https://github.com/BetterCodeHubTraining/cspacman.git", tempDir])
         
         outputFile = tempfile.mkstemp()[1]
         
-        uploadPacker = SystemUploadPacker(UploadOptions(includeHistory=True))
-        uploadPacker.prepareUpload(sourceDir, outputFile)
+        uploadPacker = SystemUploadPacker(UploadOptions(excludePatterns="", includeHistory=True))
+        uploadPacker.prepareUpload(tempDir, outputFile)
         
         entries = zipfile.ZipFile(outputFile).namelist()
         entries.sort()
 
-        self.assertEqual(entries, [".git/b.py", "a.py"])
+        self.assertEqual(os.path.exists(outputFile), True)
+        self.assertIn("git.log", entries)
         
     def testExcludeGitHistory(self):
         sourceDir = tempfile.mkdtemp()
