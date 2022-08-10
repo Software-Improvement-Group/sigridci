@@ -40,34 +40,34 @@ Sigrid CI consists of a number of Python-based client scripts, that interact wit
 
 We will create two GitHub Action workflows: the first will publish the main/master branch to [sigrid-says.com](https://sigrid-says.com) after every commit. 
 
-#### Alternative 2a: Docker-based run
+#### Alternative 2a: GitHub Marketplace
 
-The recommended approach is to run Sigrid CI using the [Docker image](https://hub.docker.com/r/softwareimprovementgroup/sigridci) published by SIG. In your GitHub repository, create a file `.github/workflows/sigrid-publish.yml` and give it the following contents:
+For GitHub, the recommended approach is to run Sigrid CI using the [GitHub Marketplace action](https://github.com/marketplace/actions/sigrid-ci) published by SIG.
+
+To use the Marketplace action, create a file `.github/workflows/sigrid-publish.yml` in your repository and give it the following contents:
 
 ```
-name: sigrid-publish
+name: Publish to Sigrid
 on:
   push:
     branches:
-      - "main"
+      - main
+
 jobs:
   sigridci:
     runs-on: ubuntu-latest
     steps:
       - name: Check out repository
         uses: actions/checkout@v2
-      - run: "git clone https://github.com/Software-Improvement-Group/sigridci.git sigridci"
-      - name: "Run Sigrid CI" 
+      - name: Sigrid CI
+        uses: Software-Improvement-Group/sigridci@v1.2
+        with:
+          customer: examplecustomername
+          system: examplesystemname
+          targetquality: 3.5
+          publishonly: true
         env:
           SIGRID_CI_TOKEN: "${{ secrets.SIGRID_CI_TOKEN }}"
-        run: "/sigridci/sigridci.py --customer examplecustomername --system examplesystemname --source . --targetquality 3.0 --publish" 
-      - name: "Save Sigrid CI results"
-        if: ${{ success() || failure() }}
-        uses: actions/upload-artifact@v2
-        with:
-          path: "sigrid-ci-output/**"
-          retention-days: 7
-          if-no-files-found: ignore
 ```
 
 Note the name of the branch, which is `main` in the example but might be different for your repository. In general, most older GitHub projects will use `master` as their main branch, while more recent GitHub projects will use `main`. 
@@ -75,26 +75,23 @@ Note the name of the branch, which is `main` in the example but might be differe
 Next, we create a separate workflow for the pull request integration. This will compare the contents of the pull request against the main/master branch from the previous step. In your GitHub repository, create a file `.github/workflows/sigrid-pullrequest.yml` and give it the following contents:
 
 ```
-name: sigrid-pullrequest
+name: Sigrid pull request feedback
 on: [pull_request]
+
 jobs:
   sigridci:
     runs-on: ubuntu-latest
     steps:
       - name: Check out repository
         uses: actions/checkout@v2
-      - run: "git clone https://github.com/Software-Improvement-Group/sigridci.git sigridci"
-      - name: "Run Sigrid CI" 
+      - name: Sigrid CI
+        uses: Software-Improvement-Group/sigridci@v1.2
+        with:
+          customer: examplecustomername
+          system: examplesystemname
+          targetquality: 3.5
         env:
           SIGRID_CI_TOKEN: "${{ secrets.SIGRID_CI_TOKEN }}"
-        run: "/sigridci/sigridci.py --customer examplecustomername --system examplesystemname --source . --targetquality 3.5"
-      - name: "Save Sigrid CI results"
-        if: ${{ success() || failure() }}
-        uses: actions/upload-artifact@v2
-        with:
-          path: "sigrid-ci-output/**"
-          retention-days: 7
-          if-no-files-found: ignore
 ```
 
 This example assumes you're using the repository-level secrets. If you want to use the organization-level secrets instead, you can change the following lines:
@@ -115,6 +112,7 @@ on:
   push:
     branches:
       - "main"
+
 jobs:
   sigridci:
     runs-on: ubuntu-latest
@@ -140,6 +138,7 @@ Next, create `.github/workflows/sigrid-pullrequest.yml` to receive feedback on y
 ```
 name: sigrid-pullrequest
 on: [pull_request]
+
 jobs:
   sigridci:
     runs-on: ubuntu-latest

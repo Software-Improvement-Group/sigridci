@@ -2,7 +2,7 @@
 FROM python:3.10-alpine
 
 LABEL org.opencontainers.image.title="Sigrid CI"
-LABEL org.opencontainers.image.description="Sigrid Software Assurance Platform"
+LABEL org.opencontainers.image.description="Sigrid | Software Assurance Platform"
 LABEL org.opencontainers.image.vendor="Software Improvement Group"
 LABEL org.opencontainers.image.authors="info@softwareimprovementgroup.com"
 LABEL org.opencontainers.image.source="https://github.com/Software-Improvement-Group/sigridci"
