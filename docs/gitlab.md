@@ -13,7 +13,7 @@ On-boarding a system is done automatically when you first run Sigrid CI for that
 
 ## Configuration
 
-**Step 1: Configure Sigrid credentials to environment variables**
+### Step 1: Configure Sigrid credentials to environment variables
 
 Sigrid CI reads your Sigrid account credentials from an environment variable called `SIGRID_CI_TOKEN`. To add it to your GitLab CI pipeline, follow these steps:
 
@@ -27,7 +27,7 @@ Sigrid CI reads your Sigrid account credentials from an environment variable cal
 
 These instructions describe how to configure a single GitLab project, but you can follow the same steps to configure the entire GitLab group, which will make the environment variables available to all projects within that group.
 
-**Step 2: Add Sigrid CI to your project's CI pipeline**
+### Step 2: Add Sigrid CI to your project's CI pipeline
 
 Next, you need to edit your project's CI configuration, in order to add Sigrid CI as an extra step. There are two alternatives: use SIG's Docker image (alternative 2.a below), or download and run the Sigrid CI Python script directly on your Gitlab runners (alternative 2.b below).
 
@@ -40,9 +40,9 @@ The relevant command that starts Sigrid CI is the call to the `sigridci.py` scri
 
 Note that you need to perform this step for every project where you wish to use Sigrid CI. Be aware that you can set a project-specific target quality, you don't necessarily have to use the same target for every project.
 
-**Alternative 2.a: use SIG's public Docker image**
+#### Alternative 2a: Use SIG's public Docker image
 
-Alternative 2.a uses the [Docker image](https://hub.docker.com/r/softwareimprovementgroup/sigridci) published by SIG as the environment to run SigridCI from. This requires using either the Docker or Kubernetes executor to be available on your Gitlab runners.
+The recommended approach is to run Sigrid CI using the [Docker image](https://hub.docker.com/r/softwareimprovementgroup/sigridci) published by SIG. This requires using either the Docker or Kubernetes executor to be available on your GitLab runners.
 
 Open `.gitlab-ci.yml` in your project's root directory and add the following:
 
@@ -85,9 +85,9 @@ sigridpublish:
 
 **Security note:** This example pulls the latest version of SIG's Sigrid CI Docker image directly from Docker Hub. That might be acceptable for many projects. However, some projects might not allow this as part of their security policy. In those cases, we recommend to either use alternative 2.b below, or clone SIG's Docker image to your own image repository.
 
-**Alternative 2.b: download SIG's SigridCI Python script**
+#### Alternative 2b: Download SIG's Sigrid CI Python script
 
-Alternative 2.b does not use a Docker image. Instead, the Sigrid CI Gitlab jobs download SIG's Sigrid CI Python script directly from Github and runs it on your Gitlab runner. This requires Github.com to be accessible from your CI environment and Python 3.7 to be available on your Gitlab runners.
+Alternative 2b does not use a Docker image. Instead, the Sigrid CI GitLab jobs download SIG's Sigrid CI Python script directly from GitHub and runs it on your GitLab runner. This requires Github.com to be accessible from your CI environment and Python 3.7 to be available on your GitLab runners.
 
 Sigrid CI consists of a number of Python-based client scripts, that interact with Sigrid in order to analyze your project's source code and provide feedback based on the results. These client scripts need to be available to your GitLab runners, in order to call the scripts *from* the CI pipeline. 
 
@@ -130,7 +130,7 @@ sigridpublish:
 
 **Security note:** This example downloads the Sigrid CI client scripts directly from GitHub. That might be acceptable for some projects, and is in fact increasingly common. However, some projects might not allow this as part of their security policy. In those cases, you can simply download the `sigridci` directory in this repository, and make it available to your runners (either by placing the scripts in a known location, or packaging them into a Docker container). 
 
-## Optional: change the analysis scope configuration
+### Step 3: Analysis configuration
 
 Sigrid will try to automatically detect the technologies you use, the component structure, and files/directories that should be excluded from the analysis. You can override the default configuration by creating a file called `sigrid.yaml` and adding it to the root of your repository. You can read more about the various options for custom configuration in the [configuration file documentation](analysis-scope-configuration.md).
 
