@@ -1,5 +1,5 @@
 name: "Sigrid CI"
-description: "Sigrid: getting software right"
+description: "Sigrid | Software Assurance Platform"
 
 inputs:
   customer:
