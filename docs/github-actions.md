@@ -60,7 +60,7 @@ jobs:
       - name: "Run Sigrid CI" 
         env:
           SIGRID_CI_TOKEN: "${{ secrets.SIGRID_CI_TOKEN }}"
-        run: "./sigridci/sigridci/sigridci.py --customer examplecustomername --system examplesystemname --source . --targetquality 3.0 --publish" 
+        run: "/sigridci/sigridci.py --customer examplecustomername --system examplesystemname --source . --targetquality 3.0 --publish" 
       - name: "Save Sigrid CI results"
         if: ${{ success() || failure() }}
         uses: actions/upload-artifact@v2
@@ -87,7 +87,7 @@ jobs:
       - name: "Run Sigrid CI" 
         env:
           SIGRID_CI_TOKEN: "${{ secrets.SIGRID_CI_TOKEN }}"
-        run: "./sigridci/sigridci/sigridci.py --customer examplecustomername --system examplesystemname --source . --targetquality 3.5"
+        run: "/sigridci/sigridci.py --customer examplecustomername --system examplesystemname --source . --targetquality 3.5"
       - name: "Save Sigrid CI results"
         if: ${{ success() || failure() }}
         uses: actions/upload-artifact@v2
