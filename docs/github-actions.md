@@ -38,7 +38,11 @@ The organization-level secret.
 
 Sigrid CI consists of a number of Python-based client scripts, that interact with Sigrid in order to analyze your project's source code and provide feedback based on the results. These client scripts need to be available to the CI environment, in order to call the scripts *from* the CI pipeline. You can configure your GitHub Actions to both download the Sigrid CI client scripts and then run Sigrid CI. 
 
-We will create two GitHub Action workflows: the first will publish the main/master branch to [sigrid-says.com](https://sigrid-says.com) after every commit. In your GitHub repository, create a file `.github/workflows/sigrid-publish.yml` and give it the following contents:
+We will create two GitHub Action workflows: the first will publish the main/master branch to [sigrid-says.com](https://sigrid-says.com) after every commit. 
+
+#### Alternative 2a: Docker-based run
+
+The recommended approach is to run Sigrid CI using the [Docker image](https://hub.docker.com/r/softwareimprovementgroup/sigridci) published by SIG. In your GitHub repository, create a file `.github/workflows/sigrid-publish.yml` and give it the following contents:
 
 ```
 name: sigrid-publish
@@ -99,17 +103,70 @@ This example assumes you're using the repository-level secrets. If you want to u
 SIGRID_CI_TOKEN: "${{ secrets.SIGRID_CI_ORG_TOKEN }}"
 ```
 
-**Security note:** This example downloads the Sigrid CI client scripts directly from GitHub. That might be acceptable for some projects, and is in fact increasingly common. However, some projects might not allow this as part of their security policy. In those cases, you can simply download the `sigridci` directory in this repository, and make it available to your runners (either by placing the scripts in a known location, or packaging them into a Docker container). 
+##### Alternative 2b: Download Sigrid CI client script
 
-The example YAML file will trigger a Sigrid CI analysis on every pull request. It is also possible to limit Sigrid CI to specific branches, or trigger Sigrid CI after every push. The [GitHub Actions documentation](https://docs.github.com/en/actions/reference/workflow-syntax-for-github-actions) explains how to configure those scenarios in the YAML file.
+If you are not able to use Docker, you can also download the Sigrid CI client script directly from GitHub. That might be acceptable for some projects, and is in fact increasingly common. However, some projects might not allow this as part of their security policy. In those cases, you can simply download the `sigridci` directory in this repository, and make it available to your runners (either by placing the scripts in a known location, or packaging them into a Docker container). 
+
+First, create `.github/workflows/sigrid-publish.yml` to publish snapshots of your project to Sigrid after every commit to the main/master branch:
+
+```
+name: sigrid-publish
+on:
+  push:
+    branches:
+      - "main"
+jobs:
+  sigridci:
+    runs-on: ubuntu-latest
+    container: softwareimprovementgroup/sigridci
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v2
+      - name: "Run Sigrid CI" 
+        env:
+          SIGRID_CI_TOKEN: "${{ secrets.SIGRID_CI_TOKEN }}"
+        run: "./sigridci/sigridci/sigridci.py --customer examplecustomername --system examplesystemname --source . --targetquality 3.0 --publish" 
+      - name: "Save Sigrid CI results"
+        if: ${{ success() || failure() }}
+        uses: actions/upload-artifact@v2
+        with:
+          path: "sigrid-ci-output/**"
+          retention-days: 7
+          if-no-files-found: ignore
+```
+
+Next, create `.github/workflows/sigrid-pullrequest.yml` to receive feedback on your pull requests:
+
+```
+name: sigrid-pullrequest
+on: [pull_request]
+jobs:
+  sigridci:
+    runs-on: ubuntu-latest
+    container: softwareimprovementgroup/sigridci
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v2
+      - name: "Run Sigrid CI" 
+        env:
+          SIGRID_CI_TOKEN: "${{ secrets.SIGRID_CI_TOKEN }}"
+        run: "./sigridci/sigridci/sigridci.py --customer examplecustomername --system examplesystemname --source . --targetquality 3.5"
+      - name: "Save Sigrid CI results"
+        if: ${{ success() || failure() }}
+        uses: actions/upload-artifact@v2
+        with:
+          path: "sigrid-ci-output/**"
+          retention-days: 7
+          if-no-files-found: ignore
+```
+
+### Step 3: Analysis configuration
 
 The relevant command that starts Sigrid CI is the call to the `sigridci.py` script, which starts the Sigrid CI analysis. The scripts supports a number of arguments that you can use to configure your Sigrid CI run. The scripts and its command line interface are explained in [using the Sigrid CI client script](client-script-usage.md).
 
-Finally, note that you need to perform this step for every project where you wish to use Sigrid CI. Be aware that you can set a project-specific target quality, you don't necessarily have to use the same target for every project.
-
-## Optional: change the analysis scope configuration
-
 Sigrid will try to automatically detect the technologies you use, the component structure, and files/directories that should be excluded from the analysis. You can override the default configuration by creating a file called `sigrid.yaml` and adding it to the root of your repository. You can read more about the various options for custom configuration in the [configuration file documentation](analysis-scope-configuration.md).
+
+The example YAML file will trigger a Sigrid CI analysis on every pull request. It is also possible to limit Sigrid CI to specific branches, or trigger Sigrid CI after every push. The [GitHub Actions documentation](https://docs.github.com/en/actions/reference/workflow-syntax-for-github-actions) explains how to configure those scenarios in the YAML file.
 
 ## Usage
 
