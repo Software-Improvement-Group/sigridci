@@ -48,7 +48,7 @@ pipeline {
     stages {
         stage('build') {
             steps {
-                sh '/sigridci/sigridci.py --customer examplecustomername --system examplesystemname --source . --targetquality 3.5 --publish'
+                sh 'sigridci.py --customer examplecustomername --system examplesystemname --source . --targetquality 3.5 --publish'
             }
         }
     }

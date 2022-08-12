@@ -44,13 +44,13 @@ pipelines:
       - step:
           name: Publish to Sigrid
           script:
-            - "/sigridci/sigridci.py --customer examplecustomername --system examplesystemname --source . --publish"
+            - "sigridci.py --customer examplecustomername --system examplesystemname --source . --publish"
   pull-requests:
     '**':
       - step:
           name: Sigrid CI
           script:
-            - "/sigridci/sigridci.py --customer examplecustomername --system examplesystemname --source . --targetquality 3.5"
+            - "sigridci.py --customer examplecustomername --system examplesystemname --source . --targetquality 3.5"
 ```
 
 Note the branch name `master` in the example. This should refer to your primary branch. In most projects this is called either `master` or `main`, but the default project name could be different for your project.

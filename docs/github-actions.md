@@ -40,9 +40,70 @@ Sigrid CI consists of a number of Python-based client scripts, that interact wit
 
 We will create two GitHub Action workflows: the first will publish the main/master branch to [sigrid-says.com](https://sigrid-says.com) after every commit. 
 
-#### Alternative 2a: GitHub Marketplace
+##### Alternative 2a: Download Sigrid CI client script
 
-For GitHub, the recommended approach is to run Sigrid CI using the [GitHub Marketplace action](https://github.com/marketplace/actions/sigrid-ci) published by SIG.
+The simplest way to run Sigrid CI is to download client script directly from GitHub. If a direct GitHub connection is not possible, for example for security reasons, you can also download the `sigridci` directory in this repository and make it available to your runners (either by placing the scripts in a known location, or packaging them into a Docker container). 
+
+First, create `.github/workflows/sigrid-publish.yml` to publish snapshots of your project to Sigrid after every commit to the main/master branch:
+
+```
+name: sigrid-publish
+on:
+  push:
+    branches:
+      - "main"
+
+jobs:
+  sigridci:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v2
+      - name: Download Sigrid CI
+        run: "git clone https://github.com/Software-Improvement-Group/sigridci.git sigridci"
+      - name: "Run Sigrid CI" 
+        env:
+          SIGRID_CI_TOKEN: "${{ secrets.SIGRID_CI_TOKEN }}"
+        run: "./sigridci/sigridci/sigridci.py --customer examplecustomername --system examplesystemname --source . --targetquality 3.0 --publish" 
+      - name: "Save Sigrid CI results"
+        if: ${{ success() || failure() }}
+        uses: actions/upload-artifact@v2
+        with:
+          path: "sigrid-ci-output/**"
+          retention-days: 7
+          if-no-files-found: ignore
+```
+
+Next, create `.github/workflows/sigrid-pullrequest.yml` to receive feedback on your pull requests:
+
+```
+name: sigrid-pullrequest
+on: [pull_request]
+
+jobs:
+  sigridci:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v2
+      - name: Download Sigrid CI
+        run: "git clone https://github.com/Software-Improvement-Group/sigridci.git sigridci"
+      - name: "Run Sigrid CI" 
+        env:
+          SIGRID_CI_TOKEN: "${{ secrets.SIGRID_CI_TOKEN }}"
+        run: "./sigridci/sigridci/sigridci.py --customer examplecustomername --system examplesystemname --source . --targetquality 3.5"
+      - name: "Save Sigrid CI results"
+        if: ${{ success() || failure() }}
+        uses: actions/upload-artifact@v2
+        with:
+          path: "sigrid-ci-output/**"
+          retention-days: 7
+          if-no-files-found: ignore
+```
+
+#### Alternative 2b: GitHub Marketplace
+
+It is also possible to run Sigrid CI using the [GitHub Marketplace action](https://github.com/marketplace/actions/sigrid-ci) published by SIG.
 
 To use the Marketplace action, create a file `.github/workflows/sigrid-publish.yml` in your repository and give it the following contents:
 
@@ -98,65 +159,6 @@ This example assumes you're using the repository-level secrets. If you want to u
 
 ```
 SIGRID_CI_TOKEN: "${{ secrets.SIGRID_CI_ORG_TOKEN }}"
-```
-
-##### Alternative 2b: Download Sigrid CI client script
-
-If you are not able to use Docker, you can also download the Sigrid CI client script directly from GitHub. That might be acceptable for some projects, and is in fact increasingly common. However, some projects might not allow this as part of their security policy. In those cases, you can simply download the `sigridci` directory in this repository, and make it available to your runners (either by placing the scripts in a known location, or packaging them into a Docker container). 
-
-First, create `.github/workflows/sigrid-publish.yml` to publish snapshots of your project to Sigrid after every commit to the main/master branch:
-
-```
-name: sigrid-publish
-on:
-  push:
-    branches:
-      - "main"
-
-jobs:
-  sigridci:
-    runs-on: ubuntu-latest
-    container: softwareimprovementgroup/sigridci
-    steps:
-      - name: Check out repository
-        uses: actions/checkout@v2
-      - name: "Run Sigrid CI" 
-        env:
-          SIGRID_CI_TOKEN: "${{ secrets.SIGRID_CI_TOKEN }}"
-        run: "./sigridci/sigridci/sigridci.py --customer examplecustomername --system examplesystemname --source . --targetquality 3.0 --publish" 
-      - name: "Save Sigrid CI results"
-        if: ${{ success() || failure() }}
-        uses: actions/upload-artifact@v2
-        with:
-          path: "sigrid-ci-output/**"
-          retention-days: 7
-          if-no-files-found: ignore
-```
-
-Next, create `.github/workflows/sigrid-pullrequest.yml` to receive feedback on your pull requests:
-
-```
-name: sigrid-pullrequest
-on: [pull_request]
-
-jobs:
-  sigridci:
-    runs-on: ubuntu-latest
-    container: softwareimprovementgroup/sigridci
-    steps:
-      - name: Check out repository
-        uses: actions/checkout@v2
-      - name: "Run Sigrid CI" 
-        env:
-          SIGRID_CI_TOKEN: "${{ secrets.SIGRID_CI_TOKEN }}"
-        run: "./sigridci/sigridci/sigridci.py --customer examplecustomername --system examplesystemname --source . --targetquality 3.5"
-      - name: "Save Sigrid CI results"
-        if: ${{ success() || failure() }}
-        uses: actions/upload-artifact@v2
-        with:
-          path: "sigrid-ci-output/**"
-          retention-days: 7
-          if-no-files-found: ignore
 ```
 
 ### Step 3: Analysis configuration
