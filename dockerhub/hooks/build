@@ -1,3 +1,4 @@
 #!/bin/bash
 
-docker build -t "$IMAGE_NAME" --build-arg REVISION="$SOURCE_COMMIT" .
+cd ..
+docker build -f "$DOCKERFILE_PATH" -t "$IMAGE_NAME" --build-arg REVISION="$SOURCE_COMMIT" .
