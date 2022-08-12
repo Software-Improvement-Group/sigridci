@@ -31,6 +31,7 @@ Sigrid CI: Frequently Asked Questions
 - [Why can't I use the publish and pathprefix options together?](#why-cant-i-use-the-publish-and-pathprefix-options-together)
 - [Where do I find the Sigrid CI output?](#where-do-i-find-the-sigrid-ci-output)
 - [I started using Sigrid CI, and now I suddenly see more code in Sigrid](#i-started-using-sigrid-ci-and-now-i-suddenly-see-more-code-in-sigrid)
+- [I'm receiving an error message about UnicodeEncodeError](#im-receiving-an-error-message-about-unicodeencodeerror)
 
 ### Infrastructure and security questions
 
@@ -183,6 +184,14 @@ The results of the SigridCI run are logged in the terminal output and optional a
 Sigrid supports multiple ways to upload source code. This documentation covers Sigrid CI, but we also support uploads via SFTP. If you previously used SFTP and then switch to Sigrid CI, you might see some differences. For example, you might suddenly see extra code, or extra components. This is caused by differences in how the upload is created. Unfortunately that means there is no "quick fix" outside of updating your configuration. We are happy to help you with identifying the changes, so please [contact us](mailto:support@softwareimprovementgroup.com) and we'll try to help you out.
 
 This also means that we recommend you to either use Sigrid CI or SFTP uploads, but not both. Using two ways of uploading means both uploads need to be consistent, otherwise you'll end up with expected changes in Sigrid. In practice this is not always convenient, so if you're using Sigrid CI we recommend you stop using SFTP and just Sigrid CI for all uploading/publishing to Sigrid.
+
+### I'm receiving an error message about UnicodeEncodeError
+
+In some environments Sigrid CI can produce the following error:
+
+    UnicodeEncodeError: 'charmap' codec can't encode characters
+    
+This happens when Sigrid CI tried to provide command line output that includes UTF-8 characters, but `stdout` is unable to display such errors. This can be solved by adding the `export PYTHONIOENCODING=utf8` environment variable.
 
 ## Infrastructure and security questions
 
