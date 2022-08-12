@@ -31,43 +31,61 @@ We will create two pipelines:
 - The first will publish the main/master branch to [sigrid-says.com](https://sigrid-says.com) after every commit. 
 - The second will provide pull request integration: it will compare the contents of the pull request against the main/master branch.
 
-In your BitBucket repository, create a file `bitbucket-pipelines.yml`. You can then configure both pipelines in the same configuration file:
+#### Alternative 2a: Docker-based run
+
+The recommended approach is to run Sigrid CI using the [Docker image](https://hub.docker.com/r/softwareimprovementgroup/sigridci) published by SIG. In your BitBucket repository, create a file `bitbucket-pipelines.yml`. You can then configure both pipelines in the same configuration file:
 
 ```
-image: atlassian/default-image:latest # Or any image you're using as build environment.
+image: softwareimprovementgroup/sigridci
 
 pipelines:
   branches:
     master:
       - step:
           name: Publish to Sigrid
-          image: python:3.9 # The client scripts for Sigrid CI are based on Python.
+          script:
+            - "sigridci.py --customer examplecustomername --system examplesystemname --source . --publish"
+  pull-requests:
+    '**':
+      - step:
+          name: Sigrid CI
+          script:
+            - "sigridci.py --customer examplecustomername --system examplesystemname --source . --targetquality 3.5"
+```
+
+Note the branch name `master` in the example. This should refer to your primary branch. In most projects this is called either `master` or `main`, but the default project name could be different for your project.
+
+#### Alternative 2b: Download Sigrid CI client script
+
+If you are unable to use Docker, for example because you are using local runners, you can still use Sigrid CI by downloading the Sigrid CI client script directly from GitHub:
+
+```
+image: softwareimprovementgroup/sigridci
+
+pipelines:
+  branches:
+    master:
+      - step:
+          name: Publish to Sigrid
           script:
             - "git clone https://github.com/Software-Improvement-Group/sigridci.git sigridci"
             - "./sigridci/sigridci/sigridci.py --customer examplecustomername --system examplesystemname --source . --publish"
   pull-requests:
-    '**': #this runs as default for any branch not elsewhere defined
+    '**':
       - step:
           name: Sigrid CI
-          image: python:3.9 # The client scripts for Sigrid CI are based on Python.
           script:
             - "git clone https://github.com/Software-Improvement-Group/sigridci.git sigridci"
             - "./sigridci/sigridci/sigridci.py --customer examplecustomername --system examplesystemname --source . --targetquality 3.5"
 ```
 
-Note the branch name `master` in the example. This should refer to your primary branch. In most projects this is called either `master` or `main`, but the default project name could be different for your project.
-
-The example uses the Docker container `python:3.9-buster`, but any Docker container that contains Python 3 will do.
-
-**Security note:** This example downloads the Sigrid CI client scripts directly from GitHub. That might be acceptable for some projects, and is in fact increasingly common. However, some projects might not allow this as part of their security policy. In those cases, you can simply download the `sigridci` directory in this repository, and make it available to your runners (either by placing the scripts in a known location, or packaging them into a Docker container). 
+**Security note:** Some projects might not allow this as part of their security policy. In those cases, you can simply download the `sigridci` directory in this repository, and make it available to your runners (either by placing the scripts in a known location, or packaging them into a Docker container). 
 
 Refer to the [BitBucket Pipelines documentation](https://support.atlassian.com/bitbucket-cloud/docs/get-started-with-bitbucket-pipelines/) for more information on when and how these steps will be performed. The [bitbucket-pipelines.yml documentation](https://support.atlassian.com/bitbucket-cloud/docs/configure-bitbucket-pipelinesyml/) describes the file format used for the configuration file.
 
-The relevant command that starts Sigrid CI is the call to the `sigridci.py` script, which starts the Sigrid CI analysis. The scripts supports a number of arguments that you can use to configure your Sigrid CI run. The scripts and its command line interface are explained in [using the Sigrid CI client script](client-script-usage.md).
+### Step 3: Analysis configuration
 
-Finally, note that you need to perform this step for every project where you wish to use Sigrid CI. Be aware that you can set a project-specific target quality, you don't necessarily have to use the same target for every project.
-
-## Optional: change the analysis scope configuration
+The Sigrid CI client script supports a number of arguments that you can use to configure your Sigrid CI run. The scripts and its command line interface are explained in [using the Sigrid CI client script](client-script-usage.md).
 
 Sigrid will try to automatically detect the technologies you use, the component structure, and files/directories that should be excluded from the analysis. You can override the default configuration by creating a file called `sigrid.yaml` and adding it to the root of your repository. You can read more about the various options for custom configuration in the [configuration file documentation](analysis-scope-configuration.md).
 
