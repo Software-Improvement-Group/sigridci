@@ -39,6 +39,7 @@ pipeline {
     
     environment {
         SIGRID_CI_TOKEN = credentials('SIGRID_CI_TOKEN')
+        PYTHONIOENCODING = utf8
     }
 
     stages {
@@ -60,6 +61,7 @@ pipeline {
 
     environment {
         SIGRID_CI_TOKEN = credentials('SIGRID_CI_TOKEN')
+        PYTHONIOENCODING = utf8
     }
 
     stages {
