@@ -2,5 +2,4 @@
 
 docker info
 echo "DOCKER_BUILDKIT=$DOCKER_BUILDKIT"
-cd ..
 docker build -f "$DOCKERFILE_PATH" -t "$IMAGE_NAME" --build-arg REVISION="$SOURCE_COMMIT" .
