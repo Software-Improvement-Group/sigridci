@@ -13,7 +13,7 @@ LABEL org.opencontainers.image.revision="${REVISION}"
 
 RUN adduser -S sigridci
 
-COPY sigridci /sigridci
+COPY --link sigridci /sigridci
 
 ENV PATH /sigridci:$PATH
 
