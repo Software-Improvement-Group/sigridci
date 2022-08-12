@@ -43,6 +43,7 @@ stages:
       - bash: "./sigridci/sigridci/sigridci.py --customer examplecustomername --system examplesystemname --source . --targetquality 3.5"
         env:
           SIGRID_CI_TOKEN: $(SIGRID_CI_TOKEN)
+          PYTHONIOENCODING: utf8
         continueOnError: true
       - publish: sigrid-ci-output
         artifact: sigrid-ci-output
@@ -62,6 +63,7 @@ stages:
       - bash: "./sigridci/sigridci/sigridci.py --customer examplecustomername --system examplesystemname --source . --publish"
         env:
           SIGRID_CI_TOKEN: $(SIGRID_CI_TOKEN)
+          PYTHONIOENCODING: utf8
         continueOnError: true
 ```
 

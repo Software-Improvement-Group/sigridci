@@ -98,7 +98,7 @@ class SystemUploadPackerTest(unittest.TestCase):
         
         outputFile = tempfile.mkstemp()[1]
         
-        uploadPacker = SystemUploadPacker(UploadOptions(excludePatterns=["b/"]))
+        uploadPacker = SystemUploadPacker(UploadOptions(excludePatterns=["b/b.py"]))
         uploadPacker.prepareUpload(sourceDir, outputFile)
 
         self.assertEqual(os.path.exists(outputFile), True)
