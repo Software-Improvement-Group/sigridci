@@ -2,4 +2,4 @@
 
 docker info
 echo "DOCKER_BUILDKIT=$DOCKER_BUILDKIT"
-docker build -f "$DOCKERFILE_PATH" -t "$IMAGE_NAME" --build-arg REVISION="$SOURCE_COMMIT" .
+docker buildx build --load --progress plain -f "$DOCKERFILE_PATH" -t "$IMAGE_NAME" --build-arg REVISION="$SOURCE_COMMIT" .
