@@ -64,8 +64,8 @@ sigridci:
       junit: "sigrid-ci-output/sigridci-junit-format-report.xml"
     expire_in: 1 week
     when: always
-  except:
-    - master
+  rules:
+    - if: $CI_MERGE_REQUEST_ID
     
 sigridpublish:
   stage: report
@@ -79,8 +79,8 @@ sigridpublish:
       - "sigrid-ci-output/*"
     expire_in: 1 week
     when: always
-  only:
-    - master
+  rules:
+    - if: $CI_COMMIT_BRANCH == $CI_DEFAULT_BRANCH
 ```
 
 **Security note:** This example pulls the latest version of SIG's Sigrid CI Docker image directly from Docker Hub. That might be acceptable for many projects. However, some projects might not allow this as part of their security policy. In those cases, we recommend to either use alternative 2.b below, or clone SIG's Docker image to your own image repository.
