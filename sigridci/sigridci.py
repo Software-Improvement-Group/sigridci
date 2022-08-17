@@ -30,7 +30,7 @@ import urllib.parse
 import urllib.request
 import zipfile
 from dataclasses import dataclass
-from ssl import SSLContext, PROTOCOL_TLS_CLIENT
+from ssl import SSLContext, PROTOCOL_TLS_SERVER
 from xml.dom import minidom
 
 
