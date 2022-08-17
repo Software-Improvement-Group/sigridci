@@ -175,7 +175,7 @@ class SigridApiClient:
             uploadRequest.add_header("Content-Type", "application/zip")
             uploadRequest.add_header("Content-Length", "%d" % os.path.getsize(upload))
             uploadRequest.add_header("x-amz-server-side-encryption", "AES256")
-            urllib.request.urlopen(uploadRequest, context=SSLContext(PROTOCOL_TLS_CLIENT))
+            urllib.request.urlopen(uploadRequest, context=SSLContext(PROTOCOL_TLS_SERVER))
 
     def checkSystemExists(self):
         path = f"/analysis-results/sigridci/{self.urlCustomerName}/{self.urlSystemName}/{self.API_VERSION}/ci"
