@@ -207,7 +207,13 @@ Sigrid, including Sigrid CI, is hosted on Amazon Web Services. If you have speci
 
 ### Do we need to update our firewall settings?
 
-Possibly. As mentioned above, Sigrid is hosted on [AWS](https://sig-sigrid-ci-upload.s3.eu-central-1.amazonaws.com/). This means your firewall needs to allow outgoing traffic in order to submit your project's source code to Sigrid. [Contact SIG](mailto:support@softwareimprovementgroup.com) if you need specific information on this setup.
+Possibly. As mentioned above, Sigrid is hosted on AWS. This means your firewall needs to allow outgoing traffic in order to submit your project's source code to Sigrid. In practical terms this means the following:
+
+- Allow outbound traffic to `sigrid-says.com` on port 443
+- Allow outbound traffic to `auth.sigrid-says.com` on port 443
+- Allow outbound traffic to `sig-sigrid-ci-upload.s3.eu-central-1.amazonaws.com` on port 443
+
+[Contact SIG](mailto:support@softwareimprovementgroup.com) if you need specific information on this setup.
 
 ## Contact and support
 
