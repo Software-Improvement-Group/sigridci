@@ -30,6 +30,7 @@ import urllib.parse
 import urllib.request
 import zipfile
 from dataclasses import dataclass
+from ssl import SSLContext, PROTOCOL_TLSv1_2
 from xml.dom import minidom
 
 
@@ -174,7 +175,7 @@ class SigridApiClient:
             uploadRequest.add_header("Content-Type", "application/zip")
             uploadRequest.add_header("Content-Length", "%d" % os.path.getsize(upload))
             uploadRequest.add_header("x-amz-server-side-encryption", "AES256")
-            urllib.request.urlopen(uploadRequest)
+            urllib.request.urlopen(uploadRequest, context=SSLContext(PROTOCOL_TLSv1_2))
 
     def checkSystemExists(self):
         path = f"/analysis-results/sigridci/{self.urlCustomerName}/{self.urlSystemName}/{self.API_VERSION}/ci"
