@@ -31,6 +31,7 @@ Sigrid CI: Frequently Asked Questions
 - [Why can't I use the publish and pathprefix options together?](#why-cant-i-use-the-publish-and-pathprefix-options-together)
 - [Where do I find the Sigrid CI output?](#where-do-i-find-the-sigrid-ci-output)
 - [I started using Sigrid CI, and now I suddenly see more code in Sigrid](#i-started-using-sigrid-ci-and-now-i-suddenly-see-more-code-in-sigrid)
+- [I'm receiving an error message about UnicodeEncodeError](#im-receiving-an-error-message-about-unicodeencodeerror)
 
 ### Infrastructure and security questions
 
@@ -184,6 +185,14 @@ Sigrid supports multiple ways to upload source code. This documentation covers S
 
 This also means that we recommend you to either use Sigrid CI or SFTP uploads, but not both. Using two ways of uploading means both uploads need to be consistent, otherwise you'll end up with expected changes in Sigrid. In practice this is not always convenient, so if you're using Sigrid CI we recommend you stop using SFTP and just Sigrid CI for all uploading/publishing to Sigrid.
 
+### I'm receiving an error message about UnicodeEncodeError
+
+In some environments Sigrid CI can produce the following error:
+
+    UnicodeEncodeError: 'charmap' codec can't encode characters
+    
+This happens when Sigrid CI tried to provide command line output that includes UTF-8 characters, but `stdout` is unable to display such errors. This can be solved by adding the `export PYTHONIOENCODING=utf8` environment variable.
+
 ## Infrastructure and security questions
 
 ### How do you protect our source code?
@@ -198,7 +207,13 @@ Sigrid, including Sigrid CI, is hosted on Amazon Web Services. If you have speci
 
 ### Do we need to update our firewall settings?
 
-Possibly. As mentioned above, Sigrid is hosted on [AWS](https://sig-sigrid-ci-upload.s3.eu-central-1.amazonaws.com/). This means your firewall needs to allow outgoing traffic in order to submit your project's source code to Sigrid. [Contact SIG](mailto:support@softwareimprovementgroup.com) if you need specific information on this setup.
+Possibly. As mentioned above, Sigrid is hosted on AWS. This means your firewall needs to allow outgoing traffic in order to submit your project's source code to Sigrid. In practical terms this means the following:
+
+- Allow outbound traffic to `sigrid-says.com` on port 443
+- Allow outbound traffic to `auth.sigrid-says.com` on port 443
+- Allow outbound traffic to `sig-sigrid-ci-upload.s3.eu-central-1.amazonaws.com` on port 443
+
+[Contact SIG](mailto:support@softwareimprovementgroup.com) if you need specific information on this setup.
 
 ## Contact and support
 

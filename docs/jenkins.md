@@ -13,7 +13,7 @@ On-boarding is done automatically when you first run Sigrid CI. As long as you h
 
 ## Configuration
 
-**Step 1: Configure Sigrid credential to environment variable**
+### Step 1: Configure Sigrid credential to environment variable
 
 Sigrid CI reads your Sigrid credential from one environment variable, called `SIGRID_CI_TOKEN`. You need to make this environment variable available Jenkins. To do this, navigate to the "Credentials" settings in your Jenkins setting page. Then select "Add credentials" with the type "secret text". You can then use this page to add `SIGRID_CI_TOKEN`:
 
@@ -25,34 +25,40 @@ After saving, the secret should be visible in the list:
 
 This example assumes a default configuration for Jenkins. Your configuration might be different, refer to the [Jenkins documentation](https://www.jenkins.io/doc/book/pipeline/jenkinsfile/#secret-text) for more information on how to make secrets available to Jenkins pipelines.
 
-**Step 2: Add SigridCI to your Jenkins configuration**
+### Step 2: Add Sigrid CI to your Jenkins configuration
 
-In the root of your repository, add a file named `Jenkinsfile`. Use the following contents:
+In the root of your repository, add a file named `Jenkinsfile`. Adding a Sigrid CI step will provide feedback on the quality of the new and changed code within Jenkins, as well as publishing a project snapshot to [sigrid-says.com](https://sigrid-says.com).
+
+#### Alternative 2a: Docker-based run
+
+The recommended approach is to run Sigrid CI using the [Docker image](https://hub.docker.com/r/softwareimprovementgroup/sigridci) published by SIG. Add the following to your `Jenkinsfile`:
 
 ```
 pipeline {
     agent {
         docker {
-            image 'python:3.9-buster'
+            image 'softwareimprovementgroup/sigridci'
         }
     }
     
     environment {
         SIGRID_CI_TOKEN = credentials('SIGRID_CI_TOKEN')
+        PYTHONIOENCODING = utf8
     }
 
     stages {
         stage('build') {
             steps {
-                sh 'git clone https://github.com/Software-Improvement-Group/sigridci.git sigridci'
-                sh './sigridci/sigridci/sigridci.py --customer examplecustomername --system examplesystemname --source . --targetquality 3.5 --publish'
+                sh 'sigridci.py --customer examplecustomername --system examplesystemname --source . --targetquality 3.5 --publish'
             }
         }
     }
 }
 ```
 
-The previous example uses a Docker image to run the pipeline. The example uses the Docker container `python:3.9-buster`, but any Docker container that contains Python 3 will do. While recommended, using Docker is *not* a requirement for using Sigrid CI. It is also possible to use Sigrid CI with a local agent, which is shown in the following example:
+#### Alternative 2b: Download Sigrid CI client script
+
+The previous example uses a Docker image to run the pipeline. While recommended, using Docker is *not* a requirement for using Sigrid CI. It is also possible to use Sigrid CI with a local agent, which is shown in the following example:
 
 ```
 pipeline {
@@ -60,6 +66,7 @@ pipeline {
 
     environment {
         SIGRID_CI_TOKEN = credentials('SIGRID_CI_TOKEN')
+        PYTHONIOENCODING = utf8
     }
 
     stages {
@@ -72,8 +79,6 @@ pipeline {
     }
 }
 ```
-
-This will provide feedback on the quality of the new and changed code within Jenkins, as well as publishing a project snapshot to [sigrid-says.com](https://sigrid-says.com).
 
 **Security note:** This example downloads the Sigrid CI client scripts directly from GitHub. That might be acceptable for some projects, and is in fact increasingly common. However, some projects might not allow this as part of their security policy. In those cases, you can simply download the `sigridci` directory in this repository, and make it available to your runners (either by placing the scripts in a known location, or packaging them into a Docker container). 
 
@@ -83,7 +88,7 @@ Sigrid CI consists of a number of Python-based client scripts, that interact wit
 
 The relevant command that starts Sigrid CI is the call to the `sigridci.py` script, which starts the Sigrid CI analysis. The scripts supports a number of arguments that you can use to configure your Sigrid CI run. The scripts and its command line interface are explained in [using the Sigrid CI client script](client-script-usage.md).
 
-**Step 3: Configure your Jenkins pipeline**
+### Step 3: Configure your Jenkins pipeline
 
 Create a new pipeline in Jenkins by selecting "New item" in the menu. Select the type "pipeline" from the list of options presented to you, and enter a name for your new build pipeline.
 
@@ -97,7 +102,7 @@ Again, these instructions assume that you needed to create a new Jenkins pipelin
 
 The Sigrid CI output uses color to communicate whether the ratings meet the target: system properties that meet the target are shown in green, while ratings below the target are shown in red. Jenkins does not support colored text by default, meaning this information is lost. Using the [Jenkins ANSI color plugin](https://plugins.jenkins.io/ansicolor/) will allow Jenkins to show colored text.
 
-## Optional: change the analysis scope configuration
+### Step 4: Analysis configuration
 
 Sigrid will try to automatically detect the technologies you use, the component structure, and files/directories that should be excluded from the analysis. You can override the default configuration by creating a file called `sigrid.yaml` and adding it to the root of your repository. You can read more about the various options for custom configuration in the [configuration file documentation](analysis-scope-configuration.md).
 
