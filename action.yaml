@@ -49,12 +49,12 @@ runs:
     - ${{ inputs.source }}
     - "--targetquality"
     - ${{ inputs.targetquality }}
-    - ${{ (inputs.publish == 'true' && '--publish') || '' }}
-    - ${{ (inputs.publishonly == 'true' && '--publishonly') || '' }}
-    - ${{ (inputs.includehistory == 'true' && '--include-history') || '' }}
+    - ${{ (inputs.publish == 'true' && '--publish') || '--dummy' }}
+    - ${{ (inputs.publishonly == 'true' && '--publishonly') || '--dummy' }}
+    - ${{ (inputs.includehistory == 'true' && '--include-history') || '--dummy' }}
     - "--exclude"
     - ${{ inputs.exclude }}
-    - ${{ (inputs.showupload == 'true' && '--showupload') || '' }}
+    - ${{ (inputs.showupload == 'true' && '--showupload') || '--dummy' }}
 
 branding:
   icon: hexagon
