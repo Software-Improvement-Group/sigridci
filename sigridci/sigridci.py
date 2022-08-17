@@ -583,9 +583,6 @@ if __name__ == "__main__":
     parser.add_argument("--showupload", action="store_true")
     parser.add_argument("--include-history", action="store_true")
     parser.add_argument("--sigridurl", type=str, default="https://sigrid-says.com")
-    # Dummy argument used when passing false to boolean arguments.
-    # BooleanOptionalAction would solve this, but requires Python 3.9+.
-    parser.add_argument("--dummy", action="store_true")
     args = parser.parse_args()
 
     if args.customer == None or args.system == None or args.source == None:
