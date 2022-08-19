@@ -11,7 +11,7 @@ LABEL org.opencontainers.image.source="https://github.com/Software-Improvement-G
 LABEL org.opencontainers.image.documentation="https://github.com/Software-Improvement-Group/sigridci/tree/main/docs"
 LABEL org.opencontainers.image.revision="${REVISION}"
 
-RUN adduser -S sigridci
+RUN apk --no-cache add git && adduser -S sigridci
 
 COPY --link sigridci /sigridci
 
