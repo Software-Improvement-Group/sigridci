@@ -64,7 +64,6 @@ jobs:
     runs-on: ubuntu-latest
     container: softwareimprovementgroup/mendixpreprocessor:latest
     env:
-      CI_PROJECT_DIR: "."
       MENDIX_TOKEN: "${{ secrets.MENDIX_TOKEN }}"
       SIGRID_CI_CUSTOMER: 'examplecustomername'
       SIGRID_CI_SYSTEM: 'examplesystemname'
