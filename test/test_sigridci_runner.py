@@ -17,7 +17,7 @@ import tempfile
 import types
 import unittest
 import urllib
-from sigridci.sigridci import SigridApiClient, SigridCiRunner, UploadOptions, TargetQuality, LOG_HISTORY, SYSTEM_NAME_PATTERN
+from sigridci.sigridci import SigridApiClient, SigridCiRunner, UploadOptions, TargetQuality, LOG_HISTORY
 
 class SigridCiRunnerTest(unittest.TestCase):
 
@@ -34,17 +34,20 @@ class SigridCiRunnerTest(unittest.TestCase):
         self.assertEqual(apiClient.urlSystemName, "noot")
         
     def testValidateSystemNameAccordingToRules(self):
-        self.assertTrue(SYSTEM_NAME_PATTERN.match("aap"))
-        self.assertTrue(SYSTEM_NAME_PATTERN.match("aap-noot"))
-        self.assertTrue(SYSTEM_NAME_PATTERN.match("aap123"))
-        self.assertTrue(SYSTEM_NAME_PATTERN.match("AAP"))
-        self.assertTrue(SYSTEM_NAME_PATTERN.match("a" * 64))
+        runner = SigridCiRunner()
+    
+        self.assertTrue(runner.isValidSystemName("aap"))
+        self.assertTrue(runner.isValidSystemName("aap-noot"))
+        self.assertTrue(runner.isValidSystemName("aap123"))
+        self.assertTrue(runner.isValidSystemName("AAP"))
+        self.assertTrue(runner.isValidSystemName("a" * 64))
         
-        self.assertFalse(SYSTEM_NAME_PATTERN.match("aap_noot"))
-        self.assertFalse(SYSTEM_NAME_PATTERN.match("a"))
-        self.assertFalse(SYSTEM_NAME_PATTERN.match("$$$"))
-        self.assertFalse(SYSTEM_NAME_PATTERN.match("-aap"))
-        self.assertFalse(SYSTEM_NAME_PATTERN.match("a" * 65))
+        self.assertFalse(runner.isValidSystemName("aap_noot"))
+        self.assertFalse(runner.isValidSystemName("a"))
+        self.assertFalse(runner.isValidSystemName("$$$"))
+        self.assertFalse(runner.isValidSystemName("-aap"))
+        self.assertFalse(runner.isValidSystemName("a" * 65))
+        self.assertFalse(runner.isValidSystemName("aap--aap"))
         
     def testSystemNameIsConvertedToLowerCaseInApiClient(self):
         args = types.SimpleNamespace(partner="sig", customer="Aap", system="NOOT", \
