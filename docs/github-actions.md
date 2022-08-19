@@ -40,7 +40,7 @@ Sigrid CI consists of a number of Python-based client scripts, that interact wit
 
 We will create two GitHub Action workflows: the first will publish the main/master branch to [sigrid-says.com](https://sigrid-says.com) after every commit. 
 
-##### Alternative 2a: Download Sigrid CI client script
+#### Alternative 2a: Download Sigrid CI client script
 
 The simplest way to run Sigrid CI is to download client script directly from GitHub. If a direct GitHub connection is not possible, for example for security reasons, you can also download the `sigridci` directory in this repository and make it available to your runners (either by placing the scripts in a known location, or packaging them into a Docker container). 
 
