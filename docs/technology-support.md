@@ -119,6 +119,7 @@ The first column refers to the name of the technology that should be used in the
 | `java`                         | Java                           |
 | `javafx`                       | Java FX                        |
 | `javascript`                   | JavaScript                     | (2) |
+| `javascript`                   | Google App Script              |
 | `jbc`                          | JBC                            |
 | `jbpm`                         | jBPM                           |
 | `jcl`                          | JCL                            |
@@ -185,7 +186,14 @@ The first column refers to the name of the technology that should be used in the
 | `performance`                  | Performance                    |
 | `perl`                         | Perl                           |
 | `php`                          | PHP                            |
-| `plc`                          | PLC                            |
+| `plc`                          | PLC - Structured Text - ABB    |
+| `plc`                          | PLC - Structured Text - Schneider Electric - EcoStruxure |
+| `plc`                          | PLC - Structured Text - Siemens |
+| `plc`                          | PLC - Functional Block Diagram - ABB |
+| `plc`                          | PLC - Functional Block Diagram - Rockwell |
+| `plc`                          | PLC - Functional Block Diagram - Siemens |
+| `plc`                          | PLC - Ladder Logic - Rockwell |
+| `plc`                          | PLC - Structured Text - Rockwell |
 | `pli`                          | PL/I                           |
 | `plsql`                        | PL/SQL                         |
 | `plsqlforms`                   | PL/SQL Forms                   |
