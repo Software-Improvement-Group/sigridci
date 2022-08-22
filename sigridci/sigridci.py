@@ -34,7 +34,6 @@ from xml.dom import minidom
 
 
 LOG_HISTORY = []
-SYSTEM_NAME_PATTERN = re.compile("^[a-z0-9][a-z0-9-]{1,63}$", re.IGNORECASE)
 SCOPE_FILE_NAMES = ["sigrid.yaml", "sigrid.yml"]
 
 
@@ -519,6 +518,9 @@ class ExitCodeReport(Report):
 
 
 class SigridCiRunner:
+    SYSTEM_NAME_PATTERN = re.compile("^[a-z0-9]+(-[a-z0-9]+)*$", re.IGNORECASE)
+    SYSTEM_NAME_LENGTH = range(2, 65)
+
     def run(self, apiClient, options, target, reports):
         if os.path.exists(f"{options.sourceDir}/sigrid.yml"):
             log("Found sigrid.yml in repository. Did you mean sigrid.yaml?")
@@ -567,6 +569,9 @@ class SigridCiRunner:
         for key, value in apiClient.fetchMetadata().items():
             if value:
                 print(f"    {key}:".ljust(20) + str(value))
+                
+    def isValidSystemName(self, systemName):
+        return self.SYSTEM_NAME_PATTERN.match(systemName) and len(systemName) in self.SYSTEM_NAME_LENGTH
 
 
 if __name__ == "__main__":
@@ -608,15 +613,16 @@ if __name__ == "__main__":
         print("You cannot use both --publish and --pathprefix at the same time, refer to the documentation for details")
         sys.exit(1)
 
-    if not SYSTEM_NAME_PATTERN.match(args.system):
-        print("Invalid system name, system name can only contain letters/numbers/hyphens, and cannot start with a hyphen")
-        sys.exit(1)
-
     log("Starting Sigrid CI")
+    
     options = UploadOptions(args.source, args.exclude.split(","), args.include_history, args.pathprefix, args.showupload, args.publishonly)
     target = TargetQuality(options.readScopeFile() or "", args.targetquality)
     apiClient = SigridApiClient(args)
     reports = [TextReport(), StaticHtmlReport(), JUnitFormatReport(), ExitCodeReport()]
 
     runner = SigridCiRunner()
+    if not runner.isValidSystemName(args.system):
+        print(f"Invalid system name, system name should match '{SYSTEM_NAME_PATTERN.pattern}' "
+              f"and be {SYSTEM_NAME_LENGTH.start} to {SYSTEM_NAME_LENGTH.stop} characters long (inclusive).")
+        sys.exit(1)
     runner.run(apiClient, options, target, reports)
