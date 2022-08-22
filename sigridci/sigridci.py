@@ -622,6 +622,7 @@ if __name__ == "__main__":
 
     runner = SigridCiRunner()
     if not runner.isValidSystemName(args.system):
-        print(f"Invalid system name, system name should match {SYSTEM_NAME_PATTERN} and within {SYSTEM_NAME_LENGTH} characters")
+        print(f"Invalid system name, system name should match '{SYSTEM_NAME_PATTERN.pattern}' "
+              f"and be {SYSTEM_NAME_LENGTH.start} to {SYSTEM_NAME_LENGTH.stop} characters long (inclusive).")
         sys.exit(1)
     runner.run(apiClient, options, target, reports)
