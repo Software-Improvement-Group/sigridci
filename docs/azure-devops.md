@@ -100,7 +100,7 @@ stages:
         inputs:
           versionSpec: '3.7'
           addToPath: false
-      - bash: "./sigridci/sigridci/sigridci.py --customer examplecustomername --system examplesystemname --source . --publish"
+      - bash: "./sigridci/sigridci/sigridci.py --customer examplecustomername --system examplesystemname --source . --publishonly"
         env:
           SIGRID_CI_TOKEN: $(SIGRID_CI_TOKEN)
           PYTHONIOENCODING: utf8
