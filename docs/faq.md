@@ -1,5 +1,5 @@
-Sigrid CI: Frequently Asked Questions
-=====================================
+Sigrid: Frequently Asked Questions
+==================================
 
 ## Table of contents
 
@@ -38,6 +38,10 @@ Sigrid CI: Frequently Asked Questions
 - [How do you protect our source code?](#how-do-you-protect-our-source-code)
 - [Where is your service hosted?](#where-is-your-service-hosted)
 - [Do we need to update our firewall settings?](#do-we-need-to-update-our-firewall-settings)
+
+### Sigrid Security
+
+See [Sigrid Security: Frequently Asked Questions](faq-security.md).
 
 ## Usage questions
 
