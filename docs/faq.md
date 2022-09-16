@@ -83,7 +83,7 @@ For legacy systems, the target quality should be in line with the system's curre
 
 ### Where can I find more information about your metrics?
 
-Sigrid itself includes a brief explanation of all metrics in the "refactoring candidates" page. If you need more information, you can find the [Guidance for producers](https://www.softwareimprovementgroup.com/wp-content/uploads/SIG-TUViT-Evaluation-Criteria-Trusted-Product-Maintainability-Guidance-for-producers.pdf)) on our website, which provides more details on what is measured and why.
+Sigrid itself includes a brief explanation of all metrics in the "refactoring candidates" page. If you need more information, you can find the [Guidance for producers](https://www.softwareimprovementgroup.com/wp-content/uploads/SIG-TUViT-Evaluation-Criteria-Trusted-Product-Maintainability-Guidance-for-producers.pdf) on our website, which provides more details on what is measured and why.
 
 For training purposes, SIG also published a book on [building maintainable software](https://www.amazon.com/Building-Maintainable-Software-Java-Future-Proof/dp/1491953527/ref=sr_1_7?dchild=1&qid=1610456817&refinements=p_27%3AJoost+Visser&s=books&sr=1-7&text=Joost+Visser), which contains detailed explanations on the metrics. It is not necessary to read the book to use Sigrid, but having training material available can be useful when training new or junior developers.
 
