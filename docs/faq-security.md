@@ -5,7 +5,11 @@ This FAQ specifically covers Sigrid's security functionality. Also check the [Si
 
 ### How do you track if a finding has been fixed?
 
-Finding status is automatically updated based on  its "fingerprint". If a fingerprint is no longer found, the issue will be set to Fixed. If a new fingerprint is found, it will become a new finding. A fingerprint is calculated from multiple fields: analysis tool, rule, file name, and the ine of code where the finding was located, combined with the line before and after it. 
+Finding status is automatically updated based on the finding's "fingerprint". If a fingerprint is no longer found, the issue will be set to *Fixed*. If a new fingerprint is found, it will become a new finding.
+
+The finding fingerprint is calculated from multiple fields: analysis tool, rule, file name, and the line of code where the finding was located combined with the line before and after it. 
+
+We use this approach to reduce the amount of busywork. Findings are automatically resolved to avoid situations where people fix something in the code, but then forget to update the finding in Sigrid. Moreover, multiple overlapping findings will automatically be merged if they have the same fingerprint. This means automatic deduplication, which is important for keeping the findings as actionable as possible.
 
 ### What status can findings be in?
 
@@ -15,7 +19,7 @@ Finding status is automatically updated based on  its "fingerprint". If a finger
 - **Will fix:** Indicates the finding should be fixed. This is different from the "refined" status, in that some findings must be fixed while others can remain open as the risk is deemed acceptable.
 - **Fixed:** The finding no longer poses any risk. This status can be assigned by Sigrid if a previous finding is no longer found in subsequent scans. 
 
-### Is it possible that new findings are created without changing the code?
+### Is it possible that Sigrid creates new findings without us changing the code?
 
 Yes, in some cases. SIG is continuously extending our security knowledge base, which means that new findings are sometimes discovered in existing code. This can feel unfair to some teams, but it's important to realize that Sigrid indicates *risk* in the system. In other words, when a new finding is found it doesn't necessarily mean the team did something wrong, it simply means a new risk was discovered and needs to be addressed.
 
@@ -25,15 +29,15 @@ Yes, but this is configurable. Scanning transitive dependencies is preferable fr
 
 Therefore, scanning transitive dependencies can be enabled or disabled in [the analysis configuration](analysis-scope-configuration.md). 
 
-### Why are findings counted double sometimes in the finding list?
+### Why does the finding list count certain findings twice?
 
-The finding list is to indicate compliance. Sometimes a single finding on a vulnerable library has multiple vulnerabilities in multiple categories (e.g. injection and XXE). In that case these are counted separately in the list, but as one in the totals dashboard.
+The finding list indicates *compliance*. Sometimes a single finding on a vulnerable library has multiple vulnerabilities in multiple categories (e.g. injection and XXE). In that case these are counted separately in the list. However, despite the finding appearing in multiple categories, it is still the same finding. It only counts as a single finding towards the total, and resolving the finding will resolve it towards all categories.
 
 ### What technology is Open Source Health based on?
 
 Open Source Health is proprietary SIG technology where we combine 20+ different ecosystems. Examples are Sonatype OSS Index, Google OSV, and GitHub security advisories. Depending on the technology, this will analyze dependency management files (e.g. `pom.xml` or `package.json`), library source files (e.g. `jquery-3.6.1.js`), and binary library files (e.g. `log4j.jar`).
 
-### Why are sometimes Open Source vulnerability entries without a CVE?
+### Why are some Open Source vulnerabilities missing a CVE?
 
 As indicated in the previous question, SIG gathers data from multiple ecosystems. Most of these ecosystems link library vulnerabilities to CVEs, but some provide their own data that is not connected to CVEs.
     
