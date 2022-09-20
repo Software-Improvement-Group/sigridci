@@ -40,6 +40,8 @@ Open Source Health is proprietary SIG technology where we combine 20+ different 
 ### Why are some Open Source vulnerabilities missing a CVE?
 
 As indicated in the previous question, SIG gathers data from multiple ecosystems. Most of these ecosystems link library vulnerabilities to CVEs, but some provide their own data that is not connected to CVEs.
+
+Open Source Health offers the option to create an SBOM (Software Bill Of Materials) report, either through the Sigrid user interface or [through the Sigrid API](sigrid-api-documentation.md#vulnerable-libraries-in-open-source-health).
     
 ### To what extent does SIG provide consultancy for security findings?
 
