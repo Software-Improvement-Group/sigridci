@@ -42,6 +42,10 @@ Open Source Health offers the option to create an SBOM (Software Bill Of Materia
 ### Why are some Open Source vulnerabilities missing a CVE?
 
 As indicated in the previous question, SIG gathers data from multiple ecosystems. Most of these ecosystems link library vulnerabilities to CVEs, but some provide their own data that is not connected to CVEs.
+
+### I previously marked a security finding in an open source library as a false positive, but now it's back?
+
+Open Source Health produces security findings for the version of the open source library you're currently using. If you update the version, but that new version still contains the same issue, the finding will automatically be reopened. If you update the open source library to a version that no longer contains the issue, the security finding in Sigrid will automatically be marked as fixed.
     
 ### To what extent does SIG provide consultancy for security findings?
 
