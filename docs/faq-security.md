@@ -37,11 +37,11 @@ The finding list indicates *compliance*. Sometimes a single finding on a vulnera
 
 Open Source Health is proprietary SIG technology where we combine 20+ different ecosystems. Examples are Sonatype OSS Index, Google OSV, and GitHub security advisories. Depending on the technology, this will analyze dependency management files (e.g. `pom.xml` or `package.json`), library source files (e.g. `jquery-3.6.1.js`), and binary library files (e.g. `log4j.jar`).
 
+Open Source Health offers the option to create an SBOM (Software Bill Of Materials) report, either through the Sigrid user interface or [through the Sigrid API](sigrid-api-documentation.md#vulnerable-libraries-in-open-source-health).
+
 ### Why are some Open Source vulnerabilities missing a CVE?
 
 As indicated in the previous question, SIG gathers data from multiple ecosystems. Most of these ecosystems link library vulnerabilities to CVEs, but some provide their own data that is not connected to CVEs.
-
-Open Source Health offers the option to create an SBOM (Software Bill Of Materials) report, either through the Sigrid user interface or [through the Sigrid API](sigrid-api-documentation.md#vulnerable-libraries-in-open-source-health).
     
 ### To what extent does SIG provide consultancy for security findings?
 
