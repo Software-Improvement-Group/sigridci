@@ -60,7 +60,7 @@ The first column refers to the name of the technology that should be used in the
 | `cobol`                        | Cobol                          |
 | `coffeescript`                 | CoffeeScript                   |
 | `coldfusion`                   | ColdFusion                     |
-| `configuration`                | Configuration                  |
+| `configuration`                | Configuration                  | (5) |
 | `coolgenc`                     | CoolGen C                      |
 | `coolgencobol`                 | CoolGen Cobol                  |
 | `cordysbpm`                    | Cordys BPM                     |
@@ -97,11 +97,12 @@ The first column refers to the name of the technology that should be used in the
 | `fortran`                      | FORTRAN                        |
 | `generated`                    | Generated                      |
 | `gensym`                       | Gensym                         |
+| `grpc`                         | [gRPC](https://grpc.io)        |
 | `go`                           | Go                             |
 | `gosu`                         | Gosu                           |
 | `groovy`                       | Groovy                         |
 | `gsp`                          | GSP                            |
-| `guidefinition`                | GUI Definition                 |
+| `guidefinition`                | GUI Definition                 | (5) |
 | `gupta`                        | Gupta                          |
 | `haml`                         | Haml                           |
 | `html`                         | HTML                           |
@@ -126,7 +127,7 @@ The first column refers to the name of the technology that should be used in the
 | `jcs`                          | JCS                            |
 | `jinja`                        | Jinja                          |
 | `jsf`                          | JSF                            |
-| `json`                         | JSON                           | (4) |
+| `json`                         | JSON                           | (5) |
 | `jsp`                          | JSP                            |
 | `kotlin`                       | Kotlin                         |
 | `less`                         | Less                           |
@@ -277,8 +278,8 @@ The first column refers to the name of the technology that should be used in the
 | `until`                        | Until                          |
 | `vag`                          | Visual Age                     |
 | `vagrecord`                    | Visual Age Record              |
-| `vb`                           | VB                             |
-| `vbnet`                        | VB.Net                         |
+| `vb`                           | Visual Basic                   | (4) |
+| `vbnet`                        | Visual Basic .NET              | (4) |
 | `velocity`                     | Velocity                       |
 | `vgl`                          | VGL                            |
 | `visualforce`                  | VisualForce                    |
@@ -295,21 +296,31 @@ The first column refers to the name of the technology that should be used in the
 | `wsdl`                         | WSDL                           |
 | `wtx`                          | WTX                            |
 | `xaml`                         | XAML                           |
-| `xml`                          | XML                            | (4) |
+| `xml`                          | XML                            | (5) |
 | `xpdl`                         | Tibco ActiveMatrix BPM         |
 | `xpp`                          | X++                            |
 | `xquery`                       | Xquery                         |
 | `xsd`                          | XSD                            |
 | `xslt`                         | XSLT                           |
 | `xul`                          | XUL                            |
-| `yaml`                         | YAML                           | (4) |
+| `yaml`                         | YAML                           | (5) |
 
 Notes:
 
-1. Use either `c` or `cpp`, but not both. Prefer `cpp` if your system contains a combination of C and C++ code.
-2. Use either `javascript` or `react` or `vuejs`, but do not use multiple. Prefer `vuejs` if your system contains [Vue.js](https://vuejs.org) components that use the `.vue` file extension. Prefer `react` if your codebase contains [React](https://reactjs.org) and/or [JSX](https://reactjs.org/docs/introducing-jsx.html). Use `javascript` in all other cases.
-3. Use either `typescript` or `vuets`, but not both. Prefer `vuets` if you're using [Vue.js](https://vuejs.org) in combination with TypeScript code. Prefer `typescript` in all other cases.
-4. In most cases, configuration files are not considered part of production code and are therefore not relevant for Sigrid's maintainability analysis. Only add these technologies if you consider them part of the system's production code.
+1. Use either `c` or `cpp`, but not both.
+  - Prefer `cpp` if your system contains a combination of C and C++ code.
+2. Use one of `javascript`, `react`, `vuejs`, `sapui5`, but do not use multiple.
+  - Prefer `vuejs` if your system contains [Vue.js](https://vuejs.org) components that use the `.vue` file extension.
+  - Prefer `react` if your codebase contains [React](https://reactjs.org) and/or [JSX](https://reactjs.org/docs/introducing-jsx.html).
+  - Only use `sapui5` if you are using [SAP UI](https://developers.sap.com/topics/ui-development.html).
+  - Use `javascript` in all other cases.
+3. Use either `typescript` or `vuets`, but not both.
+  - Prefer `vuets` if you're using [Vue.js](https://vuejs.org) in combination with TypeScript code. 
+  - Prefer `typescript` in all other cases.
+4. Use either `vb` or `vbnet`, but not both.
+  - Prefer `vbnet` for Visual Basic code running on the .NET platform, or when not sure.
+  - Use `vb` for [classic Visual Basic](https://en.wikipedia.org/wiki/Visual_Basic_(classic), which has been end-of-life since 2008.
+5. In most cases, configuration files are not considered part of production code and are therefore not relevant for Sigrid's maintainability analysis. Only add these technologies if you consider them part of the system's production code.
 
 ## Requesting additional technology support
 
