@@ -150,19 +150,13 @@ The output consists of the following:
 - An overview of all ratings, compared against the system as a whole. This allows you to check if your changes improved the system, or accidentally made things worse.
 - The final conclusion on whether your changes and merge request meet the quality target.
 
-In addition to the textual output, Sigrid CI also generates a static HTML file that shows the results in a more graphical form. This is similar to test coverage tools, which also tend to produce a HTML report. You can download this report form GitLab using the "download" button on the right side of the CI results view:
+In addition to the textual output, the results also include a link to the Sigrid landing page. 
 
-<img src="images/gitlab-download.png" width="300" />
+<img src="images/landing-page.png" width="600" />
 
-The information in the HTML report is based on the aforementioned list, though it includes slightly more detail.
+You can open this URL in order to use Sigrid for interpreting your analysis results. Whether you should use the text output or the Sigrid page is largely down to personal preference: the text output is faster to acces and more concise, while Sigrid allows you to view results in a more visual and interactive way. 
 
-<img src="images/feedback-report.png" width="600" />
-
-Sigrid CI output is also included in GitLab's CI/CD pipeline page, which contains a *Tests* tab. The *View details* button will show the same list of refactoring candidates that is shown in the aforementioned textual output and HTML report.
-
-<img src="images/gitlab-ci-details.png" width="700" />
-
-Finally, if you want to have more information on the system as a whole, you can also access [Sigrid](http://sigrid-says.com/), which gives you more information on the overall quality of the system, its architecture, and more.
+Finally, Sigrid CI output is also included in GitLab's CI/CD pipeline page, which contains a *Tests* tab. The *View details* button will show the same list of refactoring candidates that is shown in the aforementioned textual output and HTML report.
 
 ## Contact and support
 

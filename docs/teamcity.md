@@ -36,7 +36,6 @@ This scripts supports a number of arguments that you can use to configure your S
 
 **Security note:** This example downloads the Sigrid CI client scripts directly from GitHub. That might be acceptable for some projects, and is in fact increasingly common. However, some projects might not allow this as part of their security policy. In those cases, you can simply download the `sigridci` directory in this repository, and make it available to your runners.
 
-- For "artifact paths", enter the value `**/sigrid-ci-output/**`.
 - In "Docker settings", use `python:3.9-buster` as the container name and "Docker image platform" to "Linux". Note that using this Docker container is just an example, custom Docker containers or custom runners are also supported, as long as the runner meets the system requirements listed in the "Prerequisites" section at the top of this page.
 
 After performing these steps you should end up with the following configuration:
@@ -80,11 +79,11 @@ In addition to the textual output, Sigrid CI also generates a static HTML file t
 
 <img src="images/teamcity-artifacts.png" width="500" />
 
-The information in the HTML report is based on the aforementioned list, though it includes slightly more detail.
+In addition to the textual output, the results also include a link to the Sigrid landing page. 
 
-<img src="images/feedback-report.png" width="600" />
+<img src="images/landing-page.png" width="600" />
 
-Finally, if you want to have more information on the system as a whole, you can also access [Sigrid](http://sigrid-says.com/), which gives you more information on the overall quality of the system, its architecture, and more.
+You can open this URL in order to use Sigrid for interpreting your analysis results. Whether you should use the text output or the Sigrid page is largely down to personal preference: the text output is faster to acces and more concise, while Sigrid allows you to view results in a more visual and interactive way. 
 
 ## Contact and support
 
