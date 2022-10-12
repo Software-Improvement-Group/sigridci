@@ -187,6 +187,10 @@ class SigridApiClient:
     def fetchMetadata(self):
         path = f"/analysis-results/api/{self.API_VERSION}/system-metadata/{self.urlCustomerName}/{self.urlSystemName}"
         return self.retry(lambda: self.callSigridAPI(path))
+        
+    def getLandingPage(self, analysisId, target):
+        targetRating = "%.1f" % target.ratings["MAINTAINABILITY"]
+        return f"{self.baseURL}/{self.urlCustomerName}/{self.urlSystemName}/-/sigrid-ci/{analysisId}?targetRating={targetRating}"
 
 
 class SystemUploadPacker:
@@ -498,11 +502,23 @@ class JUnitFormatReport(Report):
         lists = [self.getRefactoringCandidates(feedback, m) for m in target.ratings
                  if not target.meetsTargetQualityForMetric(feedback, m)]
         return [item for sublist in lists for item in sublist]
+                
+                
+class ConclusionReport(Report):
+    def __init__(self, apiClient, output=sys.stdout):
+        self.apiClient = apiClient
+        self.output = output
 
-
-class ExitCodeReport(Report):
     def generate(self, feedback, args, target):
-        asciiArt = TextReport()
+        self.printConclusionMessage(feedback, target)
+        self.printLandingPage(feedback, target)
+        # If you publish(only) we never break the build
+        # We can break the build when running on a branch or pull request.
+        if not target.meetsQualityTargets(feedback) and not args.publish:
+            sys.exit(1)
+            
+    def printConclusionMessage(self, feedback, target):
+        asciiArt = TextReport(self.output)
         
         if target.meetsQualityTargets(feedback):
             asciiArt.printColor("\n** SIGRID CI RUN COMPLETE: YOU WROTE MAINTAINABLE CODE AND REACHED THE TARGET **\n", \
@@ -510,11 +526,16 @@ class ExitCodeReport(Report):
         else:
             asciiArt.printColor("\n** SIGRID CI RUN COMPLETE: THE CODE YOU WROTE DID NOT MEET THE TARGET FOR MAINTAINABLE CODE **\n", \
                 asciiArt.ANSI_BOLD + asciiArt.ANSI_YELLOW)
-
-            # If you publish(only) we never break the build
-            # We can break the build when running on a branch or pull request.
-            if not args.publish:
-                sys.exit(1)
+                
+    def printLandingPage(self, feedback, target):
+        landingPage = self.apiClient.getLandingPage(feedback["analysisId"], target)
+        
+        print("", file=self.output)
+        print("-" * (len(landingPage) + 4), file=self.output)
+        print("View your analysis results in Sigrid:", file=self.output)
+        print(f"    {landingPage}", file=self.output)
+        print("-" * (len(landingPage) + 4), file=self.output)
+        print("", file=self.output)
 
 
 class SigridCiRunner:
@@ -542,6 +563,7 @@ class SigridCiRunner:
             self.displayMetadata(apiClient)
         else:
             feedback = apiClient.fetchAnalysisResults(analysisId)
+            feedback["analysisId"] = analysisId
             self.displayMetadata(apiClient)
 
             if not os.path.exists("sigrid-ci-output"):
@@ -618,7 +640,7 @@ if __name__ == "__main__":
     options = UploadOptions(args.source, args.exclude.split(","), args.include_history, args.pathprefix, args.showupload, args.publishonly)
     target = TargetQuality(options.readScopeFile() or "", args.targetquality)
     apiClient = SigridApiClient(args)
-    reports = [TextReport(), StaticHtmlReport(), JUnitFormatReport(), ExitCodeReport()]
+    reports = [TextReport(), StaticHtmlReport(), JUnitFormatReport(), ConclusionReport(apiClient)]
 
     runner = SigridCiRunner()
     if not runner.isValidSystemName(args.system):
