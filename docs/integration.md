@@ -61,11 +61,6 @@ sigridci:
     - git clone https://github.com/Software-Improvement-Group/sigridci.git sigridci
     - ./sigridci/sigridci/sigridci.py --customer examplecustomername --system examplesystemname --source . --targetquality 3.5
   allow_failure: true
-  artifacts:
-    paths:
-      - "sigrid-ci-output/*"
-    expire_in: 1 week
-    when: always
   except:
     - master
     
@@ -110,11 +105,11 @@ The output consists of the following:
 - An overview of all ratings, compared against the system as a whole. This allows you to check if your changes improved the system, or accidentally made things worse.
 - The final conclusion on whether your changes and merge request meet the quality target.
 
-In addition to the textual output, Sigrid CI also generates a static HTML file that shows the results in a more graphical form. This is similar to test coverage tools, which also tend to produce a HTML report. The information in the HTML report is based on the aforementioned list, though it includes slightly more detail.
+The end of the textual output provides a link to the Sigrid landing page. You can open this URL in order to use Sigrid for interpreting your analysis results.
 
-<img src="images/feedback-report.png" width="600" />
+<img src="images/landing-page.png" width="700" />
 
-Finally, if you want to have more information on the system as a whole, you can also access [Sigrid](http://sigrid-says.com/), which gives you more information on the overall quality of the system, its architecture, and more.
+Whether you should use the text output or the Sigrid page is largely down to personal preference: the text output is faster to acces and more concise, while Sigrid allows you to view results in a more visual and interactive way. 
 
 ## Contact and support
 

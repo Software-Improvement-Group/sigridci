@@ -65,13 +65,6 @@ jobs:
         env:
           SIGRID_CI_TOKEN: "${{ secrets.SIGRID_CI_TOKEN }}"
         run: "./sigridci/sigridci/sigridci.py --customer examplecustomername --system examplesystemname --source . --targetquality 3.0 --publish" 
-      - name: "Save Sigrid CI results"
-        if: ${{ success() || failure() }}
-        uses: actions/upload-artifact@v2
-        with:
-          path: "sigrid-ci-output/**"
-          retention-days: 7
-          if-no-files-found: ignore
 ```
 
 Next, create `.github/workflows/sigrid-pullrequest.yml` to receive feedback on your pull requests:
@@ -92,13 +85,6 @@ jobs:
         env:
           SIGRID_CI_TOKEN: "${{ secrets.SIGRID_CI_TOKEN }}"
         run: "./sigridci/sigridci/sigridci.py --customer examplecustomername --system examplesystemname --source . --targetquality 3.5"
-      - name: "Save Sigrid CI results"
-        if: ${{ success() || failure() }}
-        uses: actions/upload-artifact@v2
-        with:
-          path: "sigrid-ci-output/**"
-          retention-days: 7
-          if-no-files-found: ignore
 ```
 
 #### Alternative 2b: GitHub Marketplace
@@ -195,15 +181,11 @@ The output consists of the following:
 - An overview of all ratings, compared against the system as a whole. This allows you to check if your changes improved the system, or accidentally made things worse.
 - The final conclusion on whether your changes and merge request meet the quality target.
 
-In addition to the textual output, Sigrid CI also generates a static HTML file that shows the results in a more graphical form. This is similar to test coverage tools, which also tend to produce a HTML report. You can download this HTML report from the "artifacts" section in the GitHub Actions page:
+The end of the textual output provides a link to the Sigrid landing page. You can open this URL in order to use Sigrid for interpreting your analysis results.
 
-<img src="images/github-artifacts.png" width="300" />
+<img src="images/landing-page.png" width="700" />
 
-The information in the HTML report is based on the aforementioned list, though it includes slightly more detail.
-
-<img src="images/feedback-report.png" width="600" />
-
-Finally, if you want to have more information on the system as a whole, you can also access [Sigrid](http://sigrid-says.com/), which gives you more information on the overall quality of the system, its architecture, and more.
+Whether you should use the text output or the Sigrid page is largely down to personal preference: the text output is faster to acces and more concise, while Sigrid allows you to view results in a more visual and interactive way. 
 
 ### Adding a Sigrid CI badge to your repository
 
