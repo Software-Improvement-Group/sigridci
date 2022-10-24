@@ -150,11 +150,11 @@ The output consists of the following:
 - An overview of all ratings, compared against the system as a whole. This allows you to check if your changes improved the system, or accidentally made things worse.
 - The final conclusion on whether your changes and merge request meet the quality target.
 
-In addition to the textual output, the results also include a link to the Sigrid landing page. 
+The end of the textual output provides a link to the Sigrid landing page. You can open this URL in order to use Sigrid for interpreting your analysis results.
 
 <img src="images/landing-page.png" width="700" />
 
-You can open this URL in order to use Sigrid for interpreting your analysis results. Whether you should use the text output or the Sigrid page is largely down to personal preference: the text output is faster to acces and more concise, while Sigrid allows you to view results in a more visual and interactive way. 
+Whether you should use the text output or the Sigrid page is largely down to personal preference: the text output is faster to acces and more concise, while Sigrid allows you to view results in a more visual and interactive way. 
 
 Finally, Sigrid CI output is also included in GitLab's CI/CD pipeline page, which contains a *Tests* tab. The *View details* button will show the same list of refactoring candidates that is shown in the aforementioned textual output and HTML report.
 
