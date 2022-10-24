@@ -1,5 +1,5 @@
-Integrating Sigrid CI with Mendix QSM on a Gitlab server
-==============================================
+Integrating Sigrid CI with Mendix QSM on a GitLab server
+========================================================
 
 Please note: `QSM` is the brand name used by Mendix, in this manual we will use `Sigrid`.
 
@@ -45,7 +45,6 @@ We will create a pipeline that consists of two jobs:
 
 In the root of your repository, create a file `.gitlab-ci.yml` and add the following contents:
 
-
 ```
 stages:
  - report
@@ -83,7 +82,6 @@ sigridpublish:
   only:
     variables:
       - $CI_COMMIT_REF_NAME == $CI_DEFAULT_BRANCH
-
 ```
 
 Note the name of the branch, which is `main` in the example but might be different for your repository. In general, most older projects will use `master` as their main branch, while more recent projects will use `main`. 
@@ -96,11 +94,11 @@ The output consists of the following:
 - An overview of all ratings, compared against the system as a whole. This allows you to check if your changes improved the system, or accidentally made things worse.
 - The final conclusion on whether your changes and merge request meet the quality target.
 
-In addition to the textual output, Sigrid CI also generates a static HTML file that shows the results in a more graphical form. This is similar to test coverage tools, which also tend to produce a HTML report. Use the "download" button in the pipeline details screen to download the report. The information in the HTML report is similar to the command line output, though it includes slightly more detail.
+The end of the textual output provides a link to the Sigrid landing page. You can open this URL in order to use Sigrid for interpreting your analysis results.
 
-<img src="images/feedback-report.png" width="600" />
+<img src="images/landing-page.png" width="700" />
 
-Finally, if you want to have more information on the system as a whole, you can also access [Sigrid](http://sigrid-says.com/), which gives you more information on the overall quality of the system, its architecture, and more.
+Whether you should use the text output or the Sigrid page is largely down to personal preference: the text output is faster to acces and more concise, while Sigrid allows you to view results in a more visual and interactive way. 
 
 ## Contact and support
 

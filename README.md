@@ -29,7 +29,7 @@ We provide specific instructions for integrating Sigrid CI with popular developm
 - [Integrating Sigrid CI with Azure DevOps](docs/azure-devops.md)
 - [Integrating Sigrid CI with TeamCity](docs/teamcity.md)
 - [Integrating Sigrid CI with Mendix QSM on a GitHub server](docs/mendix-github-actions.md)
-- [Integrating Sigrid CI with Mendix QSM on a Gitlab server](docs/mendix-gitlab.md)
+- [Integrating Sigrid CI with Mendix QSM on a GitLab server](docs/mendix-gitlab.md)
 - [Integrating Sigrid CI with other/custom CI environments](docs/integration.md)
 
 ## Usage documentation
