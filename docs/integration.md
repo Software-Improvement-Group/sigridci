@@ -61,11 +61,6 @@ sigridci:
     - git clone https://github.com/Software-Improvement-Group/sigridci.git sigridci
     - ./sigridci/sigridci/sigridci.py --customer examplecustomername --system examplesystemname --source . --targetquality 3.5
   allow_failure: true
-  artifacts:
-    paths:
-      - "sigrid-ci-output/*"
-    expire_in: 1 week
-    when: always
   except:
     - master
     
