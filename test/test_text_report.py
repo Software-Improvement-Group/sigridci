@@ -77,7 +77,7 @@ class TextReportTest(unittest.TestCase):
     
         buffer = io.StringIO()
         report = TextReport(buffer)
-        report.generate(feedback, types.SimpleNamespace(publish=False), target)
+        report.generate("1234", feedback, types.SimpleNamespace(publish=False), target)
         
         expected = """
 -----------------------------------------------------------------------------------------
@@ -132,7 +132,7 @@ System property            Baseline on N/A          New/changed code    Target
     
         buffer = io.StringIO()
         report = TextReport(buffer)
-        report.generate(feedback, types.SimpleNamespace(publish=True), target)
+        report.generate("1234", feedback, types.SimpleNamespace(publish=True), target)
         
         expected = """
 -----------------------------------------------------------------------------------------

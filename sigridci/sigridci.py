@@ -284,7 +284,7 @@ class Report:
     REFACTORING_CANDIDATE_METRICS = ["DUPLICATION", "UNIT_SIZE", "UNIT_COMPLEXITY", "UNIT_INTERFACING",
                                      "MODULE_COUPLING"]
 
-    def generate(self, feedback, args, target):
+    def generate(self, analysisId, feedback, args, target):
         pass
 
     def formatMetricName(self, metric):
@@ -321,7 +321,7 @@ class TextReport(Report):
     def __init__(self, output=sys.stdout):
         self.output = output
 
-    def generate(self, feedback, args, target):
+    def generate(self, analysisId, feedback, args, target):
         self.printHeader("Refactoring candidates")
         for metric in self.REFACTORING_CANDIDATE_METRICS:
             self.printMetric(feedback, metric)
@@ -392,7 +392,7 @@ class StaticHtmlReport(Report):
     HTML_STAR_FULL = "&#9733;"
     HTML_STAR_EMPTY = "&#9734;"
 
-    def generate(self, feedback, args, target):
+    def generate(self, analysisId, feedback, args, target):
         with open(os.path.dirname(__file__) + "/sigridci-feedback-template.html", encoding="utf-8", mode="r") as templateRef:
             template = templateRef.read()
             template = self.renderHtmlFeedback(template, feedback, args, target)
@@ -464,7 +464,7 @@ class StaticHtmlReport(Report):
 
 
 class JUnitFormatReport(Report):
-    def generate(self, feedback, args, target):
+    def generate(self, analysisId, feedback, args, target):
         with open("sigrid-ci-output/sigridci-junit-format-report.xml", "w") as fileRef:
             fileRef.write(self.generateXML(feedback, target))
 
@@ -509,9 +509,9 @@ class ConclusionReport(Report):
         self.apiClient = apiClient
         self.output = output
 
-    def generate(self, feedback, args, target):
+    def generate(self, analysisId, feedback, args, target):
         self.printConclusionMessage(feedback, target)
-        self.printLandingPage(feedback, target)
+        self.printLandingPage(analysisId, feedback, target)
         # If you publish(only) we never break the build
         # We can break the build when running on a branch or pull request.
         if not target.meetsQualityTargets(feedback) and not args.publish:
@@ -527,8 +527,8 @@ class ConclusionReport(Report):
             asciiArt.printColor("\n** SIGRID CI RUN COMPLETE: THE CODE YOU WROTE DID NOT MEET THE TARGET FOR MAINTAINABLE CODE **\n", \
                 asciiArt.ANSI_BOLD + asciiArt.ANSI_YELLOW)
                 
-    def printLandingPage(self, feedback, target):
-        landingPage = self.apiClient.getLandingPage(feedback["analysisId"], target)
+    def printLandingPage(self, analysisId, feedback, target):
+        landingPage = self.apiClient.getLandingPage(analysisId, target)
         
         print("", file=self.output)
         print("-" * (len(landingPage) + 4), file=self.output)
@@ -563,14 +563,13 @@ class SigridCiRunner:
             self.displayMetadata(apiClient)
         else:
             feedback = apiClient.fetchAnalysisResults(analysisId)
-            feedback["analysisId"] = analysisId
             self.displayMetadata(apiClient)
 
             if not os.path.exists("sigrid-ci-output"):
                 os.mkdir("sigrid-ci-output")
 
             for report in reports:
-                report.generate(feedback, args, target)
+                report.generate(analysisId, feedback, args, target)
     
     def checkScopeFile(self, apiClient, scope):
         log("Validating scope configuration file")

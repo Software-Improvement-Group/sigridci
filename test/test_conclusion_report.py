@@ -24,7 +24,6 @@ class ConclusionReportTest(unittest.TestCase):
 
     def testDisplayLandingPageFromClient(self):
         feedback = {
-            "analysisId" : "1234",
             "baseine": "20220110",
             "baselineRatings": {"DUPLICATION": 4.0, "UNIT_SIZE": 4.0, "MAINTAINABILITY": 4.0},
             "newCodeRatings": {"DUPLICATION": 5.0, "UNIT_SIZE": 2.0, "MAINTAINABILITY": 3.0},
@@ -39,7 +38,7 @@ class ConclusionReportTest(unittest.TestCase):
         buffer = io.StringIO()
         
         report = ConclusionReport(apiClient, buffer)
-        report.generate(feedback, args, target)
+        report.generate("1234", feedback, args, target)
         
         expected = """
 \033[1m\033[33m
