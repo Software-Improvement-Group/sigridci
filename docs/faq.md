@@ -32,6 +32,7 @@ Sigrid: Frequently Asked Questions
 - [Where do I find the Sigrid CI output?](#where-do-i-find-the-sigrid-ci-output)
 - [I started using Sigrid CI, and now I suddenly see more code in Sigrid](#i-started-using-sigrid-ci-and-now-i-suddenly-see-more-code-in-sigrid)
 - [I'm receiving an error message about UnicodeEncodeError](#im-receiving-an-error-message-about-unicodeencodeerror)
+- [I'm reciving an error message about dubious ownership in repository](#im-receiving-an-error-message-about-dubious-ownership-in-repository)
 
 ### Infrastructure and security questions
 
@@ -191,11 +192,15 @@ This also means that we recommend you to either use Sigrid CI or SFTP uploads, b
 
 ### I'm receiving an error message about UnicodeEncodeError
 
-In some environments Sigrid CI can produce the following error:
+In some environments, Sigrid CI can produce the following error:
 
     UnicodeEncodeError: 'charmap' codec can't encode characters
     
 This happens when Sigrid CI tried to provide command line output that includes UTF-8 characters, but `stdout` is unable to display such errors. This can be solved by adding the `export PYTHONIOENCODING=utf8` environment variable.
+
+### I'm reciving an error message about dubious ownership in repository
+
+This message occurs when the (Linux) user that cloned your Git repository is different from the (Linux) user that is running the CI job. This scenario is pretty uncommon, in the majority of cases the entire CI pipeline is performed with the same user. If you see this error, you can add `git config --global --add safe.directory <repository-dir>` to tell Git it is safe to trust the directory to which the repository was cloned. Note you need to provide the directory's absolute path, Git will not allow `.`.
 
 ## Infrastructure and security questions
 
