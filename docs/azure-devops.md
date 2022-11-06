@@ -5,7 +5,7 @@ Integrating Sigrid CI with Azure DevOps
 
 - You have a [Sigrid](https://sigrid-says.com) user account. 
 - You have created an [authentication token for using Sigrid CI](authentication-tokens.md).
-- [Python 3.7 or higher](https://www.python.org) needs to be available in the CI environment. The client script for Sigrid CI is based on Python.
+- [Python 3.7 or higher](https://www.python.org) needs to be available in the CI environment if you do not use the [Docker image](https://hub.docker.com/r/softwareimprovementgroup/sigridci) published by SIG. The client scripts for Sigrid CI are based on Python.
 - The examples assume [Git](https://git-scm.com) is available on your Azure DevOps environment.
 
 ## On-boarding your system to Sigrid
@@ -23,7 +23,7 @@ We will create a pipeline that consists of two jobs:
 
 #### Alternative 1a: Docker-based analysis
 
-The recommended approach is to run Sigrid CI using the [Docker image](https://hub.docker.com/r/softwareimprovementgroup/sigridci) published by SIG. In the root of your repository, create a file `azure-devops-pipeline.yaml` and add the following contents:
+The recommended approach is to run Sigrid CI using the [Docker image](https://hub.docker.com/r/softwareimprovementgroup/sigridci) published by SIG. Please make sure you use the `azure` tag. In the root of your repository, create a file `azure-devops-pipeline.yaml` and add the following contents:
 
 ```
 stages:
@@ -32,7 +32,7 @@ stages:
       - job: SigridCI
         pool:
           vmImage: ubuntu-latest
-        container: softwareimprovementgroup/sigridci
+        container: softwareimprovementgroup/sigridci:azure
         continueOnError: true
         condition: "ne(variables['Build.SourceBranch'], 'refs/heads/main')"
         steps:
@@ -43,7 +43,7 @@ stages:
       - job: SigridPublish
         pool:
           vmImage: ubuntu-latest
-        container: softwareimprovementgroup/sigridci
+        container: softwareimprovementgroup/sigridci:azure
         continueOnError: true
         condition: "eq(variables['Build.SourceBranch'], 'refs/heads/main')"
         steps:
@@ -56,6 +56,8 @@ stages:
 Note the name of the branch, which is `main` in the example but might be different for your repository. In general, most older projects will use `master` as their main branch, while more recent projects will use `main`. 
 
 Commit and push this file to the repository, so that Azure DevOps can use this configuration file for your pipeline. If you already have an existing pipeline configuration, simply add these steps to it.
+
+**Security note:** The `softwareimprovementgroup/sigridci:azure` Docker image deliberately runs as root (in other words, we deliberately did not include a `USER` instruction in the Dockerfile that generates this image). Based on [Microsoft's documentation](https://learn.microsoft.com/en-us/azure/devops/pipelines/process/container-phases?view=azure-devops&tabs=yaml#linux-based-containers), we understand that Linux-based Docker images used in Azure DevOps need to run as root (fifth requirement). 
 
 ### Alternative 1b: Download Sigrid CI client script
 
