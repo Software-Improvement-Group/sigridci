@@ -1,0 +1,24 @@
+# syntax=docker/dockerfile:1.4
+FROM python:3.11-slim
+
+ARG REVISION
+
+LABEL org.opencontainers.image.title="Sigrid CI"
+LABEL org.opencontainers.image.description="Sigrid | Software Assurance Platform"
+LABEL org.opencontainers.image.vendor="Software Improvement Group"
+LABEL org.opencontainers.image.authors="info@softwareimprovementgroup.com"
+LABEL org.opencontainers.image.source="https://github.com/Software-Improvement-Group/sigridci"
+LABEL org.opencontainers.image.documentation="https://github.com/Software-Improvement-Group/sigridci/tree/main/docs"
+LABEL org.opencontainers.image.revision="${REVISION}"
+
+RUN set -eux; \
+	apt-get update; \
+	apt-get upgrade -y; \
+	apt-get install -y --no-install-recommends git; \
+	rm -rf /var/lib/apt/lists/*
+
+COPY --link sigridci /sigridci
+
+ENV PATH /sigridci:$PATH
+
+CMD [ "/sigridci/sigridci.py" ]
