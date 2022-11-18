@@ -34,7 +34,6 @@ from xml.dom import minidom
 
 
 LOG_HISTORY = []
-SCOPE_FILE_NAMES = ["sigrid.yaml", "sigrid.yml"]
 
 
 def log(message):
@@ -53,7 +52,13 @@ class UploadOptions:
     publishOnly: bool = False
     
     def readScopeFile(self):
-        for file in SCOPE_FILE_NAMES:
+        return self.locateFile(["sigrid.yaml", "sigrid.yml"])
+        
+    def readMetadataFile(self):
+        return self.locateFile(["sigrid-metadata.yaml", "sigrid-metadata.yml"])
+    
+    def locateFile(self, possibleFileNames):
+        for file in possibleFileNames:
             if os.path.exists(f"{self.sourceDir}/{file}"):
                 with open(f"{self.sourceDir}/{file}", "r") as f:
                     return f.read()
@@ -161,6 +166,10 @@ class SigridApiClient:
     def validateScopeFile(self, scopeFile):
         path = f"/inboundresults/{self.urlPartnerName}/{self.urlCustomerName}/{self.urlSystemName}/ci/validate/{self.API_VERSION}"
         return self.retry(lambda: self.callSigridAPI(path, scopeFile.encode("utf8"), "text/yaml"))
+        
+    def validateMetadata(self, metadataFile):
+        path = f"/analysis-results/sigridci/{self.urlCustomerName}/validate"
+        return self.retry(lambda: self.callSigridAPI(path, metadataFile.encode("utf8"), "text/yaml"))
 
     def uploadBinaryFile(self, url, upload):
         self.retry(lambda: self.attemptUpload(url, upload))
@@ -550,10 +559,7 @@ class SigridCiRunner:
         systemExists = apiClient.checkSystemExists()
         log("Found system in Sigrid" if systemExists else "System is not yet on-boarded to Sigrid")
         
-        scope = options.readScopeFile()
-        if scope:
-            self.checkScopeFile(apiClient, scope)
-            
+        self.validateConfigurationFiles(apiClient, options)
         analysisId = apiClient.submitUpload(options, systemExists)
 
         if not systemExists:
@@ -570,15 +576,24 @@ class SigridCiRunner:
 
             for report in reports:
                 report.generate(analysisId, feedback, args, target)
+                
+    def validateConfigurationFiles(self, apiClient, options):
+        scope = options.readScopeFile()
+        if scope:
+            self.validateConfiguration(lambda: apiClient.validateScopeFile(scope), "scope configuration file")
+        
+        metadataFile = options.readMetadataFile()
+        if metadataFile:
+            self.validateConfiguration(lambda: apiClient.validateMetadata(metadataFile), "Sigrid metadata file")
     
-    def checkScopeFile(self, apiClient, scope):
-        log("Validating scope configuration file")
-        validationResult = apiClient.validateScopeFile(scope)
+    def validateConfiguration(self, validationCall, configurationName):
+        log(f"Validating {configurationName}")
+        validationResult = validationCall()
         if validationResult["valid"]:
             log("Validation passed")
         else:
             log("-" * 80)
-            log("Invalid scope configuration file:")
+            log(f"Invalid {configurationName}:")
             for note in validationResult["notes"]:
                 log(f"    - {note}")
             log("-" * 80)

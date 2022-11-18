@@ -344,6 +344,65 @@ class SigridCiRunnerTest(unittest.TestCase):
 
         self.assertEqual(LOG_HISTORY, expectedLog)
         
+    def testValidateMetadataFileIfPresent(self):
+        tempDir = tempfile.mkdtemp()    
+        self.createTempFile(tempDir, "sigrid-metadata.yaml", "metadata:\n  division: aap")
+        uploadOptions = UploadOptions(sourceDir=tempDir)
+        
+        apiClient = MockApiClient(publish=False)
+        apiClient.responses["/analysis-results/sigridci/aap/validate"] = {"valid" : True, "notes": []}
+    
+        runner = SigridCiRunner()
+        runner.run(apiClient, uploadOptions, None, [])
+            
+        expectedLog = [
+            "Found system in Sigrid",
+            "Validating Sigrid metadata file",
+            "Validation passed"
+        ]
+
+        self.assertEqual(LOG_HISTORY[0:3], expectedLog)
+        
+    def testFailIfMetadataFileIsNotValid(self):
+        tempDir = tempfile.mkdtemp()    
+        self.createTempFile(tempDir, "sigrid-metadata.yaml", "metadata:\n  typo: aap")
+        uploadOptions = UploadOptions(sourceDir=tempDir)
+        
+        apiClient = MockApiClient(publish=False)
+        apiClient.responses["/analysis-results/sigridci/aap/validate"] = {"valid" : False, "notes": ["test"]}
+    
+        with self.assertRaises(SystemExit):
+            runner = SigridCiRunner()
+            runner.run(apiClient, uploadOptions, None, [])
+            
+        expectedLog = [
+            "Found system in Sigrid",
+            "Validating Sigrid metadata file",
+            "--------------------------------------------------------------------------------",
+            "Invalid Sigrid metadata file:",
+            "    - test",
+            "--------------------------------------------------------------------------------"
+        ]
+
+        self.assertEqual(LOG_HISTORY, expectedLog)
+    
+    def testDoNotValidateMetadataFileIfNotPresent(self):
+        tempDir = tempfile.mkdtemp()    
+        uploadOptions = UploadOptions(sourceDir=tempDir)        
+        apiClient = MockApiClient(publish=False)
+    
+        with self.assertRaises(SystemExit):
+            runner = SigridCiRunner()
+            runner.run(apiClient, uploadOptions, None, [])
+            
+        expectedLog = [
+            "Found system in Sigrid",
+            "Creating upload",
+            "Upload size is 1 MB"
+        ]
+
+        self.assertEqual(LOG_HISTORY, expectedLog)
+        
     def createTempFile(self, dir, name, contents):
         with open(f"{dir}/{name}", "w") as fileRef:
             fileRef.write(contents)
