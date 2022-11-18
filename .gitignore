@@ -4,3 +4,4 @@ sigrid-ci-output/
 *.zip
 .idea/
 *.iml
+.vscode
