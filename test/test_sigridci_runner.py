@@ -36,18 +36,18 @@ class SigridCiRunnerTest(unittest.TestCase):
     def testValidateSystemNameAccordingToRules(self):
         runner = SigridCiRunner()
     
-        self.assertTrue(runner.isValidSystemName("aap"))
-        self.assertTrue(runner.isValidSystemName("aap-noot"))
-        self.assertTrue(runner.isValidSystemName("aap123"))
-        self.assertTrue(runner.isValidSystemName("AAP"))
-        self.assertTrue(runner.isValidSystemName("a" * 64))
-        
-        self.assertFalse(runner.isValidSystemName("aap_noot"))
-        self.assertFalse(runner.isValidSystemName("a"))
-        self.assertFalse(runner.isValidSystemName("$$$"))
-        self.assertFalse(runner.isValidSystemName("-aap"))
-        self.assertFalse(runner.isValidSystemName("a" * 65))
-        self.assertFalse(runner.isValidSystemName("aap--aap"))
+        self.assertTrue(runner.isValidSystemName("noot", "aap"))
+        self.assertTrue(runner.isValidSystemName("noot", "aap-noot"))
+        self.assertTrue(runner.isValidSystemName("noot", "aap123"))
+        self.assertTrue(runner.isValidSystemName("noot", "AAP"))
+        self.assertTrue(runner.isValidSystemName("noot", "a" * 59))
+
+        self.assertFalse(runner.isValidSystemName("noot", "aap_noot"))
+        self.assertFalse(runner.isValidSystemName("noot", "a"))
+        self.assertFalse(runner.isValidSystemName("noot", "$$$"))
+        self.assertFalse(runner.isValidSystemName("noot", "-aap"))
+        self.assertFalse(runner.isValidSystemName("noot", "a" * 65))
+        self.assertFalse(runner.isValidSystemName("noot", "aap--aap"))
         
     def testSystemNameIsConvertedToLowerCaseInApiClient(self):
         args = types.SimpleNamespace(partner="sig", customer="Aap", system="NOOT", \
