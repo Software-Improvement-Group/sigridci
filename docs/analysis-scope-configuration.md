@@ -21,7 +21,7 @@ languages:
   - typescript
 ```
 
-## Project metadata
+## General configuration
 
 | Field              | Required | Description                                                                                                    |
 |--------------------|----------|----------------------------------------------------------------------------------------------------------------|
@@ -114,6 +114,10 @@ The `architecture` section supports the following options:
 | `model`     | No        | Version of the SIG Architecture Quality Model to use. Defaults to latest version. |
 
 Architecture Quality also requires the repository history to be included in the upload. This requires the `--include-history` option to be enabled in the [Sigrid CI client script](client-script-usage.md).
+
+## Sigrid metadata
+
+`sigrid.yaml` is used for *analysis* configuration. It is also possible to configure Sigrid *metadata*. See the [Sigrid metadata](metadata.html) section for the various ways you can update this metadata.
 
 ## Contact and support
 
