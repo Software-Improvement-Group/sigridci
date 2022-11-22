@@ -165,11 +165,11 @@ class SigridApiClient:
         
     def validateScopeFile(self, scopeFile):
         path = f"/inboundresults/{self.urlPartnerName}/{self.urlCustomerName}/{self.urlSystemName}/ci/validate/{self.API_VERSION}"
-        return self.retry(lambda: self.callSigridAPI(path, scopeFile.encode("utf8"), "text/yaml"))
+        return self.retry(lambda: self.callSigridAPI(path, scopeFile.encode("utf8"), "application/yaml"))
         
     def validateMetadata(self, metadataFile):
         path = f"/analysis-results/sigridci/{self.urlCustomerName}/validate"
-        return self.retry(lambda: self.callSigridAPI(path, metadataFile.encode("utf8"), "text/yaml"))
+        return self.retry(lambda: self.callSigridAPI(path, metadataFile.encode("utf8"), "application/yaml"))
 
     def uploadBinaryFile(self, url, upload):
         self.retry(lambda: self.attemptUpload(url, upload))
@@ -566,10 +566,10 @@ class SigridCiRunner:
             log(f"System '{apiClient.urlSystemName}' is on-boarded to Sigrid, and will appear in sigrid-says.com shortly")
         elif options.publishOnly:
             log("Your project's source code has been published to Sigrid")
-            self.displayMetadata(apiClient)
+            self.displayMetadata(apiClient, options)
         else:
             feedback = apiClient.fetchAnalysisResults(analysisId)
-            self.displayMetadata(apiClient)
+            self.displayMetadata(apiClient, options)
 
             if not os.path.exists("sigrid-ci-output"):
                 os.mkdir("sigrid-ci-output")
@@ -599,12 +599,13 @@ class SigridCiRunner:
             log("-" * 80)
             sys.exit(1)
             
-    def displayMetadata(self, apiClient):
-        print("")
-        print("Sigrid metadata for this system:")
-        for key, value in apiClient.fetchMetadata().items():
-            if value:
-                print(f"    {key}:".ljust(20) + str(value))
+    def displayMetadata(self, apiClient, options):
+        if options.readMetadataFile() == None:
+            print("")
+            print("Sigrid metadata for this system:")
+            for key, value in apiClient.fetchMetadata().items():
+                if value:
+                    print(f"    {key}:".ljust(20) + str(value))
                 
     def isValidSystemName(self, systemName):
         return self.SYSTEM_NAME_PATTERN.match(systemName) and len(systemName) in self.SYSTEM_NAME_LENGTH
