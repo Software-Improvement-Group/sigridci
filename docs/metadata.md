@@ -11,6 +11,8 @@ This is by far the simplest approach: in Sigrid, simply go to the system setting
 
 <img src="images/metadata-ui.png" width="600" />
 
+Note the screenshot only shows part of the metadata page, the full page contains significantly more options than what is displayed here.
+
 ### Option 2: Using the Sigrid API to add metadata
 
 The [Sigrid API end point for metadata](sigrid-api-documentation.md#system-metadata) allows you to add metadata programmatically. This is less accessible than using the Sigrid user interface, but has the advantage that it can run automatically. This is typically used when you need to synchronize metadata from another system to Sigrid, and you want this to run in an automated way.
@@ -27,14 +29,13 @@ metadata:
   supplierNames:
     - Team 1
     - Team 2
-  lifecyclePhase: "EOL",
-  inProductionSince: 2012,
-  businessCriticality: "HIGH",
-  targetIndustry: "ICD9530",
-  deploymentType: "PUBLIC_FACING",
-  applicationType: "ANALYTICAL",
-  remark: "A remark",
-  externalID: "ab12345",
+  lifecyclePhase: EOL
+  inProductionSince: 2012
+  businessCriticality: HIGH
+  targetIndustry: ICD9530
+  deploymentType: PUBLIC_FACING
+  applicationType: ANALYTICAL
+  externalId: ab12345
   isDevelopmentOnly: false
   deploymentType: INTERNAL
   remark: "Some notes"
