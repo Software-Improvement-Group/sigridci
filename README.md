@@ -39,7 +39,6 @@ We provide specific instructions for integrating Sigrid CI with popular developm
 - [Changing the analysis scope configuration](docs/analysis-scope-configuration.md)
 - [Adding business context to a system using metadata](docs/metadata.md)
 - [Using Sigrid CI as part of your development workflow](docs/workflows.md)
-
 - [Frequently asked questions](docs/faq.md)
 - [Supported technologies](docs/technology-support.md)
 - [Sigrid CI demo recording](https://www.youtube.com/watch?v=1QWWtFlB6cQ) 
