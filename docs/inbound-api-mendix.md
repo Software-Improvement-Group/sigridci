@@ -1,6 +1,8 @@
-# Sigrid API for Mendix customers
+# Sigrid API for Mendix customers using the Teamserver
 
-This document describes 2 use cases when customers can trigger Sigrid for their specific Mendix context.
+This document describes 2 use cases when customers can trigger Sigrid. The below use cases are explicitly for customers that are using the central Mendix Teamserver. 
+
+please note: When the customer is using the Bring Your Own Git scenario then the below does not apply. please refer to [Mendix for GitHub](mendix-github-actions.md)
 
 ## Control the onboarding
 Onboarding a new Mendix system is normaly done via [addon.mendix.com](addon.mendix.com). In some cases customers would like to take onboarding in their own hands. Examples can be automation or bulk onboarding. In those cases customers can trigger an QSM Onboarding workflow that will add a new Mendix system to an existing Sigrid. By default the mainline of the Mendix system will be scanned once a day. The scan will provide both maintanability, OSH and security findings for QSM customers. AQM customers will only see maintainability results. The onboarding will generate a status email to the user specified in the payload.
