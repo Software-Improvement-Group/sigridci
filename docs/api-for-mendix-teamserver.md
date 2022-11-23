@@ -1,6 +1,6 @@
 # Sigrid API for Mendix customers using the Teamserver
 
-This document describes 2 use cases when customers can trigger Sigrid. The below use cases are explicitly for customers that are using the central Mendix Teamserver. 
+This document describes 2 use cases to trigger Sigrid for customers that are using the central Mendix Teamserver.
 
 please note: When the customer is using the Bring Your Own Git scenario then the below does not apply. please refer to [Mendix for GitHub](mendix-github-actions.md)
 
