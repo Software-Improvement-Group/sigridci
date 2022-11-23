@@ -1,12 +1,12 @@
-## Triggers for Mendix customers
+# Sigrid API for Mendix customers
 
-This document describes 2 use cases where Mendix customers can trigger Sigrid in the AQM/QSM context. 
+This document describes 2 use cases when customers can trigger Sigrid for their specific Mendix context.
 
-Trigger an QSM Onboarding workflow is about adding a new Mendix system to an existing Sigrid. By default the mainline of the Mendix system will be scanned once a day. The scan will provide both maintanability and OSH and security findings.
+## Control the onboarding
+Onboarding a new Mendix system is normaly done via [addon.mendix.com](addon.mendix.com). In some cases customers would like to take onboarding in their own hands. Examples can be automation or bulk onboarding. In those cases customers can trigger an QSM Onboarding workflow that will add a new Mendix system to an existing Sigrid. By default the mainline of the Mendix system will be scanned once a day. The scan will provide both maintanability, OSH and security findings for QSM customers. AQM customers will only see maintainability results. The onboarding will generate a status email to the user specified in the payload.
 
-
-Trigger a QSM run workflow for an already onboarded system. This is useful when a customer would like to trigger a new run for certain day. The 'on demand' run will overwrite the previous scan for maintainability, OSH and security.
-
+## On demand scanning
+Trigger a QSM run workflow for an already onboarded system. This is useful when a customer would like to trigger a new run for certain day. The trigger can be a step in an automated pipeline or just a developer that is interested in updated results for the mainline. There will be no email, the 'on demand' scan will overwrite the previous scan results in sigrid-says.com
 
 
 ### 1. Trigger an QSM Onboarding workflow
@@ -14,20 +14,20 @@ Trigger a QSM run workflow for an already onboarded system. This is useful when 
 POST `/qsm/{customer}`
 
 #### Info
-Note that this endpoint requires a Sigrid Access Token that is valid for {customer}. 
+Note that this endpoint requires a [SIGRID CI Authentication token](authentication-tokens.md) that is valid for {customer}. 
 ##### Headers
-    - 'Authorization: Bearer YOUR_TOKEN'
+    - 'Authorization: Bearer YOUR_SIGRID_CI_Auth_TOKEN'
     - `Content-Type: application/json`
 ##### Body
 Json object with the following fields:
 
-    - appId (to be used to identify the Mendix app)
+    - appId : to be used to identify the Mendix app. 
 
-    - appName (to be used as system name in SigridYou can use the Mendix project name, it will be converted to an acceptable system name)
+    - appName : to be used as system name in Sigrid. You can use the Mendix project name, it will be converted to a Sigrid system name.
 
-    - mendixToken (we prefer the PAT but also support the old API Key. In case of an API Key, the userName should match the key)
+    - mendixToken : we prefer the Mendix PAT [Personal Access Token](https://warden.mendix.com) MX model read only. There is support for the old API Key. In case of an API Key, the userName should match the key
 
-    - userName ( to be used to send email notifications, not relevant for authentication in case of PAT)
+    - userName : to be used to send status email, not relevant for authentication in case of PAT
     
 
 #### Example request
@@ -41,9 +41,9 @@ curl --header 'Authorization: Bearer YOUR_TOKEN' -X POST https://sigrid-says.com
 POST `/qsm/{customer}/{system}`
 
 #### Info
-Note that this endpoint requires a Sigrid Access Token that is valid for {customer}.
+Note that this endpoint requires a [SIGRID CI Authentication token](authentication-tokens.md) that is valid for {customer}.
 ##### Headers
-    - 'Authorization: Bearer YOUR_TOKEN'
+    - 'Authorization: Bearer YOUR_SIGRID_CI_Auth_TOKEN'
 ##### Body
 Should remain empty
     
