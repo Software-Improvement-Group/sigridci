@@ -550,6 +550,19 @@ class ConclusionReport(Report):
 class SigridCiRunner:
     SYSTEM_NAME_PATTERN = re.compile("^[a-z0-9]+(-[a-z0-9]+)*$", re.IGNORECASE)
     SYSTEM_NAME_LENGTH = range(2, 65)
+    METADATA_FIELDS = [
+        "divisionName",
+        "supplierName",
+        "lifecyclePhase",
+        "inProductionSince",
+        "businessCriticality",
+        "targetIndustry",
+        "deploymentType",
+        "applicationType",
+        "externalId",
+        "isDevelopmentOnly",
+        "remark"
+    ]
 
     def run(self, apiClient, options, target, reports):
         if os.path.exists(f"{options.sourceDir}/sigrid.yml"):
@@ -559,6 +572,7 @@ class SigridCiRunner:
         systemExists = apiClient.checkSystemExists()
         log("Found system in Sigrid" if systemExists else "System is not yet on-boarded to Sigrid")
         
+        self.prepareMetadata(options)
         self.validateConfigurationFiles(apiClient, options)
         analysisId = apiClient.submitUpload(options, systemExists)
 
@@ -606,9 +620,24 @@ class SigridCiRunner:
             for key, value in apiClient.fetchMetadata().items():
                 if value:
                     print(f"    {key}:".ljust(20) + str(value))
+                    
+    def prepareMetadata(self, options):
+        metadata = {field: os.environ.get(field.lower(), "") for field in self.METADATA_FIELDS}
+        metadata = {field: value for field, value in metadata.items() if value and len(value) > 0}
+        
+        if len(metadata) > 0:
+            if options.readMetadataFile() != None:
+                raise Exception("Cannot add metadata using environment variables if metadata YAML file is already used")
+            
+            with open(f"{options.sourceDir}/sigrid-metadata.yaml", "w") as writer:
+                writer.write("metadata:\n")
+                for name, value in metadata.items():
+                    writer.write(f"  {name}: \"{value}\"\n")
                 
     def isValidSystemName(self, customerName, systemName):
-        return self.SYSTEM_NAME_PATTERN.match(systemName) and len(systemName) > self.SYSTEM_NAME_LENGTH.start and (len(systemName) + len(customerName) + 1) in self.SYSTEM_NAME_LENGTH
+        return self.SYSTEM_NAME_PATTERN.match(systemName) and \
+            len(systemName) > self.SYSTEM_NAME_LENGTH.start and \
+            (len(systemName) + len(customerName) + 1) in self.SYSTEM_NAME_LENGTH
 
 
 if __name__ == "__main__":

@@ -3,7 +3,7 @@ Adding business context to a system using metadata
 
 Adding business context to Sigrid makes it easier to interpret the results. For example, a below-market average maintainability rating of 2 stars might seem like a problem, but this depends entirely on the context. If the system is no longer actively maintained and will be decommissioned by the end of the year (i.e., its lifecycle phase is end-of-life, or EOL for short), such a rating might be perfectly acceptable. But if that system is new, uses a modern technology, and is business critical, such a rating would be considered a red flag. In both cases the technical conclusion is identical, it's the context that determines the urgency.
 
-This context information is called *metadata* in Sigrid. Adding metadata can be done in 3 different ways:
+This context information is called *metadata* in Sigrid. Adding metadata can be done in 4 different ways:
 
 ### Option 1: Adding metadata in Sigrid
 
@@ -37,7 +37,6 @@ metadata:
   applicationType: ANALYTICAL
   externalId: ab12345
   isDevelopmentOnly: false
-  deploymentType: INTERNAL
   remark: "Some notes"
 ```
 
@@ -48,6 +47,15 @@ metadata:
   remark: null
 
 The contents of the YAML file will be used to update the metadata whenever you publish your system to Sigrid. If you run Sigrid CI *without* publishing, i.e. when you run it for a branch or pull request, the metadata does *not* get updated. This ensures that publishing code and publishing metadata behave in a consistent way.
+
+### Option 4: Adding metadata via Sigrid CI parameters
+
+Metadata can also be configured by passing the metadata values as parameters when running Sigrid CI. This will dynamically generate the YAML file from option 3, but does not require you to commit this YAML file to your repository. 
+
+- For all platforms, you can define environment variables to the Sigrid CI run. The name of the environment variables is the lowercase version of the metadata fields listed above. For example, defining the `applicationType` field in the YAML is equivalent to defining an environment variable named `applicationtype`.
+- When using the Sigrid CI GitHub Action published to GitHub Marketplace, you can also provide these fields as input parameters instead of environment variables. The names are again lowercase, so the input parameter would be named `applicationtype`.
+
+Note you can use the YAML file or environment variables, but not both. 
 
 ## Contact and support
 
