@@ -552,7 +552,7 @@ class SigridCiRunner:
     SYSTEM_NAME_LENGTH = range(2, 65)
     METADATA_FIELDS = [
         "divisionName",
-        "supplierName",
+        "supplierNames",
         "lifecyclePhase",
         "inProductionSince",
         "businessCriticality",
@@ -622,8 +622,8 @@ class SigridCiRunner:
                     print(f"    {key}:".ljust(20) + str(value))
                     
     def prepareMetadata(self, options):
-        metadata = {field: os.environ.get(field.lower(), "") for field in self.METADATA_FIELDS}
-        metadata = {field: value for field, value in metadata.items() if value and len(value) > 0}
+        getMetadataValue = lambda field: os.environ.get(field.lower(), "")
+        metadata = {field: getMetadataValue(field) for field in self.METADATA_FIELDS if getMetadataValue(field)}
         
         if len(metadata) > 0:
             if options.readMetadataFile() != None:
@@ -632,7 +632,8 @@ class SigridCiRunner:
             with open(f"{options.sourceDir}/sigrid-metadata.yaml", "w") as writer:
                 writer.write("metadata:\n")
                 for name, value in metadata.items():
-                    writer.write(f"  {name}: \"{value}\"\n")
+                    formattedValue = f"[\"{value}\"]" if name in ["supplierNames"] else f"\"{value}\""
+                    writer.write(f"  {name}: {formattedValue}\n")
                 
     def isValidSystemName(self, customerName, systemName):
         return self.SYSTEM_NAME_PATTERN.match(systemName) and \

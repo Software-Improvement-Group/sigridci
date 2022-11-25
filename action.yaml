@@ -41,7 +41,7 @@ inputs:
   divisionname:
     required: false
     default: ""
-  suppliername:
+  suppliernames:
     required: false
     default: ""
   lifecyclephase:
@@ -92,7 +92,7 @@ runs:
     - ${{ (inputs.showupload == 'true' && '--showupload') || '--dummy' }}
   env:
     divisionname: ${{ inputs.divisionname }}
-    suppliername: ${{ inputs.suppliername }}
+    suppliernames: ${{ inputs.suppliernames }}
     lifecyclephase: ${{ inputs.lifecyclephase }}
     inproductionsince: ${{ inputs.inproductionsince }}
     businesscriticality: ${{ inputs.businesscriticality }}
