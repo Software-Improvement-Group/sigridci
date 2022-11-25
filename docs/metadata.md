@@ -52,7 +52,7 @@ The contents of the YAML file will be used to update the metadata whenever you p
 
 Metadata can also be configured by passing the metadata values as parameters when running Sigrid CI. This will dynamically generate the YAML file from option 3, but does not require you to commit this YAML file to your repository. 
 
-- For all platforms, you can define environment variables to the Sigrid CI run. The name of the environment variables is the lowercase version of the metadata fields listed above. For example, defining the `applicationType` field in the YAML is equivalent to defining an environment variable named `applicationtype`.
+- For all platforms, you can define environment variables to the Sigrid CI run. The name of the environment variables is the lowercase version of the metadata fields listed above. For example, defining the `applicationType` field in the YAML is equivalent to defining an environment variable named `applicationtype` as a Sigrid CI parameter.
 - When using the Sigrid CI GitHub Action published to GitHub Marketplace, you can also provide these fields as input parameters instead of environment variables. The names are again lowercase, so the input parameter would be named `applicationtype`.
 
 Note you can use the YAML file or environment variables, but not both. 
