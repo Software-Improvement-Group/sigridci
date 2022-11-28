@@ -174,18 +174,19 @@ More information on the SBOM format and the various fields is available from the
 
 ### System metadata
 
-System metadata can be viewed and updated using the following two endpoints:
+System metadata can be viewed and updated using the following three endpoints:
 - `GET https://sigrid-says.com/rest/analysis-results/api/v1/system-metadata/{customer}/{system}`: get metadata of the given system of the given customer.
+- `GET https://sigrid-says.com/rest/analysis-results/api/v1/system-metadata/{customer}`: get metadata of all systems of the given customer.
 - `PATCH https://sigrid-says.com/rest/analysis-results/api/v1/system-metadata/{customer}/{system}`: update metadata of the given system of the given customer.
 
 The path parameters `{customer}` and `{system}` refer to your Sigrid account name and system ID respectively.
 
-The response format of both endpoints is as follows:
+The response format of both system-level endpoints (`GET` and `PATCH`) is as follows:
 ```json
 {
   "divisionName" : "Division name",
   "displayName" : "User-friendly system name",
-  "supplierNames" : [ "Supplier 1", "Dupplier 2" ],
+  "supplierNames" : [ "Supplier 1", "Supplier 2" ],
   "lifecyclePhase" : "EOL",
   "inProductionSince" : 2012,
   "businessCriticality" : "HIGH",
@@ -196,6 +197,28 @@ The response format of both endpoints is as follows:
   "externalID" : "ab12345",
   "isDevelopmentOnly" : false
 }
+```
+
+The response format of the customer-level endpoint (`GET https://sigrid-says.com/rest/analysis-results/api/v1/system-metadata/{customer}`) is as follows:
+```json
+[
+  {
+    "customerName": "foo",
+    "systemName": "bar",
+    "divisionName" : "Division name",
+    "displayName" : "User-friendly system name",
+    "supplierNames" : [ "Supplier 1", "Supplier 2" ],
+    "lifecyclePhase" : "EOL",
+    "inProductionSince" : 2012,
+    "businessCriticality" : "HIGH",
+    "targetIndustry" : "ICD9530",
+    "deploymentType" : "PUBLIC_FACING",
+    "applicationType" : "ANALYTICAL",
+    "remark" : "A remark",
+    "externalID" : "ab12345",
+    "isDevelopmentOnly" : false
+  }
+]
 ```
 
 All properties can be null except for `supplierNames` (which is always an array, but possibly empty) and `isDevelopmentOnly` (which is always true or falls).
