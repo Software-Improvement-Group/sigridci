@@ -559,7 +559,7 @@ class SigridCiRunner:
         "targetIndustry",
         "deploymentType",
         "applicationType",
-        "externalId",
+        "externalID",
         "isDevelopmentOnly",
         "remark"
     ]

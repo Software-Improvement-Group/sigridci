@@ -35,16 +35,18 @@ metadata:
   targetIndustry: ICD9530
   deploymentType: PUBLIC_FACING
   applicationType: ANALYTICAL
-  externalId: ab12345
+  externalID: ab12345
   isDevelopmentOnly: false
   remark: "Some notes"
 ```
 
 The [Sigrid API documentation](sigrid-api-documentation.md#system-metadata) contains descriptions of the various fields. Note that the semantics are the same: only fields present in `sigrid-metadata.yaml` are updated, others are left as-is. For example, the following `sigrid-metadata.yaml` file would _update_ the external ID and remove the current remark:
 
+```
 metadata:
-  externalId: "ab12345"
+  externalID: "ab12345"
   remark: null
+```
 
 The contents of the YAML file will be used to update the metadata whenever you publish your system to Sigrid. If you run Sigrid CI *without* publishing, i.e. when you run it for a branch or pull request, the metadata does *not* get updated. This ensures that publishing code and publishing metadata behave in a consistent way.
 
