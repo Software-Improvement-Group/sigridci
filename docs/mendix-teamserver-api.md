@@ -33,7 +33,7 @@ Json object with the following fields:
     
 
 #### Example request
-```
+```bash
 curl --header 'Authorization: Bearer YOUR_TOKEN' -X POST https://sigrid-says.com/rest/inboundresults/qsm/CUSTOMER -H 'Content-Type: application/json' -d '{ "appId" : "01234567-89ab-cdef-0123-456789abcdef", "appName" : "mendixsystemname", "userName" : "user@sig.eu", "mendixToken" : "123456-abcdef" }'
 ```
 ---
@@ -51,6 +51,6 @@ Should remain empty
     
 
 #### Example request
-```
+```bash
 curl --header 'Authorization: Bearer YOUR_TOKEN' -X POST https://sigrid-says.com/rest/inboundresults/qsm/CUSTOMER/SYSTEM
 ```
