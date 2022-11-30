@@ -18,10 +18,10 @@ The script takes a limited number of mandatory arguments. However, Sigrid CI's b
 
 | Argument            | Required | Example value       | Description                                                                                              |
 |---------------------|----------|---------------------|----------------------------------------------------------------------------------------------------------|
-| `--customer`        | Yes      | examplecustomername | Name of your organization's Sigrid account. Contact SIG support if you're not sure about this. [1]          |
-| `--system`          | Yes      | examplesystemname   | Name of your system in Sigrid. Contact SIG support if you're not sure about this. [2]                       |
+| `--customer`        | Yes      | examplecustomername | Name of your organization's Sigrid account. Contact SIG support if you're not sure about this. [1]       |
+| `--system`          | Yes      | examplesystemname   | Name of your system in Sigrid. Contact SIG support if you're not sure about this. [2]                    |
 | `--source`          | Yes      | .                   | Path of your project's source code. Use "." for current directory.                                       |
-| `--targetquality`   | No       | 3.5                 | Target quality level, not meeting this target will cause the CI step to fail. Default is 3.5 stars.      |
+| `--targetquality`   | No       | 3.5                 | See [defining quality targets](#defining-quality-targets). Used to decide if the CI step should fail.    |
 | `--publish`         | No       | N/A                 | Automatically publishes analysis results to Sigrid. [1]                                                  |
 | `--publishonly`     | No       | N/A                 | Publishes analysis results to Sigrid, but *does not* provide feedback in the CI environment itself. [3]  |
 | `--exclude`         | No       | /build/,.png        | Comma-separated list of file and/or directory names that should be excluded from the upload. [4]         |
@@ -37,9 +37,23 @@ Notes:
 4. These files and directories are excluded *on top of* Sigrid's default excludes. By default, Sigrid excludes things like third party libraries (e.g. `/node_modules/` for NPM libraries, build output (e.g. `/target/` for Maven builds), and generated code. 
 5. The `--pathprefix` option can be used in cases where your repository used a different directory structure from the one that is known to Sigrid. For example, you might have combined your back-end and front-end repositories within a single system in Sigrid, so that in Sigrid there are two top-level folders: `backend` and `frontend` containing the contents of your two repositories. However, you still want to get specific feedback for your front-end repository in Sigrid CI. In this case you would use `--pathprefix frontend` so that Sigrid CI knows the location of your repository within the larger directory structure. Note that you cannot use this option if you're already using `--publish`.  
 
-## Specifying a quality target
+## Defining quality targets
 
-Sigrid CI compares the quality of the new/changed code against the configured target quality level. The simplest and recommended way to configure the target is by using the `--targetquality` command line argument. This will check the overall quality maintainability rating against the target. 
+Sigrid CI compares the quality of the new/changed code against the configured target quality level. The target is always relative to the thousands of other systems in the SIG benchmark. This means you don't need to fix every single minor issue, as long as the overall quality is OK you're still allowed to proceed.
+
+### Option 1: Use Sigrid's maintainability target for your system (default)
+
+By default, Sigrid CI will use the maintainability target you've defined for your system in Sigrid. This is the same target that's depicted in the "system objectives" list you see in Sigrid.
+
+<img src="images/sigrid-objectives.png" width="300" />
+
+If you do not have a maintainability target defined in Sigrid, Sigrid CI will use a target of 3.5 stars (which is what SIG recommends for systems with modern technologies in active development).
+
+### Option 2: Use a different maintainability target in Sigrid CI
+
+Using the `--targetquality` parameter allows you to override the maintainability target defined in Sigrid. For example, `--targetquality 4.0` will require pull requests to be 4.0 stars even if the system-level maintainability target is 3.5 stars. You would normally use the same target in both, but in some situations you might want to be more strict or more lenient for pull requests. 
+
+## Option 3: Advanced per-metric targets
 
 The advanced approach requires you to add a section to the `sigrid.yaml` [configuration file](analysis-scope-configuration.md). This approach allows you to specify a target quality level for both the overall maintainability level and every system property. You can use different targets for different metrics, so this allows you to both have an overall target, but also be more strict (or more lenient) for some of the underlying system properties. Using the configuration file provides more flexibility and more control, but it also makes the feedback more complicated. In general, it is recommended to use the overall target quality level, and only start defining specific thresholds for specific system properties when there are structural quality issues that cannot be addressed otherwise.
 
