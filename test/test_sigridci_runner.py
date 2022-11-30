@@ -24,6 +24,9 @@ class SigridCiRunnerTest(unittest.TestCase):
     def setUp(self):
         os.environ["SIGRID_CI_ACCOUNT"] = "dummy"
         os.environ["SIGRID_CI_TOKEN"] = "dummy"
+        os.environ["externalid"] = ""
+        os.environ["divisionname"] = ""
+        os.environ["suppliernames"] = ""
         LOG_HISTORY.clear()
         
     def testForceLowerCaseForCustomerAndSystemName(self):
@@ -402,6 +405,66 @@ class SigridCiRunnerTest(unittest.TestCase):
         ]
 
         self.assertEqual(LOG_HISTORY, expectedLog)
+        
+    def testDoNotGenerateFileWithoutEnvironmentVariables(self):
+        tempDir = tempfile.mkdtemp()
+        uploadOptions = UploadOptions(sourceDir=tempDir)
+        
+        runner = SigridCiRunner()
+        runner.prepareMetadata(uploadOptions)
+        
+        self.assertEqual(os.path.exists(f"{tempDir}/sigrid-metadata.yaml"), False)
+        
+    def testDoGenerateFileIfEnvironmentVariablesAreUsed(self):
+        tempDir = tempfile.mkdtemp()
+        uploadOptions = UploadOptions(sourceDir=tempDir)
+        os.environ["externalid"] = "1234"
+        
+        runner = SigridCiRunner()
+        runner.prepareMetadata(uploadOptions)
+        
+        self.assertEqual(os.path.exists(f"{tempDir}/sigrid-metadata.yaml"), True)
+        with open(f"{tempDir}/sigrid-metadata.yaml") as f:
+            self.assertEqual(f.read(), "metadata:\n  externalID: \"1234\"\n")
+            
+    def testIgnoreEmptyEnvironmentVariables(self):
+        tempDir = tempfile.mkdtemp()
+        uploadOptions = UploadOptions(sourceDir=tempDir)
+        os.environ["externalid"] = "1234"
+        os.environ["divisionname"] = ""
+        
+        runner = SigridCiRunner()
+        runner.prepareMetadata(uploadOptions)
+        
+        self.assertEqual(os.path.exists(f"{tempDir}/sigrid-metadata.yaml"), True)
+        with open(f"{tempDir}/sigrid-metadata.yaml") as f:
+            self.assertEqual(f.read(), "metadata:\n  externalID: \"1234\"\n")
+            
+    def testSupplierNamesIsList(self):
+        tempDir = tempfile.mkdtemp()
+        uploadOptions = UploadOptions(sourceDir=tempDir)
+        os.environ["suppliernames"] = "aap"
+        
+        runner = SigridCiRunner()
+        runner.prepareMetadata(uploadOptions)
+        
+        self.assertEqual(os.path.exists(f"{tempDir}/sigrid-metadata.yaml"), True)
+        with open(f"{tempDir}/sigrid-metadata.yaml") as f:
+            self.assertEqual(f.read(), "metadata:\n  supplierNames: [\"aap\"]\n")
+        
+    def testErrorIfEnvironmentVariablesAreUsedButFileAlreadyExists(self):
+        tempDir = tempfile.mkdtemp()
+        self.createTempFile(tempDir, "sigrid-metadata.yaml", "metadata:\n  externalID: 1")
+        uploadOptions = UploadOptions(sourceDir=tempDir)
+        os.environ["externalid"] = "1234"
+        
+        runner = SigridCiRunner()
+        with self.assertRaises(Exception):
+            runner.prepareMetadata(uploadOptions)
+        
+        self.assertEqual(os.path.exists(f"{tempDir}/sigrid-metadata.yaml"), True)
+        with open(f"{tempDir}/sigrid-metadata.yaml") as f:
+            self.assertEqual(f.read(), "metadata:\n  externalID: 1")
         
     def createTempFile(self, dir, name, contents):
         with open(f"{dir}/{name}", "w") as fileRef:

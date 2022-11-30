@@ -36,6 +36,41 @@ inputs:
     description: "Outputs the list of files included in the upload to Sigrid, for troubleshooting (true/false)."
     required: false
     default: false
+    
+  # Sigrid metadata
+  divisionname:
+    required: false
+    default: ""
+  suppliernames:
+    required: false
+    default: ""
+  lifecyclephase:
+    required: false
+    default: ""
+  inproductionsince:
+    required: false
+    default: ""
+  businesscriticality:
+    required: false
+    default: ""
+  targetindustry:
+    required: false
+    default: ""
+  deploymenttype:
+    required: false
+    default: ""
+  applicationtype:
+    required: false
+    default: ""
+  externalid:
+    required: false
+    default: ""
+  isdevelopmentonly:
+    required: false
+    default: ""
+  remark:
+    required: false
+    default: ""
 
 runs:
   using: "docker"
@@ -55,6 +90,18 @@ runs:
     - "--exclude"
     - ${{ inputs.exclude }}
     - ${{ (inputs.showupload == 'true' && '--showupload') || '--dummy' }}
+  env:
+    divisionname: ${{ inputs.divisionname }}
+    suppliernames: ${{ inputs.suppliernames }}
+    lifecyclephase: ${{ inputs.lifecyclephase }}
+    inproductionsince: ${{ inputs.inproductionsince }}
+    businesscriticality: ${{ inputs.businesscriticality }}
+    targetindustry: ${{ inputs.targetindustry }}
+    deploymenttype: ${{ inputs.deploymenttype }}
+    applicationtype: ${{ inputs.applicationtype }}
+    externalid: ${{ inputs.externalid }}
+    isdevelopmentonly: ${{ inputs.isdevelopmentonly }}
+    remark: ${{ inputs.remark }}
 
 branding:
   icon: hexagon
