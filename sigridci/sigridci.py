@@ -197,6 +197,10 @@ class SigridApiClient:
         path = f"/analysis-results/api/{self.API_VERSION}/system-metadata/{self.urlCustomerName}/{self.urlSystemName}"
         return self.retry(lambda: self.callSigridAPI(path))
         
+    def fetchObjectives(self):
+        path = f"/analysis-results/api/{self.API_VERSION}/objectives/{self.urlCustomerName}/{self.urlSystemName}/config"
+        return self.retry(lambda: self.callSigridAPI(path))
+        
     def getLandingPage(self, analysisId, target):
         targetRating = "%.1f" % target.ratings["MAINTAINABILITY"]
         return f"{self.baseURL}/{self.urlCustomerName}/{self.urlSystemName}/-/sigrid-ci/{analysisId}?targetRating={targetRating}"
@@ -647,7 +651,7 @@ if __name__ == "__main__":
     parser.add_argument("--customer", type=str)
     parser.add_argument("--system", type=str)
     parser.add_argument("--source", type=str)
-    parser.add_argument("--targetquality", type=float, default=3.5)
+    parser.add_argument("--targetquality", type=str, default="sigrid")
     parser.add_argument("--publish", action="store_true")
     parser.add_argument("--publishonly", action="store_true")
     parser.add_argument("--exclude", type=str, default="")

@@ -304,6 +304,25 @@ The possible application types are as follows:
 |KNOWLEDGE_AND_DOCUMENT_MANAGEMENT|
 |PERSONAL_PRODUCTIVITY_APPLICATIONS|
 
+### Systems goals
+
+Sigrid allows you to define quality objectives for a system. This helps to set some realistic and feasible expectations per system, considering both the system's business context and its current technical state: business-critical systems using modern technologies require more ambitious targets than legacy systems.
+
+<img src="images/sigrid-objectives.png" width="500" />
+
+Once you have defined quality objectives in Sigrid, you can [use these targets in Sigrid CI](client-script-usage.md#defining-quality-targets). You can also retrieve a system's objectives and corresponding targets via the API:
+
+    GET https://sigrid-says.com/rest/analysis-results/api/v1/objectives/{customer}/{system}/config
+    
+This end point will return the following response structure:
+
+    {
+      "MAINTAINABILITY": 4.0,
+      "NEW_CODE_QUALITY": 3.5,
+      "OSH_MAX_SEVERITY": "LOW",
+      "TEST_CODE_RATIO": 0.8
+    }
+
 ## Contact and support
 
 Feel free to contact [SIG's support department](mailto:support@softwareimprovementgroup.com) for any questions or issues you may have after reading this document, or when using Sigrid or Sigrid CI. Users in Europe can also contact us by phone at +31 20 314 0953.

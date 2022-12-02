@@ -7,10 +7,11 @@ Once the `sigridci.py` script is available within your CI environment, you can c
 
 ## Environment requirements
 
-- Python 3.7 or higher
-- Git
-
-Sigrid CI is used in a wide variety of environments, including custom runners and on-premise installations. For this reason, the script intentionally does not have any dependencies, since [PIP](https://pypi.org/project/pip/) is not always available in the environments where Sigrid CI is used. This is also the reason why the client script is provided as a script that runs locally: Sigrid CI is used by many organizations that are unable to run [Docker](https://www.docker.com) containers in their environment. 
+- Docker
+- If you're *not* using Docker and instead use your own environment:
+  - Python 3.7 or higher
+  - Git
+  - To support custom runners and on-premise installations, the Sigrid CI client script intentionally does not have any [PIP](https://pypi.org/project/pip/) dependencies.
 
 ## Command line options
 
@@ -45,7 +46,7 @@ Sigrid CI compares the quality of the new/changed code against the configured ta
 
 By default, Sigrid CI will use the maintainability target you've defined for your system in Sigrid. This is the same target that's depicted in the "system objectives" list you see in Sigrid.
 
-<img src="images/sigrid-objectives.png" width="300" />
+<img src="images/sigrid-objectives.png" width="500" />
 
 If you do not have a maintainability target defined in Sigrid, Sigrid CI will use a target of 3.5 stars (which is what SIG recommends for systems with modern technologies in active development).
 
