@@ -64,7 +64,7 @@ jobs:
       - name: "Run Sigrid CI" 
         env:
           SIGRID_CI_TOKEN: "${{ secrets.SIGRID_CI_TOKEN }}"
-        run: "./sigridci/sigridci/sigridci.py --customer examplecustomername --system examplesystemname --source . --targetquality 3.0 --publish" 
+        run: "./sigridci/sigridci/sigridci.py --customer examplecustomername --system examplesystemname --source . --publish" 
 ```
 
 Next, create `.github/workflows/sigrid-pullrequest.yml` to receive feedback on your pull requests:
@@ -84,7 +84,7 @@ jobs:
       - name: "Run Sigrid CI" 
         env:
           SIGRID_CI_TOKEN: "${{ secrets.SIGRID_CI_TOKEN }}"
-        run: "./sigridci/sigridci/sigridci.py --customer examplecustomername --system examplesystemname --source . --targetquality 3.5"
+        run: "./sigridci/sigridci/sigridci.py --customer examplecustomername --system examplesystemname --source ."
 ```
 
 #### Alternative 2b: GitHub Marketplace
@@ -111,7 +111,6 @@ jobs:
         with:
           customer: examplecustomername
           system: examplesystemname
-          targetquality: 3.5
           publishonly: true
         env:
           SIGRID_CI_TOKEN: "${{ secrets.SIGRID_CI_TOKEN }}"
@@ -136,7 +135,6 @@ jobs:
         with:
           customer: examplecustomername
           system: examplesystemname
-          targetquality: 3.5
         env:
           SIGRID_CI_TOKEN: "${{ secrets.SIGRID_CI_TOKEN }}"
 ```

@@ -36,7 +36,7 @@ stages:
         continueOnError: true
         condition: "ne(variables['Build.SourceBranch'], 'refs/heads/main')"
         steps:
-          - bash: "sigridci.py --customer examplecustomername --system examplesystemname --source . --targetquality 3.5"
+          - bash: "sigridci.py --customer examplecustomername --system examplesystemname --source ."
             env:
               SIGRID_CI_TOKEN: $(SIGRID_CI_TOKEN)
             continueOnError: true
@@ -80,7 +80,7 @@ stages:
         inputs:
           versionSpec: '3.7'
           addToPath: false
-      - bash: "./sigridci/sigridci/sigridci.py --customer examplecustomername --system examplesystemname --source . --targetquality 3.5"
+      - bash: "./sigridci/sigridci/sigridci.py --customer examplecustomername --system examplesystemname --source ."
         env:
           SIGRID_CI_TOKEN: $(SIGRID_CI_TOKEN)
           PYTHONIOENCODING: utf8

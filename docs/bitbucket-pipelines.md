@@ -50,7 +50,7 @@ pipelines:
       - step:
           name: Sigrid CI
           script:
-            - "sigridci.py --customer examplecustomername --system examplesystemname --source . --targetquality 3.5"
+            - "sigridci.py --customer examplecustomername --system examplesystemname --source ."
 ```
 
 Note the branch name `master` in the example. This should refer to your primary branch. In most projects this is called either `master` or `main`, but the default project name could be different for your project.
@@ -76,7 +76,7 @@ pipelines:
           name: Sigrid CI
           script:
             - "git clone https://github.com/Software-Improvement-Group/sigridci.git sigridci"
-            - "./sigridci/sigridci/sigridci.py --customer examplecustomername --system examplesystemname --source . --targetquality 3.5"
+            - "./sigridci/sigridci/sigridci.py --customer examplecustomername --system examplesystemname --source ."
 ```
 
 **Security note:** Some projects might not allow this as part of their security policy. In those cases, you can simply download the `sigridci` directory in this repository, and make it available to your runners (either by placing the scripts in a known location, or packaging them into a Docker container). 

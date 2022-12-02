@@ -567,6 +567,12 @@ class SigridCiRunner:
         "isDevelopmentOnly",
         "remark"
     ]
+    
+    def loadSigridTarget(self, apiClient):
+        objectives = apiClient.fetchObjectives()
+        targetRating = objectives.get("NEW_CODE_QUALITY", objectives.get("MAINTAINABILITY", 3.5))
+        log("Using Sigrid for target rating (%.1f stars)" % targetRating)
+        return targetRating
 
     def run(self, apiClient, options, target, reports):
         if os.path.exists(f"{options.sourceDir}/sigrid.yml"):
@@ -687,13 +693,14 @@ if __name__ == "__main__":
     log("Starting Sigrid CI")
     
     options = UploadOptions(args.source, args.exclude.split(","), args.include_history, args.pathprefix, args.showupload, args.publishonly)
-    target = TargetQuality(options.readScopeFile() or "", args.targetquality)
     apiClient = SigridApiClient(args)
     reports = [TextReport(), StaticHtmlReport(), JUnitFormatReport(), ConclusionReport(apiClient)]
 
     runner = SigridCiRunner()
+    targetRating = runner.loadSigridTarget(apiClient) if args.targetquality == "sigrid" else float(args.args.targetquality)
+    target = TargetQuality(options.readScopeFile() or "", targetRating)
     if not runner.isValidSystemName(args.customer, args.system):
         print(f"Invalid system name, system name should match '{SYSTEM_NAME_PATTERN.pattern}' "
-              f"and be {SYSTEM_NAME_LENGTH.start} to {SYSTEM_NAME_LENGTH.stop - ( len(args.customer) + 1 )} characters long (inclusive).")
+              f"and be {SYSTEM_NAME_LENGTH.start} to {SYSTEM_NAME_LENGTH.stop - (len(args.customer) + 1)} characters long (inclusive).")
         sys.exit(1)
     runner.run(apiClient, options, target, reports)

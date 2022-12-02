@@ -13,9 +13,9 @@ inputs:
     required: false
     default: "."
   targetquality:
-    description: "Minimum required star rating for new/changed code."
+    description: "Minimum required star rating for new/changed code, use 'sigrid' to use target defined in Sigrid."
     required: false
-    default: "3.5"
+    default: "sigrid"
   publish:
     description: "Publishes your source code to Sigrid (true/false)."
     required: false

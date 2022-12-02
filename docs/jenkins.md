@@ -49,7 +49,7 @@ pipeline {
     stages {
         stage('build') {
             steps {
-                sh 'sigridci.py --customer examplecustomername --system examplesystemname --source . --targetquality 3.5 --publish'
+                sh 'sigridci.py --customer examplecustomername --system examplesystemname --source . --publish'
             }
         }
     }
@@ -73,7 +73,7 @@ pipeline {
         stage('build') {
             steps {
                 sh 'git clone https://github.com/Software-Improvement-Group/sigridci.git sigridci'
-                sh './sigridci/sigridci/sigridci.py --customer examplecustomername --system examplesystemname --source . --targetquality 3.5 --publish'
+                sh './sigridci/sigridci/sigridci.py --customer examplecustomername --system examplesystemname --source . --publish'
             }
         }
     }

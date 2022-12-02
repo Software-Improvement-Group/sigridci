@@ -29,7 +29,7 @@ You can add Sigrid CI to your TeamCity project by creating a new build step:
 
 ```
 git clone https://github.com/Software-Improvement-Group/sigridci.git sigridci
-./sigridci/sigridci/sigridci.py --customer yourcustomername --system yoursystemname --source . --targetquality 3.5
+./sigridci/sigridci/sigridci.py --customer yourcustomername --system yoursystemname --source .
 ```
 
 This scripts supports a number of arguments that you can use to configure your Sigrid CI run. The scripts and its command line interface are explained in [using the Sigrid CI client script](client-script-usage.md).
