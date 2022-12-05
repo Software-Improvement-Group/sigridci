@@ -52,7 +52,7 @@ If you do not have a maintainability target defined in Sigrid, Sigrid CI will us
 
 ### Option 2: Use a maintainability target in Sigrid CI that is different from the target in Sigrid
 
-Using the `--targetquality` parameter allows you to override the maintainability target defined in Sigrid. For example, `--targetquality 4.0` will require pull requests to be 4.0 stars even if the system-level maintainability target is 3.5 stars. You would normally use the same target in both, but in some situations you might want to be more strict or more lenient for pull requests. 
+Using the `--targetquality` parameter allows you to override the maintainability target defined in Sigrid. For example, `--targetquality 4.0` will require pull requests to be 4.0 stars even if the system-level maintainability target defined in Sigrid is 3.5 stars. You would normally use the same target in both, but in some situations you might want to be more strict or more lenient for pull requests. 
 
 ## Option 3: Advanced per-metric targets
 
