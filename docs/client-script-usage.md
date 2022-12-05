@@ -50,7 +50,7 @@ By default, Sigrid CI will use the maintainability target you've defined for you
 
 If you do not have a maintainability target defined in Sigrid, Sigrid CI will use a target of 3.5 stars (which is what SIG recommends for systems with modern technologies in active development).
 
-### Option 2: Use a different maintainability target in Sigrid CI
+### Option 2: Use a maintainability target in Sigrid CI that is different from the target in Sigrid
 
 Using the `--targetquality` parameter allows you to override the maintainability target defined in Sigrid. For example, `--targetquality 4.0` will require pull requests to be 4.0 stars even if the system-level maintainability target is 3.5 stars. You would normally use the same target in both, but in some situations you might want to be more strict or more lenient for pull requests. 
 
