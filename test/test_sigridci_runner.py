@@ -465,6 +465,36 @@ class SigridCiRunnerTest(unittest.TestCase):
         self.assertEqual(os.path.exists(f"{tempDir}/sigrid-metadata.yaml"), True)
         with open(f"{tempDir}/sigrid-metadata.yaml") as f:
             self.assertEqual(f.read(), "metadata:\n  externalID: 1")
+            
+    def testPreferNewCodeTargetIfAvailable(self):
+        apiClient = MockApiClient()
+        apiClient.responses["/analysis-results/api/v1/objectives/aap/noot/config"] = {
+            "NEW_CODE_QUALITY" : 4.0,
+            "MAINTAINABILITY" : 3.5
+        }
+    
+        runner = SigridCiRunner()
+        target = runner.loadSigridTarget(apiClient)
+        
+        self.assertEqual(target, 4.0)
+    
+    def testUseMaintainabilityTargetIfNoNewCodeTarget(self):
+        apiClient = MockApiClient()
+        apiClient.responses["/analysis-results/api/v1/objectives/aap/noot/config"] = {"MAINTAINABILITY" : 2.0}
+    
+        runner = SigridCiRunner()
+        target = runner.loadSigridTarget(apiClient)
+        
+        self.assertEqual(target, 2.0)
+    
+    def testFallbackToDefaultTargetIfNoSigridObjectives(self):
+        apiClient = MockApiClient()
+        apiClient.responses["/analysis-results/api/v1/objectives/aap/noot/config"] = {}
+    
+        runner = SigridCiRunner()
+        target = runner.loadSigridTarget(apiClient)
+        
+        self.assertEqual(target, 3.5)
         
     def createTempFile(self, dir, name, contents):
         with open(f"{dir}/{name}", "w") as fileRef:
