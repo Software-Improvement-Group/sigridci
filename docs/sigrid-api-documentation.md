@@ -223,7 +223,7 @@ The response format of the customer-level endpoint (`GET https://sigrid-says.com
 ]
 ```
 
-All properties can be null except for `supplierNames` and `teamNames` (which are always an array, but possibly empty), and `isDevelopmentOnly` (which is always true or falls).
+All properties can be null except for `supplierNames` and `teamNames` (which are always an array, but possibly empty), and `isDevelopmentOnly` (which is always true or false).
 
 For the `PATCH` endpoint, please take the following into account:
 - Only users with admin rights are allowed to change metadata.
