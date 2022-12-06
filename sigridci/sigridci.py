@@ -648,7 +648,7 @@ class SigridCiRunner:
                 
     def isValidSystemName(self, customerName, systemName):
         return self.SYSTEM_NAME_PATTERN.match(systemName) and \
-            len(systemName) > self.SYSTEM_NAME_LENGTH.start and \
+            len(systemName) >= self.SYSTEM_NAME_LENGTH.start and \
             (len(systemName) + len(customerName) + 1) in self.SYSTEM_NAME_LENGTH
 
 
@@ -701,7 +701,8 @@ if __name__ == "__main__":
     targetRating = runner.loadSigridTarget(apiClient) if args.targetquality == "sigrid" else float(args.targetquality)
     target = TargetQuality(options.readScopeFile() or "", targetRating)
     if not runner.isValidSystemName(args.customer, args.system):
-        print(f"Invalid system name, system name should match '{SYSTEM_NAME_PATTERN.pattern}' "
-              f"and be {SYSTEM_NAME_LENGTH.start} to {SYSTEM_NAME_LENGTH.stop - (len(args.customer) + 1)} characters long (inclusive).")
+        maxNameLength = runner.SYSTEM_NAME_LENGTH.stop - (len(args.customer) + 1)
+        print(f"Invalid system name, system name should match '{runner.SYSTEM_NAME_PATTERN.pattern}' "
+              f"and be {runner.SYSTEM_NAME_LENGTH.start} to {maxNameLength} characters long (inclusive).")
         sys.exit(1)
     runner.run(apiClient, options, target, reports)

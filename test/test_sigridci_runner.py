@@ -45,6 +45,7 @@ class SigridCiRunnerTest(unittest.TestCase):
         self.assertTrue(runner.isValidSystemName("noot", "aap123"))
         self.assertTrue(runner.isValidSystemName("noot", "AAP"))
         self.assertTrue(runner.isValidSystemName("noot", "a" * 59))
+        self.assertTrue(runner.isValidSystemName("noot", "aa"))
 
         self.assertFalse(runner.isValidSystemName("noot", "aap_noot"))
         self.assertFalse(runner.isValidSystemName("noot", "a"))
