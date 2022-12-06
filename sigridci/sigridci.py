@@ -556,6 +556,7 @@ class SigridCiRunner:
     SYSTEM_NAME_LENGTH = range(2, 65)
     METADATA_FIELDS = [
         "divisionName",
+        "teamNames",
         "supplierNames",
         "lifecyclePhase",
         "inProductionSince",
@@ -642,7 +643,7 @@ class SigridCiRunner:
             with open(f"{options.sourceDir}/sigrid-metadata.yaml", "w") as writer:
                 writer.write("metadata:\n")
                 for name, value in metadata.items():
-                    formattedValue = f"[\"{value}\"]" if name in ["supplierNames"] else f"\"{value}\""
+                    formattedValue = f"[\"{value}\"]" if name in ["teamNames", "supplierNames"] else f"\"{value}\""
                     writer.write(f"  {name}: {formattedValue}\n")
                 
     def isValidSystemName(self, customerName, systemName):

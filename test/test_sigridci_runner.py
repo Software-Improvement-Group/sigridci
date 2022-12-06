@@ -27,6 +27,7 @@ class SigridCiRunnerTest(unittest.TestCase):
         os.environ["externalid"] = ""
         os.environ["divisionname"] = ""
         os.environ["suppliernames"] = ""
+        os.environ["teamnames"] = ""
         LOG_HISTORY.clear()
         
     def testForceLowerCaseForCustomerAndSystemName(self):
@@ -440,17 +441,18 @@ class SigridCiRunnerTest(unittest.TestCase):
         with open(f"{tempDir}/sigrid-metadata.yaml") as f:
             self.assertEqual(f.read(), "metadata:\n  externalID: \"1234\"\n")
             
-    def testSupplierNamesIsList(self):
+    def testTeamNamesAndSupplierNamesAreList(self):
         tempDir = tempfile.mkdtemp()
         uploadOptions = UploadOptions(sourceDir=tempDir)
         os.environ["suppliernames"] = "aap"
+        os.environ["teamnames"] = "noot"
         
         runner = SigridCiRunner()
         runner.prepareMetadata(uploadOptions)
         
         self.assertEqual(os.path.exists(f"{tempDir}/sigrid-metadata.yaml"), True)
         with open(f"{tempDir}/sigrid-metadata.yaml") as f:
-            self.assertEqual(f.read(), "metadata:\n  supplierNames: [\"aap\"]\n")
+            self.assertEqual(f.read(), "metadata:\n  teamNames: [\"noot\"]\n  supplierNames: [\"aap\"]\n")
         
     def testErrorIfEnvironmentVariablesAreUsedButFileAlreadyExists(self):
         tempDir = tempfile.mkdtemp()

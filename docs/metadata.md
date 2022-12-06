@@ -25,10 +25,12 @@ The following examples shows an example of a `sigrid-metadata.yaml` file:
 
 ```
 metadata:
-  divisionName: My division
+  divisionName: "My division"
+  teamNames:
+    - "My Team"
   supplierNames:
-    - Team 1
-    - Team 2
+    - "Supplier 1"
+    - "Supplier 2"
   lifecyclePhase: EOL
   inProductionSince: 2012
   businessCriticality: HIGH

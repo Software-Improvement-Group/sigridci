@@ -186,6 +186,7 @@ The response format of both system-level endpoints (`GET` and `PATCH`) is as fol
 {
   "divisionName" : "Division name",
   "displayName" : "User-friendly system name",
+  "teamNames" : [ "My Team" ],
   "supplierNames" : [ "Supplier 1", "Supplier 2" ],
   "lifecyclePhase" : "EOL",
   "inProductionSince" : 2012,
@@ -207,6 +208,7 @@ The response format of the customer-level endpoint (`GET https://sigrid-says.com
     "systemName": "bar",
     "divisionName" : "Division name",
     "displayName" : "User-friendly system name",
+    "teamNames" : [ "My Team" ],
     "supplierNames" : [ "Supplier 1", "Supplier 2" ],
     "lifecyclePhase" : "EOL",
     "inProductionSince" : 2012,
@@ -221,7 +223,7 @@ The response format of the customer-level endpoint (`GET https://sigrid-says.com
 ]
 ```
 
-All properties can be null except for `supplierNames` (which is always an array, but possibly empty) and `isDevelopmentOnly` (which is always true or falls).
+All properties can be null except for `supplierNames` and `teamNames` (which are always an array, but possibly empty), and `isDevelopmentOnly` (which is always true or falls).
 
 For the `PATCH` endpoint, please take the following into account:
 - Only users with admin rights are allowed to change metadata.

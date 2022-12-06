@@ -41,6 +41,9 @@ inputs:
   divisionname:
     required: false
     default: ""
+  teamnames:
+    required: false
+    default: ""
   suppliernames:
     required: false
     default: ""
@@ -92,6 +95,7 @@ runs:
     - ${{ (inputs.showupload == 'true' && '--showupload') || '--dummy' }}
   env:
     divisionname: ${{ inputs.divisionname }}
+    teamnames: ${{ inputs.teamnames }}
     suppliernames: ${{ inputs.suppliernames }}
     lifecyclephase: ${{ inputs.lifecyclephase }}
     inproductionsince: ${{ inputs.inproductionsince }}
