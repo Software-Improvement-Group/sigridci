@@ -170,7 +170,7 @@ The endpoint that returns third-party vulnerabilities for all systems for the gi
 }
 ```
 
-More information on the SBOM format and the various fields is available from the [SBOM specification](https://github.com/CycloneDX/specification).
+More information on the SBOM format and the various fields is available from the [CycloneDX SBOM specification](https://github.com/CycloneDX/specification).
 
 ### System metadata
 

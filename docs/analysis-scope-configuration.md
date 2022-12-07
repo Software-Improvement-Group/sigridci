@@ -117,7 +117,7 @@ Architecture Quality also requires the repository history to be included in the 
 
 ## Sigrid metadata
 
-`sigrid.yaml` is used for *analysis* configuration. It is also possible to configure Sigrid *metadata*. See the [Sigrid metadata](metadata.html) section for the various ways you can update this metadata.
+`sigrid.yaml` is used for *analysis* configuration. It is also possible to configure Sigrid *metadata*. See the [Sigrid metadata](metadata.md) section for the various ways you can update this metadata.
 
 ## Contact and support
 
