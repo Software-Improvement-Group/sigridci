@@ -399,6 +399,25 @@ class TextReport(Report):
 
     def printColor(self, message, ansiPrefix):
         print(ansiPrefix + message + "\033[0m", file=self.output)
+        
+        
+class MarkdownReport(TextReport):
+    def generate(self, analysisId, feedback, args, target):
+        with open(os.path.abspath("sigrid-ci-output/feedback.md"), "w") as f:
+            f.write("## Sigrid maintainability ratings\n")
+            if target.meetsQualityTargets(feedback):
+                f.write("**\u2705 You wrote maintainable code and passed your Sigrid target**\n")
+            else:
+                f.write("**\u274C Your code did not meet your Sigrid target for maintainable code**\n")
+            f.write(f"| System property | Baseline on {self.formatBaseline(feedback)} | New/changed code |\n")
+            f.write(f"|-----------------|---------------------------------------------|------------------|\n")
+
+            for metric in self.METRICS:
+                if metric == "MAINTAINABILITY":
+                    f.write(f"|-----------------|---------------------------------------------|------------------|\n")                   
+                baseline = "(" + self.formatRating(feedback["baselineRatings"], metric) + ")" 
+                newCode = self.formatRating(feedback["newCodeRatings"], metric)
+                f.write(f"| {self.formatMetricName(metric)} | {baseline} | {newCode} |\n")
 
 
 class StaticHtmlReport(Report):
@@ -534,10 +553,10 @@ class ConclusionReport(Report):
         asciiArt = TextReport(self.output)
         
         if target.meetsQualityTargets(feedback):
-            asciiArt.printColor("\n** SIGRID CI RUN COMPLETE: YOU WROTE MAINTAINABLE CODE AND REACHED THE TARGET **\n", \
+            asciiArt.printColor("\n** Sigrid CI run complete: You wrote maintainable code and passed your Sigrid target **\n", \
                 asciiArt.ANSI_BOLD + asciiArt.ANSI_GREEN)
         else:
-            asciiArt.printColor("\n** SIGRID CI RUN COMPLETE: THE CODE YOU WROTE DID NOT MEET THE TARGET FOR MAINTAINABLE CODE **\n", \
+            asciiArt.printColor("\n** Sigrid CI run complete: Your code did not meet your Sigrid target for maintainable code **\n", \
                 asciiArt.ANSI_BOLD + asciiArt.ANSI_YELLOW)
                 
     def printLandingPage(self, analysisId, feedback, target):
@@ -695,7 +714,7 @@ if __name__ == "__main__":
     
     options = UploadOptions(args.source, args.exclude.split(","), args.include_history, args.pathprefix, args.showupload, args.publishonly)
     apiClient = SigridApiClient(args)
-    reports = [TextReport(), StaticHtmlReport(), JUnitFormatReport(), ConclusionReport(apiClient)]
+    reports = [TextReport(), MarkdownReport(), StaticHtmlReport(), JUnitFormatReport(), ConclusionReport(apiClient)]
 
     runner = SigridCiRunner()
     targetRating = runner.loadSigridTarget(apiClient) if args.targetquality == "sigrid" else float(args.targetquality)
