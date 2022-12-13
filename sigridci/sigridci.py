@@ -402,6 +402,9 @@ class TextReport(Report):
         
         
 class MarkdownReport(TextReport):
+    def __init__(self, apiClient):
+        self.apiClient = apiClient
+
     def generate(self, analysisId, feedback, args, target):
         with open(os.path.abspath("sigrid-ci-output/feedback.md"), "w") as f:
             f.write("## Sigrid maintainability ratings\n")
@@ -428,6 +431,12 @@ class MarkdownReport(TextReport):
                         f.write(f"\n\n**{self.formatMetricName(metric)}**\n")
                         for rc in relevantRefactoringCandidates:
                             f.write(f"- *({rc['category']})* {self.formatRefactoringCandidateLink(rc)}\n")
+                            
+            sigridLink = self.getSigridUrl(args)
+            landingPage = self.apiClient.getLandingPage(analysisId, target)
+            f.write("----\n")
+            f.write(f"**View this system in Sigrid:** [sigridLink](sigridLink)  ")
+            f.write(f"**View this pull request in Sigrid:** [landingPage](landingPage)  ")
     
     def formatRefactoringCandidateLink(self, rc):
         entries = rc["subject"].split("::")[-1].split("\n")
