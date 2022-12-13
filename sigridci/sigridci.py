@@ -405,13 +405,15 @@ class MarkdownReport(TextReport):
     def generate(self, analysisId, feedback, args, target):
         with open(os.path.abspath("sigrid-ci-output/feedback.md"), "w") as f:
             f.write("## Sigrid maintainability ratings\n")
+            
+            targetRating = self.formatRating(target.ratings["MAINTAINABILITY"]) + " stars"
             if target.meetsQualityTargets(feedback):
-                f.write("**\u2705 You wrote maintainable code and passed your Sigrid target**\n")
+                f.write(f"**\u2705 You wrote maintainable code and passed your Sigrid target of {targetRating}**\n")
             else:
-                f.write("**\u274C Your code did not meet your Sigrid target for maintainable code**\n")
+                f.write(f"**\u274C Your code did not meet your Sigrid target of {targetRating} for maintainable code**\n")
+            
             f.write(f"| System property | Baseline on {self.formatBaseline(feedback)} | New/changed code |\n")
             f.write(f"|-----------------|---------------------------------------------|------------------|\n")
-
             for metric in self.METRICS:
                 fmt = "**" if metric == "MAINTAINABILITY" else ""
                 baseline = "(" + self.formatRating(feedback["baselineRatings"], metric) + ")" 
