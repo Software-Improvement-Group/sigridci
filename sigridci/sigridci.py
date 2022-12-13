@@ -427,7 +427,7 @@ class MarkdownReport(TextReport):
                     if len(relevantRefactoringCandidates) > 0:
                         f.write(f"**{self.formatMetricName(metric)}**\n")
                         for rc in relevantRefactoringCandidates:
-                            subject = rc["subject"].split("::")[-1]
+                            subject = rc["subject"].split("::")[-1].replace("\n", " and ")
                             f.write(f"- *({rc['category']})* {subject}\n\n")
 
 
