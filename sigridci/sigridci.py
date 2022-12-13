@@ -425,10 +425,17 @@ class MarkdownReport(TextReport):
                 for metric in self.REFACTORING_CANDIDATE_METRICS:
                     relevantRefactoringCandidates = self.getRefactoringCandidates(feedback, metric)
                     if len(relevantRefactoringCandidates) > 0:
-                        f.write(f"**{self.formatMetricName(metric)}**\n")
+                        f.write(f"\n\n**{self.formatMetricName(metric)}**\n")
                         for rc in relevantRefactoringCandidates:
-                            subject = rc["subject"].split("::")[-1].replace("\n", " and ")
-                            f.write(f"- *({rc['category']})* {subject}\n\n")
+                            f.write(f"- *({rc['category']})* {self.formatRefactoringCandidateLink(rc)}\n")
+    
+    def formatRefactoringCandidateLink(self, rc):
+        entries = rc["subject"].split("::")[-1].split("\n")
+        codeLinkBase = os.environ.get("CODE_LINK_BASE", "")
+        if codeLinkBase:
+            return ", ".join([f"[entry]({codeLinkBase}/{entry})" for entry in entries])
+        else:
+            return ", ".join([entry for entry in entries])
 
 
 class StaticHtmlReport(Report):
