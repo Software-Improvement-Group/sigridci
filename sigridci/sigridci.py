@@ -435,8 +435,8 @@ class MarkdownReport(TextReport):
             sigridLink = self.getSigridUrl(args)
             landingPage = self.apiClient.getLandingPage(analysisId, target)
             f.write("----\n")
-            f.write(f"**View this system in Sigrid:** [{sigridLink}]({sigridLink})  \n")
-            f.write(f"**View this pull request in Sigrid:** [{landingPage}]({landingPage})  \n")
+            f.write(f"**View this system in Sigrid:** [System dashboard]({sigridLink})  \n")
+            f.write(f"**View this pull request in Sigrid:** [Landing page]({landingPage})  \n")
     
     def formatRefactoringCandidateLink(self, rc):
         entries = rc["subject"].split("::")[-1].split("\n")
