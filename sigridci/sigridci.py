@@ -433,7 +433,9 @@ class MarkdownReport(TextReport):
         entries = rc["subject"].split("::")[-1].split("\n")
         codeLinkBase = os.environ.get("CODE_LINK_BASE", "")
         if codeLinkBase:
-            return ", ".join([f"[entry]({codeLinkBase}/{entry})" for entry in entries])
+            extractLabel = lambda entry: entry.replace("(", "").replace(")", "").strip()
+            extractPath = lambda entry: entry.split(":")[0].split("(")[0].strip()
+            return ", ".join([f"[{extractLabel(entry)}]({codeLinkBase}/{extractPath(entry)})" for entry in entries])
         else:
             return ", ".join([entry for entry in entries])
 
