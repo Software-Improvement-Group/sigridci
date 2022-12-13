@@ -413,11 +413,10 @@ class MarkdownReport(TextReport):
             f.write(f"|-----------------|---------------------------------------------|------------------|\n")
 
             for metric in self.METRICS:
-                if metric == "MAINTAINABILITY":
-                    f.write(f"|-----------------|---------------------------------------------|------------------|\n")                   
+                fmt = "**" if metric == "MAINTAINABILITY" else ""
                 baseline = "(" + self.formatRating(feedback["baselineRatings"], metric) + ")" 
                 newCode = self.formatRating(feedback["newCodeRatings"], metric)
-                f.write(f"| {self.formatMetricName(metric)} | {baseline} | {newCode} |\n")
+                f.write(f"| {fmt}{self.formatMetricName(metric)}{fmt} | {fmt}{baseline}{fmt} | {fmt}{newCode}{fmt} |\n")
 
 
 class StaticHtmlReport(Report):
