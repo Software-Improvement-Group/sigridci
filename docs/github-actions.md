@@ -107,7 +107,7 @@ jobs:
       - name: Check out repository
         uses: actions/checkout@v2
       - name: Sigrid CI
-        uses: Software-Improvement-Group/sigridci@v1.2
+        uses: Software-Improvement-Group/sigridci@main
         with:
           customer: examplecustomername
           system: examplesystemname
@@ -131,7 +131,7 @@ jobs:
       - name: Check out repository
         uses: actions/checkout@v2
       - name: Sigrid CI
-        uses: Software-Improvement-Group/sigridci@v1.2
+        uses: Software-Improvement-Group/sigridci@main
         with:
           customer: examplecustomername
           system: examplesystemname
