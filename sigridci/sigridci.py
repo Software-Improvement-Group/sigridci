@@ -743,7 +743,7 @@ if __name__ == "__main__":
     
     options = UploadOptions(args.source, args.exclude.split(","), args.include_history, args.pathprefix, args.showupload, args.publishonly)
     apiClient = SigridApiClient(args)
-    reports = [TextReport(), MarkdownReport(), StaticHtmlReport(), JUnitFormatReport(), ConclusionReport(apiClient)]
+    reports = [TextReport(), MarkdownReport(apiClient), StaticHtmlReport(), JUnitFormatReport(), ConclusionReport(apiClient)]
 
     runner = SigridCiRunner()
     targetRating = runner.loadSigridTarget(apiClient) if args.targetquality == "sigrid" else float(args.targetquality)
