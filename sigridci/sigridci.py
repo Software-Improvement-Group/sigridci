@@ -406,7 +406,7 @@ class MarkdownReport(TextReport):
         with open(os.path.abspath("sigrid-ci-output/feedback.md"), "w") as f:
             f.write("## Sigrid maintainability ratings\n")
             
-            targetRating = self.formatRating(target.ratings["MAINTAINABILITY"]) + " stars"
+            targetRating = self.formatRating(target.ratings, "MAINTAINABILITY") + " stars"
             if target.meetsQualityTargets(feedback):
                 f.write(f"**\u2705 You wrote maintainable code and passed your Sigrid target of {targetRating}**\n")
             else:
