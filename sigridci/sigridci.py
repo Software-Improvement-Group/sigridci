@@ -420,13 +420,14 @@ class MarkdownReport(TextReport):
                 newCode = self.formatRating(feedback["newCodeRatings"], metric)
                 f.write(f"| {fmt}{self.formatMetricName(metric)}{fmt} | {fmt}{baseline}{fmt} | {fmt}{newCode}{fmt} |\n")
                 
-            f.write("## Refactoring candidates\n")
-            for metric in self.METRICS:
-                relevantRefactoringCandidates = self.getRefactoringCandidates(feedback, metric)
-                if len(relevantRefactoringCandidates) > 0:
-                    f.write(f"**{metric}**\n")
-                    for rc in relevantRefactoringCandidates:
-                        f.write(f"- *({rc['category']})* {rc['subject']}\n")
+            if not target.meetsQualityTargets(feedback):
+                f.write("## Refactoring candidates\n")
+                for metric in self.METRICS:
+                    relevantRefactoringCandidates = self.getRefactoringCandidates(feedback, metric)
+                    if len(relevantRefactoringCandidates) > 0:
+                        f.write(f"**{metric}**\n")
+                        for rc in relevantRefactoringCandidates:
+                            f.write(f"- *({rc['category']})* {rc['subject']}\n")
 
 
 class StaticHtmlReport(Report):
