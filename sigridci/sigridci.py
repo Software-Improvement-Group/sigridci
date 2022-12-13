@@ -422,12 +422,13 @@ class MarkdownReport(TextReport):
                 
             if not target.meetsQualityTargets(feedback):
                 f.write("## Refactoring candidates\n")
-                for metric in self.METRICS:
+                for metric in self.REFACTORING_CANDIDATE_METRICS:
                     relevantRefactoringCandidates = self.getRefactoringCandidates(feedback, metric)
                     if len(relevantRefactoringCandidates) > 0:
-                        f.write(f"**{metric}**\n")
+                        f.write(f"**{self.formatMetricName(metric)}**\n")
                         for rc in relevantRefactoringCandidates:
-                            f.write(f"- *({rc['category']})* {rc['subject']}\n")
+                            subject = rc["subject"].split("::")[-1]
+                            f.write(f"- *({rc['category']})* {subject}\n\n")
 
 
 class StaticHtmlReport(Report):
