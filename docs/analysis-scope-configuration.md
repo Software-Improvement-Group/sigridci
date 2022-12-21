@@ -16,9 +16,9 @@ component_depth: 1
 exclude:
   - ".*/simulator/.*"
 languages:
-  - java
-  - python
-  - typescript
+  - name: java
+  - name: python
+  - name: typescript
 ```
 
 ## General configuration
@@ -38,6 +38,23 @@ Note that it is not necessary to exclude files and directories that would not be
 ## Technology support
 
 See the [list of supported technologies](technology-support.md) for the names that can be used inside the `languages` section of the YAML file.
+
+### Overriding automatic technology and test code detection
+
+When you add a technology to your scope file, Sigrid will try to locate the corresponding files based on file and directory name conventions. This includes automatic detection of test code. For example, Java-based projects typically use `src/main/java` for production code and `src/test/java` for test code.
+
+This automatic detection is usually sufficient for the majority of projects. However, if you are using less common frameworks or a custom naming convention, you will need to tell Sigrid where it can find the test code. Like other parts of the scope file, this is done using regular expressions:
+
+```
+languages:
+  - name: Java
+    production:
+    test:
+      include:
+        - ".*/our-smoke-tests/.*[.]java"
+```
+
+This example will classify all Java code in the `our-smoke-tests` directory as test code.
 
 ## Defining components
 
