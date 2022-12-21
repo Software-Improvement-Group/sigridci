@@ -71,7 +71,7 @@ jobs:
       SIGRID_CI_TOKEN: "${{ secrets.SIGRID_CI_TOKEN }}"
     steps:
       - name: Check out repository
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
       - run: |
           /usr/local/bin/entrypoint.sh
 
@@ -97,7 +97,7 @@ jobs:
       SIGRID_CI_TOKEN: "${{ secrets.SIGRID_CI_TOKEN }}"
     steps:
       - name: Check out repository
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
       - run: |
           /usr/local/bin/entrypoint.sh
 ```
