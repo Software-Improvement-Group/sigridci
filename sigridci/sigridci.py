@@ -687,7 +687,7 @@ if __name__ == "__main__":
         print("Source code directory not found: " + args.source)
         sys.exit(1)
         
-    if args.customer.startswith("example") or args.system.startswith("example"):
+    if args.customer.startswith("examplecustomer") or args.system.startswith("examplesystem"):
         print("You are using the example customer/system name, please change it to your actual customer/system name")
         sys.exit(1)
 
