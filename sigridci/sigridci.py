@@ -686,6 +686,10 @@ if __name__ == "__main__":
     if not os.path.exists(args.source):
         print("Source code directory not found: " + args.source)
         sys.exit(1)
+        
+    if args.customer.startswith("example") or args.system.startswith("example"):
+        print("You are using the example customer/system name, please change it to your actual customer/system name")
+        sys.exit(1)
 
     if args.publish and len(args.pathprefix) > 0:
         print("You cannot use both --publish and --pathprefix at the same time, refer to the documentation for details")
