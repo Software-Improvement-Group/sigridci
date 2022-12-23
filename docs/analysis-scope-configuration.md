@@ -70,9 +70,9 @@ In some projects, using directory depth will not accurately reflect the actual c
       - name: "Back-end"
         include:
           - ".*[.]java"
-      - name: "Front-end"
+      - name: "Log"
         include:
-          - ".*[.]ts"
+          - ".*/cs/findbugs/log/.*"
           
 In this example, regular expressions are used to define what files and directories belong to each component. The syntax is identical to the patterns used in the `exclude` section.
 
