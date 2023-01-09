@@ -515,7 +515,49 @@ class JUnitFormatReport(Report):
         lists = [self.getRefactoringCandidates(feedback, m) for m in target.ratings
                  if not target.meetsTargetQualityForMetric(feedback, m)]
         return [item for sublist in lists for item in sublist]
-                
+
+
+class CodeClimateReport(Report):
+    DUPLICATION_SUBJECT_PATTERN = re.compile("^(?P<path>.+)\s\(lines (?P<start>\d+)-(?P<end>\d+)\)$")
+
+    def generate(self, analysisId, feedback, args, target):
+        with open("sigrid-ci-output/code-climate.json", encoding="utf-8", mode="w") as reportFile:
+            json.dump(self.generateReport(feedback), reportFile)
+
+    def generateReport(self, feedback):
+        refactoringCandidates = self.getRefactoringCandidates(feedback, "MAINTAINABILITY")
+        return [self.getIssue(rc) for rc in refactoringCandidates]
+
+    def getIssue(self, refactoringCandidate):
+        subjectLines = refactoringCandidate["subject"].splitlines()
+        locations = [self.getLocation(l) for l in subjectLines]
+        checkName = self.formatMetricName(refactoringCandidate["metric"])
+        return {
+            "type": "issue",
+            "check_name": checkName,
+            "description": "%s finding" % checkName,
+            "content": {
+                "body": refactoringCandidate["subject"]
+            },
+            "categories": ["Complexity"],
+            "location": locations[0],
+            "other_locations": locations[1:] if len(locations) > 1 else None
+        }
+
+    def getLocation(self, subjectLine):
+        match = self.DUPLICATION_SUBJECT_PATTERN.search(subjectLine)
+        location = {"path": match.group("path") if match else re.sub("::.+$", "", subjectLine)}
+        if not match:
+            return location
+
+        return {
+            **location,
+            "lines": {
+                "begin": int(match.group("start")),
+                "end": int(match.group("end"))
+            }
+        }
+
                 
 class ConclusionReport(Report):
     def __init__(self, apiClient, output=sys.stdout):
@@ -695,7 +737,7 @@ if __name__ == "__main__":
     
     options = UploadOptions(args.source, args.exclude.split(","), args.include_history, args.pathprefix, args.showupload, args.publishonly)
     apiClient = SigridApiClient(args)
-    reports = [TextReport(), StaticHtmlReport(), JUnitFormatReport(), ConclusionReport(apiClient)]
+    reports = [TextReport(), StaticHtmlReport(), JUnitFormatReport(), CodeClimateReport(), ConclusionReport(apiClient)]
 
     runner = SigridCiRunner()
     targetRating = runner.loadSigridTarget(apiClient) if args.targetquality == "sigrid" else float(args.targetquality)
