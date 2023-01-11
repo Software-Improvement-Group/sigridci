@@ -60,3 +60,33 @@ View your analysis results in Sigrid:
         
         self.assertEqual(report.getSigridUrl(args), "https://sigrid-says.com/aap/noot")
         
+    def testSpecialTextIfNoCodeChanged(self):
+        feedback = {
+            "baseine": "20220110",
+            "baselineRatings": {"DUPLICATION": 4.0, "UNIT_SIZE": 4.0, "MAINTAINABILITY": 4.0},
+            "newCodeRatings": {"MAINTAINABILITY": None},
+            "overallRatings": {"DUPLICATION": 4.5, "UNIT_SIZE": 3.0, "MAINTAINABILITY": 3.5},
+            "refactoringCandidates": []
+        }
+    
+        args = types.SimpleNamespace(partner="sig", customer="aap", system="noot", publish=True, \
+            sigridurl="https://example-sigrid.com")
+        target = TargetQuality("", 5.0)
+        apiClient = SigridApiClient(args)
+        buffer = io.StringIO()
+        
+        report = ConclusionReport(apiClient, buffer)
+        report.generate("1234", feedback, args, target)
+        
+        expected = """
+\033[1m\033[96m
+** SIGRID CI RUN COMPLETE: NO FILES CONSIDERED FOR MAINTAINABILITY WERE CHANGED **
+\033[0m
+
+-------------------------------------------------------------------------
+View your analysis results in Sigrid:
+    https://example-sigrid.com/aap/noot/-/sigrid-ci/1234?targetRating=5.0
+-------------------------------------------------------------------------
+        """
+                
+        self.assertEqual(buffer.getvalue().strip(), expected.strip())
