@@ -24,7 +24,7 @@ class ConclusionReportTest(unittest.TestCase):
 
     def testDisplayLandingPageFromClient(self):
         feedback = {
-            "baseine": "20220110",
+            "baseline": "20220110",
             "baselineRatings": {"DUPLICATION": 4.0, "UNIT_SIZE": 4.0, "MAINTAINABILITY": 4.0},
             "newCodeRatings": {"DUPLICATION": 5.0, "UNIT_SIZE": 2.0, "MAINTAINABILITY": 3.0},
             "overallRatings": {"DUPLICATION": 4.5, "UNIT_SIZE": 3.0, "MAINTAINABILITY": 3.5},
@@ -53,6 +53,13 @@ View your analysis results in Sigrid:
                 
         self.assertEqual(buffer.getvalue().strip(), expected.strip())
 
+    def testSigridLinkIsLowercase(self):
+        args = types.SimpleNamespace(partner="sig", customer="Aap", system="NOOT", publish=True, \
+            sigridurl="https://example-sigrid.com")
+        report = ConclusionReport(SigridApiClient(args), io.StringIO())
+        
+        self.assertEqual(report.getSigridUrl(args), "https://sigrid-says.com/aap/noot")
+        
     def testSpecialTextIfNoCodeChanged(self):
         feedback = {
             "baseine": "20220110",
