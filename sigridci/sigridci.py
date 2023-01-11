@@ -532,8 +532,11 @@ class ConclusionReport(Report):
             
     def printConclusionMessage(self, feedback, target):
         asciiArt = TextReport(self.output)
-        
-        if target.meetsQualityTargets(feedback):
+
+        if feedback["newCodeRatings"].get("MAINTAINABILITY", None) == None:
+            asciiArt.printColor("\n** SIGRID CI RUN COMPLETE: NO FILES CONSIDERED FOR MAINTAINABILITY WERE CHANGED **\n", \
+                asciiArt.ANSI_BOLD + asciiArt.ANSI_BLUE)
+        elif target.meetsQualityTargets(feedback):
             asciiArt.printColor("\n** SIGRID CI RUN COMPLETE: YOU WROTE MAINTAINABLE CODE AND REACHED THE TARGET **\n", \
                 asciiArt.ANSI_BOLD + asciiArt.ANSI_GREEN)
         else:
