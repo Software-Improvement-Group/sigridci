@@ -315,8 +315,9 @@ class Report:
         return snapshotDate.strftime("%Y-%m-%d")
 
     def getSigridUrl(self, args):
-        return "https://sigrid-says.com/" + urllib.parse.quote_plus(args.customer) + "/" + \
-            urllib.parse.quote_plus(args.system);
+        customer = urllib.parse.quote_plus(args.customer.lower())
+        system = urllib.parse.quote_plus(args.system.lower())
+        return f"https://sigrid-says.com/{customer}/{system}"
 
     def getRefactoringCandidates(self, feedback, metric):
         refactoringCandidates = feedback.get("refactoringCandidates", [])
