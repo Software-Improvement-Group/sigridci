@@ -499,6 +499,20 @@ class SigridCiRunnerTest(unittest.TestCase):
         
         self.assertEqual(target, 3.5)
         
+    def testUploadShouldBeDeletedAfterSubmission(self):
+        tempDir = tempfile.mkdtemp()    
+        self.createTempFile(tempDir, "a.py", "print(123)")
+        
+        options = UploadOptions(sourceDir=tempDir)
+        target = TargetQuality("/tmp/nonexistent", 3.5)
+        apiClient = MockApiClient(publish=False)
+        
+        runner = SigridCiRunner()
+        runner.run(apiClient, options, target, [])
+    
+        uploads = [file for file in os.listdir(".") if file.endswith(".zip")]
+        self.assertEqual([], uploads)
+        
     def createTempFile(self, dir, name, contents):
         with open(f"{dir}/{name}", "w") as fileRef:
             fileRef.write(contents)
