@@ -123,14 +123,19 @@ The `thirdpartyfindings` section supports the following options:
     architecture:
       enabled: true
       
+Architecture Quality also requires the repository history to be included in the upload. This requires the `--include-history` option to be enabled in the [Sigrid CI client script](client-script-usage.md).
+      
 The `architecture` section supports the following options:
 
-| Option name | Required? | Description                                                                       |
-|-------------|-----------|-----------------------------------------------------------------------------------|
-| `enabled`   | Yes       | Set to `true` to enable architecture quality analysis.                            |
-| `model`     | No        | Version of the SIG Architecture Quality Model to use. Defaults to latest version. |
+| Option name           | Required? | Description                                                                                    |
+|-----------------------|-----------|------------------------------------------------------------------------------------------------|
+| `enabled`             | Yes       | Set to `true` to enable architecture quality analysis.                                         |
+| `model`               | No        | Version of the SIG Architecture Quality Model to use. Defaults to latest version.              |
+| `exclude`             | No        | List of exclude patterns that applies only to Architecture Quality, not globally.              |
+| `add_dependencies`    | No        | List of manually added dependencies on top of the ones detected automatically by the analysis. |
+| `remove_dependencies` | No        | List of dependencies that manually overrides the analysis and removes them from the results.   |
 
-Architecture Quality also requires the repository history to be included in the upload. This requires the `--include-history` option to be enabled in the [Sigrid CI client script](client-script-usage.md).
+The `add_dependencies` and `remove_dependencies` fields expect a value in the format `name -> name`. You can use the same name that you see in Sigrid. This works for both file dependencies and component dependencies.
 
 ## Sigrid metadata
 
