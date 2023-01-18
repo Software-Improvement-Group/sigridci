@@ -163,7 +163,7 @@ class SystemUploadPackerTest(unittest.TestCase):
 
         self.assertEqual(LOG_HISTORY, expected)
         
-    def testUsePathPrefixInUpload(self):
+    def testUseSubsystemInUpload(self):
         sourceDir = tempfile.mkdtemp()
         subDirA = sourceDir + "/a"
         os.mkdir(subDirA)
@@ -183,7 +183,7 @@ class SystemUploadPackerTest(unittest.TestCase):
         self.assertEqual(os.path.exists(outputFile), True)
         self.assertEqual(entries, ["frontend/a/a.py", "frontend/b/b.py"])
         
-    def testPathPrefixDoesNotLeadToDoubleSlash(self):
+    def testSubsystemOptionDoesNotLeadToDoubleSlash(self):
         sourceDir = tempfile.mkdtemp()
         self.createTempFile(sourceDir, "a.py", "a")
         
