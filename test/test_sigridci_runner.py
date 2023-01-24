@@ -31,7 +31,8 @@ class SigridCiRunnerTest(unittest.TestCase):
         LOG_HISTORY.clear()
         
     def testForceLowerCaseForCustomerAndSystemName(self):
-        args = types.SimpleNamespace(partner="sig", customer="Aap", system="NOOT", sigridurl="", publish=False, publishonly=False)
+        args = types.SimpleNamespace(partner="sig", customer="Aap", system="NOOT", sigridurl="", \
+            publish=False, publishonly=False, subsystem=None)
         apiClient = SigridApiClient(args)
         
         self.assertEqual(apiClient.urlCustomerName, "aap")
@@ -56,7 +57,7 @@ class SigridCiRunnerTest(unittest.TestCase):
         
     def testSystemNameIsConvertedToLowerCaseInApiClient(self):
         args = types.SimpleNamespace(partner="sig", customer="Aap", system="NOOT", \
-            sigridurl="example.com", publish=False, publishonly=False)
+            sigridurl="example.com", publish=False, publishonly=False, subsystem=None)
         apiClient = SigridApiClient(args)
         
         self.assertEqual(apiClient.urlCustomerName, "aap")
@@ -193,6 +194,27 @@ class SigridCiRunnerTest(unittest.TestCase):
         ]
 
         self.assertEqual(LOG_HISTORY, expectedLog)
+        self.assertEqual(apiClient.called, expectedCalls)
+        
+    def testAddSubsystemOptionToUrl(self):
+        tempDir = tempfile.mkdtemp()    
+        self.createTempFile(tempDir, "a.py", "print(123)")
+        
+        options = UploadOptions(sourceDir=tempDir)
+        target = TargetQuality("/tmp/nonexistent", 3.5)
+        apiClient = MockApiClient(publish=True, subsystem="mysubsystem")
+        
+        runner = SigridCiRunner()
+        runner.run(apiClient, options, target, [])
+        
+        expectedCalls = [
+            "/analysis-results/sigridci/aap/noot/v1/ci", 
+            "/inboundresults/sig/aap/noot/ci/uploads/v1/publish?subsystem=mysubsystem", 
+            "UPLOAD",
+            "/analysis-results/sigridci/aap/noot/v1/ci/results/123",
+            "/analysis-results/api/v1/system-metadata/aap/noot"
+        ]
+
         self.assertEqual(apiClient.called, expectedCalls)
         
     def testExitWithMessageIfUploadEmpty(self):
@@ -506,7 +528,7 @@ class SigridCiRunnerTest(unittest.TestCase):
         
         
 class MockApiClient(SigridApiClient):
-    def __init__(self, publish=False, systemExists=True, uploadAttempts=0):
+    def __init__(self, publish=False, systemExists=True, uploadAttempts=0, subsystem=None):
         self.called = []
         self.urlPartnerName = "sig"
         self.urlCustomerName = "aap"
@@ -514,6 +536,7 @@ class MockApiClient(SigridApiClient):
         self.publish = publish
         self.systemExists = systemExists
         self.uploadAttempts = uploadAttempts
+        self.subsystem = subsystem
         self.attempt = 0
         self.responses = {}
         self.POLL_INTERVAL = 1

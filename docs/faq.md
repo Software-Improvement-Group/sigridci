@@ -28,7 +28,7 @@ Sigrid: Frequently Asked Questions
 
 - [What to do when the script does not work?](#what-to-do-when-the-script-does-not-work)
 - [I'm receiving an error message that certificate verification failed](#im-receiving-an-error-message-that-certificate-verification-failed)
-- [Why can't I use the publish and pathprefix options together?](#why-cant-i-use-the-publish-and-pathprefix-options-together)
+- [I used the subsystem option and see results from other subsystems](#i-used-the-subsystem-option-and-see-results-from-other-subsystems)
 - [Where do I find the Sigrid CI output?](#where-do-i-find-the-sigrid-ci-output)
 - [I started using Sigrid CI, and now I suddenly see more code in Sigrid](#i-started-using-sigrid-ci-and-now-i-suddenly-see-more-code-in-sigrid)
 - [I'm receiving an error message about UnicodeEncodeError](#im-receiving-an-error-message-about-unicodeencodeerror)
@@ -145,8 +145,12 @@ Yes. In some situations, the view of your project/system in Sigrid might differ 
 
 There are two ways to use Sigrid CI in such a situation. 
 
-- You can change the structure in Sigrid to match your repositories. This is the simplest option, but different roles can have different opinions on what is a suitable structure in Sigrid (though development teams tend to prefer Sigrid matching their repositories).
-- Even when *not* changing the Sigrid structure, it is still possible to run Sigrid CI for your repository. You can use the `--pathprefix` option to explain Sigrid CI how your repository structure should be matched to your Sigrid configuration. This option is explained in [using the Sigrid CI client script](client-script-usage.md).
+- You can change the structure in Sigrid to match your repositories. This is the simplest option, but different roles
+  can have different opinions on what is a suitable structure in Sigrid (though development teams tend to prefer Sigrid
+  matching their repositories).
+- Even when *not* changing the Sigrid structure, it is still possible to run Sigrid CI for your repository. You can use
+  the `--subsystem` option to explain Sigrid CI how your repository structure should be matched to your Sigrid
+  configuration. This option is explained in [using the Sigrid CI client script](client-script-usage.md).
 
 ### Can I see which files are upload to Sigrid?
 
@@ -176,9 +180,14 @@ In some cases, the Sigrid CI client script might produce an error message `[SSL:
 
 If your environment requires a certificate store in a custom location, the environment variables `openssl_cafile_env` and `openssl_capath_envz` can be used to point Python to the correct location. Refer to the [Python documentation on OpenSSL](https://docs.python.org/3/library/ssl.html) for more information
 
-### Why can't I use the publish and pathprefix options together?
+### I used the subsystem option and see results from other subsystems
 
-You can either use the `--publish` option to publish your code to Sigrid, or you can use the `--pathprefix` option to receive feedback on a specific part of your codebase, but you cannot use both in combination with each other. The reason is that these two options relate to different usage scenarios. `--pathprefix` is for pull request integration, and indicates you want to use Sigrid CI for a *subset of your codebase*. In contrast, `--publish` indicates you want to publish *your entire codebase* to Sigrid. This is why the combination doesn't really make sense, it would indicate you simultaneously consider your repository as the entire codebase (since you want to publish it) and a part of the codebase (since you're asking for more specific feedback). Please [contact us](mailto:support@softwareimprovementgroup.com) if you believe you have a need for using the combination of these two options.
+If your repository is part of a larger system you can use subsystem to only get feedback on your repository. This is
+done on a best effort basis, and if multiple pipelines run at the same time for the same system this might influence the results.
+To give you feedback on your changes Sigrid CI uses both the source code and measurement results from the last published
+measurement. If new results are published while we retrieve these measurements, some discrepancies might occur. If this
+happens, try running Sigrid CI again, preferably at a quieter moment. If it is a recurring issue,
+please [contact us](mailto:support@softwareimprovementgroup.com).
 
 ### Where do I find the Sigrid CI output ?
 

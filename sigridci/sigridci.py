@@ -47,7 +47,7 @@ class UploadOptions:
     sourceDir: str = None
     excludePatterns: typing.List[str] = dataclasses.field(default_factory=lambda: [])
     includeHistory: bool = False
-    pathPrefix: str = ""
+    subsystem: str = ""
     showContents: bool = False
     publishOnly: bool = False
     
@@ -99,6 +99,7 @@ class SigridApiClient:
         self.urlCustomerName = urllib.parse.quote_plus(args.customer.lower())
         self.urlSystemName = urllib.parse.quote_plus(args.system.lower())
         self.publish = args.publish or args.publishonly
+        self.subsystem = args.subsystem
 
     def callSigridAPI(self, path, body=None, contentType=None):
         url = f"{self.baseURL}/rest/{path}"
@@ -160,6 +161,8 @@ class SigridApiClient:
             path += "/onboarding"
         elif self.publish:
             path += "/publish"
+        if self.subsystem:
+            path += "?subsystem=" + urllib.parse.quote_plus(self.subsystem)
     
         return self.retry(lambda: self.callSigridAPI(path))
         
@@ -241,11 +244,10 @@ class SystemUploadPacker:
                 filePath = os.path.join(root, file)
                 if file != outputFile and not self.isExcluded(filePath):
                     relativePath = os.path.relpath(os.path.join(root, file), sourceDir)
-                    uploadPath = self.getUploadFilePath(relativePath)
                     hasContents = True
                     if self.options.showContents:
-                        log(f"Adding file to upload: {uploadPath}")
-                    zipFile.write(filePath, uploadPath)
+                        log(f"Adding file to upload: {relativePath}")
+                    zipFile.write(filePath, relativePath)
 
         zipFile.close()
 
@@ -263,10 +265,6 @@ class SystemUploadPacker:
             sys.exit(1)
         elif uploadSizeBytes < 50000:
             log("Warning: Upload is very small, source directory might not contain all source code")
-
-    def getUploadFilePath(self, relativePath):
-        pathPrefix = self.options.pathPrefix.strip("/")
-        return f"{pathPrefix}/{relativePath}" if pathPrefix else relativePath
 
     def isExcluded(self, filePath):
         excludePatterns = self.DEFAULT_EXCLUDES + (self.options.excludePatterns or [])
@@ -666,7 +664,7 @@ if __name__ == "__main__":
     parser.add_argument("--publish", action="store_true")
     parser.add_argument("--publishonly", action="store_true")
     parser.add_argument("--exclude", type=str, default="")
-    parser.add_argument("--pathprefix", type=str, default="")
+    parser.add_argument("--subsystem", type=str, default="")
     parser.add_argument("--showupload", action="store_true")
     parser.add_argument("--include-history", action="store_true")
     parser.add_argument("--sigridurl", type=str, default="https://sigrid-says.com")
@@ -691,13 +689,9 @@ if __name__ == "__main__":
         print("Source code directory not found: " + args.source)
         sys.exit(1)
 
-    if args.publish and len(args.pathprefix) > 0:
-        print("You cannot use both --publish and --pathprefix at the same time, refer to the documentation for details")
-        sys.exit(1)
-
     log("Starting Sigrid CI")
     
-    options = UploadOptions(args.source, args.exclude.split(","), args.include_history, args.pathprefix, args.showupload, args.publishonly)
+    options = UploadOptions(args.source, args.exclude.split(","), args.include_history, args.subsystem, args.showupload, args.publishonly)
     apiClient = SigridApiClient(args)
     reports = [TextReport(), StaticHtmlReport(), JUnitFormatReport(), ConclusionReport(apiClient)]
 
