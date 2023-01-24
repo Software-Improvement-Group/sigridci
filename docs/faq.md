@@ -183,10 +183,10 @@ If your environment requires a certificate store in a custom location, the envir
 ### I used the subsystem option and see results from other subsystems
 
 If your repository is part of a larger system you can use subsystem to only get feedback on your repository. This is
-done on a best effort basis and you might get unexpected results if another subsystem published to Sigrid while your
-pipeline was running. To analyze subsystems Sigrid CI uses both the source code and measurement results from the last
-published measurement. If something is published while we retrieve these discrepancies might occur. If this happens, try
-running Sigrid CI again, preferably at a quieter moment. If it is a recurring issue,
+done on a best effort basis, and if multiple pipelines run at the same time for the same system this might influence the results.
+To give you feedback on your changes Sigrid CI uses both the source code and measurement results from the last published
+measurement. If new results are published while we retrieve these measurements, some discrepancies might occur. If this
+happens, try running Sigrid CI again, preferably at a quieter moment. If it is a recurring issue,
 please [contact us](mailto:support@softwareimprovementgroup.com).
 
 ### Where do I find the Sigrid CI output ?
