@@ -557,6 +557,7 @@ class SigridCiRunner:
     SYSTEM_NAME_PATTERN = re.compile("^[a-z0-9]+(-[a-z0-9]+)*$", re.IGNORECASE)
     SYSTEM_NAME_LENGTH = range(2, 65)
     METADATA_FIELDS = [
+        "displayName",
         "divisionName",
         "teamNames",
         "supplierNames",
