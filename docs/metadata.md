@@ -25,6 +25,7 @@ The following examples shows an example of a `sigrid-metadata.yaml` file:
 
 ```
 metadata:
+  displayName: "MyBank back-end"
   divisionName: "My division"
   teamNames:
     - "My Team"
