@@ -142,7 +142,7 @@ class SigridApiClient:
     def submitUpload(self, options, systemExists):
         log("Creating upload")
         
-        with tempfile.NamedTemporaryFile() as tempFile:
+        with tempfile.NamedTemporaryFile(suffix=".zip") as tempFile:
             uploadPacker = SystemUploadPacker(options)        
             uploadPacker.prepareUpload(options.sourceDir, tempFile.name)
 
