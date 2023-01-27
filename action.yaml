@@ -38,6 +38,9 @@ inputs:
     default: false
     
   # Sigrid metadata
+  displayname:
+    required: false
+    default: ""
   divisionname:
     required: false
     default: ""
@@ -94,6 +97,7 @@ runs:
     - ${{ inputs.exclude }}
     - ${{ (inputs.showupload == 'true' && '--showupload') || '--dummy' }}
   env:
+    displayname: ${{ inputs.displayname }}
     divisionname: ${{ inputs.divisionname }}
     teamnames: ${{ inputs.teamnames }}
     suppliernames: ${{ inputs.suppliernames }}

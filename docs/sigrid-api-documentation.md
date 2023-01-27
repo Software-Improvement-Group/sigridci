@@ -184,8 +184,8 @@ The path parameters `{customer}` and `{system}` refer to your Sigrid account nam
 The response format of both system-level endpoints (`GET` and `PATCH`) is as follows:
 ```json
 {
-  "divisionName" : "Division name",
   "displayName" : "User-friendly system name",
+  "divisionName" : "Division name",
   "teamNames" : [ "My Team" ],
   "supplierNames" : [ "Supplier 1", "Supplier 2" ],
   "lifecyclePhase" : "EOL",
@@ -206,8 +206,8 @@ The response format of the customer-level endpoint (`GET https://sigrid-says.com
   {
     "customerName": "foo",
     "systemName": "bar",
-    "divisionName" : "Division name",
     "displayName" : "User-friendly system name",
+    "divisionName" : "Division name",
     "teamNames" : [ "My Team" ],
     "supplierNames" : [ "Supplier 1", "Supplier 2" ],
     "lifecyclePhase" : "EOL",
@@ -247,8 +247,8 @@ The metadata fields are described by the following table. Note that the setting 
 
 |Path|Type|Description|
 |----|----|-----------|
-|`divisionName`|`String`|The name of the division this system belongs to. Must be between 0 and 60 characters. Can contain blanks: true|
 |`displayName`|`String`|The display name of the system. Must be between 0 and 60 characters. Can contain blanks: true|
+|`divisionName`|`String`|The name of the division this system belongs to. Must be between 0 and 60 characters. Can contain blanks: true|
 |`supplierNames`|`Array`|Array of the names of the suppliers for this system|
 |`inProductionSince`|`Number`|The year the system went into production. Cannot be later than the current year, must be at least 1960|
 |`businessCriticality`|`String`|Importance of the system in terms of the effects of it not being available on the user's business. Must match any of the following values (case-sensitive): CRITICAL, HIGH, MEDIUM, LOW|
