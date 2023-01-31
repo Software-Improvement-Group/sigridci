@@ -24,7 +24,6 @@ import os
 import re
 import subprocess
 import sys
-import tempfile
 import time
 import typing
 import urllib.parse
@@ -142,19 +141,17 @@ class SigridApiClient:
 
     def submitUpload(self, options, systemExists):
         log("Creating upload")
-        
-        with tempfile.NamedTemporaryFile(suffix=".zip") as tempFile:
-            uploadPacker = SystemUploadPacker(options)        
-            uploadPacker.prepareUpload(options.sourceDir, tempFile.name)
+        uploadPacker = SystemUploadPacker(options)
+        upload = "sigrid-upload-" + datetime.datetime.now().strftime("%Y%m%d-%H%M%S") + ".zip"
+        uploadPacker.prepareUpload(options.sourceDir, upload)
 
-            log("Preparing upload")
-            uploadLocation = self.obtainUploadLocation(systemExists)
-            uploadUrl = uploadLocation["uploadUrl"]
-            analysisId = uploadLocation["ciRunId"]
-            log(f"Sigrid CI analysis ID: {analysisId}")
-            
-            log("Publishing upload" if self.publish else "Submitting upload")
-            self.uploadBinaryFile(uploadUrl, tempFile.name)
+        log("Preparing upload")
+        uploadLocation = self.obtainUploadLocation(systemExists)
+        uploadUrl = uploadLocation["uploadUrl"]
+        analysisId = uploadLocation["ciRunId"]
+        log(f"Sigrid CI analysis ID: {analysisId}")
+        log("Publishing upload" if self.publish else "Submitting upload")
+        self.uploadBinaryFile(uploadUrl, upload)
 
         return analysisId
 
