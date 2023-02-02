@@ -697,11 +697,13 @@ if __name__ == "__main__":
     reports = [TextReport(), StaticHtmlReport(), JUnitFormatReport(), ConclusionReport(apiClient)]
 
     runner = SigridCiRunner()
-    targetRating = runner.loadSigridTarget(apiClient) if args.targetquality == "sigrid" else float(args.targetquality)
-    target = TargetQuality(options.readScopeFile() or "", targetRating)
+    
     if not runner.isValidSystemName(args.customer, args.system):
         maxNameLength = runner.SYSTEM_NAME_LENGTH.stop - (len(args.customer) + 1)
         print(f"Invalid system name, system name should match '{runner.SYSTEM_NAME_PATTERN.pattern}' "
               f"and be {runner.SYSTEM_NAME_LENGTH.start} to {maxNameLength} characters long (inclusive).")
         sys.exit(1)
+        
+    targetRating = runner.loadSigridTarget(apiClient) if args.targetquality == "sigrid" else float(args.targetquality)
+    target = TargetQuality(options.readScopeFile() or "", targetRating)
     runner.run(apiClient, options, target, reports)
