@@ -24,6 +24,7 @@ import os
 import re
 import subprocess
 import sys
+import tempfile
 import time
 import typing
 import urllib.parse
@@ -140,20 +141,21 @@ class SigridApiClient:
         sys.exit(1)
 
     def submitUpload(self, options, systemExists):
-        log("Creating upload")
-        uploadPacker = SystemUploadPacker(options)
-        upload = "sigrid-upload-" + datetime.datetime.now().strftime("%Y%m%d-%H%M%S") + ".zip"
-        uploadPacker.prepareUpload(options.sourceDir, upload)
+        with tempfile.TemporaryDirectory() as tempDir:
+            log("Creating upload")
+            uploadPacker = SystemUploadPacker(options)
+            upload = os.path.join(tempDir, "upload.zip")
+            uploadPacker.prepareUpload(options.sourceDir, upload)
 
-        log("Preparing upload")
-        uploadLocation = self.obtainUploadLocation(systemExists)
-        uploadUrl = uploadLocation["uploadUrl"]
-        analysisId = uploadLocation["ciRunId"]
-        log(f"Sigrid CI analysis ID: {analysisId}")
-        log("Publishing upload" if self.publish else "Submitting upload")
-        self.uploadBinaryFile(uploadUrl, upload)
+            log("Preparing upload")
+            uploadLocation = self.obtainUploadLocation(systemExists)
+            uploadUrl = uploadLocation["uploadUrl"]
+            analysisId = uploadLocation["ciRunId"]
+            log(f"Sigrid CI analysis ID: {analysisId}")
+            log("Publishing upload" if self.publish else "Submitting upload")
+            self.uploadBinaryFile(uploadUrl, upload)
 
-        return analysisId
+            return analysisId
 
     def obtainUploadLocation(self, systemExists):
         path = f"/inboundresults/{self.urlPartnerName}/{self.urlCustomerName}/{self.urlSystemName}/ci/uploads/{self.API_VERSION}"
