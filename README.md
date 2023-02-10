@@ -20,8 +20,6 @@ Compared to other tools that perform code quality checks, i.e. linters, using Si
 
 ## Integrating Sigrid CI into your development pipeline
 
-We provide specific instructions for integrating Sigrid CI with popular development platforms:
-
 - [Integrating Sigrid CI with GitHub Actions](docs/github-actions.md)
 - [Integrating Sigrid CI with GitLab](docs/gitlab.md)
 - [Integrating Sigrid CI with Bitbucket Pipelines](docs/bitbucket-pipelines.md)
@@ -31,12 +29,14 @@ We provide specific instructions for integrating Sigrid CI with popular developm
 - [Integrating Sigrid CI with Mendix QSM on a Mendix Team Server](docs/mendix-teamserver-api.md)
 - [Integrating Sigrid CI with Mendix QSM on a GitHub server](docs/mendix-github-actions.md)
 - [Integrating Sigrid CI with Mendix QSM on a GitLab server](docs/mendix-gitlab.md)
+- [Integrating Sigrid CI with Siemens Polarion](docs/polarion.md)
 - [Integrating Sigrid CI with other/custom CI environments](docs/integration.md)
 
 ## Usage documentation
 
 - [Creating authentication tokens for Sigrid CI](docs/authentication-tokens.md)
 - [Client script option reference](docs/client-script-usage.md)
+- [Mapping repositories to Sigrid systems](docs/systems.md)
 - [Changing the analysis scope configuration](docs/analysis-scope-configuration.md)
 - [Adding business context to a system using metadata](docs/metadata.md)
 - [Using Sigrid CI as part of your development workflow](docs/workflows.md)

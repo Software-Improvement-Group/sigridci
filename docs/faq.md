@@ -21,7 +21,7 @@ Sigrid: Frequently Asked Questions
 - [Should we fail the build if the Sigrid CI check fails?](#should-we-fail-the-build-if-the-sigrid-ci-check-fails)
 - [Why doesn't deleted code influence the rating?](#why-doesnt-deleted-code-influence-the-rating)
 - [We have a multi-repo project, can I still use Sigrid CI?](#we-have-a-multi-repo-project-can-i-still-use-sigrid-ci)
-- [Can I see which files are upload to Sigrid?](#can-i-see-which-files-are-uploaded-to-sigrid)
+- [Can I see which files are uploaded to Sigrid?](#can-i-see-which-files-are-uploaded-to-sigrid)
 - [Why do you have both publish and publishonly options, what's the difference?](#why-do-you-have-both-publish-and-publishonly-options-whats-the-difference)
 
 ### Common problems
@@ -43,6 +43,10 @@ Sigrid: Frequently Asked Questions
 ### Sigrid Security
 
 See [Sigrid Security: Frequently Asked Questions](faq-security.md).
+
+### Sigrid Architecture Quality
+
+See [Sigrid Architecture Quality: Frequently Asked Questions](faq-architecture.md).
 
 ## Usage questions
 
@@ -152,7 +156,7 @@ There are two ways to use Sigrid CI in such a situation.
   the `--subsystem` option to explain Sigrid CI how your repository structure should be matched to your Sigrid
   configuration. This option is explained in [using the Sigrid CI client script](client-script-usage.md).
 
-### Can I see which files are upload to Sigrid?
+### Can I see which files are uploaded to Sigrid?
 
 Yes. You can add the `--showupload` option when calling the [client script](client-script-usage.md). This will add log output for every file that is included in the upload that is submitted to Sigrid.
 
@@ -207,7 +211,7 @@ In some environments, Sigrid CI can produce the following error:
     
 This happens when Sigrid CI tried to provide command line output that includes UTF-8 characters, but `stdout` is unable to display such errors. This can be solved by adding the `export PYTHONIOENCODING=utf8` environment variable.
 
-### I'm reciving an error message about dubious ownership in repository
+### I'm receiving an error message about dubious ownership in repository
 
 This message occurs when the (Linux) user that cloned your Git repository is different from the (Linux) user that is running the CI job. This scenario is pretty uncommon, in the majority of cases the entire CI pipeline is performed with the same user. If you see this error, you can add `git config --global --add safe.directory <repository-dir>` to tell Git it is safe to trust the directory to which the repository was cloned. Note you need to provide the directory's absolute path, Git will not allow `.`.
 
