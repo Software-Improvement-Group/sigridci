@@ -36,7 +36,7 @@ Notes:
 2. System names can only contain lowercase letters, numbers, and hyphens.
 3. Typically, you would use the `--publish` option when committing to the main/master branch, and you would *not* use it for pull requests.  
 4. These files and directories are excluded *on top of* Sigrid's default excludes. By default, Sigrid excludes things like third party libraries (e.g. `/node_modules/` for NPM libraries, build output (e.g. `/target/` for Maven builds), and generated code. 
-5. The `--subsystem` option can be used when your repository is part of a group of repositories that is considered a single system in Sigrid. For example, you might have combined your back-end and front-end repositories into a single system in Sigrid, such that in Sigrid there are two top-level folders: `backend` and `frontend` containing the contents of the respective repositories. However, you still want to get specific feedback for your front-end repository in Sigrid CI. In this case you would use `--subsystem frontend` so that Sigrid CI knows the location of your repository within the larger system.
+5. The `--subsystem` option can be used to map multiple repositories to the same Sigrid system. Refer to the [documentation on mapping repositories to systems](systems.md) for more information.
 
 ## Defining quality targets
 
