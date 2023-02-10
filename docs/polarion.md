@@ -60,11 +60,11 @@ Since your updated configuration file is part of your repository, it will be pic
 
 In Polarion, you can access Sigrid's Open Source Health data from the "work items" menu. Sigrid will create or update work items with the type SBOM Component and SBOM Vulnerability.
 
-<img src="images/polarion-menu.png" width="300" />
+<img src="images/polarion-menu.png" width="200" />
 
 The detail page for these work items will provide you with the combination of all data resulting from Sigrid's analysis, plus all life cycle management and workflow options provided by Polarion.
 
-<img src="images/polarion-list.png" width="400" />
+<img src="images/polarion-list.png" width="500" />
 
 ## Contact and support
 
