@@ -14,7 +14,7 @@ Integrating Sigrid CI with Siemens Polarion
 
 You will first need to add Sigrid CI to your project's pipeline, so that your code is automatically published to Sigrid after every commit. Sigrid CI supports [multiple development platforms](../README.md), so you can follow the instructions for your platform. Once Sigrid CI is enabled in your pipeline, your project will be automatically on-boarded to Sigrid when you run it for the first time. Once you have done this you should be able to see your project when you check [sigrid-says.com](https://sigrid-says.com).
 
-<img src="polarion-sigrid-onboarding.png" width="500" />
+<img src="images/polarion-sigrid-onboarding.png" width="500" />
 
 ## Adding the Polarion integration to your Sigrid configuration
 
@@ -60,11 +60,11 @@ Since your updated configuration file is part of your repository, it will be pic
 
 In Polarion, you can access Sigrid's Open Source Health data from the "work items" menu. Sigrid will create or update work items with the type SBOM Component and SBOM Vulnerability.
 
-<img src="polarion-menu.png" width="300" />
+<img src="images/polarion-menu.png" width="300" />
 
 The detail page for these work items will provide you with the combination of all data resulting from Sigrid's analysis, plus all life cycle management and workflow options provided by Polarion.
 
-<img src="polarion-list.png" width="400" />
+<img src="images/polarion-list.png" width="400" />
 
 ## Contact and support
 
