@@ -52,16 +52,21 @@ stages:
 variables:
   SIGRID_CI_CUSTOMER: 'examplecustomername'
   SIGRID_CI_SYSTEM: 'examplesystemname'
+  SIGRID_CI_TARGET_QUALITY: '3.5'
 
 sigridci:
   image: 
     name: softwareimprovementgroup/mendixpreprocessor:latest
-  variables:
-    SIGRID_CI_TARGET_QUALITY: '3.5'
+    entrypoint: [""]
   stage: report
   script: 
-    - ""
+    - /usr/local/bin/entrypoint.sh
   allow_failure: true
+  artifacts:
+    paths:
+      - sigrid-ci-output/
+    expire_in: 1 week
+    when: always
   tags:
     - run_docker
   except:
@@ -71,12 +76,18 @@ sigridci:
 sigridpublish:
   image: 
     name: softwareimprovementgroup/mendixpreprocessor:latest
+    entrypoint: [""]
   variables:
-    SIGRID_CI_PUBLISH: 'publishonly'
+    SIGRID_CI_PUBLISH: 'publish'
   stage: report
   script:
-    - ""
+    - /usr/local/bin/entrypoint.sh
   allow_failure: true
+  artifacts:
+    paths:
+      - sigrid-ci-output/
+    expire_in: 1 week
+    when: always
   tags:
     - run_docker
   only:
