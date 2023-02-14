@@ -45,7 +45,7 @@ We will create a pipeline that consists of two jobs:
 
 In the root of your repository, create a file `.gitlab-ci.yml` and add the following contents:
 
-```
+```yaml
 stages:
  - report
 
@@ -61,17 +61,15 @@ sigridci:
   stage: report
   script: 
     - /usr/local/bin/entrypoint.sh
-  allow_failure: true
   artifacts:
     paths:
-      - sigrid-ci-output/
+      - "sigrid-ci-output/*"
+    reports:
+      junit: "sigrid-ci-output/sigridci-junit-format-report.xml"
     expire_in: 1 week
     when: always
-  tags:
-    - run_docker
-  except:
-    variables:
-      - $CI_COMMIT_REF_NAME == $CI_DEFAULT_BRANCH
+  rules:
+    - if: $CI_COMMIT_REF_NAME != $CI_DEFAULT_BRANCH
 
 sigridpublish:
   image: 
@@ -82,17 +80,15 @@ sigridpublish:
   stage: report
   script:
     - /usr/local/bin/entrypoint.sh
-  allow_failure: true
   artifacts:
     paths:
-      - sigrid-ci-output/
+      - "sigrid-ci-output/*"
+    reports:
+      junit: "sigrid-ci-output/sigridci-junit-format-report.xml"
     expire_in: 1 week
     when: always
-  tags:
-    - run_docker
-  only:
-    variables:
-      - $CI_COMMIT_REF_NAME == $CI_DEFAULT_BRANCH
+  rules:
+    - if: $CI_COMMIT_REF_NAME == $CI_DEFAULT_BRANCH
 ```
 
 Note the name of the branch, which is `main` in the example but might be different for your repository. In general, most older projects will use `master` as their main branch, while more recent projects will use `main`. 
