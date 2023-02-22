@@ -37,7 +37,21 @@ In this example, the *MyBank front-end* and *MyBank back-end* repositories would
 
 This scenario also means you set your *objectives* on the combined application level, not on the individual repository level. This can help to have a clear shared goal that you're working towards together. However, if you find yourself in a situation where the different repositories would prefer to set their own objectives, it might be a better choice to base your Sigrid view and goals around repositories. 
 
-However, it's important not to go overboard with this approach. Merging a few repositories that belong together into a business application is very useful, but if you find yourself merging dozens or even hundreds of repositories you're probably taking things too far. Merging your entire landscape into one giant monolith makes Sigrid's portfolio dashboards a lot less useful, since you will only see the monolith. This will also have a negative impact on analysis performance, as the analysis needs to merge your repository's code into the multi-repo system. Finally, your changes are compared agains the multi-repo's baseline, not just the baseline for your repository, and the target is defined for the entire multi-repo system. This is generally desirable from a management perspective, but could make the results less actionable for teams since they have less control over the multi-repo system as a whole.
+However, it's important not to go overboard with this approach:
+
+### What granularity is best when combining repositories into business applications?
+
+Merging a few repositories that belong together into a business application is very useful, but if you find yourself merging dozens or even hundreds of repositories you're probably taking things too far. Merging your entire landscape into one giant monolith makes Sigrid's portfolio dashboards a lot less useful, since you will only see the monolith.
+
+This will also have a negative impact on analysis performance, as the analysis needs to merge your repository's code into the multi-repo system. Finally, your changes are compared agains the multi-repo's baseline, not just the baseline for your repository, and the target is defined for the entire multi-repo system. This is generally desirable from a management perspective, but could make the results less actionable for teams since they have less control over the multi-repo system as a whole.
+
+### When should subsystems be published?
+
+Subsystems are intended for a situation where you have different teams working on different repositories, and you want them to publish their changes to Sigrid individually while still having an aggregated/consolidated view in Sigrid itself. This is the default behavior for Sigrid CI, so following this documentation already leads to a situation where every subsystem is published to Sigrid at the appropriate time.
+
+If you find yourself publishing all repositories simultaneously, for example as a scheduled job, you should consider publishing the system as a whole, since there is little added value in using subsystems in such a scenario.
+
+Reversely, there is also little added value in publishing subsystems that have not actually changed, since this option allows you to publish every subsystem after every change anyway.
 
 ## Contact and support
 
