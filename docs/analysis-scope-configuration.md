@@ -16,9 +16,9 @@ component_depth: 1
 exclude:
   - ".*/simulator/.*"
 languages:
-  - java
-  - python
-  - typescript
+  - name: java
+  - name: python
+  - name: typescript
 ```
 
 ## General configuration
@@ -39,6 +39,23 @@ Note that it is not necessary to exclude files and directories that would not be
 
 See the [list of supported technologies](technology-support.md) for the names that can be used inside the `languages` section of the YAML file.
 
+### Overriding automatic technology and test code detection
+
+When you add a technology to your scope file, Sigrid will try to locate the corresponding files based on file and directory name conventions. This includes automatic detection of test code. For example, Java-based projects typically use `src/main/java` for production code and `src/test/java` for test code.
+
+This automatic detection is usually sufficient for the majority of projects. However, if you are using less common frameworks or a custom naming convention, you will need to tell Sigrid where it can find the test code. Like other parts of the scope file, this is done using regular expressions:
+
+```
+languages:
+  - name: Java
+    production:
+    test:
+      include:
+        - ".*/our-smoke-tests/.*[.]java"
+```
+
+This example will classify all Java code in the `our-smoke-tests` directory as test code.
+
 ## Defining components
 
 Component detection is based on the project's directory structure. What "components" mean depends on the technology. In Java, components are usually based on Maven modules. In C, components are often simply the project's top-level directories.
@@ -53,9 +70,9 @@ In some projects, using directory depth will not accurately reflect the actual c
       - name: "Back-end"
         include:
           - ".*[.]java"
-      - name: "Front-end"
+      - name: "Log"
         include:
-          - ".*[.]ts"
+          - ".*/cs/findbugs/log/.*"
           
 In this example, regular expressions are used to define what files and directories belong to each component. The syntax is identical to the patterns used in the `exclude` section.
 
@@ -106,14 +123,19 @@ The `thirdpartyfindings` section supports the following options:
     architecture:
       enabled: true
       
+Architecture Quality also requires the repository history to be included in the upload. This requires the `--include-history` option to be enabled in the [Sigrid CI client script](client-script-usage.md).
+      
 The `architecture` section supports the following options:
 
-| Option name | Required? | Description                                                                       |
-|-------------|-----------|-----------------------------------------------------------------------------------|
-| `enabled`   | Yes       | Set to `true` to enable architecture quality analysis.                            |
-| `model`     | No        | Version of the SIG Architecture Quality Model to use. Defaults to latest version. |
+| Option name           | Required? | Description                                                                                    |
+|-----------------------|-----------|------------------------------------------------------------------------------------------------|
+| `enabled`             | Yes       | Set to `true` to enable architecture quality analysis.                                         |
+| `model`               | No        | Version of the SIG Architecture Quality Model to use. Defaults to latest version.              |
+| `exclude`             | No        | List of exclude patterns that applies only to Architecture Quality, not globally.              |
+| `add_dependencies`    | No        | List of manually added dependencies on top of the ones detected automatically by the analysis. |
+| `remove_dependencies` | No        | List of dependencies that manually overrides the analysis and removes them from the results.   |
 
-Architecture Quality also requires the repository history to be included in the upload. This requires the `--include-history` option to be enabled in the [Sigrid CI client script](client-script-usage.md).
+The `add_dependencies` and `remove_dependencies` fields expect a value in the format `name -> name`. You can use the same name that you see in Sigrid. This works for both file dependencies and component dependencies.
 
 ## Sigrid metadata
 

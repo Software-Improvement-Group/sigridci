@@ -24,6 +24,7 @@ import os
 import re
 import subprocess
 import sys
+import tempfile
 import time
 import typing
 import urllib.parse
@@ -47,7 +48,7 @@ class UploadOptions:
     sourceDir: str = None
     excludePatterns: typing.List[str] = dataclasses.field(default_factory=lambda: [])
     includeHistory: bool = False
-    pathPrefix: str = ""
+    subsystem: str = ""
     showContents: bool = False
     publishOnly: bool = False
     
@@ -99,6 +100,7 @@ class SigridApiClient:
         self.urlCustomerName = urllib.parse.quote_plus(args.customer.lower())
         self.urlSystemName = urllib.parse.quote_plus(args.system.lower())
         self.publish = args.publish or args.publishonly
+        self.subsystem = args.subsystem
 
     def callSigridAPI(self, path, body=None, contentType=None):
         url = f"{self.baseURL}/rest/{path}"
@@ -139,20 +141,21 @@ class SigridApiClient:
         sys.exit(1)
 
     def submitUpload(self, options, systemExists):
-        log("Creating upload")
-        uploadPacker = SystemUploadPacker(options)
-        upload = "sigrid-upload-" + datetime.datetime.now().strftime("%Y%m%d-%H%M%S") + ".zip"
-        uploadPacker.prepareUpload(options.sourceDir, upload)
+        with tempfile.TemporaryDirectory() as tempDir:
+            log("Creating upload")
+            uploadPacker = SystemUploadPacker(options)
+            upload = os.path.join(tempDir, "upload.zip")
+            uploadPacker.prepareUpload(options.sourceDir, upload)
 
-        log("Preparing upload")
-        uploadLocation = self.obtainUploadLocation(systemExists)
-        uploadUrl = uploadLocation["uploadUrl"]
-        analysisId = uploadLocation["ciRunId"]
-        log(f"Sigrid CI analysis ID: {analysisId}")
-        log("Publishing upload" if self.publish else "Submitting upload")
-        self.uploadBinaryFile(uploadUrl, upload)
+            log("Preparing upload")
+            uploadLocation = self.obtainUploadLocation(systemExists)
+            uploadUrl = uploadLocation["uploadUrl"]
+            analysisId = uploadLocation["ciRunId"]
+            log(f"Sigrid CI analysis ID: {analysisId}")
+            log("Publishing upload" if self.publish else "Submitting upload")
+            self.uploadBinaryFile(uploadUrl, upload)
 
-        return analysisId
+            return analysisId
 
     def obtainUploadLocation(self, systemExists):
         path = f"/inboundresults/{self.urlPartnerName}/{self.urlCustomerName}/{self.urlSystemName}/ci/uploads/{self.API_VERSION}"
@@ -160,6 +163,8 @@ class SigridApiClient:
             path += "/onboarding"
         elif self.publish:
             path += "/publish"
+        if self.subsystem:
+            path += "?subsystem=" + urllib.parse.quote_plus(self.subsystem)
     
         return self.retry(lambda: self.callSigridAPI(path))
         
@@ -241,11 +246,10 @@ class SystemUploadPacker:
                 filePath = os.path.join(root, file)
                 if file != outputFile and not self.isExcluded(filePath):
                     relativePath = os.path.relpath(os.path.join(root, file), sourceDir)
-                    uploadPath = self.getUploadFilePath(relativePath)
                     hasContents = True
                     if self.options.showContents:
-                        log(f"Adding file to upload: {uploadPath}")
-                    zipFile.write(filePath, uploadPath)
+                        log(f"Adding file to upload: {relativePath}")
+                    zipFile.write(filePath, relativePath)
 
         zipFile.close()
 
@@ -263,10 +267,6 @@ class SystemUploadPacker:
             sys.exit(1)
         elif uploadSizeBytes < 50000:
             log("Warning: Upload is very small, source directory might not contain all source code")
-
-    def getUploadFilePath(self, relativePath):
-        pathPrefix = self.options.pathPrefix.strip("/")
-        return f"{pathPrefix}/{relativePath}" if pathPrefix else relativePath
 
     def isExcluded(self, filePath):
         excludePatterns = self.DEFAULT_EXCLUDES + (self.options.excludePatterns or [])
@@ -315,8 +315,9 @@ class Report:
         return snapshotDate.strftime("%Y-%m-%d")
 
     def getSigridUrl(self, args):
-        return "https://sigrid-says.com/" + urllib.parse.quote_plus(args.customer) + "/" + \
-            urllib.parse.quote_plus(args.system);
+        customer = urllib.parse.quote_plus(args.customer.lower())
+        system = urllib.parse.quote_plus(args.system.lower())
+        return f"https://sigrid-says.com/{customer}/{system}"
 
     def getRefactoringCandidates(self, feedback, metric):
         refactoringCandidates = feedback.get("refactoringCandidates", [])
@@ -581,11 +582,14 @@ class ConclusionReport(Report):
     def printConclusionMessage(self, feedback, target):
         asciiArt = TextReport(self.output)
         
-        if target.meetsQualityTargets(feedback):
-            asciiArt.printColor("\n** Sigrid CI run complete: You wrote maintainable code and passed your Sigrid target **\n", \
+        if feedback["newCodeRatings"].get("MAINTAINABILITY", None) == None:
+            asciiArt.printColor("\n** Sigrid CI run complete: No files relevant for maintainability were changed **\n",
+                asciiArt.ANSI_BOLD + asciiArt.ANSI_BLUE)
+        elif target.meetsQualityTargets(feedback):
+            asciiArt.printColor("\n** Sigrid CI run complete: You wrote maintainable code and passed your Sigrid target **\n",
                 asciiArt.ANSI_BOLD + asciiArt.ANSI_GREEN)
         else:
-            asciiArt.printColor("\n** Sigrid CI run complete: Your code did not meet your Sigrid target for maintainable code **\n", \
+            asciiArt.printColor("\n** Sigrid CI run complete: Your code did not meet your Sigrid target for maintainable code **\n",
                 asciiArt.ANSI_BOLD + asciiArt.ANSI_YELLOW)
                 
     def printLandingPage(self, analysisId, feedback, target):
@@ -603,6 +607,7 @@ class SigridCiRunner:
     SYSTEM_NAME_PATTERN = re.compile("^[a-z0-9]+(-[a-z0-9]+)*$", re.IGNORECASE)
     SYSTEM_NAME_LENGTH = range(2, 65)
     METADATA_FIELDS = [
+        "displayName",
         "divisionName",
         "teamNames",
         "supplierNames",
@@ -710,7 +715,7 @@ if __name__ == "__main__":
     parser.add_argument("--publish", action="store_true")
     parser.add_argument("--publishonly", action="store_true")
     parser.add_argument("--exclude", type=str, default="")
-    parser.add_argument("--pathprefix", type=str, default="")
+    parser.add_argument("--subsystem", type=str, default="")
     parser.add_argument("--showupload", action="store_true")
     parser.add_argument("--include-history", action="store_true")
     parser.add_argument("--sigridurl", type=str, default="https://sigrid-says.com")
@@ -735,22 +740,20 @@ if __name__ == "__main__":
         print("Source code directory not found: " + args.source)
         sys.exit(1)
 
-    if args.publish and len(args.pathprefix) > 0:
-        print("You cannot use both --publish and --pathprefix at the same time, refer to the documentation for details")
-        sys.exit(1)
-
     log("Starting Sigrid CI")
     
-    options = UploadOptions(args.source, args.exclude.split(","), args.include_history, args.pathprefix, args.showupload, args.publishonly)
+    options = UploadOptions(args.source, args.exclude.split(","), args.include_history, args.subsystem, args.showupload, args.publishonly)
     apiClient = SigridApiClient(args)
     reports = [TextReport(), MarkdownReport(apiClient), StaticHtmlReport(), JUnitFormatReport(), ConclusionReport(apiClient)]
 
     runner = SigridCiRunner()
-    targetRating = runner.loadSigridTarget(apiClient) if args.targetquality == "sigrid" else float(args.targetquality)
-    target = TargetQuality(options.readScopeFile() or "", targetRating)
+    
     if not runner.isValidSystemName(args.customer, args.system):
         maxNameLength = runner.SYSTEM_NAME_LENGTH.stop - (len(args.customer) + 1)
         print(f"Invalid system name, system name should match '{runner.SYSTEM_NAME_PATTERN.pattern}' "
               f"and be {runner.SYSTEM_NAME_LENGTH.start} to {maxNameLength} characters long (inclusive).")
         sys.exit(1)
+        
+    targetRating = runner.loadSigridTarget(apiClient) if args.targetquality == "sigrid" else float(args.targetquality)
+    target = TargetQuality(options.readScopeFile() or "", targetRating)
     runner.run(apiClient, options, target, reports)

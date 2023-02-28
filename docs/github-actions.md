@@ -58,7 +58,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Check out repository
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
       - name: Download Sigrid CI
         run: "git clone https://github.com/Software-Improvement-Group/sigridci.git sigridci"
       - name: "Run Sigrid CI" 
@@ -78,7 +78,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Check out repository
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
       - name: Download Sigrid CI
         run: "git clone https://github.com/Software-Improvement-Group/sigridci.git sigridci"
       - name: "Run Sigrid CI" 
@@ -105,7 +105,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Check out repository
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
       - name: Sigrid CI
         uses: Software-Improvement-Group/sigridci@main
         with:
@@ -129,7 +129,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Check out repository
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
       - name: Sigrid CI
         uses: Software-Improvement-Group/sigridci@main
         with:

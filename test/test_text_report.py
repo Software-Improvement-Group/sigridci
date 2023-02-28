@@ -110,7 +110,6 @@ System property            Baseline on N/A          New/changed code    Target
 \033[96mUnit Complexity            (N/A)                    N/A                                  \033[0m
 \033[96mUnit Interfacing           (N/A)                    N/A                                  \033[0m
 \033[96mModule Coupling            (N/A)                    N/A                                  \033[0m
-\033[96mComponent Balance          (N/A)                    N/A                                  \033[0m
 \033[96mComponent Independence     (N/A)                    N/A                                  \033[0m
 \033[96mComponent Entanglement     (N/A)                    N/A                                  \033[0m
 -----------------------------------------------------------------------------------------
@@ -165,7 +164,6 @@ System property            Baseline on N/A          New/changed code    Target  
 \033[96mUnit Complexity            (N/A)                    N/A                           N/A    \033[0m
 \033[96mUnit Interfacing           (N/A)                    N/A                           N/A    \033[0m
 \033[96mModule Coupling            (N/A)                    N/A                           N/A    \033[0m
-\033[96mComponent Balance          (N/A)                    N/A                           N/A    \033[0m
 \033[96mComponent Independence     (N/A)                    N/A                           N/A    \033[0m
 \033[96mComponent Entanglement     (N/A)                    N/A                           N/A    \033[0m
 -----------------------------------------------------------------------------------------

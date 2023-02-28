@@ -24,7 +24,7 @@ class ConclusionReportTest(unittest.TestCase):
 
     def testDisplayLandingPageFromClient(self):
         feedback = {
-            "baseine": "20220110",
+            "baseline": "20220110",
             "baselineRatings": {"DUPLICATION": 4.0, "UNIT_SIZE": 4.0, "MAINTAINABILITY": 4.0},
             "newCodeRatings": {"DUPLICATION": 5.0, "UNIT_SIZE": 2.0, "MAINTAINABILITY": 3.0},
             "overallRatings": {"DUPLICATION": 4.5, "UNIT_SIZE": 3.0, "MAINTAINABILITY": 3.5},
@@ -32,7 +32,7 @@ class ConclusionReportTest(unittest.TestCase):
         }
     
         args = types.SimpleNamespace(partner="sig", customer="aap", system="noot", publish=True, \
-            sigridurl="https://example-sigrid.com")
+            sigridurl="https://example-sigrid.com", subsystem=None)
         target = TargetQuality("", 5.0)
         apiClient = SigridApiClient(args)
         buffer = io.StringIO()
@@ -42,7 +42,45 @@ class ConclusionReportTest(unittest.TestCase):
         
         expected = """
 \033[1m\033[33m
-** SIGRID CI RUN COMPLETE: THE CODE YOU WROTE DID NOT MEET THE TARGET FOR MAINTAINABLE CODE **
+** Sigrid CI run complete: Your code did not meet your Sigrid target for maintainable code **
+\033[0m
+
+-------------------------------------------------------------------------
+View your analysis results in Sigrid:
+    https://example-sigrid.com/aap/noot/-/sigrid-ci/1234?targetRating=5.0
+-------------------------------------------------------------------------
+        """
+                
+        self.assertEqual(buffer.getvalue().strip(), expected.strip())
+
+    def testSigridLinkIsLowercase(self):
+        args = types.SimpleNamespace(partner="sig", customer="Aap", system="NOOT", publish=True, \
+            sigridurl="https://example-sigrid.com", subsystem=None)
+        report = ConclusionReport(SigridApiClient(args), io.StringIO())
+        
+        self.assertEqual(report.getSigridUrl(args), "https://sigrid-says.com/aap/noot")
+        
+    def testSpecialTextIfNoCodeChanged(self):
+        feedback = {
+            "baseine": "20220110",
+            "baselineRatings": {"DUPLICATION": 4.0, "UNIT_SIZE": 4.0, "MAINTAINABILITY": 4.0},
+            "newCodeRatings": {"MAINTAINABILITY": None},
+            "overallRatings": {"DUPLICATION": 4.5, "UNIT_SIZE": 3.0, "MAINTAINABILITY": 3.5},
+            "refactoringCandidates": []
+        }
+    
+        args = types.SimpleNamespace(partner="sig", customer="aap", system="noot", publish=True, \
+            sigridurl="https://example-sigrid.com", subsystem=None)
+        target = TargetQuality("", 5.0)
+        apiClient = SigridApiClient(args)
+        buffer = io.StringIO()
+        
+        report = ConclusionReport(apiClient, buffer)
+        report.generate("1234", feedback, args, target)
+        
+        expected = """
+\033[1m\033[96m
+** Sigrid CI run complete: No files relevant for maintainability were changed **
 \033[0m
 
 -------------------------------------------------------------------------

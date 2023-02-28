@@ -26,7 +26,7 @@ The script takes a limited number of mandatory arguments. However, Sigrid CI's b
 | `--publish`         | No       | N/A                 | Automatically publishes analysis results to Sigrid. [1]                                                  |
 | `--publishonly`     | No       | N/A                 | Publishes analysis results to Sigrid, but *does not* provide feedback in the CI environment itself. [3]  |
 | `--exclude`         | No       | /build/,.png        | Comma-separated list of file and/or directory names that should be excluded from the upload. [4]         |
-| `--pathprefix`      | No       | frontend            | Used to map between repository directory structure versus the one known by Sigrid. [5]                   |
+| `--subsystem `      | No       | frontend            | Used to map between repository directory structure versus the one known by Sigrid. [5]                   |
 | `--include-history` | No       | N/A                 | When enabled, includes the repository history in the upload. Required for architecture quality analysis. |
 | `--showupload`      | No       | N/A                 | Logs the contents of the upload before submitting it to Sigrid.                                          |
 
@@ -36,7 +36,7 @@ Notes:
 2. System names can only contain lowercase letters, numbers, and hyphens.
 3. Typically, you would use the `--publish` option when committing to the main/master branch, and you would *not* use it for pull requests.  
 4. These files and directories are excluded *on top of* Sigrid's default excludes. By default, Sigrid excludes things like third party libraries (e.g. `/node_modules/` for NPM libraries, build output (e.g. `/target/` for Maven builds), and generated code. 
-5. The `--pathprefix` option can be used in cases where your repository used a different directory structure from the one that is known to Sigrid. For example, you might have combined your back-end and front-end repositories within a single system in Sigrid, so that in Sigrid there are two top-level folders: `backend` and `frontend` containing the contents of your two repositories. However, you still want to get specific feedback for your front-end repository in Sigrid CI. In this case you would use `--pathprefix frontend` so that Sigrid CI knows the location of your repository within the larger directory structure. Note that you cannot use this option if you're already using `--publish`.  
+5. The `--subsystem` option can be used to map multiple repositories to the same Sigrid system. Refer to the [documentation on mapping repositories to systems](systems.md) for more information.
 
 ## Defining quality targets
 

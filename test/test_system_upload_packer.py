@@ -161,42 +161,7 @@ class SystemUploadPackerTest(unittest.TestCase):
             "Warning: Upload is very small, source directory might not contain all source code"
         ]
 
-        self.assertEqual(LOG_HISTORY, expected)
-        
-    def testUsePathPrefixInUpload(self):
-        sourceDir = tempfile.mkdtemp()
-        subDirA = sourceDir + "/a"
-        os.mkdir(subDirA)
-        self.createTempFile(subDirA, "a.py", "a")
-        subDirB = sourceDir + "/b"
-        os.mkdir(subDirB)
-        self.createTempFile(subDirB, "b.py", "b")
-        
-        outputFile = tempfile.mkstemp()[1]
-        
-        uploadPacker = SystemUploadPacker(UploadOptions(pathPrefix="frontend"))
-        uploadPacker.prepareUpload(sourceDir, outputFile)
-        
-        entries = zipfile.ZipFile(outputFile).namelist()
-        entries.sort()
-
-        self.assertEqual(os.path.exists(outputFile), True)
-        self.assertEqual(entries, ["frontend/a/a.py", "frontend/b/b.py"])
-        
-    def testPathPrefixDoesNotLeadToDoubleSlash(self):
-        sourceDir = tempfile.mkdtemp()
-        self.createTempFile(sourceDir, "a.py", "a")
-        
-        outputFile = tempfile.mkstemp()[1]
-        
-        uploadPacker = SystemUploadPacker(UploadOptions(pathPrefix="/backend/"))
-        uploadPacker.prepareUpload(sourceDir, outputFile)
-        
-        entries = zipfile.ZipFile(outputFile).namelist()
-        entries.sort()
-
-        self.assertEqual(os.path.exists(outputFile), True)
-        self.assertEqual(entries, ["backend/a.py"])
+        self.assertEqual(LOG_HISTORY, expected)     
 
     def createTempFile(self, dir, name, contents):
         with open(f"{dir}/{name}", "w") as fileRef:

@@ -45,43 +45,50 @@ We will create a pipeline that consists of two jobs:
 
 In the root of your repository, create a file `.gitlab-ci.yml` and add the following contents:
 
-```
+```yaml
 stages:
  - report
 
 variables:
   SIGRID_CI_CUSTOMER: 'examplecustomername'
   SIGRID_CI_SYSTEM: 'examplesystemname'
+  SIGRID_CI_TARGET_QUALITY: '3.5'
 
 sigridci:
   image: 
     name: softwareimprovementgroup/mendixpreprocessor:latest
-  variables:
-    SIGRID_CI_TARGET_QUALITY: '3.5'
+    entrypoint: [""]
   stage: report
   script: 
-    - ""
-  allow_failure: true
-  tags:
-    - run_docker
-  except:
-    variables:
-      - $CI_COMMIT_REF_NAME == $CI_DEFAULT_BRANCH
+    - /usr/local/bin/entrypoint.sh
+  artifacts:
+    paths:
+      - "sigrid-ci-output/*"
+    reports:
+      junit: "sigrid-ci-output/sigridci-junit-format-report.xml"
+    expire_in: 1 week
+    when: always
+  rules:
+    - if: $CI_COMMIT_REF_NAME != $CI_DEFAULT_BRANCH
 
 sigridpublish:
   image: 
     name: softwareimprovementgroup/mendixpreprocessor:latest
+    entrypoint: [""]
   variables:
-    SIGRID_CI_PUBLISH: 'publishonly'
+    SIGRID_CI_PUBLISH: 'publish'
   stage: report
   script:
-    - ""
-  allow_failure: true
-  tags:
-    - run_docker
-  only:
-    variables:
-      - $CI_COMMIT_REF_NAME == $CI_DEFAULT_BRANCH
+    - /usr/local/bin/entrypoint.sh
+  artifacts:
+    paths:
+      - "sigrid-ci-output/*"
+    reports:
+      junit: "sigrid-ci-output/sigridci-junit-format-report.xml"
+    expire_in: 1 week
+    when: always
+  rules:
+    - if: $CI_COMMIT_REF_NAME == $CI_DEFAULT_BRANCH
 ```
 
 Note the name of the branch, which is `main` in the example but might be different for your repository. In general, most older projects will use `master` as their main branch, while more recent projects will use `main`. 
