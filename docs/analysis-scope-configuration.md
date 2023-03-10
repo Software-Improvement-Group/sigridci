@@ -64,7 +64,16 @@ Components can be defined in two ways. The simple option is to simply base the c
 
     component_depth: 1
     
-In some projects, using directory depth will not accurately reflect the actual component structure. The more advanced option allows you to define components explicitly:
+In some projects, using directory depth will not accurately reflect the actual component structure. The more advanced options allows you to define components explicitly:
+
+
+**Advanced Option 1** (short)
+
+    component_base_dirs:
+      - "modules"
+      - "modules/specific"
+
+**Advanced Option 2** (can be more specific, but also harder to maintain)
 
     components:
       - name: "Back-end"
