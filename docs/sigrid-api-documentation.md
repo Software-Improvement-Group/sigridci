@@ -256,7 +256,7 @@ The metadata fields are described by the following table. Note that the setting 
 |`targetIndustry`|`String`|The industry in which the system is normally used. Must be an industry identifier from the table of target industry identifiers below (case-sensitive)|
 |`deploymentType`|`String`|The way in which the system is typically deployed. Must be an industry identifier from the table of deployment types below (case-sensitive)|
 |`applicationType`|`String`|The type of the system. Must be an industry identifier from the table of application types below (case-sensitive)|
-|`isDevelopmentOnly`|`Boolean`|If true, the system is not shown as part of customer's portfolio, in the UI this is known as the Excluded from dashboards toggle|
+|`isDevelopmentOnly`|`Boolean`|If true, the system is not shown as part of customer's portfolio, in the UI this is known as the "Excluded from dashboards" toggle|
 |`remark`|`String`|Remark(s) about the system as (possibly empty) free-format text. Must be between 0 and 300 characters. Can contain blanks: true|
 |`externalID`|`String`|Allow customers to record an external identifier for a system. free-format text. Must be between 0 and 60 characters. Can contain blanks: true|
 
