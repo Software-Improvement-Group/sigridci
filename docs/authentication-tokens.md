@@ -5,7 +5,7 @@ Using Sigrid CI requires an *authentication token*. You can create and manage th
 ## Who should create the token?
 
 - **If you want to use Sigrid CI for an existing system that is already part of your Sigrid account:** Any Sigrid user account with access to that system can create the token. 
-- **If you want to on-board new systems to your Sigrid account:** On-boarding systems requires additional rights. This requires a Sigrid user account that is either an administrator, or a Sigrid user account that is authorized to access all systems. Sigrid user accounts that can *only* access certain systems *cannot* on-board systems.
+- **If you want to on-board new systems to your Sigrid account:** On-boarding systems requires additional rights. This requires a Sigrid user account that is authorized to access all systems. Sigrid user accounts that can *only* access certain systems *cannot* on-board systems.
 
 ## Creating a new authentication token
 
