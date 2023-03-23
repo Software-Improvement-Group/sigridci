@@ -46,22 +46,26 @@ When Sigrid is linked to your SSO the user provisioning is done by the IdP. Sigr
 - do authorisation tasks to define 'who can see what' in Sigrid
 
 ### Setup customer side
-- create Authentication app in your IdP with the following 
- - url: https://auth.sigrid-says.com/saml2/idpresponse
+- create authentication 'app' in your IdP with the following details: 
+- url: https://auth.sigrid-says.com/saml2/idpresponse
  - audience: urn.amazon:cognito:sp:eu-central-1_hwh9zdCY
  - Signature Algorithm: RSA_SHA256
  - Digest Algorithm: SHA256
  - Assertion Encryption: unencrypted (privacy is provided by using https)
  - Saml Single Logout: disabled
  - Attribute statements:
+
  user.email http://schemas.xmlsoap.org/ws/2005/05/identity/claims/emailaddress
+
  user.firstName http://schemas.xmlsoap.org/ws/2005/05/identity/claims/given_name
+ 
  user.lastName http://schemas.xmlsoap.org/ws/2005/05/identity/claims/name
+
 - assign groups of users to your Authentication app
 
 ### Setup steps on SIG side
-- provide SIG the appid of your SAML app. Examples are
-metadata URL: https://sig.okta.com/app/<randomidentifier>/sso/saml/metadata
+- provide SIG the appid of your authentication 'app'. Examples are
+metadata URL: https://customername.okta.com/app/<randomidentifier>/sso/saml/metadata
 
 - you will recieve a customer specific url to enter Sigrid like
 https://customername.sigrid-says.com
@@ -69,42 +73,15 @@ https://customername.sigrid-says.com
 
 # Authorisation in Sigrid
 
-```
+### types of users
+Sigrid has two types of users, the normal users that have acces to a list of systems and there are the administrators that can edit the normal users. 
 
-You will be adding a `polarion` section to this file. This will enable the integration between Sigrid and Polarion, which means that *both* Sigrid and Polarion will be updated whenever you publish your source code. This section supports the following options:
+### system level access
+An administrator can specify on system level the access any user in the portfolio has. In order to make the authorisation easier, filters can be applied on team or division to allow for bulk assigments.
 
-| Option                | Required | Description                                                                  |
-|-----------------------|----------|------------------------------------------------------------------------------|
-| `project`             | Yes      | Your Polarion project ID.                                                    |
-| `url`                 | Yes      | The base URL of your Polarion instance.                                      |
-| `system_work_item_id` | No       | Optional parent work item ID. Sigrid's work items will be nested below this. |
-
-After adding these options, you configuration file might look something like this:
-
-```
-component_depth: 1
-
-languages:
-  - "python"
-
-dependencychecker:
-  blacklist:
-    - "NONE"
-    
-polarion:
-  project: test
-  url: "https://my-polarion.my-company.com"
-```
-
-Since your updated configuration file is part of your repository, it will be picked up automatically the next time you publish your source code to Sigrid.
-
-In Polarion, you can access Sigrid's Open Source Health data from the "work items" menu. Sigrid will create or update work items with the type SBOM Component and SBOM Vulnerability.
-
-<img src="images/polarion-menu.png" width="200" />
-
-The detail page for these work items will provide you with the combination of all data resulting from Sigrid's analysis, plus all life cycle management and workflow options provided by Polarion.
-
-<img src="images/polarion-list.png" width="500" />
+### passwords
+The administrator can help users by resending a forgotten password or by resending the initial temporary password.
+When a user has confirmed their password, they can request a new password themselves
 
 ## Contact and support
 
