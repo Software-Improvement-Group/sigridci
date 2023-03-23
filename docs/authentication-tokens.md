@@ -1,13 +1,15 @@
 # Sigrid CI authentication tokens
 
-Using Sigrid CI requires an *authentication token*. You can create and manage these tokens from your Sigrid account, using the instructions provided below.
+Using Sigrid CI requires an *authentication token*. You can create and manage these tokens from your Sigrid account, using the instructions  below.
 
 ## Who should create the token?
 
 - **If you want to use Sigrid CI for an existing system that is already part of your Sigrid account:** Any Sigrid user account with access to that system can create the token. 
 - **If you want to on-board new systems to your Sigrid account:** On-boarding systems requires additional rights. This requires a Sigrid user account that is authorized to access all systems. Sigrid user accounts that can *only* access certain systems *cannot* on-board systems.
+- **If your token is expired:** Tokens have a validaty of one year. Please create a new token.
 
-## Creating a new authentication token
+
+## Creating an (new) authentication token
 
 First, sign into [sigrid-says.com](https://sigrid-says.com) using your regular Sigrid user account. If you do not have a Sigrid user account, contact your organization's Sigrid administrator, or contact SIG support at [support@softwareimprovementgroup.com](mailto:support@softwareimprovementgroup.com).
 
@@ -35,7 +37,9 @@ After you've created the token it will be shown in the user settings page.
 
 Sign in to Sigrid and navigate to the user settings page as explained above. The list of tokens contains a "revoke" button that will immediately revoke the token's access to Sigrid.
 
-Also note that tokens are automatically revoked after one year. 
+## Expiriation of a token
+
+Tokens automatically expire after one year. You as a creator will get notification emails asking you to create a new token.
 
 ## Token permissions
 
