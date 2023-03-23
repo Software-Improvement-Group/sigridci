@@ -4,6 +4,7 @@ User management in Sigrid
 When managing user access to Sigrid we need to consider both Authentication (can you enter?) and Authorisation (what can you can see?). 
 - Authentication is the step where users are allowed to enter the platform. After Authenication is succesful, 
 - Authorisation defines which user can access the analysis results of which systems.
+
 Sigrid offers 2 ways of managing Authentication and 1 type of Authorisation. 
 
 This page describes the options and the technical setup.
@@ -25,7 +26,7 @@ With this module a Sigrid administrator can perform all the basic authentication
 - check last login and MFA status.
 - do authorisation tasks to define 'who can see what' in Sigrid.
 
-### Setup
+### Setup customer side
 - no setup is needed.
 
 
@@ -34,13 +35,16 @@ With this module a Sigrid administrator can perform all the basic authentication
 When Sigrid is linked to your SSO the user provisioning is done by the IdP. Sigrid supports SAML or OpenID Connect protocols.
 
 ### Note:
-This improves ease of use because of the Single Sign On and improves security because users are created and deleted centrally in your organisation and Sigrid follows the password policy
+- SSO improves the ease of use for your colleagues because there is no Sigrid password to remember 
+- improves security because users are created and deleted centrally in your organisation 
+- Sigrid follows the password policy of your organisatin
+
 
 ### Sigrid administrator tasks:
 - check last login
-- do Authorisation tasks to define 'who can see what' in Sigrid
+- do authorisation tasks to define 'who can see what' in Sigrid
 
-### Setup client side
+### Setup customer side
 - create Authentication app in your IdP with the following 
 - url: https://auth.sigrid-says.com/saml2/idpresponse
 - audience: urn.amazon:cognito:sp:eu-central-1_hwh9zdCY
@@ -58,7 +62,7 @@ user.lastName http://schemas.xmlsoap.org/ws/2005/05/identity/claims/name
 - provide SIG the appid of your SAML app. Examples are
 metadata URL: https://sig.okta.com/app/<randomidentifier>/sso/saml/metadata
 
-- your will recieve a client specific url to enter Sigrid like
+- you will recieve a customer specific url to enter Sigrid like
 https://customername.sigrid-says.com
 
 
