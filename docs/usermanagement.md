@@ -3,9 +3,10 @@ User management in Sigrid
 
 When managing user access to Sigrid we need to consider both Authentication (can you enter?) and Authorisation (what can you can see?). 
 - Authentication is the step where users are allowed to enter the platform. After Authenication is succesful, 
-- Authorisation defines which user can access which analysis results.
+- Authorisation defines which user can access the analysis results of which systems.
+Sigrid offers 2 ways of managing Authentication and 1 type of Authorisation. 
 
-Sigrid offers 2 ways of managing Authentication and 1 type of Authenication . This page describes the options and the technical setup.
+This page describes the options and the technical setup.
 
 
 # Authentication mechanisms
