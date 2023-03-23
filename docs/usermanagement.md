@@ -18,13 +18,14 @@ With this module a Sigrid administrator can perform all the basic authentication
 
 ### Note:
 - Your users will need to set a password and optionally MFA (multi factor authentication)
-- you will need to actively revoke access for people that no longer work for you.
+- you will need to actively revoke access for people that no longer work for you by deleting them from user management manually.
 
 ### Sigrid administrator tasks:
-- create and delete users based on email, first and lastname.
+- create users based on their email, first and lastname.
 - resend lost and temporary passwords.
 - check last login and MFA status.
 - do authorisation tasks to define 'who can see what' in Sigrid.
+- delete users
 
 ### Setup customer side
 - no setup is needed.
@@ -36,8 +37,8 @@ When Sigrid is linked to your SSO the user provisioning is done by the IdP. Sigr
 
 ### Note:
 - SSO improves the ease of use for your colleagues because there is no Sigrid password to remember 
-- improves security because users are created and deleted centrally in your organisation 
-- Sigrid follows the password policy of your organisatin
+- improves security because users are created and deleted centrally in your organisation. 
+- Sigrid follows the password policy of your organisation.
 
 
 ### Sigrid administrator tasks:
@@ -46,16 +47,16 @@ When Sigrid is linked to your SSO the user provisioning is done by the IdP. Sigr
 
 ### Setup customer side
 - create Authentication app in your IdP with the following 
-- url: https://auth.sigrid-says.com/saml2/idpresponse
-- audience: urn.amazon:cognito:sp:eu-central-1_hwh9zdCY
-- Signature Algorithm: RSA_SHA256
-- Digest Algorithm: SHA256
-- Assertion Encryption: unencrypted (privacy is provided by using https)
-- Saml Single Logout: disabled
-- Attribute statements:
-user.email http://schemas.xmlsoap.org/ws/2005/05/identity/claims/emailaddress
-user.firstName http://schemas.xmlsoap.org/ws/2005/05/identity/claims/given_name
-user.lastName http://schemas.xmlsoap.org/ws/2005/05/identity/claims/name
+ - url: https://auth.sigrid-says.com/saml2/idpresponse
+ - audience: urn.amazon:cognito:sp:eu-central-1_hwh9zdCY
+ - Signature Algorithm: RSA_SHA256
+ - Digest Algorithm: SHA256
+ - Assertion Encryption: unencrypted (privacy is provided by using https)
+ - Saml Single Logout: disabled
+ - Attribute statements:
+ user.email http://schemas.xmlsoap.org/ws/2005/05/identity/claims/emailaddress
+ user.firstName http://schemas.xmlsoap.org/ws/2005/05/identity/claims/given_name
+ user.lastName http://schemas.xmlsoap.org/ws/2005/05/identity/claims/name
 - assign groups of users to your Authentication app
 
 ### Setup steps on SIG side
