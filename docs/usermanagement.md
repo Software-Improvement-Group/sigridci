@@ -73,8 +73,10 @@ https://customername.sigrid-says.com
 
 # Authorisation in Sigrid
 
-### types of users
-Sigrid has two types of users, the normal users that have acces to a list of systems and there are the administrators that can edit the normal users. 
+The product team is actively developing the user management pages to cater for more use cases. At the moment the user management the following functions.
+
+### 2 types of users
+Sigrid has two types of users, the normal users that have acces to a list of 1 to all  systems and the Sigrid administrators that can edit all the users including other administrators. 
 
 ### system level access
 An administrator can specify on system level the access any user in the portfolio has. In order to make the authorisation easier, filters can be applied on team or division to allow for bulk assigments.
@@ -83,6 +85,6 @@ An administrator can specify on system level the access any user in the portfoli
 The administrator can help users by resending a forgotten password or by resending the initial temporary password.
 When a user has confirmed their password, they can request a new password themselves
 
-## Contact and support
+# Contact and support
 
 Feel free to contact [SIG's support department](mailto:support@softwareimprovementgroup.com) for any questions or issues you may have after reading this document, or when using Sigrid or Sigrid CI. Users in Europe can also contact us by phone at +31 20 314 0953.
