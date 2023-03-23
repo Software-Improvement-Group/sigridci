@@ -8,28 +8,27 @@ When managing user access to Sigrid we need to consider both Authentication (can
 Sigrid offers 2 ways of managing Authentication and 1 type of Authenication . This page describes the options and the technical setup.
 
 
-# 2 options for Authentication
+# Authentication mechanisms
 
 ## 1. Using the Sigrid user management module
 
-With this module a Sigrid administrator can perform all the basic Authentication tasks out of the box. 
+With this module a Sigrid administrator can perform all the basic authentication tasks out of the box. 
 
 ### Note:
-- Your users will need to set a password and MFA (multi factor authenticaton)
+- Your users will need to set a password and optionally MFA (multi factor authentication)
 - you will need to actively revoke access for people that no longer work for you.
 
 ### Sigrid administrator tasks:
-- create and delete users based on email, first and lastname
-- resend lost and temporary passwords
-- check last login and MFA status
-- do authorisation tasks to define 'who can see what' in Sigrid
+- create and delete users based on email, first and lastname.
+- resend lost and temporary passwords.
+- check last login and MFA status.
+- do authorisation tasks to define 'who can see what' in Sigrid.
 
 ### Setup
-- no setup is needed
+- no setup is needed.
 
 
-
-## 2. Using Single Sign On (SSO) with your Identity Management Providor (IdP)
+## 2. Using Single Sign On (SSO) with an Identity Management Providor (IdP)
 
 When Sigrid is linked to your SSO the user provisioning is done by the IdP. Sigrid supports SAML or OpenID Connect protocols.
 
