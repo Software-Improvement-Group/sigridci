@@ -48,10 +48,12 @@ Create an authentication 'app' in your IdP with the following details:
 - Digest Algorithm: SHA256
 - Assertion Encryption: unencrypted (privacy is provided by using HTTPS)
 - Saml Single Logout: disabled
+
 With the following attribute statements:
 - user.email http://schemas.xmlsoap.org/ws/2005/05/identity/claims/emailaddress
 - user.firstName http://schemas.xmlsoap.org/ws/2005/05/identity/claims/given_name
 - user.lastName http://schemas.xmlsoap.org/ws/2005/05/identity/claims/name
+
 Then assign groups of users to your Authentication app
 
 ### Info to provide to SIG
