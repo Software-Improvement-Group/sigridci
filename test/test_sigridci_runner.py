@@ -17,7 +17,7 @@ import tempfile
 import types
 import unittest
 import urllib
-from sigridci.sigridci import SigridApiClient, SigridCiRunner, UploadOptions, TargetQuality, LOG_HISTORY
+from sigridci.sigridci import RunMode, SigridApiClient, SigridCiRunner, UploadOptions, TargetQuality, LOG_HISTORY
 
 class SigridCiRunnerTest(unittest.TestCase):
 
@@ -69,7 +69,10 @@ class SigridCiRunnerTest(unittest.TestCase):
         
         options = UploadOptions(sourceDir=tempDir)
         target = TargetQuality("/tmp/nonexistent", 3.5)
-        apiClient = MockApiClient(publish=False)
+        
+        apiClient = MockApiClient()
+        apiClient.publish = False
+        apiClient.runMode = RunMode.FEEDBACK_ONLY
         
         runner = SigridCiRunner()
         runner.run(apiClient, options, target, [])
@@ -103,7 +106,10 @@ class SigridCiRunnerTest(unittest.TestCase):
         
         options = UploadOptions(sourceDir=tempDir, publishOnly=False)
         target = TargetQuality("/tmp/nonexistent", 3.5)
-        apiClient = MockApiClient(publish=True)
+        
+        apiClient = MockApiClient()
+        apiClient.publish = True
+        apiClient.runMode = RunMode.FEEDBACK_AND_PUBLISH
         
         runner = SigridCiRunner()
         runner.run(apiClient, options, target, [])
@@ -137,7 +143,10 @@ class SigridCiRunnerTest(unittest.TestCase):
         
         options = UploadOptions(sourceDir=tempDir, publishOnly=True)
         target = TargetQuality("/tmp/nonexistent", 3.5)
-        apiClient = MockApiClient(publish=True)
+        
+        apiClient = MockApiClient()
+        apiClient.publish = True
+        apiClient.runMode = RunMode.PUBLISH_ONLY
         
         runner = SigridCiRunner()
         runner.run(apiClient, options, target, [])
@@ -156,7 +165,7 @@ class SigridCiRunnerTest(unittest.TestCase):
         
         expectedCalls = [
             "/analysis-results/sigridci/aap/noot/v1/ci", 
-            "/inboundresults/sig/aap/noot/ci/uploads/v1/publish",             
+            "/inboundresults/sig/aap/noot/ci/uploads/v1/publishonly",             
             "UPLOAD",
             "/analysis-results/api/v1/system-metadata/aap/noot"
         ]
@@ -202,7 +211,7 @@ class SigridCiRunnerTest(unittest.TestCase):
         
         options = UploadOptions(sourceDir=tempDir)
         target = TargetQuality("/tmp/nonexistent", 3.5)
-        apiClient = MockApiClient(publish=True, subsystem="mysubsystem")
+        apiClient = MockApiClient(publish=True, runMode=RunMode.FEEDBACK_AND_PUBLISH, subsystem="mysubsystem")
         
         runner = SigridCiRunner()
         runner.run(apiClient, options, target, [])
@@ -543,11 +552,12 @@ class SigridCiRunnerTest(unittest.TestCase):
         
         
 class MockApiClient(SigridApiClient):
-    def __init__(self, publish=False, systemExists=True, uploadAttempts=0, subsystem=None):
+    def __init__(self, systemExists=True, uploadAttempts=0, subsystem=None, publish=False, runMode=RunMode.FEEDBACK_ONLY):
         self.called = []
         self.urlPartnerName = "sig"
         self.urlCustomerName = "aap"
         self.urlSystemName = "noot"
+        self.runMode = runMode
         self.publish = publish
         self.systemExists = systemExists
         self.uploadAttempts = uploadAttempts

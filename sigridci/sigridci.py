@@ -31,6 +31,7 @@ import urllib.parse
 import urllib.request
 import zipfile
 from dataclasses import dataclass
+from enum import Enum
 from xml.dom import minidom
 
 
@@ -87,6 +88,12 @@ class TargetQuality:
         
     def meetsQualityTargets(self, feedback):
         return all(self.meetsTargetQualityForMetric(feedback, metric) for metric in self.ratings)
+        
+        
+class RunMode(Enum):
+    FEEDBACK_ONLY = 1
+    FEEDBACK_AND_PUBLISH = 2
+    PUBLISH_ONLY = 3
 
 
 class SigridApiClient:
@@ -101,6 +108,13 @@ class SigridApiClient:
         self.urlSystemName = urllib.parse.quote_plus(args.system.lower())
         self.publish = args.publish or args.publishonly
         self.subsystem = args.subsystem
+        
+        if args.publishonly:
+            self.runMode = RunMode.PUBLISH_ONLY
+        elif args.publish:
+            self.runMode = RunMode.FEEDBACK_AND_PUBLISH
+        else:
+            self.runMode = RunMode.FEEDBACK_ONLY
 
     def callSigridAPI(self, path, body=None, contentType=None):
         url = f"{self.baseURL}/rest/{path}"
@@ -161,8 +175,11 @@ class SigridApiClient:
         path = f"/inboundresults/{self.urlPartnerName}/{self.urlCustomerName}/{self.urlSystemName}/ci/uploads/{self.API_VERSION}"
         if not systemExists:
             path += "/onboarding"
-        elif self.publish:
+        elif self.runMode == RunMode.PUBLISH_ONLY:
+            path += "/publishonly"
+        elif self.runMode == RunMode.FEEDBACK_AND_PUBLISH:
             path += "/publish"
+        
         if self.subsystem:
             path += "?subsystem=" + urllib.parse.quote_plus(self.subsystem)
     

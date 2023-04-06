@@ -31,7 +31,7 @@ class ConclusionReportTest(unittest.TestCase):
             "refactoringCandidates": []
         }
     
-        args = types.SimpleNamespace(partner="sig", customer="aap", system="noot", publish=True, \
+        args = types.SimpleNamespace(partner="sig", customer="aap", system="noot", publish=True, publishonly=False, \
             sigridurl="https://example-sigrid.com", subsystem=None)
         target = TargetQuality("", 5.0)
         apiClient = SigridApiClient(args)
@@ -54,7 +54,7 @@ View your analysis results in Sigrid:
         self.assertEqual(buffer.getvalue().strip(), expected.strip())
 
     def testSigridLinkIsLowercase(self):
-        args = types.SimpleNamespace(partner="sig", customer="Aap", system="NOOT", publish=True, \
+        args = types.SimpleNamespace(partner="sig", customer="Aap", system="NOOT", publish=True, publishonly=False, \
             sigridurl="https://example-sigrid.com", subsystem=None)
         report = ConclusionReport(SigridApiClient(args), io.StringIO())
         
@@ -69,7 +69,7 @@ View your analysis results in Sigrid:
             "refactoringCandidates": []
         }
     
-        args = types.SimpleNamespace(partner="sig", customer="aap", system="noot", publish=True, \
+        args = types.SimpleNamespace(partner="sig", customer="aap", system="noot", publish=True, publishonly=False, \
             sigridurl="https://example-sigrid.com", subsystem=None)
         target = TargetQuality("", 5.0)
         apiClient = SigridApiClient(args)
