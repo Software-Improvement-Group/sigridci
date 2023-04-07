@@ -211,7 +211,7 @@ class SigridCiRunnerTest(unittest.TestCase):
         
         options = UploadOptions(sourceDir=tempDir)
         target = TargetQuality("/tmp/nonexistent", 3.5)
-        apiClient = MockApiClient(publish=True, runMode=RunMode.FEEDBACK_AND_PUBLISH, subsystem="mysubsystem")
+        apiClient = MockApiClient(runMode=RunMode.FEEDBACK_AND_PUBLISH, subsystem="mysubsystem")
         
         runner = SigridCiRunner()
         runner.run(apiClient, options, target, [])
@@ -310,7 +310,7 @@ class SigridCiRunnerTest(unittest.TestCase):
         self.createTempFile(tempDir, "sigrid.yaml", "languages:\n- java")
         uploadOptions = UploadOptions(sourceDir=tempDir)
         
-        apiClient = MockApiClient(publish=False)
+        apiClient = MockApiClient(runMode=RunMode.FEEDBACK_ONLY)
         apiClient.responses["/inboundresults/sig/aap/noot/ci/validate/v1"] = {"valid": True};
         
         runner = SigridCiRunner()
@@ -337,7 +337,7 @@ class SigridCiRunnerTest(unittest.TestCase):
         self.createTempFile(tempDir, "sigrid.yaml", "languages:\n- aap")
         uploadOptions = UploadOptions(sourceDir=tempDir)
         
-        apiClient = MockApiClient(publish=False)
+        apiClient = MockApiClient(runMode=RunMode.FEEDBACK_ONLY)
         apiClient.responses["/inboundresults/sig/aap/noot/ci/validate/v1"] = {"valid" : False, "notes" : ["test"]};
     
         with self.assertRaises(SystemExit):
@@ -360,7 +360,7 @@ class SigridCiRunnerTest(unittest.TestCase):
         self.createTempFile(tempDir, "sigrid.py", "print(123)")
         uploadOptions = UploadOptions(sourceDir=tempDir)
     
-        apiClient = MockApiClient(publish=False)
+        apiClient = MockApiClient(runMode=RunMode.FEEDBACK_ONLY)
         apiClient.responses["/analysis-results/api/v1/system-metadata/aap/noot"] = {"aap" : 2, "noot" : None};
         
         runner = SigridCiRunner()
@@ -385,7 +385,7 @@ class SigridCiRunnerTest(unittest.TestCase):
         self.createTempFile(tempDir, "sigrid-metadata.yaml", "metadata:\n  division: aap")
         uploadOptions = UploadOptions(sourceDir=tempDir)
         
-        apiClient = MockApiClient(publish=False)
+        apiClient = MockApiClient(runMode=RunMode.FEEDBACK_ONLY)
         apiClient.responses["/analysis-results/sigridci/aap/validate"] = {"valid" : True, "notes": []}
     
         runner = SigridCiRunner()
@@ -404,7 +404,7 @@ class SigridCiRunnerTest(unittest.TestCase):
         self.createTempFile(tempDir, "sigrid-metadata.yaml", "metadata:\n  typo: aap")
         uploadOptions = UploadOptions(sourceDir=tempDir)
         
-        apiClient = MockApiClient(publish=False)
+        apiClient = MockApiClient(runMode=RunMode.FEEDBACK_ONLY)
         apiClient.responses["/analysis-results/sigridci/aap/validate"] = {"valid" : False, "notes": ["test"]}
     
         with self.assertRaises(SystemExit):
@@ -425,7 +425,7 @@ class SigridCiRunnerTest(unittest.TestCase):
     def testDoNotValidateMetadataFileIfNotPresent(self):
         tempDir = tempfile.mkdtemp()    
         uploadOptions = UploadOptions(sourceDir=tempDir)        
-        apiClient = MockApiClient(publish=False)
+        apiClient = MockApiClient(runMode=RunMode.FEEDBACK_ONLY)
     
         with self.assertRaises(SystemExit):
             runner = SigridCiRunner()
@@ -536,7 +536,7 @@ class SigridCiRunnerTest(unittest.TestCase):
 
         options = UploadOptions(sourceDir=tempDir)
         target = TargetQuality("/tmp/nonexistent", 3.5)
-        apiClient = MockApiClient(publish=False)
+        apiClient = MockApiClient(runMode=RunMode.FEEDBACK_ONLY)
 
         runner = SigridCiRunner()
         runner.run(apiClient, options, target, [])
@@ -552,13 +552,12 @@ class SigridCiRunnerTest(unittest.TestCase):
         
         
 class MockApiClient(SigridApiClient):
-    def __init__(self, systemExists=True, uploadAttempts=0, subsystem=None, publish=False, runMode=RunMode.FEEDBACK_ONLY):
+    def __init__(self, systemExists=True, uploadAttempts=0, subsystem=None, runMode=RunMode.FEEDBACK_ONLY):
         self.called = []
         self.urlPartnerName = "sig"
         self.urlCustomerName = "aap"
         self.urlSystemName = "noot"
         self.runMode = runMode
-        self.publish = publish
         self.systemExists = systemExists
         self.uploadAttempts = uploadAttempts
         self.subsystem = subsystem

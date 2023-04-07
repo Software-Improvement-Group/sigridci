@@ -106,7 +106,6 @@ class SigridApiClient:
         self.urlPartnerName = urllib.parse.quote_plus(args.partner.lower())
         self.urlCustomerName = urllib.parse.quote_plus(args.customer.lower())
         self.urlSystemName = urllib.parse.quote_plus(args.system.lower())
-        self.publish = args.publish or args.publishonly
         self.subsystem = args.subsystem
         
         if args.publishonly:
@@ -166,7 +165,7 @@ class SigridApiClient:
             uploadUrl = uploadLocation["uploadUrl"]
             analysisId = uploadLocation["ciRunId"]
             log(f"Sigrid CI analysis ID: {analysisId}")
-            log("Publishing upload" if self.publish else "Submitting upload")
+            log("Submitting upload" if self.runMode == RunMode.FEEDBACK_ONLY else"Publishing upload")
             self.uploadBinaryFile(uploadUrl, upload)
 
             return analysisId
