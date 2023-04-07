@@ -165,7 +165,7 @@ class SigridApiClient:
             uploadUrl = uploadLocation["uploadUrl"]
             analysisId = uploadLocation["ciRunId"]
             log(f"Sigrid CI analysis ID: {analysisId}")
-            log("Submitting upload" if self.runMode == RunMode.FEEDBACK_ONLY else"Publishing upload")
+            log("Submitting upload" if self.runMode == RunMode.FEEDBACK_ONLY else "Publishing upload")
             self.uploadBinaryFile(uploadUrl, upload)
 
             return analysisId
