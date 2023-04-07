@@ -51,7 +51,9 @@ So when to use these options:
 
 - If you want feedback on your new/changed code, *without* publishing your code to Sigrid, run the script without the publish options. This is suitable for a workflow with pull requests, as you can use it to receive feedback on your pull request.
 - If you want to publish your code to Sigrid, *and* you want Sigrid CI to give your feedback on your new/changed code, use the `--publish` option. This is suitable for people that use a workflow without pull requests where everyone is making changes to the main/master branch.
-- If you want to publish your code to Sigrid, but you do *not* want feedback on your new/changed code, use the `--publishonly` option. This is suitable for merge commits to the main/master branch. In that situation you don't need feedback, since you *already had* your feedback in the pull request and there is no reason to receive the same feedback again when merging your changes.
+- If you want to publish your code to Sigrid, but you do *not* want feedback on your new/changed code, use the `--publishonly` option.
+  - This is suitable for merge commits to the main/master branch. In that situation you don't need feedback, since you *already had* your feedback in the pull request and there is no reason to receive the same feedback again when merging your changes. 
+  - Moreover, this publishes your code to Sigrid in a fire-and-forget fashion, which is faster since the script will not wait for the analysis to complete and will immediately exit. This is suitable for the main/master branch scenario described above, but can also be used in other situation where the fire-and-forget behavior is preferred.
 
 ## Defining quality targets
 
