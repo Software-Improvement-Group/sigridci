@@ -105,7 +105,7 @@ Some files and directories are already excluded by default, based on common conv
 - The `node_modules` directory is excluded by default as it contains [NPM](https://www.npmjs.com) libraries
 - The `target` directory is excluded as it contains build output from [Maven](https://maven.apache.org)
 
-In addition to that, you can also exclude files and directories specifically for your project. This is done using the `--exclude` parameter, which is explained in the [configuration documentation](integration.md) page.
+In addition to that, you can also exclude files and directories specifically for your project. This is done using the `--exclude` parameter, which is explained in the [configuration documentation](sigridci-integration/integration.md) page.
 
 ### Do Sigrid CI uploads get added to the Sigrid dashboard?
 

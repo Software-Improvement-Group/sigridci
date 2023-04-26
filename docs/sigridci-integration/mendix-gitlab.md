@@ -9,7 +9,7 @@ Please note: `QSM` is the brand name used by Mendix, in this manual we will use 
 - You would like to trigger the Sigrid analysis from within your own pipeline in Git.
 - Your runners are able to pull this [public docker image](https://hub.docker.com/r/softwareimprovementgroup/mendixpreprocessor), the image is used to preprocess the Mendix code before uploading it to Sigrid.
 - You have a [Sigrid](https://qsm.mendix.com) user account. 
-- You have created an [authentication token using Sigrid](authentication-tokens.md).
+- You have created an [authentication token using Sigrid](../authentication-tokens.md).
 - You have created a Personal access (PAT) token using [warden.mendix.com](https://warden.mendix.com)
 
 ## On-boarding your system to Sigrid
@@ -27,11 +27,12 @@ To add these to your GitLab CI pipeline, follow these steps:
 - Select "CI/CD" in the settings menu
 - Locate the section named "Variables"
 - Click the "Add variable" button
-- Add an first environment variable `SIGRID_CI_TOKEN` and use your [Sigrid authentication token](authentication-tokens.md) as the value.
+- Add an first environment variable `SIGRID_CI_TOKEN` and use your [Sigrid authentication token](../authentication-tokens.md) as the value.
 - Add an second environment variable `MENDIX_TOKEN` and use this Mendix app [warden.mendix.com](https://warden.mendix.com) to create a PAT with 'mx:modelrepository:repo:read' access only.
 
-<img src="images/gitlab-env.png" width="400" />
-<img src="images/mendix-credentials.png" width="600" />
+<img src="../images/gitlab-env.png" width="400" />
+
+<img src="../images/mendix-credentials.png" width="600" />
 
 These instructions describe how to configure a single GitLab project, but you can follow the same steps to configure the entire GitLab group, which will make the environment variables available to all projects within that group.
 
@@ -103,7 +104,7 @@ The output consists of the following:
 
 The end of the textual output provides a link to the Sigrid landing page. You can open this URL in order to use Sigrid for interpreting your analysis results.
 
-<img src="images/landing-page.png" width="700" />
+<img src="../images/landing-page.png" width="700" />
 
 Whether you should use the text output or the Sigrid page is largely down to personal preference: the text output is faster to acces and more concise, while Sigrid allows you to view results in a more visual and interactive way. 
 

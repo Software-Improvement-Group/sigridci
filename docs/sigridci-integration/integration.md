@@ -1,12 +1,12 @@
 Integrating Sigrid CI into your continuous integration pipeline
 ===============================================================
 
-This guide explains how to integrate Sigrid into your continuous integration pipeline. Make sure you have also read the [general Sigrid CI documentation](../README.md) before starting this guide. This document describes a generic integration, but the aforementioned page also contains some specific instructions for integrating Sigrid CI with commonly used development platforms.
+This guide explains how to integrate Sigrid into your continuous integration pipeline. Make sure you have also read the [general Sigrid CI documentation](../../README.md) before starting this guide. This document describes a generic integration, but the aforementioned page also contains some specific instructions for integrating Sigrid CI with commonly used development platforms.
 
 ## Prerequisites
 
 - You have a [Sigrid](https://sigrid-says.com) user account. 
-- You have created an [authentication token for using Sigrid CI](authentication-tokens.md).
+- You have created an [authentication token for using Sigrid CI](../authentication-tokens.md).
 - [Python 3.7 or higher](https://www.python.org) needs to be available in the CI environment. The client scripts for Sigrid CI are based on Python.
 - The examples assume [Git](https://git-scm.com) is available in the CI environment.
 
@@ -18,7 +18,7 @@ On-boarding is done automatically when you first run Sigrid CI. As long as you h
 
 **Step 1: Configure Sigrid credentials to environment variables**
 
-Sigrid CI reads your [Sigrid authentication token](authentication-tokens.md) from an environment variable called `SIGRID_CI_TOKEN`. You can define this environment variable in the CI user's `~/.bashrc`, though some platforms also allow you to define environment variables using a graphical interface.
+Sigrid CI reads your [Sigrid authentication token](../authentication-tokens.md) from an environment variable called `SIGRID_CI_TOKEN`. You can define this environment variable in the CI user's `~/.bashrc`, though some platforms also allow you to define environment variables using a graphical interface.
 
 The following example shows an example of the environment variables being added to `~/.bashrc`:
 
@@ -81,23 +81,23 @@ This configures two additional build steps:
 
 **Security note:** This example downloads the Sigrid CI client scripts directly from GitHub. That might be acceptable for some projects, and is in fact increasingly common. However, some projects might not allow this as part of their security policy. In those cases, you can simply download the `sigridci` directory in this repository, and make it available to your runners (either by placing the scripts in a known location, or packaging them into a Docker container). 
 
-The relevant command that starts Sigrid CI is the call to the `sigridci.py` script, which starts the Sigrid CI analysis. The scripts supports a number of arguments that you can use to configure your Sigrid CI run. The scripts and its command line interface are explained in [using the Sigrid CI client script](client-script-usage.md).
+The relevant command that starts Sigrid CI is the call to the `sigridci.py` script, which starts the Sigrid CI analysis. The scripts supports a number of arguments that you can use to configure your Sigrid CI run. The scripts and its command line interface are explained in [using the Sigrid CI client script](../client-script-usage.md).
 
 Finally, note that you need to perform this step for every project where you wish to use Sigrid CI. Be aware that you can set a project-specific target quality, you don't necessarily have to use the same target for every project.
 
 ## Optional: change the analysis scope configuration
 
-Sigrid will try to automatically detect the technologies you use, the component structure, and files/directories that should be excluded from the analysis. You can override the default configuration by creating a file called `sigrid.yaml` and adding it to the root of your repository. You can read more about the various options for custom configuration in the [configuration file documentation](analysis-scope-configuration.md).
+Sigrid will try to automatically detect the technologies you use, the component structure, and files/directories that should be excluded from the analysis. You can override the default configuration by creating a file called `sigrid.yaml` and adding it to the root of your repository. You can read more about the various options for custom configuration in the [configuration file documentation](../analysis-scope-configuration.md).
 
 ## Usage
 
 Once you have configured the integration, Sigrid CI will show up as a new step in your CI pipeline. The step will succeed if the code quality meets the specified target, and will fail otherwise. 
 
-<img src="images/ci-pipeline.png" width="300" />
+<img src="../images/ci-pipeline.png" width="300" />
 
 Sigrid CI provides multiple levels of feedback. The first and fastest type of feedback is directly produced in the CI output, as shown in the following screenshot:
 
-<img src="images/feedback-ci-environment.png" width="600" />
+<img src="../images/feedback-ci-environment.png" width="600" />
 
 The output consists of the following:
 
@@ -107,7 +107,7 @@ The output consists of the following:
 
 The end of the textual output provides a link to the Sigrid landing page. You can open this URL in order to use Sigrid for interpreting your analysis results.
 
-<img src="images/landing-page.png" width="700" />
+<img src="../images/landing-page.png" width="700" />
 
 Whether you should use the text output or the Sigrid page is largely down to personal preference: the text output is faster to acces and more concise, while Sigrid allows you to view results in a more visual and interactive way. 
 

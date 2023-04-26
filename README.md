@@ -20,17 +20,17 @@ Compared to other tools that perform code quality checks, i.e. linters, using Si
 
 ## Integrating Sigrid CI into your development pipeline
 
-- [Integrating Sigrid CI with GitHub Actions](docs/github-actions.md)
-- [Integrating Sigrid CI with GitLab](docs/gitlab.md)
-- [Integrating Sigrid CI with Bitbucket Pipelines](docs/bitbucket-pipelines.md)
-- [Integrating Sigrid CI with Jenkins](docs/jenkins.md)
-- [Integrating Sigrid CI with Azure DevOps](docs/azure-devops.md)
-- [Integrating Sigrid CI with TeamCity](docs/teamcity.md)
-- [Integrating Sigrid CI with Mendix QSM on a Mendix Team Server](docs/mendix-teamserver-api.md)
-- [Integrating Sigrid CI with Mendix QSM on a GitHub server](docs/mendix-github-actions.md)
-- [Integrating Sigrid CI with Mendix QSM on a GitLab server](docs/mendix-gitlab.md)
-- [Integrating Sigrid CI with Siemens Polarion](docs/polarion.md)
-- [Integrating Sigrid CI with other/custom CI environments](docs/integration.md)
+- [Integrating Sigrid CI with GitHub Actions](docs/sigridci-integration/github-actions.md)
+- [Integrating Sigrid CI with GitLab](docs/sigridci-integration/gitlab.md)
+- [Integrating Sigrid CI with Bitbucket Pipelines](docs/sigridci-integration/bitbucket-pipelines.md)
+- [Integrating Sigrid CI with Jenkins](docs/sigridci-integration/jenkins.md)
+- [Integrating Sigrid CI with Azure DevOps](docs/sigridci-integration/azure-devops.md)
+- [Integrating Sigrid CI with TeamCity](docs/sigridci-integration/teamcity.md)
+- [Integrating Sigrid CI with Mendix QSM on a Mendix Team Server](docs/sigridci-integration/mendix-teamserver-api.md)
+- [Integrating Sigrid CI with Mendix QSM on a GitHub server](docs/sigridci-integration/mendix-github-actions.md)
+- [Integrating Sigrid CI with Mendix QSM on a GitLab server](docs/sigridci-integration/mendix-gitlab.md)
+- [Integrating Sigrid CI with Siemens Polarion](docs/sigridci-integration/polarion.md)
+- [Integrating Sigrid CI with other/custom CI environments](docs/sigridci-integration/integration.md)
 
 ## Usage documentation
 
