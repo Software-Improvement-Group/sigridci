@@ -4,7 +4,7 @@ Integrating Sigrid CI into your Jenkins pipeline
 ## Prerequisites
 
 - You have a [Sigrid](https://sigrid-says.com) user account. 
-- You have created an [authentication token for using Sigrid CI](authentication-tokens.md).
+- You have created an [authentication token for using Sigrid CI](../authentication-tokens.md).
 - [Python 3.7 or higher](https://www.python.org) needs to be available in the CI environment. 
 
 ## On-boarding your system to Sigrid
@@ -17,11 +17,11 @@ On-boarding is done automatically when you first run Sigrid CI. As long as you h
 
 Sigrid CI reads your Sigrid credential from one environment variable, called `SIGRID_CI_TOKEN`. You need to make this environment variable available Jenkins. To do this, navigate to the "Credentials" settings in your Jenkins setting page. Then select "Add credentials" with the type "secret text". You can then use this page to add `SIGRID_CI_TOKEN`:
 
-<img src="images/jenkins-credentials.png" width="600" />
+<img src="../images/jenkins-credentials.png" width="600" />
 
 After saving, the secret should be visible in the list:
 
-<img src="images/jenkins-credentials-list.png" width="500" />
+<img src="../images/jenkins-credentials-list.png" width="500" />
 
 This example assumes a default configuration for Jenkins. Your configuration might be different, refer to the [Jenkins documentation](https://www.jenkins.io/doc/book/pipeline/jenkinsfile/#secret-text) for more information on how to make secrets available to Jenkins pipelines.
 
@@ -86,17 +86,17 @@ In this example we're assuming you don't have a Jenkins configuration yet, hence
 
 Sigrid CI consists of a number of Python-based client scripts, that interact with Sigrid in order to analyze your project's source code and provide feedback based on the results. These client scripts need to be available to the CI environment, in order to call the scripts *from* the CI pipeline. 
 
-The relevant command that starts Sigrid CI is the call to the `sigridci.py` script, which starts the Sigrid CI analysis. The scripts supports a number of arguments that you can use to configure your Sigrid CI run. The scripts and its command line interface are explained in [using the Sigrid CI client script](client-script-usage.md).
+The relevant command that starts Sigrid CI is the call to the `sigridci.py` script, which starts the Sigrid CI analysis. The scripts supports a number of arguments that you can use to configure your Sigrid CI run. The scripts and its command line interface are explained in [using the Sigrid CI client script](../client-script-usage.md).
 
 ### Step 3: Configure your Jenkins pipeline
 
 Create a new pipeline in Jenkins by selecting "New item" in the menu. Select the type "pipeline" from the list of options presented to you, and enter a name for your new build pipeline.
 
-<img src="images/jenkins-new-pipeline.png" width="600" />
+<img src="../images/jenkins-new-pipeline.png" width="600" />
 
 Next, navigate to the section "Pipeline", and select the option "Pipeline script from SCM". This will make Jenkins use the `Jenkinsfile` configuration you created earlier. This means you only need to enter the location and credentials for your repository, and Jenkins will then pick up the rest of the configuration from the `Jenkinsfile`.
 
-<img src="images/jenkins-scm-config.png" width="600" />
+<img src="../images/jenkins-scm-config.png" width="600" />
 
 Again, these instructions assume that you needed to create a new Jenkins pipeline from scratch. If you already had an existing pipeline, simply add the required steps to it.
 
@@ -104,21 +104,21 @@ The Sigrid CI output uses color to communicate whether the ratings meet the targ
 
 ### Step 4: Analysis configuration
 
-Sigrid will try to automatically detect the technologies you use, the component structure, and files/directories that should be excluded from the analysis. You can override the default configuration by creating a file called `sigrid.yaml` and adding it to the root of your repository. You can read more about the various options for custom configuration in the [configuration file documentation](analysis-scope-configuration.md).
+Sigrid will try to automatically detect the technologies you use, the component structure, and files/directories that should be excluded from the analysis. You can override the default configuration by creating a file called `sigrid.yaml` and adding it to the root of your repository. You can read more about the various options for custom configuration in the [configuration file documentation](../analysis-scope-configuration.md).
 
 ## Usage
 
 You can schedule your Jenkins pipeline to indicate *when* it should run: the typical strategy is to run it automatically after every commit, but you can also schedule it to run periodically. You can also start your pipeline manually using the "Build now" button.
 
-<img src="images/jenkins-build-now.png" width="200" />
+<img src="../images/jenkins-build-now.png" width="200" />
 
 Once you have configured the integration, Sigrid CI will show up as a new step in your CI pipeline. The step will succeed if the code quality meets the specified target, and will fail otherwise.. Your can access the build status from the "build history" section in the menu:
 
-<img src="images/jenkins-build-history.png" width="300" />
+<img src="../images/jenkins-build-history.png" width="300" />
 
 Clicking on the build output will provide more information. Sigrid CI provides multiple levels of feedback. The first and fastest type of feedback is directly produced in the CI output, as shown in the following screenshot:
 
-<img src="images/jenkins-feedback.png" width="600" />
+<img src="../images/jenkins-feedback.png" width="600" />
 
 The output consists of the following:
 
@@ -128,7 +128,7 @@ The output consists of the following:
 
 The end of the textual output provides a link to the Sigrid landing page. You can open this URL in order to use Sigrid for interpreting your analysis results.
 
-<img src="images/landing-page.png" width="700" />
+<img src="../images/landing-page.png" width="700" />
 
 Whether you should use the text output or the Sigrid page is largely down to personal preference: the text output is faster to acces and more concise, while Sigrid allows you to view results in a more visual and interactive way. 
 

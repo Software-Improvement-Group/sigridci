@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8" />
+        <title>Sigrid documentation</title>
+        <meta name="viewport" content="initial-scale=1.0, width=device-width, user-scalable=no">
+        <link rel="shortcut icon" type="image/x-icon" href="/sigridci/docs/images/favicon.png" />
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,400;0,700;1,400&display=swap" />
+        <style>
+            {% include stylesheet.css %}
+        </style>
+    </head>
+    
+    <body>
+        <div class="container">
+            {% include menu.html %}
+            <article>
+                {{ content }}
+            </article>
+        </div>
+    </body>
+</html>

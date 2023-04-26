@@ -4,7 +4,7 @@ Integrating Sigrid CI with GitHub Actions
 ## Prerequisites
 
 - You have a [Sigrid](https://sigrid-says.com) user account. 
-- You have created an [authentication token for using Sigrid CI](authentication-tokens.md).
+- You have created an [authentication token for using Sigrid CI](../authentication-tokens.md).
 
 ## On-boarding your system to Sigrid
 
@@ -20,17 +20,17 @@ Sigrid CI reads your Sigrid account credentials from an environment variable cal
 - Select "Secrets" in the menu on the left
 - Select "Actions" in the sub-menu that appears below "Secrets"
 - Use the "New repository secret" button
-- Create a secret named `SIGRID_CI_TOKEN` and use your [Sigrid authentication token](authentication-tokens.md) as value
+- Create a secret named `SIGRID_CI_TOKEN` and use your [Sigrid authentication token](../authentication-tokens.md) as value
 
-<img src="images/github-env.png" width="400" />
+<img src="../images/github-env.png" width="400" />
 
 Your repository secret should now look like this:
 
-<img src="images/github-env-secrets.png" width="400" />
+<img src="../images/github-env-secrets.png" width="400" />
 
 This example explained how to add secrets for a single repository. However, if you have a GitHub organization with many repositories it can be cumbersome to repeat these steps for every repository. You can solve this by adding secrets to your GitHub organization. The process is the same as explained above, though you should access the "secrets" menu for your GitHub organization instead of the "secrets" page for the repository.
 
-<img src="images/github-org-secrets.jpg" width="400" />
+<img src="../images/github-org-secrets.jpg" width="400" />
 
 The organization-level secret.
 
@@ -147,9 +147,9 @@ SIGRID_CI_TOKEN: "${{ secrets.SIGRID_CI_ORG_TOKEN }}"
 
 ### Step 3: Analysis configuration
 
-The relevant command that starts Sigrid CI is the call to the `sigridci.py` script, which starts the Sigrid CI analysis. The scripts supports a number of arguments that you can use to configure your Sigrid CI run. The scripts and its command line interface are explained in [using the Sigrid CI client script](client-script-usage.md).
+The relevant command that starts Sigrid CI is the call to the `sigridci.py` script, which starts the Sigrid CI analysis. The scripts supports a number of arguments that you can use to configure your Sigrid CI run. The scripts and its command line interface are explained in [using the Sigrid CI client script](../client-script-usage.md).
 
-Sigrid will try to automatically detect the technologies you use, the component structure, and files/directories that should be excluded from the analysis. You can override the default configuration by creating a file called `sigrid.yaml` and adding it to the root of your repository. You can read more about the various options for custom configuration in the [configuration file documentation](analysis-scope-configuration.md).
+Sigrid will try to automatically detect the technologies you use, the component structure, and files/directories that should be excluded from the analysis. You can override the default configuration by creating a file called `sigrid.yaml` and adding it to the root of your repository. You can read more about the various options for custom configuration in the [configuration file documentation](../analysis-scope-configuration.md).
 
 The example YAML file will trigger a Sigrid CI analysis on every pull request. It is also possible to limit Sigrid CI to specific branches, or trigger Sigrid CI after every push. The [GitHub Actions documentation](https://docs.github.com/en/actions/reference/workflow-syntax-for-github-actions) explains how to configure those scenarios in the YAML file.
 
@@ -157,21 +157,21 @@ The example YAML file will trigger a Sigrid CI analysis on every pull request. I
 
 To view all Sigrid CI results, check the "Actions" tab in your GitHub repository. Select "Sigrid CI" from the available actions in the menu on the left. This will give you a central overview of all Sigrid CI analyses:
 
-<img src="images/github-actions.png" width="500" />
+<img src="../images/github-actions.png" width="500" />
 
 The check will succeed if the code quality meets the specified target, and will fail otherwise. In addition to this central overview, you can also find the Sigrid CI indicator next to all commits:
 
-<img src="images/github-commits.png" width="300" />
+<img src="../images/github-commits.png" width="300" />
 
 Clicking the small indicator will show a pop-up with some more information:
 
-<img src="images/github-details.png" width="300" />
+<img src="../images/github-details.png" width="300" />
 
 Select "Details" to see the output from the Sigrid CI check:
 
 Sigrid CI provides multiple levels of feedback. The first and fastest type of feedback is directly produced in the CI output, as shown in the following screenshot:
 
-<img src="images/github-action-feedback.png" width="600" />
+<img src="../images/github-action-feedback.png" width="600" />
 
 The output consists of the following:
 
@@ -181,7 +181,7 @@ The output consists of the following:
 
 The end of the textual output provides a link to the Sigrid landing page. You can open this URL in order to use Sigrid for interpreting your analysis results.
 
-<img src="images/landing-page.png" width="700" />
+<img src="../images/landing-page.png" width="700" />
 
 Whether you should use the text output or the Sigrid page is largely down to personal preference: the text output is faster to acces and more concise, while Sigrid allows you to view results in a more visual and interactive way. 
 
@@ -194,15 +194,15 @@ Once you have used Sigrid CI for the first time, GitHub allows you to create a b
 - Use the "..." menu on the top right
 - Select "Create status badge"
 
-<img src="images/github-create-badge.jpg" width="300" />
+<img src="../images/github-create-badge.jpg" width="300" />
 
 - Copy the Markdown code, and add it to your repository's README file
 
-<img src="images/github-badge-markdown.png" width="400" />
+<img src="../images/github-badge-markdown.png" width="400" />
 
 Your Sigrid CI badge will now appear in your project's home page.
 
-<img src="images/github-badge.png" width="300" />
+<img src="../images/github-badge.png" width="300" />
 
 ## Contact and support
 

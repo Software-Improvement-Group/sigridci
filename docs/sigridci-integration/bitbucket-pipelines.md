@@ -4,7 +4,7 @@ Integrating Sigrid CI with BitBucket Pipelines
 ## Prerequisites
 
 - You have a [Sigrid](https://sigrid-says.com) user account. 
-- You have created an [authentication token for using Sigrid CI](authentication-tokens.md).
+- You have created an [authentication token for using Sigrid CI](../authentication-tokens.md).
 
 ## On-boarding your system to Sigrid
 
@@ -18,9 +18,9 @@ Sigrid CI reads your Sigrid account credentials from an environment variable cal
 
 - Open "Repository settings" in your project menu
 - Select "Repository variables" located in the section "Pipelines"
-- Create a secret named `SIGRID_CI_TOKEN` and use your [Sigrid authentication token](authentication-tokens.md) as the value.
+- Create a secret named `SIGRID_CI_TOKEN` and use your [Sigrid authentication token](../authentication-tokens.md) as the value.
 
-<img src="images/bitbucket-env.png" width="500" />
+<img src="../images/bitbucket-env.png" width="500" />
 
 ### Step 2: Create a BitBucket Pipeline for Sigrid CI
 
@@ -85,25 +85,25 @@ Refer to the [BitBucket Pipelines documentation](https://support.atlassian.com/b
 
 ### Step 3: Analysis configuration
 
-The Sigrid CI client script supports a number of arguments that you can use to configure your Sigrid CI run. The scripts and its command line interface are explained in [using the Sigrid CI client script](client-script-usage.md).
+The Sigrid CI client script supports a number of arguments that you can use to configure your Sigrid CI run. The scripts and its command line interface are explained in [using the Sigrid CI client script](../client-script-usage.md).
 
-Sigrid will try to automatically detect the technologies you use, the component structure, and files/directories that should be excluded from the analysis. You can override the default configuration by creating a file called `sigrid.yaml` and adding it to the root of your repository. You can read more about the various options for custom configuration in the [configuration file documentation](analysis-scope-configuration.md).
+Sigrid will try to automatically detect the technologies you use, the component structure, and files/directories that should be excluded from the analysis. You can override the default configuration by creating a file called `sigrid.yaml` and adding it to the root of your repository. You can read more about the various options for custom configuration in the [configuration file documentation](../analysis-scope-configuration.md).
 
 ## Usage
 
 Once Sigrid CI has been enabled, you can access it from the list of pipeline runs by accessing "Pipelines" from your repository's menu:
 
-<img src="images/bitbucket-list.png" width="500" />
+<img src="../images/bitbucket-list.png" width="500" />
 
-<img src="images/bitbucket-pipeline-indicator.png" width="400" />
+<img src="../images/bitbucket-pipeline-indicator.png" width="400" />
 
 The check will succeed if the code quality meets the specified target, and will fail otherwise. In addition to this central overview, you can also find the Sigrid CI indicator next to all commits:
 
-<img src="images/bitbucket-commits.png" width="700" />
+<img src="../images/bitbucket-commits.png" width="700" />
 
 You can access the results by clicking on the pipeline's success/failure indicator. Sigrid CI provides multiple levels of feedback. The first and fastest type of feedback is directly produced in the CI output, as shown in the following screenshot:
 
-<img src="images/feedback-ci-environment.png" width="600" />
+<img src="../images/feedback-ci-environment.png" width="600" />
 
 The output consists of the following:
 
@@ -113,7 +113,7 @@ The output consists of the following:
 
 The end of the textual output provides a link to the Sigrid landing page. You can open this URL in order to use Sigrid for interpreting your analysis results.
 
-<img src="images/landing-page.png" width="700" />
+<img src="../images/landing-page.png" width="700" />
 
 Whether you should use the text output or the Sigrid page is largely down to personal preference: the text output is faster to acces and more concise, while Sigrid allows you to view results in a more visual and interactive way. 
 

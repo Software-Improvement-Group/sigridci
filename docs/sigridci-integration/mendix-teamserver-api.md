@@ -16,7 +16,7 @@ Trigger a QSM run for an already onboarded system. This is useful when a custome
 POST `/qsm/{customer}`
 
 #### Info
-Note that this endpoint requires a [SIGRID CI Authentication token](authentication-tokens.md) that is valid for {customer}. 
+Note that this endpoint requires a [SIGRID CI Authentication token](../authentication-tokens.md) that is valid for {customer}. 
 ##### Headers
     - 'Authorization: Bearer YOUR_TOKEN'
     - `Content-Type: application/json`
@@ -43,7 +43,7 @@ curl --header 'Authorization: Bearer YOUR_TOKEN' -X POST https://sigrid-says.com
 POST `/qsm/{customer}/{system}`
 
 #### Info
-Note that this endpoint requires a [SIGRID CI Authentication token](authentication-tokens.md) that is valid for {customer}.
+Note that this endpoint requires a [SIGRID CI Authentication token](../authentication-tokens.md) that is valid for {customer}.
 ##### Headers
     - 'Authorization: Bearer YOUR_TOKEN'
 ##### Body

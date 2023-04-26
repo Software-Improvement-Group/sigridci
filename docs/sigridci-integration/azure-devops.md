@@ -4,7 +4,7 @@ Integrating Sigrid CI with Azure DevOps
 ## Prerequisites
 
 - You have a [Sigrid](https://sigrid-says.com) user account. 
-- You have created an [authentication token for using Sigrid CI](authentication-tokens.md).
+- You have created an [authentication token for using Sigrid CI](../authentication-tokens.md).
 - [Python 3.7 or higher](https://www.python.org) needs to be available in the CI environment if you do not use the [Docker image](https://hub.docker.com/r/softwareimprovementgroup/sigridci) published by SIG. The client scripts for Sigrid CI are based on Python.
 - The examples assume [Git](https://git-scm.com) is available on your Azure DevOps environment.
 
@@ -113,37 +113,37 @@ Commit and push this file to the repository, so that Azure DevOps can use this c
 
 ### Step 2: Analysis configuration
 
-In both alternatives, the relevant command that starts Sigrid CI is the call to the `sigridci.py` script, which starts the Sigrid CI analysis. The scripts supports a number of arguments that you can use to configure your Sigrid CI run. The scripts and its command line interface are explained in [using the Sigrid CI client script](client-script-usage.md).
+In both alternatives, the relevant command that starts Sigrid CI is the call to the `sigridci.py` script, which starts the Sigrid CI analysis. The scripts supports a number of arguments that you can use to configure your Sigrid CI run. The scripts and its command line interface are explained in [using the Sigrid CI client script](../client-script-usage.md).
 
-Sigrid will try to automatically detect the technologies you use, the component structure, and files/directories that should be excluded from the analysis. You can override the default configuration by creating a file called `sigrid.yaml` and adding it to the root of your repository. You can read more about the various options for custom configuration in the [configuration file documentation](analysis-scope-configuration.md).
+Sigrid will try to automatically detect the technologies you use, the component structure, and files/directories that should be excluded from the analysis. You can override the default configuration by creating a file called `sigrid.yaml` and adding it to the root of your repository. You can read more about the various options for custom configuration in the [configuration file documentation](../analysis-scope-configuration.md).
 
 ### Step 3: Create your Azure DevOps pipeline
 
 In Azure DevOps, access the section "Pipelines" from the main menu. In this example we assume you are using a YAML file to configure your pipeline:
 
-<img src="images/azure-configurepipeline.png" width="500" />
+<img src="../images/azure-configurepipeline.png" width="500" />
 
 Select the YAML file you created in the previous step:
 
-<img src="images/azure-selectyaml.png" width="500" />
+<img src="../images/azure-selectyaml.png" width="500" />
 
-This will display the contents of the YAML file in the next screen. The final step is to add your account credentials to the pipeline. Click "Variables" in the top right corner. Create a secret named `SIGRID_CI_TOKEN` and use your [Sigrid authentication token](authentication-tokens.md) as the value.
+This will display the contents of the YAML file in the next screen. The final step is to add your account credentials to the pipeline. Click "Variables" in the top right corner. Create a secret named `SIGRID_CI_TOKEN` and use your [Sigrid authentication token](../authentication-tokens.md) as the value.
 
-<img src="images/azure-variables.png" width="500" />
+<img src="../images/azure-variables.png" width="500" />
 
 From this point, Sigrid CI will run as part of the pipeline. When the pipeline is triggered depends on the configuration: by default it will run after every commit, but you can also trigger it periodically or run it manually.
 
-<img src="images/azure-build-status.png" width="700" />
+<img src="../images/azure-build-status.png" width="700" />
 
 # Usage
 
 To obtain feedback on your commit, click on the "Sigrid CI" step in the pipeline results screen shown above. 
 
-<img src="images/azure-indicator.png" width="300" />
+<img src="../images/azure-indicator.png" width="300" />
 
 The check will succeed if the code quality meets the specified target, and will fail otherwise. In addition to the simple success/failure indicator, Sigrid CI provides multiple levels of feedback. The first and fastest type of feedback is directly produced in the CI output, as shown in the following screenshot:
 
-<img src="images/azure-feedback.png" width="600" />
+<img src="../images/azure-feedback.png" width="600" />
 
 The output consists of the following:
 
@@ -153,7 +153,7 @@ The output consists of the following:
 
 The end of the textual output provides a link to the Sigrid landing page. You can open this URL in order to use Sigrid for interpreting your analysis results.
 
-<img src="images/landing-page.png" width="700" />
+<img src="../images/landing-page.png" width="700" />
 
 Whether you should use the text output or the Sigrid page is largely down to personal preference: the text output is faster to acces and more concise, while Sigrid allows you to view results in a more visual and interactive way. 
 
