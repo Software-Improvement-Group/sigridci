@@ -35,13 +35,13 @@ Compared to other tools that perform code quality checks, i.e. linters, using Si
 ## Usage documentation
 
 - [Creating authentication tokens for Sigrid CI](docs/authentication-tokens.md)
-- [Client script option reference](docs/client-script-usage.md)
+- [Client script option reference](docs/reference/client-script-usage.md)
 - [Mapping repositories to Sigrid systems](docs/systems.md)
-- [Changing the analysis scope configuration](docs/analysis-scope-configuration.md)
+- [Changing the analysis scope configuration](docs/reference/analysis-scope-configuration.md)
 - [Adding business context to a system using metadata](docs/metadata.md)
 - [Using Sigrid CI as part of your development workflow](docs/workflows.md)
 - [Frequently asked questions](docs/faq.md)
-- [Supported technologies](docs/technology-support.md)
+- [Supported technologies](docs/reference/technology-support.md)
 - [Sigrid CI demo recording](https://www.youtube.com/watch?v=1QWWtFlB6cQ) 
 
 ## Sigrid API
