@@ -43,7 +43,7 @@ When Sigrid is linked to your SSO the user provisioning is done by the IdP. Sigr
 ### Setup customer side
 Create an authentication 'app' in your IdP with the following details: 
 - URL: https://auth.sigrid-says.com/saml2/idpresponse
-- Audience: urn.amazon:cognito:sp:eu-central-1_hwh9zdCY
+- Audience: urn.amazon:cognito:sp:eu-central-1_hwh9zdyCY
 - Signature Algorithm: RSA_SHA256
 - Digest Algorithm: SHA256
 - Assertion Encryption: unencrypted (privacy is provided by using HTTPS)
