@@ -46,7 +46,7 @@ Compared to other tools that perform code quality checks, i.e. linters, using Si
 
 ## Sigrid API
 
-Most of this documentation refers to our recommended way to integrate Sigrid into your development process: add Sigrid to your pipeline, for both pull requests and publishing code. However, in some cases you might need a more flexible type of integration. The [Sigrid API documentation](docs/sigrid-api-documentation.md) contains an overview of the available data that you can obtain from Sigrid's API and integrate into your workflow.
+Most of this documentation refers to our recommended way to integrate Sigrid into your development process: add Sigrid to your pipeline, for both pull requests and publishing code. However, in some cases you might need a more flexible type of integration. The [Sigrid API documentation](docs/reference/sigrid-api-documentation.md) contains an overview of the available data that you can obtain from Sigrid's API and integrate into your workflow.
 
 ## Contact and support
 
