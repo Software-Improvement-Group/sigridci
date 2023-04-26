@@ -12,13 +12,13 @@ Integrating Sigrid CI with Siemens Polarion
 
 ## Enable Sigrid CI for your project
 
-You will first need to add Sigrid CI to your project's pipeline, so that your code is automatically published to Sigrid after every commit. Sigrid CI supports [multiple development platforms](../../README.md), so you can follow the instructions for your platform. Once Sigrid CI is enabled in your pipeline, your project will be automatically on-boarded to Sigrid when you run it for the first time. Once you have done this you should be able to see your project when you check [sigrid-says.com](https://sigrid-says.com).
+You will first need to add Sigrid CI to your project's pipeline, so that your code is automatically published to Sigrid after every commit. Sigrid CI supports [multiple development platforms](../README.md), so you can follow the instructions for your platform. Once Sigrid CI is enabled in your pipeline, your project will be automatically on-boarded to Sigrid when you run it for the first time. Once you have done this you should be able to see your project when you check [sigrid-says.com](https://sigrid-says.com).
 
 <img src="../images/polarion-sigrid-onboarding.png" width="500" />
 
 ## Adding the Polarion integration to your Sigrid configuration
 
-You will need to create a [scope configuration file](../analysis-scope-configuration.md) for your system and add it to your repository. You might have already done this previously when you on-boarded your project to Sigrid. Open your `sigrid.yaml` configuration file. The file might look something like this:
+You will need to create a [scope configuration file](../reference/analysis-scope-configuration.md) for your system and add it to your repository. You might have already done this previously when you on-boarded your project to Sigrid. Open your `sigrid.yaml` configuration file. The file might look something like this:
 
 ```
 component_depth: 1
