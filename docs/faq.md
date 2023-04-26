@@ -154,15 +154,15 @@ There are two ways to use Sigrid CI in such a situation.
   matching their repositories).
 - Even when *not* changing the Sigrid structure, it is still possible to run Sigrid CI for your repository. You can use
   the `--subsystem` option to explain Sigrid CI how your repository structure should be matched to your Sigrid
-  configuration. This option is explained in [using the Sigrid CI client script](client-script-usage.md).
+  configuration. This option is explained in [using the Sigrid CI client script](reference/client-script-usage.md).
 
 ### Can I see which files are uploaded to Sigrid?
 
-Yes. You can add the `--showupload` option when calling the [client script](client-script-usage.md). This will add log output for every file that is included in the upload that is submitted to Sigrid.
+Yes. You can add the `--showupload` option when calling the [client script](reference/client-script-usage.md). This will add log output for every file that is included in the upload that is submitted to Sigrid.
 
 ### Why do you have both publish and publishonly options, what's the difference?
 
-The [list of Sigrid CI options](client-script-usage.md) lists two options with similar names and descriptions, `--publish` and `--publishonly`. These options support slightly different scenarios:
+The [list of Sigrid CI options](reference/client-script-usage.md) lists two options with similar names and descriptions, `--publish` and `--publishonly`. These options support slightly different scenarios:
 
 - `--publish` publishes your project's source code to Sigrid, *and* provides feedback on your changes within your Continuous Integration environment.
 - `--publishonly` also publishes your code to Sigrid, but it *does not* provide feedback within the Continuous Integration environment.

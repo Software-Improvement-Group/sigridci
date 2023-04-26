@@ -56,14 +56,14 @@ h2, h3 {
     padding-top: 20px;
 }
 
-.container nav .toc a {
+.container nav .toc a, .container nav .toc .category {
     display: block;
     color: #ffffff;
     border-bottom: 1px solid #687483;
     padding: 4px 8px 4px 8px;
 }
 
-.container nav .toc a.category {
+.container nav .toc a.category, .container nav .toc .category {
     color: #DFC101;
 }
 
@@ -79,4 +79,26 @@ h2, h3 {
 .container article {
     flex: 1 1 auto;
     padding: 110px 80px 30px 80px;
+}
+
+.container article img {
+    border: 1px solid #687483;
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    box-shadow: 1px 1px 5px #687483;
+}
+
+pre {
+    display: inline-block;
+    max-width: 100%;
+    overflow-x: scroll;
+    line-height: 1.4;
+    font-size: 14px;
+    background-color: #687483;
+    color: #ffffff;
+    padding: 16px;
+    border: 1px solid #233347;
+    box-shadow: 1px 1px 5px #687483;
+    font-family: "Menlo", monospace;
 }

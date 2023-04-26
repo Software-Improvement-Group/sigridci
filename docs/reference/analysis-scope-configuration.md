@@ -4,7 +4,7 @@ Changing the analysis scope configuration
 You can change Sigrid's configuration for your project, to make Sigrid's feedback as useful and actionable as possible. We call this configuration "the scope".
 
 <a href="https://www.youtube.com/watch?v=Uomc7hUbRTw" target="_blank">
-  <img src="images/scoping-video.png" width="500" />
+  <img src="../images/scoping-video.png" width="500" />
 </a>
 
 By default, Sigrid will try to automatically detect the technologies you use, the component structure, and files/directories that should be excluded from the analysis. However, you can override this standard configuration with your project-specific configuration. To do this, create a file called `sigrid.yaml` and add it to the root of your repository. When you merge changes to `sigrid.yaml`, Sigrid will pick up the new configuration and apply it to subsequent scans.
@@ -148,7 +148,7 @@ The `add_dependencies` and `remove_dependencies` fields expect a value in the fo
 
 ## Sigrid metadata
 
-`sigrid.yaml` is used for *analysis* configuration. It is also possible to configure Sigrid *metadata*. See the [Sigrid metadata](metadata.md) section for the various ways you can update this metadata.
+`sigrid.yaml` is used for *analysis* configuration. It is also possible to configure Sigrid *metadata*. See the [Sigrid metadata](../metadata.md) section for the various ways you can update this metadata.
 
 ## Contact and support
 
