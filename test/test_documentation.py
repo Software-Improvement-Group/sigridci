@@ -37,6 +37,9 @@ class DocumentationTest(unittest.TestCase):
                 self.assertTrue(os.path.exists(linkedFile), f"Dead image in {file} to {linkedFile}")
         
     def readDocumentationPages(self):
+        with open("README.md", "r") as fileRef:
+            yield ("README.md", fileRef.read())
+    
         for root, subdirs, files in os.walk("docs"):
             for file in files:
                 if file.endswith(".md"):

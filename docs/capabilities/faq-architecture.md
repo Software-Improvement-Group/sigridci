@@ -6,13 +6,13 @@ This FAQ specifically covers Sigrid's Architecture Quality functionality. Also c
 ### How do I enable Architecture Quality for my project?
 
   - Make sure your Sigrid license includes the Architecture Quality feature. You can check this with SIG support if you're not sure.
-  - Make sure your scope configuration file contains an `architecture` section as explained in the [scope documentation](reference/analysis-scope-configuration.md).
+  - Make sure your scope configuration file contains an `architecture` section as explained in the [scope documentation](../reference/analysis-scope-configuration.md).
   - Publish your system to Sigrid.
   - Architecture Quality will now be available.
   
 ### How do I enable the change history analysis?
 
-This will happen automatically, assuming that you enabled Architecture Quality in the scope file and the change history is available. You might need to add the `--include-history` option in the [Sigrid CI configuration](reference/client-script-usage.md).
+This will happen automatically, assuming that you enabled Architecture Quality in the scope file and the change history is available. You might need to add the `--include-history` option in the [Sigrid CI configuration](../reference/client-script-usage.md).
 
 ### Which version control systems does SIG support for analyzing the change history?
 
@@ -26,11 +26,11 @@ pipeline. Examples:
   
 ### Does Architecture Quality support self-service configuration?
 
-Yes, and the options are explained in the [scope documentation](reference/analysis-scope-configuration.md).
+Yes, and the options are explained in the [scope documentation](../reference/analysis-scope-configuration.md).
 
 ### Do we support change history analysis for multi-repo systems?
 
-Yes. If you use [multi-repo systems](systems.md), each repository's change history will be used, and the results will be combined into the overall system.
+Yes. If you use [multi-repo systems](../organization-integration/systems.md), each repository's change history will be used, and the results will be combined into the overall system.
 
 ### Are Git submodules supported?
 

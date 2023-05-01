@@ -27,7 +27,7 @@ Yes, in some cases. SIG is continuously extending our security knowledge base, w
 
 Yes, but this is configurable. Scanning transitive dependencies is preferable from a security perspective, as vulnerabilities in transitive dependencies are equally problematic as vulnerabilities in direct dependencies. However, to some teams this can see unfair, as the transitive dependencies are not within their control. 
 
-Therefore, scanning transitive dependencies can be enabled or disabled in [the analysis configuration](reference/analysis-scope-configuration.md). 
+Therefore, scanning transitive dependencies can be enabled or disabled in [the analysis configuration](../reference/analysis-scope-configuration.md). 
 
 ### Why does the finding list count certain findings twice?
 

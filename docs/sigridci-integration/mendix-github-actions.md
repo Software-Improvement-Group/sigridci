@@ -9,7 +9,7 @@ Please note: `QSM` is the brand name used by Mendix, in this manual we will use 
 - You would like to trigger the Sigrid analysis from within your own pipeline in Git.
 - Your runners are able to pull this [public docker image](https://hub.docker.com/r/softwareimprovementgroup/mendixpreprocessor), the image is used to preprocess the Mendix code before uploading it to Sigrid.
 - You have a [Sigrid](https://qsm.mendix.com) user account. 
-- You have created an [authentication token using Sigrid](../authentication-tokens.md).
+- You have created an [authentication token using Sigrid](../organization-integration/authentication-tokens.md).
 - You have created a Personal access (PAT) token using [warden.mendix.com](https://warden.mendix.com)
 
 ## On-boarding your system to Sigrid
@@ -27,7 +27,7 @@ To add these to your GitHub repository, follow these steps:
 - Select "Secrets" in the menu on the left
 - Select "Actions" in the sub-menu that appears below "Secrets"
 - Use the "New repository secret" button
-- Add an first environment variable `SIGRID_CI_TOKEN` and use your [Sigrid authentication token](../authentication-tokens.md) as the value.
+- Add an first environment variable `SIGRID_CI_TOKEN` and use your [Sigrid authentication token](../organization-integration/authentication-tokens.md) as the value.
 - Add an second environment variable `MENDIX_TOKEN` and use this Mendix app [warden.mendix.com](https://warden.mendix.com) to create a PAT with 'mx:modelrepository:repo:read' access only.
 
 <img src="../images/github-env.png" width="400" />

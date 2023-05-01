@@ -8,7 +8,7 @@ Integrating Sigrid CI with Siemens Polarion
   - You have a [Polarion API token](https://industry-solutions.polarion.com/polarion/rest/v1/).
 - On the Sigrid side:
   - You have a [Sigrid](https://sigrid-says.com) user account. 
-  - You have created an [authentication token for using Sigrid CI](../authentication-tokens.md).
+  - You have created an [authentication token for using Sigrid CI](../organization-integration/authentication-tokens.md).
 
 ## Enable Sigrid CI for your project
 

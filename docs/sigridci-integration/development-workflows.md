@@ -8,7 +8,7 @@ Sigrid CI provides development teams with software quality feedback at various p
 
 This is the most common development workflow, both for commercial software development projects and for open source development on platforms like GitHub. 
 
-<img src="images/feature-branch-workflow.png" width="500" />
+<img src="../images/feature-branch-workflow.png" width="500" />
 
 **How to use Sigrid CI:** In this workflow, the pull request is the logical moment to receive software quality feedback, since this feedback can then be used while the pull request is being reviewed. This enables the reviewer to either request the developer to make changes before the pull request is accepted, or create a follow-up ticket to fix the discovered issues at a later time.
 
@@ -20,7 +20,7 @@ After accepting the pull request, changes are merged to the master branch. After
 
 However, this workflow is still appropriate for smaller teams and projects, or for projects that have just started. In such scenarios the speed of this workflow outweighs the lack of an explicit review and quality control process.
 
-<img src="images/centralized-workflow.png" width="500" />
+<img src="../images/centralized-workflow.png" width="500" />
 
 **How to use Sigrid CI:** There are no pull requests, so Sigrid CI's pull request integration cannot be used. However, Sigrid CI can still provide feedback on the quality of the changes after every commit, by publishing the codebase to Sigrid directly after the commit has been made. This ensures that every developer receives feedback immediately after his/her change.
 
@@ -28,7 +28,7 @@ However, this workflow is still appropriate for smaller teams and projects, or f
 
 **How it works:** This is a variant of the *centralized workflow*, but uses two branches: a stable master branch, and a separate development branch where all changes are made. Like the *feature branch workflow*, there is an explicit code review step before changes are merged from the development branch to the master branch. Unlike the feature branch workflow, all developers work in the same branch and are affected by each other's changes.
 
-<img src="images/development-branch-workflow.png" width="500" />
+<img src="../images/development-branch-workflow.png" width="500" />
 
 **How to use Sigrid CI:** Teams may or may not use pull requests in this scenario, but they do perform code reviews before changes are merged. If the team does *not* use pull requests, Sigrid CI can be used to receive feedback on all changes made to the development branch. This feedback can be used as input to the reviewer. If the team *does* use pull requests, the workflow is the same as described in *feature branch workflow*.
 
@@ -36,7 +36,7 @@ However, this workflow is still appropriate for smaller teams and projects, or f
 
 **How it works:** In some cases there is no single "main" version of a project, but the development team maintains multiple versions in parallel. For example, a vendor might maintain separate versions for each of their clients. 
 
-<img src="images/multi-branch-workflow.png" width="500" />
+<img src="../images/multi-branch-workflow.png" width="500" />
 
 **How to use Sigrid CI:** Sigrid does not natively support multiple parallel streams for the same project, since less than 1 percent of our clients use this model. Sigrid assumes a single "baseline" version of the system, which does not exist in this type of workflow. 
 
@@ -46,7 +46,7 @@ However, it is still possible to use Sigrid in such a project: every parallel br
 
 **How it works:** This workflow does not relate to a particular branching model, but nevertheless influences the development process and how to integrate Sigrid CI. [Git submodules](https://git-scm.com/book/nl/v2/Git-Tools-Submodules) allow a Git repository to include references to other Git repositories. The references act as a pointer, so the submodules retain their own Git commit history that is independent from the parent repository.
 
-<img src="images/git-submodule-workflow.png" width="500" />
+<img src="../images/git-submodule-workflow.png" width="500" />
 
 **How to use Sigrid CI:** You can use Sigrid CI for projects that use Git submodules. That said, you want to make sure that teams only receive feedback on code they maintain. In the example above, that means the team working on repository B needs to configure Sigrid CI to exclude all code in the Git submodule, since that code is owned by the team that works on repository A.
 
@@ -59,7 +59,7 @@ However, it is still possible to use Sigrid in such a project: every parallel br
 - For the development teams, use Sigrid CI to provide repository-level feedback as explained in [this documentation](faq.md#we-have-a-multi-repo-project-can-i-still-use-sigrid-ci).
 - For reporting purposes, SIG also supports [periodic SFTP uploads](https://www.softwareimprovementgroup.com/wp-content/uploads/Automatic-source-code-upload-instruction-for-Sigrid-systems.pdf). This is less suitable for developers as a daily feedback loop is considered too slow, but for reporting purposes a daily feedback loop is perfectly reasonable.
 
-<img src="images/sftp-upload-workflow.png" width="500" />
+<img src="../images/sftp-upload-workflow.png" width="500" />
 
 ## Contact and support
 

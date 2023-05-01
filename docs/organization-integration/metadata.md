@@ -9,7 +9,7 @@ This context information is called *metadata* in Sigrid. Adding metadata can be 
 
 This is by far the simplest approach: in Sigrid, simply go to the system settings option in the menu and select the "metadata" option. 
 
-<img src="images/metadata-ui.png" width="600" />
+<img src="../images/metadata-ui.png" width="600" />
 
 Note the screenshot only shows part of the metadata page, the full page contains significantly more options than what is displayed here.
 

@@ -148,7 +148,7 @@ The `add_dependencies` and `remove_dependencies` fields expect a value in the fo
 
 ## Sigrid metadata
 
-`sigrid.yaml` is used for *analysis* configuration. It is also possible to configure Sigrid *metadata*. See the [Sigrid metadata](../metadata.md) section for the various ways you can update this metadata.
+`sigrid.yaml` is used for *analysis* configuration. It is also possible to configure Sigrid *metadata*. See the [Sigrid metadata](../organization-integration/metadata.md) section for the various ways you can update this metadata.
 
 ## Contact and support
 

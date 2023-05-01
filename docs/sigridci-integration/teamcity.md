@@ -4,7 +4,7 @@ Integrating Sigrid CI with TeamCity
 ## Prerequisites
 
 - You have a [Sigrid](https://sigrid-says.com) user account. 
-- You have created an [authentication token for using Sigrid CI](../authentication-tokens.md).
+- You have created an [authentication token for using Sigrid CI](../organization-integration/authentication-tokens.md).
 - [Python 3.7 or higher](https://www.python.org) needs to be available in the CI environment. The client scripts for Sigrid CI are based on Python.
 - The examples assume [Git](https://git-scm.com) is available in your TeamCity environment.
 
@@ -44,7 +44,7 @@ After performing these steps you should end up with the following configuration:
 
 ### Step 2: Configure account credentials
 
-Now that we have created the new build step, we need to provide our [Sigrid authentication token](../authentication-tokens.md):
+Now that we have created the new build step, we need to provide our [Sigrid authentication token](../organization-integration/authentication-tokens.md):
 
 - Select "parameters" in the build menu on the left.
 - Click "add new parameter"

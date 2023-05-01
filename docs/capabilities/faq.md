@@ -105,7 +105,7 @@ Some files and directories are already excluded by default, based on common conv
 - The `node_modules` directory is excluded by default as it contains [NPM](https://www.npmjs.com) libraries
 - The `target` directory is excluded as it contains build output from [Maven](https://maven.apache.org)
 
-In addition to that, you can also exclude files and directories specifically for your project. This is done using the `--exclude` parameter, which is explained in the [configuration documentation](sigridci-integration/integration.md) page.
+In addition to that, you can also exclude files and directories specifically for your project. This is done using the `--exclude` parameter, which is explained in the [configuration documentation](../sigridci-integration/integration.md) page.
 
 ### Do Sigrid CI uploads get added to the Sigrid dashboard?
 
@@ -154,15 +154,15 @@ There are two ways to use Sigrid CI in such a situation.
   matching their repositories).
 - Even when *not* changing the Sigrid structure, it is still possible to run Sigrid CI for your repository. You can use
   the `--subsystem` option to explain Sigrid CI how your repository structure should be matched to your Sigrid
-  configuration. This option is explained in [using the Sigrid CI client script](reference/client-script-usage.md).
+  configuration. This option is explained in [using the Sigrid CI client script](../reference/client-script-usage.md).
 
 ### Can I see which files are uploaded to Sigrid?
 
-Yes. You can add the `--showupload` option when calling the [client script](reference/client-script-usage.md). This will add log output for every file that is included in the upload that is submitted to Sigrid.
+Yes. You can add the `--showupload` option when calling the [client script](../reference/client-script-usage.md). This will add log output for every file that is included in the upload that is submitted to Sigrid.
 
 ### Why do you have both publish and publishonly options, what's the difference?
 
-The [list of Sigrid CI options](reference/client-script-usage.md) lists two options with similar names and descriptions, `--publish` and `--publishonly`. These options support slightly different scenarios:
+The [list of Sigrid CI options](../reference/client-script-usage.md) lists two options with similar names and descriptions, `--publish` and `--publishonly`. These options support slightly different scenarios:
 
 - `--publish` publishes your project's source code to Sigrid, *and* provides feedback on your changes within your Continuous Integration environment.
 - `--publishonly` also publishes your code to Sigrid, but it *does not* provide feedback within the Continuous Integration environment.
