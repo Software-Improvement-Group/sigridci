@@ -6,7 +6,7 @@ This guide explains how to integrate Sigrid into your continuous integration pip
 ## Prerequisites
 
 - You have a [Sigrid](https://sigrid-says.com) user account. 
-- You have created an [authentication token for using Sigrid CI](../authentication-tokens.md).
+- You have created an [authentication token for using Sigrid CI](../organization-integration/authentication-tokens.md).
 - [Python 3.7 or higher](https://www.python.org) needs to be available in the CI environment. The client scripts for Sigrid CI are based on Python.
 - The examples assume [Git](https://git-scm.com) is available in the CI environment.
 
@@ -18,7 +18,7 @@ On-boarding is done automatically when you first run Sigrid CI. As long as you h
 
 **Step 1: Configure Sigrid credentials to environment variables**
 
-Sigrid CI reads your [Sigrid authentication token](../authentication-tokens.md) from an environment variable called `SIGRID_CI_TOKEN`. You can define this environment variable in the CI user's `~/.bashrc`, though some platforms also allow you to define environment variables using a graphical interface.
+Sigrid CI reads your [Sigrid authentication token](../organization-integration/authentication-tokens.md) from an environment variable called `SIGRID_CI_TOKEN`. You can define this environment variable in the CI user's `~/.bashrc`, though some platforms also allow you to define environment variables using a graphical interface.
 
 The following example shows an example of the environment variables being added to `~/.bashrc`:
 

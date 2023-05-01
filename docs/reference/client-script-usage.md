@@ -36,11 +36,11 @@ Notes:
 2. System names can only contain lowercase letters, numbers, and hyphens.
 3. Typically, you would use the `--publish` option when committing to the main/master branch, and you would *not* use it for pull requests. See below for more information.  
 4. These files and directories are excluded *on top of* Sigrid's default excludes. By default, Sigrid excludes things like third party libraries (e.g. `/node_modules/` for NPM libraries, build output (e.g. `/target/` for Maven builds), and generated code. 
-5. The `--subsystem` option can be used to map multiple repositories to the same Sigrid system. Refer to the [documentation on mapping repositories to systems](../systems.md) for more information.
+5. The `--subsystem` option can be used to map multiple repositories to the same Sigrid system. Refer to the [documentation on mapping repositories to systems](../organization-integration/systems.md) for more information.
 
 ## What's the difference between `--publish` and `--publishonly`?
 
-Sigrid CI can run in different "modes", depending on your [development process and workflow](../workflows.md). The following table shows what happens depending on the values of these options:
+Sigrid CI can run in different "modes", depending on your [development process and workflow](../sigridci-integration/development-workflows.md). The following table shows what happens depending on the values of these options:
 
 |                                  | **Publish to Sigrid** | **Do not publish to Sigrid** |
 |----------------------------------|-----------------------|------------------------------|

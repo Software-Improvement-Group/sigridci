@@ -4,7 +4,7 @@ Integrating Sigrid CI with Azure DevOps
 ## Prerequisites
 
 - You have a [Sigrid](https://sigrid-says.com) user account. 
-- You have created an [authentication token for using Sigrid CI](../authentication-tokens.md).
+- You have created an [authentication token for using Sigrid CI](../organization-integration/authentication-tokens.md).
 - [Python 3.7 or higher](https://www.python.org) needs to be available in the CI environment if you do not use the [Docker image](https://hub.docker.com/r/softwareimprovementgroup/sigridci) published by SIG. The client scripts for Sigrid CI are based on Python.
 - The examples assume [Git](https://git-scm.com) is available on your Azure DevOps environment.
 
@@ -127,7 +127,7 @@ Select the YAML file you created in the previous step:
 
 <img src="../images/azure-selectyaml.png" width="500" />
 
-This will display the contents of the YAML file in the next screen. The final step is to add your account credentials to the pipeline. Click "Variables" in the top right corner. Create a secret named `SIGRID_CI_TOKEN` and use your [Sigrid authentication token](../authentication-tokens.md) as the value.
+This will display the contents of the YAML file in the next screen. The final step is to add your account credentials to the pipeline. Click "Variables" in the top right corner. Create a secret named `SIGRID_CI_TOKEN` and use your [Sigrid authentication token](../organization-integration/authentication-tokens.md) as the value.
 
 <img src="../images/azure-variables.png" width="500" />
 

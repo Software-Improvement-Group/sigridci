@@ -3,7 +3,7 @@ Mapping repositories to Sigrid systems
 
 Sigrid provides you with an overview of your organization's entire software portfolio. Your portfolio will be split into "systems". In Sigrid's main portfolio dashboard, each system is depicted as a block.
 
-<img src="images/portfolio-systems.png" width="600" />
+<img src="../images/portfolio-systems.png" width="600" />
 
 So what's a "system"? SIG uses the following definition based on the [ISO 25010 standard](https://www.softwareimprovementgroup.com/wp-content/uploads/SIG-TUViT-Evaluation-Criteria-Trusted-Product-Maintainability-Guidance-for-producers.pdf):
 
@@ -11,7 +11,7 @@ So what's a "system"? SIG uses the following definition based on the [ISO 25010 
 
 So splitting your software portfolio into systems is based on both functional and technical boundaries, and you as the system owner get to decide those boundaries. That definition seems opaque, but that's because every organization uses its own structure and terminology, and often multiple teams *within* an organization use different terms. It is quite common for different stakeholders to have a different view of what the software portfolio looks like, as depicted in the following example:
 
-<img src="images/mapping-perspectives.png" width="700" />
+<img src="../images/mapping-perspectives.png" width="700" />
 
 If you ask people what systems they have, the people on the left would have a different answer than the people on the right. And both would be right, from their own perspective. The perspective on the left is centered around business applications, i.e. more along functional boundaries. The perspective on the right is often centered around repositories, which is what they see in their development platform of choice (e.g. GitHub). 
 
@@ -21,7 +21,7 @@ One of Sigrid's goals is to provide a shared view for all stakeholders. Sure, we
 
 This is the most straightforward mapping: every repository in your development platform is mapped directly to a corresponding system in Sigrid. 
 
-<img src="images/publish-repositories.png" width="700" />
+<img src="../images/publish-repositories.png" width="700" />
 
 Technical stakeholders get information that directly matches their perspective, and findings *within* each repository directly matches what they see in their build pipeline or IDE. 
 
@@ -31,9 +31,9 @@ Business stakeholders can still get a more aggregated view by grouping systems b
 
 Alternatively, you can also base your Sigrid view on a more functional/business perspective. Each system consists of multiple underlying repositories, where each repository can be considered a subsystem within that business application. This is sometimes referred to as a [multi-repo system](https://www.gitkraken.com/blog/git-multi-repo-vs-git-mono-repo).
 
-<img src="images/publish-subsystems.png" width="700" />
+<img src="../images/publish-subsystems.png" width="700" />
 
-In this example, the *MyBank front-end* and *MyBank back-end* repositories would be combined into a single system, *myBank*. In this scenario, it is still possible for both repositories to publish their code to Sigrid independently, combining the two repositories happens on the Sigrid side. This behavior can be enabled by using the [subsystem option in the Sigrid CI configuration](reference/client-script-usage.md).
+In this example, the *MyBank front-end* and *MyBank back-end* repositories would be combined into a single system, *myBank*. In this scenario, it is still possible for both repositories to publish their code to Sigrid independently, combining the two repositories happens on the Sigrid side. This behavior can be enabled by using the [subsystem option in the Sigrid CI configuration](../reference/client-script-usage.md).
 
 This scenario also means you set your *objectives* on the combined application level, not on the individual repository level. This can help to have a clear shared goal that you're working towards together. However, if you find yourself in a situation where the different repositories would prefer to set their own objectives, it might be a better choice to base your Sigrid view and goals around repositories. 
 

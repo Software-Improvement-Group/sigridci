@@ -4,7 +4,7 @@ Integrating Sigrid CI with GitHub Actions
 ## Prerequisites
 
 - You have a [Sigrid](https://sigrid-says.com) user account. 
-- You have created an [authentication token for using Sigrid CI](../authentication-tokens.md).
+- You have created an [authentication token for using Sigrid CI](../organization-integration/authentication-tokens.md).
 
 ## On-boarding your system to Sigrid
 
@@ -20,7 +20,7 @@ Sigrid CI reads your Sigrid account credentials from an environment variable cal
 - Select "Secrets" in the menu on the left
 - Select "Actions" in the sub-menu that appears below "Secrets"
 - Use the "New repository secret" button
-- Create a secret named `SIGRID_CI_TOKEN` and use your [Sigrid authentication token](../authentication-tokens.md) as value
+- Create a secret named `SIGRID_CI_TOKEN` and use your [Sigrid authentication token](../organization-integration/authentication-tokens.md) as value
 
 <img src="../images/github-env.png" width="400" />
 

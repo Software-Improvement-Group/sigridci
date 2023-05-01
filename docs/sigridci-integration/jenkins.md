@@ -4,7 +4,7 @@ Integrating Sigrid CI into your Jenkins pipeline
 ## Prerequisites
 
 - You have a [Sigrid](https://sigrid-says.com) user account. 
-- You have created an [authentication token for using Sigrid CI](../authentication-tokens.md).
+- You have created an [authentication token for using Sigrid CI](../organization-integration/authentication-tokens.md).
 - [Python 3.7 or higher](https://www.python.org) needs to be available in the CI environment. 
 
 ## On-boarding your system to Sigrid
