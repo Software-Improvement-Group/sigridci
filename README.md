@@ -34,19 +34,19 @@ Compared to other tools that perform code quality checks, i.e. linters, using Si
 
 ## Usage documentation
 
-- [Creating authentication tokens for Sigrid CI](docs/authentication-tokens.md)
-- [Client script option reference](docs/client-script-usage.md)
-- [Mapping repositories to Sigrid systems](docs/systems.md)
-- [Changing the analysis scope configuration](docs/analysis-scope-configuration.md)
-- [Adding business context to a system using metadata](docs/metadata.md)
-- [Using Sigrid CI as part of your development workflow](docs/workflows.md)
-- [Frequently asked questions](docs/faq.md)
-- [Supported technologies](docs/technology-support.md)
+- [Creating authentication tokens for Sigrid CI](docs/organization-integration/authentication-tokens.md)
+- [Client script option reference](docs/reference/client-script-usage.md)
+- [Mapping repositories to Sigrid systems](docs/organization-integration/systems.md)
+- [Changing the analysis scope configuration](docs/reference/analysis-scope-configuration.md)
+- [Adding business context to a system using metadata](docs/organization-integration/metadata.md)
+- [Using Sigrid CI as part of your development workflow](docs/sigridci-integration/development-workflows.md)
+- [Frequently asked questions](docs/capabilities/faq.md)
+- [Supported technologies](docs/reference/technology-support.md)
 - [Sigrid CI demo recording](https://www.youtube.com/watch?v=1QWWtFlB6cQ) 
 
 ## Sigrid API
 
-Most of this documentation refers to our recommended way to integrate Sigrid into your development process: add Sigrid to your pipeline, for both pull requests and publishing code. However, in some cases you might need a more flexible type of integration. The [Sigrid API documentation](docs/sigrid-api-documentation.md) contains an overview of the available data that you can obtain from Sigrid's API and integrate into your workflow.
+Most of this documentation refers to our recommended way to integrate Sigrid into your development process: add Sigrid to your pipeline, for both pull requests and publishing code. However, in some cases you might need a more flexible type of integration. The [Sigrid API documentation](docs/reference/sigrid-api-documentation.md) contains an overview of the available data that you can obtain from Sigrid's API and integrate into your workflow.
 
 ## Contact and support
 

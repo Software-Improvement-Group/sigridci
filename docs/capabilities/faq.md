@@ -62,7 +62,7 @@ The [platform-specific documentation and examples](../README.md) cover instructi
 
 ### Does Sigrid CI fit in my workflow?
 
-Different development teams use different workflows. Our [workflow documentation](workflows.md) covers different development/branch/CI workflows, and how Sigrid CI would fit into those workflows.
+Different development teams use different workflows. Our [workflow documentation](../sigridci-integration/development-workflows.md) covers different development/branch/CI workflows, and how Sigrid CI would fit into those workflows.
 
 ### Which technologies do you support?
 
@@ -76,7 +76,7 @@ You will find the system name in the url of the monitor in Sigrid. The structure
 
 ### How to get a token and account?
 
-Follow the instructions on how to create your personal token [here](authentication-tokens.md)
+Follow the instructions on how to create your personal token [here](../organization-integration/authentication-tokens.md)
 
 ### What target quality should we use?
 

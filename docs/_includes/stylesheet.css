@@ -91,7 +91,7 @@ h2, h3 {
 
 pre {
     display: inline-block;
-    max-width: 100%;
+    max-width: 800px;
     overflow-x: scroll;
     line-height: 1.4;
     font-size: 14px;
