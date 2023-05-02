@@ -74,6 +74,15 @@ h2, h3 {
     background-color: rgba(255, 255, 255, 0.2);
 }
 
+.container nav .sigridLink {
+    display: block;
+    color: #DFC101;
+    border: 1px solid #DFC101;
+    padding: 4px;
+    margin-top: 36px;
+    text-align: center;
+}
+
 .container nav .footnote {
     margin-top: 36px;
 }
