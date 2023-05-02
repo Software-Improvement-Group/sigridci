@@ -74,6 +74,17 @@ h2, h3 {
     background-color: rgba(255, 255, 255, 0.2);
 }
 
+.container nav .footnote {
+    margin-top: 36px;
+}
+
+.container nav .footnote a {
+    display: block;
+    margin-bottom: 4px;
+    font-size: 12px;
+    color: #ffffff;
+}
+
 .container article {
     flex: 1 1 auto;
     padding: 110px 80px 30px 80px;
