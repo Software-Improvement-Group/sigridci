@@ -93,8 +93,8 @@ Open Source Health allows you to scan all open sources libraries used by your sy
 
     dependencychecker:
       enabled: true
-      blacklist: []
-      transitive: true
+      blocklist: []
+      transitive: false
       exclude:
         - ".*/scripts/.*"
         
@@ -103,7 +103,7 @@ The `dependencychecker` section supports the following options:
 | Option name  | Required? | Description                                                                                    |
 |--------------|-----------|------------------------------------------------------------------------------------------------|
 | `enabled`    | Yes       | Set to `true` to enable Open Source Health analysis.                                           |
-| `blacklist`  | Yes       | List of library names that should not be scanned. Typically used to ignore internal libraries. |
+| `blocklist`  | Yes       | List of library names that should not be scanned. Typically used to ignore internal libraries. |
 | `transitive` | No        | When true, also scans the dependencies of your dependencies. Defaults to false.                |
 | `exclude`    | No        | List of file/directory patterns that should be excluded from the Open Source Health analysis.  |
 
