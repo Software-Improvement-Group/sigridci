@@ -15,7 +15,7 @@ Note the screenshot only shows part of the metadata page, the full page contains
 
 ### Option 2: Using the Sigrid API to add metadata
 
-The [Sigrid API end point for metadata](sigrid-api-documentation.md#system-metadata) allows you to add metadata programmatically. This is less accessible than using the Sigrid user interface, but has the advantage that it can run automatically. This is typically used when you need to synchronize metadata from another system to Sigrid, and you want this to run in an automated way.
+The [Sigrid API end point for metadata](../reference/sigrid-api-documentation.md#system-metadata) allows you to add metadata programmatically. This is less accessible than using the Sigrid user interface, but has the advantage that it can run automatically. This is typically used when you need to synchronize metadata from another system to Sigrid, and you want this to run in an automated way.
 
 ### Option 3: Adding metadata from a YAML file in your repository
 
@@ -43,7 +43,7 @@ metadata:
   remark: "Some notes"
 ```
 
-The [Sigrid API documentation](sigrid-api-documentation.md#system-metadata) contains descriptions of the various fields. Note that the semantics are the same: only fields present in `sigrid-metadata.yaml` are updated, others are left as-is. For example, the following `sigrid-metadata.yaml` file would _update_ the external ID and remove the current remark:
+The [Sigrid API documentation](../reference/sigrid-api-documentation.md#system-metadata) contains descriptions of the various fields. Note that the semantics are the same: only fields present in `sigrid-metadata.yaml` are updated, others are left as-is. For example, the following `sigrid-metadata.yaml` file would _update_ the external ID and remove the current remark:
 
 ```
 metadata:
