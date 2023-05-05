@@ -90,8 +90,15 @@ h2, h3 {
 .container nav .footnote a {
     display: block;
     margin-bottom: 4px;
-    font-size: 12px;
+    font-size: 10px;
     color: #ffffff;
+}
+
+.container nav .footnote img {
+    display: block;
+    width: 80px;
+    margin-bottom: 16px;
+    margin-left: 0px;
 }
 
 .container article {

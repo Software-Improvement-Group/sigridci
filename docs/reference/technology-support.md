@@ -1,15 +1,15 @@
 Technology support
 ==================
 
-This list described all technologies that can be analyzed by Sigrid. The list contains both the display name and the name that should be used in the [configuration file](analysis-scope-configuration.md).
+The table below describes all technologies that can be analyzed by Sigrid. The first column refers to how the technology should be named in the [configuration file](analysis-scope-configuration.md). 
 
-The first column refers to the name of the technology that should be used in the `sigrid.yaml` configuration file, for example `csharp`. The second column is the technology's display name, for example "C#".
+Technologies are sometimes referred to by multiple names. For example, some people call their code NodeJS instead of JavaScript. If we're being pedantic, JavaScript is the name of the programming language and NodeJS is the name of the runtime. However, in practice many people just use these names interchangeably, so both are listed to prevent confusion.
 
-| Name in configuration file     | Display name                   | Notes |
-|--------------------------------|--------------------------------|-------|
-| `abap`                         | ABAP                           |
+| Name in configuration file     | Display name                   | Also known as | Notes |
+|--------------------------------|--------------------------------|---------------|-------|
+| `abap`                         | ABAP                           | SAP |
 | `abapsmartforms`               | ABAP SmartForms                |
-| `abl`                          | Abl                            |
+| `abl`                          | Abl                            | OpenEdge |
 | `acl`                          | ACL                            |
 | `accell`                       | Accell                         |
 | `actionscript`                 | ActionScript                   |
@@ -32,10 +32,10 @@ The first column refers to the name of the technology that should be used in the
 | `aura`                         | Aura                           |
 | `axway`                        | Axway                          |
 | `axystudio`                    | AxyStudio functions            |
-| `axyworkflow`                  | Axystudio workflows            |
+| `axyworkflow`                  | AxyStudio workflows            |
 | `basic`                        | BASIC                          |
 | `batch`                        | Batch                          |
-| `bea`                          | Bea weblogic                   |
+| `bea`                          | Bea Weblogic                   |
 | `beanshell`                    | BeanShell                      |
 | `beinformed`                   | Be Informed                    |
 | `biztalk`                      | BizTalk                        |
@@ -48,7 +48,7 @@ The first column refers to the name of the technology that should be used in the
 | `bpm`                          | BPMN                           |
 | `brail`                        | Brail                          |
 | `bsp`                          | Bsp                            |
-| `c`                            | C                              | (1) |
+| `c`                            | C                              | | (1) |
 | `cache`                        | Cache                          |
 | `cacheobjectscript`            | Cache ObjectScript             |
 | `ccl`                          | CCL                            |
@@ -60,12 +60,12 @@ The first column refers to the name of the technology that should be used in the
 | `cobol`                        | Cobol                          |
 | `coffeescript`                 | CoffeeScript                   |
 | `coldfusion`                   | ColdFusion                     |
-| `configuration`                | Configuration                  | (5) |
+| `configuration`                | Configuration                  | | (5) |
 | `coolgenc`                     | CoolGen C                      |
 | `coolgencobol`                 | CoolGen Cobol                  |
 | `cordysbpm`                    | Cordys BPM                     |
-| `cpp`                          | C++                            | (1) |
-| `csharp`                       | C#                             |
+| `cpp`                          | C++                            | | (1) |
+| `csharp`                       | C#                             | .NET |
 | `csp`                          | CSP                            |
 | `css`                          | CSS                            |
 | `cypher`                       | Cypher                         |
@@ -102,7 +102,7 @@ The first column refers to the name of the technology that should be used in the
 | `gosu`                         | Gosu                           |
 | `groovy`                       | Groovy                         |
 | `gsp`                          | GSP                            |
-| `guidefinition`                | GUI Definition                 | (5) |
+| `guidefinition`                | GUI Definition                 | | (5) |
 | `gupta`                        | Gupta                          |
 | `haml`                         | Haml                           |
 | `html`                         | HTML                           |
@@ -119,7 +119,7 @@ The first column refers to the name of the technology that should be used in the
 | `jade`                         | Jade                           |
 | `java`                         | Java                           |
 | `javafx`                       | Java FX                        |
-| `javascript`                   | JavaScript                     | (2) |
+| `javascript`                   | JavaScript                     | NodeJS | (2) |
 | `javascript`                   | Google App Script              |
 | `jbc`                          | JBC                            |
 | `jbpm`                         | jBPM                           |
@@ -127,7 +127,7 @@ The first column refers to the name of the technology that should be used in the
 | `jcs`                          | JCS                            |
 | `jinja`                        | Jinja                          |
 | `jsf`                          | JSF                            |
-| `json`                         | JSON                           | (5) |
+| `json`                         | JSON                           | | (5) |
 | `jsp`                          | JSP                            |
 | `kotlin`                       | Kotlin                         |
 | `less`                         | Less                           |
@@ -154,7 +154,7 @@ The first column refers to the name of the technology that should be used in the
 | `murexlookuptable`             | Murex Lookup Table             |
 | `murexscript`                  | Murex Script                   |
 | `murexworkflow`                | Murex Workflow                 |
-| `mustache`                     | Mustache                       |
+| `mustache`                     | Mustache                       | Handlebars |
 | `mysql`                        | MySQL                          |
 | `naviscript`                   | Naviscript                     |
 | `navision`                     | Navision                       |
@@ -204,10 +204,10 @@ The first column refers to the name of the technology that should be used in the
 | `postgresql`                   | PostgreSQL                     |
 | `powerbuilder`                 | Powerbuilder                   |
 | `powercenter`                  | PowerCenter                    |
-| `powerfx`                      | Power Fx                       |
+| `powerfx`                      | Power Fx                       | Microsoft Power Apps |
 | `powershell`                   | Powershell                     |
 | `production`                   | Production code                |
-| `progress`                     | Progress                       |
+| `progress`                     | Progress                       | OpenEdge |
 | `progressstrict`               | Progress (Strict)              |
 | `pronto`                       | Pronto                         |
 | `prt`                          | PRT                            |
@@ -216,13 +216,13 @@ The first column refers to the name of the technology that should be used in the
 | `r`                            | R                              |
 | `radience`                     | Radience                       |
 | `razor`                        | Razor                          |
-| `react`                        | React                          | (2) |
+| `react`                        | React                          | | (2) |
 | `regelspraak`                  | ALEF Regelspraak               |
 | `regelspraakhtml`              | ALEF Regelspraak               |
 | `rexx`                         | Rexx                           |
 | `robot`                        | Robot                          |
 | `rpg`                          | RPG                            |
-| `ruby`                         | Ruby                           |
+| `ruby`                         | Ruby                           | Ruby on Rails, Rails |
 | `rust`                         | Rust                           |
 | `salesforceapex`               | Salesforce Apex                |
 | `salesforceflow`               | Salesforce Flow                |
@@ -272,21 +272,21 @@ The first column refers to the name of the technology that should be used in the
 | `tripleforms`                  | TriplEforms                    |
 | `tsql`                         | T-SQL                          |
 | `turtle`                       | Turtle                         |
-| `typescript`                   | TypeScript                     | (3) |
+| `typescript`                   | TypeScript                     | | (3) |
 | `uil`                          | UIL (Motif)                    |
 | `uniface`                      | Uniface                        |
 | `until`                        | Until                          |
 | `vag`                          | Visual Age                     |
 | `vagrecord`                    | Visual Age Record              |
-| `vb`                           | Visual Basic                   | (4) |
-| `vbnet`                        | Visual Basic .NET              | (4) |
+| `vb`                           | Visual Basic                   | | (4) |
+| `vbnet`                        | Visual Basic .NET              | | (4) |
 | `velocity`                     | Velocity                       |
 | `vgl`                          | VGL                            |
 | `visualforce`                  | VisualForce                    |
 | `visualrpg`                    | Visual RPG                     |
 | `visualobjects`                | Visual Objects                 |
-| `vuejs`                        | VueJS                          | (2) |
-| `vuets`                        | VueTS                          | (3) |
+| `vuejs`                        | VueJS                          | | (2) |
+| `vuets`                        | VueTS                          | | (3) |
 | `vulcan`                       | Vulcan.NET                     |
 | `webfocus`                     | WebFocus                       |
 | `webmethods`                   | WebMethods                     |
@@ -296,14 +296,15 @@ The first column refers to the name of the technology that should be used in the
 | `wsdl`                         | WSDL                           |
 | `wtx`                          | WTX                            |
 | `xaml`                         | XAML                           |
-| `xml`                          | XML                            | (5) |
+| `xml`                          | XML                            | | (5) |
 | `xpdl`                         | Tibco ActiveMatrix BPM         |
 | `xpp`                          | X++                            |
 | `xquery`                       | Xquery                         |
 | `xsd`                          | XSD                            |
 | `xslt`                         | XSLT                           |
 | `xul`                          | XUL                            |
-| `yaml`                         | YAML                           | (5) |
+| `yaml`                         | YAML                           | | (5) |
+| `unknown`                      | Unknown technology             | | (6) |
 
 Notes:
 
@@ -321,10 +322,11 @@ Notes:
   - Prefer `vbnet` for Visual Basic code running on the .NET platform, or when not sure.
   - Use `vb` for [classic Visual Basic](https://en.wikipedia.org/wiki/Visual_Basic_(classic), which has been end-of-life since 2008.
 5. In most cases, configuration files are not considered part of production code and are therefore not relevant for Sigrid's maintainability analysis. Only add these technologies if you consider them part of the system's production code.
+6. "Unknown technology" will be shown in Sigrid when the technology cannot be detected.
 
 ## Requesting additional technology support
 
-Even with 300 supported technologies, we are still continuously working on adding support for new technologies and frameworks, and updating our technology suport for new technology versions. You can contact us using the information provided below if you believe we should extend technology support for your organization.
+Even with 300+ supported technologies, we are still continuously working on adding support for new technologies and frameworks, and updating our technology suport for new technology versions. You can contact us using the information provided below if you believe we should extend technology support for your organization.
 
 ## Contact and support
 
