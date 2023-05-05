@@ -27,7 +27,7 @@ languages:
   - "python"
 
 dependencychecker:
-  blacklist:
+  blocklist:
     - "NONE"
 ```
 
@@ -48,7 +48,7 @@ languages:
   - "python"
 
 dependencychecker:
-  blacklist:
+  blocklist:
     - "NONE"
     
 polarion:

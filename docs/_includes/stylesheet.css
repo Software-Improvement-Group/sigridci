@@ -51,8 +51,6 @@ h2, h3 {
 }
 
 .container nav .toc {
-    position: sticky;
-    top: 0;
     padding-top: 20px;
 }
 
@@ -74,6 +72,33 @@ h2, h3 {
 
 .container nav .toc a:hover {
     background-color: rgba(255, 255, 255, 0.2);
+}
+
+.container nav .sigridLink {
+    display: block;
+    color: #DFC101;
+    border: 1px solid #DFC101;
+    padding: 4px;
+    margin-top: 36px;
+    text-align: center;
+}
+
+.container nav .footnote {
+    margin-top: 36px;
+}
+
+.container nav .footnote a {
+    display: block;
+    margin-bottom: 4px;
+    font-size: 10px;
+    color: #ffffff;
+}
+
+.container nav .footnote img {
+    display: block;
+    width: 80px;
+    margin-bottom: 16px;
+    margin-left: 0px;
 }
 
 .container article {
@@ -101,4 +126,29 @@ pre {
     border: 1px solid #233347;
     box-shadow: 1px 1px 5px #687483;
     font-family: "Menlo", monospace;
+}
+
+table {
+    border-collapse: collapse;
+}
+
+tr {
+    border-bottom: 1px dotted #687483;
+    background-color: #ffffff;
+}
+
+thead tr {
+    background-color: #233347;
+}
+
+th {
+    color: #ffffff;
+    text-align: left;
+}
+
+td, th {
+    min-width: 60px;
+    padding-left: 8px;
+    padding-right: 8px;
+    font-size: 14px;
 }
