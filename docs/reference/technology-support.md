@@ -98,7 +98,7 @@ Technologies are sometimes referred to by multiple names. For example, some peop
 | `generated`                    | Generated                      |
 | `gensym`                       | Gensym                         |
 | `grpc`                         | [gRPC](https://grpc.io)        |
-| `go`                           | Go                             |
+| `go`                           | Go                             | GoLang |
 | `gosu`                         | Gosu                           |
 | `groovy`                       | Groovy                         |
 | `gsp`                          | GSP                            |
@@ -323,6 +323,31 @@ Notes:
   - Use `vb` for [classic Visual Basic](https://en.wikipedia.org/wiki/Visual_Basic_(classic), which has been end-of-life since 2008.
 5. In most cases, configuration files are not considered part of production code and are therefore not relevant for Sigrid's maintainability analysis. Only add these technologies if you consider them part of the system's production code.
 6. "Unknown technology" will be shown in Sigrid when the technology cannot be detected.
+
+## Supported open source ecosystems
+
+In addition to supporting 300+ technologies, Sigrid also supports various open source ecosystems for its Open Source Health capability. Note that different projects might use different open source ecosystems, even if they use the same technology. For example, there is no standardized way to manage open source dependencies in Java projects. Some Java projects use Maven, others use Gradle. This is why some technologies are listed multiple times in the table below.
+
+| Open source ecosystem | Common technologies    |
+|-----------------------|------------------------|
+| Alpine Linux          | Alpine Linux           |
+| Bower                 | JavaScript             |
+| CocoaPods             | Swift, Objective-C     |
+| Composer              | PHP                    |
+| Go Modules            | Go                     |
+| Gradle                | Java, Kotlin, Groovy   |
+| Ivy                   | Java                   |
+| LibMan                | JavaScript             |
+| Maven                 | Java                   |
+| NPM                   | JavaScript, TypeScript |
+| NuGet                 | C#                     |
+| PuppetForge           | Puppet                 |
+| PyPi                  | Python                 |
+| RubyGems              | Ruby                   |
+| SBT                   | Scala                  |
+| Unmanaged JAR files   | Java                   |
+| Unmanaged DLL files   | C#                     |
+| Unmanaged JS files    | JavaScript             |
 
 ## Requesting additional technology support
 
