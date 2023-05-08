@@ -96,7 +96,7 @@ h2, h3 {
 
 .container nav .footnote img {
     display: block;
-    width: 80px;
+    width: 50px;
     margin-bottom: 16px;
     margin-left: 0px;
 }
@@ -148,7 +148,6 @@ th {
 
 td, th {
     min-width: 60px;
-    padding-left: 8px;
-    padding-right: 8px;
+    padding: 4px 8px 4px 8px;
     font-size: 14px;
 }
