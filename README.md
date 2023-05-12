@@ -26,7 +26,7 @@ Compared to other tools that perform code quality checks, i.e. linters, using Si
 - [Integrating Sigrid CI with Jenkins](docs/sigridci-integration/jenkins.md)
 - [Integrating Sigrid CI with Azure DevOps](docs/sigridci-integration/azure-devops.md)
 - [Integrating Sigrid CI with TeamCity](docs/sigridci-integration/teamcity.md)
-- [Integrating Sigrid CI with Mendix QSM on a Mendix Team Server](docs/sigridci-integration/mendix-teamserver-api.md)
+- [Integrating Sigrid CI with Mendix QSM on a Mendix Team Server](docs/sigridci-integration/mendix-teamserver.md)
 - [Integrating Sigrid CI with Mendix QSM on a GitHub server](docs/sigridci-integration/mendix-github-actions.md)
 - [Integrating Sigrid CI with Mendix QSM on a GitLab server](docs/sigridci-integration/mendix-gitlab.md)
 - [Integrating Sigrid CI with Siemens Polarion](docs/sigridci-integration/polarion.md)
