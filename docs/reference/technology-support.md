@@ -5,306 +5,308 @@ The table below describes all technologies that can be analyzed by Sigrid. The f
 
 Technologies are sometimes referred to by multiple names. For example, some people call their code NodeJS instead of JavaScript. If we're being pedantic, JavaScript is the name of the programming language and NodeJS is the name of the runtime. However, in practice many people just use these names interchangeably, so both are listed to prevent confusion.
 
-| Name in configuration file     | Display name                   | Also known as | Notes |
-|--------------------------------|--------------------------------|---------------|-------|
-| `abap`                         | ABAP                           | SAP |
-| `abapsmartforms`               | ABAP SmartForms                |
-| `abl`                          | Abl                            | OpenEdge |
-| `acl`                          | ACL                            |
-| `accell`                       | Accell                         |
-| `actionscript`                 | ActionScript                   |
-| `actionscript3`                | ActionScript 3                 |
-| `ada`                          | Ada                            |
-| `adabasnatural`                | Adabas Natural                 |
-| `adfxml`                       | ADF XML                        |
-| `agilepoint`                   | AgilePoint                     |
-| `altovauml`                    | Altova UML                     |
-| `angularjstemplate`            | Angular Templates              |
-| `ansible`                      | Ansible                        |
-| `apachecamel`                  | Apache Camel                   |
-| `apex`                         | APEX                           |
-| `aps`                          | APS                            |
-| `applicationmaster`            | Application Master             |
-| `ash`                          | ArtosScript (ash)              |
-| `asp`                          | ASP                            |
-| `aspx`                         | ASP.NET                        |
-| `assembly`                     | Assembly                       |
-| `aura`                         | Aura                           |
-| `axway`                        | Axway                          |
-| `axystudio`                    | AxyStudio functions            |
-| `axyworkflow`                  | AxyStudio workflows            |
-| `basic`                        | BASIC                          |
-| `batch`                        | Batch                          |
-| `bea`                          | Bea Weblogic                   |
-| `beanshell`                    | BeanShell                      |
-| `beinformed`                   | Be Informed                    |
-| `biztalk`                      | BizTalk                        |
-| `biztalkrules`                 | BizTalk Rules Engine           |
-| `blazerules`                   | Blaze BRM                      |
-| `blueprism`                    | Blue Prism                     |
-| `blueriq`                      | Blueriq flows/processes        |
-| `blueriqexpressions`           | Blueriq expressions            |
-| `bpel`                         | BPEL                           |
-| `bpm`                          | BPMN                           |
-| `brail`                        | Brail                          |
-| `bsp`                          | Bsp                            |
-| `c`                            | C                              | | (1) |
-| `cache`                        | Cache                          |
-| `cacheobjectscript`            | Cache ObjectScript             |
-| `ccl`                          | CCL                            |
-| `cgdc`                         | CGDC                           |
-| `cgt`                          | CGT                            |
-| `cicode`                       | Cicode                         |
-| `cl`                           | CL                             |
-| `clearbasic`                   | Clearbasic                     |
-| `cobol`                        | Cobol                          |
-| `coffeescript`                 | CoffeeScript                   |
-| `coldfusion`                   | ColdFusion                     |
-| `configuration`                | Configuration                  | | (5) |
-| `coolgenc`                     | CoolGen C                      |
-| `coolgencobol`                 | CoolGen Cobol                  |
-| `cordysbpm`                    | Cordys BPM                     |
-| `cpp`                          | C++                            | | (1) |
-| `csharp`                       | C#                             | .NET |
-| `csp`                          | CSP                            |
-| `css`                          | CSS                            |
-| `cypher`                       | Cypher                         |
-| `cucumber`                     | Cucumber                       |
-| `datastage`                    | Datastage                      |
-| `datastageetl`                 | DatastageETL                   |
-| `datastageworkflow`            | DatastageWorkflow              |
-| `db2`                          | DB2                            |
-| `dcl`                          | Dcl                            |
-| `delphi`                       | Delphi                         |
-| `delphiforms`                  | Delphi Forms                   |
-| `deltacobol`                   | Delta/Cobol                    |
-| `djangotemplates`              | Django Templates               |
-| `docker`                       | Docker                         |
-| `documentumxcp`                | Documentum xCP                 |
-| `drools`                       | Drools                         |
-| `dscript`                      | Dscript                        |
-| `easytrieve`                   | Easytrieve                     |
-| `egl`                          | EGL                            |
-| `ejs`                          | EJS                            |
-| `embeddedsql`                  | C++ Embedded SQL               |
-| `erb`                          | ERB                            |
-| `esql`                         | ESQL                           |
-| `filetab`                      | File Tab                       |
-| `finacle`                      | Finacle                        |
-| `freeformatcobol`              | Freeformat Cobol               |
-| `freemarker`                   | Freemarker                     |
-| `fme`                          | FME                            |
-| `fortran`                      | FORTRAN                        |
-| `generated`                    | Generated                      |
-| `gensym`                       | Gensym                         |
-| `grpc`                         | [gRPC](https://grpc.io)        |
-| `go`                           | Go                             | GoLang |
-| `gosu`                         | Gosu                           |
-| `groovy`                       | Groovy                         |
-| `gsp`                          | GSP                            |
-| `guidefinition`                | GUI Definition                 | | (5) |
-| `gupta`                        | Gupta                          |
-| `haml`                         | Haml                           |
-| `html`                         | HTML                           |
-| `hql`                          | HQL                            |
-| `ibmbpmbpd`                    | IBM BPM (BPD)                  |
-| `ibmbpmprocess`                | IBM BPM (Process)              |
-| `ideal`                        | Ideal                          |
-| `informatica`                  | Informatica                    |
-| `informix4gl`                  | Informix 4GL                   |
-| `informixsql`                  | Informix SQL                   |
-| `ingres`                       | Ingres                         |
-| `intershoppipeline`            | Intershop (Pipeline)           |
-| `jasperreports`                | Jasper Reports                 |
-| `jade`                         | Jade                           |
-| `java`                         | Java                           |
-| `javafx`                       | Java FX                        |
-| `javascript`                   | JavaScript                     | NodeJS | (2) |
-| `javascript`                   | Google App Script              |
-| `jbc`                          | JBC                            |
-| `jbpm`                         | jBPM                           |
-| `jcl`                          | JCL                            |
-| `jcs`                          | JCS                            |
-| `jinja`                        | Jinja                          |
-| `jsf`                          | JSF                            |
-| `json`                         | JSON                           | | (5) |
-| `jsp`                          | JSP                            |
-| `kotlin`                       | Kotlin                         |
-| `less`                         | Less                           |
-| `linc`                         | LINC                           |
-| `lion`                         | Lion                           |
-| `lodestar`                     | Lodestar                       |
-| `logicapps`                    | Logic Apps                     |
-| `logicnets`                    | LogicNets                      |
-| `lotusscript`                  | LotusScript                    |
-| `lua`                          | Lua                            |
-| `magic`                        | Magic                          |
-| `magik`                        | Magik                          |
-| `magnum`                       | Magnum                         |
-| `matlab`                       | Matlab                         |
-| `mediationflows`               | Mediation Flows                |
-| `mendix`                       | Mendix                         |
-| `messagebuilder`               | MessageBuilder                 |
-| `mpsbehavior`                  | MPS Behavior                   |
-| `mpsclass`                     | MPS Class                      |
-| `mpstranslator`                | MPS Translator                 |
-| `mule`                         | Mule                           |
-| `mtwize`                       | MtWize                         |
-| `murexdatadictionary`          | Murex Data Dictionary          |
-| `murexlookuptable`             | Murex Lookup Table             |
-| `murexscript`                  | Murex Script                   |
-| `murexworkflow`                | Murex Workflow                 |
-| `mustache`                     | Mustache                       | Handlebars |
-| `mysql`                        | MySQL                          |
-| `naviscript`                   | Naviscript                     |
-| `navision`                     | Navision                       |
-| `netiqidmpolicy`               | NetIQ IDM Policy               |
-| `netiqidmrequest`              | NetIQ IDM Request              |
-| `netiqidmworkflow`             | NetIQ IDM Workflow             |
-| `netweaveridm`                 | NetweaverIDM                   |
-| `nonstopsql`                   | Nonstop SQL                    |
-| `normalizedsystemsjava`        | Normalized Systems Java        |
-| `normalizedsystemsmodel`       | Normalized Systems Model       |
-| `objectivec`                   | Objective-C                    |
-| `odi`                          | ODI                            |
-| `odm`                          | ODM                            |
-| `omt`                          | OMT                            |
-| `opa`                          | OPA                            |
-| `opc`                          | OPC                            |
-| `openroad`                     | OpenROAD 4GL                   |
-| `oraclebpm`                    | Oracle BPM                     |
-| `oracleofsaa`                  | Oracle OFSAA                   |
-| `oracleworkflow`               | Oracle Workflow                |
-| `ords`                         | ORDS                           |
-| `osb`                          | OSB                            |
-| `osbproxy`                     | OSB Proxy                      |
-| `osmprocess`                   | OSM Process                    |
-| `osmtask`                      | OSM Task                       |
-| `outsystems`                   | OutSystems                     |
-| `pascal`                       | Pascal                         |
-| `pega`                         | Pega                           |
-| `pegajsp`                      | PEGA JSP                       |
-| `performance`                  | Performance                    |
-| `perl`                         | Perl                           |
-| `php`                          | PHP                            |
-| `plc`                          | PLC - Structured Text - ABB    |
-| `plc`                          | PLC - Structured Text - Schneider Electric - EcoStruxure |
-| `plc`                          | PLC - Structured Text - Siemens |
-| `plc`                          | PLC - Functional Block Diagram - ABB |
-| `plc`                          | PLC - Functional Block Diagram - Rockwell |
-| `plc`                          | PLC - Functional Block Diagram - Siemens |
-| `plc`                          | PLC - Ladder Logic - Rockwell |
-| `plc`                          | PLC - Structured Text - Rockwell |
-| `pli`                          | PL/I                           |
-| `plsql`                        | PL/SQL                         |
-| `plsqlforms`                   | PL/SQL Forms                   |
-| `plsqlreports`                 | PL/SQL Reports                 |
-| `pluk`                         | PLUK                           |
-| `polymertemplates`             | Polymer Templates              |
-| `postgresql`                   | PostgreSQL                     |
-| `powerbuilder`                 | Powerbuilder                   |
-| `powercenter`                  | PowerCenter                    |
-| `powerfx`                      | Power Fx                       | Microsoft Power Apps |
-| `powershell`                   | Powershell                     |
-| `production`                   | Production code                |
-| `progress`                     | Progress                       | OpenEdge |
-| `progressstrict`               | Progress (Strict)              |
-| `pronto`                       | Pronto                         |
-| `prt`                          | PRT                            |
-| `puppet`                       | Puppet                         |
-| `python`                       | Python                         |
-| `r`                            | R                              |
-| `radience`                     | Radience                       |
-| `razor`                        | Razor                          |
-| `react`                        | React                          | | (2) |
-| `regelspraak`                  | ALEF Regelspraak               |
-| `regelspraakhtml`              | ALEF Regelspraak               |
-| `rexx`                         | Rexx                           |
-| `robot`                        | Robot                          |
-| `rpg`                          | RPG                            |
-| `ruby`                         | Ruby                           | Ruby on Rails, Rails |
-| `rust`                         | Rust                           |
-| `salesforceapex`               | Salesforce Apex                |
-| `salesforceflow`               | Salesforce Flow                |
-| `sappo`                        | SAP PO                         |
-| `sapui5`                       | SapUI5                         |
-| `sas`                          | SAS                            |
-| `sasflows`                     | SAS Flows                      |
-| `sass`                         | Sass                           |
-| `scala`                        | Scala                          |
-| `scl`                          | SCL                            |
-| `scr`                          | SCR                            |
-| `script`                       | Shell script                   |
-| `servicenow`                   | ServiceNow                     |
-| `siebeldeclarative`            | Siebel Declarative             |
-| `siebeljs`                     | Siebel JS                      |
-| `siebelscripted`               | Siebel Scripted                |
-| `siebelworkflow`               | Siebel Workflow                |
-| `siebeltbui`                   | Siebel TBUI                    |
-| `slim`                         | Slim                           |
-| `smalltalk`                    | Smalltalk                      |
-| `solidity`                     | Solidity                       |
-| `sonicesb`                     | Sonic ESB                      |
-| `spl`                          | SPL                            |
-| `sqlj`                         | SQLJ                           |
-| `sqlite`                       | SQLite                         |
-| `sqr`                          | SQR                            |
-| `ssis`                         | SSIS                           |
-| `starlimssql`                  | StarLIMS                       |
-| `streamserve`                  | StreamServe                    |
-| `synapse`                      | Synapse                        |
-| `synon`                        | Synon                          |
-| `swift`                        | Swift                          |
-| `t4`                           | T4                             |
-| `tacl`                         | TACL                           |
-| `tal`                          | TAL                            |
-| `tandem`                       | Tandem                         |
-| `tapestry`                     | Tapestry                       |
-| `terraform`                    | Terraform                      |
-| `test`                         | Testcode                       |
-| `thrift`                       | Thrift                         |
-| `thymeleaf`                    | Thymeleaf                      |
-| `tibco`                        | TIBCO BW                       |
-| `tibcobe`                      | TIBCO BE (XML)                 |
-| `tibcobejava`                  | TIBCO BE (Java)                |
-| `tibcobestatemachine`          | TIBCO BE (State Machine)       |
-| `tibcobw6`                     | TIBCO BW6                      |
-| `tripleforms`                  | TriplEforms                    |
-| `tsql`                         | T-SQL                          |
-| `turtle`                       | Turtle                         |
-| `typescript`                   | TypeScript                     | | (3) |
-| `uil`                          | UIL (Motif)                    |
-| `uniface`                      | Uniface                        |
-| `until`                        | Until                          |
-| `vag`                          | Visual Age                     |
-| `vagrecord`                    | Visual Age Record              |
-| `vb`                           | Visual Basic                   | | (4) |
-| `vbnet`                        | Visual Basic .NET              | | (4) |
-| `velocity`                     | Velocity                       |
-| `vgl`                          | VGL                            |
-| `visualforce`                  | VisualForce                    |
-| `visualrpg`                    | Visual RPG                     |
-| `visualobjects`                | Visual Objects                 |
-| `vuejs`                        | VueJS                          | | (2) |
-| `vuets`                        | VueTS                          | | (3) |
-| `vulcan`                       | Vulcan.NET                     |
-| `webfocus`                     | WebFocus                       |
-| `webmethods`                   | WebMethods                     |
-| `webmethodsbpm`                | WebMethods BPM                 |
-| `websmart`                     | WebSmart                       |
-| `wonderware`                   | Wonderware                     |
-| `wsdl`                         | WSDL                           |
-| `wtx`                          | WTX                            |
-| `xaml`                         | XAML                           |
-| `xml`                          | XML                            | | (5) |
-| `xpdl`                         | Tibco ActiveMatrix BPM         |
-| `xpp`                          | X++                            |
-| `xquery`                       | Xquery                         |
-| `xsd`                          | XSD                            |
-| `xslt`                         | XSLT                           |
-| `xul`                          | XUL                            |
-| `yaml`                         | YAML                           | | (5) |
-| `unknown`                      | Unknown technology             | | (6) |
+Finally, note the column "supported Sigrid capabilities" does not list Open Source Health. The reason is that Open Source Health is based on open source ecosystems, not specific technologies. Refer to the section on [supported technologies for Open Source Health](#supported-open-source-ecosystems) for more information.
+
+| Name in configuration file     | Display name                   | Also known as | Supported Sigrid capabilities | Notes |
+|--------------------------------|--------------------------------|---------------|-------------------------------|-------|
+| `abap`                         | ABAP                           | SAP | Maintainability |
+| `abapsmartforms`               | ABAP SmartForms                | | Maintainability |
+| `abl`                          | Abl                            | OpenEdge | Maintainability |
+| `acl`                          | ACL                            | | Maintainability |
+| `accell`                       | Accell                         | | Maintainability |
+| `actionscript`                 | ActionScript                   | | Maintainability |
+| `actionscript3`                | ActionScript 3                 | | Maintainability |
+| `ada`                          | Ada                            | | Maintainability |
+| `adabasnatural`                | Adabas Natural                 | | Maintainability |
+| `adfxml`                       | ADF XML                        | | Maintainability |
+| `agilepoint`                   | AgilePoint                     | | Maintainability |
+| `altovauml`                    | Altova UML                     | | Maintainability |
+| `angularjstemplate`            | Angular Templates              | | Maintainability |
+| `ansible`                      | Ansible                        | | Maintainability, Security |
+| `apachecamel`                  | Apache Camel                   | | Maintainability |
+| `apex`                         | APEX                           | | Maintainability |
+| `aps`                          | APS                            | | Maintainability |
+| `applicationmaster`            | Application Master             | | Maintainability |
+| `ash`                          | ArtosScript (ash)              | | Maintainability |
+| `asp`                          | ASP                            | | Maintainability |
+| `aspx`                         | ASP.NET                        | | Maintainability |
+| `assembly`                     | Assembly                       | | Maintainability |
+| `aura`                         | Aura                           | | Maintainability |
+| `axway`                        | Axway                          | | Maintainability |
+| `axystudio`                    | AxyStudio functions            | | Maintainability |
+| `axyworkflow`                  | AxyStudio workflows            | | Maintainability |
+| `basic`                        | BASIC                          | | Maintainability |
+| `batch`                        | Batch                          | | Maintainability |
+| `bea`                          | Bea Weblogic                   | | Maintainability |
+| `beanshell`                    | BeanShell                      | | Maintainability |
+| `beinformed`                   | Be Informed                    | | Maintainability |
+| `biztalk`                      | BizTalk                        | | Maintainability |
+| `biztalkrules`                 | BizTalk Rules Engine           | | Maintainability |
+| `blazerules`                   | Blaze BRM                      | | Maintainability |
+| `blueprism`                    | Blue Prism                     | | Maintainability |
+| `blueriq`                      | Blueriq flows/processes        | | Maintainability |
+| `blueriqexpressions`           | Blueriq expressions            | | Maintainability |
+| `bpel`                         | BPEL                           | | Maintainability |
+| `bpm`                          | BPMN                           | | Maintainability |
+| `brail`                        | Brail                          | | Maintainability |
+| `bsp`                          | Bsp                            | | Maintainability |
+| `c`                            | C                              | | Maintainability, Security | (1) |
+| `cache`                        | Cache                          | | Maintainability |
+| `cacheobjectscript`            | Cache ObjectScript             | | Maintainability |
+| `ccl`                          | CCL                            | | Maintainability |
+| `cgdc`                         | CGDC                           | | Maintainability |
+| `cgt`                          | CGT                            | | Maintainability |
+| `cicode`                       | Cicode                         | | Maintainability |
+| `cl`                           | CL                             | | Maintainability |
+| `clearbasic`                   | Clearbasic                     | | Maintainability |
+| `cobol`                        | Cobol                          | | Maintainability |
+| `coffeescript`                 | CoffeeScript                   | | Maintainability |
+| `coldfusion`                   | ColdFusion                     | | Maintainability |
+| `configuration`                | Configuration                  | | Maintainability | (5) |
+| `coolgenc`                     | CoolGen C                      | | Maintainability |
+| `coolgencobol`                 | CoolGen Cobol                  | | Maintainability |
+| `cordysbpm`                    | Cordys BPM                     | | Maintainability |
+| `cpp`                          | C++                            | | Maintainability, Security | (1) |
+| `csharp`                       | C#                             | .NET | Maintainability, Security |
+| `csp`                          | CSP                            | | Maintainability |
+| `css`                          | CSS                            | | Maintainability |
+| `cypher`                       | Cypher                         | | Maintainability |
+| `cucumber`                     | Cucumber                       | | Maintainability |
+| `datastage`                    | Datastage                      | | Maintainability |
+| `datastageetl`                 | DatastageETL                   | | Maintainability |
+| `datastageworkflow`            | DatastageWorkflow              | | Maintainability |
+| `db2`                          | DB2                            | | Maintainability |
+| `dcl`                          | Dcl                            | | Maintainability |
+| `delphi`                       | Delphi                         | | Maintainability |
+| `delphiforms`                  | Delphi Forms                   | | Maintainability |
+| `deltacobol`                   | Delta/Cobol                    | | Maintainability |
+| `djangotemplates`              | Django Templates               | | Maintainability |
+| `docker`                       | Docker                         | | Maintainability, Security |
+| `documentumxcp`                | Documentum xCP                 | | Maintainability |
+| `drools`                       | Drools                         | | Maintainability |
+| `dscript`                      | Dscript                        | | Maintainability |
+| `easytrieve`                   | Easytrieve                     | | Maintainability |
+| `egl`                          | EGL                            | | Maintainability |
+| `ejs`                          | EJS                            | | Maintainability |
+| `embeddedsql`                  | C++ Embedded SQL               | | Maintainability |
+| `erb`                          | ERB                            | | Maintainability |
+| `esql`                         | ESQL                           | | Maintainability |
+| `filetab`                      | File Tab                       | | Maintainability |
+| `finacle`                      | Finacle                        | | Maintainability |
+| `freeformatcobol`              | Freeformat Cobol               | | Maintainability |
+| `freemarker`                   | Freemarker                     | | Maintainability |
+| `fme`                          | FME                            | | Maintainability |
+| `fortran`                      | FORTRAN                        | | Maintainability |
+| `generated`                    | Generated                      | | Maintainability |
+| `gensym`                       | Gensym                         | | Maintainability |
+| `grpc`                         | [gRPC](https://grpc.io)        | | Maintainability |
+| `go`                           | Go                             | GoLang | Maintainability |
+| `gosu`                         | Gosu                           | | Maintainability, Security |
+| `groovy`                       | Groovy                         | | Maintainability, Security |
+| `gsp`                          | GSP                            | | Maintainability |
+| `guidefinition`                | GUI Definition                 | | Maintainability | (5) |
+| `gupta`                        | Gupta                          | | Maintainability |
+| `haml`                         | Haml                           | | Maintainability |
+| `html`                         | HTML                           | | Maintainability |
+| `hql`                          | HQL                            | | Maintainability |
+| `ibmbpmbpd`                    | IBM BPM (BPD)                  | | Maintainability |
+| `ibmbpmprocess`                | IBM BPM (Process)              | | Maintainability |
+| `ideal`                        | Ideal                          | | Maintainability |
+| `informatica`                  | Informatica                    | | Maintainability |
+| `informix4gl`                  | Informix 4GL                   | | Maintainability |
+| `informixsql`                  | Informix SQL                   | | Maintainability |
+| `ingres`                       | Ingres                         | | Maintainability |
+| `intershoppipeline`            | Intershop (Pipeline)           | | Maintainability |
+| `jasperreports`                | Jasper Reports                 | | Maintainability |
+| `jade`                         | Jade                           | | Maintainability |
+| `java`                         | Java                           | | Maintainability, Security |
+| `javafx`                       | Java FX                        | | Maintainability |
+| `javascript`                   | JavaScript                     | NodeJS | Maintainability, Security | (2) |
+| `javascript`                   | Google App Script              | | Maintainability |
+| `jbc`                          | JBC                            | | Maintainability |
+| `jbpm`                         | jBPM                           | | Maintainability |
+| `jcl`                          | JCL                            | | Maintainability |
+| `jcs`                          | JCS                            | | Maintainability |
+| `jinja`                        | Jinja                          | | Maintainability |
+| `jsf`                          | JSF                            | | Maintainability |
+| `json`                         | JSON                           | | Maintainability | (5) |
+| `jsp`                          | JSP                            | | Maintainability |
+| `kotlin`                       | Kotlin                         | | Maintainability, Security |
+| `less`                         | Less                           | | Maintainability |
+| `linc`                         | LINC                           | | Maintainability |
+| `lion`                         | Lion                           | | Maintainability |
+| `lodestar`                     | Lodestar                       | | Maintainability |
+| `logicapps`                    | Logic Apps                     | | Maintainability |
+| `logicnets`                    | LogicNets                      | | Maintainability |
+| `lotusscript`                  | LotusScript                    | | Maintainability |
+| `lua`                          | Lua                            | | Maintainability |
+| `magic`                        | Magic                          | | Maintainability |
+| `magik`                        | Magik                          | | Maintainability |
+| `magnum`                       | Magnum                         | | Maintainability |
+| `matlab`                       | Matlab                         | | Maintainability |
+| `mediationflows`               | Mediation Flows                | | Maintainability |
+| `mendix`                       | Mendix                         | | Maintainability, Security |
+| `messagebuilder`               | MessageBuilder                 | | Maintainability |
+| `mpsbehavior`                  | MPS Behavior                   | | Maintainability |
+| `mpsclass`                     | MPS Class                      | | Maintainability |
+| `mpstranslator`                | MPS Translator                 | | Maintainability |
+| `mule`                         | Mule                           | | Maintainability |
+| `mtwize`                       | MtWize                         | | Maintainability |
+| `murexdatadictionary`          | Murex Data Dictionary          | | Maintainability |
+| `murexlookuptable`             | Murex Lookup Table             | | Maintainability |
+| `murexscript`                  | Murex Script                   | | Maintainability |
+| `murexworkflow`                | Murex Workflow                 | | Maintainability |
+| `mustache`                     | Mustache                       | Handlebars | Maintainability |
+| `mysql`                        | MySQL                          | | Maintainability |
+| `naviscript`                   | Naviscript                     | | Maintainability |
+| `navision`                     | Navision                       | | Maintainability |
+| `netiqidmpolicy`               | NetIQ IDM Policy               | | Maintainability |
+| `netiqidmrequest`              | NetIQ IDM Request              | | Maintainability |
+| `netiqidmworkflow`             | NetIQ IDM Workflow             | | Maintainability |
+| `netweaveridm`                 | NetweaverIDM                   | | Maintainability |
+| `nonstopsql`                   | Nonstop SQL                    | | Maintainability |
+| `normalizedsystemsjava`        | Normalized Systems Java        | | Maintainability |
+| `normalizedsystemsmodel`       | Normalized Systems Model       | | Maintainability |
+| `objectivec`                   | Objective-C                    | | Maintainability |
+| `odi`                          | ODI                            | | Maintainability |
+| `odm`                          | ODM                            | | Maintainability |
+| `omt`                          | OMT                            | | Maintainability |
+| `opa`                          | OPA                            | | Maintainability |
+| `opc`                          | OPC                            | | Maintainability |
+| `openroad`                     | OpenROAD 4GL                   | | Maintainability |
+| `oraclebpm`                    | Oracle BPM                     | | Maintainability |
+| `oracleofsaa`                  | Oracle OFSAA                   | | Maintainability |
+| `oracleworkflow`               | Oracle Workflow                | | Maintainability |
+| `ords`                         | ORDS                           | | Maintainability |
+| `osb`                          | OSB                            | | Maintainability |
+| `osbproxy`                     | OSB Proxy                      | | Maintainability |
+| `osmprocess`                   | OSM Process                    | | Maintainability |
+| `osmtask`                      | OSM Task                       | | Maintainability |
+| `outsystems`                   | OutSystems                     | | Maintainability |
+| `pascal`                       | Pascal                         | | Maintainability |
+| `pega`                         | Pega                           | | Maintainability |
+| `pegajsp`                      | PEGA JSP                       | | Maintainability |
+| `performance`                  | Performance                    | | Maintainability |
+| `perl`                         | Perl                           | | Maintainability, Security |
+| `php`                          | PHP                            | | Maintainability, Security |
+| `plc`                          | PLC - Structured Text - ABB    | | Maintainability |
+| `plc`                          | PLC - Structured Text - Schneider Electric - EcoStruxure | | Maintainability |
+| `plc`                          | PLC - Structured Text - Siemens | | Maintainability |
+| `plc`                          | PLC - Functional Block Diagram - ABB | | Maintainability |
+| `plc`                          | PLC - Functional Block Diagram - Rockwell | | Maintainability |
+| `plc`                          | PLC - Functional Block Diagram - Siemens | | Maintainability |
+| `plc`                          | PLC - Ladder Logic - Rockwell | | Maintainability |
+| `plc`                          | PLC - Structured Text - Rockwell | | Maintainability |
+| `pli`                          | PL/I                           | | Maintainability |
+| `plsql`                        | PL/SQL                         | | Maintainability |
+| `plsqlforms`                   | PL/SQL Forms                   | | Maintainability |
+| `plsqlreports`                 | PL/SQL Reports                 | | Maintainability |
+| `pluk`                         | PLUK                           | | Maintainability |
+| `polymertemplates`             | Polymer Templates              | | Maintainability |
+| `postgresql`                   | PostgreSQL                     | | Maintainability |
+| `powerbuilder`                 | Powerbuilder                   | | Maintainability |
+| `powercenter`                  | PowerCenter                    | | Maintainability |
+| `powerfx`                      | Power Fx                       | Microsoft Power Apps | Maintainability |
+| `powershell`                   | Powershell                     | | Maintainability |
+| `production`                   | Production code                | | Maintainability |
+| `progress`                     | Progress                       | OpenEdge | Maintainability |
+| `progressstrict`               | Progress (Strict)              | | Maintainability |
+| `pronto`                       | Pronto                         | | Maintainability |
+| `prt`                          | PRT                            | | Maintainability |
+| `puppet`                       | Puppet                         | | Maintainability |
+| `python`                       | Python                         | | Maintainability, Security |
+| `r`                            | R                              | | Maintainability |
+| `radience`                     | Radience                       | | Maintainability |
+| `razor`                        | Razor                          | | Maintainability |
+| `react`                        | React                          | | Maintainability, Security | (2) |
+| `regelspraak`                  | ALEF Regelspraak               | | Maintainability |
+| `regelspraakhtml`              | ALEF Regelspraak (HTML export) | | Maintainability |
+| `rexx`                         | Rexx                           | | Maintainability |
+| `robot`                        | Robot                          | | Maintainability |
+| `rpg`                          | RPG                            | | Maintainability |
+| `ruby`                         | Ruby                           | Ruby on Rails, Rails | Maintainability, Security |
+| `rust`                         | Rust                           | | Maintainability |
+| `salesforceapex`               | Salesforce Apex                | | Maintainability |
+| `salesforceflow`               | Salesforce Flow                | | Maintainability |
+| `sappo`                        | SAP PO                         | | Maintainability |
+| `sapui5`                       | SapUI5                         | | Maintainability |
+| `sas`                          | SAS                            | | Maintainability |
+| `sasflows`                     | SAS Flows                      | | Maintainability |
+| `sass`                         | Sass                           | | Maintainability |
+| `scala`                        | Scala                          | | Maintainability, Security |
+| `scl`                          | SCL                            | | Maintainability |
+| `scr`                          | SCR                            | | Maintainability |
+| `script`                       | Shell script                   | | Maintainability |
+| `servicenow`                   | ServiceNow                     | | Maintainability |
+| `siebeldeclarative`            | Siebel Declarative             | | Maintainability |
+| `siebeljs`                     | Siebel JS                      | | Maintainability |
+| `siebelscripted`               | Siebel Scripted                | | Maintainability |
+| `siebelworkflow`               | Siebel Workflow                | | Maintainability |
+| `siebeltbui`                   | Siebel TBUI                    | | Maintainability |
+| `slim`                         | Slim                           | | Maintainability |
+| `smalltalk`                    | Smalltalk                      | | Maintainability |
+| `solidity`                     | Solidity                       | | Maintainability |
+| `sonicesb`                     | Sonic ESB                      | | Maintainability |
+| `spl`                          | SPL                            | | Maintainability |
+| `sqlj`                         | SQLJ                           | | Maintainability |
+| `sqlite`                       | SQLite                         | | Maintainability |
+| `sqr`                          | SQR                            | | Maintainability |
+| `ssis`                         | SSIS                           | | Maintainability |
+| `starlimssql`                  | StarLIMS                       | | Maintainability |
+| `streamserve`                  | StreamServe                    | | Maintainability |
+| `synapse`                      | Synapse                        | | Maintainability |
+| `synon`                        | Synon                          | | Maintainability |
+| `swift`                        | Swift                          | | Maintainability, Security |
+| `t4`                           | T4                             | | Maintainability |
+| `tacl`                         | TACL                           | | Maintainability |
+| `tal`                          | TAL                            | | Maintainability |
+| `tandem`                       | Tandem                         | | Maintainability |
+| `tapestry`                     | Tapestry                       | | Maintainability |
+| `terraform`                    | Terraform                      | | Maintainability, Security |
+| `test`                         | Testcode                       | | Maintainability |
+| `thrift`                       | Thrift                         | | Maintainability |
+| `thymeleaf`                    | Thymeleaf                      | | Maintainability |
+| `tibco`                        | TIBCO BW                       | | Maintainability |
+| `tibcobe`                      | TIBCO BE (XML)                 | | Maintainability |
+| `tibcobejava`                  | TIBCO BE (Java)                | | Maintainability |
+| `tibcobestatemachine`          | TIBCO BE (State Machine)       | | Maintainability |
+| `tibcobw6`                     | TIBCO BW6                      | | Maintainability |
+| `tripleforms`                  | TriplEforms                    | | Maintainability |
+| `tsql`                         | T-SQL                          | | Maintainability |
+| `turtle`                       | Turtle                         | | Maintainability |
+| `typescript`                   | TypeScript                     | | Maintainability, Security | (3) |
+| `uil`                          | UIL (Motif)                    | | Maintainability |
+| `uniface`                      | Uniface                        | | Maintainability |
+| `until`                        | Until                          | | Maintainability |
+| `vag`                          | Visual Age                     | | Maintainability |
+| `vagrecord`                    | Visual Age Record              | | Maintainability |
+| `vb`                           | Visual Basic                   | | Maintainability, Security | (4) |
+| `vbnet`                        | Visual Basic .NET              | | Maintainability, Security | (4) |
+| `velocity`                     | Velocity                       | | Maintainability |
+| `vgl`                          | VGL                            | | Maintainability |
+| `visualforce`                  | VisualForce                    | | Maintainability |
+| `visualrpg`                    | Visual RPG                     | | Maintainability |
+| `visualobjects`                | Visual Objects                 | | Maintainability |
+| `vuejs`                        | VueJS                          | | Maintainability, Security | (2) |
+| `vuets`                        | VueTS                          | | Maintainability, Security | (3) |
+| `vulcan`                       | Vulcan.NET                     | | Maintainability |
+| `webfocus`                     | WebFocus                       | | Maintainability |
+| `webmethods`                   | WebMethods                     | | Maintainability |
+| `webmethodsbpm`                | WebMethods BPM                 | | Maintainability |
+| `websmart`                     | WebSmart                       | | Maintainability |
+| `wonderware`                   | Wonderware                     | | Maintainability |
+| `wsdl`                         | WSDL                           | | Maintainability |
+| `wtx`                          | WTX                            | | Maintainability |
+| `xaml`                         | XAML                           | | Maintainability |
+| `xml`                          | XML                            | | Maintainability | (5) |
+| `xpdl`                         | Tibco ActiveMatrix BPM         | | Maintainability |
+| `xpp`                          | X++                            | | Maintainability |
+| `xquery`                       | Xquery                         | | Maintainability |
+| `xsd`                          | XSD                            | | Maintainability |
+| `xslt`                         | XSLT                           | | Maintainability |
+| `xul`                          | XUL                            | | Maintainability |
+| `yaml`                         | YAML                           | | Maintainability | (5) |
+| `unknown`                      | Unknown technology             | | Maintainability | (6) |
 
 Notes:
 
