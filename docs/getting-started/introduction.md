@@ -25,8 +25,9 @@ As SIG’s software quality assurance platform, Sigrid provides a *single source
 
 Sigrid visualizes your software landscape according to various technical quality aspects, into a single solution. *Quality* here is understood as characteristics of technical health (or technical debt). This includes terms defined and understood in the ISO 25010 standard, such as maintainability and security. Bringing these aspects together broadens your overview of your software landscape, which helps you expose possible technical risks. 
 
-<img src="../images/portfolio-systems.png" width="600" />
-Example of a portfolio overview. For an elaboration of the relation between systems and their repositories, see [systems](../organization-integration/systems.md).
+<!--SR relative path ../images/ does not seem to fit with the unit test -->
+<img src="docs/images/portfolio-systems.png" width="600" />
+Example of a portfolio overview. For an elaboration of the relation between systems and their repositories, see [systems](docs/organization-integration/systems.md).
 
 ## How does Sigrid work?
 Essentially, Sigrid’s insights are based on source code analysis. Analyses are run on the code “as is”, so without actually running the system. This is known as *static analysis*, as opposed to *dynamic analysis*. Dynamic analysis of software is more typically done by the developers themselves, because it requires a simulation of how a system will behave in operation.

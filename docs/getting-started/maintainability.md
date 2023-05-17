@@ -16,7 +16,8 @@ So even though 50% necessarily is below average (3.0), 35% of systems will score
 ## Maintainability stars are predictive of speed and costs
 By experience with its datasets of systems, SIG has gathered that there is a strong correlation, and cause-effect relationship, between this maintainability star rating and development speed/system maintenance costs. For example, maintenance/ownership costs for 4-star systems are 2 times lower than for 2-star systems, and their development speed is up to 4 times faster.  See the graph below:
 
-<img src="../images/maintainability-star-distribution.png" width="600" />
+<!--SR relative path ../images/ does not seem to fit with the unit test -->
+<img src="docs/images/maintainability-star-distribution.png" width="600" />
 
 ## Interpretation of maintainability metrics depends on context
 Whether a lower score, such as below a 3-star rating, is an actual problem, depends on context. SIG consultants will be happy to help out there. Considerations might for example be the balance between the system’s code change capacity (how easy you can make changes) and the expected business change demand (how much and how fast you need to change to get by).

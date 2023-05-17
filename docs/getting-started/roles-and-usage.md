@@ -13,7 +13,8 @@ High-level overviews of the software landscape’s composition and quality help 
 To answer such questions, start in the portfolio view > tab *Overview*. Sigrid shows a dashboard with a quality overview of your entire portfolio, combining all quality characteristics. Based on the systems’ information, you can filter/zoom your portfolio into views that help you understand the details. 
 
 <!-- SR I am reusing the same portfolio pic. Rather have consistency than minor variations in views-->
-<img src="../images/portfolio-systems.png" width="600" />
+<!--SR relative path ../images/ does not seem to fit with the unit test -->
+<img src="docs/images/portfolio-systems.png" width="600" />
 
 Below, systems are grouped by lifecycle phase. A lifecycle phase is an indication of a system’s maturity and “adaptability needs”. They range from: initial development > Evolution > Servicing & maintenance > End-of-life. You will generally expect to see a higher maintainability for younger systems (Initial development and Evolution), because they have a long time of changes ahead of them. Lower code quality early on in a system’s life will hurt more over the long term than it would for a system that is already considered “end-of-life”. 
 
