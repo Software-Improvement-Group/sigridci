@@ -3,9 +3,10 @@ Getting started with Sigrid
 
 # About this guide 
 This document acts  as a user guide for Sigrid. This covers:
-* **Context and background.** Some words on our vision developing and offering Sigrid. A high-level overview of its goals and functionality.  
-* **Roles and usage.** The main roles/typical users that Sigrid supports. These range from management/architects to developers. They typically have different needs for views/detail (roughly from portfolio/trend to code detail view). 
-* **Analysis scenarios.** We discuss typical analysis needs or use cases and the steps can you take to get there.
+* **Context and background.** This page dedicates some words to our vision developing and offering Sigrid. A high-level overview of its goals and functionality.  
+Other pages will discuss:
+* [Roles and usage](roles-and-usage.md) The main roles/typical users that Sigrid supports. These range from management/architects to developers. They typically have different needs for views/detail (roughly from portfolio/trend to code detail view). 
+  + **Analysis scenarios.** We discuss typical analysis needs or use cases and the steps can you take to get there.
 
 ## Sigrid, why you need it
 Sigrid is a fact-supported cost-saver, risk-management aid and a technical-debt prioritization tool that can be used to improve quality at all system levels. 
@@ -24,7 +25,7 @@ As SIG’s software quality assurance platform, Sigrid provides a *single source
 
 Sigrid visualizes your software landscape according to various technical quality aspects, into a single solution. *Quality* here is understood as characteristics of technical health (or technical debt). This includes terms defined and understood in the ISO 25010 standard, such as maintainability and security. Bringing these aspects together broadens your overview of your software landscape, which helps you expose possible technical risks. 
 
-<img src="images/portfolio-systems.png" width="600" />
+<img src="../images/portfolio-systems.png" width="600" />
 Example of a portfolio overview. For an elaboration of the relation between systems and their repositories, see [systems](../organization-integration/systems.md).
 
 ## How does Sigrid work?
@@ -32,5 +33,5 @@ Essentially, Sigrid’s insights are based on source code analysis. Analyses are
 
 Sigrid recognizes, calculates and prioritizes code characteristics that indicate software health. Such as whether the code contains design anti-patterns (undesirable constructs), whether the code contains security flaws (or imported, external code contains those).  
 
-For maintainability (the relative ease of code maintenance) Sigrid results in metrics that are benchmarked. Those are elaborated on in @@.
+For maintainability (the relative ease of code maintenance) Sigrid results in metrics that are benchmarked. Those are elaborated on in [maintainability](maintainability.md).
 
