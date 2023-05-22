@@ -36,6 +36,9 @@ inputs:
     description: "Outputs the list of files included in the upload to Sigrid, for troubleshooting (true/false)."
     required: false
     default: false
+  subsystem:
+    description: "Used to map between repository directory structure versus the one known by Sigrid."
+    required: false
     
   # Sigrid metadata
   displayname:
@@ -96,6 +99,8 @@ runs:
     - "--exclude"
     - ${{ inputs.exclude }}
     - ${{ (inputs.showupload == 'true' && '--showupload') || '--dummy' }}
+    - "--subsystem"
+    - ${{ inputs.subsystem }}
   env:
     displayname: ${{ inputs.displayname }}
     divisionname: ${{ inputs.divisionname }}

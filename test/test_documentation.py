@@ -35,6 +35,14 @@ class DocumentationTest(unittest.TestCase):
                 parentDir = os.path.dirname(file)
                 linkedFile = os.path.join(parentDir, match.group(1))
                 self.assertTrue(os.path.exists(linkedFile), f"Dead image in {file} to {linkedFile}")
+                
+    def testFileNamesAreLowercase(self):
+        for file, contents in self.readDocumentationPages():
+            if not file.lower().endswith("readme.md"):
+                self.assertEqual(file, file.lower(), f"Article file name should be lowercase: {file}")
+            
+        for file in self.listDocumentationImages():
+            self.assertEqual(file, file.lower(), f"Image file name should be lowercase: {file}")
         
     def readDocumentationPages(self):
         with open("README.md", "r") as fileRef:
@@ -45,3 +53,9 @@ class DocumentationTest(unittest.TestCase):
                 if file.endswith(".md"):
                     with open(f"{root}/{file}", "r") as fileRef:
                         yield (f"{root}/{file}", fileRef.read())
+
+    def listDocumentationImages(self):
+        for root, subdirs, files in os.walk("docs"):
+            for file in files:
+                if file.lower().endswith((".png", ".jpg")):
+                    yield f"{root}/{file}"
