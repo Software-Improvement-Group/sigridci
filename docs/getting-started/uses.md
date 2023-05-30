@@ -1,7 +1,8 @@
 # Uses
-## Portfolio/trend views
-Example analysis questions:
+This section describes the different types of uses and questions that Sigrid can be used for. 
 
+## Portfolio/trend views
+To gauge portfolio health and portfolio trends, example analysis questions are:
 * Is the portfolio balanced with business objectives and (enterprise) architecture roadmaps? 
 * Do some systems appear to be in trouble while they should have a long life ahead of them? Are quality trends heading in the right direction? 
 * Which direction is technical debt moving? Does this impede developers to support the business with sufficient speed and quality?
@@ -32,4 +33,19 @@ Whether quality trends are heading in the right direction does depend on context
 
 The visibility of system-/portfolio quality overviews and their standing on [quality objectives](../getting-started/objectives.md) helps getting a shared understanding and commitment towards quality of systems and the portfolio.
 
-# System/detailed views
+## System developement progress/planning views
+For viewing progress and predicting planning, example analysis questions are:
+
+* For a particular system, where are technical debt and code quality moving towards? Is that what we are expecting?
+* If we extrapolate progress, does it seem likely that we can meet planning objectives? How much (unforeseen) technical renovations will we need to take into account?
+
+TODO
+
+## System detailed views
+Moving deeper into code details, to know what to focus development efforts on, example analysis questions are:
+
+* Does the code show our craftmanship? Can we explain why code changes are hard when the business asks us for faster delivery?
+* In terms of technical debt, are we reaching quality goals? What should be prioritized on the backlog?
+* How well are we generally doing securing our systems? Where is this concerning? Are we actually exposed? Are there accepted risks that we accept as a business or false positive findings that we may ignore?
+
+TODO
