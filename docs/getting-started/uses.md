@@ -1,13 +1,10 @@
-# Where could Sigrid help me in my role?
-
-Sigrid is aimed at organizational roles that deal with concerns around system health, code quality and their business consequences. Depending on your role you can answer different types of questions.
-
-## Role: Executive/portfolio manager for portfolio/trend views: 
-
-High-level overviews of the software landscape’s composition and quality help you take inventory of your landscape’s *health*, or *risk profile*. This gives direction to future plans. Example analysis questions:
+# Uses
+## Portfolio/trend views
+Example analysis questions:
 
 * Is the portfolio balanced with business objectives and (enterprise) architecture roadmaps? 
-* Do some systems appear to be in trouble while they should have a long life ahead of them?
+* Do some systems appear to be in trouble while they should have a long life ahead of them? Are quality trends heading in the right direction? 
+* Which direction is technical debt moving? Does this impede developers to support the business with sufficient speed and quality?
 
 To answer such questions, start in the portfolio view > tab *Overview*. Sigrid shows a dashboard with a quality overview of your entire portfolio, combining all quality characteristics. Based on the systems’ information, you can filter/zoom your portfolio into views that help you understand the details. 
 
@@ -26,30 +23,13 @@ You can create different by system characteristics. The characteristics under **
 
 <img src="../images/portfolio-menus-treemap.png" width="600" />
 
-
 Here, "Maintainability change" is chosen as the meaning of the color scheme. The relative changes are colored as white (neutral) up to green (improving) and red (deteriorating), based on the period selected above (in this example, Year-To-Date/YTD). This can be useful as trend analysis, comparing to expectations. Generally, you would expect public-facing systems to be more actively maintained because outside users tend to come up with new requests, bug reports, and requirements for e.g. stability. As a simplification, you would expect actively maintained systems to not (or very little) deteriorate in code quality. Switching between views of "maintainability change" in different grouping will give you and idea of the balance between expected- and actual trends.  
 <img src="../images/portfolio-system-type-maintainability-change.png" width="600" />
-
-## Role: Enterprise Architect for both portfolio views and deep dives
-
-Similarly to manager roles, an EA is aided in Sigrid with an overview of the current and desired state of the landscape. From experience we also knaw that EAs tend to go into technical deep dives, to look for (historical) explanations. Example analysis questions:
-
-* Which direction is technical debt moving? Does this impede developers to support the business with sufficient speed and quality?
-* Are quality trends heading in the right direction? 
 
 You can filter per division/team/supplier on different quality aspects, and track the trends of each. 
 
 Whether quality trends are heading in the right direction does depend on context/goals. The expected quality direction is not necessarily only upwards, but could be: restrict deterioration, stabilization, or cutting volume as a priority.
 
-
-
-
-
-
-
-
-
-
 The visibility of system-/portfolio quality overviews and their standing on [quality objectives](../getting-started/objectives.md) helps getting a shared understanding and commitment towards quality of systems and the portfolio.
 
-
+# System/detailed views

@@ -9,7 +9,7 @@ Objectives can be set per different quality characteristics and levels of detail
 
 <img src="../images/objectives-overview.png" width="600" />
 
-Objectives show the evolution of the system quality over time. Thereby they are useful for roles such as Enterprise Architects to see where technical debt is moving. It also has a signaling function to make explicit what goals teams should be working towards, and therefore, how the portfolio ought to be moving. This is, of course, only meaningful if these targets/thresholds have been agreed upon beforehand with teams/Product Owners/Development managers, etc. 
+Objectives show the evolution of the system quality over time. Thereby they are useful for [roles](../getting-started/roles.md) such as Enterprise Architects to see where technical debt is moving. It also has a signaling function to make explicit what goals teams should be working towards, and therefore, how the portfolio ought to be moving. This is, of course, only meaningful if these targets/thresholds have been agreed upon beforehand with teams/Product Owners/Development managers, etc. 
 
 ## Understanding Objectives in detail
 Objectives can be set as below. 
@@ -21,6 +21,4 @@ The green checkmark shows that the test code ratio is at least 50%.
 2. *Capability* column (2): A *Capability* can be understood as a desirable code quality characteristic where an objective falls into. 
 3. *Target* column (3): The *Target* is the desired measurable value of the objective. It is important to revisit this periodically, because targets will likely vary over time. A likely cause for a target change is the system's *Lifecycle*. Similarly, *Business criticality* typically also is a determinant. 
 4. *Delta* column (4): The delta on the image above now shows an "=" sign, but it could also show an upwards arrow or a downwards arrow. This shows the difference with the previously analyzed snapshot.
-
-
 
