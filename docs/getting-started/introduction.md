@@ -3,17 +3,17 @@ Getting started with Sigrid
 
 ## About this guide 
 
-This document acts  as a user guide for Sigrid. This covers:
+This document acts as a user guide for Sigrid. It covers:
 
 * **Context and background.** This page dedicates some words to our vision developing and offering Sigrid. A high-level overview of its goals and functionality.  
 Other pages will discuss:
 * [Roles](../getting-started/roles.md). The main roles/typical users that Sigrid supports. These range from management/architects to developers. They typically have different needs for views/detail (roughly from portfolio/trend to code detail view). 
-  + **Analysis scenarios.** We discuss typical analysis needs or use cases and the steps can you take to get there.
+  + **Analysis scenarios.** We discuss typical analysis needs or use cases and the steps you can take to get there.
 * [Uses](../getting-started/uses.md). This elaborates on the scenarios that you can use Sigrid for. 
 
 ## Sigrid, why you need it
 
-Sigrid is a fact-supported cost-saver, risk-management aid and a technical-debt prioritization tool that can be used to improve quality at all system levels. 
+Sigrid is a fact-based cost-saver, risk-management aid and a technical-debt prioritization tool that can be used to improve quality at all system levels. 
 
 It does that by providing you the data to steer business decisions and make technical improvements.
 
@@ -21,9 +21,9 @@ It does that by providing you the data to steer business decisions and make tech
 
 We know that most organizations rely on software to run their business. Software, and taking control of it, is therefore at the center of business decisions.
 
-* To make confident business decisions in this context, you need to be confident about the internals (the health) of your software landscape. We will provide you with the data to get that insight, and make informed decisions. The type of data accommodates the organizational context. Therefore, functionality focuses on:
-  + Seeing trends of the portfolio of software as a whole.
-  + Bringing together many types of technical health (such as maintainability, security, architecture).
+* To make confident business decisions in this context, you need to be confident about the internals (the health) of your software landscape. Sigrid provides you with the data to get that insight, and make informed decisions. The type of data accommodates the organizational context. Therefore, functionality focuses on:
+  + Seeing trends within the software portfolio as a whole.
+  + Bringing together many types of technical health (such as maintainability, security, architecture). This simplifies comparison and finding relationships between them.
   + Offering transparency on IT quality, which evokes accountability and makes code contributors proud of their work.
 
 ## What can you use Sigrid for?

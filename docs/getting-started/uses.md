@@ -1,5 +1,5 @@
-# Uses
-This section describes the different types of uses and questions that Sigrid can be used for. 
+# Uses: where can Sigrid help me in my role?
+Sigrid is aimed at organizational roles that deal with concerns around system health, code quality and their business consequences. Depending on your role Sigrid can help you answer different types of questions. This section describes those different types of uses and questions. 
 
 ## Portfolio/trend views
 To gauge portfolio health and portfolio trends, example analysis questions are:
@@ -33,8 +33,8 @@ Whether quality trends are heading in the right direction does depend on context
 
 The visibility of system-/portfolio quality overviews and their standing on [quality objectives](../getting-started/objectives.md) helps getting a shared understanding and commitment towards quality of systems and the portfolio.
 
-## System developement progress/planning views
-For viewing progress and predicting planning, example analysis questions are:
+## System development progress/planning views
+To gauge development progress and expected remaining work to be done, you are interested in indications of how predictable code development is. For viewing progress and predicting planning, example analysis questions are:
 
 * For a particular system, where are technical debt and code quality moving towards? Is that what we are expecting?
 * If we extrapolate progress, does it seem likely that we can meet planning objectives? How much (unforeseen) technical renovations will we need to take into account?
@@ -44,7 +44,7 @@ TODO
 ## System detailed views
 Moving deeper into code details, to know what to focus development efforts on, example analysis questions are:
 
-* Does the code show our craftmanship? Can we explain why code changes are hard when the business asks us for faster delivery?
+* Does the code show our craftsmanship? Can we explain why code changes are hard when the business asks us for faster delivery?
 * In terms of technical debt, are we reaching quality goals? What should be prioritized on the backlog?
 * How well are we generally doing securing our systems? Where is this concerning? Are we actually exposed? Are there accepted risks that we accept as a business or false positive findings that we may ignore?
 
