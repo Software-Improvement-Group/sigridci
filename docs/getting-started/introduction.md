@@ -9,7 +9,8 @@ This document acts as a user guide for Sigrid. It covers:
 Other pages will discuss:
 * [Roles](../getting-started/roles.md). The main roles/typical users that Sigrid supports. These range from management/architects to developers. They typically have different needs for views/detail (roughly from portfolio/trend to code detail view). 
   + **Analysis scenarios.** We discuss typical analysis needs or use cases and the steps you can take to get there.
-* [Uses](../getting-started/uses.md). This elaborates on the scenarios that you can use Sigrid for. 
+* Specific **uses** are described in [uses-portfolio](../getting-started/uses-portfolio.md) and [uses-system](../getting-started/uses-system.md). These elaborate on the scenarios that you can use Sigrid for. 
+
 
 ## Sigrid, why you need it
 
