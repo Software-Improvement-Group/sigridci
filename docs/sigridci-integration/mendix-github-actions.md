@@ -54,6 +54,7 @@ We will create a pipeline that consists of two jobs:
 
 We will create two GitHub Action workflows: the first will publish the main/master branch to [sigrid-says.com](https://sigrid-says.com) after every commit. In your GitHub repository, create a file `.github/workflows/sigrid-publish.yml` and give it the following contents:
 
+{% raw %}
 ```
 name: sigrid-publish
 on:
@@ -77,11 +78,13 @@ jobs:
           /usr/local/bin/entrypoint.sh
 
 ```
+{% endraw %}
 
 Note the name of the branch, which is `main` in the example but might be different for your repository. In general, most older projects will use `master` as their main branch, while more recent projects will use `main`. 
 
 Next, we create a separate workflow for the pull request integration. This will compare the contents of the pull request against the main/master branch from the previous step. In your GitHub repository, create a file `.github/workflows/sigrid-pullrequest.yml` and give it the following contents:
 
+{% raw %}
 ```
 name: sigrid-pullrequest
 on: [pull_request]
@@ -102,11 +105,16 @@ jobs:
       - run: |
           /usr/local/bin/entrypoint.sh
 ```
+{% endraw %}
 
 This example assumes you're using the repository-level secrets. If you want to use the organization-level secrets instead, you can change the following lines:
 
-    SIGRID_CI_TOKEN: "${{ secrets.SIGRID_CI_ORG_TOKEN }}"
-    MENDIX_TOKEN: "${{ secrets.MENDIX_ORG_TOKEN }}"
+{% raw %}
+```
+SIGRID_CI_TOKEN: "${{ secrets.SIGRID_CI_ORG_TOKEN }}"
+MENDIX_TOKEN: "${{ secrets.MENDIX_ORG_TOKEN }}"
+```
+{% endraw %}
 
 Finally, note that you need to perform this step for every project where you wish to use Sigrid CI. Be aware that you can set a project-specific target quality, you don't necessarily have to use the same target for every project.
 
