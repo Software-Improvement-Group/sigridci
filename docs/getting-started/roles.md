@@ -1,6 +1,6 @@
 # Where could Sigrid help me in my role?
 
-Sigrid is aimed at organizational roles that deal with concerns around system health, code quality and their business consequences. Depending on your role you can answer different types of questions. The different roles we distinguish are described here. Specific uses
+Sigrid is aimed at organizational roles that deal with concerns around system health, code quality and their business consequences. Depending on your role you can answer different types of questions. The different roles we distinguish are described here. Specific uses are described in [uses](../getting-started/uses.md).
 
 ## Role: Executive/portfolio manager for portfolio/trend views: 
 High-level overviews of the software landscape’s composition and quality help you take inventory of your landscape’s *health*, or *risk profile*. This gives direction to future plans. 
