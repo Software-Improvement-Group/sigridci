@@ -42,4 +42,4 @@ Essentially, Sigrid’s insights are based on source code analysis. Analyses are
 
 Sigrid recognizes, calculates and prioritizes code characteristics that indicate software health. Such as whether the code contains design anti-patterns (undesirable constructs), whether the code contains security flaws (or imported, external code contains those).  
 
-Sigrid communicates results as benchmarked star ratings. You can find more information about [our approach](approach.md) later in this documentation.
+Sigrid communicates results as benchmarked star ratings. You can find more information about our [approach](approach.md) later in this documentation.

@@ -1,6 +1,6 @@
 # Our approach: benchmarked code metrics offer perspective
 
-A benchmark on quality is meaningful, because it shows you an unbiased norm of how well you are doing. For source code, this means that you can compare it to the code that others are producing and maintaining.
+A benchmark on quality is meaningful because it shows you an unbiased norm of how well you are doing. For source code, this means that you can compare it to the code that others are producing and maintaining.
 
 Sigrid compares analysis results for your system against a benchmark of 10,000+ industry systems, to give you that perspective. 
 
