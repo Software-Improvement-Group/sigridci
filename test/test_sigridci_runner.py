@@ -39,21 +39,25 @@ class SigridCiRunnerTest(unittest.TestCase):
         self.assertEqual(apiClient.urlSystemName, "noot")
         
     def testValidateSystemNameAccordingToRules(self):
-        runner = SigridCiRunner()
-    
-        self.assertTrue(runner.isValidSystemName("noot", "aap"))
-        self.assertTrue(runner.isValidSystemName("noot", "aap-noot"))
-        self.assertTrue(runner.isValidSystemName("noot", "aap123"))
-        self.assertTrue(runner.isValidSystemName("noot", "AAP"))
-        self.assertTrue(runner.isValidSystemName("noot", "a" * 59))
-        self.assertTrue(runner.isValidSystemName("noot", "aa"))
+        self.assertTrue(SigridCiRunner.isValidSystemName("noot", "aap"))
+        self.assertTrue(SigridCiRunner.isValidSystemName("noot", "aap-noot"))
+        self.assertTrue(SigridCiRunner.isValidSystemName("noot", "aap123"))
+        self.assertTrue(SigridCiRunner.isValidSystemName("noot", "AAP"))
+        self.assertTrue(SigridCiRunner.isValidSystemName("noot", "a" * 59))
+        self.assertTrue(SigridCiRunner.isValidSystemName("noot", "aa"))
 
-        self.assertFalse(runner.isValidSystemName("noot", "aap_noot"))
-        self.assertFalse(runner.isValidSystemName("noot", "a"))
-        self.assertFalse(runner.isValidSystemName("noot", "$$$"))
-        self.assertFalse(runner.isValidSystemName("noot", "-aap"))
-        self.assertFalse(runner.isValidSystemName("noot", "a" * 65))
-        self.assertFalse(runner.isValidSystemName("noot", "aap--aap"))
+        self.assertFalse(SigridCiRunner.isValidSystemName("noot", "aap_noot"))
+        self.assertFalse(SigridCiRunner.isValidSystemName("noot", "a"))
+        self.assertFalse(SigridCiRunner.isValidSystemName("noot", "$$$"))
+        self.assertFalse(SigridCiRunner.isValidSystemName("noot", "-aap"))
+        self.assertFalse(SigridCiRunner.isValidSystemName("noot", "a" * 65))
+        self.assertFalse(SigridCiRunner.isValidSystemName("noot", "aap--aap"))
+        
+    def testValidateToken(self):
+        self.assertFalse(SigridCiRunner.isValidToken(None))
+        self.assertFalse(SigridCiRunner.isValidToken(""))
+        self.assertFalse(SigridCiRunner.isValidToken("$"))
+        self.assertTrue(SigridCiRunner.isValidToken("jzRPOkVgAHbdKzeiYh/WYQ=="))
         
     def testSystemNameIsConvertedToLowerCaseInApiClient(self):
         args = types.SimpleNamespace(partner="sig", customer="Aap", system="NOOT", \
