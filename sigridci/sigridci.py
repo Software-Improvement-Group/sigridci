@@ -140,7 +140,7 @@ class SigridApiClient:
                     return response
             except urllib.error.HTTPError as e:
                 if e.code in [401, 403]:
-                    log("You are not authorized to access Sigrid for this system")
+                    log(f"You are not authorized to access Sigrid for this system: HTTP status {e.code}")
                     sys.exit(1)
                 elif allow404 and e.code == 404:
                     return False
