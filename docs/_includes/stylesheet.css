@@ -106,7 +106,7 @@ h2, h3 {
     padding: 110px 80px 30px 80px;
 }
 
-.container article img {
+.container article img, .container article iframe {
     border: 1px solid #687483;
     display: block;
     margin-left: auto;
