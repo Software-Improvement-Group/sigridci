@@ -1,9 +1,9 @@
 Mapping repositories to Sigrid systems
 ======================================
 
-Sigrid provides you with an overview of your organization's entire software portfolio. Your portfolio will be split into "systems". In Sigrid's main portfolio dashboard, each system is depicted as a block.
+Sigrid provides you with an overview of your organization's entire software portfolio. Your portfolio will be split into several systems. In Sigrid's main portfolio dashboard, each system is depicted as a block within a treemap.
 
-<img src="../images/portfolio-systems.png" width="600" />
+<img src="../images/portfolio-lifecycle-phase-maintainability.png" width="600" />
 
 So what's a "system"? SIG uses the following definition based on the [ISO 25010 standard](https://www.softwareimprovementgroup.com/wp-content/uploads/SIG-TUViT-Evaluation-Criteria-Trusted-Product-Maintainability-Guidance-for-producers.pdf):
 
@@ -31,7 +31,7 @@ Business stakeholders can still get a more aggregated view by grouping systems b
 
 Alternatively, you can also base your Sigrid view on a more functional/business perspective. Each system consists of multiple underlying repositories, where each repository can be considered a subsystem within that business application. This is sometimes referred to as a [multi-repo system](https://www.gitkraken.com/blog/git-multi-repo-vs-git-mono-repo).
 
-<img src="../images/publish-subsystems.png" width="700" />
+<img src="../images/publish-subsystems.png" width="600" />
 
 In this example, the *MyBank front-end* and *MyBank back-end* repositories would be combined into a single system, *myBank*. In this scenario, it is still possible for both repositories to publish their code to Sigrid independently, combining the two repositories happens on the Sigrid side. This behavior can be enabled by using the [subsystem option in the Sigrid CI configuration](../reference/client-script-usage.md).
 
