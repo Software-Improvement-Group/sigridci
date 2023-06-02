@@ -143,7 +143,7 @@ class SigridApiClient:
                     log(f"You are not authenticated to Sigrid (HTTP status {e.code}). Did you set environment variable SIGRID_CI_TOKEN to the correct token?")
                     sys.exit(1)
                 elif e.code == 403:
-                    log(f"You are not authorized to access Sigrid for this system: HTTP status {e.code}")
+                    log(f"You are not authorized to access Sigrid for this system (HTTP status {e.code})")
                     sys.exit(1)
                 elif allow404 and e.code == 404:
                     return False
