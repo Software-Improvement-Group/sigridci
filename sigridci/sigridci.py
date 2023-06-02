@@ -140,7 +140,7 @@ class SigridApiClient:
                     return response
             except urllib.error.HTTPError as e:
                 if e.code == 401:
-                    log(f"You are not authenticated to Sigrid (HTTP status {e.code}). Did you set environment variable SIGRID_CI_TOKEN to the correct token?")
+                    log(f"You are not authenticated to Sigrid (HTTP status {e.code}), please check if your token is valid")
                     sys.exit(1)
                 elif e.code == 403:
                     log(f"You are not authorized to access Sigrid for this system (HTTP status {e.code})")
@@ -679,7 +679,7 @@ class SigridCiRunner:
             
     @staticmethod
     def isValidToken(token):
-        return token != None and len(token) >= 5
+        return token != None and len(token) >= 64
 
 
 if __name__ == "__main__":
