@@ -57,7 +57,7 @@ class SigridCiRunnerTest(unittest.TestCase):
         self.assertFalse(SigridCiRunner.isValidToken(None))
         self.assertFalse(SigridCiRunner.isValidToken(""))
         self.assertFalse(SigridCiRunner.isValidToken("$"))
-        self.assertTrue(SigridCiRunner.isValidToken("jzRPOkVgAHbdKzeiYh/WYQ=="))
+        self.assertTrue(SigridCiRunner.isValidToken("zeiYh/WYQ==" * 10))
         
     def testSystemNameIsConvertedToLowerCaseInApiClient(self):
         args = types.SimpleNamespace(partner="sig", customer="Aap", system="NOOT", \
