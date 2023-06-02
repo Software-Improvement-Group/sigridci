@@ -31,9 +31,9 @@ We know that most organizations rely on software to run their business. Software
 
 As SIG’s software quality assurance platform, Sigrid provides a *single source of truth* of software health. This helps you steer decision-making while you buy, build, maintain and modernize your software. We call this ‘bit to boardroom insights’. These decisions will range from high-level system lifecycle decisions (e.g., renewal, decommissioning) to code-level recommendations (e.g., what to refactor and upgrade) to improve and smoothen out patterns that may slow down or endanger your business.
 
-Sigrid visualizes your software landscape according to various technical quality aspects, into a single solution. *Quality* here is understood as characteristics of technical health (or technical debt). This includes terms defined and understood in the ISO 25010 standard, such as maintainability and security. Bringing these aspects together broadens your overview of your software landscape, which helps you expose possible technical risks. 
+Sigrid visualizes your software landscape according to various technical quality aspects, into a single solution. *Quality* here is understood as characteristics of technical health (or technical debt). This includes terms defined and understood in the ISO 25010 standard, such as maintainability and security. Bringing these aspects together broadens your overview of your software landscape, which helps you expose possible technical risks. All Sigrid models are accessible on both portfolio and system levels, offering both overview (for a landscape) and detail (per system).
 
-<img src="../images/portfolio-systems.png" width="600" />
+<img src="../images/portfolio-systems-filter-bc.png" width="600" />
 
 Example of a portfolio overview. For an elaboration of the relation between systems and their repositories, see [systems](../organization-integration/systems.md).
 
@@ -44,3 +44,14 @@ Essentially, Sigrid’s insights are based on source code analysis. Analyses are
 Sigrid recognizes, calculates and prioritizes code characteristics that indicate software health. Such as whether the code contains design anti-patterns (undesirable constructs), whether the code contains security flaws (or imported, external code contains those).  
 
 Sigrid communicates results as benchmarked star ratings. You can find more information about our [approach](approach.md) later in this documentation.
+
+## SIG publications on quality models and their evaluation criteria
+Since SIG's quality models are based on the ISO 25010 standard, documents are available describing the relationship between the formal ISO definitions and the "application" of those in metrics. The following documents are publicly available:
+* [Maintainability Evaluation Criteria:](https://www.softwareimprovementgroup.com/wp-content/uploads/SIG-TUViT-Evaluation-Criteria-Trusted-Product-Maintainability.pdf) (describing the translation from definitions to metrics, partly based on this [scientic paper on maintainability](https://softwareimprovementgroup.com/wp-content/uploads/APracticalModelForMeasuringMaintainability.pdf))
+  - [Maintainability Guidance for Producers](https://softwareimprovementgroup.com/wp-content/uploads/SIG-TUViT-Evaluation-Criteria-Trusted-Product-Maintainability-Guidance-for-producers.pdf) (describing conceptual objectives and metrics thresholds to achieve above-average maintainability rating of 4 out of 5 stars)
+  - [Maintainability Guidance for Producers, specifically for PLC applications](https://softwareimprovementgroup.com/wp-content/uploads/Guidance-for-producers-Industrial-Automation.pdf) and [Maintainability Guidance for Producers, specifically for visual/low-code technologies](https://softwareimprovementgroup.com/wp-content/uploads/SIG_Guidance-for-producers_Visual-Technologies.pdf)
+* [Application security model](https://softwareimprovementgroup.com/wp-content/uploads/SIG-Evaluation-Criteria-Security.pdf) describing best practices against which application security is assessed in manual assessments, partly based on this [scientic paper on security](https://softwareimprovementgroup.com/wp-content/uploads/APracticalModelForSoftwareSecurity.pdf)
+* [Performance efficiency Guidance for Producers](https://softwareimprovementgroup.com/wp-content/uploads/SIG-Evaluation-Criteria-Performance-Efficiency_Guidance-for-producers.pdf)
+* [Reliability Guidance for Producers](https://softwareimprovementgroup.com/wp-content/uploads/SIG-Evaluation-Criteria-Reliability-Guidance-for-producers-2.0.pdf)
+
+
