@@ -139,7 +139,10 @@ class SigridApiClient:
                 if allowEmpty or response != {}:
                     return response
             except urllib.error.HTTPError as e:
-                if e.code in [401, 403]:
+                if e.code == 401:
+                    log(f"You are not authenticated to Sigrid (HTTP status {e.code}). Did you set environment variable SIGRID_CI_TOKEN to the correct token?")
+                    sys.exit(1)
+                elif e.code == 403:
                     log(f"You are not authorized to access Sigrid for this system: HTTP status {e.code}")
                     sys.exit(1)
                 elif allow404 and e.code == 404:
