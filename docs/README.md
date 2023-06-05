@@ -11,8 +11,8 @@ Sigrid performs code quality checks that have been designed by the [Software Imp
 This documentation acts as a user guide for Sigrid. This covers:
 
 - **Context and background:** This page dedicates some words to our vision developing and offering Sigrid. A high-level overview of its goals and functionality.  
-- [Roles and usage](getting-started/roles-and-usage.md) The main roles/typical users that Sigrid supports. These range from management/architects to developers. They typically have different needs for views/detail (roughly from portfolio/trend to code detail view). 
-  - **Analysis scenarios:** We discuss typical analysis needs or use cases and the steps can you take to get there.
+- [Roles and usage](getting-started/roles.md): The main roles/typical users that Sigrid supports. These range from management and (enterprise) architects to product owners and developers. Different roles typically have different needs for views/detail, roughly from portfolio/trend to code detail view. 
+- **Analysis scenarios:** We discuss typical analysis needs or use cases and the steps can you take to get there.
   
 ## Sigrid, why you need it
 
@@ -37,9 +37,9 @@ As SIG’s software quality assurance platform, Sigrid provides a *single source
 
 Sigrid visualizes your software landscape according to various technical quality aspects, into a single solution. *Quality* here is understood as characteristics of technical health (or technical debt). This includes terms defined and understood in the ISO 25010 standard, such as maintainability and security. Bringing these aspects together broadens your overview of your software landscape, which helps you expose possible technical risks. 
 
-<img src="images/portfolio-systems.png" width="600" />
+<img src="images/objectives-overview.png" width="600" />
 
-Example of a portfolio overview. For an elaboration of the relation between systems and their repositories, see [systems](organization-integration/systems.md).
+The screenshot above shows an example on how Sigrid can help you to define and track objectives for various quality aspects. You can do this for every system in your portfolio. For more context on the relation between systems and their repositories, see [systems](organization-integration/systems.md).
 
 ## How does Sigrid work?
 
