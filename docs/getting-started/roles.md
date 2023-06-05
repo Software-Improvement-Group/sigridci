@@ -8,12 +8,8 @@ High-level overviews of the software landscape’s composition and quality help 
 ## Role: Enterprise Architect for both portfolio views and deep dives
 Similarly to manager roles, as an EA you are aided in Sigrid with an overview of the current and desired state of the landscape. From experience we also know that EAs tend to go into technical deep dives, to look for (historical) explanations. 
 
-## Role: Development manager/Delivery manager / Product Owner / Project manager for system development progress and planning.
+## Role: Product Owner for system development progress and planning.
 To gauge development progress and expected remaining demands, you are interested in indications of how predictable code development is.
 
-## Role: Software architect / Software Developer 
+## Role: Software Developer 
 Where Sigrid highlights code hotspots, you are interested in going into their details. To understand where and why issues occur. The typical scenario is focusing on code that scores low on maintainability, which are recognized by developers as tough to modify. The detailed metrics can show what kinds of complexity lies beneath.
-
-
-
-
