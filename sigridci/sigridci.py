@@ -139,8 +139,11 @@ class SigridApiClient:
                 if allowEmpty or response != {}:
                     return response
             except urllib.error.HTTPError as e:
-                if e.code in [401, 403]:
-                    log("You are not authorized to access Sigrid for this system")
+                if e.code == 401:
+                    log(f"You are not authenticated to Sigrid (HTTP status {e.code}), please check if your token is valid")
+                    sys.exit(1)
+                elif e.code == 403:
+                    log(f"You are not authorized to access Sigrid for this system (HTTP status {e.code})")
                     sys.exit(1)
                 elif allow404 and e.code == 404:
                     return False
@@ -668,10 +671,15 @@ class SigridCiRunner:
                     formattedValue = f"[\"{value}\"]" if name in ["teamNames", "supplierNames"] else f"\"{value}\""
                     writer.write(f"  {name}: {formattedValue}\n")
                 
-    def isValidSystemName(self, customerName, systemName):
-        return self.SYSTEM_NAME_PATTERN.match(systemName) and \
-            len(systemName) >= self.SYSTEM_NAME_LENGTH.start and \
-            (len(systemName) + len(customerName) + 1) in self.SYSTEM_NAME_LENGTH
+    @staticmethod
+    def isValidSystemName(customerName, systemName):
+        return SigridCiRunner.SYSTEM_NAME_PATTERN.match(systemName) and \
+            len(systemName) >= SigridCiRunner.SYSTEM_NAME_LENGTH.start and \
+            (len(systemName) + len(customerName) + 1) in SigridCiRunner.SYSTEM_NAME_LENGTH
+            
+    @staticmethod
+    def isValidToken(token):
+        return token != None and len(token) >= 64
 
 
 if __name__ == "__main__":
@@ -701,12 +709,18 @@ if __name__ == "__main__":
         print("Sigrid CI requires Python 3.7 or higher")
         sys.exit(1)
 
-    if not "SIGRID_CI_TOKEN" in os.environ:
-        print("Missing required environment variable SIGRID_CI_TOKEN")
+    if not SigridCiRunner.isValidToken(os.environ.get("SIGRID_CI_TOKEN", None)):
+        print("Missing or incomplete environment variable SIGRID_CI_TOKEN")
         sys.exit(1)
 
     if not os.path.exists(args.source):
         print("Source code directory not found: " + args.source)
+        sys.exit(1)
+        
+    if not SigridCiRunner.isValidSystemName(args.customer, args.system):
+        maxNameLength = SigridCiRunner.SYSTEM_NAME_LENGTH.stop - (len(args.customer) + 1)
+        print(f"Invalid system name, system name should match '{SigridCiRunner.SYSTEM_NAME_PATTERN.pattern}' "
+              f"and be {SigridCiRunner.SYSTEM_NAME_LENGTH.start} to {maxNameLength} characters long (inclusive).")
         sys.exit(1)
 
     log("Starting Sigrid CI")
@@ -715,14 +729,7 @@ if __name__ == "__main__":
     apiClient = SigridApiClient(args)
     reports = [TextReport(), StaticHtmlReport(), JUnitFormatReport(), ConclusionReport(apiClient)]
 
-    runner = SigridCiRunner()
-    
-    if not runner.isValidSystemName(args.customer, args.system):
-        maxNameLength = runner.SYSTEM_NAME_LENGTH.stop - (len(args.customer) + 1)
-        print(f"Invalid system name, system name should match '{runner.SYSTEM_NAME_PATTERN.pattern}' "
-              f"and be {runner.SYSTEM_NAME_LENGTH.start} to {maxNameLength} characters long (inclusive).")
-        sys.exit(1)
-        
+    runner = SigridCiRunner()        
     targetRating = runner.loadSigridTarget(apiClient) if args.targetquality == "sigrid" else float(args.targetquality)
     target = TargetQuality(options.readScopeFile() or "", targetRating)
     runner.run(apiClient, options, target, reports)
