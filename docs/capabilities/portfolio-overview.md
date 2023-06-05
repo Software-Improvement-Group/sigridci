@@ -1,9 +1,11 @@
-# Uses: - Portfolio level
+# Portfolio-level overview
+
 This section describes the main functionalities and typical uses/analysis questions on portfolio level. 
 
-For system-level details, see [use-system](../getting-started/uses-system.md).
+For the system-level page, see [system level](system-overview.md).
 
 ## Main capabilities
+
 This section describes the quality aspects / tabs that you will encounter in Sigrid.
 
 <img src="../images/portfolio-overview-top-bar.png" width="600" />
@@ -17,26 +19,13 @@ The maintainability section on the portfolio level has two main views: *Overview
 
 Please see [uses-system](../getting-started/uses-system.md) under *Maintainability:4* for elaboration. 
 
-### Security
-TODO
-
-### Open Source Health
-TODO
-
-### Technology Risk
-TODO
-
-### Objectives
-Please see [Objectives](../getting-started/objectives.md).
-
-
 ## Analysis questions for portfolio/trend views
 To gauge portfolio health and portfolio trends, example analysis questions are:
 * Is the portfolio balanced with business objectives and (enterprise) architecture roadmaps? 
 * Do some systems appear to be in trouble while they should have a long life ahead of them? Are quality trends heading in the right direction? 
 * Which direction is technical debt moving? Does this impede developers to support the business with sufficient speed and quality?
 
-### Using the portfolio Overview
+### Using the portfolio overview
 To answer questions such as the above, start in the portfolio view > tab *Overview*. Sigrid shows a dashboard with a quality overview of your entire portfolio, combining all quality characteristics. Based on the systems’ information, you can filter/zoom your portfolio into views that help you understand the details. 
 
 You land on the maintainability overview in this page. 

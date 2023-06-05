@@ -1,7 +1,8 @@
-# Uses: System level
+# System-level overview
+
 This section describes the main functionalities and typical uses/analysis questions on the system level, looking at details and root causes of system quality findings. 
 
-For a portfolio-level view, see [uses-portfolio](../getting-started/uses-portfolio.md).
+For the portfolio-level view, see [the portfolio-level overview](portfolio-overview.md).
 
 ## Main capabilities
 
@@ -18,11 +19,7 @@ TODO
 TODO
 4. The *Delta quality* view shows the impact of new code changes on the entire portfolio for the selected period. By default it is grouped per system. 
 
-1. 
-2. 
-3. 
-
-4. Within *Delta quality*, there are three tabs available :
+Within *Delta quality*, there are three tabs available :
 * **New code**: this shows the code quality of newly added files. 
 * **Changed code**:this shows the quality of existing files in which a change has been made, and 
 * **New & changed code**: this shows the balance of all changed- and added code quality. 
@@ -30,22 +27,8 @@ The information can be filtered and sorted by metadata (such as supplier, team, 
 
 *New code* tends to give you the best indication of whether new development is creating high quality software. For *Changed code*, quality effects may be limited unless deliberate refactoring/renovation has been done.
 
-TODO visual
-
-### Security
-TODO
-
-### Open Source Health
-TODO
-
-### Technology Risk
-TODO
-
 ### Objectives
 Please see [Objectives](../getting-started/objectives.md).
-
-
-
 
 ## Analysis questions for system development progress/planning views
 To gauge development progress and expected remaining work to be done, you are interested in indications of how predictable code development is. For viewing progress and predicting planning, example analysis questions are:
