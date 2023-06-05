@@ -51,6 +51,6 @@ Quality goals can be assesed in the Overview tab. You can reach this either by s
 
 The status of quality goals are shown in the System Objective Overview on the right (see also [Objectives](../getting-started/objectives.md)). This is binary: either the objective is met or not. 
 
-Since a period of time has been selected, the change within this period is shown. On the right side (Delta) a change will be noted by an equal sign <img src="../images/delta-equal.png" width="25" />, upward arrow <img src="../images/delta-up.png" width="25" /> or downward arrow <img src="../images/delta-down.png" width="25" />. Details of changes in objectives are shown in the Quality Overview bar on the top. 
+Since a period of time has been selected, the change within this period is shown. On the right side (Delta) a change will be noted by an equal sign, upward arrow, or downward arrow. Details of changes in objectives are shown in the Quality Overview bar on the top. 
 
-On the left, system details can be edited. Clicking on the edit <img src="../images/edit.png" width="25" />button will bring you to the [metadata](../organization-integration/metadata.md) page. This will allow, and influence, filtering on these metadata fields, such as "Division" or "Business criticality".
+On the left, system details can be edited. Clicking on the edit button will bring you to the [metadata](../organization-integration/metadata.md) page. This will allow, and influence, filtering on these metadata fields, such as "Division" or "Business criticality".
