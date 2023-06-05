@@ -28,7 +28,7 @@ The information can be filtered and sorted by metadata (such as supplier, team, 
 *New code* tends to give you the best indication of whether new development is creating high quality software. For *Changed code*, quality effects may be limited unless deliberate refactoring/renovation has been done.
 
 ### Objectives
-Please see [Objectives](../getting-started/objectives.md).
+Please see [Objectives](objectives.md).
 
 ## Analysis questions for system development progress/planning views
 To gauge development progress and expected remaining work to be done, you are interested in indications of how predictable code development is. For viewing progress and predicting planning, example analysis questions are:

@@ -17,7 +17,7 @@ The maintainability section on the portfolio level has two main views: *Overview
 
 <img src="../images/portfolio-delta-new-code.png" width="600" />
 
-Please see [uses-system](../getting-started/uses-system.md) under *Maintainability:4* for elaboration. 
+Please see [the system-level overview page](system-overview.md) under *Maintainability:4* for elaboration. 
 
 ## Analysis questions for portfolio/trend views
 To gauge portfolio health and portfolio trends, example analysis questions are:
@@ -62,7 +62,7 @@ Here, "Maintainability change" is chosen as the meaning of the color scheme. The
 You can filter per division/team/supplier on different quality aspects, and track the trends of each. 
 
 ### Trends in the context of and objectives
-Whether quality trends are heading in the right direction does depend on context/goals. The expected quality direction is not necessarily only upwards, but could be: restrict deterioration, stabilization, or cutting volume as a priority. This is why [quality objectives](../getting-started/objectives.md) are important. System-/portfolio quality overviews and their standing on helps getting a shared understanding and commitment towards quality of systems and the portfolio.
+Whether quality trends are heading in the right direction does depend on context/goals. The expected quality direction is not necessarily only upwards, but could be: restrict deterioration, stabilization, or cutting volume as a priority. This is why [quality objectives](objectives.md) are important. System-/portfolio quality overviews and their standing on helps getting a shared understanding and commitment towards quality of systems and the portfolio.
 
 ## Using quality trend lines 
 On a trend line, quality trends can help you see movements over time, possibly fuelled by specific (renovation/development) events. In the below example, a portfolio's code quality over time is shown per system. 
