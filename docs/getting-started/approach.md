@@ -2,6 +2,8 @@
 
 A benchmark on quality is meaningful because it shows you an unbiased norm of how well you are doing. For source code, this means that you can compare it to the code that others are producing and maintaining.
 
+<iframe width="560" height="315" src="https://www.youtube.com/embed/D_5SN4Q8cGI" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+
 Sigrid compares analysis results for your system against a benchmark of 10,000+ industry systems, to give you that perspective. 
 
 This benchmark set is selected and calibrated yearly to give a balanced view of the *current state of software development*. “Balanced” here can be understood as a representative spread of the “system population”. This will include anything in between old and new technologies. In terms of technologies this is skewed towards programming languages that are now most common. The metrics underlying the benchmark approach a normal distribution.

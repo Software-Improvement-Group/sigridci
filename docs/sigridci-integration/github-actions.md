@@ -46,6 +46,7 @@ The simplest way to run Sigrid CI is to download client script directly from Git
 
 First, create `.github/workflows/sigrid-publish.yml` to publish snapshots of your project to Sigrid after every commit to the main/master branch:
 
+{% raw %}
 ```
 name: sigrid-publish
 on:
@@ -66,9 +67,11 @@ jobs:
           SIGRID_CI_TOKEN: "${{ secrets.SIGRID_CI_TOKEN }}"
         run: "./sigridci/sigridci/sigridci.py --customer examplecustomername --system examplesystemname --source . --publish" 
 ```
+{% endraw %}
 
 Next, create `.github/workflows/sigrid-pullrequest.yml` to receive feedback on your pull requests:
 
+{% raw %}
 ```
 name: sigrid-pullrequest
 on: [pull_request]
@@ -86,6 +89,7 @@ jobs:
           SIGRID_CI_TOKEN: "${{ secrets.SIGRID_CI_TOKEN }}"
         run: "./sigridci/sigridci/sigridci.py --customer examplecustomername --system examplesystemname --source ."
 ```
+{% endraw %}
 
 #### Alternative 2b: GitHub Marketplace
 
@@ -93,6 +97,7 @@ It is also possible to run Sigrid CI using the [GitHub Marketplace action](https
 
 To use the Marketplace action, create a file `.github/workflows/sigrid-publish.yml` in your repository and give it the following contents:
 
+{% raw %}
 ```
 name: Publish to Sigrid
 on:
@@ -115,11 +120,13 @@ jobs:
         env:
           SIGRID_CI_TOKEN: "${{ secrets.SIGRID_CI_TOKEN }}"
 ```
+{% endraw %}
 
 Note the name of the branch, which is `main` in the example but might be different for your repository. In general, most older GitHub projects will use `master` as their main branch, while more recent GitHub projects will use `main`. 
 
 Next, we create a separate workflow for the pull request integration. This will compare the contents of the pull request against the main/master branch from the previous step. In your GitHub repository, create a file `.github/workflows/sigrid-pullrequest.yml` and give it the following contents:
 
+{% raw %}
 ```
 name: Sigrid pull request feedback
 on: [pull_request]
@@ -138,12 +145,15 @@ jobs:
         env:
           SIGRID_CI_TOKEN: "${{ secrets.SIGRID_CI_TOKEN }}"
 ```
+{% endraw %}
 
 This example assumes you're using the repository-level secrets. If you want to use the organization-level secrets instead, you can change the following lines:
 
+{% raw %}
 ```
 SIGRID_CI_TOKEN: "${{ secrets.SIGRID_CI_ORG_TOKEN }}"
 ```
+{% endraw %}
 
 ### Step 3: Analysis configuration
 
