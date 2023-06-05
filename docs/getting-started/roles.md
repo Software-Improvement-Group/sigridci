@@ -11,5 +11,5 @@ Similarly to manager roles, as an EA you are aided in Sigrid with an overview of
 ## Role: Product Owner for system development progress and planning.
 To gauge development progress and expected remaining demands, you are interested in indications of how predictable code development is.
 
-## Role: Software Developer 
+## Role: Developer for direct feedback on how to improve your code
 Where Sigrid highlights code hotspots, you are interested in going into their details. To understand where and why issues occur. The typical scenario is focusing on code that scores low on maintainability, which are recognized by developers as tough to modify. The detailed metrics can show what kinds of complexity lies beneath.
