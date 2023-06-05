@@ -19,6 +19,7 @@ languages:
   - name: typescript
 ```
 
+
 ## General configuration
 
 | Field              | Required | Description                                                                                                    |
@@ -37,7 +38,7 @@ Note that it is not necessary to exclude files and directories that would not be
 
 See the [list of supported technologies](technology-support.md) for the names that can be used inside the `languages` section of the YAML file.
 
-### Overriding automatic technology and test code detection
+### Overriding automatic technology-, and test code detection
 
 When you add a technology to your scope file, Sigrid will try to locate the corresponding files based on file and directory name conventions. This includes automatic detection of test code. For example, Java-based projects typically use `src/main/java` for production code and `src/test/java` for test code.
 
@@ -70,6 +71,7 @@ In some projects, using directory depth will not accurately reflect the actual c
     component_base_dirs:
       - "modules"
       - "modules/specific"
+      - "" \[This includes the root directory as a separate component\]
 
 **Advanced Option 2** (can be more specific, but also harder to maintain)
 
@@ -82,6 +84,25 @@ In some projects, using directory depth will not accurately reflect the actual c
           - ".*/cs/findbugs/log/.*"
           
 In this example, regular expressions are used to define what files and directories belong to each component. The syntax is identical to the patterns used in the `exclude` section.
+
+### A note about writing regular expression patterns
+* The full file path must always be matched instead of (part of) a filename. This generally requires some wildcards.
+  - The engine starts searching starting with the first "/". So if you are fairly certain that the first level folder structure is stable you could hardcode that in the pattern, such as
+```
+name: “frontend”
+include:
+  - “/frontend/.*[.]jsx”
+```
+* All patterns are case-sensitive. This is relevant in case you are specifically searching for naming in camelCase or PascalCase. It is then useful to search for files like /SomeTest.java.
+<!--Note SR: to show 2 backslashes you have to write 3 backslashes-->
+* Escape special groups with an extra backslash. This is because yaml interprets “\” as an escape character (so does GitHub, by the way). So a regular expression searching for a space character needs 2 backslashes like so: “\\\s” or a word character (defined as [a-zA-Z0-9_]) as “\\\w”.
+  - If you want to express a literal dot “.” use "[.]". This means: 1 character in a group where only “.” is permitted. This is more readable than , “\\\.”.
+* Matching "positive" patterns is far easier than trying with negative lookaheads "(?!)" because catching the full file path becomes difficult. There are cases where patterns may work such as "((?![unwanted string]).)+", but these are hard to get right/debug.
+  - Also, negative lookbehinds (?<!) are not recommended. They need to be fixed length and immediately precede the pattern to work (wildcards tend to break the pattern).
+* There may be cases where you need to add test files manually. This may ask for precise pattern because not all files ending with “test” will be tests (for example,“latest”).
+  - “.\*/[^/]*Test(s)?.java"  (anything in the last folder/after the last “/” ending with Test.java or Tests.java)
+  - “.\*/[a-z0-9-_]*Test[.]java” (camelCase in the final folder)
+
 
 ## Open Source Health
 
