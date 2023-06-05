@@ -4,7 +4,7 @@ The maintainability section on the portfolio level has two main views: *Overview
 
 The *Overview* tab brings the main metrics together. 
 
-<img src="portfolio-maintainability.png" width="500" />
+<img src="../images/portfolio-maintainability.png" width="500" />
 
 The *Delta quality* view shows the impact of new code changes on the entire portfolio for the selected period. By default it is grouped per system. 
 
