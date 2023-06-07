@@ -15,7 +15,7 @@ During the technical onboarding we will ask you what authorisation you require. 
 
 ## how to onboard Mendix projects from the teamserver
 
-Mendix offers a self servive app to do this. The [addon app](https://addon.mendix.com) helps you onboard new projects in QSM. After 5 minutes you will receive an email stating the onboarding was succesful and you will be able to see the results for this project in QSM.
+Mendix offers a self service app to do this. The [addon app](https://addon.mendix.com) helps you onboard new projects in QSM. After 5-10 minutes you will receive an email stating the onboarding was succesful and you will be able to see the results for this project in QSM.
 
 what do you need:
 
