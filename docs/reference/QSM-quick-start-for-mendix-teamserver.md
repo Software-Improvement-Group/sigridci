@@ -21,15 +21,10 @@ what do you need:
 
 - your mendix login
 - the name of the mendix project you want to onboard
-- with that login you create a [Personal Acces Token](https://docs.mendix.com/apidocs-mxsdk/mxsdk/set-up-your-pat/).  When creating the pat please choose `mx:modelrepository:repo:read Read access to Team Server Git repositories and Team Server API`  
-Also make sure that the PAT is bound to a Mendix developer that has access to the project with a minimum os Scrum Master. For scalability you can create a PAT for a system users that has access to all your projects.
+- with that login you create a [Personal Acces Token](https://docs.mendix.com/apidocs-mxsdk/mxsdk/set-up-your-pat/).  When creating the PAT please choose `mx:modelrepository:repo:read Read access to Team Server Git repositories and Team Server API`  
+Also make sure that the PAT is bound to a Mendix developer that has access to the project with a minimum access of Scrum Master. 
+- For scalability you can create a PAT for a system users that has access to all your projects.
 
-
-
-
-
-
-## Available end points
 
 
 ## Contact and support
