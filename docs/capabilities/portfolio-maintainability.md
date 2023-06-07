@@ -10,7 +10,7 @@ The *Delta quality* view shows the impact of new code changes on the entire port
 
 <iframe width="560" height="315" src="https://www.youtube.com/embed/O9ARAQV7v1w" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
 
-<img src="../images/filter-2.png" style="float:right;width="25 style=float:left" /> The information can be filtered and sorted by metadata (such as supplier, team, or division) by using the filter button. By default the filters shows (2) active filters: "Hide excluded systems" and "Hide deactivated systems". 
+<img src="../images/filter-2.png" class="inline" /> The information can be filtered and sorted by metadata (such as supplier, team, or division) by using the filter button. By default the filters shows (2) active filters: "Hide excluded systems" and "Hide deactivated systems". 
 
 Please see [the system-level overview page](system-overview.md) under *Maintainability:4* for elaboration. 
 

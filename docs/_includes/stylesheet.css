@@ -114,6 +114,11 @@ h2, h3 {
     box-shadow: 1px 1px 5px #687483;
 }
 
+.container article img.inline {
+    display: inline-block;
+    width: 25px;
+}
+
 pre {
     display: inline-block;
     max-width: 800px;
