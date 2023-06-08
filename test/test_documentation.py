@@ -15,6 +15,7 @@
 import os
 import re
 import unittest
+from bs4 import BeautifulSoup
 
 
 class DocumentationTest(unittest.TestCase):
@@ -35,6 +36,14 @@ class DocumentationTest(unittest.TestCase):
                 parentDir = os.path.dirname(file)
                 linkedFile = os.path.join(parentDir, match.group(1))
                 self.assertTrue(os.path.exists(linkedFile), f"Dead image in {file} to {linkedFile}")
+                
+    def testMenuDoesNotContainDeadLinks(self):
+        with open("docs/_includes/menu.html", "r") as f:
+            dom = BeautifulSoup(f.read(), features="html.parser")
+        
+        for menuLink in dom.select("a.page"):
+            linkedFile = f"docs{menuLink['href']}".replace(".html", ".md")
+            self.assertTrue(os.path.exists(linkedFile), f"Dead menu link to {linkedFile}")
                 
     def testFileNamesAreLowercase(self):
         for file, contents in self.readDocumentationPages():

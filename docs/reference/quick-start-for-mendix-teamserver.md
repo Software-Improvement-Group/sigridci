@@ -9,7 +9,7 @@ Most Mendix customers use the Mendix teamserver to store their projects. Develop
 
 ## How to onboard users
 
-During the technical onboarding we will ask you what authorisation you require. QSM offers both a basic version of user management or it can connect to your Identity Provider to obtain Single Sign On. For more information, see the [general instruction on how to set up Sigrid](../organization-integration/onboarding-steps.md), or the [user management](docs/organization-integration/usermanagement.md) page describing this in detail. In either way you will have a first user with administrator rights at your disposal to get the onboarding of users going.
+During the technical onboarding we will ask you what authorisation you require. QSM offers both a basic version of user management or it can connect to your Identity Provider to obtain Single Sign On. For more information, see the [general instruction on how to set up Sigrid](../organization-integration/onboarding-steps.md), or the [user management](../organization-integration/usermanagement.md) page describing this in detail. In either way you will have a first user with administrator rights at your disposal to get the onboarding of users going.
 
 ## how to onboard Mendix projects from the teamserver
 
