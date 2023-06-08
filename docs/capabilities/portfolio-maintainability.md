@@ -22,11 +22,14 @@ To gauge portfolio health and portfolio trends, example analysis questions are:
 
 ## Portfolio view by system lifecycle phase
 Below, systems are grouped by lifecycle phase. A lifecycle phase is an indication of a system’s maturity and “adaptability needs”, their expected path of continuation. They range from: Initial development > Evolution > Servicing & maintenance > End-of-life. You will generally expect to see a higher maintainability for younger systems (Initial development and Evolution), because they have a long time of changes ahead of them. Lower code quality early on in a system’s life will hurt more over the long term than it would for a system that is already considered “end-of-life”. 
-Setting this lifecycle metadata is discussed in the [metadata page](../organization-integration/metadata.md). The help buttons <img src="../images/help-button.png" width="25" /> explain the meaning of the different types of settings.
+Setting this lifecycle metadata is discussed in the [metadata page](../organization-integration/metadata.md). 
+<img src="../images/help-button.png" class="inline" /> The "?" help buttons explain the meaning of the different types of settings.
+
+<img src="../images/portfolio-lifecycle-phase-maintainability.png" width="600" />
 
 The maintainability ratings expressed in (rounded) stars are distinguished by "traffic light colors", ranging from red (1 star) to green (5 stars). 
 
-<img src="../images/portfolio-lifecycle-phase-maintainability.png" width="600" />
+<img src="../images/maintainability-star-color-scheme.png" width="300" />
 
 Note that the snapshots dates in the top-right corner always imply a period, but it will assume the last date as a state, unless you select a viewing option that shows change, such as "Maintainability change". 
 
