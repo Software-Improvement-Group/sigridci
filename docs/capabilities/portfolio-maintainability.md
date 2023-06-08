@@ -9,7 +9,7 @@ The *Overview* tab brings the main metrics together.
 <img src="../images/portfolio-maintainability.png" width="500" />
 
 The *Delta quality* view shows the impact of new code changes on the entire portfolio for the selected period. By default it is grouped per system. 
-For elaboration, see [Delta quality] (system-delta-quality.md). 
+For elaboration, see [Delta quality](system-delta-quality.md). 
 
 <iframe width="560" height="315" src="https://www.youtube.com/embed/O9ARAQV7v1w" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
 
