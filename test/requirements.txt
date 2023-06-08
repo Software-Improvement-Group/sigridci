@@ -1,0 +1,4 @@
+# We can't use PIP dependencies for the production code due to portability with
+# certain user environments, but it's fine if we use dependencies in tests.
+
+beautifulsoup4==4.12.2
