@@ -1,5 +1,5 @@
 # System-level maintainability
-<img src="../images/system-maintainability-menu.png" width="600" />
+<img src="../images/system-maintainability-menu-ex-architecture.png" width="600" />
 
 The maintainability section on the system level has 4 views: 
 1. The *Overview* tab brings the main metrics together. 
@@ -8,9 +8,9 @@ The maintainability section on the system level has 4 views:
 4. The *Delta quality* view shows the impact of new code changes on the system for the selected period.
 ## Overview
 The overview page is shown below. 
-- The system’s (configured) architecture is visible in the top right. This is based on the system’s scope configuration (see [the page on scope configuration](../reference/analysis-scope-configuration.md)). 
-- The main code changes are visible at the bottom.
-- The (change in) system metrics are in the top left. 
+* The system’s (configured) architecture is visible in the top right. This is based on the system’s scope configuration (see [the page on scope configuration](../reference/analysis-scope-configuration.md)). 
+* The main code changes are visible at the bottom.
+* The (change in) system metrics are in the top left. 
 <img src="../images/system-maintainability.png" width="600" />
 
 Below a detailed view of the metrics. 
@@ -18,17 +18,74 @@ Below a detailed view of the metrics.
 
 For technical details on maintainability metrics, see [Maintainability Evaluation Criteria](https://www.softwareimprovementgroup.com/wp-content/uploads/SIG-TUViT-Evaluation-Criteria-Trusted-Product-Maintainability.pdf) on our website. Or a broader overview on our [Reference page on our quality models](../reference/sig-quality-models.md).
 
-Below the metrics overview there is a shortcut to the Refactoring candidates [link on this page](system-maintainability.md#refactoring-candidates). This can also be reached by the Maintainability tab. 
+Below the metrics overview, there is a shortcut to the *Refactoring candidates* [link on this page](system-maintainability.md#refactoring-candidates). This can also be reached by the Maintainability tab. 
 
 ### Note on the Technical Monitor
 The “Technical monitor” button above the rating brings you to an alternative (one might say, “legacy”) view of all the maintainability metrics and underlying source code. Its functionality and views will eventually be moved to Sigrid. Its source code-level view is available in Sigrid in the [Code Explorer](system-code-explorer.md).
 
 ## Component Dependencies
+The *Component Dependency* view visualizes the dependencies between your application’s main components. The components follow from the system’s configuration.
+<img src="../images/system-component-dependencies.png" width="600" />
+
+### Meaning of the dependencies
+The arrows denote call direction within the code; a number on top of an arrow indicates the count of dependencies (that is, >1). Note that only calls will be shown that are identifiable as code dependencies (“static”). This excludes dependencies that may occur in production because of communication to frameworks or resources that are not explicitly defined in the source code. 
+
+### Visualization options and filters
+Different types of dependency antipatterns can be shown by toggling *”Visualize component entanglement”*. 
+
+<img src="../images/system-component-dependencies-visualize-toggle.png" width="300" />
+Once activated, a legend will appear at the bottom describing the different types. 
+
+<img src="../images/system-component-dependencies-legend.png" width="600" />
+
+The legend’s colors denotes the severity of the antipattern: 
+
+* **Layer bypassing dependency:** an architectural layer appears to be bypassed; a component has both a direct and indirect (“transitive”) dependency to another component.
+* **Indirect cyclic dependency:** a set of components (>2) does not have direct cyclic dependencies, but the communication lines between the involved components form a cycle.
+* **Cyclic dependency:** code within 2 components appear to “depend on each other”.
+
+For details on their specifics, see the [Reference page on our quality models](../reference/sig-quality-models.md), specifically the [Maintainability Guidance for Producers](https://softwareimprovementgroup.com/wp-content/uploads/SIG-TUViT-Evaluation-Criteria-Trusted-Product-Maintainability-Guidance-for-producers.pdf).
+
+If you click on an arrow in the graph, a page will appear where you can inspect the individual dependencies from- and to the selected components.
+
+<img src="../images/system-component-dependencies-call-details.png" width="600" />
+
+Note that the calls are shown for the direction of the arrow that you clicked at. If you want to inspect cyclic dependencies, also inspect the dependencies in the other direction.
+
+<img src="../images/system-component-dependencies-call-details-mouseover-path.png" width="300" />
+
+A filename mouseover shows you the full path. Clicking on the file name will bring you to its source code.
+
+### Annotations
+The annotation menu can present different data on top of the components. 
+
+<img src="../images/system-components-annotation-ex-toggle.png" width="150" />
+
+This may include e.g. code volume in PM/PY (person-month or person-year equivalent).
+
+### Filtering
+On the left-hand side column, you can filter dependencies per component and/or file level. This will show you a more detailed view of dependencies.
+
+<img src="../images/system-component-dependencies-file-selection.png" width=”600" />
 
 ## Refactoring candidates
+This view lists the top 100 findings per metric. 
 
-## Delta quality
-See the page on [system-level delta quality](system-delta-quality.md).
+<img src="../images/system-refactoring-candidates.png" width=”600" />
+
+Clicking on a metric will expand the list, prioritized by the “severity” of the violation. This is a good approximation of technical risk. The order/prioritization of the findings cannot be changed, but their status can be. The default status is *“Raw”*. This is meant in the sense of “not yet curated by hand”. Setting another status may help you to filter findings. A finding can be set to *“Prioritize”* or *“Accept risk”*.  
+
+<img src="../images/system-refactoring-candidates-3dots-status.png" width=”300" />
+
+Setting a finding to *“Prioritize”* will show as *“Will fix”*
+<img src="../images/system-refactoring-candidates-status-set.png" width=”300" />
+
+When you set a finding to *“Accept Risk”*, its status will change to *“Risk accepted”* and the finding will be hidden by default. 
+
+<img src="../images/filter-2.png" class="inline" /> Findings with *“Risk accepted”* can still be viewed by using the filter. By default the filter is set to *“Will fix”* and *“Raw"* only. 
+
+The relevant filter is shown below.
+<img src="../images/system-refactoring-candidates-filters-risk-accepted.png" width=”300" />
 
 
 
