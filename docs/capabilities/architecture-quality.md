@@ -12,7 +12,7 @@ Software architecture can seem abstract, but it's ultimately how the structure o
 
 The overview page provides a summary of your system's current architecture, relative to the other systems in SIG's benchmark. The structure of this page is comparable to Sigrid's [maintainability summary](system-maintainability.md): you have an overall rating, which is then split into a number of underlying system properties and associated ratings. Hovering your cursor over the system properties on the right provides you with a short description of each metric.
 
-<img src="../images/aq-overview.png" width="600" />
+<img src="../images/aq-summary.png" width="600" />
 
 This page provides you with a summary, but you may decide that further investigation into the actual architecture is needed. You can use the "explore architecture" button to navigate to Sigrid's architecture explorer page. Clicking on one of the system properties on the right will *also* take you to the architecture explorer page, but will then immediately jump to the system property you just clicked on.
 
