@@ -45,7 +45,7 @@ Clicking on a dependency will provide you with a list of where those dependencie
 
 Finally, the buttons around the page allow you to manipulate the architecture view:
 
-<img src="../images/aq-display-options.png" width="500" />
+<img src="../images/aq-display-options.png" width="400" />
 
 - The settings icon allows you to customize what is displayed, as depicted above.
 - The "reset layout" button resets the architecture visualization to its original state, which can help to restore readability.
