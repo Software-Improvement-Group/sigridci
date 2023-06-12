@@ -11,7 +11,8 @@ This is by far the simplest approach: in Sigrid, simply go to the system setting
 
 <img src="../images/metadata-ui.png" width="600" />
 
-Note the screenshot only shows part of the metadata page, the full page contains significantly more options than what is displayed here.
+Note the screenshot only shows part of the metadata page, the full page contains options related to the context in which the system is being developed, such as *Business criticality*, *Lifecycle phase*, and *Deployment type*.
+The help buttons <img src="../images/help-button.png" width="80" /> explain the meaning of the different types of settings.
 
 ### Option 2: Using the Sigrid API to add metadata
 
