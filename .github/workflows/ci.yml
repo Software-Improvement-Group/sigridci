@@ -7,6 +7,7 @@ jobs:
     steps:
       - name: "Check out repository"
         uses: actions/checkout@v3
+      - run: "pip3 install -r test/requirements.txt --user"
       - run: "python3 -m unittest"
   dockerci:
     name: "Sigrid CI in Docker"
