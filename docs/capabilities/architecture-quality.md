@@ -4,7 +4,7 @@ Software engineering is a socio-technical activity. Software is built by teams o
 
 <iframe width="560" height="315" src="https://www.youtube.com/embed/BejJ9sHeUOQ" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
 
-When people talk about "legacy" or "monoliths", they often mean much more than just outdated technology. Rather, it refers to any pre-existing software solution that has become too fragile for changes to be timely, predictable, and reliable, usually due to poor architecture, or team knowledge loss. 
+When people talk about "legacy" or "monoliths", they often mean much more than just outdated technology. What people usually mean is software that has become too fragile for changes to be timely, predictable, and reliable, usually due to poor architecture or team knowledge loss.
 
 Software architecture can seem abstract, but it's ultimately how the structure of your software facilitates the people working on it. The code will not care that it's highly coupled, but the people working on that code certainly do care about having dependencies on other people and teams. Sigrid can help you to both *communicate* the as-is architecture as it's actually implemented, and also help to find opportunities on how it can be improved. 
 
@@ -14,7 +14,7 @@ The overview page provides a summary of your system's current architecture, rela
 
 <img src="../images/aq-summary.png" width="600" />
 
-This page provides you with a summary, but you may decide that further investigation into the actual architecture is needed. You can use the "explore architecture" button to navigate to Sigrid's architecture explorer page. Clicking on one of the system properties on the right will *also* take you to the architecture explorer page, but will then immediately jump to the system property you just clicked on.
+This page provides you with a summary, but you may decide that further investigation into your system's current architecture is needed. You can use the "explore architecture" button to navigate to Sigrid's architecture explorer page. Clicking on one of the system properties on the right will *also* take you to the architecture explorer page, but will then immediately jump to the system property you just clicked on.
 
 ## Exploring your system's as-is architecture
 
