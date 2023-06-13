@@ -41,23 +41,25 @@ When Sigrid is linked to your SSO the user provisioning is done by the IdP. Sigr
 - Do authorisation tasks to define who can see what in Sigrid
 
 ### Setup customer side
-Create an authentication 'app' in your IdP with the following details: 
-- URL: https://auth.sigrid-says.com/saml2/idpresponse
-- Audience: urn:amazon:cognito:sp:eu-central-1_hwh9zdyCY
+Create an Enterprise application 'app' in your IdP with the following details: 
+- Audience or Identifier (Entity) ID: urn:amazon:cognito:sp:eu-central-1_hwh9zdyCY
+- Reply URL: https://auth.sigrid-says.com/saml2/idpresponse
+
+With the following attributes:
+- user.email http://schemas.xmlsoap.org/ws/2005/05/identity/claims/emailaddress
+- user.firstName http://schemas.xmlsoap.org/ws/2005/05/identity/claims/given_name
+- user.lastName http://schemas.xmlsoap.org/ws/2005/05/identity/claims/name
+- Unique User Identifier = user.email
+
 - Signature Algorithm: RSA_SHA256
 - Digest Algorithm: SHA256
 - Assertion Encryption: unencrypted (privacy is provided by using HTTPS)
 - Saml Single Logout: disabled
 
-With the following attribute statements:
-- user.email http://schemas.xmlsoap.org/ws/2005/05/identity/claims/emailaddress
-- user.firstName http://schemas.xmlsoap.org/ws/2005/05/identity/claims/given_name
-- user.lastName http://schemas.xmlsoap.org/ws/2005/05/identity/claims/name
-
 Then assign groups of users to your Authentication app
 
 ### Info to provide to SIG
-Provide SIG with the MetadataURL of your authentication app.
+Provide SIG with the 'App federation MetadataURL' of your authentication app.
 The information will include your app's identifier, redirectURL etc.
 
 ### Deliverables
