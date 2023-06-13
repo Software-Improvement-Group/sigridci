@@ -1,12 +1,14 @@
 # Architecture Quality
 
-Software engineering is a socio-technical activity. Software is built by teams of people, working together to produce a joint product. High performers in socio-technical architecture quality show faster issue resolution times. Sigrid measures Architecture Quality Model to quantify these aspects of socio-technical software architecture, covering both technical and social aspects and then compares the results against [SIG’s benchmark](../getting-started/approach.md). 
+High quality application development requires software architecture. On paper, it describes your technical choices, constraints, and is a reflection of business decisions. But the architecture may look very different once it's implemented in code. Objectively, badly implemented architecture is easy to see (like incoherence). To assess what is well-implemented architecture, we have to look broader. 
+
+Software architecture can seem abstract, but it's ultimately how the structure of your software facilitates the people working on it. The code will not care that it's highly coupled, but the people working on that code certainly do care about having dependencies on other people and teams. Sigrid can help you to both *communicate* the as-is architecture as it's actually implemented, and also help to find opportunities on how it can be improved. 
 
 <iframe width="560" height="315" src="https://www.youtube.com/embed/BejJ9sHeUOQ" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
 
-When people talk about "legacy" or "monoliths", they often mean much more than just outdated technology. What people usually mean is software that has become too fragile for changes to be timely, predictable, and reliable, usually due to poor architecture or team knowledge loss.
+When people talk about "legacy" or "monoliths", they often mean much more than just outdated technology. What people usually mean is software that has become too fragile for changes to be timely, predictable, and reliable, usually due to poor architecture or team knowledge loss. An architecture should be able to adapt to those changing circumstances. Therefore, we define *architecture quality* as the degree to which an architecture is flexible and adaptable to change. 
 
-Software architecture can seem abstract, but it's ultimately how the structure of your software facilitates the people working on it. The code will not care that it's highly coupled, but the people working on that code certainly do care about having dependencies on other people and teams. Sigrid can help you to both *communicate* the as-is architecture as it's actually implemented, and also help to find opportunities on how it can be improved. 
+So to make an assessment of architectural/future flexibility, we measure widely. Next to measuring the technical fundamentals, we also look at (code) evolution over time, and for example the spread of code contributions. We then compare your results against [SIG's benchmark](../getting-started/approach.md) to make it clear what's going well and where improvement is needed.
 
 ## Architecture Quality overview
 
