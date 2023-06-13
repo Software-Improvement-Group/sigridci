@@ -1,4 +1,4 @@
-# Our approach: benchmarked code metrics offer perspective
+# Our approach on maintainability: benchmarked code metrics offer perspective
 
 A benchmark on quality is meaningful because it shows you an unbiased norm of how well you are doing. For source code, this means that you can compare it to the code that others are producing and maintaining.
 
@@ -10,7 +10,7 @@ This benchmark set is selected and calibrated yearly to give a balanced view of 
 
 ## Benchmarking from 1 to 5 stars
 
-The code quality score compared to this benchmark is expressed in star ratings, on a scale from 1 to 5 stars. It follows a 5%-30%-30%-30%-5% distribution. Technically, its metrics range is from 0.5-5.5 stars. So the middle 30% exists between 2.5 - 3.5 and is scored as 3 stars, market average. 
+The code quality score compared to this benchmark is expressed in star ratings, on a scale from 1 to 5 stars. It follows a 5%-30%-30%-30%-5% distribution. Technically, its metrics range from 0.5-5.5 stars. So the middle 30% exists between 2.5 - 3.5 and is scored as 3 stars, market average. 
 
 So even though 50% necessarily is below average (3.0), 35% of systems will score below the 3-star threshold (below 2.5). And 35% of systems will score above the 3-star threshold (above 3.5). 
 
