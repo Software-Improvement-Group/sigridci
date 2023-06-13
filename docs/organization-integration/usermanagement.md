@@ -51,6 +51,7 @@ With the following attributes:
 - user.lastName http://schemas.xmlsoap.org/ws/2005/05/identity/claims/name
 - Unique User Identifier = user.email
 
+Other
 - Signature Algorithm: RSA_SHA256
 - Digest Algorithm: SHA256
 - Assertion Encryption: unencrypted (privacy is provided by using HTTPS)
