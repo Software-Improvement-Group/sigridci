@@ -31,7 +31,7 @@ Patterns are defined using regular expressions, as explained in the next section
 
 ## Defining include and exclude patterns
 
-Various options across the scope configuration file allow you to define include and exclude patterns. At first glance, many people expect these patterns to behave like [Glob patterns](https://en.wikipedia.org/wiki/Glob_(programming) (for example `*.py`), but Sigrid actually uses [regular expressions](https://en.wikipedia.org/wiki/Regular_expression) instead. The reason for this is fairly straightforward: regular expressions are more flexible, which is relevant considering the large number of technologies and conventions that Sigrid needs to support.
+Various options across the scope configuration file allow you to define `include` and `exclude` patterns. At first glance, many people expect these patterns to behave like [Glob patterns](https://en.wikipedia.org/wiki/Glob_(programming) (for example `*.py`), but Sigrid actually uses [regular expressions](https://en.wikipedia.org/wiki/Regular_expression) instead. The reason for this is fairly straightforward: regular expressions are more flexible, which is relevant considering the large number of technologies and conventions that Sigrid needs to support.
 
 The following example specified a component that includes all `.jsx` files in the `frontend` directory, except files ending with `.spec.jsx`:
 
@@ -42,14 +42,14 @@ The following example specified a component that includes all `.jsx` files in th
         exclude:
           - ".*/.*[.]spec[.]jsx"
           
-When you specify both include and exclude patterns, the exclude patterns take precedence. In this example, the file `frontend/home.jsx` would be included, but the file `frontend/example.spec.jsx` would be excluded.
+When you specify both `include` and `exclude` patterns, the exclude patterns take precedence. In this example, the file `frontend/home.jsx` would be included, but the file `frontend/example.spec.jsx` would be excluded.
 
-As a convention, all include and exclude patterns always start with `.*/`. It is tempting to always define patterns relative to the root of the codebase, but it's important to realize that what is considered the "root" is flexible in Sigrid. Depending on how you [map your repositories to systems](../organization-integration/systems.md), the root of your repository might not match the root of the Sigrid system that contains your repository. Starting all patterns `.*/` will avoid confusion in such situations.
+As a convention, all `include` and `exclude` patterns always start with `.*/`. It is tempting to always define patterns relative to the root of the codebase, but it is important to realize that what is considered the "root" is flexible in Sigrid. Depending on how you [map your repositories to systems](../organization-integration/systems.md), the root of your repository might not match the root of the Sigrid system that contains your repository. Starting all patterns `.*/` will avoid confusion in such situations.
 
 Some other common caveats when using regular expressions to define patterns:
 
 - All patterns are case-sensitive. This is relevant in case you are specifically searching for naming in camelCase or PascalCase. It is then useful to search for files like `SomeTest.java`.
-- You are entering patterns inside of a YAML file. YAML uses backslashes for escape characters. So if you want to use backslashes inside of your regular expressions, for example `\S+`, you will need to escape the backslash: `\\S+`.
+- You are entering patterns inside of a YAML file. YAML uses backslashes for escape characters. So if you want to use backslashes inside of your regular expressions, for example `\S+` (i.e. "one or more non-whitespace characters"), you will need to escape the backslash: `\\S+`.
 - If you want to express a literal dot `.`, use `[.]`. This means: 1 character in a group where only `.` is permitted.
 - Matching "positive" patterns is far easier than trying with negative lookaheads `(?!)`, as catching the full file path becomes difficult. There are cases where patterns may work such as `((?![unwanted string]).)+`, but these are hard to get right/debug.
 - Also, negative lookbehinds (`?<!`) are not recommended. They need to be fixed length and immediately precede the pattern to work (wildcards tend to break the pattern).
@@ -104,7 +104,7 @@ In some projects, using directory depth will not accurately reflect the actual c
       
 **Option 3: Defining components manually**
 
-In some cases the components really do not match the directory structure, and the only way to define components is by manually listing what should go where. In the example below, regular expressions are used to define what files and directories belong to each component. The syntax is identical to the patterns used in the `exclude` section. These include and exclude patterns work as explained in the [patterns section](#defining-include-and-exclude-patterns).
+In some cases the components really do not match the directory structure, and the only way to define components is by manually listing what should go where. In the example below, regular expressions are used to define what files and directories belong to each component. The syntax is identical to the patterns used in the `exclude` section. These `include` and `exclude` patterns work as explained in the [patterns section](#defining-include-and-exclude-patterns).
 
     components:
       - name: "Back-end"
@@ -204,7 +204,7 @@ The `architecture` section in the configuration has its own `exclude` option, wh
       exclude:
         - ".*/index[.]ts"
         
-The list of exclude patterns works in the same way as the global, top-level `exclude` option. The difference is the global option excludes files and directories from *all* Sigrid capabilities, and the architecture exclude option excludes them from Architecture Quality but not from other Sigrid capabilities. See the [pattern documentation](#defining-include-and-exclude-patterns) for more information on writing these patterns.
+The list of exclude patterns works in the same way as the global, top-level `exclude` option. The difference is the global option excludes files and directories from *all* Sigrid capabilities, and the architecture `exclude` option excludes them from Architecture Quality but not from other Sigrid capabilities. See the [pattern documentation](#defining-include-and-exclude-patterns) for more information on writing these patterns.
           
 ## Sigrid metadata
 
