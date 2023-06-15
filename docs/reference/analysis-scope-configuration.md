@@ -17,7 +17,7 @@ The following example shows a typical example of the `sigrid.yaml` configuration
       - name: python
       - name: typescript
       
-The various options and sections are explains in more detail in the remainder of this page.
+The various options and sections are explained in more detail in the remainder of this page.
 
 ## Excluding files and directories
 
@@ -33,7 +33,7 @@ Patterns are defined using regular expressions, as explained in the next section
 
 Various options across the scope configuration file allow you to define `include` and `exclude` patterns. At first glance, many people expect these patterns to behave like [Glob patterns](https://en.wikipedia.org/wiki/Glob_(programming) (for example `*.py`), but Sigrid actually uses [regular expressions](https://en.wikipedia.org/wiki/Regular_expression) instead. The reason for this is fairly straightforward: regular expressions are more flexible, which is relevant considering the large number of technologies and conventions that Sigrid needs to support.
 
-The following example specified a component that includes all `.jsx` files in the `frontend` directory, except files ending with `.spec.jsx`:
+The following example specifies a component that includes all `.jsx` files in the `frontend` directory, except files ending with `.spec.jsx`:
 
     components:
       - name: "Our new React website"
@@ -51,8 +51,8 @@ Some other common caveats when using regular expressions to define patterns:
 - All patterns are case-sensitive. This is relevant in case you are specifically searching for naming in camelCase or PascalCase. It is then useful to search for files like `SomeTest.java`.
 - You are entering patterns inside of a YAML file. YAML uses backslashes for escape characters. So if you want to use backslashes inside of your regular expressions, for example `\S+` (i.e. "one or more non-whitespace characters"), you will need to escape the backslash: `\\S+`.
 - If you want to express a literal dot `.`, use `[.]`. This means: 1 character in a group where only `.` is permitted.
-- Matching "positive" patterns is far easier than trying with negative lookaheads `(?!)`, as catching the full file path becomes difficult. There are cases where patterns may work such as `((?![unwanted string]).)+`, but these are hard to get right/debug.
-- Also, negative lookbehinds (`?<!`) are not recommended. They need to be fixed length and immediately precede the pattern to work (wildcards tend to break the pattern).
+- Matching "positive" patterns is far easier than trying with negative lookaheads `(?!)`, as catching the full file path becomes difficult. There are cases where patterns may work such as `((?![unwanted string]).)+`, but these cases are hard to get right or debug.
+- Also, negative lookbehinds (`?<!`) are not recommended. They pattern to be matched requires a fixed length and it needs to immediately precede the rest of the pattern to work (wildcards tend to break here).
 
 ## Technology support
 
@@ -64,7 +64,7 @@ The `languages` section lists all languages that you want Sigrid to analyze:
       - name: Python
       - name: Typescript
 
-Refer to the [list of supported technologies](technology-support.md) for an overview of all supported technologie and the names that can be used.
+Refer to the [list of supported technologies](technology-support.md) for an overview of all supported technologies and the names that can be used.
 
 ## Overriding automatic technology and test code detection
 
