@@ -4,3 +4,70 @@ System-level security is one of the detailed technical views under *Findings*. T
 
 You can reach the system-level security view in different ways: Via the top menu, or clicking an a capability on the System or Portfolio *Overview* pages. See the [system-level Overview page](system-overview.md#navigating-to-capabilities) or [portfolio-level Overview page](portfolio-overview.md#navigating-to-capabilities).
 
+## Security Overview
+The security overview page shows a summary of findings, their change, age and estimated severity.
+<img src="../images/system-security-overview.png" width="600" />
+
+The different elements in this page are:
+* *Findings* shows a count of *the current number of findings*. Below it is the number of changes, based on the source code comparison period. This range be changed in the top right as usual. The note *"Also showing ... resolved findings and ... informational findings"* means that on top of this number, more findings are shown below. This is relevant for estimating activity surrounding these findings, such as fixing security findings or marking them as *false positive*. 
+* *Activity* shows a breakdown of this number. A mouseover on the *Activity* barchart will show the following:
+
+<img src="../images/system-security-activity-mouseover.png" width="300" />
+
+* The *CVSS Severity* tile summarizes a breakdown of findings according to CVSS severity ratings. A mouseover on the barchart will show the exact number of findings. A mouseover on the CVSS severity benchmark shows the CVSS sevurity score and the number of findings with that severity. 
+
+<img src="../images/system-security-cvss-mouseover.png" width="300" />
+
+<img src="../images/filter-2.png" class="inline" /> The CVSS map adjusts to the filter that you may have used.
+
+* The *Findings Age* tile gives an indication how long findings are known. 
+
+## Different statuses of security findings
+These are the different statutes of findings. The status *"Fixed"* will be applied automatically if a finding is resolved. The other statuses can be set. They are similar to those used for [system maintainability refactoring candidates](system-maintainability.md#refactoring-candidates). 
+* *"Raw"* means "not yet verified" where *"Refined"* ones mark that a finding has been confirmed manually. Inversely, a finding can be set as *"False positive"*. 
+* *"Will fix"* signals the intention to fix it, while *"Risk Accepted"* does not.
+
+## Different grouping of security findings
+Different views can be selected in the left menu. security models. The menu selector on the left you to easily toggle between the different models in one view. Next to popular models, SIG has developed its own model based on the ISO standard, more information see [https://www.softwareimprovementgroup.com/wp-content/uploads/SIG-Evaluation-Criteria-Security.pdf].
+
+
+<img src="../images/system-security-grouping-finding-status-ex-background.png" width="300" />
+
+Note that here, the bold category is the currently chosen grouping. Under *"Finding"*, the following grouping can be set:
+
+* *"Activity"* groups according to *"New"*, *"Recurring"* or *"Resolved"*.
+* *"Origin"* refers to the originating tool of the finding.
+* *"Severity"* orders on level of severity (based on CVSS).
+* *"Status"* lists the statuses as [mentioned above](#different-statuses-of-security-findings).
+* *"Type"* shows a specific list of vulnerabilities. This is especially useful for technical analysis, since sometimes, a whole category/type of findings may be set to *"False positive"*. 
+* *"Weakness"* orders on type of weaknesse (based on the CWE database). Weaknesses are somewhat higher level than *"Type"*. Note that 1 finding might refer to multiple CWEs, and therefore the same line of code might be counted multiple times (a count is applied for each possible security risk). See also [security FAQ elaboration](faq-security.md#why-does-the-finding-list-count-certain-findings-twice).  
+
+
+<img src="../images/system-security-grouping-location-ex-background.png" width="300" />
+
+In *"Location"*, either *"Component"* or *"File"* grouping can be chosen. The Component group follows the maintainability grouping in components. Findings may fall outside of that grouping because of exclusions. Then they will show under the *"Other"* component. Examples might be binaries or package manager configuration files, which would be excluded for maintainability analysis and therefore not fall into a component for the purpose of maintainability calculations. 
+
+<img src="../images/system-security-grouping-model-ex-background.png" width="300" />
+
+Under *"Model"*, different Models can be used to map findings on. This is in practice mostly a matter of preference or specific auditing requirements.
+
+## Your strategy for processing security findings
+
+In general, processing scan findings includes cleaning the results from false positives, adding priority, and writing explanations or recommendations. You may take different strategies that depend a lot on organizational context.
+
+* Probably you want to start with *"Open Source Health"* because they are regularly high-risk and urgent, yet relatively easy to solve. That has a high return on your efforts. Also, grouping the same libraries/frameworks may be favorable because you only need to go through release notes once. This might be harder if you need to cross teams to do that.
+  * Any occurring *possible legal risks* (e.g. GPL) are important to discuss with your legal department. These legal license risks tend to apply only in specific cases, e.g. when you have modified the source code. SIG explicitly cannot help you with legal advice. 
+
+* To get an *overview* of findings and to be able to make quick exclusions of false positives, it may be useful to order security findings by *component/file* [see above](#different-grouping-of-security-findings). A file-view may expose e.g. test-code, and a component-view may show that many files may lay in a certain functional domain (e.g. deployment). This may lead to a lot of exclusions and a cleaner overview of security findings. In the *File view* you can export findings as a spreadsheet. In case of very large lists of findings it may be advantageous to browse and filter in a spreadsheet editor, and then go back and exclude them (by groups). 
+  * A tactic during sprints is to use a kind of *Boy Scout* approach, where you compare findings for files while you are modifying them. This tends to be efficient because you are already working in/analyzing the code. You may consider to make this part of the Definition of Done.
+* *Prioritizing by severity* is the typical approach, and this is faithful to agile practices (assuming you choose the action with the highest return first). This way you move from urgent to less urgent findings.
+* Prioritizing based on grouping by patterns means that you may exclude or solve many findings in one go. There are indeed cases when a whole class of findings can be excluded because for some reason the findings are not applicable or can be resolved in one place.
+
+### SIG consultancy helping with security
+Depending on your agreement with SIG, security expertise consultancy may be available. See also [this question in the security FAQ](faq-security.md#to-what-extent-does-sig-provide-consultancy-for-security-findings).
+
+
+
+
+
+
