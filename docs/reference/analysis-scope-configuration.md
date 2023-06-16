@@ -9,22 +9,15 @@ By default, Sigrid will try to automatically detect the technologies you use, th
 
 The following example shows a typical example of the `sigrid.yaml` configuration file:
 
-```
-component_depth: 1
-exclude:
-  - ".*/simulator/.*"
-languages:
-  - name: java
-  - name: python
-  - name: typescript
-```
-
-
-## General configuration
-
-| Field              | Required | Description                                                                                                    |
-|--------------------|----------|----------------------------------------------------------------------------------------------------------------|
-| `model`            | No       | Version of the SIG quality model that should be used to analyze your project. Default is latest model version. |
+    component_depth: 1
+    exclude:
+      - ".*/simulator/.*"
+    languages:
+      - name: java
+      - name: python
+      - name: typescript
+      
+The various options and sections are explained in more detail in the remainder of this page.
 
 ## Excluding files and directories
 
@@ -34,24 +27,57 @@ It is possible to extend this list with project-specific files and directories t
 
 Note that it is not necessary to exclude files and directories that would not be analyzed anyway. 
 
+Patterns are defined using regular expressions, as explained in the next section.
+
+## Defining include and exclude patterns
+
+Various options across the scope configuration file allow you to define `include` and `exclude` patterns. At first glance, many people expect these patterns to behave like [Glob patterns](https://en.wikipedia.org/wiki/Glob_(programming) (for example `*.py`), but Sigrid actually uses [regular expressions](https://en.wikipedia.org/wiki/Regular_expression) instead. The reason for this is fairly straightforward: regular expressions are more flexible, which is relevant considering the large number of technologies and conventions that Sigrid needs to support.
+
+The following example specifies a component that includes all `.jsx` files in the `frontend` directory, except files ending with `.spec.jsx`:
+
+    components:
+      - name: "Our new React website"
+        include:
+          - ".*/frontend/.*[.]jsx"
+        exclude:
+          - ".*/.*[.]spec[.]jsx"
+          
+When you specify both `include` and `exclude` patterns, the exclude patterns take precedence. In this example, the file `frontend/home.jsx` would be included, but the file `frontend/example.spec.jsx` would be excluded.
+
+As a convention, all `include` and `exclude` patterns always start with `.*/`. It is tempting to always define patterns relative to the root of the codebase, but it is important to realize that what is considered the "root" is flexible in Sigrid. Depending on how you [map your repositories to systems](../organization-integration/systems.md), the root of your repository might not match the root of the Sigrid system that contains your repository. Starting all patterns `.*/` will avoid confusion in such situations.
+
+Some other common caveats when using regular expressions to define patterns:
+
+- All patterns are case-sensitive. This is relevant in case you are specifically searching for naming in camelCase or PascalCase. It is then useful to search for files like `SomeTest.java`.
+- You are entering patterns inside of a YAML file. YAML uses backslashes for escape characters. So if you want to use backslashes inside of your regular expressions, for example `\S+` (i.e. "one or more non-whitespace characters"), you will need to escape the backslash: `\\S+`.
+- If you want to express a literal dot `.`, use `[.]`. This means: 1 character in a group where only `.` is permitted.
+- Matching "positive" patterns is far easier than trying with negative lookaheads `(?!)`, as catching the full file path becomes difficult. There are cases where patterns may work such as `((?![unwanted string]).)+`, but these cases are hard to get right or debug.
+- Also, negative lookbehinds (`?<!`) are not recommended. They pattern to be matched requires a fixed length and it needs to immediately precede the rest of the pattern to work (wildcards tend to break here).
+
 ## Technology support
 
-See the [list of supported technologies](technology-support.md) for the names that can be used inside the `languages` section of the YAML file.
+The `languages` section lists all languages that you want Sigrid to analyze:
 
-### Overriding automatic technology-, and test code detection
+    languages:
+      - name: Csharp
+      - name: Java
+      - name: Python
+      - name: Typescript
+
+Refer to the [list of supported technologies](technology-support.md) for an overview of all supported technologies and the names that can be used.
+
+## Overriding automatic technology and test code detection
 
 When you add a technology to your scope file, Sigrid will try to locate the corresponding files based on file and directory name conventions. This includes automatic detection of test code. For example, Java-based projects typically use `src/main/java` for production code and `src/test/java` for test code.
 
 This automatic detection is usually sufficient for the majority of projects. However, if you are using less common frameworks or a custom naming convention, you will need to tell Sigrid where it can find the test code. Like other parts of the scope file, this is done using regular expressions:
 
-```
-languages:
-  - name: Java
-    production:
-    test:
-      include:
-        - ".*/our-smoke-tests/.*[.]java"
-```
+    languages:
+      - name: Java
+        production:
+        test:
+          include:
+            - ".*/our-smoke-tests/.*[.]java"
 
 This example will classify all Java code in the `our-smoke-tests` directory as test code.
 
@@ -59,21 +85,26 @@ This example will classify all Java code in the `our-smoke-tests` directory as t
 
 Component detection is based on the project's directory structure. What "components" mean depends on the technology. In Java, components are usually based on Maven modules. In C, components are often simply the project's top-level directories.
 
-Components can be defined in two ways. The simple option is to simply base the components on directory depth. The following example will use the project's top-level directories as components.
+Components can be defined in several ways, which are explained below.
+
+**Option 1: Defining components based on directory depth**
+
+The simple option is to simply base the components on directory depth. The following example will use the project's top-level directories as components.
 
     component_depth: 1
     
+**Option 2: Defining components based on base directories**
+
 In some projects, using directory depth will not accurately reflect the actual component structure. The more advanced options allows you to define components explicitly:
-
-
-**Advanced Option 1** (short)
 
     component_base_dirs:
       - "modules"
       - "modules/specific"
-      - "" \[This includes the root directory as a separate component\]
+      - "" # This includes the root directory as a separate component
+      
+**Option 3: Defining components manually**
 
-**Advanced Option 2** (can be more specific, but also harder to maintain)
+In some cases the components really do not match the directory structure, and the only way to define components is by manually listing what should go where. In the example below, regular expressions are used to define what files and directories belong to each component. The syntax is identical to the patterns used in the `exclude` section. These `include` and `exclude` patterns work as explained in the [patterns section](#defining-include-and-exclude-patterns).
 
     components:
       - name: "Back-end"
@@ -83,26 +114,7 @@ In some projects, using directory depth will not accurately reflect the actual c
         include:
           - ".*/cs/findbugs/log/.*"
           
-In this example, regular expressions are used to define what files and directories belong to each component. The syntax is identical to the patterns used in the `exclude` section.
-
-### A note about writing regular expression patterns
-* The full file path must always be matched instead of (part of) a filename. This generally requires some wildcards.
-  - The engine starts searching starting with the first "/". So if you are fairly certain that the first level folder structure is stable you could hardcode that in the pattern, such as
-```
-name: “frontend”
-include:
-  - “/frontend/.*[.]jsx”
-```
-* All patterns are case-sensitive. This is relevant in case you are specifically searching for naming in camelCase or PascalCase. It is then useful to search for files like /SomeTest.java.
-<!--Note SR: to show 2 backslashes you have to write 3 backslashes-->
-* Escape special groups with an extra backslash. This is because yaml interprets “\” as an escape character (so does GitHub, by the way). So a regular expression searching for a space character needs 2 backslashes like so: “\\\s” or a word character (defined as [a-zA-Z0-9_]) as “\\\w”.
-  - If you want to express a literal dot “.” use "[.]". This means: 1 character in a group where only “.” is permitted. This is more readable than , “\\\.”.
-* Matching "positive" patterns is far easier than trying with negative lookaheads "(?!)" because catching the full file path becomes difficult. There are cases where patterns may work such as "((?![unwanted string]).)+", but these are hard to get right/debug.
-  - Also, negative lookbehinds (?<!) are not recommended. They need to be fixed length and immediately precede the pattern to work (wildcards tend to break the pattern).
-* There may be cases where you need to add test files manually. This may ask for precise pattern because not all files ending with “test” will be tests (for example,“latest”).
-  - “.\*/[^/]*Test(s)?.java"  (anything in the last folder/after the last “/” ending with Test.java or Tests.java)
-  - “.\*/[a-z0-9-_]*Test[.]java” (camelCase in the final folder)
-
+In general you should try to avoid defining components in this way: not because it is not possible, but because it is hard to maintain. This might work perfectly well for your system's *current* codebase, but what's going to happen when someone moves a file or adds a directory? This type of component configuration will require constant maintenance.
 
 ## Open Source Health
 
@@ -148,23 +160,52 @@ The `thirdpartyfindings` section supports the following options:
 
 **Note: This requires an Architecture Quality license, which is currently restricted to a limited customer beta. Without this license, you will not be able to see security results in Sigrid.**
 
+Similar to other Sigrid capabilities, you can enabled the Architecture Quality capability by adding a section to your configuration file:
+
     architecture:
       enabled: true
       
-Architecture Quality also requires the repository history to be included in the upload. This requires the `--include-history` option to be enabled in the [Sigrid CI client script](client-script-usage.md).
+Adding this section to the configuration will automatically enable the Architecture Quality analysis every time you publish your system to Sigrid.
       
-The `architecture` section supports the following options:
+### Analyzing your repository history
+      
+Architecture Quality also requires the repository history to be included in the upload. This requires the `--include-history` option to be enabled in the [Sigrid CI client script](client-script-usage.md). See the [frequently asked questions for architecture quality](../capabilities/faq-architecture.md) for more information on how the repository history is analyzed.
 
-| Option name           | Required? | Description                                                                                    |
-|-----------------------|-----------|------------------------------------------------------------------------------------------------|
-| `enabled`             | Yes       | Set to `true` to enable architecture quality analysis.                                         |
-| `model`               | No        | Version of the SIG Architecture Quality Model to use. Defaults to latest version.              |
-| `exclude`             | No        | List of exclude patterns that applies only to Architecture Quality, not globally.              |
-| `add_dependencies`    | No        | List of manually added dependencies on top of the ones detected automatically by the analysis. |
-| `remove_dependencies` | No        | List of dependencies that manually overrides the analysis and removes them from the results.   |
+When you publish your repository history to Sigrid, it is automatically picked up by the Architecture Quality analysis without needing further configuration. By default, Sigrid will analyze the repository history for the last year. If you want to change this to a different period, you can manually specify the time period that should be analyzed:
 
-The `add_dependencies` and `remove_dependencies` fields expect a value in the format `name -> name`. You can use the same name that you see in Sigrid. This works for both file dependencies and component dependencies.
+    architecture:
+      enabled: true
+      history_start: "2023-01-01"
+      
+### Manually specifying architecture dependencies
 
+Although Sigrid supports hundreds of technologies, there is always the possibility that Sigrid doesn't automatically detect the dependencies for your particular framework. It is therefore possible to manually define additional dependencies, which will be added on top of the automatic dependency detection:
+
+    architecture:
+      enabled: true
+      add_dependencies:
+        - source: backend
+          target: frontend
+            
+The names for the `source` and `target` fields are the same you see in Sigrid's user interface. You can use the same mechanism to remove false positives from the automatic dependency detection:
+
+    architecture:
+      enabled: true
+      remove_dependencies:
+        - source: frontend
+          target: backend
+          
+### Excluding files and directories for Architecture Quality
+
+The `architecture` section in the configuration has its own `exclude` option, which can be used to exclude certain files and directories from the Architecture Quality analysis.
+
+    architecture:
+      enabled: true
+      exclude:
+        - ".*/index[.]ts"
+        
+The list of exclude patterns works in the same way as the global, top-level `exclude` option. The difference is the global option excludes files and directories from *all* Sigrid capabilities, and the architecture `exclude` option excludes them from Architecture Quality but not from other Sigrid capabilities. See the [pattern documentation](#defining-include-and-exclude-patterns) for more information on writing these patterns.
+          
 ## Sigrid metadata
 
 `sigrid.yaml` is used for *analysis* configuration. It is also possible to configure Sigrid *metadata*. See the [Sigrid metadata](../organization-integration/metadata.md) section for the various ways you can update this metadata.
