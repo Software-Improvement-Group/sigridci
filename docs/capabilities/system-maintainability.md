@@ -1,11 +1,16 @@
 # System-level maintainability
+The maintainability view is available for all systems by default. 
+You can reach this view in different ways: Via the top menu, or clicking an a capability on the System or Portfolio *Overview* pages. See the [system-level Overview page](system-overview.md#navigating-to-capabilities) or [portfolio-level Overview page](portfolio-overview.md#navigating-to-capabilities).
+
+
 <img src="../images/system-maintainability-menu-ex-architecture.png" width="600" />
 
 The maintainability section on the system level has 4 views: 
 1. The *Overview* tab brings the main metrics together. 
 2. The *Component Dependencies* tab visualizes architectural layering and connections.
 3. The *Refactoring Candidates* tab groups and prioritizes code that does not meet 4 star quality. 
-4. The *Delta quality* view shows the impact of new code changes on the system for the selected period.
+4. The [*Delta quality*](system-delta-quality.md) view shows the impact of new code changes on the system for the selected period.
+
 ## Overview
 The overview page is shown below. 
 * The system’s (configured) architecture is visible in the top right. This is based on the system’s scope configuration (see [the page on scope configuration](../reference/analysis-scope-configuration.md)). 

@@ -34,12 +34,20 @@ Moving deeper into code details, to know what to focus development efforts on, e
 
 ## Navigating to capabilities
 
-You can use the main menu to navigate to other system-level pages for specific Sigrid capabilities.
-
+Whichever Sigrid tab you are working in now, you can use the top menu to navigate to other system-level pages for specific Sigrid capabilities.
 <img src="../images/system-overview-top-bar.png" width="600" />
 
 Under the *Findings* menu, specific capabilities such as security may be available for your system. This depends on whether this has been activated for your system or portfolio. Shown below is the full menu. Your menu under *Findings* might look slightly different.
-
 <img src="../images/system-findings-menu-ex-osh.png" width="250" />
 
-These pages are explained elsewhere in this documentation. 
+Starting from the System Overview: to move to specific capabilities you can also use the *Quality Overview* clicking on the area of your interest.
+<img src="../images/system-overview-quality-overview.png" width="600" />
+
+Starting from the Portfolio *Overview*: similar to the system overview, you can click on a capability of your interest, and then select the system you want to investigate further.
+<img src="../images/portfolio-overview-quality-overview.png" width="600" />
+
+These capability pages are explained specifically here:
+* [System maintainability](system-maintainability.md) and [Delta quality](system-delta-quality.md)
+* [System architecture quality](architecture-quality.md)
+* [System security](system-security.md)
+* [Code explorer](system-code-explorer.md)
