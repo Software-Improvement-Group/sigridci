@@ -43,9 +43,6 @@ Under the *Findings* menu, specific capabilities such as security may be availab
 Starting from the System Overview: to move to specific capabilities you can also use the *Quality Overview* clicking on the area of your interest.
 <img src="../images/system-overview-quality-overview.png" width="600" />
 
-Starting from the Portfolio *Overview*: similar to the system overview, you can click on a capability of your interest, and then select the system you want to investigate further.
-<img src="../images/portfolio-overview-quality-overview.png" width="600" />
-
 These capability pages are explained specifically here:
 * [System maintainability](system-maintainability.md) and [Delta quality](system-delta-quality.md)
 * [System architecture quality](architecture-quality.md)
