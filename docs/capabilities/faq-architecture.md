@@ -1,5 +1,5 @@
-Sigrid Architecture Quality: Frequently Asked Questions
-=======================================================
+Architecture Quality: Frequently Asked Questions
+================================================
 
 This FAQ specifically covers Sigrid's Architecture Quality functionality. Also check the [Sigrid FAQ](faq.md) for more information about Sigrid in general.
 
@@ -55,7 +55,6 @@ The scope configuration file has an option called `history_enabled`. You normall
 analys will automatically detect whether the upload contains the project's change history. However, if the  upload
 *does* contain the change history, but you do *not* want to use the change history in the analysis, you can add the
 configuration option `history_enabled: false`.
-
 
 ## Contact and support
 

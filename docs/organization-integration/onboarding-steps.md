@@ -1,6 +1,6 @@
 # How to set up Sigrid
 
-<img src="../images/onboarding-steps.png" width="700" />
+<img src="../images/onboarding-steps.png" width="800" />
 
 ### Before you start
 
