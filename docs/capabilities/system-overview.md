@@ -37,6 +37,9 @@ Moving deeper into code details, to know what to focus development efforts on, e
 Whichever Sigrid tab you are working in now, you can use the top menu to navigate to other system-level pages for specific Sigrid capabilities.
 <img src="../images/system-overview-top-bar.png" width="600" />
 
+Under the *Findings* menu, specific capabilities such as security may be available for your system. This depends on whether this has been activated for your system or portfolio. Shown below is the full menu. Your menu under *Findings* might look slightly different.
+<img src="../images/system-findings-menu-ex-osh.png" width="250" />
+
 Starting from the System Overview: to move to specific capabilities you can also use the *Quality Overview* clicking on the area of your interest.
 <img src="../images/system-overview-quality-overview.png" width="600" />
 
