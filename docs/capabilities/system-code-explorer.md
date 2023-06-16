@@ -1,9 +1,6 @@
 # System-level Code Explorer
 
-The Code Explorer view lets you explore a system’s codebase and maintainability findings that are associated with it. It is visible by default for all systems.  
-
-You can reach this view in different ways: Via the top menu, or clicking an a capability on the System or Portfolio *Overview* pages. See the [system-level Overview page](system-overview.md#navigating-to-capabilities) or [portfolio-level Overview page](portfolio-overview.md#navigating-to-capabilities).
-
+The Code Explorer view lets you explore a system’s codebase and maintainability findings that are associated with it. 
 
 ## Different views
 Exploring the codebase can be done e.g. by directory tree or components (as defined in the system’s configuration). Because maintainability findings can be grouped on a file level, “problem hotspots” in the code can be found. 

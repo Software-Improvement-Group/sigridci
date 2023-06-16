@@ -25,5 +25,4 @@ You can use the main menu at the top of the page to navigate to portfolio-level 
 
 <img src="../images/portfolio-overview-top-bar.png" width="600" />
 
-Or from the Portfolio *Overview*, you can click on a capability of your interest, and then select the system you want to investigate further.
-<img src="../images/portfolio-overview-quality-overview.png" width="600" />
+The items in this menu are explained in [Portfolio-level maintainability](portfolio-maintainability.md)
