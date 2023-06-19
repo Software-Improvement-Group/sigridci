@@ -1,4 +1,4 @@
-# Sigrid workflow for developer
+# Sigrid workflow for developers
 
 ## Set your quality objectives
 
