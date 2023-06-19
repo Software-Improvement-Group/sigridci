@@ -15,8 +15,12 @@ Note that metrics can be compared to [objectives](../capabilities/objectives.md)
 ## Role: Product Owner for system development progress and planning
 To gauge development progress and expected remaining demands, you are interested in indications of how predictable code development is. When progress and trend lines are your main interest, go to [the maintainability detail page](../capabilities/system-maintainability.md) and code evolution [known as "delta quality"](../capabilities/system-delta-quality.md).
 
+To look into the workflows that Sigrid offers you as a PO, you can read the dedicated [workflows section](../workflows/product-owner.md).
+
 
 ## Role: Developer for direct feedback on how to improve your code
 In places where Sigrid highlights code quality hotspots, you are interested in going into their details. To understand where and why issues occur. The typical scenario is focusing on code that scores low on maintainability. Typically that code is recognized by developers as tough to modify. The detailed metrics can show what kinds of complexity lies beneath.
 
 The metric details of interest mostly follow from the [system maintainability page](../capabilities/system-maintainability.md), notably [architecture/component dependencies](../capabilities/system-maintainability.md#component-dependencies), [prioritized list of refactoring candidates](../capabilities/system-maintainability.md#refactoring-candidates) and [a code-tree view in the code explorer](../capabilities/system-code-explorer.md) or [alternatively, the technical monitor](../capabilities/system-maintainability.md#note-on-the-technical-monitor).
+
+To look into the workflows that Sigrid offers you as a developer, you can read the dedicated [workflows section](../workflows/developer.md).
