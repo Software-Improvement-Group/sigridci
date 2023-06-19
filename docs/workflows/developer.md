@@ -1,7 +1,7 @@
 # Sigrid workflow for developers
 
 As a developer, you will be interacting with other stakeholders during your day-to-day work, providing your unique perspective on the codebase as someone who actually writes the code and implements the necessary features.
-As a project evolves, a lot of details can change over time, like the teams who work on it, the scope and requests from customers. Your task as a developer then becomes managing all these aspects together.
+As a project evolves, a lot of its details can change over time, like the teams who work on it, the scope and requests from customers. Your task as a developer then becomes managing all these aspects together.
 
 <img src="../images/po-priorities.png" width="600" />
 
