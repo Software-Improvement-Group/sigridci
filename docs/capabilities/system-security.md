@@ -5,7 +5,7 @@ System-level security is one of the detailed technical views under *Findings*. T
 You can reach the system-level security view in different ways: Via the top menu, or clicking an a capability on the System or Portfolio *Overview* pages. See the [system-level Overview page](system-overview.md#navigating-to-capabilities) or [portfolio-level Overview page](portfolio-overview.md#navigating-to-capabilities).
 
 ## Security Overview
-The security overview page shows a summary of findings, their change, age and estimated severity.
+The security overview page shows a summary of findings, their change, age and estimated severity. In this example, 
 <img src="../images/system-security-overview.png" width="600" />
 
 The different elements in this page are:
@@ -28,12 +28,14 @@ These are the different statutes of findings. The status *"Fixed"* will be appli
 * *"Will fix"* signals the intention to fix it, while *"Risk Accepted"* does not.
 
 ## Different grouping of security findings
-Different views can be selected in the left menu. security models. The menu selector on the left you to easily toggle between the different models in one view. Next to popular models, SIG has developed its own model based on the ISO standard, more information see [https://www.softwareimprovementgroup.com/wp-content/uploads/SIG-Evaluation-Criteria-Security.pdf].
+Different views can be selected in the left menu. security models. The menu selector on the left you to easily toggle between the different models in one view. 
 
 
 <img src="../images/system-security-grouping-finding-status-ex-background.png" width="300" />
 
-Note that here, the bold category is the currently chosen grouping. Under *"Finding"*, the following grouping can be set:
+Note that here, the menu's category in bold is the currently chosen grouping. Therefore, below, under the column *"Description"*, different statuses are shown. Because *"Grouping"* means that Sigrid will show you a summary, the number of findings are shown on the right column under *"Findings"*, such as [C]1, [H]1, [M]99+ and [I]99+. These abbreviate the severity of the findings, respectively *"Critical"*, *"High"*, *"Medium"* and *"Information"* and their count. You can click on those for a listing of the detailed findings.
+
+In the Grouping menu in the top left under *"Finding"*, the following types of grouping can be set:
 
 * *"Activity"* groups according to *"New"*, *"Recurring"* or *"Resolved"*.
 * *"Origin"* refers to the originating tool of the finding.
@@ -49,7 +51,24 @@ In *"Location"*, either *"Component"* or *"File"* grouping can be chosen. The Co
 
 <img src="../images/system-security-grouping-model-ex-background.png" width="300" />
 
-Under *"Model"*, different Models can be used to map findings on. This is in practice mostly a matter of preference or specific auditing requirements.
+Under *"Model"*, different Models can be used to map findings on. This is in practice mostly a matter of preference or specific auditing requirements. Next to popular security models, SIG has developed its own model based on the ISO 25010 standard, which can also be chosen. These are based on the [SIG Evalution Criteria Security][https://www.softwareimprovementgroup.com/wp-content/uploads/SIG-Evaluation-Criteria-Security.pdf].
+
+## Analyzing security findings:
+You can group and sort the detailed view of security findings. The sorting offers you the following.  
+<img src="../images/system-security-sorting-menu.png" width="300" />
+
+Below an example of a list of detailed findings. 
+<img src="../images/system-security-overview-no-grouping-sorting-status.png" width="600" />
+
+In the top left you can see that the findings are not grouped. Therefore each finding is shown individually. Below, the *"Grouping"* menu under *"Sorting"*, sorting is set to CVSS severity. Therefore the highest risk findings are shown above. Note that for example the first two findings are Maven dependencies. These originate from [Open Source Health](system-open-source-health.md). 
+
+If Remarks have been registered, they can be seen in the far right column with a mouseover or clicking on the text balloon. An example of a mouseover is shown here. Open Source Health automatically adds this remark, but they can also be adjusted manually. 
+<img src="../images/system-security-osh-remark-mouseover.png" width="300" />
+
+If you click on the finding, the source code of the finding will be shown with its details. 
+<img src="../images/system-security-security-os-inj-example-detail.png" width="600" />
+
+The mechanism and interface for a security finding is essentially the same as for Open Source Health. Here, the specific line is highlighted in yellow, where a possible vulnerability may exist (in this case, OS injection). For details on e.g. the right panel, see [Open Source Health-analysis section](system-open-source-health.md#analyzing-security-findings-open-source-health-example).
 
 ## Your strategy for processing security findings
 
