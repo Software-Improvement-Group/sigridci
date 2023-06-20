@@ -4,6 +4,9 @@ System-level security is one of the detailed technical views under *Findings*. T
 
 You can reach the system-level security view in different ways: Via the top menu, or clicking an a capability on the System or Portfolio *Overview* pages. See the [system-level Overview page](system-overview.md#navigating-to-capabilities) or [portfolio-level Overview page](portfolio-overview.md#navigating-to-capabilities).
 
+The tooling underlying this analysis is updated as often as possible. Therefore it may be possible that [new findings are found even when code is unchanged (link to FAQ)](faq-security.md#is-it-possible-that-sigrid-creates-new-findings-without-us-changing-the-code).
+
+
 ## Security Overview
 The security overview page shows a summary of findings, their change, age and estimated severity. In this example, 
 <img src="../images/system-security-overview.png" width="600" />
@@ -23,13 +26,12 @@ The different elements in this page are:
 * The *Findings Age* tile gives an indication how long findings are known. 
 
 ## Different statuses of security findings
-These are the different statutes of findings. The status *"Fixed"* will be applied automatically if a finding is resolved. The other statuses can be set. They are similar to those used for [system maintainability refactoring candidates](system-maintainability.md#refactoring-candidates). 
+These are the different statutes of findings. The status *"Fixed"* will be applied automatically if a finding is resolved. See [FAQ:Fixed issues are auto-detected](faq-security.md#how-does-the-automatic-detection-of-fixed-findings-work). The other statuses can be set. They are similar to those used for [system maintainability refactoring candidates](system-maintainability.md#refactoring-candidates). 
 * *"Raw"* means "not yet verified" where *"Refined"* ones mark that a finding has been confirmed manually. Inversely, a finding can be set as *"False positive"*. 
 * *"Will fix"* signals the intention to fix it, while *"Risk Accepted"* does not.
 
 ## Different grouping of security findings
 Different views can be selected in the left menu. security models. The menu selector on the left you to easily toggle between the different models in one view. 
-
 
 <img src="../images/system-security-grouping-finding-status-ex-background.png" width="300" />
 
@@ -42,8 +44,7 @@ In the Grouping menu in the top left under *"Finding"*, the following types of g
 * *"Severity"* orders on level of severity (based on CVSS).
 * *"Status"* lists the statuses as [mentioned above](#different-statuses-of-security-findings).
 * *"Type"* shows a specific list of vulnerabilities. This is especially useful for technical analysis, since sometimes, a whole category/type of findings may be set to *"False positive"*. 
-* *"Weakness"* orders on type of weaknesse (based on the CWE database). Weaknesses are somewhat higher level than *"Type"*. Note that 1 finding might refer to multiple CWEs, and therefore the same line of code might be counted multiple times (a count is applied for each possible security risk). See also [security FAQ elaboration](faq-security.md#why-does-the-finding-list-count-certain-findings-twice).  
-
+* *"Weakness"* orders on type of weaknesse (based on the CWE database). Weaknesses are somewhat higher level than *"Type"*. 
 
 <img src="../images/system-security-grouping-location-ex-background.png" width="300" />
 
@@ -53,7 +54,12 @@ In *"Location"*, either *"Component"* or *"File"* grouping can be chosen. The Co
 
 Under *"Model"*, different Models can be used to map findings on. This is in practice mostly a matter of preference or specific auditing requirements. Next to popular security models, SIG has developed its own model based on the ISO 25010 standard, which can also be chosen. These are based on the [SIG Evalution Criteria Security][https://www.softwareimprovementgroup.com/wp-content/uploads/SIG-Evaluation-Criteria-Security.pdf].
 
-## Analyzing security findings:
+### A note on seeing the same file/finding multiple times
+* **A specific finding** is counted once, but it may be visible in multiple views. This could be because e.g. there is certain overlap in classification of the model that you have chosen as a view. 
+* **A specific line** may be counted multiple times if it refers to multiple CWEs: a count is applied for each possible security risk. See also [security FAQ elaboration on multiple views of the same finding](faq-security.md#why-does-the-finding-list-count-certain-findings-twice).  
+
+
+## Analyzing security findings
 You can group and sort the detailed view of security findings. The sorting offers you the following.  
 <img src="../images/system-security-sorting-menu.png" width="300" />
 
@@ -62,13 +68,32 @@ Below an example of a list of detailed findings.
 
 In the top left you can see that the findings are not grouped. Therefore each finding is shown individually. Below, the *"Grouping"* menu under *"Sorting"*, sorting is set to CVSS severity. Therefore the highest risk findings are shown above. Note that for example the first two findings are Maven dependencies. These originate from [Open Source Health](system-open-source-health.md). 
 
-If Remarks have been registered, they can be seen in the far right column with a mouseover or clicking on the text balloon. An example of a mouseover is shown here. Open Source Health automatically adds this remark, but they can also be adjusted manually. 
+If Remarks have been registered, they can be seen in the far right column with a mouseover or clicking on the text balloon. An example of a mouseover is shown here. 
 <img src="../images/system-security-osh-remark-mouseover.png" width="300" />
 
-If you click on the finding, the source code of the finding will be shown with its details. 
+If you click on the finding, the source code of the finding will be shown with its details. Details such as Status, finding age, Origin (scanning tool), File location, Remarks (if available) or audit trail are all viewable here.
 <img src="../images/system-security-security-os-inj-example-detail.png" width="600" />
 
-The mechanism and interface for a security finding is essentially the same as for Open Source Health. Here, the specific line is highlighted in yellow, where a possible vulnerability may exist (in this case, OS injection). For details on e.g. the right panel, see [Open Source Health-analysis section](system-open-source-health.md#analyzing-security-findings-open-source-health-example).
+In the left panel, the specific line is highlighted in yellow, where a possible vulnerability may exist (in this case, OS injection). For details on e.g. the right panel, see [Open Source Health-analysis section](system-open-source-health.md#analyzing-security-findings-open-source-health-example). Extra information such 
+
+## Analyzing security findings: Dependency example (based on Open Source Health)
+As above, starting from the findings overview: if you click on the finding, the source code of the finding will be shown with its details. 
+<img src="../images/system-security-maven-finding-detail-sshd-search.png" width="600" />
+
+In case that the relevant line is not highlighted in yellow (this sometimes occurs in package management files), you can search within the file with cmd+f/ctrl+f. By default your browser takes precedence for this shortcut and therefore will try to search the page. You therefore need to move mouse focus to the left pane by clicking on the source code area or tabbing to the element first. You can use regular expressions if you wish so. 
+
+On the right side of the page, all details surrounding the finding are shown. If available, the relevant *CWE* will be shown. This is part of the authoritative list of weakness types known as the *"Common Weakness Enumeration"* by MITRE [MITRE CWE website](https://cwe.mitre.org/). The CWE link in the security finding will refer you to the [OWASP CRE page](https://www.opencre.org/) of which SIG has been an active contributor. It is an open source, OWASP supported reference knowledge base that links all sorts of relevant, authoritative security reference documents and their explanations. 
+
+With the buttons in the top right, you can edit the finding or show the code in the  *"Code Explorer"*, which will show you code context. See also [Code Explorer](system-code-explorer.md). 
+
+<img src="../images/system-security-pom-dependency-edit-finding.png" width="300" />
+
+In this case, because this is an automatically scanned dependency by [Open Source Health](system-open-source-health.md), e.g. changing its status to "false positive" will not necessarily remove the finding indefinitely. As long as the OSH tooling finds the same result, it will return. See also [this specific case in the Security FAQ](faq-security.md#i-previously-marked-a-security-finding-in-an-open-source-library-as-a-false-positive-but-now-it-is-back). The same holds for the *"Remark"*. Findings by *Open Source Health automatically add the type of vulnerability and vulnerability (CVE) reference. Remarks can also be adjusted manually. Any user can edit remarks or other characteristics. This could also be a SIG consultant, depending on your specific Sigrid agreement. 
+
+An audit trail can be seen when clicking the *"Show Audit Trail"* button. In case of changes, multiple entries will be shown with their respective usernames and dates.
+
+<img src="../images/system-security-audit-trail.png" width="300" />
+
 
 ## Your strategy for processing security findings
 
