@@ -8,7 +8,7 @@ In case that the relevant line is not highlighted in yellow (this sometimes occu
 
 On the right side of the page, all details surrounding the finding are shown. If available, the relevant *CWE* will be shown. This is part of the authoritative list of weakness types known as the *"Common Weakness Enumeration"* by MITRE [MITRE CWE website](https://cwe.mitre.org/). The CWE link in the security finding will refer you to the [OWASP CRE page](https://www.opencre.org/) of which SIG has been an active contributor. It is an open source, OWASP supported reference knowledge base that links all sorts of relevant, authoritative security reference documents and their explanations. 
 
-With the buttons in the top right, you can edit the finding or show the code in the  *"Code Explorer"*, which will show you code context. See also [Code Explorer](code-explorer.md). 
+With the buttons in the top right, you can edit the finding or show the code in the  *"Code Explorer"*, which will show you code context. See also [Code Explorer](system-code-explorer.md). 
 
 <img src="../images/system-security-pom-dependency-edit-finding.png" width="300" />
 
