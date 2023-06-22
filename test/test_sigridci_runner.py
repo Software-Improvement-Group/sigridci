@@ -549,6 +549,22 @@ class SigridCiRunnerTest(unittest.TestCase):
             for file in files:
                 self.assertFalse(file.endswith(".zip"))
 
+    def testExitWhenSystemIsNotActive(self):
+        tempDir = tempfile.mkdtemp()
+        self.createTempFile(tempDir, "a.py", "print(123)")
+
+        options = UploadOptions(sourceDir=tempDir)
+        target = TargetQuality("/tmp/nonexistent", 3.5)
+        apiClient = MockApiClient(systemName="i-am-not-active")
+
+        runner = SigridCiRunner()
+
+        with self.assertRaises(SystemExit) as raised:
+            runner.run(apiClient, options, target, [])
+
+        self.assertTrue(1 in raised.exception.args)
+        self.assertEqual(LOG_HISTORY, ["System aap-i-am-not-active has been deactivated (HTTP status 410)"])
+
     def createTempFile(self, dir, name, contents):
         with open(f"{dir}/{name}", "w") as fileRef:
             fileRef.write(contents)
@@ -556,11 +572,11 @@ class SigridCiRunnerTest(unittest.TestCase):
         
         
 class MockApiClient(SigridApiClient):
-    def __init__(self, systemExists=True, uploadAttempts=0, subsystem=None, runMode=RunMode.FEEDBACK_ONLY):
+    def __init__(self, systemName="noot", systemExists=True, uploadAttempts=0, subsystem=None, runMode=RunMode.FEEDBACK_ONLY):
         self.called = []
         self.urlPartnerName = "sig"
         self.urlCustomerName = "aap"
-        self.urlSystemName = "noot"
+        self.urlSystemName = systemName
         self.runMode = runMode
         self.systemExists = systemExists
         self.uploadAttempts = uploadAttempts
@@ -575,7 +591,11 @@ class MockApiClient(SigridApiClient):
         if not self.systemExists and path.endswith("/sigridci/aap/noot/v1/ci"):
             # Mock a HTTP 404.
             raise urllib.error.HTTPError(path, 404, "", {}, None)
-        
+
+        if path.endswith("/sigridci/aap/i-am-not-active/v1/ci"):
+            # Mock a HTTP 410.
+            raise urllib.error.HTTPError(path, 410, "System aap-i-am-not-active has been deactivated", {}, None)
+
         defaultResponse = {"ciRunId" : "123", "uploadUrl" : "dummy"}
         return self.responses.get(path, defaultResponse)
         
