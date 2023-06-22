@@ -145,6 +145,12 @@ class SigridApiClient:
                 elif e.code == 403:
                     log(f"You are not authorized to access Sigrid for this system (HTTP status {e.code})")
                     sys.exit(1)
+                elif e.code == 410:
+                    if e.reason:
+                        log(f"{json.loads(e.reason)} (HTTP status {e.code})")
+                    else:
+                        log(f"The system no longer exists (HTTP status {e.code})")
+                    sys.exit(1)
                 elif allow404 and e.code == 404:
                     return False
             
