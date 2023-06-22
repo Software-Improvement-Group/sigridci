@@ -147,7 +147,7 @@ class SigridApiClient:
                     sys.exit(1)
                 elif e.code == 410:
                     if e.reason:
-                        log(f"{json.loads(e.reason)} (HTTP status {e.code})")
+                        log(f"{e.reason} (HTTP status {e.code})")
                     else:
                         log(f"The system no longer exists (HTTP status {e.code})")
                     sys.exit(1)

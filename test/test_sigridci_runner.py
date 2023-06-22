@@ -594,7 +594,7 @@ class MockApiClient(SigridApiClient):
 
         if path.endswith("/sigridci/aap/i-am-not-active/v1/ci"):
             # Mock a HTTP 410.
-            raise urllib.error.HTTPError(path, 410, '"System aap-i-am-not-active has been deactivated"', {}, None)
+            raise urllib.error.HTTPError(path, 410, "System aap-i-am-not-active has been deactivated", {}, None)
 
         defaultResponse = {"ciRunId" : "123", "uploadUrl" : "dummy"}
         return self.responses.get(path, defaultResponse)
