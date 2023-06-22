@@ -58,13 +58,24 @@ h2, h3 {
     display: none;
 }
 
-input[type="checkbox"] + .category + .pages {
+.container nav input[type="checkbox"] + .category + .pages {
     display: none;
 }
 
-input[type="checkbox"]:checked + .category + .pages {
+.container nav input[type="checkbox"]:checked + .category + .pages {
     display: block;
-    border-top: 1px solid #687483;
+}
+
+.container nav input[type="checkbox"] + .category:before {
+    content: "▶  ";
+    font-size: 12px;
+    display: inline-block;
+    width: 22px;
+    vertical-align: middle;
+}
+
+.container nav input[type="checkbox"]:checked + .category:before {
+    content: "▼  ";
 }
 
 .container nav .toc a {
@@ -88,7 +99,7 @@ input[type="checkbox"]:checked + .category + .pages {
     font-size: 12px;
 }
 
-.container nav .toc a:hover {
+.container nav .toc a:hover, .toc .currentSection {
     background-color: rgba(255, 255, 255, 0.2);
 }
 
