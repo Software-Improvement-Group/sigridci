@@ -52,7 +52,7 @@ No, as the shallow clone will only download the code and will *not* download the
 ### When should I use the history_enabled option?
 
 The scope configuration file has an option called `history_enabled`. You normally don't need to use this option, the
-analys will automatically detect whether the upload contains the project's change history. However, if the  upload
+analysis will automatically detect whether the upload contains the project's change history. However, if the  upload
 *does* contain the change history, but you do *not* want to use the change history in the analysis, you can add the
 configuration option `history_enabled: false`.
 
