@@ -3,50 +3,51 @@ Sigrid Security: Frequently Asked Questions
 
 This FAQ specifically covers Sigrid's security functionality. Also check the [Sigrid FAQ](faq.md) for more information about Sigrid in general.
 
-### How do you track if a finding has been fixed?
-
-Finding status is automatically updated based on the finding's "fingerprint". If a fingerprint is no longer found, the issue will be set to *Fixed*. If a new fingerprint is found, it will become a new finding.
-
-The finding fingerprint is calculated from multiple fields: analysis tool, rule, file name, and the line of code where the finding was located combined with the line before and after it. 
-
-We use this approach to reduce the amount of busywork. Findings are automatically resolved to avoid situations where people fix something in the code, but then forget to update the finding in Sigrid. Moreover, multiple overlapping findings will automatically be merged if they have the same fingerprint. This means automatic deduplication, which is important for keeping the findings as actionable as possible.
-
-### What status can findings be in?
-
-- **Raw:** Initial status when a finding is first created by Sigrid.
-- **Refined:** Indicates a finding has been interpreted by an expert.
-- **False positive:** Indicates the finding is invalid, and does not actually pose any risk.
-- **Will fix:** Indicates the finding should be fixed. This is different from the "refined" status, in that some findings must be fixed while others can remain open as the risk is deemed acceptable.
-- **Fixed:** The finding no longer poses any risk. This status can be assigned by Sigrid if a previous finding is no longer found in subsequent scans. 
+## Security findings (ex. Open Source Health)
 
 ### Is it possible that Sigrid creates new findings without us changing the code?
 
-Yes, in some cases. SIG is continuously extending our security knowledge base, which means that new findings are sometimes discovered in existing code. This can feel unfair to some teams, but it's important to realize that Sigrid indicates *risk* in the system. In other words, when a new finding is found it doesn't necessarily mean the team did something wrong, it simply means a new risk was discovered and needs to be addressed.
+Yes, in some cases. We are continuously extending our security knowledge base. Therefore, new findings are sometimes discovered in existing code. It might seem as a deterioration of the system's security. But actually it is a more accurate assessment of *security risk* in the system. 
+
+### What statuses can security findings have?
+See [Different statuses of security findings](system-security.md#different-statuses-of-security-findings).
+
+### How does the automatic detection of "Fixed" findings work?
+The status of a finding is automatically updated based on its "fingerprint". If a fingerprint is no longer found, the issue will be set to *Fixed*. If a new fingerprint is found, it will become a new finding.
+
+The finding fingerprint is a calculated identifier based on multiple characteristics of the finding: analysis tool, rule, file name, and the line of code where the finding was located combined with the line before and after it. 
+
+We use this approach to reduce the amount of busywork. Findings are automatically resolved to avoid situations where people fix something in the code, but then forget to update the finding in Sigrid. Moreover, multiple overlapping findings will automatically be merged if they have the same fingerprint. This means automatic deduplication, which is important for keeping the findings as actionable as possible.
+
+## Open Source Health
 
 ### Does Sigrid support transitive dependencies?
+Yes. This is configurable. Scanning transitive dependencies is preferable from a security perspective, as vulnerabilities in transitive dependencies may be equally problematic as vulnerabilities in direct dependencies. However, it does introduce nuances: transitive dependencies might not actually be callable because they are somehow inactive. As a steering mechanism it may seem unfair to some teams, since the transitive dependencies are not within their direct control. 
 
-Yes, but this is configurable. Scanning transitive dependencies is preferable from a security perspective, as vulnerabilities in transitive dependencies are equally problematic as vulnerabilities in direct dependencies. However, to some teams this can see unfair, as the transitive dependencies are not within their control. 
-
-Therefore, scanning transitive dependencies can be enabled or disabled in [the analysis configuration](../reference/analysis-scope-configuration.md). 
+Therefore, scanning transitive dependencies can be enabled or disabled in [the analysis configuration](../reference/analysis-scope-configuration.md#open-source-health). 
 
 ### Why does the finding list count certain findings twice?
 
-The finding list indicates *compliance*. Sometimes a single finding on a vulnerable library has multiple vulnerabilities in multiple categories (e.g. injection and XXE). In that case these are counted separately in the list. However, despite the finding appearing in multiple categories, it is still the same finding. It only counts as a single finding towards the total, and resolving the finding will resolve it towards all categories.
+The findings list indicates *compliance*. Sometimes a single finding on a vulnerable library has multiple vulnerabilities in multiple categories (e.g. injection and XXE). In that case these are counted separately in the list. However, despite the finding appearing in multiple categories, it is still the same finding. It only counts as a single finding towards the total, and resolving the finding will resolve it towards all categories.
 
 ### What technology is Open Source Health based on?
 
-Open Source Health is proprietary SIG technology where we combine 20+ different ecosystems. Examples are Sonatype OSS Index, Google OSV, and GitHub security advisories. Depending on the technology, this will analyze dependency management files (e.g. `pom.xml` or `package.json`), library source files (e.g. `jquery-3.6.1.js`), and binary library files (e.g. `log4j.jar`).
+Open Source Health is proprietary SIG technology where we combine 20+ different ecosystems. Examples are *Sonatype OSS Index*, *Google OSV*, and *GitHub security advisories*. Depending on the technology, this will analyze dependency management files (e.g. `pom.xml` or `package.json`), library source files (e.g. `jquery-3.6.1.js`), and binary library files (e.g. `log4j.jar`).
 
 Open Source Health offers the option to create an SBOM (Software Bill Of Materials) report, either through the Sigrid user interface or [through the Sigrid API](sigrid-api-documentation.md#vulnerable-libraries-in-open-source-health).
 
 ### Why are some Open Source vulnerabilities missing a CVE?
 
-As indicated in the previous question, SIG gathers data from multiple ecosystems. Most of these ecosystems link library vulnerabilities to CVEs, but some provide their own data that is not connected to CVEs.
+SIG gathers data from multiple ecosystems. Most of these ecosystems link library vulnerabilities to CVEs, but some provide their own data that is not connected to CVEs.
 
-### I previously marked a security finding in an open source library as a false positive, but now it's back?
+### I previously marked a security finding in an open source library as a false positive, but now it is back?
 
-Open Source Health produces security findings for the version of the open source library you're currently using. If you update the version, but that new version still contains the same issue, the finding will automatically be reopened. If you update the open source library to a version that no longer contains the issue, the security finding in Sigrid will automatically be marked as fixed.
+Open Source Health produces security findings for the version of the open source library you are currently using. If you update the version, but that new version still contains the same issue, the finding will automatically be reopened. If you update the open source library to a version that no longer contains the issue, the security finding in Sigrid will automatically be marked as *"Fixed"*.
     
+
+### We have a lot of (new) security findings. What should we do first?
+Please see [elaboration in the system-level security page](system-security.md#your-strategy-for-processing-security-findings) 
+
 ### To what extent does SIG provide consultancy for security findings?
 
 This depends on your agreement with SIG, which can differ per system: 
