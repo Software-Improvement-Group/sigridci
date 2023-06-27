@@ -1,4 +1,12 @@
-# Sigrid workflow for developer
+# Sigrid workflow for developers
+
+As a developer, you will be interacting with other stakeholders during your day-to-day work, providing your unique perspective on the codebase as someone who actually writes the code and implements the necessary features.
+As a project evolves, a lot of its details can change over time, like the teams who work on it, the scope and requests from customers. Your task as a developer then becomes managing all these aspects together.
+
+<img src="../images/po-priorities.png" width="600" />
+
+Sigrid can help you balancing these aspects, by allowing you to define objectives for non-functionals (e.g. test code coverage, state of open-source libraries used, etc.), and then providing you with information that will help you to track progress towards those objectives as part of your process. 
+
 
 ## Set your quality objectives
 
