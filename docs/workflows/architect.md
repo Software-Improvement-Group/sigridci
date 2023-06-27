@@ -1,1 +1,3 @@
-## Sigrid workflow for architects
+# Sigrid workflow for architects
+
+As an enterprise architect
