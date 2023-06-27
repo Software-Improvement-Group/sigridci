@@ -9,7 +9,9 @@ Sigrid Objective Creator allows you to set system-specific objectives. With it, 
 This improves collaboration and creates alignment at a higher level than just "the code in front of you, " making it valuable for multiple teams and stakeholders across these teams, making Sigrid an integral part of your architectural decisions.
 
 ## Prioritize initiatives with the best ROI
-todo
+
+Not every initiative will have the same impact and as an enterprise architect, you should be able to prioritize the initiatives which can give you the best return based on the effort you spend on them. The higher the impact is, the more worthy it can be to spend extra time on a given effort.
+By allowing you to define objectives at a portfolio-wide level, Sigrid gives you a detailed overview of where exactly your focus must go.
 
 ## Reduce maintenance efforts by giving non-functional requirements the right priority
 todo
