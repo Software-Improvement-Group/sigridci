@@ -15,7 +15,8 @@ By allowing you to define objectives at a portfolio-wide level, Sigrid gives you
 
 ## Reduce maintenance efforts by giving non-functional requirements the right priority
 
-Non-functional requirements 
+Non-functional requirements aren't always top of mind when it comes to managing technical debt or maintenance efforts. Because these are usually concerned with the operation and usage of a given system instead of directly relating to its specific features, they can be harder to correlate with the overall system quality. As an enterprise architect, Sigrid can help you to reduce the maintenance efforts of your team by putting you in the driver's seat for prioritizing non-functional requirements. Then, you and your team can stay on top of all possible requirements and ensure that the work being done is prioritized correctly.
 
 ## Improve developer happiness with clear architecture quality insights
-todo
+
+Code can be looked at through different lenses by different stakeholders. Sigrid offers you an overview of your current architecture at the level where you can make a difference. By offering you clear architecture quality insights, it enables you to act as a liaison between different teams in your organization and uncover certain details that would be otherwise buried deep within the complexity of your system.
