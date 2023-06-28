@@ -8,7 +8,7 @@ By seeing where you are and if you are moving in the right direction, you can en
 Sigrid Objective Creator allows you to set system-specific objectives. With it, you can confer and settle on a plan with all teams. As a result, goals are made clear to all members and stakeholders upfront.
 This improves collaboration and creates alignment at a higher level than just "the code in front of you, " making it valuable for multiple teams and stakeholders across these teams, making Sigrid an integral part of your architectural decisions.
 
-<img src="../images/ea-workflows.png" width="600" />
+<img src="../images/ea-workflows.png" width="700" />
 
 ## Prioritize initiatives with the best ROI
 
