@@ -8,6 +8,8 @@ By seeing where you are and if you are moving in the right direction, you can en
 Sigrid Objective Creator allows you to set system-specific objectives. With it, you can confer and settle on a plan with all teams. As a result, goals are made clear to all members and stakeholders upfront.
 This improves collaboration and creates alignment at a higher level than just "the code in front of you, " making it valuable for multiple teams and stakeholders across these teams, making Sigrid an integral part of your architectural decisions.
 
+<img src="../images/ea-workflows.png" width="600" />
+
 ## Prioritize initiatives with the best ROI
 
 Not every initiative will have the same impact and as an enterprise architect, you should be able to prioritize the initiatives which can give you the best return based on the effort you spend on them. The higher the impact is, the more worthy it can be to spend extra time on a given effort.
