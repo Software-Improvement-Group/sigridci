@@ -14,7 +14,8 @@ Not every initiative will have the same impact and as an enterprise architect, y
 By allowing you to define objectives at a portfolio-wide level, Sigrid gives you a detailed overview of where exactly your focus must go.
 
 ## Reduce maintenance efforts by giving non-functional requirements the right priority
-todo
+
+Non-functional requirements 
 
 ## Improve developer happiness with clear architecture quality insights
 todo
