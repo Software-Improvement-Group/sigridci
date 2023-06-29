@@ -14,7 +14,8 @@ This is by far the simplest approach: in Sigrid, simply go to the system setting
 Note the screenshot only shows part of the metadata page. The full page contains options related to the context in which the system is being developed, such as *Business criticality*, *Lifecycle phase*, and *Deployment type*.
 
 They can be set with a drop-down menu. 
-<img src="../images/metadata-lifecycle-phase-menu.png" width="600" />
+
+<img src="../images/metadata-lifecycle-phase-menu.png" width="400" />
 
 
 <img src="../images/help-button.png" class="inline" /> The "?" help buttons explain the meaning of the different types of settings.

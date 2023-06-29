@@ -2,7 +2,7 @@
 The maintainability view is available for all systems by default. 
 You can reach this view in different ways: Via the top menu, or clicking an a capability on the System or Portfolio *Overview* pages. See the [system-level Overview page](system-overview.md#navigating-to-capabilities) or [portfolio-level Overview page](portfolio-overview.md#navigating-to-capabilities).
 
-<img src="../images/system-maintainability-menu-ex-architecture.png" width="600" />
+<img src="../images/system-maintainability-menu-ex-architecture.png" width="150" />
 
 The maintainability section on the system level has 4 views: 
 1. The *Overview* tab brings the main metrics together. 
@@ -15,6 +15,7 @@ The overview page is shown below.
 * The system’s (configured) architecture is visible in the top right. This is based on the system’s scope configuration (see [the page on scope configuration](../reference/analysis-scope-configuration.md)). 
 * The main code changes are visible at the bottom.
 * The (change in) system metrics are in the top left. 
+
 <img src="../images/system-maintainability.png" width="600" />
 
 Below a detailed view of the metrics. 

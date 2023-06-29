@@ -2,7 +2,7 @@
 
 The maintainability section on the portfolio level has two main views: *Overview* and *Delta quality*. Both views include all the systems of your portfolio in one place. 
 
-<img src="../images/portfolio-maintainability-menu.png" width="250" />
+<img src="../images/portfolio-maintainability-menu.png" width="150" />
 
 The *Overview* tab brings the main metrics together. 
 
