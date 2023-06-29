@@ -159,7 +159,7 @@ Finally, note the column "supported Sigrid capabilities" does not list Open Sour
 | `mustache`                     | Mustache                       | Handlebars | Maintainability |
 | `mysql`                        | MySQL                          | | Maintainability |
 | `naviscript`                   | Naviscript                     | | Maintainability |
-| `navision`                     | Navision                       | | Maintainability |
+| `navision`                     | Navision                       | Dynamics NAV, AL | Maintainability |
 | `netiqidmpolicy`               | NetIQ IDM Policy               | | Maintainability |
 | `netiqidmrequest`              | NetIQ IDM Request              | | Maintainability |
 | `netiqidmworkflow`             | NetIQ IDM Workflow             | | Maintainability |
