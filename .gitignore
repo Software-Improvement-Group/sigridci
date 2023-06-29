@@ -5,3 +5,4 @@ sigrid-ci-output/
 .idea/
 *.iml
 .vscode
+docs/_site/
