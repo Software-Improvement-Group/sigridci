@@ -46,10 +46,14 @@ Create an Enterprise application 'app' in your IdP with the following details:
 - Reply URL: https://auth.sigrid-says.com/saml2/idpresponse
 
 With the following attributes:
-- user.email http://schemas.xmlsoap.org/ws/2005/05/identity/claims/emailaddress
-- user.firstName http://schemas.xmlsoap.org/ws/2005/05/identity/claims/given_name
-- user.lastName http://schemas.xmlsoap.org/ws/2005/05/identity/claims/name
-- Unique User Identifier = user.email
+
+| Your attribute | Sigrid attribute | XML schema |
+| ----------- | ----------- | ----------|
+| user email  | emailaddress | http://schemas.xmlsoap.org/ws/2005/05/identity/claims/emailaddress |
+| user first name   | given_name | http://schemas.xmlsoap.org/ws/2005/05/identity/claims/given_name |
+| user last name   | name       | http://schemas.xmlsoap.org/ws/2005/05/identity/claims/name |
+| unique user identifier | emailaddress | |
+
 
 Other
 - Signature Algorithm: RSA_SHA256
