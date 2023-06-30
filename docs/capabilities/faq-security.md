@@ -19,6 +19,10 @@ The finding fingerprint is a calculated identifier based on multiple characteris
 
 We use this approach to reduce the amount of busywork. Findings are automatically resolved to avoid situations where people fix something in the code, but then forget to update the finding in Sigrid. Moreover, multiple overlapping findings will automatically be merged if they have the same fingerprint. This means automatic deduplication, which is important for keeping the findings as actionable as possible.
 
+### What are the risk thresholds that determine low-medium-high-critical risk?
+Findings are mapped on a scale from 0-10 based on a *CVSS* benchmark comparison. See the [CVSS section in the security page](system-security.md#the-scoring-system-with-cvss).
+
+
 ## Open Source Health
 
 ### Does Sigrid support transitive dependencies?
@@ -39,6 +43,10 @@ Open Source Health offers the option to create an SBOM (Software Bill Of Materia
 ### Why are some Open Source vulnerabilities missing a CVE?
 
 SIG gathers data from multiple ecosystems. Most of these ecosystems link library vulnerabilities to CVEs, but some provide their own data that is not connected to CVEs.
+
+### What are the risk thresholds that determine low-medium-high risk?
+
+They are shown as a mouseover on the Open Source Health page in the top tile that summarizes risks. See the [open-source health page](system-open-source-health.md#navigating-the-overview-page).
 
 ### I previously marked a security finding in an open source library as a false positive, but now it is back?
 
