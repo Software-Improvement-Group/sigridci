@@ -9,6 +9,7 @@ The tooling underlying this analysis is updated as often as possible. Therefore 
 
 ## Security Overview
 The security overview page shows a summary of findings, their change, age and estimated severity. In this example, 
+
 <img src="../images/system-security-overview.png" width="600" />
 
 The different elements in this page are:
@@ -19,7 +20,7 @@ The different elements in this page are:
 
 * The *CVSS Severity* tile summarizes a breakdown of findings according to CVSS severity ratings. A mouseover on the barchart will show the exact number of findings. A mouseover on the CVSS severity benchmark shows the CVSS sevurity score and the number of findings with that severity. 
 
-<img src="../images/system-security-cvss-mouseover.png" width="300" />
+<img src="../images/system-security-cvss-mouseover.png" width="200" />
 
 <img src="../images/filter-2.png" class="inline" /> The CVSS map adjusts to the filter that you may have used.
 
@@ -33,7 +34,7 @@ These are the different statutes of findings. The status *"Fixed"* will be appli
 ## Different grouping of security findings
 Different views can be selected in the left menu. security models. The menu selector on the left you to easily toggle between the different models in one view. 
 
-<img src="../images/system-security-grouping-finding-status-ex-background.png" width="300" />
+<img src="../images/system-security-grouping-finding-status-ex-background.png" width="150" />
 
 Note that here, the menu's category in bold is the currently chosen grouping. Therefore, below, under the column *"Description"*, different statuses are shown. Because *"Grouping"* means that Sigrid will show you a summary, the number of findings are shown on the right column under *"Findings"*, such as [C]1, [H]1, [M]99+ and [I]99+. These abbreviate the severity of the findings, respectively *"Critical"*, *"High"*, *"Medium"* and *"Information"* and their count. You can click on those for a listing of the detailed findings.
 
@@ -46,11 +47,11 @@ In the Grouping menu in the top left under *"Finding"*, the following types of g
 * *"Type"* shows a specific list of vulnerabilities. This is especially useful for technical analysis, since sometimes, a whole category/type of findings may be set to *"False positive"*. 
 * *"Weakness"* orders on type of weaknesse (based on the CWE database). Weaknesses are somewhat higher level than *"Type"*. 
 
-<img src="../images/system-security-grouping-location-ex-background.png" width="300" />
+<img src="../images/system-security-grouping-location-ex-background.png" width="150" />
 
 In *"Location"*, either *"Component"* or *"File"* grouping can be chosen. The Component group follows the maintainability grouping in components. Findings may fall outside of that grouping because of exclusions. Then they will show under the *"Other"* component. Examples might be binaries or package manager configuration files, which would be excluded for maintainability analysis and therefore not fall into a component for the purpose of maintainability calculations. 
 
-<img src="../images/system-security-grouping-model-ex-background.png" width="300" />
+<img src="../images/system-security-grouping-model-ex-background.png" width="250" />
 
 Under *"Model"*, different Models can be used to map findings on. This is in practice mostly a matter of preference or specific auditing requirements. Next to popular security models, SIG has developed its own model based on the ISO 25010 standard, which can also be chosen. These are based on the [SIG Evalution Criteria Security][https://www.softwareimprovementgroup.com/wp-content/uploads/SIG-Evaluation-Criteria-Security.pdf].
 
@@ -61,9 +62,11 @@ Under *"Model"*, different Models can be used to map findings on. This is in pra
 
 ## Analyzing security findings
 You can group and sort the detailed view of security findings. The sorting offers you the following.  
-<img src="../images/system-security-sorting-menu.png" width="300" />
+
+<img src="../images/system-security-sorting-menu.png" width="150" />
 
 Below an example of a list of detailed findings. 
+
 <img src="../images/system-security-overview-no-grouping-sorting-status.png" width="600" />
 
 In the top left you can see that the findings are not grouped. Therefore each finding is shown individually. Below, the *"Grouping"* menu under *"Sorting"*, sorting is set to CVSS severity. Therefore the highest risk findings are shown above. Note that for example the first two findings are Maven dependencies. These originate from [Open Source Health](system-open-source-health.md). 
