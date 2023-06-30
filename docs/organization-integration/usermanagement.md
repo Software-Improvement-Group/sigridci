@@ -47,7 +47,7 @@ Create an Enterprise application 'app' in your IdP with the following details:
 
 With the following attributes:
 
-| Your attribute | Sigrid attribute | XML schema |
+| Your attribute | claim | SAML Attribute |
 | ----------- | ----------- | ----------|
 | user email  | emailaddress | http://schemas.xmlsoap.org/ws/2005/05/identity/claims/emailaddress |
 | user first name   | given_name | http://schemas.xmlsoap.org/ws/2005/05/identity/claims/given_name |
