@@ -7,7 +7,7 @@ This page contains some additional instructions on how you can best publish your
 
 First of all, it is not necessary to submit the *binaries* for every library. If your system uses a dependency management tool, it is usually sufficient to send the corresponding configuration files. For example, Maven uses `pom.xml` to list dependencies, Gradle uses `build.gradle`, and NPM uses `package.json`. If any of those files are included in your repository, they will be picked up automatically. 
 
-However, in some cases there might be extra options or caveats when using certain dependency management tools. The sections below contain some more specific instructions to take into consideration when using one of those dependency management tools. Also refer to [supported dependency management tools and open source ecosystems](../reference/supported-technologies.md) for a complete list of all supported technologies.
+However, in some cases there might be extra options or caveats when using certain dependency management tools. The sections below contain some more specific instructions to take into consideration when using one of those dependency management tools. Also refer to [supported dependency management tools and open source ecosystems](../reference/technology-support.md) for a complete list of all supported technologies.
 
 ## Maven
 
@@ -68,7 +68,7 @@ Yarn is very similar to NPM, but its lockfile is called `yarn.lock` instead of N
 
 ### Other dependency management tools
 
-This page provides some additional instructions and explanation for commonly used dependency management tools. For the complete list of all supportec technologies, refer to the [supported dependency management tools and open source ecosystems](../reference/supported-technologies.md).
+This page provides some additional instructions and explanation for commonly used dependency management tools. For the complete list of all supportec technologies, refer to the [supported dependency management tools and open source ecosystems](../reference/technology-support.md).
 
 ## Contact and support
 
