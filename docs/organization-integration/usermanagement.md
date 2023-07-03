@@ -50,11 +50,17 @@ With the following Attributes & Claims:
 | Your user | SAML attribute as expected by Sigrid * |
 | ----------- | ----------|
 | user email  | http://schemas.xmlsoap.org/ws/2005/05/identity/claims/emailaddress |
-| user first name   | http://schemas.xmlsoap.org/ws/2005/05/identity/claims/given_name |
 | user last name   | http://schemas.xmlsoap.org/ws/2005/05/identity/claims/name |
+| user first name   | http://schemas.xmlsoap.org/ws/2005/05/identity/claims/given_name |
 | unique user identifier | emailaddress | |
-
 \* for some identity providers like Azure AD the first part ( http://schemas.xmlsoap.org/ws/2005/05/identity/claims/ ) may be omitted. 
+
+### Example for Azure AD
+
+<img src="../images/azure-saml.png" width="800" />
+
+
+
 
 Other
 - Signature Algorithm: RSA_SHA256
