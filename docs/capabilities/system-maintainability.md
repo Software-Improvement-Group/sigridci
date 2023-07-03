@@ -90,7 +90,7 @@ When you set a finding to *“Accept Risk”*, its status will change to *“Ris
 <img src="../images/filter-2.png" class="inline" /> Findings with *“Risk accepted”* can still be viewed by using the filter. By default the filter is set to *“Will fix”* and *“Raw"* only. 
 
 The relevant filter is shown below.
-<img src="../images/system-refactoring-candidates-filters-risk-accepted.png" width=”300" />
+<img src="../images/system-refactoring-candidates-filters-risk-accepted.png" width="300" />
 
 
 
