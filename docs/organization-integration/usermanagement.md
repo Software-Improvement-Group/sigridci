@@ -45,14 +45,21 @@ Create an Enterprise application 'app' in your IdP with the following details:
 - Audience or Identifier (Entity) ID: urn:amazon:cognito:sp:eu-central-1_hwh9zdyCY
 - Reply URL: https://auth.sigrid-says.com/saml2/idpresponse
 
-With the following attributes:
+With the following Attributes & Claims:
 
-| Your attribute | Sigrid attribute | XML schema |
-| ----------- | ----------- | ----------|
-| user email  | emailaddress | http://schemas.xmlsoap.org/ws/2005/05/identity/claims/emailaddress |
-| user first name   | given_name | http://schemas.xmlsoap.org/ws/2005/05/identity/claims/given_name |
-| user last name   | name       | http://schemas.xmlsoap.org/ws/2005/05/identity/claims/name |
+| Your user | SAML attribute as expected by Sigrid * |
+| ----------- | ----------|
+| user email  | http://schemas.xmlsoap.org/ws/2005/05/identity/claims/emailaddress |
+| user last name   | http://schemas.xmlsoap.org/ws/2005/05/identity/claims/name |
+| user first name   | http://schemas.xmlsoap.org/ws/2005/05/identity/claims/given_name |
 | unique user identifier | emailaddress | |
+\* for some identity providers like Azure AD the first part ( http://schemas.xmlsoap.org/ws/2005/05/identity/claims/ ) may be omitted. 
+
+### Example for Azure AD
+
+<img src="../images/azure-saml.png" width="800" />
+
+
 
 
 Other
