@@ -166,12 +166,36 @@ Similar to other Sigrid capabilities, you can enabled the Architecture Quality c
       enabled: true
       
 Adding this section to the configuration will automatically enable the Architecture Quality analysis every time you publish your system to Sigrid.
+
+### Components in Maintainability versus components in Architecture Quality
+
+Sigrid combines different capabilities, and those different capabilities might necessitate their own view on your system. In Sigrid's *Maintainability* pages, you get a simple breakdown into one level of components. Because you only get a single level, you need to define these components manually as explained in the [defining components](#defining-components) section.
+
+Out of the box, Sigrid's *Architecture Quality* provides a different componentization, which allows for more detail: components can have sub-components, those can *also* have sub-components, and so on. Having multiple levels of sub-components is necessary to make Architecture Quality useful. In many cases, there is general consensus on the top-level architecture. It's the internal architecture within sub-components where things get interesting. Generally, those internal architectures are the responsibility of a team, and therefore less known to people outside of the team (and in many cases it's even not fully transparent to the team itself). Moreover, incrementally improving the top-level architecture is very hard. Focusing on architecture improvement/modernization is easier when starting with a component's internal architecture, as there are less people involved and it's therefore more realistic to realize improvements within a sprint. 
+
+The fact that Architecture Quality relies on these sub-components also explains the second difference with the components you see in the maintainability page: For Architecture Quality, components and sub-components are detected automatically. This is required to make them useful and practical: defining components manually just isn't practical if your system has 50 microservices, each with their own internal architecture. Configuring such a system manually would be a huge amount of work. And you would need to update the configuration every time you add a microservice or change its internal architecture!
+
+The obvious downside of this approach is that it leads to different views in Sigrid's Maintainability and Architecture Quality pages. However, having [multiple architecture views](https://en.wikipedia.org/wiki/4%2B1_architectural_view_model) is fairly mainstream, hence we adopted this approach by Sigrid.
+
+However, if it is essential for you to have the same componentization for both Maintainability and Architecture Quality, or if you really want to define your Architecture Quality view manually, it is possible to override the standard behavior in the configuration:
+
+    architecture:
+      enabled: true
+      custom_components: true
+      
+This will disable the automatic component detection for Architecture Quality, and will instead use the [components you defined manually](#defining-components).
       
 ### Analyzing your repository history
       
 Architecture Quality also requires the repository history to be included in the upload. This requires the `--include-history` option to be enabled in the [Sigrid CI client script](client-script-usage.md). See the [frequently asked questions for architecture quality](../capabilities/faq-architecture.md) for more information on how the repository history is analyzed.
 
 When you publish your repository history to Sigrid, it is automatically picked up by the Architecture Quality analysis without needing further configuration. By default, Sigrid will analyze the repository history for the last year. If you want to change this to a different period, you can manually specify the time period that should be analyzed:
+
+    architecture:
+      enabled: true
+      history_period_months: 6
+      
+This example will change the default period of 12 months, and instead analyze only analyze the last 6 months of history. If you want to go even further, it is also possible to define an exact start date:
 
     architecture:
       enabled: true

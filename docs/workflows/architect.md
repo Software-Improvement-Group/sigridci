@@ -1,7 +1,10 @@
 # Sigrid workflow for architects
 
 As an enterprise architect, a big part of your role is understanding the current "as-is" architecture of the systems your team is working with. Then, equipped with such understanding, you can foster innovation and accelerate strategic IT improvements.
+
 By seeing where you are and if you are moving in the right direction, you can ensure that the recent changes in your system's build quality are having the desired impact.
+
+<iframe width="560" height="315" src="https://www.youtube.com/embed/nCW855MBNSE" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
 
 ## Prevent new technical debt by setting guidelines and improving collaboration
 
