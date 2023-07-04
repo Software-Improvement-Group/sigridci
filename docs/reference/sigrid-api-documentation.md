@@ -345,7 +345,7 @@ The request format is:
 
 where the placeholder, `<deactivate_now>` can assume the following values:
 
-- `{"deactivateNow": null}` : when setting the boolean value `deactivateNow` to null, the system will be viewed by Sigrid as being active, so, setting this value to null effectively marks a system as active and re-activates a previously deactivated system;
+- `{"deactivateNow": false}` : when setting the boolean value `deactivateNow` to false, the system will be viewed by Sigrid as being active, so, setting this value to false effectively marks a system as active and re-activates a previously deactivated system;
 
 - `{"deactivateNow": true}` : when this value is true, the deactivation date for the system will be set using `Instant.now()` representing the current instant when the endpoint was called. This effectively deactivates a system from the moment the endpoint was called;
 
