@@ -331,23 +331,23 @@ The possible application types are as follows:
 
 ### Systems lifecycle management
 
-Sigrid allows you to set the deactivation date for a system. This can be useful for cases when a system is known to be planned for deactivation ahead of time or simply when there is a need for deactivating a certain system at a specific point in time.
+Sigrid allows you to deactivate a given system.
 
 The endpoint that enables such deactivation is:
 
-- `PATCH https://sigrid-says.com/rest/analysis-results/api/v1/systems/{customer}/{system}`: enables setting a specific deactivation date for a system.
+- `PATCH https://sigrid-says.com/rest/analysis-results/api/v1/systems/{customer}/{system}`: enables setting the deactivation date for a system as the instant when this endpoint was called.
 
 The request format is:
 
 ```json
-{"deactivationDate": <deactivation_date>}
+{"deactivateNow": <deactivate_now>}
 ```
 
-where the placeholder, `<deactivation_date>` can assume the following values:
+where the placeholder, `<deactivate_now>` can assume the following values:
 
-- `{"deactivationDate": null}` : when setting the date to null, the system will be viewed by Sigrid as being active, so, setting this value to null effectively marks a system as active and re-activates a previously deactivated system;
+- `{"deactivateNow": null}` : when setting the boolean value `deactivateNow` to null, the system will be viewed by Sigrid as being active, so, setting this value to null effectively marks a system as active and re-activates a previously deactivated system;
 
-- `{"deactivationDate": "2017-12-03T00:00:00Z"}` : The string must represent a valid instant in UTC and it must adhere to the [ISO-8601 instant format](https://www.ionos.com/digitalguide/websites/web-development/iso-8601/).
+- `{"deactivateNow": true}` : when this value is true, the deactivation date for the system will be set using `Instant.now()` representing the current instant when the endpoint was called. This effectively deactivates a system from the moment the endpoint was called;
 
 The response format on a successful request is, as an example, for SIG's `bch` system:
 
@@ -358,7 +358,7 @@ The response format on a successful request is, as an example, for SIG's `bch` s
 }
 ```
 
-If the deactivation date is not in the expected format, the returned response status will be: `400 BAD REQUEST`.
+If the request body is not in the expected format, the returned response status will be: `400 BAD REQUEST`.
 
 ### Systems goals
 
