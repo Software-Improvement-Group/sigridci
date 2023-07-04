@@ -18,13 +18,25 @@ The different elements in this page are:
 
 <img src="../images/system-security-activity-mouseover.png" width="300" />
 
-* The *CVSS Severity* tile summarizes a breakdown of findings according to CVSS severity ratings. A mouseover on the barchart will show the exact number of findings. A mouseover on the CVSS severity benchmark shows the CVSS sevurity score and the number of findings with that severity. 
+* The *Findings Age* tile gives an indication how long findings are known. 
 
-<img src="../images/system-security-cvss-mouseover.png" width="200" />
+
+### The scoring system with CVSS 
+* The *CVSS Severity* tile summarizes a breakdown of findings according to CVSS severity ratings. A mouseover on the barchart will show the exact number of findings. A mouseover on the CVSS severity benchmark shows the CVSS security score and the number of findings with that severity. *CVSS* (*Common Vulnerability Scoring System*) is a security-industry standard on a 0-10 scale, where scores are based on a benchmark of expert judgements.  
+
+
+<img src="../images/system-security-cvss-mouseover.png" width="500" />
 
 <img src="../images/filter-2.png" class="inline" /> The CVSS map adjusts to the filter that you may have used.
 
-* The *Findings Age* tile gives an indication how long findings are known. 
+Based on the CVSS score of findings, they are marked and colored ranging from "Information", "Low", "Medium", "High", "Critical".
+<img src="../images/system-security-icon-information1.png" class="inline" /> *Information*: a CVSS score of "0". These include anti-patterns that may not have a direct security impact but can still be significant. 
+<img src="../images/system-security-icon-low1.png" class="inline" /> *Low*: CVSS score between 0 and 4.
+<img src="../images/system-security-icon-medium1.png" class="inline" /> *Medium*: CVSS score between 4 and 7.
+<img src="../images/system-security-icon-high1.png" class="inline" /> *High*: CVSS score >between 7 and 9. 
+<img src="../images/system-security-icon-critical1.png" class="inline" /> *Critical*: CVSS score over 9. 
+
+
 
 ## Different statuses of security findings
 These are the different statutes of findings. The status *"Fixed"* will be applied automatically if a finding is resolved. See [FAQ:Fixed issues are auto-detected](faq-security.md#how-does-the-automatic-detection-of-fixed-findings-work). The other statuses can be set. They are similar to those used for [system maintainability refactoring candidates](system-maintainability.md#refactoring-candidates). 
@@ -34,9 +46,9 @@ These are the different statutes of findings. The status *"Fixed"* will be appli
 ## Different grouping of security findings
 Different views can be selected in the left menu. security models. The menu selector on the left you to easily toggle between the different models in one view. 
 
-<img src="../images/system-security-grouping-finding-status-ex-background.png" width="150" />
+<img src="../images/system-security-grouping-finding-status-ex-background.png" width="250" />
 
-Note that here, the menu's category in bold is the currently chosen grouping. Therefore, below, under the column *"Description"*, different statuses are shown. Because *"Grouping"* means that Sigrid will show you a summary, the number of findings are shown on the right column under *"Findings"*, such as [C]1, [H]1, [M]99+ and [I]99+. These abbreviate the severity of the findings, respectively *"Critical"*, *"High"*, *"Medium"* and *"Information"* and their count. You can click on those for a listing of the detailed findings.
+Note that here, the menu's category in bold is the currently chosen grouping. Therefore, below, under the column *"Description"*, different statuses are shown. Because *"Grouping"* means that Sigrid will show you a summary, the number of findings are shown on the right column under *"Findings"*, such as [C]1, [H]1, [M]99+ and [I]99+. These abbreviate the severity of the findings based on their CVSS score, and their count. You can click on those for a listing of the detailed findings. See also the [CVSS elaboration above](#the-scoring-system-with-cvss).
 
 In the Grouping menu in the top left under *"Finding"*, the following types of grouping can be set:
 
@@ -47,7 +59,7 @@ In the Grouping menu in the top left under *"Finding"*, the following types of g
 * *"Type"* shows a specific list of vulnerabilities. This is especially useful for technical analysis, since sometimes, a whole category/type of findings may be set to *"False positive"*. 
 * *"Weakness"* orders on type of weaknesse (based on the CWE database). Weaknesses are somewhat higher level than *"Type"*. 
 
-<img src="../images/system-security-grouping-location-ex-background.png" width="150" />
+<img src="../images/system-security-grouping-location-ex-background.png" width="250" />
 
 In *"Location"*, either *"Component"* or *"File"* grouping can be chosen. The Component group follows the maintainability grouping in components. Findings may fall outside of that grouping because of exclusions. Then they will show under the *"Other"* component. Examples might be binaries or package manager configuration files, which would be excluded for maintainability analysis and therefore not fall into a component for the purpose of maintainability calculations. 
 
@@ -72,7 +84,7 @@ Below an example of a list of detailed findings.
 In the top left you can see that the findings are not grouped. Therefore each finding is shown individually. Below, the *"Grouping"* menu under *"Sorting"*, sorting is set to CVSS severity. Therefore the highest risk findings are shown above. Note that for example the first two findings are Maven dependencies. These originate from [Open Source Health](system-open-source-health.md). 
 
 If Remarks have been registered, they can be seen in the far right column with a mouseover or clicking on the text balloon. An example of a mouseover is shown here. 
-<img src="../images/system-security-osh-remark-mouseover.png" width="300" />
+<img src="../images/system-security-osh-remark-mouseover.png" width="500" />
 
 If you click on the finding, the source code of the finding will be shown with its details. Details such as Status, finding age, Origin (scanning tool), File location, Remarks (if available) or audit trail are all viewable here.
 <img src="../images/system-security-security-os-inj-example-detail.png" width="600" />
@@ -89,13 +101,13 @@ On the right side of the page, all details surrounding the finding are shown. If
 
 With the buttons in the top right, you can edit the finding or show the code in the  *"Code Explorer"*, which will show you code context. See also [Code Explorer](system-code-explorer.md). 
 
-<img src="../images/system-security-pom-dependency-edit-finding.png" width="300" />
+<img src="../images/system-security-pom-dependency-edit-finding.png" width="400" />
 
 In this case, because this is an automatically scanned dependency by [Open Source Health](system-open-source-health.md), e.g. changing its status to "false positive" will not necessarily remove the finding indefinitely. As long as the OSH tooling finds the same result, it will return. See also [this specific case in the Security FAQ](faq-security.md#i-previously-marked-a-security-finding-in-an-open-source-library-as-a-false-positive-but-now-it-is-back). The same holds for the *"Remark"*. Findings by *Open Source Health automatically add the type of vulnerability and vulnerability (CVE) reference. Remarks can also be adjusted manually. Any user can edit remarks or other characteristics. This could also be a SIG consultant, depending on your specific Sigrid agreement. 
 
 An audit trail can be seen when clicking the *"Show Audit Trail"* button. In case of changes, multiple entries will be shown with their respective usernames and dates.
 
-<img src="../images/system-security-audit-trail.png" width="300" />
+<img src="../images/system-security-audit-trail.png" width="400" />
 
 
 ## Your strategy for processing security findings
