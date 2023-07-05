@@ -1,20 +1,26 @@
-# QSM (Sigrid-says.com)for Mendix customers using the Teamserver
+# QSM (Sigrid-says.com) for Mendix customers using the Teamserver
 
-This document describes use cases for customers that are using the central Mendix Teamserver.
+This document describes onboarding of Mendix apps to Sigrid for customers that are using the central Mendix Teamserver.
 
-please note: When the customer is not using the teamserver but they are in a "Bring Your Own Git" scenario then the below does not apply. Then please refer to [Mendix for GitHub](mendix-github-actions.md) or [Mendix for Gitlab](mendix-gitlab.md) 
+please note: When the customer is not using the teamserver but they are in a "Bring Your Own Git" scenario then the below does not apply. Then please refer to [Mendix for GitHub](mendix-github-actions.md) or [Mendix for Gitlab](mendix-gitlab.md)
 
-Onboarding a new Mendix system is normaly done via [addon.mendix.com](https://addon.mendix.com). By default the mainline of the Mendix system will be scanned once a day. The scan will provide both maintainability, OSH and security findings for QSM customers. AQM customers will only see maintainability results. The onboarding will generate a status email to the user specified in the payload.
+---
+## Manual onboarding via the dedicated Mendix support app
+Onboarding a new Mendix app into Sigrid is normaly done via the Mendix app [addon.mendix.com](https://addon.mendix.com). By default the mainline will be scanned once a day. The scan will provide both maintainability, OSH and security findings for QSM customers. AQM customers will only see maintainability results. After succesfull onboarding an email is sent to the user requesting the onboarding.
 
-## Trigger a QSM Onboarding of a Teamserver based app
-In some cases customers would like to take onboarding of a teamserver based app in their own hands. Examples can be automation or bulk onboarding or specify a specific branch. In those cases customers can trigger an QSM Onboarding that will add a new Mendix system to an existing Sigrid. 
+----------
+
+## Scripted onboarding via a POST command to the Sigrid API
+In some cases customers would like to take onboarding of teamserver based apps into their own hands. Examples can be automated onboarding or the need to specify a specific branch. In those cases customers can use the Sigrid API to onboard a Mendix app to Sigrid. 
 
 
-### Technical details about the required post message for onboarding a system
+### API details 
+
+In order to onboard an app use the below post command where {customer} is your customer name. Check the url of sigrid-says.com/customer/ if you are not sure.
 
 POST `https://sigrid-says.com/rest/inboundresults/qsm/{customer}`
 
-#### Info
+#### Token
 Note that this endpoint requires a [SIGRID CI Authentication token](../organization-integration/authentication-tokens.md) that is valid for {customer}. 
 
 ##### Headers
@@ -46,18 +52,20 @@ This request will return the following response:
 }
 ```
 
-Note that the system name is a concatenation of the app name, the word `branch` and the branch name, with unsupported characters replaced or removed. In case of omitting the `teamServerBranch` or leaving it empty, the system name would be `mendixsystemname`.
+Note that the Sigrid system name is a concatenation of the Mendix app name, the word `branch` and the branch name, with unsupported characters replaced or removed. In case of omitting the `teamServerBranch` or leaving it empty, the system name would be `mendixsystemname`.
 
 ---
 
-## Trigger a QSM run for an already onboarded system
-This is useful when a customer would like to do an 'on-demand' trigger for certain day. The trigger can be a step in an automated pipeline or just a developer that is interested in updated results for the mainline. There will be no email, the scan will overwrite the previous scan results in Sigrid.
+## On-demand QSM scan for a system
+This is useful when a customer would like to do an on-demand trigger in addition to the daily scan. The trigger could be a step in a CICD pipeline or a trigger from a developer who is interested in a scan for the updates in mainline or branch. There will be no email, the scan will simply overwrite the previous results in Sigrid.
 
-### Technical details about the required post message for triggering a run
+### API details
+
+In order to trigger an on-demand scan for an app use the below post command where {customer} is your customer name and {system} your system name. Check the url of Sigrid-says.com/customer/system if you are not sure.
 
 POST `https://sigrid-says.com/rest/inboundresults/qsm/{customer}/{system}`
 
-#### Info
+#### Token
 Note that this endpoint requires a [SIGRID CI Authentication token](../organization-integration/authentication-tokens.md) that is valid for {customer}.
 ##### Headers
     - 'Authorization: Bearer YOUR_TOKEN'
