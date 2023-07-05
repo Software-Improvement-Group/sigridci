@@ -2,12 +2,12 @@
 
 This document describes use cases for customers that are using the central Mendix Teamserver.
 
-please note: When the customer is not using the team server but they are in a "Bring Your Own Git" scenario then the below does not apply. Then please refer to [Mendix for GitHub](mendix-github-actions.md) or [Mendix for Gitlab](mendix-gitlab.md) 
+please note: When the customer is not using the teamserver but they are in a "Bring Your Own Git" scenario then the below does not apply. Then please refer to [Mendix for GitHub](mendix-github-actions.md) or [Mendix for Gitlab](mendix-gitlab.md) 
 
 Onboarding a new Mendix system is normaly done via [addon.mendix.com](https://addon.mendix.com). By default the mainline of the Mendix system will be scanned once a day. The scan will provide both maintainability, OSH and security findings for QSM customers. AQM customers will only see maintainability results. The onboarding will generate a status email to the user specified in the payload.
 
-## Trigger an QSM Onboarding of a Teamserver based app
-In some cases customers would like to take onboarding of a team server based app in their own hands. Examples can be automation or bulk onboarding. or specify a specific branch. In those cases customers can trigger an QSM Onboarding that will add a new Mendix system to an existing Sigrid. 
+## Trigger a QSM Onboarding of a Teamserver based app
+In some cases customers would like to take onboarding of a teamserver based app in their own hands. Examples can be automation or bulk onboarding or specify a specific branch. In those cases customers can trigger an QSM Onboarding that will add a new Mendix system to an existing Sigrid. 
 
 
 ### Technical details about the required post message for onboarding a system
