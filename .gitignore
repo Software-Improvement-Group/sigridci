@@ -6,3 +6,4 @@ sigrid-ci-output/
 *.iml
 .vscode
 docs/_site/
+docs/.jekyll-cache/

@@ -66,6 +66,10 @@ NPM dependencies are defined in `package.json`, but NPM also generates a [lockfi
 
 Yarn is very similar to NPM, but its lockfile is called `yarn.lock` instead of NPM's `package-lock.json`. Like for NPM, Sigrid will prioritize the lockfile over `package.json` during its analysis.
 
+### Poetry
+
+[Poetry](https://python-poetry.org) is a Python dependency management tool, that is sometimes used as an alternative to the more popular PIP. Sigrid currently only supports analyzing the Poetry lockfile, which is called `poetry.lock`. This lockfile needs to be included in the codebase that is published to Sigrid, and is then analyzed automatically. Do note that [using a Poetry lockfile is a best practice](https://python-poetry.org), so there are good reasons for using this lockfile even beyond Sigrid.
+
 ### Other dependency management tools
 
 This page provides some additional instructions and explanation for commonly used dependency management tools. For the complete list of all supportec technologies, refer to the [supported dependency management tools and open source ecosystems](../reference/technology-support.md).
