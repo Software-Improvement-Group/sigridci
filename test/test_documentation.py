@@ -42,7 +42,7 @@ class DocumentationTest(unittest.TestCase):
             dom = BeautifulSoup(f.read(), features="html.parser")
         
         for menuLink in dom.select("a.page"):
-            linkedFile = f"docs{menuLink['href']}".replace(".html", ".md")
+            linkedFile = f"docs{menuLink['href']}".split("#")[0].replace(".html", ".md")
             self.assertTrue(os.path.exists(linkedFile), f"Dead menu link to {linkedFile}")
                 
     def testFileNamesAreLowercase(self):

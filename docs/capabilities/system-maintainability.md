@@ -71,26 +71,26 @@ This may include e.g. code volume in PM/PY (person-month or person-year equivale
 ### Filtering
 On the left-hand side column, you can filter dependencies per component and/or file level. This will show you a more detailed view of dependencies.
 
-<img src="../images/system-component-dependencies-file-selection.png" width=”600" />
+<img src="../images/system-component-dependencies-file-selection.png" width="600" />
 
 ## Refactoring candidates
 This view lists the top 100 findings per metric. 
 
-<img src="../images/system-refactoring-candidates.png" width=”600" />
+<img src="../images/system-refactoring-candidates.png" width="600" />
 
 Clicking on a metric will expand the list, prioritized by the “severity” of the violation. This is a good approximation of technical risk. The order/prioritization of the findings cannot be changed, but their status can be. The default status is *“Raw”*. This is meant in the sense of “not yet curated by hand”. Setting another status may help you to filter findings. A finding can be set to *“Prioritize”* or *“Accept risk”*.  
 
-<img src="../images/system-refactoring-candidates-3dots-status.png" width=”300" />
+<img src="../images/system-refactoring-candidates-3dots-status.png" width="300" />
 
 Setting a finding to *“Prioritize”* will show as *“Will fix”*
-<img src="../images/system-refactoring-candidates-status-set.png" width=”300" />
+<img src="../images/system-refactoring-candidates-status-set.png" width="300" />
 
 When you set a finding to *“Accept Risk”*, its status will change to *“Risk accepted”* and the finding will be hidden by default. 
 
 <img src="../images/filter-2.png" class="inline" /> Findings with *“Risk accepted”* can still be viewed by using the filter. By default the filter is set to *“Will fix”* and *“Raw"* only. 
 
 The relevant filter is shown below.
-<img src="../images/system-refactoring-candidates-filters-risk-accepted.png" width=”300" />
+<img src="../images/system-refactoring-candidates-filters-risk-accepted.png" width="300" />
 
 
 

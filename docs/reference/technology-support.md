@@ -344,6 +344,7 @@ In addition to supporting 300+ technologies, Sigrid also supports various open s
 | NPM                   | JavaScript, TypeScript |
 | NuGet                 | C#                     |
 | PuppetForge           | Puppet                 |
+| Poetry                | Python                 |
 | PyPi                  | Python                 |
 | RubyGems              | Ruby                   |
 | SBT                   | Scala                  |
