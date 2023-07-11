@@ -56,13 +56,6 @@ With the following Attributes & Claims:
 
 note: for some identity providers like Azure AD the first part ( http://schemas.xmlsoap.org/ws/2005/05/identity/claims/ ) may be omitted. 
 
-### Example for Azure AD
-
-<img src="../images/azure-saml.png" width="800" />
-
-
-
-
 Other
 - Signature Algorithm: RSA_SHA256
 - Digest Algorithm: SHA256
@@ -70,6 +63,15 @@ Other
 - Saml Single Logout: disabled
 
 Then assign groups of users to your Authentication app
+
+### Examples
+
+For Active Directory:
+
+<img src="../images/azure-saml.png" width="800" />
+
+For OneLogin: [this page](usermanagement-example-onelogin.md)
+
 
 ### Info to provide to SIG
 Provide SIG with the 'App federation MetadataURL' of your authentication app.
