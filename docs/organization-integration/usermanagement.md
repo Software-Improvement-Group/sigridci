@@ -66,11 +66,11 @@ Then assign groups of users to your Authentication app
 
 ### Examples
 
-For Active Directory
+For Active Directory:
+
 <img src="../images/azure-saml.png" width="800" />
 
-For OneLogin
-[this page](usermanagement-example-onelogin.md)
+For OneLogin: [this page](usermanagement-example-onelogin.md)
 
 
 ### Info to provide to SIG
