@@ -5,10 +5,10 @@ This page describes the technical setup for customer using OneLogin as Identity 
 
 ### Screenshots for OneLogin config
 
-<img src="docs/images/saml-onelogin-1.png" width="800" />
-<img src="docs/images/saml-onelogin-2.png" width="800" />
-<img src="docs/images/saml-onelogin-3.png" width="800" />
-<img src="docs/images/saml-onelogin-4.png" width="800" />
+<img src="../images/saml-onelogin-1.png" width="800" />
+<img src="../images/saml-onelogin-2.png" width="800" />
+<img src="../images/saml-onelogin-3.png" width="800" />
+<img src="../images/saml-onelogin-4.png" width="800" />
 
 
 
