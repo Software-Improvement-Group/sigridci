@@ -1,15 +1,23 @@
 OneLogin SAML Custom Connector (Advanced)
 ===========================================
 
-This page describes the technical setup for customer using OneLogin as Identity Management Provider.
+This page describes an example of the the technical setup if you are a customer using OneLogin as Identity Management Provider.
 
-### Screenshots for OneLogin config
+## OneLogin configuration screen
 
 <img src="../images/onelogin-saml-1.png" width="800" />
-<img src="../images/onelogin-saml-2.png" width="800" />
-<img src="../images/onelogin-saml-3.png" width="800" />
-<img src="../images/onelogin-saml-4.png" width="800" />
 
+## SAML parameters screen
+
+<img src="../images/onelogin-saml-2.png" width="800" />
+
+## Connector parameters screen
+
+<img src="../images/onelogin-saml-3.png" width="800" />
+
+## SAML URLs and endpoints
+
+<img src="../images/onelogin-saml-4.png" width="800" />
 
 
 # Contact and support

@@ -32,7 +32,7 @@ With this module, a Sigrid administrator can perform all the basic authenticatio
 When Sigrid is linked to your SSO the user provisioning is done by the IdP. Sigrid supports SAML or OpenID Connect protocols.
 
 ### Note
-- SSO improves the ease of use for your colleagues because there is no Sigrid password to remember 
+- SSO improves the ease of use for your colleagues because there is no Sigrid password to remember. 
 - Improves security because users are created and deleted centrally in your organisation.
 - Sigrid follows the password policy of your organisation.
 
@@ -40,7 +40,7 @@ When Sigrid is linked to your SSO the user provisioning is done by the IdP. Sigr
 - Check the last login
 - Do authorisation tasks to define who can see what in Sigrid
 
-### Setup customer side
+### Setup on client side
 Create an Enterprise application 'app' in your IdP with the following details: 
 - Audience or Identifier (Entity) ID: urn:amazon:cognito:sp:eu-central-1_hwh9zdyCY
 - Reply URL: https://auth.sigrid-says.com/saml2/idpresponse
@@ -60,17 +60,16 @@ Other
 - Signature Algorithm: RSA_SHA256
 - Digest Algorithm: SHA256
 - Assertion Encryption: unencrypted (privacy is provided by using HTTPS)
-- Saml Single Logout: disabled
+- SAML Single Logout: disabled
 
-Then assign groups of users to your Authentication app
+Then assign groups of users to your Authentication app.
 
-### Examples
-
-For Active Directory:
+### Example Active Directory
 
 <img src="../images/azure-saml.png" width="800" />
 
-For OneLogin: [this page](usermanagement-example-onelogin.md)
+### Example OneLogin
+Please see the separate [OneLogin page](usermanagement-example-onelogin.md).
 
 
 ### Info to provide to SIG
