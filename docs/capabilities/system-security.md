@@ -32,9 +32,13 @@ The different elements in this page are:
 
 Based on the CVSS score of findings, they are marked and colored ranging from "Information", "Low", "Medium", "High", "Critical".
 <img src="../images/system-security-icon-information1.png" class="inline" /> *Information*: a CVSS score of "0". These include anti-patterns that may not have a direct security impact but can still be significant. 
+
 <img src="../images/system-security-icon-low1.png" class="inline" /> *Low*: CVSS score between 0 and 3.9.
+
 <img src="../images/system-security-icon-medium1.png" class="inline" /> *Medium*: CVSS score between 4 and 6.9.
+
 <img src="../images/system-security-icon-high1.png" class="inline" /> *High*: CVSS score >between 7 and 8.9. 
+
 <img src="../images/system-security-icon-critical1.png" class="inline" /> *Critical*: CVSS score 9 or higher. 
 
 

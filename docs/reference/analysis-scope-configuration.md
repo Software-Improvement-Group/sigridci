@@ -138,6 +138,8 @@ The `dependencychecker` section supports the following options:
 | `transitive` | No        | When true, also scans the dependencies of your dependencies. Defaults to false.                |
 | `exclude`    | No        | List of file/directory patterns that should be excluded from the Open Source Health analysis.  |
 
+Please Note: dependency exclusions may be necessary in case your system resolves internal dependencies that could expose organization- or system name based on their internal URI. Therefore, as part of the onboarding process, please inform SIG of any such naming conventions that should be filtered. [See also this question in the FAQ on dependency filtering](../capabilities/faq-security.md#does-sig-filter-when-resolving-our-systems-dependencies).
+
 ## Security
 
 **Note: This requires a [Sigrid license for Software Security](https://www.softwareimprovementgroup.com/solutions/sigrid-software-security/). Without this license, you will not be able to see security results in Sigrid.**
