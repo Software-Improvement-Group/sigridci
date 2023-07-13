@@ -21,20 +21,21 @@ The different elements in this page are:
 * The *Findings Age* tile gives an indication how long findings are known. 
 
 
-### The scoring system with CVSS 
-* The *CVSS Severity* tile summarizes a breakdown of findings according to CVSS severity ratings. A mouseover on the barchart will show the exact number of findings. A mouseover on the CVSS severity benchmark shows the CVSS security score and the number of findings with that severity. *CVSS* (*Common Vulnerability Scoring System*) is a security-industry standard on a 0-10 scale, where scores are based on a benchmark of expert judgements.  
+### The scoring system with CVSS: background
+* The *CVSS Severity* tile summarizes a breakdown of findings according to CVSS severity ratings. A mouseover on the barchart will show the exact number of findings. A mouseover on the CVSS severity benchmark shows the CVSS security score and the number of findings with that severity. *CVSS* (*Common Vulnerability Scoring System*) is a security-industry standard on a 0-10 scale, developed by [NIST](https://nist.gov/), specifically its [National Vulnerability Database(NVD)](https://nvd.nist.gov/). CVSS scores are based on a benchmark of expert judgements and a well-defined calculation that estimates risk (see [NIST's current 3.1 calculator](https://nvd.nist.gov/vuln-metrics/cvss/v3-calculator/) or a [calculation preview of the to-be-released CVSS 4.0](https://www.first.org/cvss/calculator/4.0/)). Note that version 2 did not include a *"Critical"* vulnerability category.
 
 
+### CVSS scores in Sigrid
 <img src="../images/system-security-cvss-mouseover.png" width="500" />
 
 <img src="../images/filter-2.png" class="inline" /> The CVSS map adjusts to the filter that you may have used.
 
 Based on the CVSS score of findings, they are marked and colored ranging from "Information", "Low", "Medium", "High", "Critical".
 <img src="../images/system-security-icon-information1.png" class="inline" /> *Information*: a CVSS score of "0". These include anti-patterns that may not have a direct security impact but can still be significant. 
-<img src="../images/system-security-icon-low1.png" class="inline" /> *Low*: CVSS score between 0 and 4.
-<img src="../images/system-security-icon-medium1.png" class="inline" /> *Medium*: CVSS score between 4 and 7.
-<img src="../images/system-security-icon-high1.png" class="inline" /> *High*: CVSS score >between 7 and 9. 
-<img src="../images/system-security-icon-critical1.png" class="inline" /> *Critical*: CVSS score over 9. 
+<img src="../images/system-security-icon-low1.png" class="inline" /> *Low*: CVSS score between 0 and 3.9.
+<img src="../images/system-security-icon-medium1.png" class="inline" /> *Medium*: CVSS score between 4 and 6.9.
+<img src="../images/system-security-icon-high1.png" class="inline" /> *High*: CVSS score >between 7 and 8.9. 
+<img src="../images/system-security-icon-critical1.png" class="inline" /> *Critical*: CVSS score 9 or higher. 
 
 
 
@@ -43,7 +44,7 @@ These are the different statutes of findings. The status *"Fixed"* will be appli
 * *"Raw"* means "not yet verified" where *"Refined"* ones mark that a finding has been confirmed manually. Inversely, a finding can be set as *"False positive"*. 
 * *"Will fix"* signals the intention to fix it, while *"Risk Accepted"* does not.
 
-## Different grouping of security findings
+## Different possible grouping of security findings
 Different views can be selected in the left menu. security models. The menu selector on the left you to easily toggle between the different models in one view. 
 
 <img src="../images/system-security-grouping-finding-status-ex-background.png" width="250" />
@@ -57,7 +58,7 @@ In the Grouping menu in the top left under *"Finding"*, the following types of g
 * *"Severity"* orders on level of severity (based on CVSS).
 * *"Status"* lists the statuses as [mentioned above](#different-statuses-of-security-findings).
 * *"Type"* shows a specific list of vulnerabilities. This is especially useful for technical analysis, since sometimes, a whole category/type of findings may be set to *"False positive"*. 
-* *"Weakness"* orders on type of weaknesse (based on the CWE database). Weaknesses are somewhat higher level than *"Type"*. 
+* *"Weakness"* orders on type of weaknesse (based on [MITRE's *CWE* database](https://cwe.mitre.org/)). Weaknesses are defined somewhat higher level than *"Type"*. 
 
 <img src="../images/system-security-grouping-location-ex-background.png" width="250" />
 
@@ -69,7 +70,7 @@ Under *"Model"*, different Models can be used to map findings on. This is in pra
 
 ### A note on seeing the same file/finding multiple times
 * **A specific finding** is counted once, but it may be visible in multiple views. This could be because e.g. there is certain overlap in classification of the model that you have chosen as a view. 
-* **A specific line** may be counted multiple times if it refers to multiple CWEs: a count is applied for each possible security risk. See also [security FAQ elaboration on multiple views of the same finding](faq-security.md#why-does-the-finding-list-count-certain-findings-twice).  
+* **A specific line** may be counted multiple times if it refers to multiple *CWEs*: a count is applied for each possible security risk. See also [security FAQ elaboration on multiple views of the same finding](faq-security.md#why-does-the-finding-list-count-certain-findings-twice).  
 
 
 ## Analyzing security findings
@@ -97,18 +98,29 @@ As above, starting from the findings overview: if you click on the finding, the 
 
 In case that the relevant line is not highlighted in yellow (this sometimes occurs in package management files), you can search within the file with cmd+f/ctrl+f. By default your browser takes precedence for this shortcut and therefore will try to search the page. You therefore need to move mouse focus to the left pane by clicking on the source code area or tabbing to the element first. You can use regular expressions if you wish so. 
 
-On the right side of the page, all details surrounding the finding are shown. If available, the relevant *CWE* will be shown. This is part of the authoritative list of weakness types known as the *"Common Weakness Enumeration"* by MITRE [MITRE CWE website](https://cwe.mitre.org/). The CWE link in the security finding will refer you to the [OWASP CRE page](https://www.opencre.org/) of which SIG has been an active contributor. It is an open source, OWASP supported reference knowledge base that links all sorts of relevant, authoritative security reference documents and their explanations. 
+On the right side of the page, all details surrounding the finding are shown. 
 
-With the buttons in the top right, you can edit the finding or show the code in the  *"Code Explorer"*, which will show you code context. See also [Code Explorer](system-code-explorer.md). 
+## Changing a finding's status and audit trail
 
-<img src="../images/system-security-pom-dependency-edit-finding.png" width="400" />
+<img src="../images/edit-inverted.png" class="inline" /> In the top right, the *Edit Finding* button allows you to change e.g. its Status and Severity 
 
-In this case, because this is an automatically scanned dependency by [Open Source Health](system-open-source-health.md), e.g. changing its status to "false positive" will not necessarily remove the finding indefinitely. As long as the OSH tooling finds the same result, it will return. See also [this specific case in the Security FAQ](faq-security.md#i-previously-marked-a-security-finding-in-an-open-source-library-as-a-false-positive-but-now-it-is-back). The same holds for the *"Remark"*. Findings by *Open Source Health automatically add the type of vulnerability and vulnerability (CVE) reference. Remarks can also be adjusted manually. Any user can edit remarks or other characteristics. This could also be a SIG consultant, depending on your specific Sigrid agreement. 
+In this case, because this is an automatically scanned dependency by [Open Source Health](system-open-source-health.md), e.g. changing its status to "false positive" will not necessarily remove the finding indefinitely. As long as the OSH tooling finds the same result, it will return. See also [this specific case in the Security FAQ](faq-security.md#i-previously-marked-a-security-finding-in-an-open-source-library-as-a-false-positive-but-now-it-is-back). The same holds for the *"Remark"*. Findings by *Open Source Healt*h* automatically add the type of vulnerability and vulnerability (CVE) reference. Remarks can also be adjusted manually. Any user can edit remarks or other characteristics. This could also be a SIG consultant, depending on your specific Sigrid agreement. 
 
 An audit trail can be seen when clicking the *"Show Audit Trail"* button. In case of changes, multiple entries will be shown with their respective usernames and dates.
 
 <img src="../images/system-security-audit-trail.png" width="400" />
 
+## CWE and its link with CRE (Common Requirement Enumeration)
+If available, the relevant *CWE* will be shown. *CWEs* are part of the authoritative list of weakness types known as the *"Common Weakness Enumeration"* by MITRE [MITRE CWE website](https://cwe.mitre.org/). The *CWE* link in the security finding will refer you to the [OWASP Common Requirement Enumeration (CRE) page](https://www.opencre.org/). This will show the CWE in context. SIG has been an active and proud contributor to this project in close collaboration with the world's application security authority [*OWASP* (Open Worldwide Application Security Project)](https://owasp.org/). *CRE* is an open source security reference knowledge base, [a nexus between *OWASP's* initiatives](https://owasp.org/projects/#owasp-projects-the-sdlc-and-the-security-wayfinder) and relevant, authoritative security reference documents originating in [MITRE](https://www.mitre.org/), [NIST](https://www.nist.gov/) and [ISO](https://www.iso.org/). 
+
+An example of openCRE is shown below.
+
+<img src="../images/opencre-example-cwe308.png" width="600" />
+
+## Linking to Code Explorer
+On the top right you can show the code in the *"Code Explorer"*, which will show you the code's context and related findings. See also [Code Explorer](system-code-explorer.md). 
+
+<img src="../images/system-security-pom-dependency-edit-finding.png" width="400" />
 
 ## Your strategy for processing security findings
 

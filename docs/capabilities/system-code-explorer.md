@@ -18,7 +18,6 @@ The directory view and component view in most cases are (almost) the same. This 
 
 ## Navigating a directory or component in the Code Explorer
 Clicking on a *directory* or *component* will make 2 panels appear to the right: sources (on top) and findings (on bottom). The panels will change dynamically, depending on e.g. which file and finding you select. By default, a treemap represents the collection of files. The size of the squares/quadrilaterals represents code volume. A mouseover on a file shows volume- and finding counts. In the lower right panel, *Maintainability* and its metric *Duplication* are shown by default. They can be changed according to interest. 
-
 <img src="../images/system-code-explorer-directory-tree.png" width=”600" />
 
 ## Navigating a file in the Code Explorer

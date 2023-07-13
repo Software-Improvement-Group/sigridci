@@ -21,7 +21,7 @@ We use this approach to reduce the amount of busywork. Findings are automaticall
 
 
 ### What are the risk thresholds for determining whether a risk is low-medium-high?
-Findings are mapped on a scale from 0-10 based on a *CVSS* benchmark comparison. See the [CVSS section in the security page](system-security.md#the-scoring-system-with-cvss).
+Findings are mapped on a scale from 0-10 based on a *CVSS* benchmark comparison. See the [explanation on CVSS in the security page](system-security.md#the-scoring-system-with-cvss-background) and [its different levels in Sigrid](system-security.md#cvss-scores-in-sigrid).
 
 
 ## Open Source Health
@@ -37,7 +37,7 @@ The findings list indicates *compliance*. Sometimes a single finding on a vulner
 
 ### What technology is Open Source Health based on?
 
-Open Source Health is proprietary SIG technology where we combine 20+ different ecosystems. Examples are *Sonatype OSS Index*, *Google OSV*, and *GitHub security advisories*. Depending on the technology, this will analyze dependency management files (e.g. `pom.xml` or `package.json`), library source files (e.g. `jquery-3.6.1.js`), and binary library files (e.g. `log4j.jar`).
+Open Source Health is proprietary SIG technology where we combine 20+ different ecosystems. Examples are *Sonatype OSS Index*, *NVD*, *Google OSV*, and the *GitHub Security Advisory API*. Depending on the technology, this will analyze dependency management files (e.g. `pom.xml` or `package.json`), library source files (e.g. `jquery-3.6.1.js`), and binary library files (e.g. `log4j.jar`).
 
 Open Source Health offers the option to create an SBOM (Software Bill Of Materials) report, either through the Sigrid user interface or [through the Sigrid API](sigrid-api-documentation.md#vulnerable-libraries-in-open-source-health).
 
