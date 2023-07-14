@@ -2,7 +2,7 @@
 
 Sigrid supports all development process methodologies. That said, most organizations are either already using an [agile development process](https://en.wikipedia.org/wiki/Agile_software_development), or are currently in the process of migrating towards such a way of working. Working agile is therefore both the most mainstream and most desirable way of doing software development. 
 
-This page explains how Sigrid fits into a [Scrum](https://en.wikipedia.org/wiki/Scrum_(software_development) development process, which is the most popular and widely used version flavor of agile. Many of thes best practices outlined in this article can also be used when using other agile project management methodologies, such as [Kanban](https://en.wikipedia.org/wiki/Kanban).
+This page explains how Sigrid fits into a [Scrum](https://en.wikipedia.org/wiki/Scrum_(software_development)) development process, which is the most popular and widely used flavor of agile. Many of thes best practices outlined in this article can also be used when using other agile project management methodologies, such as [Kanban](https://en.wikipedia.org/wiki/Kanban).
 
 ## In an agile process, different roles still have different needs
 
@@ -12,7 +12,7 @@ In Scrum, [developers](developer.html) and [product owners](product-owner.html) 
 
 - **Product owners** generally see prioritization from the customer perspective: adding functionality tends to be seen something that brings most customer value, and is therefore top of mind. 
 - **Developers** generally put additional emphasis on non-functionals, for the obvious reason they need to work with the code on a daily basis. 
-- **Architects** have an interesting role in this process, as they are not "officially" part of the team. However, in many organization architects do in fact have [hands-on involvement with achieving technical goals](architect.html). This can be true even if nobody has "architect" as a job title! This is often called "emerging architect", where a senior engineer (or sometimes even the product owner!) takes care of the duties normally associated with an architect.
+- **Architects** have an interesting role in this process, as they are not "officially" part of the team. In many organizations, architects do in fact have [hands-on involvement with achieving technical goals](architect.html). This can be true even if nobody has "architect" as a job title! This is often called "emerging architect", where a senior engineer (or sometimes even the product owner!) takes care of the duties normally associated with an architect.
 
 These descriptions are clearly stereotypes. Though in many organizations there is some truth to them, things are usually a lot less black-and-white. In Scrum, developers are *also* responsible for delivering customer value. If people are over-focusing on non-functional quality and neglecting functional progress, this will eventually lead to problems. Reversely, product owners cannot completely ignore non-functionals, as this will eventually lead to issues that customers do notice. 
 
