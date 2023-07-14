@@ -1,10 +1,13 @@
 # System-level Open Source Health (OSH)
-Sigrid runs a comprehensive analysis of open source software that is used in the source code. These are known here as “*Third party libraries*”. You can reach this via the top menu:
+Sigrid runs a comprehensive analysis of open source software that is used in the source code. These are known here as “*Third party libraries*”. 
+
+## Reaching the OSH page
+You can reach the Open Source Health information via the top menu if you are in System view already:
 <img src="../images/system-top-bar-osh.png" width="300" />
 
+Or you can click a capability on Portfolio *Overview* page, clicking on a system from the Portfolio Open Source Health view. See [the system-level Overview page](system-overview.md#navigating-to-capabilities), [navigating from the portfolio-level Overview page](portfolio-overview.md#navigating-to-capabilities) or [navigating from the portfolio security view](portfolio-open-source-health.md#moving-from-portfolio-level-to-system-level).
 
 ## Navigating the overview page
-
 The system level overview lists the third party libraries used in this system, categorized per risk area (columns on the right). On top, a trend line is shown counting changes over time. A summary of counts, changes and identified risks are shown in the top four panels. These (change) counts depend on the period that you have chosen in the top right corner. If only 1 snapshot is available, only the latest count will be provided.
 
 <img src="../images/system-osh-top-bar-and-trendline.png" width="600" />

@@ -2,12 +2,13 @@
 
 System-level security is one of the detailed technical views under *Findings*. This may be available for your system. It depends on which capabilities have been activated specifically for your system or portfolio. 
 
-You can reach the system-level security view in different ways: Via the top menu, or clicking an a capability on the System or Portfolio *Overview* pages. See the [system-level Overview page](system-overview.md#navigating-to-capabilities) or [portfolio-level Overview page](portfolio-overview.md#navigating-to-capabilities).
+## Reaching the Security page
+You can reach the system-level security view in different ways: Via the top menu, clicking a capability on the System or Portfolio *Overview* pages, or clicking on a system from the Portfolio security view. See  [the system-level Overview page](system-overview.md#navigating-to-capabilities), [navigating from the portfolio-level Overview page](portfolio-overview.md#navigating-to-capabilities) or [navigating from the portfolio security view](portfolio-security.md#moving-from-portfolio-level-to-system-level).
 
 The tooling underlying this analysis is updated as often as possible. Therefore it may be possible that [new findings are found even when code is unchanged (link to FAQ)](faq-security.md#is-it-possible-that-sigrid-creates-new-findings-without-us-changing-the-code).
 
 
-## Security Overview
+## Navigating the Security Overview
 The security overview page shows a summary of findings, their change, age and estimated severity. In this example, 
 
 <img src="../images/system-security-overview.png" width="600" />

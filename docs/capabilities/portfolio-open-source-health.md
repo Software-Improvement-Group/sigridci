@@ -1,19 +1,20 @@
 # Portfolio-level Open Source Health
 If you have a portfolio of systems in Sigrid and licenses enabled for Security or Open Source Health, they will be visible in the top bar.
 
-Your URL will be of the convention https://sigrid-says.com/*[CLIENTNAME]*/-/open-source-health, where system details will follow https://sigrid-says.com/*[CLIENT-NAME]*/*SYSTEM-NAME*/-/open-source-health.
-
-To arrive here, you can use the top bar or the top capability tiles on the *Portfolio overview* page. See the [portfolio overview page](portfolio-overview.md#navigating-between-portfolio-and-system-level-views).
-
 <img src="../images/portfolio-overview-top-bar-open-source-health-focus.png" width="600" />
 
+Your URL will be of the convention https://sigrid-says.com/*[CLIENTNAME]*/-/open-source-health, whereas system details will follow https://sigrid-says.com/*[CLIENT-NAME]*/*SYSTEM-NAME*/-/open-source-health.
+
+Another way to arrive here is clicking on the top capability tiles on the *Portfolio overview* page. See the [portfolio overview page](portfolio-overview.md#navigating-between-portfolio-and-system-level-views).
+
+## Moving from portfolio level to system level
 Since the portfolio view is a summary of system level findings, please refer to the [system-level view of Open Source Health](system-open-source-health.md). For example, clicking on a system name in the portfolio overview will bring you to the system's details. 
 
 ## 6 different risk areas
 It is important to know how Open Source Health groups its findings. Open Source Health scans for 6 different risk areas. For an elaboration, please [see the relevant paragraph in the page describing system-level view of Open Source Health](system-open-source-health.md#open-source-health-scans-for-6-different-risk-areas). Risks are then classified and colored as <img src="../images/system-security-icon-low1.png" class="inline" /> *low*, <img src="../images/system-security-icon-medium1.png" class="inline" /> *medium*, or <img src="../images/system-security-icon-high1.png" class="inline" /> *high, based on their *CVSS score*. See also [our elaboration on how CVSS works](system-security.md#the-scoring-system-with-cvss-background) and on [how risks are visualized in Sigrid](system-security.md#cvss-scores-in-sigrid).
 
 ## Portfolio-level Open Source Health overview
-The security overview page shows a summary of findings and estimated severity. 
+The Open Source Health overview page shows a summary of findings and estimated severity.  
 
 <img src="../images/portfolio-open-source-health-overview.png" width="800" />
 
