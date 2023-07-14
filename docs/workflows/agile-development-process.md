@@ -1,6 +1,6 @@
 # Using Sigrid as part of an agile development process
 
-Many organizations using Sigrid are either already using an [agile development process](https://en.wikipedia.org/wiki/Agile_software_development), or are currently in the process of migrating towards such a way of working. Sigrid does not *force* you to use any specific development process, but we do believe working agile produces the best results.
+Sigrid supports all development process methodologies. That said, most organizations are either already using an [agile development process](https://en.wikipedia.org/wiki/Agile_software_development), or are currently in the process of migrating towards such a way of working. Working agile is therefore both the most mainstream and most desirable way of doing software development. 
 
 This page explains how Sigrid fits into a [Scrum](https://en.wikipedia.org/wiki/Scrum_(software_development) development process, which is the most popular and widely used version flavor of agile. Many of thes best practices outlined in this article can also be used when using other agile project management methodologies, such as [Kanban](https://en.wikipedia.org/wiki/Kanban).
 
@@ -18,11 +18,7 @@ These descriptions are clearly stereotypes. Though in many organizations there i
 
 <img src="../images/agile-vicious-cycle.png" width="500" />
 
-The problem with degrading technical quality is that it will eventually reduce stability. People make mistakes because the consequences of certain changes are not clear. Most of these mistakes will be caught by the development and test process, but this leads to additional time being spent on correcting the mistakes, reducing productivity. Moreover, some mistakes will inevitably *not* be caught, leading to issues in production.
-
-Once this has been going on for some period of time, people tend to get scared. They become over-defensive to avoid causing issues in production, reducing both speed and agility. This will cause technical debt to increase even more, as people will prefer workarounds rather than fixing problem structurally, as they are afraid making structural changes will break something.
-
-The only way to address this is by also making software quality agile. Ensuring quality and non-functionals should be part of every sprint and every ticket, so that it becomes a regular part of the process rather than an afterthought that needs to be managed independently. 
+The problem with degrading technical quality is that it will eventually reduce stability. People make mistakes because the consequences of certain changes are not clear. This will cost more time, as people spend more time on correcting the mistakes, or even to production issues when things *really* go wrong. The only way to avoid this vicious cycle of technical debt is by also making software quality agile, rather than something that needs to be managed independently from the normal process.
 
 ## Where does Sigrid fit in Scrum rituals?
 
@@ -36,17 +32,13 @@ This structure is effectively a series of feedback loops between people:
 - Each ticket is the responsibility of the people working on it. In nearly all organizations a ticket involves a minimum of two people: at least one person that implements the ticket, and at least one ticket that reviews it. 
 - While working on a ticket, the actual development work on the lowest level consists of a series of commits made by a developer.
 
-The red arrows in the diagram below depict how the different feedback loops and responsibilities are connected. 
-
-<img src="../images/agile-feedback-loops.png" width="500" />
-
 A sprint obviously consists of more than just implementing things. However, if you look at the sprint rituals you'll find they tend to connect to the same responsibilities:
 
 <img src="../images/agile-rituals.png" width="500" />
 
 So how can we use Sigrid during these sessions to ensure every sprint brings you closer to your software quality objectives?
 
-### Using Sigrid during refinement/planning
+### Using Sigrid during refinement and planning
 
 **Triage security and OSH findings**
 
@@ -76,7 +68,11 @@ Fixing technical debt can be done in two ways. The simplest form is to simply cl
 
 ### Using Sigrid during code review
 
-Sigrid CI allows you to use [feedback from Sigrid as part of your code review](../sigridci-integration/development-workflows.md). As shown in the picture with feedback loops, the pipeline is where you go from individual responsibility to shared responsibility, making it the logical place for both the code review and for Sigrid. Sigrid CI compares the new/code against your goal. This means the feedback is focused at making your code *good enough* (where "good enough" is defined by your shared goal), rather than trying to make your code perfect with zero findings. This also means you don't have to fix every single finding, which tends to be more motivating and pragmatic for the person receiving this feedback.
+Agile teams rely on [continuous integration](https://en.wikipedia.org/wiki/Continuous_integration) to facilitate their process. Every change is reviewed, and once this [code review](https://en.wikipedia.org/wiki/Code_review) has approved the change is is merged into the main/master branch. This makes the code review the process' main *agile quality gate*.
+
+During code reviews, the definition-of-done for software quality is often quite subjective and vague. Using [Sigrid's objectives](../capabilities/objectives.md) helps to agree on a shared goal within the team, and then relate code review feedback towards that goal.
+
+Sigrid also [integrates with your continuous integration pipeline](../sigridci-integration/development-workflows.md). Sigrid compares the new/code against your goal, meaning this feedback focuses on making your code *good enough* in regards to your team objectives. This avoids extensive discussions about minor issues. This in turn also means you don't have to fix *every* trivial finding, which tends to be more motivating and pragmatic for the person receiving this feedback.
 
 ### Using Sigrid during the sprint retrospective
 
