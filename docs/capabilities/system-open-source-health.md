@@ -3,6 +3,7 @@ Sigrid runs a comprehensive analysis of open source software that is used in the
 
 ## Reaching the OSH page
 You can reach the Open Source Health information via the top menu if you are in System view already:
+
 <img src="../images/system-top-bar-osh.png" width="300" />
 
 Or you can click a capability on Portfolio *Overview* page, clicking on a system from the Portfolio Open Source Health view. See [the system-level Overview page](system-overview.md#navigating-to-capabilities), [navigating from the portfolio-level Overview page](portfolio-overview.md#navigating-to-capabilities) or [navigating from the portfolio security view](portfolio-open-source-health.md#moving-from-portfolio-level-to-system-level).
@@ -15,6 +16,7 @@ The system level overview lists the third party libraries used in this system, c
 ### Open Source Health scans for 6 different risk areas
 
 “*Open Source Health*” scans for six different risk areas: 
+
 <img src="../images/system-osh-icon-vulnerability.png" class="inline" /> **Known vulnerabilities:** publicly known and categorized vulnerabilities in a third-party dependency.
 
 <img src="../images/system-osh-icon-freshness.png" class="inline" />  **Freshness:** a measure of versioning compared to official/available versions. The count is the time difference with the date of the latest (publicly) available version. 

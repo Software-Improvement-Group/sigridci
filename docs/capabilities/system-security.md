@@ -31,11 +31,13 @@ The different elements in this page are:
 
 
 ### CVSS scores in Sigrid
+
 <img src="../images/system-security-cvss-mouseover.png" width="500" />
 
 <img src="../images/filter-2.png" class="inline" /> The CVSS map adjusts to the filter that you may have used.
 
 Based on the CVSS score of findings, they are marked and colored ranging from "Information", "Low", "Medium", "High", "Critical".
+
 <img src="../images/system-security-icon-information1.png" class="inline" /> *Information*: a CVSS score of "0". These include anti-patterns that may not have a direct security impact but can still be significant. 
 
 <img src="../images/system-security-icon-low1.png" class="inline" /> *Low*: CVSS score between 0 and 3.9.
@@ -94,15 +96,18 @@ Below an example of a list of detailed findings.
 In the top left you can see that the findings are not grouped. Therefore each finding is shown individually. Below, the *"Grouping"* menu under *"Sorting"*, sorting is set to CVSS severity. Therefore the highest risk findings are shown above. Note that for example the first two findings are Maven dependencies. These originate from [Open Source Health](system-open-source-health.md). 
 
 If Remarks have been registered, they can be seen in the far right column with a mouseover or clicking on the text balloon. An example of a mouseover is shown here. 
+
 <img src="../images/system-security-osh-remark-mouseover.png" width="500" />
 
 If you click on the finding, the source code of the finding will be shown with its details. Details such as Status, finding age, Origin (scanning tool), File location, Remarks (if available) or audit trail are all viewable here.
+
 <img src="../images/system-security-security-os-inj-example-detail.png" width="600" />
 
 In the left panel, the specific line is highlighted in yellow, where a possible vulnerability may exist (in this case, OS injection). For details on e.g. the right panel, see [Open Source Health-analysis section](system-open-source-health.md#analyzing-security-findings-open-source-health-example). Extra information such 
 
 ## Analyzing security findings: Dependency example (based on Open Source Health)
 As above, starting from the findings overview: if you click on the finding, the source code of the finding will be shown with its details. 
+
 <img src="../images/system-security-maven-finding-detail-sshd-search.png" width="600" />
 
 In case that the relevant line is not highlighted in yellow (this sometimes occurs in package management files), you can search within the file with cmd+f/ctrl+f. By default your browser takes precedence for this shortcut and therefore will try to search the page. You therefore need to move mouse focus to the left pane by clicking on the source code area or tabbing to the element first. You can use regular expressions if you wish so. 

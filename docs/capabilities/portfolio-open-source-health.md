@@ -24,6 +24,7 @@ From left to right, the tiles read as follows:
 * *Libraries with vulnerability/legal/freshness/..risk*: the total count of libraries in each risk category, transcending systems. 
 
 The aforementioned 6 categories are present on the bottom of the tiles that show the sum of number of risks.
+
 <img src="../images/system-osh-risk-barchart-bottom-icons.png" width="400" />
 
 <img src="../images/help-corner-osh.png" class="inline" /> The help button in the tile's upper right corner shows mouseovers for each category that you select.
@@ -33,9 +34,11 @@ The aforementioned 6 categories are present on the bottom of the tiles that show
 <img src="../images/portfolio-open-source-health-freshness-mouseover.png" width="600" />
 
 In the bottom part of the screen, each system is shown with a summary of its counts: number of libraries and findings per category. For larger portfolios it may be useful to sort these on different characteristics. Its menu, by default set on sorting order by "*Risk*", is as follows:
+
 <img src="../images/portfolio-open-source-health-sorting-risk.png" width="300" /> 
 
 Sorting can also be done per columns (here, "*Vulnerability*" as an example). The top right bottom for exporting the data as a spreadsheet may be useful for further analysis. 
+
 <img src="../images/portfolio-open-source-health-sorting-columns-vulnerability-focus.png" width="300" /> 
 
 ## Filtering internal dependencies
