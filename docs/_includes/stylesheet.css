@@ -131,6 +131,7 @@ h2, h3 {
 .container article {
     flex: 1 1 auto;
     padding: 110px 80px 30px 80px;
+    max-width: 850px;
 }
 
 .container article img, .container article iframe {
