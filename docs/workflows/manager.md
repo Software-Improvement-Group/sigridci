@@ -24,7 +24,7 @@ Make sure you are aware of the most important developments of your current softw
 
 ## Prioritize improvement actions based on system context
 
-The next step after getting the right insights is taking the right decision. Prioritize areas of improvement based on their urgency. For Security, Sigrid provides you with a dashboard of findings, mapped based on their exploitability and possible impact. For maintainability, the overview dashboard allows you to filter the most important systems, and pinpoint the areas of attention. A recommended approach for prioritizing improvement actions is the following:
+The next step after getting the right insights is making the right decision Prioritize areas of improvement based on their urgency. For Security, Sigrid provides you with a dashboard of findings, mapped based on their exploitability and possible impact. For maintainability, the overview dashboard allows you to filter the most important systems, and pinpoint the areas of attention. A recommended approach for prioritizing improvement actions is the following:
 
 - For security findings and known vulnerabilities in 3rd party libraries, prioritize based on systems web accessibility. Give public facing systems priority, then connected systems (communicate with public facing through a network).
 - For maintainability findings, give business critical systems priority, for example, give extra attention to the trends and delivered work, and afterwards plan time and budget to resolve technical debt. The technical team should already have insights on possible actions after consulting the refactoring candidates list in Sigrid.
