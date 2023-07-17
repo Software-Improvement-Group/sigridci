@@ -2,7 +2,7 @@
 
 As a product owner, you face a constant challenge to prioritize your sprint backlog. On one hand, you represent the voice of the customer and need to delivery as much customer value as possible, every single sprint. But on the other hand, you're also working with your team to ensure the non-functional aspects. If you *only* focus on adding more and more functionality at the expense of everything else, your productivity will eventually slow to a crawl as everyone gets increasingly overwhelmed by technical debt.
 
-<img src="../images/po-priorities.png" width="600" />
+<img src="../images/agile-prioritization.png" width="500" />
 
 Sigrid can help you balancing these aspects, by allowing you to define objectives for non-functionals (e.g. test code coverage, state of open-source libraries used, etc.), and then providing you with information that will help you to track progress towards those objectives as part of your process. 
 
@@ -20,3 +20,7 @@ Preventing technical debt will help you in the long run, but it won't solve the 
 ## Report progress towards your objectives
 
 [Objectives](../capabilities/objectives.md) are not only useful to the team, you can also use them to report progress to stakeholders outside of the team. To those people, concepts like software quality and non-functionals can be abstract, making it hard to explain *why* you are choosing to prioritize those issues. [Sigrid's dashboards](../capabilities/system-overview.md) help evaluate changes to the overall quality of the system. This allows you to determine whether you're on track to meet your objectives, or whether you need to pivot to prevent yourself from further trouble.
+
+## Learn more about using Sigrid in an agile development process
+
+Obviously, as a product owner you never work alone. Learn more about [how you can use Sigrid in your agile development process](agile-development-process.md), including concrete suggestions on how to use Sigrid's capabilities in your sprints and sessions. 
