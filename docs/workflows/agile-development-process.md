@@ -42,7 +42,7 @@ So how can we use Sigrid during these sessions to ensure every sprint brings you
 
 **Triage security and OSH findings**
 
-Fully preventing security findings from ever appearing is impossible. Instead, a good security process means you focus on *discovering*, *triaging*, and *fixing* these findings quickly. 
+Fully preventing security findings from ever appearing is impossible. Instead, a good security process means you focus on *discovering*, *triaging*, and *fixing* these findings quickly. For elaborations on security functionality, see [system security page](../capabilities/system-security.md).
 
 People often find it hard to adequately assess security findings. Moreover, triaging security findings is a form of risk assessment, so it's best to not make those decisions on a purely individual basis. Making the security triage process part of your refinement sessions solves this. The refinement session is ultimately about determining what work needs to be done, so in that regard triaging security findings can be seen as a form of refinement. 
 

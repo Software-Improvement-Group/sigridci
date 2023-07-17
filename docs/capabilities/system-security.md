@@ -3,13 +3,17 @@
 System-level security is one of the detailed technical views under *Findings*. This may be available for your system. It depends on which capabilities have been activated specifically for your system or portfolio. 
 
 ## Reaching the Security page
-You can reach the system-level security view in different ways: Via the top menu, clicking a capability on the System or Portfolio *Overview* pages, or clicking on a system from the Portfolio security view. See  [the system-level Overview page](system-overview.md#navigating-to-capabilities), [navigating from the portfolio-level Overview page](portfolio-overview.md#navigating-to-capabilities) or [navigating from the portfolio security view](portfolio-security.md#moving-from-portfolio-level-to-system-level).
+You can reach the system-level security view in different ways: Via the top menu (the *Findings* tab), clicking a capability on the System or Portfolio *Overview* pages, or clicking on a system from the Portfolio security view. See  [the system-level Overview page](system-overview.md#navigating-to-capabilities), [navigating from the portfolio-level Overview page](portfolio-overview.md#navigating-to-capabilities) or [navigating from the portfolio security view](portfolio-security.md#moving-from-portfolio-level-to-system-level).
 
 The tooling underlying this analysis is updated as often as possible. Therefore it may be possible that [new findings are found even when code is unchanged (link to FAQ)](faq-security.md#is-it-possible-that-sigrid-creates-new-findings-without-us-changing-the-code).
 
 
 ## Navigating the Security Overview
-The security overview page shows a summary of findings, their change, age and estimated severity. In this example, 
+As an example, clicking on the *Findings* tab will show you a menu different capabilities (if available for your particular system). Here, with *Security* highlighted when hovering the mouse.
+
+<img src="../images/system-findings-menu-security.png" width="300" />
+
+The security overview page shows a summary of findings, their change, age and estimated severity. Note that the *Findings* tab will remain highlighted in yellow.
 
 <img src="../images/system-security-overview.png" width="600" />
 
@@ -127,20 +131,37 @@ On the top right you can show the code in the *"Code Explorer"*, which will show
 
 <img src="../images/system-security-pom-dependency-edit-finding.png" width="400" />
 
-## Your strategy for processing security findings
+## A general, typical strategy for processing security findings
 
-In general, processing scan findings includes cleaning the results from false positives, adding priority, and writing explanations or recommendations. You may take different strategies that depend a lot on organizational context.
+Especially when *Security* is enabled in Sigrid for the first time in your system, the number of findings may seem overwhelming. Therefore, filtering out false positives is your first concern. That will give you a more accurate view of the system's risk exposure. And then you may set priorities, and writing explanations or recommendations for findings that need attention. 
 
-* Probably you want to start with *"Open Source Health"* because they are regularly high-risk and urgent, yet relatively easy to solve. That has a high return on your efforts. Also, grouping the same libraries/frameworks may be favorable because you only need to go through release notes once. This might be harder if you need to cross teams to do that.
-  * Any occurring *possible legal risks* (e.g. GPL) are important to discuss with your legal department. These legal license risks tend to apply only in specific cases, e.g. when you have modified the source code. SIG explicitly cannot help you with legal advice. 
+### Threat modeling as a requisite for interpreting security findings
+The absolutely most solid way to approach security is to start by threat modeling. This takes you a step back of all the technical findings. A threat modeling effort should involve brainstorms, whiteboarding and *Data Flow Diagrams* to reach a basic system *threat model* and its associated security risks. 
 
-* To get an *overview* of findings and to be able to make quick exclusions of false positives, it may be useful to order security findings by *component/file* [see above](#different-grouping-of-security-findings). A file-view may expose e.g. test-code, and a component-view may show that many files may lay in a certain functional domain (e.g. deployment). This may lead to a lot of exclusions and a cleaner overview of security findings. In the *File view* you can export findings as a spreadsheet. In case of very large lists of findings it may be advantageous to browse and filter in a spreadsheet editor, and then go back and exclude them (by groups). 
-  * A tactic during sprints is to use a kind of *Boy Scout* approach, where you compare findings for files while you are modifying them. This tends to be efficient because you are already working in/analyzing the code. You may consider to make this part of the Definition of Done.
+There is wide availability of training and instruction regarding threat modeling [e.g. OWASP's Threat Modeling Cheat Sheet](https://cheatsheetseries.owasp.org/cheatsheets/Threat_Modeling_Cheat_Sheet.html) or [the Threat model Wikipedia page](https://en.wikipedia.org/wiki/Threat_model), where the *Threat Modeling* book by Adam Shostack is probably considered one of the fundamentals. 
+
+As a simplification of a whole field of expertise, please do keep in mind:
+1. **Start small**. Do not strive for completeness on the first try.
+2. **Assign ownership and repeat**. Threat models are never finished and need a maintenance rhythm. 
+
+SIG can help with such threat analysis efforts as custom consultancy services. Please reach out to your account contact if you have questions.
+
+### Filtering results for false positives
+* **Starting with *Open Source Health*:** Assuming that Open Source Health is enabled together with Security, you probably want to start there. Vulnerable dependencies are regularly high-risk and urgent, yet relatively easy to solve (not when it concerns major framework updates for example). Generally, updating libraries has a high return on your efforts. Also, grouping the same libraries/frameworks may be favorable because you only need to go through release notes once. This might be harder if you need to cross teams to do that.
+  * **Note on legal risks in dependencies:** Any occurring *possible legal risks* (e.g. GPL) are important to discuss with your legal department. These legal license risks tend to apply only in specific cases, e.g. when you have modified the source code. SIG explicitly cannot help you with legal advice on this. 
+
+* **Filtering test/functional domains by sorting on code location:** To get an overview and to be able to make quick exclusions of false positives, it may be useful to order security findings by *component/file* [see above](#different-grouping-of-security-findings). A file-view may expose e.g. test-code, and a component-view may show that many files may lay in a certain functional domain> As an example, deployment configurations may exist in a context of which you know that they are protected from certain security risks. This may lead to a lot of exclusions and a cleaner overview of security findings. 
+  * **Deeper analysis in the File view:** In the *File view* you can export those findings as a spreadsheet. In case of very large lists of findings it may be advantageous to browse and filter in a spreadsheet editor, and then go back and exclude them (by groups). 
+
+
+### Prioritizing security findings
+  * **Sprint approaches:** A tactic during sprints is to use a kind of *Boy Scout* approach, where you compare findings for files while you are modifying them. This tends to be efficient because you are already working in/analyzing the code. Consider making this part of the *Definition of Done*.
+    * Please see the [Agile workflow page regarding refinement/planning](../workflows/agile-development-process.md#using-sigrid-during-refinement-and-planning) for a further discussion on processing security findings in an Agile workflow. 
 * *Prioritizing by severity* is the typical approach, and this is faithful to agile practices (assuming you choose the action with the highest return first). This way you move from urgent to less urgent findings.
 * Prioritizing based on grouping by patterns means that you may exclude or solve many findings in one go. There are indeed cases when a whole class of findings can be excluded because for some reason the findings are not applicable or can be resolved in one place.
 
-### SIG consultancy helping with security
-Depending on your agreement with SIG, security expertise consultancy may be available. See also [this question in the security FAQ](faq-security.md#to-what-extent-does-sig-provide-consultancy-for-security-findings).
+## SIG may offer consultancy services to help you with security
+Depending on your agreement with SIG, security expertise consultancy may be available. Or this can be offered as a separate consultancy effort. See also [this question in the security FAQ](faq-security.md#to-what-extent-does-sig-provide-consultancy-for-security-findings).
 
 
 
