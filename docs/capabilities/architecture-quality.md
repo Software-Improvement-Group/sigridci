@@ -4,12 +4,17 @@ High quality application development requires software architecture. On paper, i
 
 Software architecture can seem abstract, but it is ultimately how the structure of your software facilitates the people working on it. The code will not care that it is highly coupled, but the people working on that code certainly do care about having dependencies on other people and teams. Sigrid can help you to both *communicate* the as-is architecture as it is actually implemented, and also help to find opportunities on how it can be improved. 
 
-<iframe width="560" height="315" src="https://www.youtube.com/embed/BejJ9sHeUOQ" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+<iframe width="560" height="315" src="https://www.youtube.com/embed/K5BbtWxFJYk" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
 
 ## A wide measure of Architecture Quality
+
 When people talk about "legacy" or "monoliths", they often mean much more than just outdated technology. What people usually mean is software that has become too fragile for changes to be timely, predictable, and reliable. Usually due to poor architecture or team knowledge loss. An architecture should be able to adapt to those changing circumstances. Therefore, we define *architecture quality* as the degree to which an architecture is flexible and adaptable to change. 
 
 So to make an assessment of architectural/future flexibility, we measure widely. Next to measuring the technical fundamentals, we also look at (code) evolution over time. For example the spread of code contributions over developers. We then compare your results against [SIG's benchmark](../getting-started/approach.md) to clarify what is going well and where improvement is needed.
+
+## Navigating to Architecture Quality
+
+If Architecture Quality is available for your system, you can reach this view via the top menu, or by clicking an a capability on the System or Portfolio *Overview* pages. See the [system-level Overview page](system-overview.md#navigating-to-capabilities) or [portfolio-level Overview page](portfolio-overview.md#navigating-to-capabilities).
 
 ## Architecture Quality overview
 
@@ -19,10 +24,9 @@ The overview page provides a summary of your system's current architecture, rela
 
 This page provides you with a summary, but you may decide that further investigation into your system's current architecture is needed. You can use the "explore architecture" button to navigate to Sigrid's architecture explorer page. Clicking on one of the system properties on the right will *also* take you to the architecture explorer page, but will then immediately jump to the system property you just clicked on.
 
-## Navigating to Architecture Quality
-If Architecture Quality is available for your systems, you can reach this view via the top menu, or clicking an a capability on the System or Portfolio *Overview* pages. See the [system-level Overview page](system-overview.md#navigating-to-capabilities) or [portfolio-level Overview page](portfolio-overview.md#navigating-to-capabilities).
-
 ## Exploring your system's as-is architecture
+
+<iframe width="560" height="315" src="https://www.youtube.com/embed/BejJ9sHeUOQ" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
 
 The architecture explorer page visualizes your architecture. Not the architecture that was initially planned, not the to-be architecture, but the implemented as-is architecture. The information used to provide this view is extracted from your source code, your repository history, and your configuration. 
 

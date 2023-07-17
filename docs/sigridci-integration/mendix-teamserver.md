@@ -5,12 +5,12 @@ This document describes onboarding of Mendix apps to Sigrid for customers that a
 please note: When the customer is not using the teamserver but they are in a "Bring Your Own Git" scenario then the below does not apply. Then please refer to [Mendix for GitHub](mendix-github-actions.md) or [Mendix for Gitlab](mendix-gitlab.md)
 
 ---
-## Manual onboarding via the dedicated Mendix support app
+## Default: Onboarding via the dedicated Mendix support app
 Onboarding a new Mendix app into Sigrid is normaly done via the Mendix app [addon.mendix.com](https://addon.mendix.com). By default the mainline will be scanned once a day. The scan will provide both maintainability, OSH and security findings for QSM customers. AQM customers will only see maintainability results. After succesfull onboarding an email is sent to the user requesting the onboarding.
 
 ----------
 
-## Scripted onboarding via a POST command to the Sigrid API
+## Scripted: Onboarding via a POST command to the Sigrid API
 In some cases customers would like to take onboarding of teamserver based apps into their own hands. Examples can be automated onboarding or the need to specify a specific branch. In those cases customers can use the Sigrid API to onboard a Mendix app to Sigrid. 
 
 
