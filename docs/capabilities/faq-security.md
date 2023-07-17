@@ -57,7 +57,7 @@ Open Source Health produces security findings for the version of the open source
     
 
 ### We have a lot of (new) security findings. What should we do first?
-Please see [elaboration in the system-level security page](system-security.md#your-strategy-for-processing-security-findings) 
+Please see [elaboration on such strategies in the system-level security page](system-security.md#a-general-typical-strategy-for-processing-security-findings), or [specifically the paragraph on filtering security findings](system-security.md#filtering-results-for-false-positives).
 
 ### To what extent does SIG provide consultancy for security findings?
 
@@ -70,6 +70,10 @@ This depends on your agreement with SIG, which can differ per system:
     - The model is that training of personnel and second tier hands-on security coaching is to be organised by the client. When required, SIG can assist.
     - In case you believe that remarks can be more helpful: please  provide examples of where you believe this is the case. We want to offer useful guidance as well as we can.
 - **Manual code review:** This service provides reviewing design, configuration and code for findings that cannot be detected by scan tools - typically involving the interpretation of logic, in context. The results are added into the Sigrid finding workflow.
+
+### What about security risk assessment and threat modeling?
+
+These should indeed be considered requisites for dealing with security findings effectively. Please see our elaboration [on the system security page](system-security.md#threat-modeling-as-a-requisite-for-interpreting-security-findings).
 
 ## Contact and support
 
