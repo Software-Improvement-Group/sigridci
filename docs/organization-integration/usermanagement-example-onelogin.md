@@ -1,21 +1,23 @@
-OneLogin SAML Custom Connector (Advanced)
-===========================================
+Configuring Sigrid Single Sign-on with OneLogin
+===============================================
 
-This page describes an example of the the technical setup if you are a customer using OneLogin as Identity Management Provider.
+This page describes an example of the technical setup for Sigrid customers using OneLogin as their Identity Management Provider.
 
-## OneLogin configuration screen
+## Creating an Application for Sigrid SSO
+As OneLogin administrator, add an Application based on the `SAML Custom Connector (Advanced)` template.
 
-<img src="../images/onelogin-saml-1.png" width="800" />
+### Configuration
 
-## SAML parameters screen
+<img src="../images/onelogin-saml-1.png" width="800" /><br />
 
+### Configuration (cont'd)
 <img src="../images/onelogin-saml-2.png" width="800" />
 
-## Connector parameters screen
+### Parameters
 
 <img src="../images/onelogin-saml-3.png" width="800" />
 
-## SAML URLs and endpoints
+### SSO
 
 <img src="../images/onelogin-saml-4.png" width="800" />
 
