@@ -25,7 +25,7 @@ For technical details on maintainability metrics, see [Maintainability Evaluatio
 
 Below the metrics overview, there is a shortcut to the *Refactoring candidates* [link on this page](system-maintainability.md#refactoring-candidates). This can also be reached by the Maintainability tab. 
 
-### Note on the Technical Monitor
+### Technical Monitor and Code Explorer
 The “Technical monitor” button above the rating brings you to an alternative (one might say, “legacy”) view of all the maintainability metrics and underlying source code. Its functionality and views will eventually be moved to Sigrid. Its source code-level view is available in Sigrid in the [Code Explorer](system-code-explorer.md).
 
 ## Component Dependencies

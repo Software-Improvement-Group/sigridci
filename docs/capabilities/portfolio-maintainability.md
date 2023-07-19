@@ -26,7 +26,7 @@ The *Overview* tab brings the main metrics together. For the systems combined, i
 
 ### Delta quality view
 
-The *Delta quality* view shows the impact of code changes on the entire portfolio for the selected period. By default it shows you "*New code*", the first of three tabs. In the treemap the results are grouped per system. Just like other Sigrid pages, the "*Color*", "*Area*", "*Grouping*" and "*Annotations*" can be changed by their drop-down munes. So note that the summaries in the top tiles adjust to whether you have selected "*New code*", "*Changed code*" or "*New & changed code*".
+The *Delta quality* view shows the impact of code changes on the entire portfolio for the selected period. By default it shows you "*New code*", the first of three tabs. In the treemap the results are grouped per system. Just like other Sigrid pages, the characteristics can be changed by their drop-down menus (here:"*Color*", "*Area*", "*Grouping*" and "*Annotations*"). So note that the summaries in the top tiles adjust to whether you have selected "*New code*", "*Changed code*" or "*New & changed code*".
 
 <img src="../images/portfolio-delta-quality-new-code.png" width="600" />
 
