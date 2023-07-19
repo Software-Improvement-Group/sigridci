@@ -18,16 +18,23 @@ The maintainability section on the portfolio level has two main views: *Overview
 
 <img src="../images/portfolio-maintainability-menu.png" width="150" />
 
-The *Overview* tab brings the main metrics together. 
+### Maintainability view
 
-<img src="../images/portfolio-maintainability.png" width="500" />
+The *Overview* tab brings the main metrics together. For the systems combined, it summarizes their (change in) volume and maintainability. 
 
-The *Delta quality* view shows the impact of new code changes on the entire portfolio for the selected period. By default it is grouped per system. 
-For elaboration, see [Delta quality](system-delta-quality.md). 
+<img src="../images/portfolio-maintainability.png" width="600" />
+
+### Delta quality view
+
+The *Delta quality* view shows the impact of code changes on the entire portfolio for the selected period. By default it shows you "*New code*", the first of three tabs. In the treemap the results are grouped per system. Just like other Sigrid pages, the "*Color*", "*Area*", "*Grouping*" and "*Annotations*" can be changed by their drop-down munes. So note that the summaries in the top tiles adjust to whether you have selected "*New code*", "*Changed code*" or "*New & changed code*".
+
+<img src="../images/portfolio-delta-quality-new-code.png" width="600" />
+
+By clicking on a system, either on the treemap or the list below, you will move to the system view for *Delta Quality* in the same tab as you are viewing now ("*New code*", "*Changed code*" or "*New & changed code*"). Please see [Delta quality on a system-level](system-delta-quality.md) for elaboration on system-specifics. Generally, the "*New code*" delta tells you whether new developments are able to follow best practices (assuming that code change heuristics picked up those files correctly as being new, as opposed to moved or renamed). The impact of "*Changed code quality*" really depends on the size of the change. If 1 line of code has been changed, the code quality will probably stay the same. If that happens to be (older) code with lower quality, it is not necessarily alarming. A more balanced view will be visible in the "*New & changed code*" tab, which averages out changes to new and existing code. A sanity check is to see whether portfolio-wide metrics have actually changed (in the [Maintainability Overview tab, see above](#portfolio-level-maintainability-overview)). 
 
 <iframe width="560" height="315" src="https://www.youtube.com/embed/O9ARAQV7v1w" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
 
-<img src="../images/filter-2.png" class="inline" /> The information can be filtered and sorted by metadata (such as supplier, team, or division) by using the filter button. By default the filters shows (2) active filters: "Hide excluded systems" and "Hide deactivated systems". 
+<img src="../images/filter-2.png" class="inline" /> With the help of the top right funnel/filter icon, the information can be filtered and sorted by metadata (such as supplier, team, or division). By default it shows (2) active filters: "*Hide excluded systems*" and "*Hide deactivated systems*". 
 
 Please see [the system-level overview page](system-overview.md) under *Maintainability:4* for elaboration. 
 
