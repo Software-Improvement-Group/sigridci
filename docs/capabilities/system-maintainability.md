@@ -26,7 +26,12 @@ For technical details on maintainability metrics, see [Maintainability Evaluatio
 Below the metrics overview, there is a shortcut to the *Refactoring candidates* [link on this page](system-maintainability.md#refactoring-candidates). This can also be reached by the Maintainability tab. 
 
 ### Technical Monitor and Code Explorer
-The “Technical monitor” button above the rating brings you to an alternative (one might say, “legacy”) view of all the maintainability metrics and underlying source code. Its functionality and views will eventually be moved to Sigrid. Its source code-level view is available in Sigrid in the [Code Explorer](system-code-explorer.md).
+ 
+The “*Technical monitor*” button above the system rating brings you to an alternative (one might say, “legacy”) view of all the maintainability metrics and underlying source code. Its functionality and views will eventually be moved to Sigrid. Generally, its source code-level view is available in Sigrid in the [Code Explorer](system-code-explorer.md). 
+
+<img src="../images/technical-monitor-shortcut.png" width="300" />
+
+Because the views, filters and sorting abilities between the "*Technical monitor*" and "*Code Explorer*" are different, please see [a deserved elaboration on the Technical monitor on the Code Explorer page](system-code-explorer.md#the-technical-monitor). 
 
 ## Component Dependencies
 The *Component Dependency* view visualizes the dependencies between your application’s main components. The components follow from the system’s configuration.

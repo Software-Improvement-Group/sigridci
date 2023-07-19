@@ -7,7 +7,7 @@ In a way, it is the reverse of all the finding views, such as [maintainability](
 
 You can reach this view in different ways: Via the top menu, or clicking an a capability on the System or Portfolio *Overview* pages. See the [system-level Overview page](system-overview.md#navigating-to-capabilities) or [portfolio-level Overview page](portfolio-overview.md#navigating-to-capabilities). Also, you may be referred to the Code Explorer page by clicking its icon <img src="../images/system-code-explorer-icon.png" class="inline" />, e.g. on a *Delta quality* detail page ([see elaboration on the Delta Quality page](system-delta-quality.md#navigating-to-the-code-explorer)). 
 
-## Different views: directory or component structure
+### Different views: directory or component structure
 The default view lets you choose between a directory structure. It represents the structure as the source is unpacked at our (SIG's) side.   
 
 <img src="../images/system-code-explorer-default-view.png" width=”400" />
@@ -17,12 +17,12 @@ By default the structure is collapsed. It can be expanded (or be undone) with th
 
 The directory view and component view in most cases are (almost) the same. This can be a matter of how the system is defined or scoped. Scoping choices may allow for specific filtering and componentization, e.g. a component division that does not follow the directory structure or [when you are working with multiple repositories](faq.md#we-have-a-multi-repo-project-can-i-still-use-sigrid-ci). For details on scoping, see the [scope configuration page](../reference/analysis-scope-configuration.md).
 
-## Navigating a directory or component in the Code Explorer
+### Navigating a directory or component in the Code Explorer
 Clicking on a *directory* or *component* will make 2 panels appear to the right: sources (on top) and findings (on bottom). The panels will change dynamically, depending on e.g. which file and finding you select. By default, a treemap represents the collection of files. The size of the squares/quadrilaterals represents code volume. A mouseover on a file shows volume- and finding counts. In the lower right panel, *Maintainability* and its metric *Duplication* are shown by default. They can be changed according to interest. 
 
 <img src="../images/system-code-explorer-directory-tree.png" width=”600" />
 
-## Navigating a file in the Code Explorer
+### Navigating a file in the Code Explorer
 Clicking on a *file* will show its source in the top panels. By default, focus in the top panel will jump to the first duplication finding. Findings are highlighted on a yellow/orange spectrum. If 2 or more findings overlap, the overlapping space will be accented with a darker shade. By default (when not clicking a specific finding in the bottom panel), a colored slide on the left of the code lines will reflect where findings are present. A mouseover shows the findings:
 
 <img src="../images/system-code-explorer-file-focus-line-mouseover.png" width=”600" />
@@ -37,9 +37,13 @@ If desired, you can fold code blocks - based on curly brackets *{* and *}* - by 
 
 <img src="../images/system-code-explorer-file-focus-line-fold-code.png" width=”300" />
 
-
-
-## Assisting in planning with issue tracker text 
+### Assisting in planning with issue tracker text 
 Findings that you wish to solve later on can be exported as text with static links for your issue tracker.
 
 <img src="../images/system-code-explorer-finding-to-planning.png" width=”600" />
+
+## The Technical monitor
+The "*Technical monitor*" can be accessed from the Maintainability Overview page [see our system Maintainability page](system-maintainability.md#technical-monitor-and-code-explorer).
+
+<img src="../images/technical-monitor-shortcut.png" width="300" />
+
