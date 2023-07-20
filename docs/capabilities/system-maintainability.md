@@ -4,13 +4,29 @@ You can reach this view in different ways: Via the top menu, or clicking an a ca
 
 <img src="../images/system-maintainability-menu-ex-architecture.png" width="150" />
 
+## 4 different views in the Maintainability tab 
 The maintainability section on the system level has 4 views: 
 1. The *Overview* tab brings the main metrics together. 
 2. The *Component Dependencies* tab visualizes architectural layering and connections.
 3. The *Refactoring Candidates* tab groups and prioritizes code that does not meet 4 star quality. 
 4. The [*Delta quality*](system-delta-quality.md) view shows the impact of new code changes on the system for the selected period.
 
-## Overview
+## Investigating system maintainability rating state and -changes 
+* **Overview:** the [Maintainability Overview (see below)](#maintainability-overview) is the place to start. The different metrics give a quick breakdown of system characteristics (such as Volume or Duplication). For a background on maintainability, [see "*Our approach*" section under "*Getting Started*"](../getting-started/approach.md). 
+You can find the [technical details of maintainability metrics under "*References*"](../reference/sig-quality-models.md).
+* **System architecture**: Details can be analyzed in the [Component Dependencies view](#component-dependencies). For more details, [see the Architecture Quality page](architecture-quality.md) or [see "*References*" for its separate technical document]((../reference/sig-quality-models.md). *Architecture Quality* does not count towards the maintainability rating.  
+  * You may be triggered by an architecture-level rating change or have suspicions of architectural problems based on experience. You might experience that certain components or files are hard to maintain because they are inter-related or (tightly) coupled in complex ways. For example, when design-level changes have unpredictable effects, when small changes propagate errors/faults, when a change in one component makes integration tests fail in another part of the system. 
+* **Triggered by a maintainability rating change** you may be interested in understanding its cause. In case code steps over certain risk thresholds ("*a violation*"), it will show up in the *Refactoring Candidates*.
+  * An exception may occur for "*Component Entanglement*" in case there are no architectural violations to resolve, but when the number of components and their connections are higher than the benchmark. This would be visible in the [Component Dependencies view](#component-dependencies) (but **not** in the *Architecture Quality* view, since they are not directly related). 
+* Use the ***Code Explorer*** if you suspect specific maintenance hotspots and want to understand the details ([see the *Code Explorer* page](system-code-explorer.md)).
+
+
+
+
+
+The next sections elaborate on the aforementioned four Maintainability views.
+
+## Maintainability overview
 The overview page is shown below. 
 * The system’s (configured) architecture is visible in the top right. This is based on the system’s scope configuration (see [the page on scope configuration](../reference/analysis-scope-configuration.md)). 
 * The main code changes are visible at the bottom.
@@ -24,6 +40,9 @@ Below a detailed view of the metrics.
 For technical details on maintainability metrics, see [Maintainability Evaluation Criteria](https://www.softwareimprovementgroup.com/wp-content/uploads/SIG-TUViT-Evaluation-Criteria-Trusted-Product-Maintainability.pdf) on our website. Or a broader overview on our [Reference page on our quality models](../reference/sig-quality-models.md).
 
 Below the metrics overview, there is a shortcut to the *Refactoring candidates* [link on this page](system-maintainability.md#refactoring-candidates). This can also be reached by the Maintainability tab. 
+
+
+
 
 ### Technical Monitor and Code Explorer
  
@@ -96,6 +115,5 @@ When you set a finding to *“Accept Risk”*, its status will change to *“Ris
 
 The relevant filter is shown below.
 <img src="../images/system-refactoring-candidates-filters-risk-accepted.png" width="300" />
-
 
 

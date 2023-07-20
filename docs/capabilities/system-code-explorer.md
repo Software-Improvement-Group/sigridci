@@ -1,6 +1,8 @@
 # The Code Explorer
 
-## Use the code Explorer if you suspect maintenance hotspots and want to understand the details
+This page describes the functionality of the Code Explorer, which can be used for deeper code analysis regarding code quality. For a general approach analyzing maintainability metrics, see the section for [investigating system maintainability rating state and -changes](system-maintainability.md#investigating-system-maintainability-rating-state-and--changes). 
+
+## Use the code Explorer if you suspect specific maintenance hotspots and want to understand the details
 The Code Explorer view lets you explore a system’s codebase and maintainability findings that are associated with it. It is visible by default for all systems. 
 
 In a way, it is the reverse of all the finding views, such as [maintainability](system-maintainability.md) and [security](system-security.md). There you start with lists of findings, ordered by the findings' severity. Then you can investigate where they occur in the code. So these views answer different questions: *"Where are my highest quality risks in the code?"* (*Findings* and *Maintainability* tabs) or *"Given a certain file, what are all the risks that could be assessed/refactored?"* (*Code Explorer*). 

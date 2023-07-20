@@ -24,7 +24,7 @@ For *Changed code*, quality effects may be limited unless deliberate refactoring
 
 A more balanced view will be visible in the "*New & changed code*" tab, which averages out changes to new and existing code. 
 
-A sanity check is to see whether the system metrics have actually changed (in the [Maintainability Overview tab, see](system-maintainability.md#overview)).
+A sanity check is to see whether the system metrics have actually changed (in the [Maintainability Overview tab, see](system-maintainability.md#maintainability-overview)).
 
 <img src="../images/system-security-icon-medium1.png" class="inline" /> 
 
