@@ -65,7 +65,9 @@ By default, Sigrid CI will use the maintainability target you've defined for you
 
 <img src="../images/sigrid-objectives.png" width="500" />
 
-If you do not have a maintainability target defined in Sigrid, Sigrid CI will use a target of 3.5 stars (which is what SIG recommends for systems with modern technologies in active development).
+- If you have a specific objective for new and changed code, that objective will automatically be used for Sigrid CI (since Sigrid CI focuses on giving feedback on new/changed code specifically).
+- If you do not have a separate objective for new/changed code, your "normal" maintainability objective will be used.
+- If you have not defined any objectives for maintainability, Sigrid CI will use a default target of 3.5 stars. This is the quality level that SIG recommends for systems with modern technologies in active development.
 
 You can find more information on how to define, track, and use Sigrid objectives in the [objectives section](../capabilities/objectives.md).
 
