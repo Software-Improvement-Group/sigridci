@@ -231,6 +231,18 @@ The `architecture` section in the configuration has its own `exclude` option, wh
         - ".*/index[.]ts"
         
 The list of exclude patterns works in the same way as the global, top-level `exclude` option. The difference is the global option excludes files and directories from *all* Sigrid capabilities, and the architecture `exclude` option excludes them from Architecture Quality but not from other Sigrid capabilities. See the [pattern documentation](#defining-include-and-exclude-patterns) for more information on writing these patterns.
+
+## Configuring multi-repo systems
+
+Sigrid allows you to create ["multi-repo systems"](../sigridci-integration/development-workflows.md#combining-multiple-repositories-into-a-single-Sigrid-system) that are the combination of multiple repositories in your development environment. In this situation, each individual repository within the system is referred to as a "subsystem". Such a view is more high-level than looking at individual repositories, and is sometimes a better fit if you want to align on Sigrid findings with stakeholders from outside the development organization.
+
+Since multi-repo systems are used to create a *shared* view, they also require shared [objectives](../capabilities/objectives.md) and a shared configuration. The latter creates an obvious problem: if the configuration file is normally located in the root of the repository, how does that work when there are multiple repositories?
+
+In such a situation, you can use [Sigrid CI](client-script-usage.md) to manage the shared configuration:
+
+- Publishing with `--system mybank --subsystem mybank-backend` will publish the code for the subsystem "mybank-backend" within the system "mybank".
+- Publishing with `--system mybank --subsystem mybank-frontend` will publish the code for the subsystem "mybank-frontend" within the system "mybank".
+- Publishing with `--system mybank --subsystem root` allows you to publish code to the root of the system "mybank", i.e. files that are not bound to a specific system. This includes the configuration file `sigrid.yaml`, so this can be used to update `sigrid.yaml` programmatically.
           
 ## Sigrid metadata
 

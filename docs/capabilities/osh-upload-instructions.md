@@ -37,11 +37,13 @@ In some cases, the parent POM itself *also* has a parent POM. This usually refer
 
 Sigrid is able to scan the parent POM, but only if the parent POM is included in the source code that was published. And that's a problem, because as we just established these parent POMs are usually *not* part of the repository (by definition, as they contain all shared configuration across repositories). And if the parent POM is not published to Sigrid, then Sigrid is not able to read the file.
 
-If you really want Sigrid to analyze your parent POM, you can include the [effective POM](help:effective-pom) in your upload. The effective POM is basically a standalone version of your project, without references to external files. You can generate the effective POM from the command line, as part of your build pipeline:
+If you want Sigrid to scan your parent POM without having to include its original file in your upload, you can also generate a [Maven dependency report](https://maven.apache.org/plugins/maven-dependency-plugin/tree-mojo.html) and upload that to Sigrid. You can generate this report from the command line, as part of your build pipeline:
 
-    mvn help:effective-pom 
+    mvn dependency:tree > maven.tree
     
-Note that you need to run this command *before* you publish your code to Sigrid, otherwise the effective POM will not end up in the upload. Also note that it is sufficient to run this on-the-fly during your pipeline, it is not necessary to commit the effective POM to your repository.
+If Sigrid finds both POM files and the `maven.tree` file in your upload, the `maven.tree` file takes precedence. 
+
+Note that you need to run this command *before* you publish your code to Sigrid, otherwise the file will not end up in the upload. Also note that it is not necessary to commit this file to your repository, generating it on-the-fly in the pipeline is sufficient for Sigrid.
 
 ## Gradle
 

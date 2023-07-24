@@ -9,7 +9,7 @@ Quality goals can be assessed in the Overview tab. You can reach this either by 
 
 <img src="../images/system-overview-tab-objectives.png" width="600" />
 
-The status of quality goals are shown in the System Objective Overview on the right (see also [Objectives](../getting-started/objectives.md)). This is binary: either the objective is met or not. 
+The status of quality goals are shown in the System Objective Overview on the right (see also [Objectives](objectives.md)). This is binary: either the objective is met or not. 
 
 Since a period of time has been selected, the change within this period is shown. On the right side (Delta) a change will be noted by an equal sign, upward arrow, or downward arrow. Details of changes in objectives are shown in the Quality Overview bar on the top. 
 

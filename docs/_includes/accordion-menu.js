@@ -3,13 +3,9 @@ function expandCurrentSection() {
     const categoryPages = document.querySelectorAll("nav .pages");
 
     for (let i = categoryHeaders.length - 1; i >= 0; i--) {
-    console.log(i);
-        console.log(categoryHeaders[i]);
-        console.log(categoryPages[i]);
         const currentPageLink = findCurrentPageLink(categoryPages[i]);
 
         if (currentPageLink) {
-            console.log(currentPageLink);
             expandSection(i);
             currentPageLink.classList.add("currentPage");
             return;
