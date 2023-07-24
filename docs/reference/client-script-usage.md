@@ -61,11 +61,13 @@ Sigrid CI compares the quality of the new/changed code against the configured ta
 
 ### Option 1: Use Sigrid's maintainability target for your system (default)
 
-By default, Sigrid CI will use the maintainability target you've defined for your system in Sigrid. This is the same target that's depicted in the "system objectives" list you see in Sigrid.
+By default, Sigrid CI will use the maintainability target you've defined for your system in Sigrid. This is the same target that's depicted in the "system objectives" list you see in Sigrid. See below:
 
 <img src="../images/sigrid-objectives.png" width="500" />
 
-If you do not have a maintainability target defined in Sigrid, Sigrid CI will use a target of 3.5 stars (which is what SIG recommends for systems with modern technologies in active development).
+* **Default setting:** If you do not set any objective, Sigrid CI will use a default target of 3.5 stars. This is the lower threshold of the better-than-average 4-star range. Four star code quality is the level that SIG recommends for systems with modern technologies in active development.
+* **Specific objective for new- and changed code**: If you have set a specific objective for new- and changed code, that objective will automatically be used for Sigrid CI (since Sigrid CI focuses on giving feedback on new/changed code specifically). Given that you may expect 4 star quality for modern system development, that could be a target for newly added code.
+* **Same objective for system/new/changed code quality**: If you have set a maintainability rating objective, but not specifically one for new- and changed code, your "normal" maintainability objective will be used.
 
 You can find more information on how to define, track, and use Sigrid objectives in the [objectives section](../capabilities/objectives.md).
 

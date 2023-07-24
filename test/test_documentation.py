@@ -25,9 +25,9 @@ class DocumentationTest(unittest.TestCase):
     def testDocumentationDoesNotContainDeadLinks(self):
         for file, contents in self.readDocumentationPages():
             for match in self.LINK.finditer(contents):
-                if match.group(2).endswith(".md"):
+                if ".md" in match.group(2):
                     parentDir = os.path.dirname(file)
-                    linkedFile = os.path.join(parentDir, match.group(2))
+                    linkedFile = os.path.join(parentDir, match.group(2).split(".md")[0] + ".md")
                     self.assertTrue(os.path.exists(linkedFile), f"Dead link in {file} to {linkedFile}")
                     
     def testDocumentationDoesNotContainDeadImages(self):

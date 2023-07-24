@@ -301,6 +301,7 @@ Finally, note the column "supported Sigrid capabilities" does not list Open Sour
 | `xml`                          | XML                            | | Maintainability | (5) |
 | `xpdl`                         | Tibco ActiveMatrix BPM         | | Maintainability |
 | `xpp`                          | X++                            | | Maintainability |
+| `xpp365`                       | X++ for Dynamics 365           | | Maintainability |
 | `xquery`                       | Xquery                         | | Maintainability |
 | `xsd`                          | XSD                            | | Maintainability |
 | `xslt`                         | XSLT                           | | Maintainability |
