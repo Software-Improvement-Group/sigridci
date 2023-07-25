@@ -54,6 +54,7 @@ Because the views, filters and sorting abilities between the "*Technical monitor
 
 ## Component Dependencies
 The *Component Dependency* view visualizes the dependencies between your application’s main components. The components follow from the system’s configuration.
+
 <img src="../images/system-component-dependencies.png" width="600" />
 
 ### Meaning of the dependencies
@@ -63,6 +64,7 @@ The arrows denote call direction within the code; a number on top of an arrow in
 Different types of dependency antipatterns can be shown by toggling *”Visualize component entanglement”*. 
 
 <img src="../images/system-component-dependencies-visualize-toggle.png" width="300" />
+
 Once activated, a legend will appear at the bottom describing the different types. 
 
 <img src="../images/system-component-dependencies-legend.png" width="600" />
@@ -98,7 +100,7 @@ On the left-hand side column, you can filter dependencies per component and/or f
 <img src="../images/system-component-dependencies-file-selection.png" width="600" />
 
 ## Refactoring candidates
-This view lists the top 100 findings per metric. 
+This view lists the top 100 findings per metric.  
 
 <img src="../images/system-refactoring-candidates.png" width="600" />
 
@@ -107,6 +109,7 @@ Clicking on a metric will expand the list, prioritized by the “severity” of 
 <img src="../images/system-refactoring-candidates-3dots-status.png" width="300" />
 
 Setting a finding to *“Prioritize”* will show as *“Will fix”*
+
 <img src="../images/system-refactoring-candidates-status-set.png" width="300" />
 
 When you set a finding to *“Accept Risk”*, its status will change to *“Risk accepted”* and the finding will be hidden by default. 
@@ -114,19 +117,52 @@ When you set a finding to *“Accept Risk”*, its status will change to *“Ris
 <img src="../images/filter-2.png" class="inline" /> Findings with *“Risk accepted”* can still be viewed by using the filter. By default the filter is set to *“Will fix”* and *“Raw"* only. 
 
 The relevant filter is shown below.
+
 <img src="../images/system-refactoring-candidates-filters-risk-accepted.png" width="300" />
+
+
+### Ordering of refactoring candidates
+
+Refactoring candidates are sorted by risk impact. This is shown as maintainability risk categories, color coded as green-yellow-orange-red from lowest- to highest risk. Within each category, code is sorted by code volume (since volume is the common denominator for the maintainability metrics). [See for more details the technical documentation](../reference/sig-quality-models.md).
+
+As an example, the risk categories for *Unit complexity* as shown at the top of the page:
+
+<img src="../images/system-refactoring-candidates-unit-complexity-risk-profile.png" width="600" />
+
+The exception in this ordering is *Duplication*, where no different degrees of risks are used for the rating calculation. They are ordered by *duplicate size*, where a duplicate may appear more than 3 times, in 1 or multiple files. This is visible next to the file names in the columns "*Same file*" and "*Same component*".
+
+The risk impact ordering is a good indication for prioritization of findings, but it may need a case-by-case analysis. Context is a defining factor, which is discussed below. 
 
 ### Dealing with Refactoring candidates
 
-Being refactoring *candidates* should be taken literally. It is not to say that every candidate needs to be resolved. This decision is essentially a cost-benefit trade-off. Questions to ask yourself dealing with refactoring candidates include:
-* Does this piece of code cause trouble to me or other developers? 
-  * How likely is it that this code will need modification in the future?
+Being refactoring *candidates* should be taken literally. It is not to say that every candidate *needs* to be resolved. No system is technically perfect (or it is not for long). Every metric has tolerances for violations of the risk categories, and these violations may be defendable. 
+
+The decision to refactor is essentially a cost-benefit trade-off. As a simplification this is determined by:
+* The size of the **problem**
+* The amount of **effort** to resolve that
+* Expected **benefits** (like its "*future value*")
+
+Questions to ask yourself dealing with refactoring candidates include:
+
+**Problem** 
+* Does this piece of code cause trouble to me or other developers? E.g. is this a long `switch` statement scoring badly for unit complexity, but it is perfectly readable in context?
+  * How likely is it that this code will need (frequent) modification in the future?
+  * Is this problem likely to grow? A "*mistake waiting to happen*"? For example, could this maintainability "*tarnish*" evolve into a security flaw?   
 * How important/critical is this code in context of the system? Do we value its stability more than technical elegance?
-  * To what extent is this code guarded against undesirable behavior (being well unit-/integration tested and contained)? And is this in proportion to its importance?
-* How difficult is this to refactor?
-  * What is the "*opportunity cost*" of refactoring this as opposed to "the next best thing" you could spend your time on (such as bugfixing/building new functionality)? 
-  * Is it efficient to change this code right now when I am already looking at it, and gain an extra advantage e.g. by improving unit tests? 
-* Are there technical limitations, or design choices, that limit our ability to change code into a more maintainable form? Can a case be made that consistency trumps technical cleanliness? 
+  * To what extent is this code guarded against undesirable behavior (being well tested and contained)? And is this in sufficient proportion to the code's importance?
+
+**Effort**
+* How difficult is this to refactor? Am I confident in its unit-/integration tests?
+  * Are there technical limitations, or design choices, that limit our ability to change code into a more maintainable form? Can a case be made that consistency trumps technical cleanliness? 
+  * Is it efficient to change this code right now when I am already looking at it?
+* Can it even be placed outside of the source code (this may be true for e.g. static referennce lists)?
+
+**Benefits**
+* What is the "*opportunity cost*" of refactoring this as opposed to "the next best thing" you could spend your time on (such as bugfixing/building new functionality)? 
+* Could I gain an extra advantage by refactoring now, e.g. by improving unit tests? 
+
+### Sigrid as part of the Agile development process
+For an elaboration of using and prioritizing maintainability findings within the development process, [see the elaboration in the Agile development process document](../workflows/agile-development-process.md#for-maintainability-focus-on-technical-debt-that-is-affecting-you-right-now)
 
 
 

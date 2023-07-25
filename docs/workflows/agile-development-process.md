@@ -38,9 +38,9 @@ A sprint obviously consists of more than just implementing things. However, if y
 
 So how can we use Sigrid during these sessions to ensure every sprint brings you closer to your software quality objectives?
 
-### Using Sigrid during refinement and planning
+## Using Sigrid during refinement and planning
 
-**Triage security and OSH findings**
+### Triage security and OSH findings
 
 Fully preventing security findings from ever appearing is impossible. Instead, a good security process means you focus on *discovering*, *triaging*, and *fixing* these findings quickly. For elaborations on security functionality, see [system security page](../capabilities/system-security.md).
 
@@ -54,7 +54,7 @@ The same process applies to findings in [Open Source Health](../capabilities/sys
 
 Also make sure that you don't go too far. Updating to every new version immediately after it has been released is usually not worth it. It's OK if you're a little behind the latest version, as long as you don't fall *too far* behind. The situation is obviously different if your current version contains security vulnerabilities, in that case you will likely need to plan updates with far higher priority.
 
-**For maintainability, focus on technical debt that is affecting you right now** 
+### For maintainability, focus on technical debt that is affecting you right now 
 
 Maintainability findings tend to be more of a long-term problem, they are not urgent in the way security and Open Source Health issues can be urgent. For this reason, it is not necessary to review every single maintainability finding as part of the sprint. Instead, you can focus on how to incorporate the removal of technical debt as part of your normal sprint work. 
 
@@ -66,7 +66,7 @@ Fixing technical debt can be done in two ways. The simplest form is to simply cl
 
 <img src="../images/agile-planning.png" width="500" />
 
-### Using Sigrid during code review
+## Using Sigrid during code review
 
 Agile teams rely on [continuous integration](https://en.wikipedia.org/wiki/Continuous_integration) to facilitate their process. Every change is reviewed, and once this [code review](https://en.wikipedia.org/wiki/Code_review) has approved the change is is merged into the main/master branch. This makes the code review the process' main *agile quality gate*.
 
@@ -74,7 +74,7 @@ During code reviews, the definition-of-done for software quality is often quite 
 
 Sigrid also [integrates with your continuous integration pipeline](../sigridci-integration/development-workflows.md). Sigrid compares the new/code against your goal, meaning this feedback focuses on making your code *good enough* in regards to your team objectives. This avoids extensive discussions about minor issues. This in turn also means you don't have to fix *every* trivial finding, which tends to be more motivating and pragmatic for the person receiving this feedback.
 
-### Using Sigrid during the sprint retrospective
+## Using Sigrid during the sprint retrospective
 
 For all quality aspects, relate your progress to your [objectives](../capabilities/objectives.md). Try to keep in mind perfection is not the goal, you're simply trying to meet your shared goals. Or, if you haven't made your goals yet, you just want to make sure you end the sprint in a better position than you started. 
 
