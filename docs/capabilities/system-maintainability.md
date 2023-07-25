@@ -16,9 +16,9 @@ The maintainability section on the system level has 4 views:
 You can find the [technical details of maintainability metrics under "*References*"](../reference/sig-quality-models.md).
 * **System architecture**: Details can be analyzed in the [Component Dependencies view](#component-dependencies). For more details, [see the Architecture Quality page](architecture-quality.md) or [see "*References*" for its separate technical document](../reference/sig-quality-models.md). *Architecture Quality* does not count towards the maintainability rating.  
   * You may be triggered by an architecture-level rating change or have suspicions of architectural problems based on experience. You might experience that certain components or files are hard to maintain because they are inter-related or (tightly) coupled in complex ways. For example, when design-level changes have unpredictable effects, when small changes propagate errors/faults, when a change in one component makes integration tests fail in another part of the system. 
-* **Triggered by a maintainability rating change** you may be interested in understanding its cause. In case code steps over certain risk thresholds ("*a violation*"), it will show up in the *Refactoring Candidates*.
+* **Triggered by a maintainability rating change**: you may be interested in understanding its cause. In case code steps over certain risk thresholds ("*a violation*"), it will show up in the *Refactoring Candidates* [see Refactoring Candidates paragraph below](#refactoring-candidates). There may be several trade-offs in deciding whether and when to refactor [see relevant paragraph below on dealing with refactoring candidates](#dealing-with-refactoring-candidates).
   * An exception may occur for "*Component Entanglement*" in case there are no architectural violations to resolve, but when the number of components and their connections are higher than the benchmark. This would be visible in the [Component Dependencies view](#component-dependencies) (but **not** in the *Architecture Quality* view, since they are not directly related). 
-* Use the ***Code Explorer*** if you suspect specific maintenance hotspots and want to understand the details ([see the *Code Explorer* page](system-code-explorer.md)).
+* Use the **Code Explorer** if you suspect specific maintenance hotspots and want to understand the details ([see the *Code Explorer* page](system-code-explorer.md)).
 
 
 
@@ -115,5 +115,18 @@ When you set a finding to *“Accept Risk”*, its status will change to *“Ris
 
 The relevant filter is shown below.
 <img src="../images/system-refactoring-candidates-filters-risk-accepted.png" width="300" />
+
+### Dealing with Refactoring candidates
+
+Being refactoring *candidates* should be taken literally. It is not to say that every candidate needs to be resolved. This decision is essentially a cost-benefit trade-off. Questions to ask yourself dealing with refactoring candidates include:
+* Does this piece of code cause trouble to me or other developers? 
+  * How likely is it that this code will need modification in the future?
+* How important/critical is this code in context of the system? Do we value its stability more than technical elegance?
+  * To what extent is this code guarded against undesirable behavior (being well unit-/integration tested and contained)? And is this in proportion to its importance?
+* How difficult is this to refactor?
+  * What is the "*opportunity cost*" of refactoring this as opposed to "the next best thing" you could spend your time on (such as bugfixing/building new functionality)? 
+  * Is it efficient to change this code right now when I am already looking at it, and gain an extra advantage e.g. by improving unit tests? 
+* Are there technical limitations, or design choices, that limit our ability to change code into a more maintainable form? Can a case be made that consistency trumps technical cleanliness? 
+
 
 
