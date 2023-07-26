@@ -4,6 +4,8 @@ You can reach this view in different ways: Via the top menu, or clicking an a ca
 
 <img src="../images/system-maintainability-menu-ex-architecture.png" width="150" />
 
+The definition of what a system is, what it is comprised of, and how it is configured, are detailed in the pages on [systems within Sigrid](../organization-integration/systems.md) and the [analysis scope configuration documentation page](../reference/analysis-scope-configuration.md).
+
 ## 4 different views in the Maintainability tab 
 The maintainability section on the system level has 4 views: 
 1. The *Overview* tab brings the main metrics together. 
