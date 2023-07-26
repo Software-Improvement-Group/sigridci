@@ -3,6 +3,8 @@ Adding business context to a system using metadata
 
 Adding business context to Sigrid makes it easier to interpret the results. For example, a below-market average maintainability rating of 2 stars might seem like a problem, but this depends entirely on the context. If the system is no longer actively maintained and will be decommissioned by the end of the year (i.e., its lifecycle phase is end-of-life, or EOL for short), such a rating might be perfectly acceptable. But if that system is new, uses a modern technology, and is business critical, such a rating would be considered a red flag. In both cases the technical conclusion is identical, it's the context that determines the urgency.
 
+Regarding ***Objectives***, see [our Objectives page](../capabilities/objectives.md)
+
 This context information is called *metadata* in Sigrid. Adding metadata can be done in 4 different ways:
 
 ### Option 1: Adding metadata in Sigrid

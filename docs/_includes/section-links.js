@@ -12,7 +12,7 @@ function makeSectionLink(sectionHeader) {
 }
 
 document.addEventListener("DOMContentLoaded", () => {
-    for (const sectionHeader of document.querySelectorAll("article h1, article h2, article h3, article h4")) {
+    for (const sectionHeader of document.querySelectorAll("article h2, article h3, article h4")) {
         makeSectionLink(sectionHeader);
     }
 });

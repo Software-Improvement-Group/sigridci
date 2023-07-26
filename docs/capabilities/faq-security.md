@@ -19,10 +19,8 @@ The finding fingerprint is a calculated identifier based on multiple characteris
 
 We use this approach to reduce the amount of busywork. Findings are automatically resolved to avoid situations where people fix something in the code, but then forget to update the finding in Sigrid. Moreover, multiple overlapping findings will automatically be merged if they have the same fingerprint. This means automatic deduplication, which is important for keeping the findings as actionable as possible.
 
-
 ### What are the risk thresholds for determining whether a risk is low-medium-high?
-Findings are mapped on a scale from 0-10 based on a *CVSS* benchmark comparison. See the [CVSS section in the security page](system-security.md#the-scoring-system-with-cvss).
-
+Findings are mapped on a scale from 0-10 based on a *CVSS* benchmark comparison. See the [explanation on CVSS in the security page](system-security.md#the-scoring-system-with-cvss-background) and [its different levels in Sigrid](system-security.md#cvss-scores-in-sigrid).
 
 ## Open Source Health
 
@@ -37,9 +35,13 @@ The findings list indicates *compliance*. Sometimes a single finding on a vulner
 
 ### What technology is Open Source Health based on?
 
-Open Source Health is proprietary SIG technology where we combine 20+ different ecosystems. Examples are *Sonatype OSS Index*, *Google OSV*, and *GitHub security advisories*. Depending on the technology, this will analyze dependency management files (e.g. `pom.xml` or `package.json`), library source files (e.g. `jquery-3.6.1.js`), and binary library files (e.g. `log4j.jar`).
+Open Source Health is proprietary SIG technology where we combine 20+ different ecosystems. Examples are *Sonatype OSS Index*, *NVD*, *Google OSV*, and the *GitHub Security Advisory API*. Depending on the technology, this will analyze dependency management files (e.g. `pom.xml` or `package.json`), library source files (e.g. `jquery-3.6.1.js`), and binary library files (e.g. `log4j.jar`).
 
 Open Source Health offers the option to create an SBOM (Software Bill Of Materials) report, either through the Sigrid user interface or [through the Sigrid API](../reference/sigrid-api-documentation.md#vulnerable-libraries-in-open-source-health).
+
+### Does SIG filter when resolving our system's dependencies?
+
+SIG can filter dependency checks for internal dependencies to avoid exposing internal names, but they must be configured manually by SIG. [See the Open Source Health paragraph in our scope configuration document](../reference/analysis-scope-configuration.md#open-source-health). Please inform SIG of such dependencies and their name conventions before onboarding.
 
 ### Why are some Open Source vulnerabilities missing a CVE?
 
@@ -55,7 +57,7 @@ Open Source Health produces security findings for the version of the open source
     
 
 ### We have a lot of (new) security findings. What should we do first?
-Please see [elaboration in the system-level security page](system-security.md#your-strategy-for-processing-security-findings) 
+Please see [elaboration on such strategies in the system-level security page](system-security.md#a-general-typical-strategy-for-processing-security-findings), or [specifically the paragraph on filtering security findings](system-security.md#filtering-results-for-false-positives).
 
 ### To what extent does SIG provide consultancy for security findings?
 
@@ -68,6 +70,10 @@ This depends on your agreement with SIG, which can differ per system:
     - The model is that training of personnel and second tier hands-on security coaching is to be organised by the client. When required, SIG can assist.
     - In case you believe that remarks can be more helpful: please  provide examples of where you believe this is the case. We want to offer useful guidance as well as we can.
 - **Manual code review:** This service provides reviewing design, configuration and code for findings that cannot be detected by scan tools - typically involving the interpretation of logic, in context. The results are added into the Sigrid finding workflow.
+
+### What about security risk assessment and threat modeling?
+
+These should indeed be considered requisites for dealing with security findings effectively. Please see our elaboration [on the system security page](system-security.md#threat-modeling-as-a-requisite-for-interpreting-security-findings).
 
 ## Contact and support
 

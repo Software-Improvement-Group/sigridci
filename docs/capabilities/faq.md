@@ -21,6 +21,7 @@ Sigrid: Frequently Asked Questions
 - [Should we fail the build if the Sigrid CI check fails?](#should-we-fail-the-build-if-the-sigrid-ci-check-fails)
 - [Why doesn't deleted code influence the rating?](#why-doesnt-deleted-code-influence-the-rating)
 - [We have a multi-repo project, can I still use Sigrid CI?](#we-have-a-multi-repo-project-can-i-still-use-sigrid-ci)
+- [Why are there differences between the directory structure as we see it in our IDE and Sigrid components?](#why-are-there-differences-between-the-directory-structure-as-we-see-it-in-our-IDE-and-Sigrid-components)
 - [Can I see which files are uploaded to Sigrid?](#can-i-see-which-files-are-uploaded-to-sigrid)
 - [Why do you have both publish and publishonly options, what's the difference?](#why-do-you-have-both-publish-and-publishonly-options-whats-the-difference)
 
@@ -155,6 +156,10 @@ There are two ways to use Sigrid CI in such a situation.
 - Even when *not* changing the Sigrid structure, it is still possible to run Sigrid CI for your repository. You can use
   the `--subsystem` option to explain Sigrid CI how your repository structure should be matched to your Sigrid
   configuration. This option is explained in [using the Sigrid CI client script](../reference/client-script-usage.md).
+
+## Why are there differences between the directory structure as we see it in our IDE and Sigrid components?
+
+Your system may be defined/scoped in a different way than simply mapping directories as components. Scoping choices als allows for specific filtering and componentization. See the [scope configuration page](../reference/analysis-scope-configuration.md). If there are any differences you will notice them in the [Code Explorer](../capabilities/system-code-explorer.md#different-views-directory-or-component-structure).
 
 ### Can I see which files are uploaded to Sigrid?
 

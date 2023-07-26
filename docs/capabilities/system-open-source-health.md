@@ -1,14 +1,35 @@
 # System-level Open Source Health (OSH)
-Sigrid runs a comprehensive analysis of open source software that is used in the source code. These are known here as “*Third party libraries*”. You can reach this via the top menu:
+Sigrid runs a comprehensive analysis of open source software that is used in the source code. These are known here as “*Third party libraries*”. 
+
+## Reaching the OSH page
+You can reach the Open Source Health information via the top menu if you are in System view already:
+
 <img src="../images/system-top-bar-osh.png" width="300" />
 
+Or you can click a capability on Portfolio *Overview* page, clicking on a system from the Portfolio Open Source Health view. See [the system-level Overview page](system-overview.md#navigating-to-capabilities), [navigating from the portfolio-level Overview page](portfolio-overview.md#navigating-to-capabilities) or [navigating from the portfolio security view](portfolio-open-source-health.md#moving-from-portfolio-level-to-system-level).
 
 ## Navigating the overview page
-
 The system level overview lists the third party libraries used in this system, categorized per risk area (columns on the right). On top, a trend line is shown counting changes over time. A summary of counts, changes and identified risks are shown in the top four panels. These (change) counts depend on the period that you have chosen in the top right corner. If only 1 snapshot is available, only the latest count will be provided.
 
 <img src="../images/system-osh-top-bar-and-trendline.png" width="600" />
 
+### Open Source Health scans for 6 different risk areas
+
+“*Open Source Health*” scans for six different risk areas: 
+
+<img src="../images/system-osh-icon-vulnerability.png" class="inline" /> **Known vulnerabilities:** publicly known and categorized vulnerabilities in a third-party dependency.
+
+<img src="../images/system-osh-icon-freshness.png" class="inline" />  **Freshness:** a measure of versioning compared to official/available versions. The count is the time difference with the date of the latest (publicly) available version. 
+
+<img src="../images/system-osh-icon-activity.png" class="inline" />  **Activity:** an estimation of (the degree of) community activity, measured as the time that has lapsed since the last published release. 
+
+<img src="../images/system-osh-icon-stability.png" class="inline" />  **Stability:** an estimate of stability by identifying seemingly unfinished versions such as alpha/beta/rc/0.x versions.
+
+<img src="../images/system-osh-icon-dep-management.png" class="inline" />  **Management:** possible risk originating from dependencies in binaries (e.g. JARs for Java) instead of configurations in package managers.
+
+<img src="../images/system-osh-icon-legal.png" class="inline" />  **Legal licenses:** third-party dependencies may have restricted licenses, that restrict how you can use it or e.g. obliges you to publish certain source code. This should always trigger a check by a legal expert. 
+
+### Navigating the top tiles in the overview page 
 The default view shows a vulnerability count first:
 
 <img src="../images/system-osh-chart-vulnerability-risk.png" width="300" />
@@ -33,13 +54,6 @@ If you change the category, the help mouseover will also change and provide you 
 
 <img src="../images/system-osh-legal-help-mouseover.png" width="300" />
 
-
-## Open Source Health scans for 6 different risk areas
-
-“*Open Source Health*” scans for six different risk areas: 
-<img src="../images/system-osh-icon-vulnerability.png" class="inline" /> **Known vulnerabilities:** publicly known and categorized vulnerabilities in a third-party dependency
-<img src="../images/system-osh-icon-freshness.png" class="inline" />  **Freshness:** a measure of versioning compared to official/available versions. The count is the time difference with the date of the latest (publicly) available version. 
-<img src="../images/system-osh-icon-activity.png" class="inline" />  **Activity:** an estimation of (the degree of) community activity, measured as the time that has lapsed since the last published release. 
-<img src="../images/system-osh-icon-stability.png" class="inline" />  **Stability:** an estimate of stability by identifying seemingly unfinished versions such as alpha/beta/rc/0.x versions.
-<img src="../images/system-osh-icon-dep-management.png" class="inline" />  **Management:** possible risk originating from dependencies in binaries (e.g. JARs for Java) instead of configurations in package managers.
-<img src="../images/system-osh-icon-legal.png" class="inline" />  **Legal licenses:** third-party dependencies may have restricted licenses, that restrict how you can use it or e.g. obliges you to publish certain source code. This should always trigger a check by a legal expert. 
+## Filtering internal dependencies
+Internal dependencies can be filtered manually, such that they will not be resolved with the Open Source Health APIs that Sigrid uses.
+[Please see the Open Source Health paragraph in our scope configuration document](../reference/analysis-scope-configuration.md#open-source-health) or [this related question in the FAQ](../capabilities/faq-security.md#does-sig-filter-when-resolving-our-systems-dependencies).

@@ -47,4 +47,5 @@ These capability pages are explained specifically here:
 * [System maintainability](system-maintainability.md) and [Delta quality](system-delta-quality.md)
 * [System architecture quality](architecture-quality.md)
 * [System security](system-security.md)
+* [System Open Source Health](system-open-source-health.md)
 * [Code explorer](system-code-explorer.md)
