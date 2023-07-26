@@ -31,9 +31,11 @@ Business stakeholders can still get a more aggregated view by grouping systems b
 
 Alternatively, you can also base your Sigrid view on a more functional/business perspective. Each system consists of multiple underlying repositories, where each repository can be considered a subsystem within that business application. This is sometimes referred to as a [multi-repo system](https://www.gitkraken.com/blog/git-multi-repo-vs-git-mono-repo).
 
-<img src="../images/publish-subsystems.png" width="600" />
+<img src="../images/publish-subsystems.png" width="750" />
 
-In this example, the *MyBank front-end* and *MyBank back-end* repositories would be combined into a single system, *myBank*. In this scenario, it is still possible for both repositories to publish their code to Sigrid independently, combining the two repositories happens on the Sigrid side. This behavior can be enabled by using the [subsystem option in the Sigrid CI configuration](../reference/client-script-usage.md).
+In this example, the *MyBank front-end* and *MyBank back-end* repositories would be combined into a single system, *myBank*. In this scenario, it is still possible for both repositories to publish their code to Sigrid independently, combining the two repositories happens on the Sigrid side. This behavior can be enabled by using the [subsystem option in the Sigrid CI configuration](../reference/client-script-usage.md). 
+
+This allows you to publish each subsystem as part of their own pipeline, rather than being force to publish all subsystems at the same time. Using subsystems therefore doesn't interrupt the normal workflow for teams working on each subsystem, while still resulting in a shared/combined/aggregated view in Sigrid.
 
 This scenario also means you set your *objectives* on the combined application level, not on the individual repository level. This can help to have a clear shared goal that you're working towards together. However, if you find yourself in a situation where the different repositories would prefer to set their own objectives, it might be a better choice to base your Sigrid view and goals around repositories. 
 
