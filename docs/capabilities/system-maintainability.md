@@ -16,13 +16,13 @@ The maintainability section on the system level has 4 views:
 You can find the [technical details of maintainability metrics under "*References*"](../reference/sig-quality-models.md).
 * **System architecture**: Details can be analyzed in the [Component Dependencies view](#component-dependencies). For more details, [see the Architecture Quality page](architecture-quality.md) or [see "*References*" for its separate technical document](../reference/sig-quality-models.md). *Architecture Quality* does not count towards the maintainability rating.  
   * You may be triggered by an architecture-level rating change or have suspicions of architectural problems based on experience. You might experience that certain components or files are hard to maintain because they are inter-related or (tightly) coupled in complex ways. For example, when design-level changes have unpredictable effects, when small changes propagate errors/faults, when a change in one component makes integration tests fail in another part of the system. 
-* **Triggered by a maintainability rating change**: you may be interested in understanding its cause. In case code steps over certain risk thresholds ("*a violation*"), it will show up in the *Refactoring Candidates* [see Refactoring Candidates paragraph below](#refactoring-candidates). There may be several trade-offs in deciding whether and when to refactor [see relevant paragraph below on dealing with refactoring candidates](#dealing-with-refactoring-candidates).
-  * An exception may occur for "*Component Entanglement*" in case there are no architectural violations to resolve, but when the number of components and their connections are higher than the benchmark. This would be visible in the [Component Dependencies view](#component-dependencies) (but **not** in the *Architecture Quality* view, since they are not directly related). 
-* Use the **Code Explorer** if you suspect specific maintenance hotspots and want to understand the details ([see the *Code Explorer* page](system-code-explorer.md)).
-
-
-
-
+* **Triggered by a maintainability rating change**: you may be interested in understanding its cause. 
+  * **Delta quality**: In case of a recent change, the *Delta quality* view shows you how and where recent code modifications/additions have affected the maintainabilty rating. 
+  * **Refactoring candidates**: In case code steps over certain risk thresholds ("*a violation*"), it will show up in the *Refactoring Candidates* [see Refactoring Candidates paragraph below](#refactoring-candidates). There may be several trade-offs in deciding whether and when to refactor [see relevant paragraph below on dealing with refactoring candidates](#dealing-with-refactoring-candidates). 
+    * As an exception, there might be no "*Component Entanglement*" violations visible while its rating is below 4-star rating. That can be the case if there are no architectural violations to resolve, but when the number of components and their connections are higher than the benchmark. This would be visible in the [Component Dependencies view](#component-dependencies) (but **not** in the *Architecture Quality* view, since they are not directly related). 
+    * For *Duplication* and unit metrics, clicking on a *Refactoring candidate* will show the affected code highlighted in context of this one file. 
+  * **Code Explorer**: You may reach the *Code Explorer* from a finding in the *Refactoring candidates* list or the detailed file list from the *Delta quality* view. there you can go to the *Code Explorer* to see the unit/file/component in context of the codebase. The Code Explorer is also a good place to start if you suspect specific maintenance hotspots and want to understand the details. [See the *Code Explorer* page](system-code-explorer.md). An advantage of the Code Explorer is that it can also show per file/unit whether it contains other risky constructs, e.g. regarding security.
+  * The strength of the **Technical Monitor** (accessible from the maintainability overview page) is making detailed comparisons between snapshots and filtering by technologies [discussed as part of the Code Explorer page](system-code-explorer.md#the-technical-monitor).
 
 The next sections elaborate on the aforementioned four Maintainability views.
 
@@ -40,9 +40,6 @@ Below a detailed view of the metrics.
 For technical details on maintainability metrics, see [Maintainability Evaluation Criteria](https://www.softwareimprovementgroup.com/wp-content/uploads/SIG-TUViT-Evaluation-Criteria-Trusted-Product-Maintainability.pdf) on our website. Or a broader overview on our [Reference page on our quality models](../reference/sig-quality-models.md).
 
 Below the metrics overview, there is a shortcut to the *Refactoring candidates* [link on this page](system-maintainability.md#refactoring-candidates). This can also be reached by the Maintainability tab. 
-
-
-
 
 ### Technical Monitor and Code Explorer
  
