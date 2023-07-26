@@ -15,6 +15,7 @@ The default view lets you choose between a directory structure. It represents th
 <img src="../images/system-code-explorer-default-view.png" width=”400" />
 
 By default the structure is collapsed. It can be expanded (or be undone) with the top right icons:
+
 <img src="../images/system-code-explorer-icon-expand-all.png" width=”300" />
 
 The directory view and component view in most cases are (almost) the same. This can be a matter of how the system is defined or scoped. Scoping choices may allow for specific filtering and componentization, e.g. a component division that does not follow the directory structure or [when you are working with multiple repositories](faq.md#we-have-a-multi-repo-project-can-i-still-use-sigrid-ci). For details on scoping, see the [scope configuration page](../reference/analysis-scope-configuration.md).

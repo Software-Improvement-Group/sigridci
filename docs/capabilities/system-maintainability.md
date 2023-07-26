@@ -11,21 +11,6 @@ The maintainability section on the system level has 4 views:
 3. The *Refactoring Candidates* tab groups and prioritizes code that does not meet 4 star quality. 
 4. The [*Delta quality*](system-delta-quality.md) view shows the impact of new code changes on the system for the selected period.
 
-## Investigating system maintainability rating state and -changes 
-* **Overview:** the [Maintainability Overview (see below)](#maintainability-overview) is the place to start. The different metrics give a quick breakdown of system characteristics (such as Volume or Duplication). For a background on maintainability, [see "*Our approach*" section under "*Getting Started*"](../getting-started/approach.md). 
-You can find the [technical details of maintainability metrics under "*References*"](../reference/sig-quality-models.md).
-* **System architecture**: Details can be analyzed in the [Component Dependencies view](#component-dependencies). For more details, [see the Architecture Quality page](architecture-quality.md) or [see "*References*" for its separate technical document](../reference/sig-quality-models.md). *Architecture Quality* does not count towards the maintainability rating.  
-  * You may be triggered by an architecture-level rating change or have suspicions of architectural problems based on experience. You might experience that certain components or files are hard to maintain because they are inter-related or (tightly) coupled in complex ways. For example, when design-level changes have unpredictable effects, when small changes propagate errors/faults, when a change in one component makes integration tests fail in another part of the system. 
-* **Triggered by a maintainability rating change**: you may be interested in understanding its cause. 
-  * **Delta quality**: In case of a recent change, the *Delta quality* view shows you how and where recent code modifications/additions have affected the maintainabilty rating. 
-  * **Refactoring candidates**: In case code steps over certain risk thresholds ("*a violation*"), it will show up in the *Refactoring Candidates* [see Refactoring Candidates paragraph below](#refactoring-candidates). There may be several trade-offs in deciding whether and when to refactor [see relevant paragraph below on dealing with refactoring candidates](#dealing-with-refactoring-candidates). 
-    * As an exception, there might be no "*Component Entanglement*" violations visible while its rating is below 4-star rating. That can be the case if there are no architectural violations to resolve, but when the number of components and their connections are higher than the benchmark. This would be visible in the [Component Dependencies view](#component-dependencies) (but **not** in the *Architecture Quality* view, since they are not directly related). 
-    * For *Duplication* and unit metrics, clicking on a *Refactoring candidate* will show the affected code highlighted in context of this one file. 
-  * **Code Explorer**: You may reach the *Code Explorer* from a finding in the *Refactoring candidates* list or the detailed file list from the *Delta quality* view. there you can go to the *Code Explorer* to see the unit/file/component in context of the codebase. The Code Explorer is also a good place to start if you suspect specific maintenance hotspots and want to understand the details. [See the *Code Explorer* page](system-code-explorer.md). An advantage of the Code Explorer is that it can also show per file/unit whether it contains other risky constructs, e.g. regarding security.
-  * The strength of the **Technical Monitor** (accessible from the maintainability overview page) is making detailed comparisons between snapshots and filtering by technologies [discussed as part of the Code Explorer page](system-code-explorer.md#the-technical-monitor).
-
-The next sections elaborate on the aforementioned four Maintainability views.
-
 ## Maintainability overview
 The overview page is shown below. 
 * The system’s (configured) architecture is visible in the top right. This is based on the system’s scope configuration (see [the page on scope configuration](../reference/analysis-scope-configuration.md)). 
@@ -161,5 +146,35 @@ Questions to ask yourself dealing with refactoring candidates include:
 ### Sigrid as part of the Agile development process
 For an elaboration of using and prioritizing maintainability findings within the development process, [see the elaboration in the Agile development process document](../workflows/agile-development-process.md#for-maintainability-focus-on-technical-debt-that-is-affecting-you-right-now)
 
+## Investigating system maintainability rating state and -changes 
+
+A typical approach and different options to investigate what is going on in terms of maintainability metrics are described below. Getting an initial overview is discussed here in most detail. The options to further analyze have their own respective pages and paragraphs and are referred in the text. 
+
+* **Getting an overview:** the [Maintainability Overview (see above)](#maintainability-overview) is the place to start. The different metrics give a quick breakdown of system characteristics (such as Volume or Duplication). For a background on maintainability, [see "*Our approach*" section under "*Getting Started*"](../getting-started/approach.md). 
+You can find the [technical details of maintainability metrics under "*References*"](../reference/sig-quality-models.md).
+
+With the default treemap view, as an example, a large drop in "*Component independence*" may lead you to filter on change in that metric specifically over the chosen time period. With the following menu:
+
+<img src="../images/system-overview-treemap-menu-change-component-independence.png" width="600" />
+
+This results in the following overview colored by rating change impact on a green-to-red color scale:
+
+<img src="../images/system-overview-treemap-component-independence-change.png" width="600" />
+
+To get an insight into the point of time of large changes, it may be useful to turn the default treemap into a trendline (change in the "*Chart*" drop-down menu) to see approximate when large changes have taken place. As an example, distinguishing between different metrics ("*System properties*"):
+
+<img src="../images/system-overview-trend-system-properties.png" width="600" />
+
+Assuming that this has been your first step into maintainability analysis, you can do several things next:
+
+* **System architecture**: Architectural details can be analyzed in the [Component Dependencies view](#component-dependencies). For more details, [see the Architecture Quality page](architecture-quality.md) or [see "*References*" for its separate technical document](../reference/sig-quality-models.md). *Architecture Quality* does not count towards the maintainability rating.  
+  * You may be triggered by an architecture-level rating change or have suspicions of architectural problems based on experience. You might experience that certain components or files are hard to maintain because they are inter-related or (tightly) coupled in complex ways. For example, when design-level changes have unpredictable effects, when small changes propagate errors/faults, when a change in one component makes integration tests fail in another part of the system. 
+* **Triggered by a specific maintainability rating change**: you may be interested in understanding the cause of a specific change. There are several ways to analyze this deeper: 
+  * **Delta quality**: In case of a recent change, the *Delta quality* view shows you how and where recent code modifications/additions have affected the maintainabilty rating. 
+  * **Refactoring candidates**: In case code steps over certain risk thresholds ("*a violation*"), it will show up in the *Refactoring Candidates* [see Refactoring Candidates paragraph above](#refactoring-candidates). There may be several trade-offs in deciding whether and when to refactor [see relevant paragraph above on dealing with refactoring candidates](#dealing-with-refactoring-candidates). 
+    * As an exception, there might be no "*Component Entanglement*" violations visible while its rating is below 4-star rating. That can be the case if there are no architectural violations to resolve, but when the number of components and their connections are higher than the benchmark. This would be visible in the [Component Dependencies view](#component-dependencies) (but **not** in the *Architecture Quality* view, since they are not directly related). 
+    * For *Duplication* and unit metrics, clicking on a *Refactoring candidate* will show the affected code highlighted in context of this one file. 
+  * **Code Explorer**: You may reach the *Code Explorer* from a finding in the *Refactoring candidates* list or the detailed file list from the *Delta quality* view. there you can go to the *Code Explorer* to see the unit/file/component in context of the codebase. The Code Explorer is also a good place to start if you suspect specific maintenance hotspots and want to understand the details. [See the *Code Explorer* page](system-code-explorer.md). An advantage of the Code Explorer is that it can also show per file/unit whether it contains other risky constructs, e.g. regarding security. 
+  * **Using the Technical Monitor**: The strength of the *"Technical Monitor"* (accessible from the maintainability overview page) is making detailed comparisons between snapshots and filtering by technologies [discussed as part of the Code Explorer page](system-code-explorer.md#the-technical-monitor).
 
 
