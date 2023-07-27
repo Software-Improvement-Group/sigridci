@@ -52,43 +52,48 @@ The "*Technical Monitor*" can be accessed from the Maintainability Overview page
 
 <img src="../images/technical-monitor-shortcut.png" width="300" />
 
+The top menu is as follows:
+
+<img src="../images/system-technical-monitor-top-menu.png" width="600" />
+
+To simplify explanations of the contents of the "*Technical Monitor*", the differences or resemblances with Sigrid are emphasized below. 
+
 ### Landing page: Home
 
-Landing page dashboard:
+The landing page shows a dashboard of which most elements are emulated in Sigrid, mostly in the Maintainability Overview page ([see the respective section on its documentation page](system-maintainability.md#maintainability-overview)).
 
 <img src="../images/system-technical-monitor-landing-page.png" width="600" />
 
-In the bottom right corner, the largest duplicates are shown. Note that normally test files will be excluded from maintainability scope, in accordance with [Sigrid's system definitions](../organization-integration/systems.md) and [analysis scope configuration documentation page](../reference/analysis-scope-configuration.md).
+* The metrics overview and "*Rating changes*" bar chart are part of the Maintainability Overview in Sigrid. 
+* The graphs for "*Maintainability trend*", "*Changes*" and "*Volume*" can be created in the same Sigrid page by switching from the default treemap to "*Trend graph*" or "*Bar chart*". As in Sigrid, individual metrics can be turned on and off by clicking on their colored icons.
+* In the bottom right corner, the largest duplicates are shown. In Sigrid, these will be visible under "*Refactoring candidates*" [see documentation section](system-maintainability.md#refactoring-candidates). Note that normally test files will be excluded from maintainability scope, in accordance with [Sigrid's system definitions](../organization-integration/systems.md) and [analysis scope configuration documentation page](../reference/analysis-scope-configuration.md).
 
+### Maintainability dashboard
 
-Top menu:
-<img src="../images/system-technical-monitor-top-menu.png" width="600" />
-
-
-
-
-
-
-
-### Maintainability overview
-
-Doughnut charts system level metrics
+The dashboard lands on the system level metrics with doughnut charts. The other visualizations are all bar charts or area charts (under "*Trends*") that can be recreated in Sigrid by changing the treemap in the "*Maintainability Overview*" into a bar chart.  
 
 <img src="../images/system-technical-monitor-maintainability-dashboard-system.png" width="600" />
 
+In the sidebar, different views can be selected. In this example, "*Rating changes*". 
 
-Area chart:
-@@
+<img src="../images/system-technical-monitor-maintainability-dashboard-menu-system-rating-changes.png" width="300" />
 
-Sidebar, example "*Rating changes*"
-<img src="../images/system-technical-monitor-maintainability-dashboard-system-rating-changes.png" width="300" />
+Under *"Other"*, the chart for a distribution of different duplication categories cannot yet be created in Sigrid, but its detailed information is available under "*Refactoring candidates*" under "*Duplication*". 
 
-
-
+<img src="../images/system-technical-monitor-chart-duplication-categories.png" width="600" />
 
 ### Metrics
 
-Date changes in the "*Metrics*", "*Compare Snapshots*" or "*Dependency graph*" tabs need to be confirmed by clicking on the forward arrow <img src="../images/system-technical-monitor-icon-go.png" class="inline" />.
+The "*Metrics*" tab shows the metrics per snapshot one-by-one. Following the left-hand menu from top to bottom, by default this page lands on "*Production code*", "*System level*" and "*Overview*". With this left-side menu, you can take different routes to navigate to steer your analysis. Note that code in the categories of "*Test code*" and "*Generated code*" do not count for a system's maintainability rating. They are configured as such in the system's scoping ([see scoping documentation](../reference/analysis-scope-configuration.md)).
+
+<img src="../images/system-technical-monitor-metrics-menu.png" width="600" />
+
+**Every click in this menu acts as a filter and the assumed order is from top to bottom**. For example, you could keep "*Production code*" untouched, click on "*Component level*", and see main metrics for all technologies combined per component. But if you are interested only in one particular technology, you could click "*Java*" first, and then move to "*Component*" level, "*File*" level or "*Unit*" level. 
+Note that with the Production code filter as a default, only a select number of metrics are shown, i.e. those that can be calculated on a system level. You may also notice that not all metrics are available for each technology, because e.g. for XML-based languages "*Module coupling*" cannot meaningfully be calculated. 
+
+In the top of this filter menu there is a date selector. Date changes in the "*Metrics*", "*Compare Snapshots*" or "*Dependency graph*" tabs need to be confirmed by clicking on the forward arrow <img src="../images/system-technical-monitor-icon-go.png" class="inline" />.
+
+Every column can be sorted. In combination with a relevant technology/analysis level/metric filter this is a powerful feature to find hotspots, especially when comparing different risk categories. 
 
 ### Compare snapshots
 
@@ -114,12 +119,12 @@ The <img src="../images/system-technical-monitor-icon-source.png" class="inline"
 
 ### Dependency graph
 
-You can filter on technology and type of calls, as shown in the menu on the right:
+In the Dependency graph view, you can filter on technology and type of calls, as shown in the menu on the left:
 
 <img src="../images/system-technical-monitor-dependency graph-menu.png" width="300" />
 
 
-Clicking on a number related to a dependency line will bring you to the dependency details, similar to Sigrid's detail page of the *Component Dependencies* tab ([see the relevant paragraph in the system maintainability documentation](system-maintainability.md#component-dependencies)). The position of components cannot be changed. It is possible to recalculate the dependency graph of an earlier date . 
+Clicking on a number related to a dependency line will bring you to the dependency details, similar to Sigrid's detail page of the *Component Dependencies* tab ([see the relevant paragraph in the system maintainability documentation](system-maintainability.md#component-dependencies)). The position of components cannot be changed visually. It is possible though to recalculate the dependency graph of an earlier date. This can be powerful to trace back architectural changes over time.
 
 ### Documentation
 Explanations relevant for the Technical monitor are in Chapter 4. However that document is not being maintained. The current state of functionality will be on this page. 
