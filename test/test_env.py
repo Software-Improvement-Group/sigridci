@@ -13,9 +13,10 @@
 # limitations under the License.
 
 import os
-import unittest
+from unittest import TestCase
 
-class EnvironmentTest(unittest.TestCase):
+
+class EnvironmentTest(TestCase):
 
     def testSigridCiClientShouldNotRequireAnyDependencies(self):
         requirementsFile = os.path.dirname(__file__) + "/../requirements.txt"

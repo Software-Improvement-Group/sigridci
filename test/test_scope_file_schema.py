@@ -14,11 +14,11 @@
 
 import json
 import jsonschema
-import unittest
 import yaml
+from unittest import TestCase
 
 
-class ScopeFileSchemaTest(unittest.TestCase):
+class ScopeFileSchemaTest(TestCase):
     maxDiff = None
     
     def setUp(self):

@@ -14,11 +14,11 @@
 
 import os
 import re
-import unittest
 from bs4 import BeautifulSoup
+from unittest import TestCase
 
 
-class DocumentationTest(unittest.TestCase):
+class DocumentationTest(TestCase):
     LINK = re.compile("\\[(.*?)\\]\\((\\S+)\\)")
     IMAGE = re.compile("img src=\"(\\S+)\"")
 
