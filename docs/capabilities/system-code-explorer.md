@@ -89,13 +89,15 @@ The "*Metrics*" tab shows the metrics per snapshot one-by-one. Following the lef
 <img src="../images/system-technical-monitor-metrics-menu.png" width="600" />
 
 **Every click in this menu acts as a filter and the assumed order is from top to bottom**. For example, you could keep "*Production code*" untouched, click on "*Component level*", and see main metrics for all technologies combined per component. But if you are interested only in one particular technology, you could click "*Java*" first, and then move to "*Component*" level, "*File*" level or "*Unit*" level. 
-Note that with the Production code filter as a default, only a select number of metrics are shown, i.e. those that can be calculated on a system level. You may also notice that not all metrics are available for each technology, because e.g. for XML-based languages "*Module coupling*" cannot meaningfully be calculated. 
+Note that with the Production code filter as a default, only a select number of metrics are shown, i.e. those that can be calculated on a system level. That list changes dynamically based on the technology and analysis level that you have selected. This is because not all metrics are available for each technology, because e.g. for XML-based languages "*Module coupling*" cannot meaningfully be calculated. 
 
 In the top of this filter menu there is a date selector. Date changes in the "*Metrics*", "*Compare Snapshots*" or "*Dependency graph*" tabs need to be confirmed by clicking on the forward arrow <img src="../images/system-technical-monitor-icon-go.png" class="inline" />.
 
 Every column can be sorted. In combination with a relevant technology/analysis level/metric filter this is a powerful feature to find hotspots, especially when comparing different risk categories. 
 
 ### Compare snapshots
+
+Module Coupling example.
 
 ### Change quality
 This tab will directly link to the "*Delta quality*" tab in Sigrid. See the [Delta quality documentation page](system-delta-quality.md).
@@ -112,8 +114,6 @@ In the sidebar, filters can be applied to e.g. only show duplicates of a defined
 <img src="../images/system-technical-monitor-duplication-side-bar.png" width="250" />
 
 The <img src="../images/system-technical-monitor-icon-source.png" class="inline" /> icon in the "*Source*" column will bring you to its source code, anchoring at the top of the duplicate and highlighted in a dark shade of yellow). Other duplicates in the same file are also highlighted, in a lighter yellow shade.
-
-
 
 
 
