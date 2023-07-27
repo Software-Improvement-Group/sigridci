@@ -17,6 +17,7 @@
 import argparse
 import os
 import sys
+
 from sigridci.publish_options import PublishOptions, RunMode
 from sigridci.sigrid_api_client import SigridApiClient
 from sigridci.sigridci_runner import SigridCiRunner

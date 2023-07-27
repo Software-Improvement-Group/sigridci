@@ -14,6 +14,7 @@
 
 import os
 import subprocess
+
 from sigridci.upload_log import UploadLog
 
 

@@ -13,6 +13,7 @@
 # limitations under the License.
 
 import sys
+
 from sigridci.publish_options import RunMode
 from sigridci.report import Report
 

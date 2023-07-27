@@ -13,6 +13,7 @@
 # limitations under the License.
 
 from xml.dom.minidom import Document
+
 from sigridci.report import Report
 
 

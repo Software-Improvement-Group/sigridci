@@ -14,6 +14,7 @@
 
 import html
 import os
+
 from sigridci.report import Report
 
 

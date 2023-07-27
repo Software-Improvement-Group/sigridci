@@ -15,6 +15,7 @@
 import os
 import re
 import sys
+
 from sigridci.ascii_art_report import AsciiArtReport
 from sigridci.junit_format_report import JUnitFormatReport
 from sigridci.pipeline_summary_report import PipelineSummaryReport
