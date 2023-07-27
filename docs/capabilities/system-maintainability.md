@@ -59,7 +59,7 @@ The legend’s colors denotes the severity of the antipattern:
 * **Indirect cyclic dependency:** a set of components (>2) does not have direct cyclic dependencies, but the communication lines between the involved components form a cycle.
 * **Cyclic dependency:** code within 2 components appear to “depend on each other”.
 
-For details on their specifics, see the [Reference page on our quality models](../reference/sig-quality-models.md), specifically the [Maintainability Guidance for Producers](https://softwareimprovementgroup.com/wp-content/uploads/SIG-TUViT-Evaluation-Criteria-Trusted-Product-Maintainability-Guidance-for-producers.pdf).
+For details on their specifics, see the [Reference page on our quality models](../reference/sig-quality-models.md), specifically the [Maintainability Guidance for Producers (on the SIG website)](https://softwareimprovementgroup.com/wp-content/uploads/SIG-TUViT-Evaluation-Criteria-Trusted-Product-Maintainability-Guidance-for-producers.pdf).
 
 If you click on an arrow in the graph, a page will appear where you can inspect the individual dependencies from- and to the selected components.
 
