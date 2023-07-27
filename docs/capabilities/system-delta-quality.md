@@ -22,11 +22,11 @@ Within *Delta quality*, there are three tabs available :
 
 For *Changed code*, quality effects may be limited unless deliberate refactoring/renovation has been done.The impact of "*Changed code quality*" really depends on the size of the change. If 1 line of code has been changed, the code quality will probably stay the same. If that happens to be (older) code with lower quality, it is not necessarily alarming. 
 
-A more balanced view will be visible in the "*New & changed code*" tab, which averages out changes to new and existing code. 
+A more balanced view will be visible in the "*New & changed code*" tab, which averages out changes to new and existing code. But here again, the volume of changes and the difference in code quality determines ultimate impact on system rating. A sanity check is to see whether the system metrics have actually changed for the system as a whole. 
 
-A sanity check is to see whether the system metrics have actually changed (in the [Maintainability Overview tab, see](system-maintainability.md#maintainability-overview)).
+<img src="../images/system-overview-rating-tile.png" width="400" />
 
-<img src="../images/system-security-icon-medium1.png" class="inline" /> 
+Also see [the *Maintainability Overview* section on the system maintainability documentation page](system-maintainability.md#maintainability-overview).
 
 ## Example: Delta Quality for changed code
 
