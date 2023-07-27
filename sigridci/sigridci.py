@@ -35,7 +35,7 @@ def parsePublishOptions(args):
         excludePatterns=args.exclude.split(","),
         includeHistory=args.include_history,
         showUploadContents=args.showupload,
-        targetRating=args.targetquality
+        targetRating=parseTarget(args.targetquality)
     )
 
 
@@ -46,6 +46,12 @@ def parseRunMode(args):
         return RunMode.FEEDBACK_AND_PUBLISH
     else:
         return RunMode.FEEDBACK_ONLY
+
+
+def parseTarget(target):
+    if target == "sigrid":
+        return "sigrid"
+    return float(target)
 
 
 if __name__ == "__main__":
