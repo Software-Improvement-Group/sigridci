@@ -92,7 +92,7 @@ if __name__ == "__main__":
     UploadLog.log("Starting Sigrid CI")
 
     options = parsePublishOptions(args)
-    apiClient = SigridApiClient(args.sigridurl, options)
+    apiClient = SigridApiClient(options)
 
     runner = SigridCiRunner(options, apiClient)
-    runner.run(apiClient, options, target, reports)
+    runner.run()

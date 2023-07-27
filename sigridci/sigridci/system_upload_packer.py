@@ -16,9 +16,9 @@ import os
 import sys
 from zipfile import ZipFile, ZIP_DEFLATED
 
-from sigridci.publish_options import PublishOptions
-from sigridci.repository_history_exporter import RepositoryHistoryExporter
-from sigridci.upload_log import UploadLog
+from .publish_options import PublishOptions
+from .repository_history_exporter import RepositoryHistoryExporter
+from .upload_log import UploadLog
 
 
 class SystemUploadPacker:

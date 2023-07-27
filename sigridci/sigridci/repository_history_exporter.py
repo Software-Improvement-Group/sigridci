@@ -15,7 +15,7 @@
 import os
 import subprocess
 
-from sigridci.upload_log import UploadLog
+from .upload_log import UploadLog
 
 
 class RepositoryHistoryExporter:

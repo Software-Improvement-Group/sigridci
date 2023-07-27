@@ -13,10 +13,10 @@
 # limitations under the License.
 
 from io import StringIO
-
-from sigridci.pipeline_summary_report import PipelineSummaryReport
-from sigridci.publish_options import PublishOptions, RunMode
 from unittest import TestCase
+
+from sigridci.sigridci.pipeline_summary_report import PipelineSummaryReport
+from sigridci.sigridci.publish_options import PublishOptions, RunMode
 
 
 class ConclusionReportTest(TestCase):

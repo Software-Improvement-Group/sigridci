@@ -16,13 +16,13 @@ import os
 import re
 import sys
 
-from sigridci.ascii_art_report import AsciiArtReport
-from sigridci.junit_format_report import JUnitFormatReport
-from sigridci.pipeline_summary_report import PipelineSummaryReport
-from sigridci.publish_options import PublishOptions, RunMode
-from sigridci.sigrid_api_client import SigridApiClient
-from sigridci.static_html_report import StaticHtmlReport
-from sigridci.upload_log import UploadLog
+from .ascii_art_report import AsciiArtReport
+from .junit_format_report import JUnitFormatReport
+from .pipeline_summary_report import PipelineSummaryReport
+from .publish_options import PublishOptions, RunMode
+from .sigrid_api_client import SigridApiClient
+from .static_html_report import StaticHtmlReport
+from .upload_log import UploadLog
 
 
 class SigridCiRunner:

@@ -14,9 +14,9 @@
 
 import sys
 
-from sigridci.ascii_art_report import AsciiArtReport
-from sigridci.publish_options import RunMode
-from sigridci.report import Report
+from .ascii_art_report import AsciiArtReport
+from .publish_options import RunMode
+from .report import Report
 
 
 class PipelineSummaryReport(Report):

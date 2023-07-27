@@ -11,11 +11,12 @@
 # WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 # See the License for the specific language governing permissions and
 # limitations under the License.
-import os.path
+
 import subprocess
 import tempfile
 from unittest import TestCase
-from sigridci.repository_history_exporter import RepositoryHistoryExporter
+
+from sigridci.sigridci.repository_history_exporter import RepositoryHistoryExporter
 
 
 class RepositoryHistoryExporterTest(TestCase):

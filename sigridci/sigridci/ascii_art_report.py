@@ -14,8 +14,8 @@
 
 import sys
 
-from sigridci.publish_options import RunMode
-from sigridci.report import Report
+from .publish_options import RunMode
+from .report import Report
 
 
 class AsciiArtReport(Report):

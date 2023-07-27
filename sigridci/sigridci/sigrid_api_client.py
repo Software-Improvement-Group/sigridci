@@ -21,9 +21,9 @@ import urllib.parse
 import urllib.request
 from tempfile import TemporaryDirectory
 
-from sigridci.publish_options import PublishOptions, RunMode
-from sigridci.system_upload_packer import SystemUploadPacker
-from sigridci.upload_log import UploadLog
+from .publish_options import PublishOptions, RunMode
+from .system_upload_packer import SystemUploadPacker
+from .upload_log import UploadLog
 
 
 class SigridApiClient:

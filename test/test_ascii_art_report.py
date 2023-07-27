@@ -13,9 +13,10 @@
 # limitations under the License.
 
 from io import StringIO
-from sigridci.ascii_art_report import AsciiArtReport
-from sigridci.publish_options import PublishOptions, RunMode
 from unittest import TestCase
+
+from sigridci.sigridci.ascii_art_report import AsciiArtReport
+from sigridci.sigridci.publish_options import PublishOptions, RunMode
 
 
 class AsciiArtReportTest(TestCase):

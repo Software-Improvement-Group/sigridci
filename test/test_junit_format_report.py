@@ -12,9 +12,10 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-from sigridci.junit_format_report import JUnitFormatReport
-from sigridci.publish_options import PublishOptions, RunMode
 from unittest import TestCase
+
+from sigridci.sigridci.junit_format_report import JUnitFormatReport
+from sigridci.sigridci.publish_options import PublishOptions, RunMode
 
 
 class JUnitReportTest(TestCase):

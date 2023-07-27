@@ -12,8 +12,9 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-from sigridci.publish_options import PublishOptions, RunMode
 from unittest import TestCase
+
+from sigridci.sigridci.publish_options import PublishOptions, RunMode
 
 
 class StaticHtmlReportTest(TestCase):

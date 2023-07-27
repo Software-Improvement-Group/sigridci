@@ -12,10 +12,10 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-from sigridci.markdown_report import MarkdownReport
 from unittest import TestCase
 
-from sigridci.publish_options import PublishOptions, RunMode
+from sigridci.sigridci.markdown_report import MarkdownReport
+from sigridci.sigridci.publish_options import PublishOptions, RunMode
 
 
 class MarkdownReportTest(TestCase):

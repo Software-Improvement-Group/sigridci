@@ -15,11 +15,12 @@
 import os
 import tempfile
 import subprocess
-from sigridci.publish_options import PublishOptions, RunMode
-from sigridci.system_upload_packer import SystemUploadPacker
-from sigridci.upload_log import UploadLog
 from unittest import TestCase
 from zipfile import ZipFile
+
+from sigridci.sigridci.publish_options import PublishOptions, RunMode
+from sigridci.sigridci.system_upload_packer import SystemUploadPacker
+from sigridci.sigridci.upload_log import UploadLog
 
 
 class SystemUploadPackerTest(TestCase):

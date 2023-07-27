@@ -15,12 +15,12 @@
 import os
 import tempfile
 import urllib.error
-
-from sigridci.publish_options import PublishOptions, RunMode
-from sigridci.sigrid_api_client import SigridApiClient
-from sigridci.sigridci_runner import SigridCiRunner
-from sigridci.upload_log import UploadLog
 from unittest import TestCase
+
+from sigridci.sigridci.publish_options import PublishOptions, RunMode
+from sigridci.sigridci.sigrid_api_client import SigridApiClient
+from sigridci.sigridci.sigridci_runner import SigridCiRunner
+from sigridci.sigridci.upload_log import UploadLog
 
 
 class SigridCiRunnerTest(TestCase):

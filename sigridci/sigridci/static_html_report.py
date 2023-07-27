@@ -15,7 +15,7 @@
 import html
 import os
 
-from sigridci.report import Report
+from .report import Report
 
 
 class StaticHtmlReport(Report):
