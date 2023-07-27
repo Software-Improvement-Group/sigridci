@@ -1,10 +1,10 @@
-# Sigrid | Software Assurance Platform
+# Sigrid | One platform to manage your entire IT organization
 
 [Sigrid](https://www.softwareimprovementgroup.com/solutions/sigrid-software-assurance-platform/) helps you to improve your software by measuring your system's code quality, and then compares the results against a benchmark of 10,000 industry systems to give you concrete advice on areas where you can improve.
 
 <img src="images/overall-portfolio-dashboard.png" width="700" />
 
-Sigrid performs code quality checks that have been designed by the [Software Improvement Group](https://www.softwareimprovementgroup.com/), which have been used by thousands of development teams over the past 20 years to help improve their software. SIG's approach is based on the ISO 25010 standard for software quality, and has been accredited to ensure alignment with the standard.
+Sigrid performs code quality checks that have been designed by the [Software Improvement Group](https://www.softwareimprovementgroup.com/), which have been used by thousands of development teams over the past 20 years to help improve their software. SIG's approach is based on the [ISO 25010 standard for software quality](https://www.iso.org/standard/35733.html), and has been accredited to ensure alignment with the standard.
 
 ## About this documentation
 
