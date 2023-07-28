@@ -20,7 +20,6 @@ from sigridci.sigridci import Report, TextReport, TargetQuality
 
 
 class TextReportTest(unittest.TestCase):
-
     maxDiff = None
     
     def testGetRefactoringCandidatesForNewFormat(self):

@@ -44,7 +44,7 @@ However, it is still possible to use Sigrid in such a project: every parallel br
 
 ## Sigrid CI &amp; Git submodule workflow
 
-**How it works:** This workflow does not relate to a particular branching model, but nevertheless influences the development process and how to integrate Sigrid CI. [Git submodules](https://git-scm.com/book/nl/v2/Git-Tools-Submodules) allow a Git repository to include references to other Git repositories. The references act as a pointer, so the submodules retain their own Git commit history that is independent from the parent repository.
+**How it works:** This workflow does not relate to a particular branching model, but nevertheless influences the development process and how to integrate Sigrid CI. [Git submodules (link to Git documentation)](https://git-scm.com/book/en/v2/Git-Tools-Submodules) allow a Git repository to include references to other Git repositories. The references act as a pointer, so the submodules retain their own Git commit history that is independent from the parent repository.
 
 <img src="../images/git-submodule-workflow.png" width="500" />
 

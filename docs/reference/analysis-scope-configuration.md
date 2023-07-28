@@ -19,6 +19,15 @@ The following example shows a typical example of the `sigrid.yaml` configuration
       
 The various options and sections are explained in more detail in the remainder of this page.
 
+## Editing scope files
+
+Since scope files are part of your repository, you can edit them using your preferred text editor. Sigrid scope configuration files are registered with [SchemaStore.org](https://schemastore.org), which means you get IDE features like content assist and error detection while you're editing the file. 
+
+- In [Visual Studio Code](https://code.visualstudio.com), support is automatically provided if you are using the recommended file name of `sigrid.yaml`. If you are using a different file name, you can select the Sigrid JSON schema manually using the *"select JSON schema"* option located in the bottom right of the editor window.
+- In [JetBrains IDEs](https://www.jetbrains.com), which include IntelliJ IDEA, WebStorm, and PyCharm, you can get editor support by selecting *Sigrid scope configuration file* in the bottom right of the editor window. After you have done this the first time, the IDE will automatically provide editor support when you open other `sigrid.yaml` files in the future.
+
+<img src="../images/scope-file-ide.png" width="400" />
+
 ## Excluding files and directories
 
 Sigrid will exclude common patterns by default. For example, directories like `build`, `dist`, and `target` typically contain build output and are not part of the source code. Directories like `node_modules` contain open source libraries and are not part of the application's own source code. Those directories are therefore ignored during the analysis.

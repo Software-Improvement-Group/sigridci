@@ -5,7 +5,7 @@ function makeSectionLink(sectionHeader) {
     sectionHeader.appendChild(sectionLink);
 
     sectionLink.addEventListener("click", e => {
-        const anchor = sectionHeader.innerText.replace(/[^\w]/g, "-").toLowerCase();
+        const anchor = sectionHeader.innerText.replace(/\s/g, "-").replace(/[^\w-]/g, "").toLowerCase();
         const href = window.location.origin + window.location.pathname + "#" + anchor;
         navigator.clipboard.writeText(href);
     });
