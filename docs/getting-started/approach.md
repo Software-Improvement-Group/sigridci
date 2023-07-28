@@ -6,7 +6,7 @@ A benchmark on quality is meaningful because it shows you an unbiased norm of ho
 
 Sigrid compares analysis results for your system against a benchmark of 10,000+ industry systems, to give you that perspective. 
 
-This benchmark set is selected and calibrated yearly to give a balanced view of the *current state of software development*. “Balanced” here can be understood as a representative spread of the “system population”. This will include anything in between old and new technologies. In terms of technologies this is skewed towards programming languages that are now most common. The metrics underlying the benchmark approach a normal distribution.
+This benchmark set is selected and calibrated yearly to give a balanced view of the *current state of software development*. "Balanced" here can be understood as a representative spread of the "system population". This will include anything in between old and new technologies. In terms of technologies this is skewed towards programming languages that are now most common. The metrics underlying the benchmark approach a normal distribution.
 
 ## Benchmarking from 1 to 5 stars
 
