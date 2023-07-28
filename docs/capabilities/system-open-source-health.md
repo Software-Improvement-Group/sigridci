@@ -4,7 +4,7 @@ Sigrid runs a comprehensive analysis of open source software that is used in the
 ## Reaching the OSH page
 You can reach the Open Source Health information via the top menu if you are in System view already:
 
-<img src="../images/system-top-bar-osh.png" width="300" />
+<img src="../images/system-top-bar-osh.png" width="600" />
 
 Or you can click a capability on Portfolio *Overview* page, clicking on a system from the Portfolio Open Source Health view. See [the system-level Overview page](system-overview.md#navigating-to-capabilities), [navigating from the portfolio-level Overview page](portfolio-overview.md#navigating-to-capabilities) or [navigating from the portfolio security view](portfolio-open-source-health.md#moving-from-portfolio-level-to-system-level).
 

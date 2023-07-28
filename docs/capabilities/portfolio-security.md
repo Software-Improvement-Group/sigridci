@@ -17,11 +17,11 @@ The security overview page shows a summary of findings and estimated severity. F
 
 * *Systems and Findings*: the totals of systems being scanned and the sum of identified Findings. Below those counts, it shows the total changes over the selected time period. A mouseover shows an elaboration:
 
-<img src="../images/portfolio-security-findings-mouseover.png" width="400" />
+<img src="../images/portfolio-security-findings-mouseover.png" width="200" />
 
 * *Systems per CVSS severity*: the count of systems where their highest-risk finding is in these risk categories, i.e. <img src="../images/system-security-icon-low1.png" class="inline" /> *Low*, <img src="../images/system-security-icon-medium1.png" class="inline" /> *Medium*, <img src="../images/system-security-icon-high1.png" class="inline" /> *High*, or <img src="../images/system-security-icon-critical1.png" class="inline" /> *Critical*. A mouseover on the colored bar shows the exact count:
 
-<img src="../images/portfolio-security-cvss-severity-mouseover.png" width="400" />
+<img src="../images/portfolio-security-cvss-severity-mouseover.png" width="200" />
 
 * *Activity*: the count of *New*, *Recurring* and *Resolved* findings over the selected time period in the top right corner data selector. Note that the sums for *New* and *Resolved* are the same totals as shown in the *Findings* tile on the left. A mouseover on the colored bar shows the exact count:
 
@@ -33,11 +33,11 @@ The security overview page shows a summary of findings and estimated severity. F
 
 In the bottom part of the screen, each system is shown with a summary of its counts: number of findings per *CVSS* risk category and *Finding age* counts. For larger portfolios it may be useful to sort these on different characteristics. Its menu, by default set on sorting order by total number of "*Finding*", is as follows:
 
-<img src="../images/portfolio-security-sorting-menu.png" width="300" /> 
+<img src="../images/portfolio-security-sorting-menu.png" width="150" /> 
 
 Sorting can also be done per columns (here, the total number of "*Critical risk*" findings as an example). The top right bottom for exporting the data as a spreadsheet may be useful for further analysis. 
 
-<img src="../images/portfolio-security-overview-sorting-columns-critical.png" width="300" /> 
+<img src="../images/portfolio-security-overview-sorting-columns-critical.png" width="600" /> 
 
 
 

@@ -32,7 +32,7 @@ Also see [the *Maintainability Overview* section on the system maintainability d
 
 As an example below is a partial screenshot for the "*Changed code*" tab. The layout and type of information is generally the same as for the two other tabs: the left tile shows the number of changed files, their total volume and average maintainability rating in stars. The *Changed code* tab shows an extra comparison. For each maintainability rating tile, next to the comparison of the system as a whole (whether, as a trend, code quality of existing code is improving), it also shows the difference between the maintainability rating of the file *before and after the change*. This gives an indication of whether, *on average*, code quality of modified existing code has been improved. Note that "*on average*" is significant. 
 
-<img src="../images/system-delta-quality-changed-code-overview-and-duplication.png" width="600" />
+<img src="../images/system-delta-quality-changed-code-overview-and-duplication.png" width="750" />
 
 In the tabs for "*New code*" and "*New & changed code*", metrics are only compared to the system quality as it was before.  
 
@@ -42,7 +42,7 @@ The filtering menu (here, for *Changed files*) shows next to the calculated metr
 
 You can achieve the same filtering by clicking on the respective column names.
 
-<img src="../images/system-delta-quality-changed-code-changed-files-menu.png" width="300" />
+<img src="../images/system-delta-quality-changed-code-changed-files-menu.png" width="150" />
 
 ## Navigating the New/Changed files overviews
 The overview page here is focused on "*Changed code*". You can also move to "*New code*" or "*Changed & new code*" in the tabs in the top.  

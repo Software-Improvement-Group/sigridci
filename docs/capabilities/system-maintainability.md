@@ -2,7 +2,7 @@
 The maintainability view is available for all systems by default. 
 You can reach this view in different ways: Via the top menu, or clicking an a capability on the System or Portfolio *Overview* pages. See the [system-level Overview page](system-overview.md#navigating-to-capabilities) or [portfolio-level Overview page](portfolio-overview.md#navigating-to-capabilities).
 
-<img src="../images/system-maintainability-menu-ex-architecture.png" width="150" />
+<img src="../images/system-maintainability-menu-ex-architecture.png" width="250" />
 
 The definition of what a system is, what it is comprised of, and how it is configured, are detailed in the pages on [systems within Sigrid](../organization-integration/systems.md) and the [analysis scope configuration documentation page](../reference/analysis-scope-configuration.md).
 
@@ -32,7 +32,7 @@ Below the metrics overview, there is a shortcut to the *Refactoring candidates* 
  
 The “*Technical monitor*” button above the system rating brings you to an alternative (one might say, “legacy”) view of all the maintainability metrics and underlying source code. Its functionality and views will eventually be moved to Sigrid. Generally, its source code-level view is available in Sigrid in the [Code Explorer](system-code-explorer.md). 
 
-<img src="../images/technical-monitor-shortcut.png" width="300" />
+<img src="../images/technical-monitor-shortcut.png" width="200" />
 
 Because the views, filters and sorting abilities between the "*Technical monitor*" and "*Code Explorer*" are different, please see [a deserved elaboration on the Technical monitor on the Code Explorer page](system-code-explorer.md#the-technical-monitor). 
 
@@ -47,7 +47,7 @@ The arrows denote call direction within the code; a number on top of an arrow in
 ### Visualization options and filters
 Different types of dependency antipatterns can be shown by toggling *”Visualize component entanglement”*. 
 
-<img src="../images/system-component-dependencies-visualize-toggle.png" width="300" />
+<img src="../images/system-component-dependencies-visualize-toggle.png" width="450" />
 
 Once activated, a legend will appear at the bottom describing the different types. 
 
@@ -94,7 +94,7 @@ Clicking on a metric will expand the list, prioritized by the “severity” of 
 
 Setting a finding to *“Prioritize”* will show as *“Will fix”*
 
-<img src="../images/system-refactoring-candidates-status-set.png" width="300" />
+<img src="../images/system-refactoring-candidates-status-set.png" width="250" />
 
 When you set a finding to *“Accept Risk”*, its status will change to *“Risk accepted”* and the finding will be hidden by default. 
 
@@ -102,7 +102,7 @@ When you set a finding to *“Accept Risk”*, its status will change to *“Ris
 
 The relevant filter is shown below.
 
-<img src="../images/system-refactoring-candidates-filters-risk-accepted.png" width="300" />
+<img src="../images/system-refactoring-candidates-filters-risk-accepted.png" width="150" />
 
 
 ### Ordering of refactoring candidates
