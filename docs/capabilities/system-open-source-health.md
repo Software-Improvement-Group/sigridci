@@ -1,5 +1,5 @@
 # System-level Open Source Health (OSH)
-Sigrid runs a comprehensive analysis of open source software that is used in the source code. These are known here as “*Third party libraries*”. 
+Sigrid runs a comprehensive analysis of open source software that is used in the source code. These are known here as *third party libraries*. 
 
 ## Reaching the OSH page
 You can reach the Open Source Health information via the top menu if you are in System view already:
@@ -15,7 +15,7 @@ The system level overview lists the third party libraries used in this system, c
 
 ### Open Source Health scans for 6 different risk areas
 
-“*Open Source Health*” scans for six different risk areas: 
+*Open Source Health* scans for six different risk areas: 
 
 <img src="../images/system-osh-icon-vulnerability.png" class="inline" /> **Known vulnerabilities:** publicly known and categorized vulnerabilities in a third-party dependency.
 
