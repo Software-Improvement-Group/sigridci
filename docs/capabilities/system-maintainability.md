@@ -34,7 +34,7 @@ The *Technical monitor* button above the system rating brings you to an alternat
 
 <img src="../images/technical-monitor-shortcut.png" width="200" />
 
-Because the views, filters and sorting abilities between the "*Technical monitor*" and "*Code Explorer*" are different, please see [a deserved elaboration on the Technical monitor on the Code Explorer page](system-code-explorer.md#the-technical-monitor). 
+Because the views, filters and sorting abilities between the "*Technical monitor*" and "*Code Explorer*" are different, please see [a deserved elaboration on the Technical monitor page](system-technical-monitor.md). 
 
 ## Component Dependencies
 The *Component Dependency* view visualizes the dependencies between your application’s main components. The components follow from the system’s configuration.
@@ -177,6 +177,6 @@ Assuming that this has been your first step into maintainability analysis, you c
     * As an exception, there might be no *Component Entanglement* violations visible while its rating is below 4-star rating. That can be the case if there are no architectural violations to resolve, but when the number of components and their connections are higher than the benchmark. This would be visible in the [Component Dependencies view](#component-dependencies) (but **not** in the *Architecture Quality* view, since they are not directly related). 
     * For *Duplication* and unit metrics, clicking on a *Refactoring candidate* will show the affected code highlighted in context of this one file. 
   * **Code Explorer**: You may reach the *Code Explorer* from a finding in the *Refactoring candidates* list or the detailed file list from the *Delta quality* view. there you can go to the *Code Explorer* to see the unit/file/component in context of the codebase. The Code Explorer is also a good place to start if you suspect specific maintenance hotspots and want to understand the details. [See the *Code Explorer* page](system-code-explorer.md). An advantage of the Code Explorer is that it can also show per file/unit whether it contains other risky constructs, e.g. regarding security. 
-  * **Using the Technical Monitor**: The strength of the *Technical Monitor* (accessible from the maintainability overview page) is making detailed comparisons between snapshots and filtering by technologies [discussed as part of the Code Explorer page](system-code-explorer.md#the-technical-monitor).
+  * **Using the Technical Monitor**: The strength of the *Technical Monitor* (accessible from the maintainability overview page) is making detailed comparisons between snapshots and filtering by technologies [discussed on its own page](system-technical-monitor.md).
 
 

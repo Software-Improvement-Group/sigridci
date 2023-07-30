@@ -3,7 +3,7 @@ If you have a portfolio of systems in Sigrid and licenses enabled for Security, 
 
 <img src="../images/portfolio-overview-top-bar-security-focus.png" width="600" />
 
-Your URL will be of the convention https://sigrid-says.com/*[CLIENTNAME]*/-/open-source-health, whereas system details will follow https://sigrid-says.com/*[CLIENT-NAME]*/*SYSTEM-NAME*/-/open-source-health.
+Your URL will be of the convention https://sigrid-says.com/*[clientname]*/-/open-source-health, whereas system details will follow https://sigrid-says.com/*[clientname]*/*systemname*/-/open-source-health.
 
 Another way to arrive here is clicking on the top capability tiles on the *Portfolio overview* page. See the [portfolio overview page](portfolio-overview.md#navigating-between-portfolio-and-system-level-views).
 

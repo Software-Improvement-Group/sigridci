@@ -7,7 +7,7 @@ If you have a portfolio of systems in Sigrid, maintainability is always availabl
 
 Another way to arrive here is clicking on the top capability tiles on the *Portfolio Overview* page. See the [portfolio overview page](portfolio-overview.md#navigating-between-portfolio-and-system-level-views).
 
-Your URL will be of the convention https://sigrid-says.com/*[CLIENTNAME]*/-/maintainability/.
+Your URL will be of the convention https://sigrid-says.com/*[clientname]*/-/maintainability/.
 
 ## Moving from portfolio-level to system-level view
 Since the portfolio view is a summary of system level findings, please refer to the [system-level view of maintainability](system-maintainability.md). For example, clicking on a system name in the portfolio overview will bring you to the system's details. 
