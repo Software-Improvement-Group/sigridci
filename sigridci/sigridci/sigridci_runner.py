@@ -26,9 +26,6 @@ from .upload_log import UploadLog
 
 
 class SigridCiRunner:
-    SYSTEM_NAME_PATTERN = re.compile("^[a-z0-9]+(-[a-z0-9]+)*$", re.IGNORECASE)
-    SYSTEM_NAME_LENGTH = range(2, 65)
-
     METADATA_FIELDS = [
         "displayName",
         "divisionName",
@@ -136,12 +133,3 @@ class SigridCiRunner:
         UploadLog.log("Using Sigrid for target rating (%.1f stars)" % targetRating)
         return targetRating
 
-    @staticmethod
-    def isValidSystemName(customerName, systemName):
-        return SigridCiRunner.SYSTEM_NAME_PATTERN.match(systemName) and \
-            len(systemName) >= SigridCiRunner.SYSTEM_NAME_LENGTH.start and \
-            (len(systemName) + len(customerName) + 1) in SigridCiRunner.SYSTEM_NAME_LENGTH
-
-    @staticmethod
-    def isValidToken(token):
-        return token != None and len(token) >= 64

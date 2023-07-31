@@ -43,34 +43,19 @@ class SigridCiRunnerTest(TestCase):
         self.options.system = "NOOT"
 
         apiClient = SigridApiClient(self.options)
-        
+
         self.assertEqual(apiClient.urlCustomerName, "aap")
         self.assertEqual(apiClient.urlSystemName, "noot")
-        
-    def testValidateSystemNameAccordingToRules(self):
-        self.assertTrue(SigridCiRunner.isValidSystemName("noot", "aap"))
-        self.assertTrue(SigridCiRunner.isValidSystemName("noot", "aap-noot"))
-        self.assertTrue(SigridCiRunner.isValidSystemName("noot", "aap123"))
-        self.assertTrue(SigridCiRunner.isValidSystemName("noot", "AAP"))
-        self.assertTrue(SigridCiRunner.isValidSystemName("noot", "a" * 59))
-        self.assertTrue(SigridCiRunner.isValidSystemName("noot", "aa"))
 
-        self.assertFalse(SigridCiRunner.isValidSystemName("noot", "aap_noot"))
-        self.assertFalse(SigridCiRunner.isValidSystemName("noot", "a"))
-        self.assertFalse(SigridCiRunner.isValidSystemName("noot", "$$$"))
-        self.assertFalse(SigridCiRunner.isValidSystemName("noot", "-aap"))
-        self.assertFalse(SigridCiRunner.isValidSystemName("noot", "a" * 65))
-        self.assertFalse(SigridCiRunner.isValidSystemName("noot", "aap--aap"))
-        
     def testValidateToken(self):
-        self.assertFalse(SigridCiRunner.isValidToken(None))
-        self.assertFalse(SigridCiRunner.isValidToken(""))
-        self.assertFalse(SigridCiRunner.isValidToken("$"))
-        self.assertTrue(SigridCiRunner.isValidToken("zeiYh/WYQ==" * 10))
+        self.assertFalse(SigridApiClient.isValidToken(None))
+        self.assertFalse(SigridApiClient.isValidToken(""))
+        self.assertFalse(SigridApiClient.isValidToken("$"))
+        self.assertTrue(SigridApiClient.isValidToken("zeiYh/WYQ==" * 10))
 
     def testRegularRun(self):
         self.createTempFile(self.tempDir, "a.py", "print(123)")
-        
+
         apiClient = MockApiClient(self.options)
         runner = SigridCiRunner(self.options, apiClient)
         runner.reports = []
@@ -78,19 +63,19 @@ class SigridCiRunnerTest(TestCase):
 
         expectedLog = [
             "Found system in Sigrid",
-            "Creating upload", 
+            "Creating upload",
             "Upload size is 1 MB",
             "Warning: Upload is very small, source directory might not contain all source code",
-            "Preparing upload", 
+            "Preparing upload",
             "Sigrid CI analysis ID: 123",
             "Submitting upload",
             "Upload successful",
             "Waiting for analysis results"
         ]
-        
+
         expectedCalls = [
-            "/analysis-results/sigridci/aap/noot/v1/ci", 
-            "/inboundresults/sig/aap/noot/ci/uploads/v1", 
+            "/analysis-results/sigridci/aap/noot/v1/ci",
+            "/inboundresults/sig/aap/noot/ci/uploads/v1",
             "UPLOAD",
             "/analysis-results/sigridci/aap/noot/v1/ci/results/123",
             "/analysis-results/api/v1/system-metadata/aap/noot"
@@ -98,7 +83,7 @@ class SigridCiRunnerTest(TestCase):
 
         self.assertEqual(UploadLog.history, expectedLog)
         self.assertEqual(apiClient.called, expectedCalls)
-        
+
     def testPublishRun(self):
         self.createTempFile(self.tempDir, "a.py", "print(123)")
 
@@ -111,19 +96,19 @@ class SigridCiRunnerTest(TestCase):
 
         expectedLog = [
             "Found system in Sigrid",
-            "Creating upload", 
+            "Creating upload",
             "Upload size is 1 MB",
             "Warning: Upload is very small, source directory might not contain all source code",
-            "Preparing upload", 
+            "Preparing upload",
             "Sigrid CI analysis ID: 123",
             "Publishing upload",
             "Upload successful",
             "Waiting for analysis results"
         ]
-        
+
         expectedCalls = [
-            "/analysis-results/sigridci/aap/noot/v1/ci", 
-            "/inboundresults/sig/aap/noot/ci/uploads/v1/publish", 
+            "/analysis-results/sigridci/aap/noot/v1/ci",
+            "/inboundresults/sig/aap/noot/ci/uploads/v1/publish",
             "UPLOAD",
             "/analysis-results/sigridci/aap/noot/v1/ci/results/123",
             "/analysis-results/api/v1/system-metadata/aap/noot"
@@ -131,7 +116,7 @@ class SigridCiRunnerTest(TestCase):
 
         self.assertEqual(UploadLog.history, expectedLog)
         self.assertEqual(apiClient.called, expectedCalls)
-        
+
     def testPublishOnlyRun(self):
         self.createTempFile(self.tempDir, "a.py", "print(123)")
 
@@ -144,26 +129,26 @@ class SigridCiRunnerTest(TestCase):
 
         expectedLog = [
             "Found system in Sigrid",
-            "Creating upload", 
+            "Creating upload",
             "Upload size is 1 MB",
             "Warning: Upload is very small, source directory might not contain all source code",
-            "Preparing upload", 
+            "Preparing upload",
             "Sigrid CI analysis ID: 123",
             "Publishing upload",
             "Upload successful",
             "Your project's source code has been published to Sigrid"
         ]
-        
+
         expectedCalls = [
-            "/analysis-results/sigridci/aap/noot/v1/ci", 
-            "/inboundresults/sig/aap/noot/ci/uploads/v1/publishonly",             
+            "/analysis-results/sigridci/aap/noot/v1/ci",
+            "/inboundresults/sig/aap/noot/ci/uploads/v1/publishonly",
             "UPLOAD",
             "/analysis-results/api/v1/system-metadata/aap/noot"
         ]
 
         self.assertEqual(UploadLog.history, expectedLog)
         self.assertEqual(apiClient.called, expectedCalls)
-        
+
     def testOnBoardingRun(self):
         self.createTempFile(self.tempDir, "a.py", "print(123)")
 
@@ -174,25 +159,25 @@ class SigridCiRunnerTest(TestCase):
 
         expectedLog = [
             "System is not yet on-boarded to Sigrid",
-            "Creating upload", 
+            "Creating upload",
             "Upload size is 1 MB",
             "Warning: Upload is very small, source directory might not contain all source code",
-            "Preparing upload", 
+            "Preparing upload",
             "Sigrid CI analysis ID: 123",
             "Submitting upload",
             "Upload successful",
             "System 'noot' has been on-boarded and will appear in Sigrid shortly"
         ]
-        
+
         expectedCalls = [
-            "/analysis-results/sigridci/aap/noot/v1/ci", 
-            "/inboundresults/sig/aap/noot/ci/uploads/v1/onboarding", 
+            "/analysis-results/sigridci/aap/noot/v1/ci",
+            "/inboundresults/sig/aap/noot/ci/uploads/v1/onboarding",
             "UPLOAD"
         ]
 
         self.assertEqual(UploadLog.history, expectedLog)
         self.assertEqual(apiClient.called, expectedCalls)
-        
+
     def testAddSubsystemOptionToUrl(self):
         self.createTempFile(self.tempDir, "a.py", "print(123)")
 
@@ -205,15 +190,15 @@ class SigridCiRunnerTest(TestCase):
         runner.run()
 
         expectedCalls = [
-            "/analysis-results/sigridci/aap/noot/v1/ci", 
-            "/inboundresults/sig/aap/noot/ci/uploads/v1/publish?subsystem=mysubsystem", 
+            "/analysis-results/sigridci/aap/noot/v1/ci",
+            "/inboundresults/sig/aap/noot/ci/uploads/v1/publish?subsystem=mysubsystem",
             "UPLOAD",
             "/analysis-results/sigridci/aap/noot/v1/ci/results/123",
             "/analysis-results/api/v1/system-metadata/aap/noot"
         ]
 
         self.assertEqual(apiClient.called, expectedCalls)
-        
+
     def testExitWithMessageIfUploadEmpty(self):
         apiClient = MockApiClient(self.options, systemExists=False)
         runner = SigridCiRunner(self.options, apiClient)
@@ -221,7 +206,7 @@ class SigridCiRunnerTest(TestCase):
 
         with self.assertRaises(SystemExit):
             runner.run()
-            
+
     def testRetryIfUploadFailsTheFirstTime(self):
         self.createTempFile(self.tempDir, "a.py", "print(123)")
 
@@ -232,10 +217,10 @@ class SigridCiRunnerTest(TestCase):
 
         expectedLog = [
             "Found system in Sigrid",
-            "Creating upload", 
+            "Creating upload",
             "Upload size is 1 MB",
             "Warning: Upload is very small, source directory might not contain all source code",
-            "Preparing upload", 
+            "Preparing upload",
             "Sigrid CI analysis ID: 123",
             "Submitting upload",
             "Retrying",
@@ -245,7 +230,7 @@ class SigridCiRunnerTest(TestCase):
         ]
 
         self.assertEqual(UploadLog.history, expectedLog)
-    
+
     def testExitIfUploadKeepsFailing(self):
         self.createTempFile(self.tempDir, "a.py", "print(123)")
 
@@ -255,10 +240,10 @@ class SigridCiRunnerTest(TestCase):
 
         expectedLog = [
             "Found system in Sigrid",
-            "Creating upload", 
+            "Creating upload",
             "Upload size is 1 MB",
             "Warning: Upload is very small, source directory might not contain all source code",
-            "Preparing upload", 
+            "Preparing upload",
             "Sigrid CI analysis ID: 123",
             "Submitting upload",
             "Retrying",
@@ -268,19 +253,19 @@ class SigridCiRunnerTest(TestCase):
             "Retrying",
             "Sigrid is currently unavailable, failed after 5 attempts"
         ]
-        
+
         with self.assertRaises(SystemExit):
             runner.run()
         self.assertEqual(UploadLog.history, expectedLog)
-        
+
     def testReadScopeFileWhenInRepository(self):
         self.createTempFile(self.tempDir, "sigrid.yaml", "component_depth: 1")
 
         self.assertEquals(self.options.readScopeFile(), "component_depth: 1")
-        
+
     def testScopeFileIsNoneWhenNotInRepository(self):
         self.assertIsNone(self.options.readScopeFile())
-        
+
     def testValidateScopeFile(self):
         self.createTempFile(self.tempDir, "sigrid.yaml", "languages:\n- java")
 
@@ -295,10 +280,10 @@ class SigridCiRunnerTest(TestCase):
             "Found system in Sigrid",
             "Validating scope configuration file",
             "Validation passed",
-            "Creating upload", 
+            "Creating upload",
             "Upload size is 1 MB",
             "Warning: Upload is very small, source directory might not contain all source code",
-            "Preparing upload", 
+            "Preparing upload",
             "Sigrid CI analysis ID: 123",
             "Submitting upload",
             "Upload successful",
@@ -306,7 +291,7 @@ class SigridCiRunnerTest(TestCase):
         ]
 
         self.assertEqual(UploadLog.history, expectedLog)
-    
+
     def testFailIfScopeFileIsNotValid(self):
         self.createTempFile(self.tempDir, "sigrid.yaml", "languages:\n- aap")
 
@@ -318,7 +303,7 @@ class SigridCiRunnerTest(TestCase):
 
         with self.assertRaises(SystemExit):
             runner.run()
-            
+
         expectedLog = [
             "Found system in Sigrid",
             "Validating scope configuration file",
@@ -329,7 +314,7 @@ class SigridCiRunnerTest(TestCase):
         ]
 
         self.assertEqual(UploadLog.history, expectedLog)
-        
+
     def testDumpAvailableMetadataToOutput(self):
         self.createTempFile(self.tempDir, "sigrid.py", "print(123)")
 
@@ -342,10 +327,10 @@ class SigridCiRunnerTest(TestCase):
 
         expectedLog = [
             "Found system in Sigrid",
-            "Creating upload", 
+            "Creating upload",
             "Upload size is 1 MB",
             "Warning: Upload is very small, source directory might not contain all source code",
-            "Preparing upload", 
+            "Preparing upload",
             "Sigrid CI analysis ID: 123",
             "Submitting upload",
             "Upload successful",
@@ -353,7 +338,7 @@ class SigridCiRunnerTest(TestCase):
         ]
 
         self.assertEqual(UploadLog.history, expectedLog)
-        
+
     def testValidateMetadataFileIfPresent(self):
         self.createTempFile(self.tempDir, "sigrid-metadata.yaml", "metadata:\n  division: aap")
 
@@ -371,7 +356,7 @@ class SigridCiRunnerTest(TestCase):
         ]
 
         self.assertEqual(UploadLog.history[0:3], expectedLog)
-        
+
     def testFailIfMetadataFileIsNotValid(self):
         self.createTempFile(self.tempDir, "sigrid-metadata.yaml", "metadata:\n  typo: aap")
 
@@ -383,7 +368,7 @@ class SigridCiRunnerTest(TestCase):
 
         with self.assertRaises(SystemExit):
             runner.run()
-            
+
         expectedLog = [
             "Found system in Sigrid",
             "Validating Sigrid metadata file",
@@ -394,7 +379,7 @@ class SigridCiRunnerTest(TestCase):
         ]
 
         self.assertEqual(UploadLog.history, expectedLog)
-    
+
     def testDoNotValidateMetadataFileIfNotPresent(self):
         apiClient = MockApiClient(self.options)
         runner = SigridCiRunner(self.options, apiClient)
@@ -402,7 +387,7 @@ class SigridCiRunnerTest(TestCase):
 
         with self.assertRaises(SystemExit):
             runner.run()
-            
+
         expectedLog = [
             "Found system in Sigrid",
             "Creating upload",
@@ -410,15 +395,15 @@ class SigridCiRunnerTest(TestCase):
         ]
 
         self.assertEqual(UploadLog.history, expectedLog)
-        
+
     def testDoNotGenerateFileWithoutEnvironmentVariables(self):
         apiClient = MockApiClient(self.options)
         runner = SigridCiRunner(self.options, apiClient)
         runner.reports = []
         runner.prepareMetadata()
-        
+
         self.assertEqual(os.path.exists(f"{self.tempDir}/sigrid-metadata.yaml"), False)
-        
+
     def testDoGenerateFileIfEnvironmentVariablesAreUsed(self):
         os.environ["externalid"] = "1234"
 
@@ -426,11 +411,11 @@ class SigridCiRunnerTest(TestCase):
         runner = SigridCiRunner(self.options, apiClient)
         runner.reports = []
         runner.prepareMetadata()
-        
+
         self.assertEqual(os.path.exists(f"{self.tempDir}/sigrid-metadata.yaml"), True)
         with open(f"{self.tempDir}/sigrid-metadata.yaml") as f:
             self.assertEqual(f.read(), "metadata:\n  externalID: \"1234\"\n")
-            
+
     def testIgnoreEmptyEnvironmentVariables(self):
         os.environ["externalid"] = "1234"
         os.environ["divisionname"] = ""
@@ -439,11 +424,11 @@ class SigridCiRunnerTest(TestCase):
         runner = SigridCiRunner(self.options, apiClient)
         runner.reports = []
         runner.prepareMetadata()
-        
+
         self.assertEqual(os.path.exists(f"{self.tempDir}/sigrid-metadata.yaml"), True)
         with open(f"{self.tempDir}/sigrid-metadata.yaml") as f:
             self.assertEqual(f.read(), "metadata:\n  externalID: \"1234\"\n")
-            
+
     def testTeamNamesAndSupplierNamesAreList(self):
         os.environ["suppliernames"] = "aap"
         os.environ["teamnames"] = "noot"
@@ -452,11 +437,11 @@ class SigridCiRunnerTest(TestCase):
         runner = SigridCiRunner(self.options, apiClient)
         runner.reports = []
         runner.prepareMetadata()
-        
+
         self.assertEqual(os.path.exists(f"{self.tempDir}/sigrid-metadata.yaml"), True)
         with open(f"{self.tempDir}/sigrid-metadata.yaml") as f:
             self.assertEqual(f.read(), "metadata:\n  teamNames: [\"noot\"]\n  supplierNames: [\"aap\"]\n")
-        
+
     def testErrorIfEnvironmentVariablesAreUsedButFileAlreadyExists(self):
         self.createTempFile(self.tempDir, "sigrid-metadata.yaml", "metadata:\n  externalID: 1")
         os.environ["externalid"] = "1234"
@@ -466,11 +451,11 @@ class SigridCiRunnerTest(TestCase):
         runner.reports = []
         with self.assertRaises(Exception):
             runner.prepareMetadata()
-        
+
         self.assertEqual(os.path.exists(f"{self.tempDir}/sigrid-metadata.yaml"), True)
         with open(f"{self.tempDir}/sigrid-metadata.yaml") as f:
             self.assertEqual(f.read(), "metadata:\n  externalID: 1")
-            
+
     def testPreferNewCodeTargetIfAvailable(self):
         apiClient = MockApiClient(self.options)
         apiClient.responses["/analysis-results/api/v1/objectives/aap/noot/config"] = {
@@ -481,9 +466,9 @@ class SigridCiRunnerTest(TestCase):
         runner = SigridCiRunner(self.options, apiClient)
         runner.reports = []
         target = runner.loadSigridTarget()
-        
+
         self.assertEqual(target, 4.0)
-    
+
     def testUseMaintainabilityTargetIfNoNewCodeTarget(self):
         apiClient = MockApiClient(self.options)
         apiClient.responses["/analysis-results/api/v1/objectives/aap/noot/config"] = {"MAINTAINABILITY" : 2.0}
@@ -491,9 +476,9 @@ class SigridCiRunnerTest(TestCase):
         runner = SigridCiRunner(self.options, apiClient)
         runner.reports = []
         target = runner.loadSigridTarget()
-        
+
         self.assertEqual(target, 2.0)
-    
+
     def testFallbackToDefaultTargetIfNoSigridObjectives(self):
         apiClient = MockApiClient(self.options)
         apiClient.responses["/analysis-results/api/v1/objectives/aap/noot/config"] = {}
@@ -501,7 +486,7 @@ class SigridCiRunnerTest(TestCase):
         runner = SigridCiRunner(self.options, apiClient)
         runner.reports = []
         target = runner.loadSigridTarget()
-        
+
         self.assertEqual(target, 3.5)
 
     def testUploadShouldBeDeletedAfterSubmission(self):
@@ -534,7 +519,7 @@ class SigridCiRunnerTest(TestCase):
         with open(f"{dir}/{name}", "w") as fileRef:
             fileRef.write(contents)
         return f"{dir}/{name}"
-        
+
         
 class MockApiClient(SigridApiClient):
 
