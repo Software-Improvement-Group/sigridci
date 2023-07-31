@@ -18,6 +18,7 @@ import sys
 
 from .ascii_art_report import AsciiArtReport
 from .junit_format_report import JUnitFormatReport
+from .markdown_report import MarkdownReport
 from .pipeline_summary_report import PipelineSummaryReport
 from .publish_options import PublishOptions, RunMode
 from .sigrid_api_client import SigridApiClient
@@ -51,6 +52,7 @@ class SigridCiRunner:
 
         self.reports = [
             AsciiArtReport(),
+            MarkdownReport(),
             StaticHtmlReport(),
             JUnitFormatReport(),
             PipelineSummaryReport()
