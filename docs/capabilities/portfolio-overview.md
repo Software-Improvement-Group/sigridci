@@ -6,7 +6,7 @@ For the system-level page, see [system level](system-overview.md).
 
 ## Navigating between portfolio and system level views
 
-The portfolio view shows combined findings and metrics of multiple systems. You will know you have the portfolio view when your URL reads https://sigrid-says.com/*[CLIENTNAME]*/-/overview/ where /maintainability is the default view.
+The portfolio view shows combined findings and metrics of multiple systems. You will know you have the portfolio view when your URL reads https://sigrid-says.com/*[clientname]*/-/overview/ where /maintainability is the default view.
 
 From this overview page, you can click on a capability of your interest, seeing the portfolio summary. You can click on a system in the treemap (or the list below) to move to system-level details. 
 <img src="../images/portfolio-overview-quality-overview.png" width="600" />

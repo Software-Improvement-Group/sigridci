@@ -1,6 +1,7 @@
 # The Code Explorer
+This page describes the functionality of the "*Code Explorer*". For the "*Technical Monitor*", with comparable functionality, see [the Technical Monitor page](system-technical-monitor.md). Both can be used for deeper code analysis regarding code quality.  
 
-This page describes the functionality of the Code Explorer, which can be used for deeper code analysis regarding code quality. For a general approach analyzing maintainability metrics, see the section for [investigating system maintainability rating state and -changes](system-maintainability.md#investigating-system-maintainability-rating-state-and--changes). 
+For a general approach analyzing maintainability metrics, see the section for [investigating system maintainability rating state and -changes](system-maintainability.md#investigating-system-maintainability-rating-state-and--changes). 
 
 ## Use the code Explorer if you suspect specific maintenance hotspots and want to understand the details
 The Code Explorer view lets you explore a system’s codebase and maintainability findings that are associated with it. It is visible by default for all systems. 
@@ -45,81 +46,4 @@ Findings that you wish to solve later on can be exported as text with static lin
 
 <img src="../images/system-code-explorer-finding-to-planning.png" width="600" />
 
-## The Technical monitor
-As mentioned in [the system maintainability page](system-maintainability.md#technical-monitor-and-code-explorer), the "*Technical Monitor*" may be considered Sigrid's predecessor and as such is not actively being maintained. Its functionality and views will eventually be moved to Sigrid, notably in [the Maintainability overview page (doc page)](system-maintainability.md#maintainability-overview) and *Code Explorer*. It does have distinguishing features that are helpful for your analysis.
 
-The "*Technical Monitor*" can be accessed from the Maintainability Overview page [see our system Maintainability page](system-maintainability.md#technical-monitor-and-code-explorer). 
-
-<img src="../images/technical-monitor-shortcut.png" width="300" />
-
-### Landing page: Home
-
-Landing page dashboard:
-
-<img src="../images/system-technical-monitor-landing-page.png" width="600" />
-
-In the bottom right corner, the largest duplicates are shown. Note that normally test files will be excluded from maintainability scope, in accordance with [Sigrid's system definitions](../organization-integration/systems.md) and [analysis scope configuration documentation page](../reference/analysis-scope-configuration.md).
-
-
-Top menu:
-<img src="../images/system-technical-monitor-top-menu.png" width="600" />
-
-
-
-
-
-
-
-### Maintainability overview
-
-Doughnut charts system level metrics
-
-<img src="../images/system-technical-monitor-maintainability-dashboard-system.png" width="600" />
-
-
-Area chart:
-@@
-
-Sidebar, example "*Rating changes*"
-<img src="../images/system-technical-monitor-maintainability-dashboard-system-rating-changes.png" width="300" />
-
-
-
-
-### Metrics
-
-Date changes in the "*Metrics*", "*Compare Snapshots*" or "*Dependency graph*" tabs need to be confirmed by clicking on the forward arrow <img src="../images/system-technical-monitor-icon-go.png" class="inline" />.
-
-### Compare snapshots
-
-### Change quality
-This tab will directly link to the "*Delta quality*" tab in Sigrid. See the [Delta quality documentation page](system-delta-quality.md).
-
-### Violations
-
-### Duplication
-This tab is dedicated to showing ad filtering code duplicates. 
-
-In Sigrid, different duplicate instances are shown next to each other in the "*Duplication*" section of "*Refactoring candidates*" (i.e. at https://sigrid-says.com/[Client]/[System]/-/maintainability/refactoring-candidates/duplication).
-
-In the sidebar, filters can be applied to e.g. only show duplicates of a defined minimum length, or exclude certain components.
-
-<img src="../images/system-technical-monitor-duplication-side-bar.png" width="250" />
-
-The <img src="../images/system-technical-monitor-icon-source.png" class="inline" /> icon in the "*Source*" column will bring you to its source code, anchoring at the top of the duplicate and highlighted in a dark shade of yellow). Other duplicates in the same file are also highlighted, in a lighter yellow shade.
-
-
-
-
-
-### Dependency graph
-
-You can filter on technology and type of calls, as shown in the menu on the right:
-
-<img src="../images/system-technical-monitor-dependency graph-menu.png" width="300" />
-
-
-Clicking on a number related to a dependency line will bring you to the dependency details, similar to Sigrid's detail page of the *Component Dependencies* tab ([see the relevant paragraph in the system maintainability documentation](system-maintainability.md#component-dependencies)). The position of components cannot be changed. It is possible to recalculate the dependency graph of an earlier date . 
-
-### Documentation
-Explanations relevant for the Technical monitor are in Chapter 4. However that document is not being maintained. The current state of functionality will be on this page. 

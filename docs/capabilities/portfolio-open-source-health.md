@@ -1,9 +1,9 @@
 # Portfolio-level Open Source Health
 If you have a portfolio of systems in Sigrid and licenses enabled for Security or Open Source Health, they will be visible in the top bar.
 
-<img src="../images/portfolio-overview-top-bar-open-source-health-focus.png" width="600" />
+<img src="../images/portfolio-overview-top-bar-open-source-health-focus.png" width="750" />
 
-Your URL will be of the convention https://sigrid-says.com/*[CLIENTNAME]*/-/open-source-health, whereas system details will follow https://sigrid-says.com/*[CLIENT-NAME]*/*SYSTEM-NAME*/-/open-source-health.
+Your URL will be of the convention https://sigrid-says.com/*[clientname]*/-/open-source-health, whereas system details will follow https://sigrid-says.com/*[clientname]*/*systemname*/-/open-source-health.
 
 Another way to arrive here is clicking on the top capability tiles on the *Portfolio overview* page. See the [portfolio overview page](portfolio-overview.md#navigating-between-portfolio-and-system-level-views).
 
@@ -31,15 +31,15 @@ The aforementioned 6 categories are present on the bottom of the tiles that show
 
 * *Library freshness*: the distribution of library age, defined as the time difference with the date of the latest (publicly) available version. The mouseover shows the exact counts, as below.
 
-<img src="../images/portfolio-open-source-health-freshness-mouseover.png" width="600" />
+<img src="../images/portfolio-open-source-health-freshness-mouseover.png" width="300" />
 
 In the bottom part of the screen, each system is shown with a summary of its counts: number of libraries and findings per category. For larger portfolios it may be useful to sort these on different characteristics. Its menu, by default set on sorting order by "*Risk*", is as follows:
 
-<img src="../images/portfolio-open-source-health-sorting-risk.png" width="300" /> 
+<img src="../images/portfolio-open-source-health-sorting-risk.png" width="150" /> 
 
 Sorting can also be done per columns (here, "*Vulnerability*" as an example). The top right bottom for exporting the data as a spreadsheet may be useful for further analysis. 
 
-<img src="../images/portfolio-open-source-health-sorting-columns-vulnerability-focus.png" width="300" /> 
+<img src="../images/portfolio-open-source-health-sorting-columns-vulnerability-focus.png" width="600" /> 
 
 ## Filtering internal dependencies
 Internal dependencies can be filtered manually, such that they will not be resolved with the Open Source Health APIs that Sigrid uses.

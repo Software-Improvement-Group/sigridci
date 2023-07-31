@@ -22,17 +22,17 @@ Within *Delta quality*, there are three tabs available :
 
 For *Changed code*, quality effects may be limited unless deliberate refactoring/renovation has been done.The impact of "*Changed code quality*" really depends on the size of the change. If 1 line of code has been changed, the code quality will probably stay the same. If that happens to be (older) code with lower quality, it is not necessarily alarming. 
 
-A more balanced view will be visible in the "*New & changed code*" tab, which averages out changes to new and existing code. 
+A more balanced view will be visible in the "*New & changed code*" tab, which averages out changes to new and existing code. But here again, the volume of changes and the difference in code quality determines ultimate impact on system rating. A sanity check is to see whether the system metrics have actually changed for the system as a whole. 
 
-A sanity check is to see whether the system metrics have actually changed (in the [Maintainability Overview tab, see](system-maintainability.md#maintainability-overview)).
+<img src="../images/system-overview-rating-tile.png" width="400" />
 
-<img src="../images/system-security-icon-medium1.png" class="inline" /> 
+Also see [the *Maintainability Overview* section on the system maintainability documentation page](system-maintainability.md#maintainability-overview).
 
 ## Example: Delta Quality for changed code
 
 As an example below is a partial screenshot for the "*Changed code*" tab. The layout and type of information is generally the same as for the two other tabs: the left tile shows the number of changed files, their total volume and average maintainability rating in stars. The *Changed code* tab shows an extra comparison. For each maintainability rating tile, next to the comparison of the system as a whole (whether, as a trend, code quality of existing code is improving), it also shows the difference between the maintainability rating of the file *before and after the change*. This gives an indication of whether, *on average*, code quality of modified existing code has been improved. Note that "*on average*" is significant. 
 
-<img src="../images/system-delta-quality-changed-code-overview-and-duplication.png" width="600" />
+<img src="../images/system-delta-quality-changed-code-overview-and-duplication.png" width="750" />
 
 In the tabs for "*New code*" and "*New & changed code*", metrics are only compared to the system quality as it was before.  
 
@@ -42,7 +42,7 @@ The filtering menu (here, for *Changed files*) shows next to the calculated metr
 
 You can achieve the same filtering by clicking on the respective column names.
 
-<img src="../images/system-delta-quality-changed-code-changed-files-menu.png" width="300" />
+<img src="../images/system-delta-quality-changed-code-changed-files-menu.png" width="150" />
 
 ## Navigating the New/Changed files overviews
 The overview page here is focused on "*Changed code*". You can also move to "*New code*" or "*Changed & new code*" in the tabs in the top.  

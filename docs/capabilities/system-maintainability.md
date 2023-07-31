@@ -2,7 +2,7 @@
 The maintainability view is available for all systems by default. 
 You can reach this view in different ways: Via the top menu, or clicking an a capability on the System or Portfolio *Overview* pages. See the [system-level Overview page](system-overview.md#navigating-to-capabilities) or [portfolio-level Overview page](portfolio-overview.md#navigating-to-capabilities).
 
-<img src="../images/system-maintainability-menu-ex-architecture.png" width="150" />
+<img src="../images/system-maintainability-menu-ex-architecture.png" width="250" />
 
 The definition of what a system is, what it is comprised of, and how it is configured, are detailed in the pages on [systems within Sigrid](../organization-integration/systems.md) and the [analysis scope configuration documentation page](../reference/analysis-scope-configuration.md).
 
@@ -32,9 +32,9 @@ Below the metrics overview, there is a shortcut to the *Refactoring candidates* 
  
 The *Technical monitor* button above the system rating brings you to an alternative (one might say, "legacy") view of all the maintainability metrics and underlying source code. Its functionality and views will eventually be moved to Sigrid. Generally, its source code-level view is available in Sigrid in the [Code Explorer](system-code-explorer.md). 
 
-<img src="../images/technical-monitor-shortcut.png" width="300" />
+<img src="../images/technical-monitor-shortcut.png" width="200" />
 
-Because the views, filters and sorting abilities between the "*Technical monitor*" and "*Code Explorer*" are different, please see [a deserved elaboration on the Technical monitor on the Code Explorer page](system-code-explorer.md#the-technical-monitor). 
+Because the views, filters and sorting abilities between the "*Technical monitor*" and "*Code Explorer*" are different, please see [a deserved elaboration on the Technical monitor page](system-technical-monitor.md). 
 
 ## Component Dependencies
 The *Component Dependency* view visualizes the dependencies between your application’s main components. The components follow from the system’s configuration.
@@ -47,7 +47,7 @@ The arrows denote call direction within the code; a number on top of an arrow in
 ### Visualization options and filters
 Different types of dependency antipatterns can be shown by toggling *Visualize component entanglement*. 
 
-<img src="../images/system-component-dependencies-visualize-toggle.png" width="300" />
+<img src="../images/system-component-dependencies-visualize-toggle.png" width="450" />
 
 Once activated, a legend will appear at the bottom describing the different types. 
 
@@ -59,7 +59,7 @@ The legend’s colors denotes the severity of the antipattern:
 * **Indirect cyclic dependency:** a set of components (>2) does not have direct cyclic dependencies, but the communication lines between the involved components form a cycle.
 * **Cyclic dependency:** code within 2 components appear to "depend on each other".
 
-For details on their specifics, see the [Reference page on our quality models](../reference/sig-quality-models.md), specifically the [Maintainability Guidance for Producers](https://softwareimprovementgroup.com/wp-content/uploads/SIG-TUViT-Evaluation-Criteria-Trusted-Product-Maintainability-Guidance-for-producers.pdf).
+For details on their specifics, see the [Reference page on our quality models](../reference/sig-quality-models.md), specifically the [Maintainability Guidance for Producers (on the SIG website)](https://softwareimprovementgroup.com/wp-content/uploads/SIG-TUViT-Evaluation-Criteria-Trusted-Product-Maintainability-Guidance-for-producers.pdf).
 
 If you click on an arrow in the graph, a page will appear where you can inspect the individual dependencies from- and to the selected components.
 
@@ -94,7 +94,7 @@ Clicking on a metric will expand the list, prioritized by the "severity" of the 
 
 Setting a finding to *Prioritize* will show as *Will fix*
 
-<img src="../images/system-refactoring-candidates-status-set.png" width="300" />
+<img src="../images/system-refactoring-candidates-status-set.png" width="250" />
 
 When you set a finding to *Accept Risk*, its status will change to *Risk accepted* and the finding will be hidden by default. 
 
@@ -102,7 +102,7 @@ When you set a finding to *Accept Risk*, its status will change to *Risk accepte
 
 The relevant filter is shown below.
 
-<img src="../images/system-refactoring-candidates-filters-risk-accepted.png" width="300" />
+<img src="../images/system-refactoring-candidates-filters-risk-accepted.png" width="150" />
 
 
 ### Ordering of refactoring candidates
@@ -177,6 +177,6 @@ Assuming that this has been your first step into maintainability analysis, you c
     * As an exception, there might be no *Component Entanglement* violations visible while its rating is below 4-star rating. That can be the case if there are no architectural violations to resolve, but when the number of components and their connections are higher than the benchmark. This would be visible in the [Component Dependencies view](#component-dependencies) (but **not** in the *Architecture Quality* view, since they are not directly related). 
     * For *Duplication* and unit metrics, clicking on a *Refactoring candidate* will show the affected code highlighted in context of this one file. 
   * **Code Explorer**: You may reach the *Code Explorer* from a finding in the *Refactoring candidates* list or the detailed file list from the *Delta quality* view. there you can go to the *Code Explorer* to see the unit/file/component in context of the codebase. The Code Explorer is also a good place to start if you suspect specific maintenance hotspots and want to understand the details. [See the *Code Explorer* page](system-code-explorer.md). An advantage of the Code Explorer is that it can also show per file/unit whether it contains other risky constructs, e.g. regarding security. 
-  * **Using the Technical Monitor**: The strength of the *Technical Monitor* (accessible from the maintainability overview page) is making detailed comparisons between snapshots and filtering by technologies [discussed as part of the Code Explorer page](system-code-explorer.md#the-technical-monitor).
+  * **Using the Technical Monitor**: The strength of the *Technical Monitor* (accessible from the maintainability overview page) is making detailed comparisons between snapshots and filtering by technologies [discussed on its own page](system-technical-monitor.md).
 
 
