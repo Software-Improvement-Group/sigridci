@@ -48,6 +48,8 @@ class PipelineSummaryReport(Report):
 
     def printLandingPage(self, analysisId, options):
         landingPage = self.getLandingPage(analysisId, options)
+        if analysisId == "":
+            landingPage = self.getSigridUrl(options)
 
         print("", file=self.output)
         print("-" * (len(landingPage) + 4), file=self.output)
