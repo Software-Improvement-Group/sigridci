@@ -17,7 +17,7 @@ The default view lets you choose between a directory structure. It represents th
 
 By default the structure is collapsed. It can be expanded (or be undone) with the top right icons:
 
-<img src="../images/system-code-explorer-icon-expand-all.png" width="300" />
+<img src="../images/system-code-explorer-icon-expand-all.png" width="100" />
 
 The directory view and component view in most cases are (almost) the same. This can be a matter of how the system is defined or scoped. Scoping choices may allow for specific filtering and componentization, e.g. a component division that does not follow the directory structure or [when you are working with multiple repositories](faq.md#we-have-a-multi-repo-project-can-i-still-use-sigrid-ci). For details on scoping, see the [scope configuration page](../reference/analysis-scope-configuration.md).
 
@@ -39,7 +39,7 @@ Clicking on one of the finding characteristics again (e.g. *Duplication*) will b
 
 If desired, you can fold code blocks - based on curly brackets *{* and *}* - by clicking the downwards pointing triangle.
 
-<img src="../images/system-code-explorer-file-focus-line-fold-code.png" width="300" />
+<img src="../images/system-code-explorer-file-focus-line-fold-code.png" width="100" />
 
 ### Assisting in planning with issue tracker text 
 Findings that you wish to solve later on can be exported as text with static links for your issue tracker.
