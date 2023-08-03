@@ -52,6 +52,12 @@ class DocumentationTest(TestCase):
             
         for file in self.listDocumentationImages():
             self.assertEqual(file, file.lower(), f"Image file name should be lowercase: {file}")
+            
+    def testMarkdownShouldNotContainSmartQuotes(self):
+        for file, contents in self.readDocumentationPages():
+            for line in contents.split("\n"):
+                if "\u201B" in line or "\u201C" in line or "\u201D" in line or "\u201F" in line:
+                    self.fail(f"{file} contains smart quote characters, which is likely unintentional:\n{line}")
         
     def readDocumentationPages(self):
         with open("README.md", "r") as fileRef:

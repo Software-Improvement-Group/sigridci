@@ -7,7 +7,7 @@ If you have a portfolio of systems in Sigrid, maintainability is always availabl
 
 Another way to arrive here is clicking on the top capability tiles on the *Portfolio Overview* page. See the [portfolio overview page](portfolio-overview.md#navigating-between-portfolio-and-system-level-views).
 
-Your URL will be of the convention https://sigrid-says.com/*[CLIENTNAME]*/-/maintainability/.
+Your URL will be of the convention https://sigrid-says.com/*[clientname]*/-/maintainability/.
 
 ## Moving from portfolio-level to system-level view
 Since the portfolio view is a summary of system level findings, please refer to the [system-level view of maintainability](system-maintainability.md). For example, clicking on a system name in the portfolio overview will bring you to the system's details. 
@@ -45,7 +45,7 @@ To gauge portfolio health and portfolio trends, example analysis questions are:
 * Which direction is technical debt moving? Does this impede developers to support the business with sufficient speed and quality?
 
 ## Portfolio view by system lifecycle phase
-Below, systems are grouped by lifecycle phase. A lifecycle phase is an indication of a system’s maturity and “adaptability needs”, their expected path of continuation. They range from: Initial development > Evolution > Servicing & maintenance > End-of-life. You will generally expect to see a higher maintainability for younger systems (Initial development and Evolution), because they have a long time of changes ahead of them. Lower code quality early on in a system’s life will hurt more over the long term than it would for a system that is already considered “end-of-life”. 
+Below, systems are grouped by lifecycle phase. A lifecycle phase is an indication of a system’s maturity and "adaptability needs", their expected path of continuation. They range from: Initial development > Evolution > Servicing & maintenance > End-of-life. You will generally expect to see a higher maintainability for younger systems (Initial development and Evolution), because they have a long time of changes ahead of them. Lower code quality early on in a system’s life will hurt more over the long term than it would for a system that is already considered "end-of-life". 
 Setting this lifecycle metadata is discussed in the [metadata page](../organization-integration/metadata.md). 
 
 <img src="../images/help-button.png" class="inline" /> The "?" help buttons explain the meaning of the different types of settings.

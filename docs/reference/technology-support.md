@@ -72,6 +72,7 @@ Finally, note the column "supported Sigrid capabilities" does not list Open Sour
 | `css`                          | CSS                            | | Maintainability |
 | `cypher`                       | Cypher                         | | Maintainability |
 | `cucumber`                     | Cucumber                       | | Maintainability |
+| `dart`                         | Dart                           | Flutter | Maintainability |
 | `datastage`                    | Datastage                      | | Maintainability |
 | `datastageetl`                 | DatastageETL                   | | Maintainability |
 | `datastageworkflow`            | DatastageWorkflow              | | Maintainability |
