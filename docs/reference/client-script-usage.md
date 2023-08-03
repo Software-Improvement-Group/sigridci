@@ -27,7 +27,7 @@ The script takes a limited number of mandatory arguments. However, Sigrid CI's b
 | `--publishonly`     | No       | N/A                 | Publishes analysis results to Sigrid, but *does not* provide feedback in the CI environment itself. [3]  |
 | `--exclude`         | No       | /build/,.png        | Comma-separated list of file and/or directory names that should be excluded from the upload. [4]         |
 | `--subsystem `      | No       | frontend            | Used to map between repository directory structure versus the one known by Sigrid. [5]                   |
-| `--include-history` | No       | N/A                 | When enabled, includes the repository history in the upload. Required for architecture quality analysis. |
+| `--include-history` | No       | N/A                 | See [publishing your repository history](#publishing-your-repository-history).                           |
 | `--showupload`      | No       | N/A                 | Logs the contents of the upload before submitting it to Sigrid.                                          |
 
 Notes:
@@ -91,6 +91,15 @@ sigridci:
     unit_interfacing: 2.5
     module_coupling: 3.0
 ```
+
+## Publishing your repository history
+
+The `--include-history` option lets Sigrid CI publish your repository history to Sigrid. When enabled, this will export your Git history and publish it to Sigrid along with your source code. This information is then used in Sigrid's Architecture Quality feature to show evolution and knowledge metrics. Note that Sigrid will never report on the activities of individual developers, all data is aggregated to team level.
+
+- [The Architecture Quality feature usage documentation](../capabilities/architecture-quality.md) for information on how to utilize this information in Sigrid.
+- See the [Architecture Quality configuration](analysis-scope-configuration.md#architecture-quality) for more information on the available options.
+- The [Architecture Quality FAQ](../capabilities/faq-architecture.md) covers common questions regarding this feature, including support for specific (Git) features. 
+- This option is only supported for Git repositories, as [Git is now used by 97% of the market](https://survey.stackoverflow.co/2023/). If you don't use Git, you can still enable this option but it will have no effect.
 
 ## Contact and support
 
