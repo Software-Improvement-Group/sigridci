@@ -28,40 +28,41 @@ Since scope files are part of your repository, you can edit them using your pref
 
 <img src="../images/scope-file-ide.png" width="400" />
 
-## Excluding files and directories
+### Excluding files and directories
 
 Sigrid will exclude common patterns by default. For example, directories like `build`, `dist`, and `target` typically contain build output and are not part of the source code. Directories like `node_modules` contain open source libraries and are not part of the application's own source code. Those directories are therefore ignored during the analysis.
 
-It is possible to extend this list with project-specific files and directories that should also be excluded. The `exclude` section in the YAML file contains a list of regular expressions for paths to ignore. For example, `.*[.]out[.]js` will exclude all files with a name ending in `.out.js` from the analysis. Adding `.*/simulator/.*` will exclude everything in the directory `simulator`.
+It is possible to extend this list with project-specific files and directories that should also be excluded. The `exclude` section in the YAML file contains a list of regular expressions for paths to ignore. For example, `.*[.]out[.]js` will exclude all files with a name ending in `.out.js` from the analysis. Adding `.*/simulator/.*` will exclude everything in a path that contains the directory `/simulator/`.
 
 Note that it is not necessary to exclude files and directories that would not be analyzed anyway. 
 
 Patterns are defined using regular expressions, as explained in the next section.
 
-## Defining include and exclude patterns
+### Defining include and exclude patterns
 
 Various options across the scope configuration file allow you to define `include` and `exclude` patterns. At first glance, many people expect these patterns to behave like [Glob patterns](https://en.wikipedia.org/wiki/Glob_(programming) (for example `*.py`), but Sigrid actually uses [regular expressions](https://en.wikipedia.org/wiki/Regular_expression) instead. The reason for this is fairly straightforward: regular expressions are more flexible, which is relevant considering the large number of technologies and conventions that Sigrid needs to support.
 
-The following example specifies a component that includes all `.jsx` files in the `frontend` directory, except files ending with `.spec.jsx`:
+The following example specifies a component that includes all `.js` and `.jsx` files with a path that includes the `frontend` directory, except files ending with `.spec.jsx`:
 
     components:
       - name: "Our new React website"
         include:
-          - ".*/frontend/.*[.]jsx"
+          - ".*/frontend/.*[.]jsx?"
         exclude:
-          - ".*/.*[.]spec[.]jsx"
+          - ".*[.]spec[.]jsx?" #excluding all spec.js files, wherever they are; alternatively, limiting to files within a `/frontend/` directory tree, `.*/frontend/.*[.]spec[.]js`
           
-When you specify both `include` and `exclude` patterns, the exclude patterns take precedence. In this example, the file `frontend/home.jsx` would be included, but the file `frontend/example.spec.jsx` would be excluded.
+When you specify both `include` and `exclude` patterns, the exclude patterns take precedence. In this example, the file `frontend/home.jsx` would be included, but the file `frontend/example.spec.jsx` would be excluded. This is much easier and maintainable than trying `.*(?<![.]spec)[.]jsx?` under `include`, even though that would work.
 
 As a convention, all `include` and `exclude` patterns always start with `.*/`. It is tempting to always define patterns relative to the root of the codebase, but it is important to realize that what is considered the "root" is flexible in Sigrid. Depending on how you [map your repositories to systems](../organization-integration/systems.md), the root of your repository might not match the root of the Sigrid system that contains your repository. Starting all patterns `.*/` will avoid confusion in such situations.
 
-Some other common caveats when using regular expressions to define patterns:
+### Other common tips and caveats when using regular expressions to define patterns
 
+- The full file path must always be matched instead of (part of) a filename. This generally requires some wildcards.
 - All patterns are case-sensitive. This is relevant in case you are specifically searching for naming in camelCase or PascalCase. It is then useful to search for files like `SomeTest.java`.
 - You are entering patterns inside of a YAML file. YAML uses backslashes for escape characters. So if you want to use backslashes inside of your regular expressions, for example `\S+` (i.e. "one or more non-whitespace characters"), you will need to escape the backslash: `\\S+`.
 - If you want to express a literal dot `.`, use `[.]`. This means: 1 character in a group where only `.` is permitted.
-- Matching "positive" patterns is far easier than trying with negative lookaheads `(?!)`, as catching the full file path becomes difficult. There are cases where patterns may work such as `((?![unwanted string]).)+`, but these cases are hard to get right or debug.
-- Also, negative lookbehinds (`?<!`) are not recommended. They pattern to be matched requires a fixed length and it needs to immediately precede the rest of the pattern to work (wildcards tend to break here).
+- Since the commonly used `.*` is greedy, with deep directory structures it may happen that directory names appear in other places than you want. Or that you are looking for specific file names, and those words should not appear in directory names. To find filenames specifically, or whenever you want to avoid a deeper level directory, a useful pattern is `[^/]*` or `[^/]+`. This pattern consumes characters as long as it does not find a `/`. When used as `/[^/]*[.]java` it will ensure to catch a filename ending with `.java`. You could only have defined a character set, like `.*/[\\w-][.]java` but this is prone to omissions.  
+- Matching "positive" patterns, including the `exclude` option, is far easier than trying with negative lookaheads `(?!)`, because catching the full file path becomes difficult. There are cases where patterns may work such as `((?![unwanted string]).)+`, but these cases are hard to get right or debug. Also, negative lookbehinds (`?<!`) are not recommended. They pattern to be matched requires a fixed length and it needs to immediately precede the rest of the pattern to work (wildcards tend to break here). In both cases, using the `exclude` option has preference. 
 
 ## Technology support
 
