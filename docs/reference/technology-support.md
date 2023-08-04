@@ -324,7 +324,7 @@ Notes:
   - Prefer `typescript` in all other cases.
 4. Use either `vb` or `vbnet`, but not both.
   - Prefer `vbnet` for Visual Basic code running on the .NET platform, or when not sure.
-  - Use `vb` for [classic Visual Basic](https://en.wikipedia.org/wiki/Visual_Basic_(classic), which has been end-of-life since 2008.
+  - Use `vb` for [classic Visual Basic](https://en.wikipedia.org/wiki/Visual_Basic_(classic)), which has been end-of-life since 2008.
 5. In most cases, configuration files are not considered part of production code and are therefore not relevant for Sigrid's maintainability analysis. Only add these technologies if you consider them part of the system's production code.
 6. "Unknown technology" will be shown in Sigrid when the technology cannot be detected.
 
@@ -356,7 +356,7 @@ In addition to supporting 300+ technologies, Sigrid also supports various open s
 
 ## Requesting additional technology support
 
-Even with 300+ supported technologies, we are still continuously working on adding support for new technologies and frameworks, and updating our technology suport for new technology versions. You can contact us using the information provided below if you believe we should extend technology support for your organization.
+Even with 300+ supported technologies, we are still continuously working on adding support for new technologies and frameworks and updating our technology support for new technology versions. You can contact us using the information provided below if you believe we should extend technology support for your organization.
 
 ## Contact and support
 
