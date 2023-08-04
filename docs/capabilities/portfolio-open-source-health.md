@@ -35,7 +35,7 @@ The aforementioned 6 categories are present on the bottom of the tiles that show
 
 In the bottom part of the screen, each system is shown with a summary of its counts: number of libraries and findings per category. For larger portfolios it may be useful to sort these on different characteristics. Its menu, by default set on sorting order by "*Risk*", is as follows:
 
-<img src="../images/portfolio-open-source-health-sorting-risk.png" width="150" /> 
+<img src="../images/portfolio-open-source-health-sorting-risk.png" width="100" /> 
 
 Sorting can also be done per columns (here, "*Vulnerability*" as an example). The top right bottom for exporting the data as a spreadsheet may be useful for further analysis. 
 
