@@ -14,26 +14,35 @@
 
 import os
 import tempfile
-import types
-import unittest
-import urllib
-from sigridci.sigridci import RunMode, SigridApiClient, SigridCiRunner, UploadOptions, TargetQuality, LOG_HISTORY
+import urllib.error
+from unittest import TestCase
 
-class SigridCiRunnerTest(unittest.TestCase):
+from sigridci.sigridci.publish_options import PublishOptions, RunMode
+from sigridci.sigridci.sigrid_api_client import SigridApiClient
+from sigridci.sigridci.sigridci_runner import SigridCiRunner
+from sigridci.sigridci.upload_log import UploadLog
+
+
+class SigridCiRunnerTest(TestCase):
 
     def setUp(self):
+        self.tempDir = tempfile.mkdtemp()
+        self.options = PublishOptions("aap", "noot", RunMode.FEEDBACK_ONLY, self.tempDir, targetRating=3.5)
+
+        UploadLog.clear()
+
         os.environ["SIGRID_CI_ACCOUNT"] = "dummy"
         os.environ["SIGRID_CI_TOKEN"] = "dummy"
         os.environ["externalid"] = ""
         os.environ["divisionname"] = ""
         os.environ["suppliernames"] = ""
         os.environ["teamnames"] = ""
-        LOG_HISTORY.clear()
-        
+
     def testForceLowerCaseForCustomerAndSystemName(self):
-        args = types.SimpleNamespace(partner="sig", customer="Aap", system="NOOT", sigridurl="", \
-            publish=False, publishonly=False, subsystem=None)
-        apiClient = SigridApiClient(args)
+        self.options.customer = "Aap"
+        self.options.system = "NOOT"
+
+        apiClient = SigridApiClient(self.options)
         
         self.assertEqual(apiClient.urlCustomerName, "aap")
         self.assertEqual(apiClient.urlSystemName, "noot")
@@ -58,28 +67,14 @@ class SigridCiRunnerTest(unittest.TestCase):
         self.assertFalse(SigridCiRunner.isValidToken(""))
         self.assertFalse(SigridCiRunner.isValidToken("$"))
         self.assertTrue(SigridCiRunner.isValidToken("zeiYh/WYQ==" * 10))
-        
-    def testSystemNameIsConvertedToLowerCaseInApiClient(self):
-        args = types.SimpleNamespace(partner="sig", customer="Aap", system="NOOT", \
-            sigridurl="example.com", publish=False, publishonly=False, subsystem=None)
-        apiClient = SigridApiClient(args)
-        
-        self.assertEqual(apiClient.urlCustomerName, "aap")
-        self.assertEqual(apiClient.urlSystemName, "noot")
 
     def testRegularRun(self):
-        tempDir = tempfile.mkdtemp()    
-        self.createTempFile(tempDir, "a.py", "print(123)")
+        self.createTempFile(self.tempDir, "a.py", "print(123)")
         
-        options = UploadOptions(sourceDir=tempDir)
-        target = TargetQuality("/tmp/nonexistent", 3.5)
-        
-        apiClient = MockApiClient()
-        apiClient.publish = False
-        apiClient.runMode = RunMode.FEEDBACK_ONLY
-        
-        runner = SigridCiRunner()
-        runner.run(apiClient, options, target, [])
+        apiClient = MockApiClient(self.options)
+        runner = SigridCiRunner(self.options, apiClient)
+        runner.reports = []
+        runner.run()
 
         expectedLog = [
             "Found system in Sigrid",
@@ -101,22 +96,18 @@ class SigridCiRunnerTest(unittest.TestCase):
             "/analysis-results/api/v1/system-metadata/aap/noot"
         ]
 
-        self.assertEqual(LOG_HISTORY, expectedLog)
+        self.assertEqual(UploadLog.history, expectedLog)
         self.assertEqual(apiClient.called, expectedCalls)
         
     def testPublishRun(self):
-        tempDir = tempfile.mkdtemp()    
-        self.createTempFile(tempDir, "a.py", "print(123)")
-        
-        options = UploadOptions(sourceDir=tempDir, publishOnly=False)
-        target = TargetQuality("/tmp/nonexistent", 3.5)
-        
-        apiClient = MockApiClient()
-        apiClient.publish = True
-        apiClient.runMode = RunMode.FEEDBACK_AND_PUBLISH
-        
-        runner = SigridCiRunner()
-        runner.run(apiClient, options, target, [])
+        self.createTempFile(self.tempDir, "a.py", "print(123)")
+
+        self.options.runMode = RunMode.FEEDBACK_AND_PUBLISH
+
+        apiClient = MockApiClient(self.options)
+        runner = SigridCiRunner(self.options, apiClient)
+        runner.reports = []
+        runner.run()
 
         expectedLog = [
             "Found system in Sigrid",
@@ -138,22 +129,18 @@ class SigridCiRunnerTest(unittest.TestCase):
             "/analysis-results/api/v1/system-metadata/aap/noot"
         ]
 
-        self.assertEqual(LOG_HISTORY, expectedLog)
+        self.assertEqual(UploadLog.history, expectedLog)
         self.assertEqual(apiClient.called, expectedCalls)
         
     def testPublishOnlyRun(self):
-        tempDir = tempfile.mkdtemp()    
-        self.createTempFile(tempDir, "a.py", "print(123)")
-        
-        options = UploadOptions(sourceDir=tempDir, publishOnly=True)
-        target = TargetQuality("/tmp/nonexistent", 3.5)
-        
-        apiClient = MockApiClient()
-        apiClient.publish = True
-        apiClient.runMode = RunMode.PUBLISH_ONLY
-        
-        runner = SigridCiRunner()
-        runner.run(apiClient, options, target, [])
+        self.createTempFile(self.tempDir, "a.py", "print(123)")
+
+        self.options.runMode = RunMode.PUBLISH_ONLY
+
+        apiClient = MockApiClient(self.options)
+        runner = SigridCiRunner(self.options, apiClient)
+        runner.reports = []
+        runner.run()
 
         expectedLog = [
             "Found system in Sigrid",
@@ -174,19 +161,16 @@ class SigridCiRunnerTest(unittest.TestCase):
             "/analysis-results/api/v1/system-metadata/aap/noot"
         ]
 
-        self.assertEqual(LOG_HISTORY, expectedLog)
+        self.assertEqual(UploadLog.history, expectedLog)
         self.assertEqual(apiClient.called, expectedCalls)
         
     def testOnBoardingRun(self):
-        tempDir = tempfile.mkdtemp()    
-        self.createTempFile(tempDir, "a.py", "print(123)")
-        
-        options = UploadOptions(sourceDir=tempDir)
-        target = TargetQuality("/tmp/nonexistent", 3.5)
-        apiClient = MockApiClient(systemExists=False)
-        
-        runner = SigridCiRunner()
-        runner.run(apiClient, options, target, [])
+        self.createTempFile(self.tempDir, "a.py", "print(123)")
+
+        apiClient = MockApiClient(self.options, systemExists=False)
+        runner = SigridCiRunner(self.options, apiClient)
+        runner.reports = []
+        runner.run()
 
         expectedLog = [
             "System is not yet on-boarded to Sigrid",
@@ -197,7 +181,7 @@ class SigridCiRunnerTest(unittest.TestCase):
             "Sigrid CI analysis ID: 123",
             "Submitting upload",
             "Upload successful",
-            "System 'noot' is on-boarded to Sigrid, and will appear in sigrid-says.com shortly"
+            "System 'noot' has been on-boarded and will appear in Sigrid shortly"
         ]
         
         expectedCalls = [
@@ -206,20 +190,20 @@ class SigridCiRunnerTest(unittest.TestCase):
             "UPLOAD"
         ]
 
-        self.assertEqual(LOG_HISTORY, expectedLog)
+        self.assertEqual(UploadLog.history, expectedLog)
         self.assertEqual(apiClient.called, expectedCalls)
         
     def testAddSubsystemOptionToUrl(self):
-        tempDir = tempfile.mkdtemp()    
-        self.createTempFile(tempDir, "a.py", "print(123)")
-        
-        options = UploadOptions(sourceDir=tempDir)
-        target = TargetQuality("/tmp/nonexistent", 3.5)
-        apiClient = MockApiClient(runMode=RunMode.FEEDBACK_AND_PUBLISH, subsystem="mysubsystem")
-        
-        runner = SigridCiRunner()
-        runner.run(apiClient, options, target, [])
-        
+        self.createTempFile(self.tempDir, "a.py", "print(123)")
+
+        self.options.subsystem = "mysubsystem"
+        self.options.runMode = RunMode.FEEDBACK_AND_PUBLISH
+
+        apiClient = MockApiClient(self.options)
+        runner = SigridCiRunner(self.options, apiClient)
+        runner.reports = []
+        runner.run()
+
         expectedCalls = [
             "/analysis-results/sigridci/aap/noot/v1/ci", 
             "/inboundresults/sig/aap/noot/ci/uploads/v1/publish?subsystem=mysubsystem", 
@@ -231,25 +215,20 @@ class SigridCiRunnerTest(unittest.TestCase):
         self.assertEqual(apiClient.called, expectedCalls)
         
     def testExitWithMessageIfUploadEmpty(self):
-        tempDir = tempfile.mkdtemp()    
-        options = UploadOptions(sourceDir=tempDir)
-        target = TargetQuality("/tmp/nonexistent", 3.5)
-        apiClient = MockApiClient(systemExists=False)
-        
-        runner = SigridCiRunner()
+        apiClient = MockApiClient(self.options, systemExists=False)
+        runner = SigridCiRunner(self.options, apiClient)
+        runner.reports = []
+
         with self.assertRaises(SystemExit):
-            runner.run(apiClient, options, target, [])
+            runner.run()
             
     def testRetryIfUploadFailsTheFirstTime(self):
-        tempDir = tempfile.mkdtemp()    
-        self.createTempFile(tempDir, "a.py", "print(123)")
-        
-        options = UploadOptions(sourceDir=tempDir)
-        target = TargetQuality("/tmp/nonexistent", 3.5)
-        apiClient = MockApiClient(systemExists=True, uploadAttempts=3)
-        
-        runner = SigridCiRunner()
-        runner.run(apiClient, options, target, [])
+        self.createTempFile(self.tempDir, "a.py", "print(123)")
+
+        apiClient = MockApiClient(self.options, systemExists=True, uploadAttempts=3)
+        runner = SigridCiRunner(self.options, apiClient)
+        runner.reports = []
+        runner.run()
 
         expectedLog = [
             "Found system in Sigrid",
@@ -265,17 +244,15 @@ class SigridCiRunnerTest(unittest.TestCase):
             "Waiting for analysis results"
         ]
 
-        self.assertEqual(LOG_HISTORY, expectedLog)
+        self.assertEqual(UploadLog.history, expectedLog)
     
     def testExitIfUploadKeepsFailing(self):
-        tempDir = tempfile.mkdtemp()    
-        self.createTempFile(tempDir, "a.py", "print(123)")
-        
-        options = UploadOptions(sourceDir=tempDir)
-        target = TargetQuality("/tmp/nonexistent", 3.5)
-        apiClient = MockApiClient(systemExists=True, uploadAttempts=99)
-        runner = SigridCiRunner()
-        
+        self.createTempFile(self.tempDir, "a.py", "print(123)")
+
+        apiClient = MockApiClient(self.options, systemExists=True, uploadAttempts=99)
+        runner = SigridCiRunner(self.options, apiClient)
+        runner.reports = []
+
         expectedLog = [
             "Found system in Sigrid",
             "Creating upload", 
@@ -293,33 +270,27 @@ class SigridCiRunnerTest(unittest.TestCase):
         ]
         
         with self.assertRaises(SystemExit):
-            runner.run(apiClient, options, target, [])
-        self.assertEqual(LOG_HISTORY, expectedLog)
+            runner.run()
+        self.assertEqual(UploadLog.history, expectedLog)
         
     def testReadScopeFileWhenInRepository(self):
-        tempDir = tempfile.mkdtemp()    
-        self.createTempFile(tempDir, "sigrid.yaml", "component_depth: 1")
-        uploadOptions = UploadOptions(sourceDir=tempDir)
-        
-        self.assertEquals(uploadOptions.readScopeFile(), "component_depth: 1")
+        self.createTempFile(self.tempDir, "sigrid.yaml", "component_depth: 1")
+
+        self.assertEquals(self.options.readScopeFile(), "component_depth: 1")
         
     def testScopeFileIsNoneWhenNotInRepository(self):
-        tempDir = tempfile.mkdtemp()    
-        uploadOptions = UploadOptions(sourceDir=tempDir)
-        
-        self.assertIsNone(uploadOptions.readScopeFile())
+        self.assertIsNone(self.options.readScopeFile())
         
     def testValidateScopeFile(self):
-        tempDir = tempfile.mkdtemp()    
-        self.createTempFile(tempDir, "sigrid.yaml", "languages:\n- java")
-        uploadOptions = UploadOptions(sourceDir=tempDir)
-        
-        apiClient = MockApiClient(runMode=RunMode.FEEDBACK_ONLY)
+        self.createTempFile(self.tempDir, "sigrid.yaml", "languages:\n- java")
+
+        apiClient = MockApiClient(self.options)
         apiClient.responses["/inboundresults/sig/aap/noot/ci/validate/v1"] = {"valid": True};
-        
-        runner = SigridCiRunner()
-        runner.run(apiClient, uploadOptions, None, [])
-        
+
+        runner = SigridCiRunner(self.options, apiClient)
+        runner.reports = []
+        runner.run()
+
         expectedLog = [
             "Found system in Sigrid",
             "Validating scope configuration file",
@@ -334,19 +305,19 @@ class SigridCiRunnerTest(unittest.TestCase):
             "Waiting for analysis results"
         ]
 
-        self.assertEqual(LOG_HISTORY, expectedLog)
+        self.assertEqual(UploadLog.history, expectedLog)
     
     def testFailIfScopeFileIsNotValid(self):
-        tempDir = tempfile.mkdtemp()    
-        self.createTempFile(tempDir, "sigrid.yaml", "languages:\n- aap")
-        uploadOptions = UploadOptions(sourceDir=tempDir)
-        
-        apiClient = MockApiClient(runMode=RunMode.FEEDBACK_ONLY)
-        apiClient.responses["/inboundresults/sig/aap/noot/ci/validate/v1"] = {"valid" : False, "notes" : ["test"]};
-    
+        self.createTempFile(self.tempDir, "sigrid.yaml", "languages:\n- aap")
+
+        apiClient = MockApiClient(self.options)
+        apiClient.responses["/inboundresults/sig/aap/noot/ci/validate/v1"] = {"valid" : False, "notes" : ["test"]}
+
+        runner = SigridCiRunner(self.options, apiClient)
+        runner.reports = []
+
         with self.assertRaises(SystemExit):
-            runner = SigridCiRunner()
-            runner.run(apiClient, uploadOptions, None, [])
+            runner.run()
             
         expectedLog = [
             "Found system in Sigrid",
@@ -357,19 +328,18 @@ class SigridCiRunnerTest(unittest.TestCase):
             "--------------------------------------------------------------------------------"
         ]
 
-        self.assertEqual(LOG_HISTORY, expectedLog)
+        self.assertEqual(UploadLog.history, expectedLog)
         
     def testDumpAvailableMetadataToOutput(self):
-        tempDir = tempfile.mkdtemp()    
-        self.createTempFile(tempDir, "sigrid.py", "print(123)")
-        uploadOptions = UploadOptions(sourceDir=tempDir)
-    
-        apiClient = MockApiClient(runMode=RunMode.FEEDBACK_ONLY)
+        self.createTempFile(self.tempDir, "sigrid.py", "print(123)")
+
+        apiClient = MockApiClient(self.options)
         apiClient.responses["/analysis-results/api/v1/system-metadata/aap/noot"] = {"aap" : 2, "noot" : None};
-        
-        runner = SigridCiRunner()
-        runner.run(apiClient, uploadOptions, None, [])
-        
+
+        runner = SigridCiRunner(self.options, apiClient)
+        runner.reports = []
+        runner.run()
+
         expectedLog = [
             "Found system in Sigrid",
             "Creating upload", 
@@ -382,38 +352,37 @@ class SigridCiRunnerTest(unittest.TestCase):
             "Waiting for analysis results"
         ]
 
-        self.assertEqual(LOG_HISTORY, expectedLog)
+        self.assertEqual(UploadLog.history, expectedLog)
         
     def testValidateMetadataFileIfPresent(self):
-        tempDir = tempfile.mkdtemp()    
-        self.createTempFile(tempDir, "sigrid-metadata.yaml", "metadata:\n  division: aap")
-        uploadOptions = UploadOptions(sourceDir=tempDir)
-        
-        apiClient = MockApiClient(runMode=RunMode.FEEDBACK_ONLY)
+        self.createTempFile(self.tempDir, "sigrid-metadata.yaml", "metadata:\n  division: aap")
+
+        apiClient = MockApiClient(self.options)
         apiClient.responses["/analysis-results/sigridci/aap/validate"] = {"valid" : True, "notes": []}
-    
-        runner = SigridCiRunner()
-        runner.run(apiClient, uploadOptions, None, [])
-            
+
+        runner = SigridCiRunner(self.options, apiClient)
+        runner.reports = []
+        runner.run()
+
         expectedLog = [
             "Found system in Sigrid",
             "Validating Sigrid metadata file",
             "Validation passed"
         ]
 
-        self.assertEqual(LOG_HISTORY[0:3], expectedLog)
+        self.assertEqual(UploadLog.history[0:3], expectedLog)
         
     def testFailIfMetadataFileIsNotValid(self):
-        tempDir = tempfile.mkdtemp()    
-        self.createTempFile(tempDir, "sigrid-metadata.yaml", "metadata:\n  typo: aap")
-        uploadOptions = UploadOptions(sourceDir=tempDir)
-        
-        apiClient = MockApiClient(runMode=RunMode.FEEDBACK_ONLY)
+        self.createTempFile(self.tempDir, "sigrid-metadata.yaml", "metadata:\n  typo: aap")
+
+        apiClient = MockApiClient(self.options)
         apiClient.responses["/analysis-results/sigridci/aap/validate"] = {"valid" : False, "notes": ["test"]}
-    
+
+        runner = SigridCiRunner(self.options, apiClient)
+        runner.reports = []
+
         with self.assertRaises(SystemExit):
-            runner = SigridCiRunner()
-            runner.run(apiClient, uploadOptions, None, [])
+            runner.run()
             
         expectedLog = [
             "Found system in Sigrid",
@@ -424,16 +393,15 @@ class SigridCiRunnerTest(unittest.TestCase):
             "--------------------------------------------------------------------------------"
         ]
 
-        self.assertEqual(LOG_HISTORY, expectedLog)
+        self.assertEqual(UploadLog.history, expectedLog)
     
     def testDoNotValidateMetadataFileIfNotPresent(self):
-        tempDir = tempfile.mkdtemp()    
-        uploadOptions = UploadOptions(sourceDir=tempDir)        
-        apiClient = MockApiClient(runMode=RunMode.FEEDBACK_ONLY)
-    
+        apiClient = MockApiClient(self.options)
+        runner = SigridCiRunner(self.options, apiClient)
+        runner.reports = []
+
         with self.assertRaises(SystemExit):
-            runner = SigridCiRunner()
-            runner.run(apiClient, uploadOptions, None, [])
+            runner.run()
             
         expectedLog = [
             "Found system in Sigrid",
@@ -441,129 +409,126 @@ class SigridCiRunnerTest(unittest.TestCase):
             "Upload size is 1 MB"
         ]
 
-        self.assertEqual(LOG_HISTORY, expectedLog)
+        self.assertEqual(UploadLog.history, expectedLog)
         
     def testDoNotGenerateFileWithoutEnvironmentVariables(self):
-        tempDir = tempfile.mkdtemp()
-        uploadOptions = UploadOptions(sourceDir=tempDir)
+        apiClient = MockApiClient(self.options)
+        runner = SigridCiRunner(self.options, apiClient)
+        runner.reports = []
+        runner.prepareMetadata()
         
-        runner = SigridCiRunner()
-        runner.prepareMetadata(uploadOptions)
-        
-        self.assertEqual(os.path.exists(f"{tempDir}/sigrid-metadata.yaml"), False)
+        self.assertEqual(os.path.exists(f"{self.tempDir}/sigrid-metadata.yaml"), False)
         
     def testDoGenerateFileIfEnvironmentVariablesAreUsed(self):
-        tempDir = tempfile.mkdtemp()
-        uploadOptions = UploadOptions(sourceDir=tempDir)
         os.environ["externalid"] = "1234"
+
+        apiClient = MockApiClient(self.options)
+        runner = SigridCiRunner(self.options, apiClient)
+        runner.reports = []
+        runner.prepareMetadata()
         
-        runner = SigridCiRunner()
-        runner.prepareMetadata(uploadOptions)
-        
-        self.assertEqual(os.path.exists(f"{tempDir}/sigrid-metadata.yaml"), True)
-        with open(f"{tempDir}/sigrid-metadata.yaml") as f:
+        self.assertEqual(os.path.exists(f"{self.tempDir}/sigrid-metadata.yaml"), True)
+        with open(f"{self.tempDir}/sigrid-metadata.yaml") as f:
             self.assertEqual(f.read(), "metadata:\n  externalID: \"1234\"\n")
             
     def testIgnoreEmptyEnvironmentVariables(self):
-        tempDir = tempfile.mkdtemp()
-        uploadOptions = UploadOptions(sourceDir=tempDir)
         os.environ["externalid"] = "1234"
         os.environ["divisionname"] = ""
+
+        apiClient = MockApiClient(self.options)
+        runner = SigridCiRunner(self.options, apiClient)
+        runner.reports = []
+        runner.prepareMetadata()
         
-        runner = SigridCiRunner()
-        runner.prepareMetadata(uploadOptions)
-        
-        self.assertEqual(os.path.exists(f"{tempDir}/sigrid-metadata.yaml"), True)
-        with open(f"{tempDir}/sigrid-metadata.yaml") as f:
+        self.assertEqual(os.path.exists(f"{self.tempDir}/sigrid-metadata.yaml"), True)
+        with open(f"{self.tempDir}/sigrid-metadata.yaml") as f:
             self.assertEqual(f.read(), "metadata:\n  externalID: \"1234\"\n")
             
     def testTeamNamesAndSupplierNamesAreList(self):
-        tempDir = tempfile.mkdtemp()
-        uploadOptions = UploadOptions(sourceDir=tempDir)
         os.environ["suppliernames"] = "aap"
         os.environ["teamnames"] = "noot"
+
+        apiClient = MockApiClient(self.options)
+        runner = SigridCiRunner(self.options, apiClient)
+        runner.reports = []
+        runner.prepareMetadata()
         
-        runner = SigridCiRunner()
-        runner.prepareMetadata(uploadOptions)
-        
-        self.assertEqual(os.path.exists(f"{tempDir}/sigrid-metadata.yaml"), True)
-        with open(f"{tempDir}/sigrid-metadata.yaml") as f:
+        self.assertEqual(os.path.exists(f"{self.tempDir}/sigrid-metadata.yaml"), True)
+        with open(f"{self.tempDir}/sigrid-metadata.yaml") as f:
             self.assertEqual(f.read(), "metadata:\n  teamNames: [\"noot\"]\n  supplierNames: [\"aap\"]\n")
         
     def testErrorIfEnvironmentVariablesAreUsedButFileAlreadyExists(self):
-        tempDir = tempfile.mkdtemp()
-        self.createTempFile(tempDir, "sigrid-metadata.yaml", "metadata:\n  externalID: 1")
-        uploadOptions = UploadOptions(sourceDir=tempDir)
+        self.createTempFile(self.tempDir, "sigrid-metadata.yaml", "metadata:\n  externalID: 1")
         os.environ["externalid"] = "1234"
-        
-        runner = SigridCiRunner()
+
+        apiClient = MockApiClient(self.options)
+        runner = SigridCiRunner(self.options, apiClient)
+        runner.reports = []
         with self.assertRaises(Exception):
-            runner.prepareMetadata(uploadOptions)
+            runner.prepareMetadata()
         
-        self.assertEqual(os.path.exists(f"{tempDir}/sigrid-metadata.yaml"), True)
-        with open(f"{tempDir}/sigrid-metadata.yaml") as f:
+        self.assertEqual(os.path.exists(f"{self.tempDir}/sigrid-metadata.yaml"), True)
+        with open(f"{self.tempDir}/sigrid-metadata.yaml") as f:
             self.assertEqual(f.read(), "metadata:\n  externalID: 1")
             
     def testPreferNewCodeTargetIfAvailable(self):
-        apiClient = MockApiClient()
+        apiClient = MockApiClient(self.options)
         apiClient.responses["/analysis-results/api/v1/objectives/aap/noot/config"] = {
             "NEW_CODE_QUALITY" : 4.0,
             "MAINTAINABILITY" : 3.5
         }
-    
-        runner = SigridCiRunner()
-        target = runner.loadSigridTarget(apiClient)
+
+        runner = SigridCiRunner(self.options, apiClient)
+        runner.reports = []
+        target = runner.loadSigridTarget()
         
         self.assertEqual(target, 4.0)
     
     def testUseMaintainabilityTargetIfNoNewCodeTarget(self):
-        apiClient = MockApiClient()
+        apiClient = MockApiClient(self.options)
         apiClient.responses["/analysis-results/api/v1/objectives/aap/noot/config"] = {"MAINTAINABILITY" : 2.0}
-    
-        runner = SigridCiRunner()
-        target = runner.loadSigridTarget(apiClient)
+
+        runner = SigridCiRunner(self.options, apiClient)
+        runner.reports = []
+        target = runner.loadSigridTarget()
         
         self.assertEqual(target, 2.0)
     
     def testFallbackToDefaultTargetIfNoSigridObjectives(self):
-        apiClient = MockApiClient()
+        apiClient = MockApiClient(self.options)
         apiClient.responses["/analysis-results/api/v1/objectives/aap/noot/config"] = {}
-    
-        runner = SigridCiRunner()
-        target = runner.loadSigridTarget(apiClient)
+
+        runner = SigridCiRunner(self.options, apiClient)
+        runner.reports = []
+        target = runner.loadSigridTarget()
         
         self.assertEqual(target, 3.5)
 
     def testUploadShouldBeDeletedAfterSubmission(self):
-        tempDir = tempfile.mkdtemp()
-        self.createTempFile(tempDir, "a.py", "print(123)")
+        self.createTempFile(self.tempDir, "a.py", "print(123)")
 
-        options = UploadOptions(sourceDir=tempDir)
-        target = TargetQuality("/tmp/nonexistent", 3.5)
-        apiClient = MockApiClient(runMode=RunMode.FEEDBACK_ONLY)
-
-        runner = SigridCiRunner()
-        runner.run(apiClient, options, target, [])
+        apiClient = MockApiClient(self.options)
+        runner = SigridCiRunner(self.options, apiClient)
+        runner.reports = []
+        runner.run()
 
         for root, dirs, files in os.walk("."):
             for file in files:
                 self.assertFalse(file.endswith(".zip"))
 
     def testExitWhenSystemIsNotActive(self):
-        tempDir = tempfile.mkdtemp()
-        self.createTempFile(tempDir, "a.py", "print(123)")
+        self.createTempFile(self.tempDir, "a.py", "print(123)")
 
-        options = UploadOptions(sourceDir=tempDir)
-        target = TargetQuality("/tmp/nonexistent", 3.5)
-        apiClient = MockApiClient(systemName="i-am-not-active")
+        self.options.system = "i-am-not-active"
 
-        runner = SigridCiRunner()
-
+        apiClient = MockApiClient(self.options)
+        runner = SigridCiRunner(self.options, apiClient)
+        runner.reports = []
         with self.assertRaises(SystemExit) as raised:
-            runner.run(apiClient, options, target, [])
+            runner.run()
 
         self.assertTrue(1 in raised.exception.args)
-        self.assertEqual(LOG_HISTORY, ["System aap-i-am-not-active has been deactivated (HTTP status 410)"])
+        self.assertEqual(UploadLog.history, ["System aap-i-am-not-active has been deactivated (HTTP status 410)"])
 
     def createTempFile(self, dir, name, contents):
         with open(f"{dir}/{name}", "w") as fileRef:
@@ -572,15 +537,13 @@ class SigridCiRunnerTest(unittest.TestCase):
         
         
 class MockApiClient(SigridApiClient):
-    def __init__(self, systemName="noot", systemExists=True, uploadAttempts=0, subsystem=None, runMode=RunMode.FEEDBACK_ONLY):
+
+    def __init__(self, options, *, systemExists=True, uploadAttempts=0):
+        super().__init__(options)
+
         self.called = []
-        self.urlPartnerName = "sig"
-        self.urlCustomerName = "aap"
-        self.urlSystemName = systemName
-        self.runMode = runMode
         self.systemExists = systemExists
         self.uploadAttempts = uploadAttempts
-        self.subsystem = subsystem
         self.attempt = 0
         self.responses = {}
         self.POLL_INTERVAL = 1

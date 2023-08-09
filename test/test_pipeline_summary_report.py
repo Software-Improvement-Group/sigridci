@@ -12,53 +12,53 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-import io
-import os
-import types
-import unittest
-from sigridci.sigridci import ConclusionReport, Report, SigridApiClient, TargetQuality
+from io import StringIO
+from unittest import TestCase
+
+from sigridci.sigridci.pipeline_summary_report import PipelineSummaryReport
+from sigridci.sigridci.publish_options import PublishOptions, RunMode
 
 
-class ConclusionReportTest(unittest.TestCase):
+class ConclusionReportTest(TestCase):
     maxDiff = None
+
+    def setUp(self):
+        self.options = PublishOptions("aap", "noot", RunMode.FEEDBACK_AND_PUBLISH, "/tmp",
+            targetRating=3.5, sigridURL="https://example-sigrid.com")
 
     def testDisplayLandingPageFromClient(self):
         feedback = {
             "baseline": "20220110",
             "baselineRatings": {"DUPLICATION": 4.0, "UNIT_SIZE": 4.0, "MAINTAINABILITY": 4.0},
             "newCodeRatings": {"DUPLICATION": 5.0, "UNIT_SIZE": 2.0, "MAINTAINABILITY": 3.0},
-            "overallRatings": {"DUPLICATION": 4.5, "UNIT_SIZE": 3.0, "MAINTAINABILITY": 3.5},
+            "overallRatings": {"DUPLICATION": 4.5, "UNIT_SIZE": 3.0, "MAINTAINABILITY": 3.2},
             "refactoringCandidates": []
         }
     
-        args = types.SimpleNamespace(partner="sig", customer="aap", system="noot", publish=True, publishonly=False, \
-            sigridurl="https://example-sigrid.com", subsystem=None)
-        target = TargetQuality("", 5.0)
-        apiClient = SigridApiClient(args)
-        buffer = io.StringIO()
-        
-        report = ConclusionReport(apiClient, buffer)
-        report.generate("1234", feedback, args, target)
+        buffer = StringIO()
+        report = PipelineSummaryReport(buffer, ansiColors=False)
+        report.generate("1234", feedback, self.options)
         
         expected = """
-\033[1m\033[33m
 ** SIGRID CI RUN COMPLETE: THE CODE YOU WROTE DID NOT MEET THE TARGET FOR MAINTAINABLE CODE **
-\033[0m
+
 
 -------------------------------------------------------------------------
 View your analysis results in Sigrid:
-    https://example-sigrid.com/aap/noot/-/sigrid-ci/1234?targetRating=5.0
+    https://example-sigrid.com/aap/noot/-/sigrid-ci/1234?targetRating=3.5
 -------------------------------------------------------------------------
         """
                 
         self.assertEqual(buffer.getvalue().strip(), expected.strip())
 
     def testSigridLinkIsLowercase(self):
-        args = types.SimpleNamespace(partner="sig", customer="Aap", system="NOOT", publish=True, publishonly=False, \
-            sigridurl="https://example-sigrid.com", subsystem=None)
-        report = ConclusionReport(SigridApiClient(args), io.StringIO())
-        
-        self.assertEqual(report.getSigridUrl(args), "https://sigrid-says.com/aap/noot")
+        self.options.customer = "Aap"
+        self.options.system = "NOOT"
+
+        buffer = StringIO()
+        report = PipelineSummaryReport(buffer, ansiColors=False)
+
+        self.assertEqual(report.getSigridUrl(self.options), "https://example-sigrid.com/aap/noot")
         
     def testSpecialTextIfNoCodeChanged(self):
         feedback = {
@@ -68,25 +68,19 @@ View your analysis results in Sigrid:
             "overallRatings": {"DUPLICATION": 4.5, "UNIT_SIZE": 3.0, "MAINTAINABILITY": 3.5},
             "refactoringCandidates": []
         }
-    
-        args = types.SimpleNamespace(partner="sig", customer="aap", system="noot", publish=True, publishonly=False, \
-            sigridurl="https://example-sigrid.com", subsystem=None)
-        target = TargetQuality("", 5.0)
-        apiClient = SigridApiClient(args)
-        buffer = io.StringIO()
-        
-        report = ConclusionReport(apiClient, buffer)
-        report.generate("1234", feedback, args, target)
-        
+
+        buffer = StringIO()
+        report = PipelineSummaryReport(buffer, ansiColors=False)
+        report.generate("1234", feedback, self.options)
+
         expected = """
-\033[1m\033[96m
 ** SIGRID CI RUN COMPLETE: NO FILES CONSIDERED FOR MAINTAINABILITY WERE CHANGED **
-\033[0m
+
 
 -------------------------------------------------------------------------
 View your analysis results in Sigrid:
-    https://example-sigrid.com/aap/noot/-/sigrid-ci/1234?targetRating=5.0
+    https://example-sigrid.com/aap/noot/-/sigrid-ci/1234?targetRating=3.5
 -------------------------------------------------------------------------
         """
-                
+
         self.assertEqual(buffer.getvalue().strip(), expected.strip())
