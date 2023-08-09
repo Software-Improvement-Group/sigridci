@@ -23,7 +23,6 @@ jobs:
         with:
           customer: "sig"
           system: "sigridci-client"
-          targetquality: "3"
         env:
           SIGRID_CI_TOKEN: "${{ secrets.SIGRID_CI_TOKEN }}"
           
