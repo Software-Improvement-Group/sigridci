@@ -10,17 +10,17 @@ Objectives can be set per different quality characteristics and levels of detail
 ## Setting Objectives
 <img src="../images/settings-gear.png" class="inline" /> You can set *Objectives* by using the settings gear button, in the menu under *Objectives*. 
 
-<img src="../images/system-settings-menu-objectives.png" width="300" />
+<img src="../images/system-settings-menu-objectives.png" width="150" />
 
 They can be set as such:
 
-<img src="../images/system-objectives-settings.png" width="300" />
+<img src="../images/system-objectives-settings.png" width="200" />
 
 ## Comparing status and objectives in the System Overview page
 
 When set, the status of a system against its goals is shown in the *System Overview* tab, as shown below. 
 
-<img src="../images/objectives-overview.png" width="600" />
+<img src="../images/objectives-overview.png" width="750" />
 
 Objectives show the evolution of the system quality over time. Thereby they are useful for [roles](../getting-started/roles.md) such as Enterprise Architects to see where technical debt is moving. It also has a signaling function to make explicit what goals teams should be working towards, and therefore, how the portfolio ought to be moving. This is, of course, only meaningful if these targets/thresholds have been agreed upon beforehand with teams/Product Owners/Development managers, etc. 
 

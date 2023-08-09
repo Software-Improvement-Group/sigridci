@@ -12,6 +12,7 @@ Sigrid: Frequently Asked Questions
 - [How to get a token and account?](#how-to-get-a-token-and-account)
 - [What target quality should we use?](#what-target-quality-should-we-use)
 - [Where can I find more information about your metrics?](#where-can-i-find-more-information-about-your-metrics)
+- [How can I use Sigrid to improve my code maintainability?](#how-can-i-use-sigrid to-improve-my-code-maintainability)
 - [What is the maximum upload size?](#what-is-the-maximum-upload-size)
 - [Can I exclude certain files from being uploaded?](#can-i-exclude-certain-files-from-being-uploaded)
 - [Do Sigrid CI uploads get added to the Sigrid dashboard?](#do-sigrid-ci-uploads-get-added-to-the-sigrid-dashboard)
@@ -93,7 +94,12 @@ Sigrid itself includes a brief explanation of all metrics in the "refactoring ca
 
 For training purposes, SIG also published a book on [building maintainable software](https://www.amazon.com/Building-Maintainable-Software-Java-Future-Proof/dp/1491953527/ref=sr_1_7?dchild=1&qid=1610456817&refinements=p_27%3AJoost+Visser&s=books&sr=1-7&text=Joost+Visser), which contains detailed explanations on the metrics. It is not necessary to read the book to use Sigrid, but having training material available can be useful when training new or junior developers.
 
-### What is the maximum upload size?
+### How can I use Sigrid to improve my code maintainability?
+To improve a system's maintainability you will need to understand some context of [our approach to maintainability](../getting-started/approach.md), and e.g. the [paragraph with an overview on interpreting metrics](../getting-started/approach.md#further-reading-and-interpreting-metrics). Understanding on the used metrics is required [see the SIG quality model page](../reference/sig-quality-models.md). Because you will have a better idea of what the metrics are measuring conceptually, how it will help your maintenance, and what you should pay attention to. [The system maintainability page](system-maintainability.md) offers you an overview for navigating and understanding maintainability in Sigrid. 
+
+Depending on how you are using Sigrid (CI-integrated or web interface), you will see different levels of detail and follow a different order of activities (e.g. see the workflows:[general Agile process](../workflows/agile-development-process.md), [Architect](../workflows/architect.md), [Developer](../workflows/developer.md), [Product Owner](../workflows/product-owner.md) or [(Development) Manager](../workflows/manager.md)). 
+
+### What is the maximum upload size for Sigrid CI?
 
 Sigrid CI is limited to uploads of 500 MB. This is mainly for performance reasons, since uploading and unpacking huge files takes some time, which endangers Sigrid CI's goal of providing quick feedback. Note that based on our experience 99% of repositories easily fit within this limit. Also, Sigrid will only measure the actual source code maintained by your development team. Other artifacts, such as libraries, binaries, or other non-source files are excluded.
 
@@ -138,9 +144,9 @@ One of Sigrid's key goals is making software quality advice *reasonable*. It's e
 
 We therefore believe in a comply-or-explain model. Obviously, you should still strive to pass the Sigrid CI check in the overwhelming majority of cases. However, in the rare cases the check fails, it's perfectly OK for the reviewer to overrule the check and accept the pull request, as long as the reviewer finds that the author had good reasons for deviating from the best practice in that particular case.
 
-### Why doesn't deleted code influence the rating?
+### Why does deleted code not influence the rating?
 
-In general, deleting code improves maintainability. The less code you have, the less you have to maintain. Having less code also makes it easier to make structural changes, since such changes will require less effort.
+In general, deleting code improves maintainability. The less code you have, the less you have to maintain. Having less code also makes it easier to make structural changes, since such changes will require less effort. So if you navigate in Sigrid, you may find its effects. The exact consequences depend on how "good or bad" the deleted code was compared to the rest of the codebase, since volume is the common denominator for the maintainability metrics ([See for more details the technical documentation](../reference/sig-quality-models.md)).
 
 So why does Sigrid CI only give ratings based on new and changed code, but doesn't reward you for deleting code? This is mostly to keep the rating simple: combining code quality and deleted code into a single metric would make it hard to understand. Also, the majority of pull requests are about adding new code or changing existing code, deleting code is less common, so we have chosen to not optimize for that scenario.
 

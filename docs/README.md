@@ -43,7 +43,7 @@ The screenshot above shows an example on how Sigrid can help you to define and t
 
 ## How does Sigrid work?
 
-Essentially, Sigrid’s insights are based on source code analysis. Analyses are run on the code “as is”, so without actually running the system. This is known as *static analysis*, as opposed to *dynamic analysis*. Dynamic analysis of software is more typically done by the developers themselves, because it requires a simulation of how a system will behave in operation.
+Essentially, Sigrid’s insights are based on source code analysis. Analyses are run on the code "as is", so without actually running the system. This is known as *static analysis*, as opposed to *dynamic analysis*. Dynamic analysis of software is more typically done by the developers themselves, because it requires a simulation of how a system will behave in operation.
 
 Sigrid recognizes, calculates and prioritizes code characteristics that indicate software health. Such as whether the code contains design anti-patterns (undesirable constructs), whether the code contains security flaws (or imported, external code contains those).  
 
