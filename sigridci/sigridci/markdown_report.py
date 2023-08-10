@@ -19,9 +19,6 @@ from .report import Report
 
 class MarkdownReport(Report):
 
-    def __init__(self, outputDir="sigrid-ci-output"):
-        self.outputDir = outputDir
-
     def generate(self, analysisId, feedback, options):
         with open(os.path.abspath(f"{self.outputDir}/feedback.md"), "w", encoding="utf-8") as f:
             markdown = self.renderMarkdown(analysisId, feedback, options)

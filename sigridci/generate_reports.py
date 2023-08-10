@@ -22,7 +22,6 @@ from argparse import ArgumentParser, SUPPRESS
 from sigridci.ascii_art_report import AsciiArtReport
 from sigridci.junit_format_report import JUnitFormatReport
 from sigridci.markdown_report import MarkdownReport
-from sigridci.pipeline_summary_report import PipelineSummaryReport
 from sigridci.publish_options import PublishOptions, RunMode
 from sigridci.static_html_report import StaticHtmlReport
 
@@ -36,13 +35,13 @@ def generateReports(feedbackFile, options, outputDir):
 
     reports = [
         AsciiArtReport(),
-        MarkdownReport(outputDir),
-        StaticHtmlReport(outputDir),
-        JUnitFormatReport(outputDir),
-        PipelineSummaryReport()
+        MarkdownReport(),
+        StaticHtmlReport(),
+        JUnitFormatReport()
     ]
 
     for report in reports:
+        report.outputDir = outputDir
         report.generate("", feedback, options)
 
 

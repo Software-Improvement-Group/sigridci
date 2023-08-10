@@ -22,9 +22,6 @@ class StaticHtmlReport(Report):
     HTML_STAR_FULL = "&#9733;"
     HTML_STAR_EMPTY = "&#9734;"
 
-    def __init__(self, outputDir="sigrid-ci-output"):
-        self.outputDir = outputDir
-
     def generate(self, analysisId, feedback, options):
         with open(os.path.dirname(__file__) + "/sigridci-feedback-template.html", encoding="utf-8", mode="r") as f:
             template = f.read()

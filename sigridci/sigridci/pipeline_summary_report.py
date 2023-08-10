@@ -25,6 +25,7 @@ class PipelineSummaryReport(Report):
     MESSAGE_FAIL = "\n** SIGRID CI RUN COMPLETE: THE CODE YOU WROTE DID NOT MEET THE TARGET FOR MAINTAINABLE CODE **\n"
 
     def __init__(self, output=sys.stdout, ansiColors=True):
+        super().__init__()
         self.output = output
         self.ansiColors = ansiColors
 
