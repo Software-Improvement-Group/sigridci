@@ -6,7 +6,7 @@ Sigrid CI consists of a number of Python-based client scripts, that interact wit
 - To *publish* your code to Sigrid after every change. Publishing makes results available at https://sigrid-says.com for users who have access to the system.
 - To *provide feedback* on your changes, which can be used when reviewing pull requests. Results are visible in your development environment (e.g. GitHub, Azure DevOps, GitLab), but are not published and are hence not visible at [sigrid-says.com](https://sigrid-says.com).
 
-<img src="../images/sigridci-architecture.png" width=750"" />
+<img src="../images/sigridci-architecture.png" width="750" />
 
 The [general Sigrid CI documentation](../sigridci-integration/development-workflows.html) contains instructions on how and when to use these scripts available within various development platforms. There are multiple options for making the Sigrid CI client scripts available to the pipeline, which are explained in the instructions for each respective development platform.
 
