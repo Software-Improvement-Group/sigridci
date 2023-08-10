@@ -12,29 +12,32 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-import io
-import os
-import types
-import unittest
-from sigridci.sigridci import Report, TextReport, TargetQuality
+from io import StringIO
+from unittest import TestCase
+
+from sigridci.sigridci.ascii_art_report import AsciiArtReport
+from sigridci.sigridci.publish_options import PublishOptions, RunMode
 
 
-class TextReportTest(unittest.TestCase):
+class AsciiArtReportTest(TestCase):
     maxDiff = None
+
+    def setUp(self):
+        self.options = PublishOptions("aap", "noot", RunMode.FEEDBACK_ONLY, "/tmp", targetRating=3.5)
     
     def testGetRefactoringCandidatesForNewFormat(self):
         feedback = {
             "refactoringCandidates": [{"subject":"a/b.java::Duif.vuur()","category":"introduced","metric":"UNIT_SIZE"}]
         }
         
-        report = Report()
+        report = AsciiArtReport()
         unitSize = report.getRefactoringCandidates(feedback, "UNIT_SIZE")
         
         self.assertEqual(len(unitSize), 1)
         self.assertEqual(unitSize[0]["subject"], "a/b.java::Duif.vuur()")
         
     def testFormatBaseline(self):
-        report = Report()
+        report = AsciiArtReport()
 
         self.assertEqual(report.formatBaseline({"baseline" : "20211015"}), "2021-10-15")
         self.assertEqual(report.formatBaseline({"baseline" : None}), "N/A")
@@ -46,22 +49,11 @@ class TextReportTest(unittest.TestCase):
         rc2 = {"subject" : "noot\nmies", "category" : "worsened", "metric" : "DUPLICATION"}
         rc3 = {"subject" : "noot::mies", "category" : "worsened", "metric" : "UNIT_SIZE"}
         
-        report = TextReport()
+        report = AsciiArtReport()
         
         self.assertEqual(report.formatRefactoringCandidate(rc1), "    - (introduced)   aap")
         self.assertEqual(report.formatRefactoringCandidate(rc2), "    - (worsened)     noot\n                     mies")
         self.assertEqual(report.formatRefactoringCandidate(rc3), "    - (worsened)     noot\n                     mies")
-        
-    def testTextColorShouldOnlyApplyToMetricsThatHaveExplicitThreshold(self):
-        target = TargetQuality("/tmp/nonexistent", 3.5)
-        target.ratings["UNIT_SIZE"] = 3.5
-        
-        feedback = {"newCodeRatings" : {"MAINTAINABILITY" : 2.0, "DUPLICATION" : 3.0, "UNIT_SIZE" : 3.0}}
-        report = TextReport()
-        
-        self.assertEqual(report.getRatingColor(feedback, target, "MAINTAINABILITY"), report.ANSI_RED)
-        self.assertEqual(report.getRatingColor(feedback, target, "DUPLICATION"), report.ANSI_BLUE)
-        self.assertEqual(report.getRatingColor(feedback, target, "UNIT_SIZE"), report.ANSI_RED)
 
     def testPrintRegularReport(self):
         feedback = {
@@ -69,14 +61,12 @@ class TextReportTest(unittest.TestCase):
             "baselineRatings": {"DUPLICATION": 4.0, "UNIT_SIZE": 4.0, "MAINTAINABILITY": 4.0},
             "newCodeRatings": {"DUPLICATION": 5.0, "UNIT_SIZE": 2.0, "MAINTAINABILITY": 3.0},
             "overallRatings": {"DUPLICATION": 4.5, "UNIT_SIZE": 3.0, "MAINTAINABILITY": 3.5},
-            "refactoringCandidates": [{"subject":"a.py::aap()", "category":"introduced", "metric":"UNIT_SIZE"}]
+            "refactoringCandidates": [{"subject": "a.py::aap()", "category": "introduced", "metric": "UNIT_SIZE"}]
         }
     
-        target = TargetQuality("/tmp/nonexistent", 3.5)
-    
-        buffer = io.StringIO()
-        report = TextReport(buffer)
-        report.generate("1234", feedback, types.SimpleNamespace(publish=False), target)
+        buffer = StringIO()
+        report = AsciiArtReport(buffer, ansiColors=False)
+        report.generate("1234", feedback, self.options)
         
         expected = """
 -----------------------------------------------------------------------------------------
@@ -103,19 +93,18 @@ Module Coupling
 Maintainability ratings
 -----------------------------------------------------------------------------------------
 System property            Baseline on N/A          New/changed code    Target           
-\033[96mVolume                     (N/A)                    N/A                                  \033[0m
-\033[96mDuplication                (4.0)                    5.0                                  \033[0m
-\033[96mUnit Size                  (4.0)                    2.0                                  \033[0m
-\033[96mUnit Complexity            (N/A)                    N/A                                  \033[0m
-\033[96mUnit Interfacing           (N/A)                    N/A                                  \033[0m
-\033[96mModule Coupling            (N/A)                    N/A                                  \033[0m
-\033[96mComponent Balance          (N/A)                    N/A                                  \033[0m
-\033[96mComponent Independence     (N/A)                    N/A                                  \033[0m
-\033[96mComponent Entanglement     (N/A)                    N/A                                  \033[0m
+Volume                     (N/A)                    N/A                                  
+Duplication                (4.0)                    5.0                                  
+Unit Size                  (4.0)                    2.0                                  
+Unit Complexity            (N/A)                    N/A                                  
+Unit Interfacing           (N/A)                    N/A                                  
+Module Coupling            (N/A)                    N/A                                  
+Component Independence     (N/A)                    N/A                                  
+Component Entanglement     (N/A)                    N/A                                  
 -----------------------------------------------------------------------------------------
-\033[91mMaintainability            (4.0)                    3.0                 3.5              \033[0m
+Maintainability            (4.0)                    3.0                 3.5
         """
-                
+
         self.assertEqual(buffer.getvalue().strip(), expected.strip())
 
     def testPrintOverallColumnWhenPublishing(self):
@@ -126,12 +115,12 @@ System property            Baseline on N/A          New/changed code    Target
             "overallRatings": {"DUPLICATION": 4.5, "UNIT_SIZE": 3.0, "MAINTAINABILITY": 3.5},
             "refactoringCandidates": [{"subject":"a.py::aap()", "category":"introduced", "metric":"UNIT_SIZE"}]
         }
+
+        self.options.runMode = RunMode.FEEDBACK_AND_PUBLISH
     
-        target = TargetQuality("/tmp/nonexistent", 3.5)
-    
-        buffer = io.StringIO()
-        report = TextReport(buffer)
-        report.generate("1234", feedback, types.SimpleNamespace(publish=True), target)
+        buffer = StringIO()
+        report = AsciiArtReport(buffer, ansiColors=False)
+        report.generate("1234", feedback, self.options)
         
         expected = """
 -----------------------------------------------------------------------------------------
@@ -158,18 +147,16 @@ Module Coupling
 Maintainability ratings
 -----------------------------------------------------------------------------------------
 System property            Baseline on N/A          New/changed code    Target    Overall
-\033[96mVolume                     (N/A)                    N/A                           N/A    \033[0m
-\033[96mDuplication                (4.0)                    5.0                           4.0    \033[0m
-\033[96mUnit Size                  (4.0)                    2.0                           4.0    \033[0m
-\033[96mUnit Complexity            (N/A)                    N/A                           N/A    \033[0m
-\033[96mUnit Interfacing           (N/A)                    N/A                           N/A    \033[0m
-\033[96mModule Coupling            (N/A)                    N/A                           N/A    \033[0m
-\033[96mComponent Balance          (N/A)                    N/A                           N/A    \033[0m
-\033[96mComponent Independence     (N/A)                    N/A                           N/A    \033[0m
-\033[96mComponent Entanglement     (N/A)                    N/A                           N/A    \033[0m
+Volume                     (N/A)                    N/A                           N/A    
+Duplication                (4.0)                    5.0                           4.0    
+Unit Size                  (4.0)                    2.0                           4.0    
+Unit Complexity            (N/A)                    N/A                           N/A    
+Unit Interfacing           (N/A)                    N/A                           N/A    
+Module Coupling            (N/A)                    N/A                           N/A    
+Component Independence     (N/A)                    N/A                           N/A    
+Component Entanglement     (N/A)                    N/A                           N/A    
 -----------------------------------------------------------------------------------------
-\033[91mMaintainability            (4.0)                    3.0                 3.5       4.0    \033[0m
+Maintainability            (4.0)                    3.0                 3.5       4.0
         """
-        
+
         self.assertEqual(buffer.getvalue().strip(), expected.strip())
-        

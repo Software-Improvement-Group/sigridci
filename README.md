@@ -1,56 +1,43 @@
-<img src="docs/images/sigrid-logo.png" width="150" />
+<img src="docs/images/sigrid-logo-black.svg" width="200" align="center" />
 
-## Sigrid | Software Assurance Platform
+# Sigrid | One platform to manage your entire IT organization
 
 [Sigrid](https://www.softwareimprovementgroup.com/solutions/sigrid-software-assurance-platform/) helps you to improve your software by measuring your system's code quality, and then compares the results against a benchmark of 10,000 industry systems to give you concrete advice on areas where you can improve.
 
-<img src="docs/images/sigrid-dashboard.png" width="700" />
+<img src="docs/images/overall-portfolio-dashboard.png" width="700" align="center" />
 
-Sigrid performs code quality checks that have been designed by the [Software Improvement Group](https://www.softwareimprovementgroup.com/), which have been used by thousands of development teams over the past 20 years to help improve their software. SIG's approach is based on the ISO 25010 standard for software quality, and has been accredited to ensure alignment with the standard.
+Sigrid performs code quality checks that have been designed by the [Software Improvement Group](https://www.softwareimprovementgroup.com/), which have been used by thousands of development teams over the past 20 years to help improve their software. SIG's approach is based on the [ISO 25010 standard for software quality](https://www.iso.org/standard/35733.html), and has been accredited to ensure alignment with the standard.
 
-Integrating Sigrid's feedback into your development pipeline enables you to fix quality issues right away during your code reviews, instead of having to spot and fix them after the fact. You can access Sigrid's feedback through [sigrid-says.com](https://sigrid-says.com), or directly within your Continuous Integration environment.
+## Sigrid documentation
 
-<img src="docs/images/sigridci-features.png" width="800" />
+This repository hosts the Sigrid documentation, which you can access via [docs.sigrid-says.com](https://docs.sigrid-says.com). 
 
-Compared to other tools that perform code quality checks, i.e. linters, using Sigrid has a number of advantages:
+<img src="docs/images/documentation-screenshot.png" width="700" align="center" />
 
-- **Quality guard:** Sigrid ensures both the quality of your code and the quality of the system as a whole.
-- **Pragmatic:** Other tools block changes if even a single issue is found. This is not cost-effective. Sigrid CI allows some minor issues as long as the overall quality is acceptable. Code quality should be good, but it doesn't have to be perfect.
-- **Benchmarked:** We rate quality against thousands of other systems, not against theoretical perfection or a subjective target.
+We encourage collaboration, so you are welcome to use GitHib features like issues or pull requests if you want to request additions or changes to the documentation.
 
-## Integrating Sigrid CI into your development pipeline
+## Sigrid CI: Development process integration
 
-- [Integrating Sigrid CI with GitHub Actions](docs/sigridci-integration/github-actions.md)
-- [Integrating Sigrid CI with GitLab](docs/sigridci-integration/gitlab.md)
-- [Integrating Sigrid CI with Bitbucket Pipelines](docs/sigridci-integration/bitbucket-pipelines.md)
-- [Integrating Sigrid CI with Jenkins](docs/sigridci-integration/jenkins.md)
-- [Integrating Sigrid CI with Azure DevOps](docs/sigridci-integration/azure-devops.md)
-- [Integrating Sigrid CI with TeamCity](docs/sigridci-integration/teamcity.md)
-- [Integrating Sigrid CI with Mendix QSM on a Mendix Team Server](docs/sigridci-integration/mendix-teamserver.md)
-- [Integrating Sigrid CI with Mendix QSM on a GitHub server](docs/sigridci-integration/mendix-github-actions.md)
-- [Integrating Sigrid CI with Mendix QSM on a GitLab server](docs/sigridci-integration/mendix-gitlab.md)
-- [Integrating Sigrid CI with Siemens Polarion](docs/sigridci-integration/polarion.md)
-- [Integrating Sigrid CI with other/custom CI environments](docs/sigridci-integration/integration.md)
+Sigrid integrates directly into your development workflow. This integration consists of several aspects:
 
-## Usage documentation
+<img src="docs/images/sigridci-features.png" width="800" align="center" />
 
-- [Creating authentication tokens for Sigrid CI](docs/organization-integration/authentication-tokens.md)
-- [Client script option reference](docs/reference/client-script-usage.md)
-- [Mapping repositories to Sigrid systems](docs/organization-integration/systems.md)
-- [Changing the analysis scope configuration](docs/reference/analysis-scope-configuration.md)
-- [Adding business context to a system using metadata](docs/organization-integration/metadata.md)
-- [Using Sigrid CI as part of your development workflow](docs/sigridci-integration/development-workflows.md)
-- [Frequently asked questions](docs/capabilities/faq.md)
-- [Supported technologies](docs/reference/technology-support.md)
-- [Sigrid CI demo recording](https://www.youtube.com/watch?v=1QWWtFlB6cQ) 
+Sigrid integrates with many development platforms, including [GitHub](https://docs.sigrid-says.com/sigridci-integration/github-actions.html), [Azure DevOps](https://docs.sigrid-says.com/sigridci-integration/azure-devops.html), [GitLab](https://docs.sigrid-says.com/sigridci-integration/gitlab.html), [Bitbucket](https://docs.sigrid-says.com/sigridci-integration/bitbucket-pipelines.html), and [Jenkins](https://docs.sigrid-says.com/sigridci-integration/jenkins.html).
 
-## Sigrid API
+You can find more information on how to set up this development process integration in the [Sigrid documentation](https://docs.sigrid-says.com/sigridci-integration/development-workflows.html).
 
-Most of this documentation refers to our recommended way to integrate Sigrid into your development process: add Sigrid to your pipeline, for both pull requests and publishing code. However, in some cases you might need a more flexible type of integration. The [Sigrid API documentation](docs/reference/sigrid-api-documentation.md) contains an overview of the available data that you can obtain from Sigrid's API and integrate into your workflow.
+## Sigrid REST API
+
+In addition to the [Sigrid user interface at sigrid-says.com](https://sigrid-says.com), you can also consume Sigrid's data via the [Sigrid REST API](https://docs.sigrid-says.com/reference/sigrid-api-documentation.html). This API can be used to integrate with Sigrid in both directions:
+
+- You can take data from your existing systems and import this data into Sigrid. And example is [metadata](https://docs.sigrid-says.com/organization-integration/metadata.html), which can be imported from Application Lifecycle Management or CMDB systems. 
+- You can also extract data from Sigrid and then feed this data into your other systems. 
+
+You can find more information on how to use the Sigrid REST API in the [Sigrid documentation](https://docs.sigrid-says.com/reference/sigrid-api-documentation.html). 
 
 ## Contact and support
 
-Feel free to contact [SIG's support department](mailto:support@softwareimprovementgroup.com) for any questions or issues you may have after reading this document, or when using Sigrid or Sigrid CI. Users in Europe can also contact us by phone at +31 20 314 0953.
+Feel free to contact [SIG's support team](mailto:support@softwareimprovementgroup.com) for any questions or issues you may have after reading this document, or when using Sigrid or Sigrid CI. Users in Europe can also contact us by phone at +31 20 314 0953.
 
 ## License
 

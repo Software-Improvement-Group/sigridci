@@ -196,7 +196,8 @@ The response format of both system-level endpoints (`GET` and `PATCH`) is as fol
   "applicationType" : "ANALYTICAL",
   "remark" : "A remark",
   "externalID" : "ab12345",
-  "isDevelopmentOnly" : false
+  "isDevelopmentOnly" : false,
+  "technologyCategory": "MODERN_GENERAL_PURPOSE"
 }
 ```
 
@@ -218,7 +219,8 @@ The response format of the customer-level endpoint (`GET https://sigrid-says.com
     "applicationType" : "ANALYTICAL",
     "remark" : "A remark",
     "externalID" : "ab12345",
-    "isDevelopmentOnly" : false
+    "isDevelopmentOnly" : false,
+    "technologyCategory": "MODERN_GENERAL_PURPOSE"
   }
 ]
 ```
@@ -328,6 +330,27 @@ The possible application types are as follows:
 |FUNCTIONAL_APPLICATIONS|
 |KNOWLEDGE_AND_DOCUMENT_MANAGEMENT|
 |PERSONAL_PRODUCTIVITY_APPLICATIONS|
+
+The possible technology categories are as follows:
+
+|`technologyCategory` identifier|
+|-------------------------------|
+|AGGREGATE|
+|BPM|
+|CUSTOMIZATION|
+|CONFIGURATION|
+|DATABASE|
+|DSL|
+|EMBEDDED|
+|LEGACY|
+|LOW_CODE|
+|MAINFRAME|
+|MODERN_GENERAL_PURPOSE|
+|SCIENTIFIC|
+|SCRIPTING|
+|SDI|
+|TEMPLATING|
+|WEB|
 
 ### Systems lifecycle management
 

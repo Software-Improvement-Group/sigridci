@@ -3,7 +3,7 @@
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
 # You may obtain a copy of the License at
-# 
+#
 #     http://www.apache.org/licenses/LICENSE-2.0
 #
 # Unless required by applicable law or agreed to in writing, software
@@ -12,16 +12,18 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-from unittest import TestCase
-
-from sigridci.sigridci.publish_options import PublishOptions, RunMode
+from datetime import datetime
 
 
-class StaticHtmlReportTest(TestCase):
+class UploadLog:
+    history = []
 
-    def setUp(self):
-        self.options = PublishOptions("aap", "noot", RunMode.FEEDBACK_ONLY, "/tmp", targetRating=3.5)
+    @staticmethod
+    def log(message):
+        timestamp = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+        print(f"{timestamp}  {message}", flush=True)
+        UploadLog.history.append(message)
 
-    def testFeedbackTemplateOnlyContainsAsciiCharacters(self):
-        with open("sigridci/sigridci/sigridci-feedback-template.html", mode="r", encoding="ascii") as f:
-            f.read()
+    @staticmethod
+    def clear():
+        UploadLog.history.clear()

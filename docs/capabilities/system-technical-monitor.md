@@ -34,17 +34,13 @@ The dashboard lands on the system level metrics with doughnut charts. The other 
 
 In the sidebar, different views can be selected. In this example, "*Rating changes*". 
 
-<img src="../images/system-technical-monitor-maintainability-dashboard-menu-system-rating-changes.png" width="300" />
-
-Under *"Other"*, the chart for a distribution of different duplication categories cannot yet be created in Sigrid, but its detailed information is available under "*Refactoring candidates*" under "*Duplication*". 
-
-<img src="../images/system-technical-monitor-chart-duplication-categories.png" width="600" />
+<img src="../images/system-technical-monitor-maintainability-dashboard-menu-system-rating-changes.png" width="100" />
 
 ### Metrics
 
 The "*Metrics*" tab shows the metrics per snapshot one-by-one. Following the left-hand menu from top to bottom, by default this page lands on "*Production code*", "*System level*" and "*Overview*". With this left-side menu, you can take different routes to navigate to steer your analysis. Note that code in the categories of "*Test code*" and "*Generated code*" do not count for a system's maintainability rating. They are configured as such in the system's scoping ([see scoping documentation](../reference/analysis-scope-configuration.md)).
 
-<img src="../images/system-technical-monitor-metrics-menu.png" width="600" />
+<img src="../images/system-technical-monitor-metrics-menu.png" width="100" />
 
 **Every click in this menu acts as a filter and the assumed order is from top to bottom**. For example, you could keep "*Production code*" untouched, click on "*Component level*", and see main metrics for all technologies combined per component. But if you are interested only in one particular technology, you could click "*Java*" first, and then move to "*Component*" level, "*File*" level or "*Unit*" level. 
 
@@ -122,16 +118,15 @@ In Sigrid, different duplicate instances are shown next to each other in the "*D
 
 In the sidebar, filters can be applied to e.g. only show duplicates of a defined minimum length, or exclude certain components.
 
-<img src="../images/system-technical-monitor-duplication-side-bar.png" width="250" />
+<img src="../images/system-technical-monitor-duplication-side-bar.png" width="100" />
 
 The <img src="../images/system-technical-monitor-icon-source.png" class="inline" /> icon in the "*Source*" column will bring you to its source code, anchoring at the top of the duplicate and highlighted in a dark shade of yellow). Other duplicates in the same file are also highlighted, in a lighter yellow shade.
-
 
 ### Dependency graph
 
 In the Dependency graph view, you can filter on technology and type of calls, as shown in the menu on the left:
 
-<img src="../images/system-technical-monitor-dependency graph-menu.png" width="300" />
+<img src="../images/system-technical-monitor-dependency graph-menu.png" width="150" />
 
 Clicking on a number related to a dependency line will bring you to the dependency details, similar to Sigrid's detail page of the *Component Dependencies* tab ([see the relevant paragraph in the system maintainability documentation](system-maintainability.md#component-dependencies)). The position of components cannot be changed visually. It is possible though to recalculate the dependency graph of an earlier date. This can be powerful to trace back architectural changes over time.
 

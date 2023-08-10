@@ -33,7 +33,7 @@ The security overview page shows a summary of findings and estimated severity. F
 
 In the bottom part of the screen, each system is shown with a summary of its counts: number of findings per *CVSS* risk category and *Finding age* counts. For larger portfolios it may be useful to sort these on different characteristics. Its menu, by default set on sorting order by total number of "*Finding*", is as follows:
 
-<img src="../images/portfolio-security-sorting-menu.png" width="150" /> 
+<img src="../images/portfolio-security-sorting-menu.png" width="100" /> 
 
 Sorting can also be done per columns (here, the total number of "*Critical risk*" findings as an example). The top right bottom for exporting the data as a spreadsheet may be useful for further analysis. 
 

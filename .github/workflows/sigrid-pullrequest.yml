@@ -11,7 +11,7 @@ jobs:
       - name: "Run Sigrid CI" 
         env:
           SIGRID_CI_TOKEN: "${{ secrets.SIGRID_CI_TOKEN }}"
-        run: "./sigridci/sigridci.py --customer sig --system sigridci-client --source . --targetquality 3.5"
+        run: "./sigridci/sigridci.py --customer sig --system sigridci-client --source ."
       - name: "Save Sigrid CI results"
         if: ${{ success() || failure() }}
         uses: actions/upload-artifact@v2

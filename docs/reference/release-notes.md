@@ -3,9 +3,15 @@ Sigrid release notes
 
 SIG uses [continuous delivery](https://en.wikipedia.org/wiki/Continuous_delivery), meaning that every change to Sigrid or the underlying analysis is released once our development pipeline has completed. On average, we release somewhere between 10 and 20 times per day. This page therefore doesn't list every single change, since that would quickly lead to an excessively long list of small changes. Instead, this page lists Sigrid and analysis changes that we consider noteworthy for the typical Sigrid user.
 
+### August 9, 2023
+
+- **Objectives:** It is now possible to define objectives for *all* Sigrid capabilities, not just for Maintainability and Open Source Health. To do this, navigate to your system's dashboard, locate your objectives, and hit the edit button.
+- **Technology support:** Added support for the [Dart](https://dart.dev) programming language, which is commonly used for creating apps in Google's [Flutter](https://flutter.dev) framework.
+
 ### July 31, 2023
 
 - **Scope configuration:** The `sigrid.yaml` configuration file format has been registered with [SchemaStore.org](https://www.schemastore.org/json/). This means that IDEs such as [Visual Studio Code](https://code.visualstudio.com) or [JetBrains IDEs](https://www.jetbrains.com) will now provide content assist and indicate errors when you edit Sigrid configuration files. This both gives a productivity boost and reduces errors, since you can act on thise feedback right away when editing these files.
+- **User management:** It is now possible to copy another user's permissions when creating a new users. This is generally more convenient than having to create existing permissions for the new user.
 - **Documentation:** In this documentation, every section now has a "link" icon. Clicking this icon will copy the link to that particular section to your clipboard. This allows you to quickly share or store deeplinks to the documentation.
 
 ### July 24, 2023
