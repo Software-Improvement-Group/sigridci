@@ -58,7 +58,7 @@ if __name__ == "__main__":
     parser = ArgumentParser(description="Starts a Sigrid CI analysis and provides feedback on the outcomes.")
     parser.add_argument("--partner", type=str, default="sig", help=SUPPRESS)
     parser.add_argument("--customer", type=str, help="Name of your organization's Sigrid account.")
-    parser.add_argument("--system", type=str, help="Name of your system in Sigrid, letters/hyphens only.")
+    parser.add_argument("--system", type=str, help="Name of your system in Sigrid, letters/digits/hyphens only.")
     parser.add_argument("--subsystem", type=str, default="", help="Publishes your code as a subsystem within a Sigrid system.")
     parser.add_argument("--source", type=str, help="Path of your project’s source code.")
     parser.add_argument("--targetquality", type=str, default="sigrid", help=SUPPRESS)
