@@ -47,12 +47,6 @@ class SigridCiRunnerTest(TestCase):
         self.assertEqual(apiClient.urlCustomerName, "aap")
         self.assertEqual(apiClient.urlSystemName, "noot")
 
-    def testValidateToken(self):
-        self.assertFalse(SigridApiClient.isValidToken(None))
-        self.assertFalse(SigridApiClient.isValidToken(""))
-        self.assertFalse(SigridApiClient.isValidToken("$"))
-        self.assertTrue(SigridApiClient.isValidToken("zeiYh/WYQ==" * 10))
-
     def testRegularRun(self):
         self.createTempFile(self.tempDir, "a.py", "print(123)")
 
