@@ -1,7 +1,7 @@
 # The Code Explorer
 This page describes the functionality of the "*Code Explorer*". For the "*Technical Monitor*", with comparable functionality, see [the Technical Monitor page](system-technical-monitor.md). Both can be used for deeper code analysis regarding code quality.  
 
-For a general approach analyzing maintainability metrics, see the section for [investigating system maintainability rating state and -changes](system-maintainability.md#investigating-system-maintainability-rating-state-and--changes). 
+For a general approach analyzing maintainability metrics, see the section for [investigating system maintainability rating state and -changes](system-maintainability.md#investigating-system-maintainability-rating-state-and--changes). Using the *Code Explorer* is also discussed on [our page on the agile development process](../workflows/agile-development-process.md#for-maintainability-focus-on-technical-debt-that-is-affecting-you-right-now).
 
 ## Use the code Explorer if you suspect specific maintenance hotspots and want to understand the details
 The Code Explorer view lets you explore a system’s codebase and maintainability findings that are associated with it. It is visible by default for all systems. 
