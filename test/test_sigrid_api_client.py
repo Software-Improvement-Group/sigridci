@@ -14,7 +14,6 @@
 
 from unittest import TestCase
 
-from sigridci.sigridci.publish_options import PublishOptions, RunMode
 from sigridci.sigridci.sigrid_api_client import SigridApiClient
 
 
