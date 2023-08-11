@@ -23,6 +23,7 @@ from sigridci.ascii_art_report import AsciiArtReport
 from sigridci.junit_format_report import JUnitFormatReport
 from sigridci.markdown_report import MarkdownReport
 from sigridci.publish_options import PublishOptions, RunMode
+from sigridci.sigridci.pipeline_summary_report import PipelineSummaryReport
 from sigridci.static_html_report import StaticHtmlReport
 
 
@@ -37,7 +38,8 @@ def generateReports(feedbackFile, options, outputDir):
         AsciiArtReport(),
         MarkdownReport(),
         StaticHtmlReport(),
-        JUnitFormatReport()
+        JUnitFormatReport(),
+        PipelineSummaryReport()
     ]
 
     for report in reports:
