@@ -12,6 +12,8 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
+import os
+import tempfile
 from unittest import TestCase
 
 from sigridci.sigridci.markdown_report import MarkdownReport
@@ -69,3 +71,20 @@ class MarkdownReportTest(TestCase):
         """
 
         self.assertEqual(markdown.strip(), expected.strip())
+
+    def testCustomOuputDirectory(self):
+        tempDir = tempfile.mkdtemp()
+
+        feedback = {
+            "baseine": "20220110",
+            "baselineRatings": {"DUPLICATION": 4.0, "UNIT_SIZE": 4.0, "MAINTAINABILITY": 4.0},
+            "newCodeRatings": {"DUPLICATION": 5.0, "UNIT_SIZE": 2.0, "MAINTAINABILITY": 3.0},
+            "overallRatings": {"DUPLICATION": 4.5, "UNIT_SIZE": 3.0, "MAINTAINABILITY": 3.5},
+            "refactoringCandidates": [{"subject": "a.py::aap()", "category": "introduced", "metric": "UNIT_SIZE"}]
+        }
+
+        report = MarkdownReport()
+        report.outputDir = tempDir
+        report.generate("1234", feedback, self.options)
+
+        self.assertTrue(os.path.exists(f"{tempDir}/feedback.md"))
