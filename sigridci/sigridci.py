@@ -35,7 +35,8 @@ def parsePublishOptions(args):
         excludePatterns=args.exclude.split(","),
         includeHistory=args.include_history,
         showUploadContents=args.showupload,
-        targetRating=parseTarget(args.targetquality)
+        targetRating=parseTarget(args.targetquality),
+        sigridURL=args.sigridurl
     )
 
 
