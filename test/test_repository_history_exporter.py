@@ -33,4 +33,4 @@ class RepositoryHistoryExporterTest(TestCase):
             historyEntries = f.read().strip().split("\n")
 
         self.assertEquals(historyEntries[0],
-          "'@@@;3e161af9218e6f20a095a96ee246763e9c01f1e3;Thomas Kraus (tukraus);thomas@sig.nl;2016-05-24 09:25:40 +0200;remove javascript'")
+          "'@@@;f59c21c9de5bee332d51cea5caef4b2500ea100e;Michiel Cuijpers;m.cuijpers@sig.eu;2023-08-15 13:57:07 +0200;Create sigrid-publish.yml'")
