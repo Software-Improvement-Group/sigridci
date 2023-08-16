@@ -157,3 +157,8 @@ class SigridApiClient:
     def fetchObjectives(self):
         path = f"/analysis-results/api/{self.API_VERSION}/objectives/{self.urlCustomerName}/{self.urlSystemName}/config"
         return self.retry(lambda: self.callSigridAPI(path))
+
+    @staticmethod
+    def isValidToken(token):
+        return token != None and len(token) >= 64
+

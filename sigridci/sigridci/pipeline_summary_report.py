@@ -25,6 +25,7 @@ class PipelineSummaryReport(Report):
     MESSAGE_FAIL = "\n** SIGRID CI RUN COMPLETE: THE CODE YOU WROTE DID NOT MEET THE TARGET FOR MAINTAINABLE CODE **\n"
 
     def __init__(self, output=sys.stdout, ansiColors=True):
+        super().__init__()
         self.output = output
         self.ansiColors = ansiColors
 
@@ -48,6 +49,8 @@ class PipelineSummaryReport(Report):
 
     def printLandingPage(self, analysisId, options):
         landingPage = self.getLandingPage(analysisId, options)
+        if analysisId == "":
+            landingPage = self.getSigridUrl(options)
 
         print("", file=self.output)
         print("-" * (len(landingPage) + 4), file=self.output)

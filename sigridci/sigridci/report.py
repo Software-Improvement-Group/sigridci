@@ -33,6 +33,9 @@ class Report:
         "MAINTAINABILITY"
     ]
 
+    def __init__(self):
+        self.outputDir = "sigrid-ci-output"
+
     def generate(self, analysisId, feedback, options):
         pass
 

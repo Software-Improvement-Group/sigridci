@@ -13,6 +13,7 @@
 # limitations under the License.
 
 import os
+import re
 from dataclasses import dataclass, field
 from enum import Enum
 from typing import List, Union
@@ -37,6 +38,14 @@ class PublishOptions:
     targetRating: Union[float, str] = "sigrid"
     sigridURL: str = "https://sigrid-says.com"
     partner: str = "sig"
+
+    SYSTEM_NAME_PATTERN = re.compile("^[a-z0-9]+(-[a-z0-9]+)*$", re.IGNORECASE)
+    SYSTEM_NAME_LENGTH = range(2, 65)
+
+    def isValidSystemName(self):
+        return self.SYSTEM_NAME_PATTERN.match(self.system) and \
+            len(self.system) >= self.SYSTEM_NAME_LENGTH.start and \
+            (len(self.system) + len(self.customer) + 1) in self.SYSTEM_NAME_LENGTH
 
     def readScopeFile(self):
         return self.locateFile(["sigrid.yaml", "sigrid.yml"])
