@@ -110,7 +110,7 @@ In some projects, using directory depth will not accurately reflect the actual c
     component_base_dirs:
       - "modules"
       - "modules/specific"
-      - "" # This includes the root directory as a separate component
+      - "" # This "empty string" includes the `root` directory, as it appears in the upload folder structure, as a separate component. While this is like setting `"component_depth: 1"`, in this way you are able to split only some folders into separate components (in this case, `"modules"` and `"modules/specific"`) 
       
 **Option 3: Defining components manually**
 
@@ -123,7 +123,7 @@ In some cases the components really do not match the directory structure, and th
       - name: "Log"
         include:
           - ".*/cs/findbugs/log/.*"
-          
+           
 In general you should try to avoid defining components in this way: not because it is not possible, but because it is hard to maintain. This might work perfectly well for your system's *current* codebase, but what's going to happen when someone moves a file or adds a directory? This type of component configuration will require constant maintenance.
 
 ## Open Source Health
