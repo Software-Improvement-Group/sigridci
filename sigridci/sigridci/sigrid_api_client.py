@@ -77,6 +77,9 @@ class SigridApiClient:
                     else:
                         UploadLog.log(f"The system no longer exists (HTTP status {e.code})")
                     sys.exit(1)
+                elif e.code == 502:
+                    UploadLog.log("Something went wrong during analysis on our end (possibly related to configuration issues)")
+                    sys.exit(1)
                 elif allow404 and e.code == 404:
                     return False
 
