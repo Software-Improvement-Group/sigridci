@@ -67,8 +67,8 @@ jobs:
     container: softwareimprovementgroup/mendixpreprocessor:latest
     env:
       MENDIX_TOKEN: "${{ secrets.MENDIX_TOKEN }}"
-      SIGRID_CI_CUSTOMER: 'examplecustomername'
-      SIGRID_CI_SYSTEM: 'examplesystemname'
+      SIGRID_CI_CUSTOMER: '<example_customer_name>'
+      SIGRID_CI_SYSTEM: '<example_system_name>'
       SIGRID_CI_PUBLISH: 'publish'
       SIGRID_CI_TOKEN: "${{ secrets.SIGRID_CI_TOKEN }}"
     steps:
@@ -95,8 +95,8 @@ jobs:
     env:
       CI_PROJECT_DIR: "."
       MENDIX_TOKEN: "${{ secrets.MENDIX_TOKEN }}"
-      SIGRID_CI_CUSTOMER: 'examplecustomername'
-      SIGRID_CI_SYSTEM: 'examplesystemname'
+      SIGRID_CI_CUSTOMER: '<example_customer_name>'
+      SIGRID_CI_SYSTEM: '<example_system_name>'
       SIGRID_CI_TARGET_QUALITY: '3.5'
       SIGRID_CI_TOKEN: "${{ secrets.SIGRID_CI_TOKEN }}"
     steps:
