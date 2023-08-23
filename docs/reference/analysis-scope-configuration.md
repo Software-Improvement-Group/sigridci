@@ -61,8 +61,8 @@ As a convention, all `include` and `exclude` patterns always start with `.*/`. I
 - All patterns are case-sensitive. This is relevant in case you are specifically searching for naming in camelCase or PascalCase. It is then useful to search for files like `SomeTest.java`.
 - You are entering patterns inside of a YAML file. YAML uses backslashes for escape characters. So if you want to use backslashes inside of your regular expressions, for example `\S+` (i.e. "one or more non-whitespace characters"), you will need to escape the backslash: `\\S+`.
 - If you want to express a literal dot `.`, use `[.]`. This means: 1 character in a group where only `.` is permitted.
-- Since the commonly used `.*` is greedy, with deep directory structures it may happen that directory names appear in other places than you want. Or that you are looking for specific file names, and those words should not appear in directory names. To find filenames specifically, or whenever you want to avoid a deeper level directory, a useful pattern is `[^/]*` or `[^/]+`. This pattern consumes characters as long as it does not find a `/`. When used as `/[^/]*[.]java` it will ensure to catch a filename ending with `.java`. You could only have defined a character set, like `.*/[\\w-][.]java` but this is prone to omissions.  
-- Matching "positive" patterns, including the `exclude` option, is far easier than trying with negative lookaheads `(?!)`, because catching the full file path becomes difficult. There are cases where patterns may work such as `((?![unwanted string]).)+`, but these cases are hard to get right or debug. Also, negative lookbehinds (`?<!`) are not recommended. They pattern to be matched requires a fixed length and it needs to immediately precede the rest of the pattern to work (wildcards tend to break here). In both cases, using the `exclude` option has preference. 
+- Since the commonly used *`.*`* is greedy, with deep directory structures it may happen that your search term appears in other places than you want, e.g. deeper level directories. Being as specific as possible helps you catch the right folders and files. Commonly, you might be looking for specific file names, while those same search terms should not appear in directory names. For example, you may search for files with *Build* in the name, but avoiding */Build/* directories, since those may contain generated or compiled code. To find filenames specifically, or whenever you want to avoid a deeper level directory, a useful pattern is `[^/]*` or `[^/]+`. This pattern consumes characters as long as it does not find a `/`. When used as `/[^/]*[.]java` it will ensure to catch a filename ending with `.java`. You could also have defined a character set that excludes the folder separator *"/"* with a set like `.*/[\\w-][.]java`, but this is prone to omissions.  
+- Abide by the developer wisdom that solving a problem with a regular expression leads you to have 2 problems. Regular expressions are powerful and may even be fun, but try to match your needs with the simplest possible pattern. Matching "positive" patterns, including the `exclude` option, is far easier than trying with e.g. negative lookaheads `(?!..)`, because catching a full file path is difficult with its non-capturing behavior. There are cases where patterns may work such as `((?![unwanted string]).)+`, but these cases are hard to get right and debug. Also, negative lookbehinds (`?<!`) are not recommended ([rather use an `exclude` pattern as above](#defining-include-and-exclude-patterns)), because they require a known character length and position. 
 
 ## Technology support
 
@@ -110,7 +110,7 @@ In some projects, using directory depth will not accurately reflect the actual c
     component_base_dirs:
       - "modules"
       - "modules/specific"
-      - "" # This includes the root directory as a separate component
+      - "" # This "empty string" includes the `root` directory, as it appears in the upload folder structure, as a separate component. While this is like setting `"component_depth: 1"`, in this way you are able to split only some folders into separate components (in this case, `"modules"` and `"modules/specific"`) 
       
 **Option 3: Defining components manually**
 
@@ -123,7 +123,7 @@ In some cases the components really do not match the directory structure, and th
       - name: "Log"
         include:
           - ".*/cs/findbugs/log/.*"
-          
+           
 In general you should try to avoid defining components in this way: not because it is not possible, but because it is hard to maintain. This might work perfectly well for your system's *current* codebase, but what's going to happen when someone moves a file or adds a directory? This type of component configuration will require constant maintenance.
 
 ## Open Source Health
@@ -240,7 +240,7 @@ The `architecture` section in the configuration has its own `exclude` option, wh
       exclude:
         - ".*/index[.]ts"
         
-The list of exclude patterns works in the same way as the global, top-level `exclude` option. The difference is the global option excludes files and directories from *all* Sigrid capabilities, and the architecture `exclude` option excludes them from Architecture Quality but not from other Sigrid capabilities. See the [pattern documentation](#defining-include-and-exclude-patterns) for more information on writing these patterns.
+The list of exclude patterns works in the same way as the global, top-level `exclude` option. The difference is the global option excludes files and directories from *all* Sigrid capabilities, and the architecture `exclude` option excludes them from Architecture Quality but not from other Sigrid capabilities. See the [pattern section](#defining-include-and-exclude-patterns) for more information on writing these patterns.
 
 ## Configuring multi-repo systems
 
