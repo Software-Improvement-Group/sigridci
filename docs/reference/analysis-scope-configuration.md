@@ -19,6 +19,11 @@ The following example shows a typical example of the `sigrid.yaml` configuration
       
 The various options and sections are explained in more detail in the remainder of this page.
 
+General note:
+---
+Reasons why you would want to change a system's scope configuration is to avoid double matches (which fails analysis), solve an `Remainder` (undefined) component or include/exclude specific parts of the code or programming languages. See specifically the [paragraph to exclude code](#excluding-files-and-directories), their [`include` and `exclude` syntax](#defining-include-and-exclude-patterns) and [resolving ambiguities](#resolving-pattern-match-ambiguities-that-may-stall-analysis).
+---
+
 ## Editing scope files
 
 Since scope files are part of your repository, you can edit them using your preferred text editor. Sigrid scope configuration files are registered with [SchemaStore.org](https://schemastore.org), which means you get IDE features like content assist and error detection while you're editing the file. 
@@ -45,13 +50,26 @@ Various options across the scope configuration file allow you to define `include
 The following example specifies a component that includes all `.js` and `.jsx` files with a path that includes the `frontend` directory, except files ending with `.spec.jsx`:
 
     components:
-      - name: "Our new React website"
-        include:
-          - ".*/frontend/.*[.]jsx?"
-        exclude:
-          - ".*[.]spec[.]jsx?" #excluding all spec.js files, wherever they are; alternatively, limiting to files within a `/frontend/` directory tree, `.*/frontend/.*[.]spec[.]js`
+    - name: "Our new React website"
+      include:
+      - ".*/frontend/.*[.]jsx?"
+      exclude:
+      - ".*[.]spec[.]jsx?" #excluding all `spec.js` files from this component, wherever they are; alternatively, limiting to files within a `/frontend/` directory tree, `.*/frontend/.*[.]spec[.]js`
           
 When you specify both `include` and `exclude` patterns, the exclude patterns take precedence. In this example, the file `frontend/home.jsx` would be included, but the file `frontend/example.spec.jsx` would be excluded. This is much easier and maintainable than trying `.*(?<![.]spec)[.]jsx?` under `include`, even though that would work.
+
+Since we know that spec.js files are meant to be test files, what you probably want in this case is to make this distinction according to its context: 
+
+    components:
+    - name: "Our new React website"
+      production:
+        include:
+        - ".*/frontend/.*[.]jsx?"
+        exclude:
+        - ".*[.]spec[.]jsx?"
+      test:
+        include:
+        - ".*[.]spec[.]jsx?"
 
 As a convention, all `include` and `exclude` patterns always start with `.*/`. It is tempting to always define patterns relative to the root of the codebase, but it is important to realize that what is considered the "root" is flexible in Sigrid. Depending on how you [map your repositories to systems](../organization-integration/systems.md), the root of your repository might not match the root of the Sigrid system that contains your repository. Starting all patterns `.*/` will avoid confusion in such situations.
 
@@ -64,15 +82,24 @@ As a convention, all `include` and `exclude` patterns always start with `.*/`. I
 - Since the commonly used *`.*`* is greedy, with deep directory structures it may happen that your search term appears in other places than you want, e.g. deeper level directories. Being as specific as possible helps you catch the right folders and files. Commonly, you might be looking for specific file names, while those same search terms should not appear in directory names. For example, you may search for files with *Build* in the name, but avoiding */Build/* directories, since those may contain generated or compiled code. To find filenames specifically, or whenever you want to avoid a deeper level directory, a useful pattern is `[^/]*` or `[^/]+`. This pattern consumes characters as long as it does not find a `/`. When used as `/[^/]*[.]java` it will ensure to catch a filename ending with `.java`. You could also have defined a character set that excludes the folder separator *"/"* with a set like `.*/[\\w-][.]java`, but this is prone to omissions.  
 - Abide by the developer wisdom that solving a problem with a regular expression leads you to have 2 problems. Regular expressions are powerful and may even be fun, but try to match your needs with the simplest possible pattern. Matching "positive" patterns, including the `exclude` option, is far easier than trying with e.g. negative lookaheads `(?!..)`, because catching a full file path is difficult with its non-capturing behavior. There are cases where patterns may work such as `((?![unwanted string]).)+`, but these cases are hard to get right and debug. Also, negative lookbehinds (`?<!`) are not recommended ([rather use an `exclude` pattern as above](#defining-include-and-exclude-patterns)), because they require a known character length and position. 
 
+### YAML indentation rules
+
+The configuration is sensitive to indentation.
+- System-wide elements are on the first column, like `exclude:` (the `exclude:` in the top of the configuration which defines a system-wide exclusion), `components:`, `languages:`.
+- Their direct elements start on the first column after a "`- `", e.g. the `- name:` of a component, 
+- Indented with 2 spaces `include:` and `exclude:` of a component, **if** no context has been defined (being: `production:`, `generated:`, or `test:`). The pattern definitions of an `include:` or `exclude:` start with "`- `" at the same level. 
+  - If such a code context **is** defined, then their respective `include:` and `exclude:` tags are indented 2 spaces below that.
+- For `architecture:`, `dependencychecker:` and `thirdpartyfindings:`, all underlying elements are indented 2 spaces. 
+
 ## Technology support
 
 The `languages` section lists all languages that you want Sigrid to analyze:
 
     languages:
-      - name: Csharp
-      - name: Java
-      - name: Python
-      - name: Typescript
+    - name: Csharp
+    - name: Java
+    - name: Python
+    - name: Typescript
 
 Refer to the [list of supported technologies](technology-support.md) for an overview of all supported technologies and the names that can be used.
 
@@ -87,7 +114,7 @@ This automatic detection is usually sufficient for the majority of projects. How
         production:
         test:
           include:
-            - ".*/our-smoke-tests/.*[.]java"
+          - ".*/our-smoke-tests/.*[.]java"
 
 This example will classify all Java code in the `our-smoke-tests` directory as test code.
 
@@ -117,14 +144,22 @@ In some projects, using directory depth will not accurately reflect the actual c
 In some cases the components really do not match the directory structure, and the only way to define components is by manually listing what should go where. In the example below, regular expressions are used to define what files and directories belong to each component. The syntax is identical to the patterns used in the `exclude` section. These `include` and `exclude` patterns work as explained in the [patterns section](#defining-include-and-exclude-patterns).
 
     components:
-      - name: "Back-end"
-        include:
-          - ".*[.]java"
-      - name: "Log"
-        include:
-          - ".*/cs/findbugs/log/.*"
+    - name: "Back-end"
+      include:
+      - ".*[.]java"
+    - name: "Log"
+      include:
+      - ".*/cs/findbugs/log/.*"
            
 In general you should try to avoid defining components in this way: not because it is not possible, but because it is hard to maintain. This might work perfectly well for your system's *current* codebase, but what's going to happen when someone moves a file or adds a directory? This type of component configuration will require constant maintenance.
+
+### Resolving pattern match ambiguities that may stall analysis
+An analysis may fail if pattern matches are ambiguous. Examples:
+- Language-level: files could be matched under different technologies that "compete" for the the same file extensions, like `.js` for JavaScript frameworks or `.xml` for any (visual) technology that exports its logic or flows as XML. You can resolve this by defining explicit `include` and `exclude` file extension or folder structure patterns.
+- Files may be matched in multiple components at the same time, in case that you have manually defined different components as described above in [the usage of include and exclude patterns](#defining-include-and-exclude-patterns). This may occur in code bases with many repeating folder path patterns. Patterns that may be transparent to you as developers because they are defined in another (IDE) configuration. Then e.g. `/integration/service/` or `/app/service/integration` could be deliberately different things, but defining 2 components based on `/integration/.*` and `/service/.*` would then not work. The easiest solution may be to extend the paths to make them more specific. If this proves too difficult or ambiguous, a list of `include` and `exclude` patterns should help you out. We know, this may require some trial and error.     
+- Files could be matched in multiple "contexts" at the same time. Contexts being `production`, `generated` or `test`. If there is a conflict between 2 contexts, the `exclude:` pattern takes precedence over the `include:` pattern [as described in the paragraph on defining `include` and `exclude` patterns](#defining-include-and-exclude-patterns). Due to this rule, code may appear in another context as you expect in case pattern matches overlap. In case there is ambiguity among all three contexts, then the analysis will fail.  
+- Files that are expected by the scoping file's language or component definition but are not matched anywhere, appear in a `Remainder` component. Code within this component will be analyzed, but it is one that you want to resolve, since it not an actual component that developers will recognize, and it will make architectural metrics less accurate.
+
 
 ## Open Source Health
 
@@ -137,7 +172,7 @@ Open Source Health allows you to scan all open sources libraries used by your sy
       blocklist: []
       transitive: false
       exclude:
-        - ".*/scripts/.*"
+      - ".*/scripts/.*"
         
 The `dependencychecker` section supports the following options:
 
@@ -159,7 +194,7 @@ Sigrid uses a combination of its own security checks and security checks perform
     thirdpartyfindings:
       enabled: true
       exclude:
-        - ".*/scripts/.*[.]sh"
+      - ".*/scripts/.*[.]sh"
           
 The `thirdpartyfindings` section supports the following options:
 
@@ -238,7 +273,7 @@ The `architecture` section in the configuration has its own `exclude` option, wh
     architecture:
       enabled: true
       exclude:
-        - ".*/index[.]ts"
+      - ".*/index[.]ts"
         
 The list of exclude patterns works in the same way as the global, top-level `exclude` option. The difference is the global option excludes files and directories from *all* Sigrid capabilities, and the architecture `exclude` option excludes them from Architecture Quality but not from other Sigrid capabilities. See the [pattern section](#defining-include-and-exclude-patterns) for more information on writing these patterns.
 
