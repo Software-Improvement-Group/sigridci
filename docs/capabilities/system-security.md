@@ -25,9 +25,36 @@ The different elements in this page are:
 
 * The *Findings Age* tile gives an indication how long findings are known. 
 
+* The *CVSS Severity* tile summarizes a breakdown of findings according to CVSS severity ratings. A mouseover on the barchart will show the exact number of findings. A mouseover on the CVSS severity barchart shows the number of findings with that CVSS severity category. 
 
-### The scoring system with CVSS: background
-* The *CVSS Severity* tile summarizes a breakdown of findings according to CVSS severity ratings. A mouseover on the barchart will show the exact number of findings. A mouseover on the CVSS severity benchmark shows the CVSS security score and the number of findings with that severity. *CVSS* (*Common Vulnerability Scoring System*) is a security-industry standard on a 0-10 scale, developed by [NIST](https://nist.gov/), specifically its [National Vulnerability Database(NVD)](https://nvd.nist.gov/). CVSS scores are based on a benchmark of expert judgements and a well-defined calculation that estimates risk (see [NIST's current 3.1 calculator](https://nvd.nist.gov/vuln-metrics/cvss/v3-calculator/) or a [calculation preview of the to-be-released CVSS 4.0](https://www.first.org/cvss/calculator/4.0/)). Note that version 2 did not include a *"Critical"* vulnerability category.
+## Context and meaning of CVSS security metrics: from asset to risk
+
+*CVSS* (*Common Vulnerability Scoring System*) is a security-industry standard metric on a 0-10 scale, to indicate how severe a security issue *may be*. It does not signify a definite security problem, nor does lack of CVSS (or 0 score) imply security. This uncertainty is at the core of system security and mostly dependent on context. 
+
+It is important to make some distinctions by defining the elements that are necessary to properly interpret the meaning of these numbers. To simplify matters, consider the following non-exhaustive definitions: 
+
+* An *asset* is something of value. An asset exists in context, like the way that a system is connected to the outside world. 
+* A *weakness* (or flaw) is a (security-relevant) deficiency. In our context, a weakness may be catalogued as a *CWE* [see also section on CWEs below](#cwe-and-its-link-with-cre-common-requirement-enumeration). A weakness may be exploitable or not.
+* A *vulnerability* is an exploitable weakness (by a threat). In our context, a vulnerablity may be catalogued as a *CVE*. A vulnerability may be actually exploited or not.
+* A *threat* is an event/condition that causes undesirable/adverse effects to something of value (often described as *assets*). A threat may manifest or not.
+* A *risk* is a possibility of harm, a chance that an undesirable event may occur. Typically it is understood as a function of *probability* and *impact*. In this context it is useful to consider that *a risk involves an asset, a threat and a vulnerability*. A risk may occur or not. 
+
+### Sigrid's CVSS score of Raw findings signify "potential severity"
+
+We may use "risk" a lot in colloquial language, but in this context of system security, a lot has to co-occur before a risk manifests, as can be seen above. This is relevant in reading the CVSS scores in Sigrid, because without a triage and a verification context, CVSS does **not** mean *vulnerability* or *risk*. CVSS scores, even when unvalidated, are a useful indicator. Generally, triage/analyze raw security findings, you would follow the CVSS scores in descending order from "potentially most severe to - least severe".
+
+### Sigrid's CVSS scores are based on a CWE benchmark
+
+CVSS originates in research done by the US government's [National Infrastructure Advisory Council (NIAC)](https://www.cisa.gov/), further developed by the [Forum of Incident Response and Security Teams (FIRST)](https://www.first.org/). CVSS is strongly associated with the administrations for *CWEs* and *CVEs*. *CWEs* are part of the authoritative list of weakness types known as the *"Common Weakness Enumeration"* by MITRE [MITRE CWE website](https://cwe.mitre.org/). For *CVEs*, see the [National Vulnerability Database(NVD)](https://nvd.nist.gov/)). A CVE always contains a CWE, while the opposite is not necessarily true (e.g. a weakness that has not been shown to be exploitable). CWE has a hierarchical structure, so higher-level weaknesses implicitly contain lower-level ones. 
+
+### Elaboration on the CWE benchmark calculation
+
+The core idea of the CWE benchmark is that, since CWEs, CVEs and CVSSs are related, we can use CVSS data associated with CVEs to come up with a score for CWEs. A benchmarked CWE score (presented as CVSS in Sigrid) consists of the averaged CVSS scores of all linked CVEs. In this calculation process, a *weighted mean* is applied to *Impact* and *Exploitability* (these are part of the CVSS "*Core metrics*"). This configuration puts more weight on relatively infrequent, but severe vulnerabilities.  
+
+For each CWE, we build its CWE hierarchy tree and determine their respective CVEs of the last 5 years and the CVE's typical CVSS estimations by security experts. This is a benchmark of expert judgements. Since context is a large factor in the severity of a security issue, the CVSS scores assigned to CWEs are further split by their attack vectors (this data is available since *Attack Vector [AV]* is part of the CVSS calculation). This split allows to make a mapping on this technical context, which should be administered in Sigrid as *Deployment type* metadata ([see metadata page, specifically the GUI to do this in Sigrid itself](../organization-integration/metadata.md#option-1-adding-metadata-in-sigrid)). This metadata emulates CVSS' "*Environmental metric group*" and provides important context to interpret its scores. If this metadata has *not* been set, Sigrid conservatively assumes "public-facing", hence the most exposed type of deployment.
+
+
+
 
 
 ### CVSS scores in Sigrid
@@ -48,9 +75,10 @@ Based on the CVSS score of findings, they are marked and colored ranging from "I
 
 <img src="../images/system-security-icon-critical1.png" class="inline" /> *Critical*: CVSS score 9 or higher. 
 
-
+To have an idea of what a certain CVSS score approximates, see [NIST's current 3.1 calculator](https://nvd.nist.gov/vuln-metrics/cvss/v3-calculator/) or a [calculation preview of the to-be-released CVSS 4.0](https://www.first.org/cvss/calculator/4.0/)). Note that an earlier CVSS version 2 did not include a *"Critical"* vulnerability category.
 
 ## Different statuses of security findings
+
 These are the different statutes of findings. The status *"Fixed"* will be applied automatically if a finding is resolved. See [FAQ:Fixed issues are auto-detected](faq-security.md#how-does-the-automatic-detection-of-fixed-findings-work). The other statuses can be set. They are similar to those used for [system maintainability refactoring candidates](system-maintainability.md#refactoring-candidates). 
 * *"Raw"* means "not yet verified" where *"Refined"* ones mark that a finding has been confirmed manually. Inversely, a finding can be set as *"False positive"*. 
 * *"Will fix"* signals the intention to fix it, while *"Risk Accepted"* does not.
@@ -125,7 +153,7 @@ An audit trail can be seen when clicking the *"Show Audit Trail"* button. In cas
 <img src="../images/system-security-audit-trail.png" width="400" />
 
 ## CWE and its link with CRE (Common Requirement Enumeration)
-If available, the relevant *CWE* will be shown. *CWEs* are part of the authoritative list of weakness types known as the *"Common Weakness Enumeration"* by MITRE [MITRE CWE website](https://cwe.mitre.org/). The *CWE* link in the security finding will refer you to the [OWASP Common Requirement Enumeration (CRE) page](https://www.opencre.org/). This will show the CWE in context. SIG has been an active and proud contributor to this project in close collaboration with the world's application security authority [*OWASP* (Open Worldwide Application Security Project)](https://owasp.org/). *CRE* is an open source security reference knowledge base, [a nexus between *OWASP's* initiatives](https://owasp.org/projects/#owasp-projects-the-sdlc-and-the-security-wayfinder) and relevant, authoritative security reference documents originating in [MITRE](https://www.mitre.org/), [NIST](https://www.nist.gov/) and [ISO](https://www.iso.org/). 
+If available, the relevant *CWE* will be shown. The *CWE* link in the security finding will refer you to the [OWASP Common Requirement Enumeration (CRE) page](https://www.opencre.org/). This will show the CWE in context. SIG has been an active and proud contributor to this project in close collaboration with the world's application security authority [*OWASP* (Open Worldwide Application Security Project)](https://owasp.org/). *CRE* is an open source security reference knowledge base, [a nexus between *OWASP's* initiatives](https://owasp.org/projects/#owasp-projects-the-sdlc-and-the-security-wayfinder) and relevant, authoritative security reference documents originating in [MITRE](https://www.mitre.org/), [NIST](https://www.nist.gov/) and [ISO](https://www.iso.org/). 
 
 An example of openCRE is shown below.
 
@@ -167,7 +195,6 @@ SIG can help with such threat analysis efforts as custom consultancy services. P
 
 ## SIG may offer consultancy services to help you with security
 Depending on your agreement with SIG, security expertise consultancy may be available. Or this can be offered as a separate consultancy effort. See also [this question in the security FAQ](faq-security.md#to-what-extent-does-sig-provide-consultancy-for-security-findings).
-
 
 
 
