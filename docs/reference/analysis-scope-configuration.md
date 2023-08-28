@@ -22,6 +22,8 @@ The various options and sections are explained in more detail in the remainder o
 General note:
 ---
 Reasons why you would want to change a system's scope configuration is to avoid double matches (which fails analysis), solve an `Remainder` (undefined) component or include/exclude specific parts of the code or programming languages. See specifically the [paragraph to exclude code](#excluding-files-and-directories), their [`include` and `exclude` syntax](#defining-include-and-exclude-patterns) and [resolving ambiguities](#resolving-pattern-match-ambiguities-that-may-stall-analysis).
+
+For more details about the structure and syntax of scope files, you can refer to the JSON validation schema that Sigrid uses. For that purpose, see [the Sigrid scope file schema under *"resources"*](../../resources/sigrid-scope-file.schema.json).
 ---
 
 ## Editing scope files
