@@ -55,7 +55,7 @@ sigridci:
   image:
     name: softwareimprovementgroup/sigridci
   script:
-    - sigridci.py --customer examplecustomername --system examplesystemname --source . 
+    - sigridci.py --customer <example_customer_name> --system <example_system_name> --source . 
   allow_failure: true
   artifacts:
     paths:
@@ -72,7 +72,7 @@ sigridpublish:
   image:
     name: softwareimprovementgroup/sigridci
   script:
-    - sigridci.py --customer examplecustomername --system examplesystemname --source . --publish
+    - sigridci.py --customer <example_customer_name> --system <example_system_name> --source . --publish
   allow_failure: true
   artifacts:
     paths:
@@ -101,7 +101,7 @@ sigridci:
   stage: report
   script:
     - git clone https://github.com/Software-Improvement-Group/sigridci.git sigridci
-    - ./sigridci/sigridci/sigridci.py --customer examplecustomername --system examplesystemname --source .
+    - ./sigridci/sigridci/sigridci.py --customer <example_customer_name> --system <example_system_name> --source .
   allow_failure: true
   artifacts:
     paths:
@@ -117,7 +117,7 @@ sigridpublish:
   stage: report
   script:
     - git clone https://github.com/Software-Improvement-Group/sigridci.git sigridci
-    - ./sigridci/sigridci/sigridci.py --customer examplecustomername --system examplesystemname --source . --publish
+    - ./sigridci/sigridci/sigridci.py --customer <example_customer_name> --system <example_system_name> --source . --publish
   allow_failure: true
   artifacts:
     paths:
