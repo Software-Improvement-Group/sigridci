@@ -53,10 +53,10 @@ The following example specifies a component that includes all `.js` and `.jsx` f
 
     components:
     - name: "Our new React website"
-      include:
-      - ".*/frontend/.*[.]jsx?"
-      exclude:
-      - ".*[.]spec[.]jsx?" #excluding all `spec.js` files from this component, wherever they are; alternatively, limiting to files within a `/frontend/` directory tree, `.*/frontend/.*[.]spec[.]js`
+        include:
+          - ".*/frontend/.*[.]jsx?"
+        exclude:
+          - ".*[.]spec[.]jsx?" #excluding all `spec.js` files from this component, wherever they are; alternatively, limiting to files within a `/frontend/` directory tree, `.*/frontend/.*[.]spec[.]js`
           
 When you specify both `include` and `exclude` patterns, the exclude patterns take precedence. In this example, the file `frontend/home.jsx` would be included, but the file `frontend/example.spec.jsx` would be excluded. This is much easier and maintainable than trying `.*(?<![.]spec)[.]jsx?` under `include`, even though that would work.
 
@@ -98,10 +98,10 @@ The configuration is sensitive to indentation.
 The `languages` section lists all languages that you want Sigrid to analyze:
 
     languages:
-    - name: Csharp
-    - name: Java
-    - name: Python
-    - name: Typescript
+      - name: Csharp
+      - name: Java
+      - name: Python
+      - name: Typescript
 
 Refer to the [list of supported technologies](technology-support.md) for an overview of all supported technologies and the names that can be used.
 
@@ -116,7 +116,7 @@ This automatic detection is usually sufficient for the majority of projects. How
         production:
         test:
           include:
-          - ".*/our-smoke-tests/.*[.]java"
+            - ".*/our-smoke-tests/.*[.]java"
 
 This example will classify all Java code in the `our-smoke-tests` directory as test code.
 
@@ -146,12 +146,12 @@ In some projects, using directory depth will not accurately reflect the actual c
 In some cases the components really do not match the directory structure, and the only way to define components is by manually listing what should go where. In the example below, regular expressions are used to define what files and directories belong to each component. The syntax is identical to the patterns used in the `exclude` section. These `include` and `exclude` patterns work as explained in the [patterns section](#defining-include-and-exclude-patterns).
 
     components:
-    - name: "Back-end"
-      include:
-      - ".*[.]java"
-    - name: "Log"
-      include:
-      - ".*/cs/findbugs/log/.*"
+      - name: "Back-end"
+        include:
+          - ".*[.]java"
+      - name: "Log"
+        include:
+          - ".*/cs/findbugs/log/.*"
            
 In general you should try to avoid defining components in this way: not because it is not possible, but because it is hard to maintain. This might work perfectly well for your system's *current* codebase, but what's going to happen when someone moves a file or adds a directory? This type of component configuration will require constant maintenance.
 
@@ -174,7 +174,7 @@ Open Source Health allows you to scan all open sources libraries used by your sy
       blocklist: []
       transitive: false
       exclude:
-      - ".*/scripts/.*"
+        - ".*/scripts/.*"
         
 The `dependencychecker` section supports the following options:
 
@@ -196,7 +196,7 @@ Sigrid uses a combination of its own security checks and security checks perform
     thirdpartyfindings:
       enabled: true
       exclude:
-      - ".*/scripts/.*[.]sh"
+        - ".*/scripts/.*[.]sh"
           
 The `thirdpartyfindings` section supports the following options:
 
@@ -275,7 +275,7 @@ The `architecture` section in the configuration has its own `exclude` option, wh
     architecture:
       enabled: true
       exclude:
-      - ".*/index[.]ts"
+        - ".*/index[.]ts"
         
 The list of exclude patterns works in the same way as the global, top-level `exclude` option. The difference is the global option excludes files and directories from *all* Sigrid capabilities, and the architecture `exclude` option excludes them from Architecture Quality but not from other Sigrid capabilities. See the [pattern section](#defining-include-and-exclude-patterns) for more information on writing these patterns.
 
