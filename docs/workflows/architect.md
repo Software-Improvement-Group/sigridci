@@ -14,3 +14,5 @@ By comparing a system's- or landscape's situation to its desired path [(see our 
 <img src="../images/ea-workflows.png" width="700" />
 
 Following the progress of objectives generally can be done on the Overview pages for either Portfolio level (see our portfolio pages, [e.g. the portfolio overview page](../capabilities/portfolio-overview.md)) or system level ([see our system-level overview page](../capabilities/system-overview.md)). The overview pages offer the widest view, where typically you would be looking for the "anomalies" in systems that appear "out of place" in the portfolio. 
+
+In terms of system security, one of the non-functionals that bear importance in most development, see [our system security page](../capabilities/system-security.md) and [our Open Source Health page)](../capabilities/system-open-source-health.md).
