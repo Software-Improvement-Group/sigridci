@@ -1,6 +1,14 @@
-# Our approach on maintainability: benchmarked code metrics offer perspective
+# Our approach to software maintainability: benchmarked code metrics offer perspective
 
-Generally, to assess the quality of something, you need a sense of context. And each piece of software may have a widely different context. To put objective thresholds under code quality, at SIG we use technology-independent code measurements and compare those to a benchmark. A benchmark on quality is meaningful because it shows you an unbiased norm of how well you are doing. The context for this benchmark is "the current state of the software development market". This means that you can compare your source code to the code that others are producing and maintaining. 
+## What is good quality software?
+
+Finding an objective measure is tough. When it behaves the way you expect it to, when it can withstand unforeseen situations, when it is secure against abuse, when it complies with requirements. 
+
+What they all have in common is the need for maintenance. The honorable task of developers, and the roles surrounding them. Efficient, effective, workable code, *easy to read* even. That is, easy for the developers that come after you. When we talk about technical debt, it is easy to imagine its compounding effects. Where over time it gathers interest over the original debt, the technical imperfections of code. The metaphor does not stretch limitlessly, since not all debt must necessarily be recovered (this is essentially a business trade-off). But it is well-understood ("*cruft*" never quite made it past developer argot). Technical debt might be just harmless unrealized potential, but we see often that at a certain point, teams get stuck in a vicious cycle. Then code/software quality will be very noticeable to developers, clients and business. See also our discussion on [technical debt in an agile development process](../workflows/agile-development-process.md#technical-debt). Essentially, *bad code is bad for business*. The inverse is not necessarily always true, but certain is that you need to have a grip on quality to deliver business value in a predictable and efficient way.
+
+## Setting a quality benchmark
+
+Generally, to assess the quality of something, you need a sense of context. And each piece of software may have a widely different context. To put objective thresholds under code quality, at SIG we use technology-independent code measurements and compare those to a benchmark. A benchmark on quality is meaningful because it shows you an unbiased norm of how well you are doing. The context for this benchmark is "the current state of the software development market". This means that you can compare your source code to the code that others are maintaining. 
 
 To compare different programming technologies with each other, the metrics represent a type of abstractions that occur universally, like the volume of pieces of code and the complexity of decision paths within. In that way, system size can be normalized to "*person-months*" or "*person-years*", indications of amount of developer work done per time period. Those numbers are again based on benchmarks.  
 

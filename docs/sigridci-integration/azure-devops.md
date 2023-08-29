@@ -36,7 +36,7 @@ stages:
         continueOnError: true
         condition: "ne(variables['Build.SourceBranch'], 'refs/heads/main')"
         steps:
-          - bash: "sigridci.py --customer examplecustomername --system examplesystemname --source ."
+          - bash: "sigridci.py --customer <example_customer_name> --system <example_system_name> --source ."
             env:
               SIGRID_CI_TOKEN: $(SIGRID_CI_TOKEN)
             continueOnError: true
@@ -47,7 +47,7 @@ stages:
         continueOnError: true
         condition: "eq(variables['Build.SourceBranch'], 'refs/heads/main')"
         steps:
-          - bash: "sigridci.py --customer examplecustomername --system examplesystemname --source . --publishonly"
+          - bash: "sigridci.py --customer <example_customer_name> --system <example_system_name> --source . --publishonly"
             env:
               SIGRID_CI_TOKEN: $(SIGRID_CI_TOKEN)
             continueOnError: true
@@ -80,7 +80,7 @@ stages:
         inputs:
           versionSpec: '3.7'
           addToPath: false
-      - bash: "./sigridci/sigridci/sigridci.py --customer examplecustomername --system examplesystemname --source ."
+      - bash: "./sigridci/sigridci/sigridci.py --customer <example_customer_name> --system <example_system_name> --source ."
         env:
           SIGRID_CI_TOKEN: $(SIGRID_CI_TOKEN)
           PYTHONIOENCODING: utf8
@@ -98,7 +98,7 @@ stages:
         inputs:
           versionSpec: '3.7'
           addToPath: false
-      - bash: "./sigridci/sigridci/sigridci.py --customer examplecustomername --system examplesystemname --source . --publishonly"
+      - bash: "./sigridci/sigridci/sigridci.py --customer <example_customer_name> --system <example_system_name> --source . --publishonly"
         env:
           SIGRID_CI_TOKEN: $(SIGRID_CI_TOKEN)
           PYTHONIOENCODING: utf8

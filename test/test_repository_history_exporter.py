@@ -31,6 +31,6 @@ class RepositoryHistoryExporterTest(TestCase):
 
         with open(f"{tempDir}/git.log", "r", encoding="utf-8") as f:
             historyEntries = f.read().strip().split("\n")
-
+            
         self.assertEquals(historyEntries[0],
-          "'@@@;f59c21c9de5bee332d51cea5caef4b2500ea100e;Michiel Cuijpers;m.cuijpers@sig.eu;2023-08-15 13:57:07 +0200;Create sigrid-publish.yml'")
+            "'@@@;f59c21c9de5bee332d51cea5caef4b2500ea100e;Michiel Cuijpers;m.cuijpers@sig.eu;2023-08-15 13:57:07 +0200;Create sigrid-publish.yml'")
