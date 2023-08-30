@@ -20,7 +20,7 @@ The finding fingerprint is a calculated identifier based on multiple characteris
 We use this approach to reduce the amount of busywork. Findings are automatically resolved to avoid situations where people fix something in the code, but then forget to update the finding in Sigrid. Moreover, multiple overlapping findings will automatically be merged if they have the same fingerprint. This means automatic deduplication, which is important for keeping the findings as actionable as possible.
 
 ### What are the risk thresholds for determining whether a risk is low-medium-high?
-Findings are mapped on a scale from 0-10 based on a *CVSS* benchmark comparison. See the [explanation on CVSS in the security page](system-security.md#the-scoring-system-with-cvss-background) and [its different levels in Sigrid](system-security.md#cvss-scores-in-sigrid).
+Findings are mapped on a scale from 0-10 based on a *CWE-CVSS* benchmark comparison. See the [explanation on CVSS in the security page](system-security.md#context-and-meaning-of-cvss-security-metrics-from-asset-to-risk) and [its different levels in Sigrid](system-security.md#cvss-scores-in-sigrid).
 
 ## Open Source Health
 
