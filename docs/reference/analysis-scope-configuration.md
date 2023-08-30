@@ -281,7 +281,7 @@ The list of exclude patterns works in the same way as the global, top-level `exc
 
 ### Highlighting undesirable dependencies
 
-Architecture Quality allows you to mark certain dependencies as "undesirable", meaning they will be shown in red in [the architecture visualization](../capabilities/architecture-quality.md). You can indicate undesirable dependencies in the configuration: 
+Architecture Quality allows you to mark certain dependencies as "undesirable", meaning they will be shown in red in [the architecture visualization](../capabilities/architecture-quality.md). You can indicate undesirable dependencies in the configuration like so: 
 
     architecture:
       enabled: true
@@ -289,7 +289,7 @@ Architecture Quality allows you to mark certain dependencies as "undesirable", m
           - source: "backend"
             target: "legacy"
             
-This example will mark all dependencies from the "backend" component to the "legacy" component as undesirable. You can also use additional options to be more specific in *which* dependencies are undesirable:
+This example will mark all dependencies from the "backend" component to the "legacy" component as "undesirable". You can also use additional options to be more specific about *which type* of dependencies are undesirable:
 
     architecture:
       enabled: true
@@ -299,7 +299,7 @@ This example will mark all dependencies from the "backend" component to the "leg
             bidirectional: true
             type: code_call
 
-Adding `bidirectional: true` means the dependencies are undesirable in both directions. This is basically a shorthand notation so that you don't have to configure both `A -> B` and `B -> A` separately. The `type` option can be used to only consider certain types of dependencies. In the example, code dependencies are undesirable but other types of dependency (e.g. interface dependencies) are still allowed.
+Adding `bidirectional: true` means the dependencies are undesirable in both directions. This is basically a shorthand notation so that you do not have to configure both `A -> B` and `B -> A` separately. The `type` option can be used to only consider certain types of dependencies. In the example, since one type has been defined, code dependencies are undesirable but other types (such as interface dependencies) are still allowed.
 
 ## Configuring multi-repo systems
 
