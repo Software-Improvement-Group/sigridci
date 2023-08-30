@@ -279,6 +279,28 @@ The `architecture` section in the configuration has its own `exclude` option, wh
         
 The list of exclude patterns works in the same way as the global, top-level `exclude` option. The difference is the global option excludes files and directories from *all* Sigrid capabilities, and the architecture `exclude` option excludes them from Architecture Quality but not from other Sigrid capabilities. See the [pattern section](#defining-include-and-exclude-patterns) for more information on writing these patterns.
 
+### Highlighting undesirable dependencies
+
+Architecture Quality allows you to mark certain dependencies as "undesirable", meaning they will be shown in red in [the architecture visualization](../capabilities/architecture-quality.md). You can indicate undesirable dependencies in the configuration like so: 
+
+    architecture:
+      enabled: true
+        undesirable_dependencies:
+          - source: "backend"
+            target: "legacy"
+            
+This example will mark all dependencies from the "backend" component to the "legacy" component as "undesirable". You can also use additional options to be more specific about *which type* of dependencies are undesirable:
+
+    architecture:
+      enabled: true
+        undesirable_dependencies:
+          - source: "backend"
+            target: "legacy"
+            bidirectional: true
+            type: code_call
+
+Adding `bidirectional: true` means the dependencies are undesirable in both directions. This is basically a shorthand notation so that you do not have to configure both `A -> B` and `B -> A` separately. The `type` option can be used to only consider certain types of dependencies. In the example, since one type has been defined, code dependencies are undesirable but other types (such as interface dependencies) are still allowed.
+
 ## Configuring multi-repo systems
 
 Sigrid allows you to create ["multi-repo systems"](../sigridci-integration/development-workflows.md#combining-multiple-repositories-into-a-single-Sigrid-system) that are the combination of multiple repositories in your development environment. In this situation, each individual repository within the system is referred to as a "subsystem". Such a view is more high-level than looking at individual repositories, and is sometimes a better fit if you want to align on Sigrid findings with stakeholders from outside the development organization.
