@@ -92,10 +92,6 @@ if __name__ == "__main__":
         print(f"Source code directory not found: {args.source}")
         sys.exit(1)
 
-    if args.exclude and args.include:
-        print(f"You can use either exclude or include. Not both")
-        sys.exit(1)
-
     options = parsePublishOptions(args)
     apiClient = SigridApiClient(options)
 
