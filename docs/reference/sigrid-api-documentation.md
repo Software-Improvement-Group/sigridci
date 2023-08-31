@@ -181,6 +181,8 @@ System metadata can be viewed and updated using the following three endpoints:
 
 The path parameters `{customer}` and `{system}` refer to your Sigrid account name and system ID respectively.
 
+
+### Endpoint response format
 The response format of both system-level endpoints (`GET` and `PATCH`) is as follows:
 ```json
 {
@@ -247,24 +249,27 @@ $ curl 'https://sigrid-says.com/rest/analysis-results/api/v1/system-metadata/{cu
 This example request _replaces_ the list of supplier names with the list consisting of one single supplier name (`Supplier 1`). It also _removes_ the remark. Next to this, it
 leaves all metadata as-is. For instance, if the external ID before executing this request is `ab12345`, after this request it still is. 
 
+### Metadata fields
+
 The metadata fields are described by the following table. Note that the setting for `deploymentType` is used to assess impact of security findings.
 
-|Path|Type|Description|
-|----|----|-----------|
-|`displayName`|`String`|The display name of the system. Must be between 0 and 60 characters. Can contain blanks: true|
-|`divisionName`|`String`|The name of the division this system belongs to. Must be between 0 and 60 characters. Can contain blanks: true|
-|`supplierNames`|`Array`|Array of the names of the suppliers for this system|
-|`inProductionSince`|`Number`|The year the system went into production. Cannot be later than the current year, must be at least 1960|
-|`businessCriticality`|`String`|Importance of the system in terms of the effects of it not being available on the user's business. Must match any of the following values (case-sensitive): CRITICAL, HIGH, MEDIUM, LOW|
-|`lifecyclePhase`|`String`|The phase of its lifecycle the system is in. Must be an industry identifier from the table of lifecycle phase identifiers below (case-sensitive)|
-|`targetIndustry`|`String`|The industry in which the system is normally used. Must be an industry identifier from the table of target industry identifiers below (case-sensitive)|
-|`deploymentType`|`String`|The way in which the system is typically deployed. Must be an industry identifier from the table of deployment types below (case-sensitive)|
-|`applicationType`|`String`|The type of the system. Must be an industry identifier from the table of application types below (case-sensitive)|
-|`softwareDistributionStrategy`|`String`|The type of the software distribution strategy. Must be one of the distribution strategy identifiers from the table below (case-sensitive)|
-|`isDevelopmentOnly`|`Boolean`|If true, the system is not shown as part of customer's portfolio, in the UI this is known as the "Excluded from dashboards" toggle|
-|`remark`|`String`|Remark(s) about the system as (possibly empty) free-format text. Must be between 0 and 300 characters. Can contain blanks: true|
-|`externalID`|`String`|Allow customers to record an external identifier for a system. free-format text. Must be between 0 and 60 characters. Can contain blanks: true|
+|Path                          |Type     |Description                                                                                                                               |
+|------------------------------|---------|------------------------------------------------------------------------------------------------------------------------------------------|
+|`displayName`                 |`String` |The display name of the system. Must be between 0 and 60 characters. Can contain blanks: true|
+|`divisionName`                |`String` |The name of the division this system belongs to. Must be between 0 and 60 characters. Can contain blanks: true|
+|`supplierNames`               |`Array`  |Array of the names of the suppliers for this system|
+|`inProductionSince`           |`Number` |The year the system went into production. Cannot be later than the current year, must be at least 1960|
+|`businessCriticality`         |`String` |Importance of the system in terms of the effects of it not being available on the user's business. Must match any of the following values (case-sensitive): CRITICAL, HIGH, MEDIUM, LOW|
+|`lifecyclePhase`              |`String` |The phase of its lifecycle the system is in. Must be an industry identifier from the table of lifecycle phase identifiers below (case-sensitive)|
+|`targetIndustry`              |`String` |The industry in which the system is normally used. Must be an industry identifier from the table of target industry identifiers below (case-sensitive)|
+|`deploymentType`              |`String` |The way in which the system is typically deployed. Must be an industry identifier from the table of deployment types below (case-sensitive)|
+|`applicationType`             |`String` |The type of the system. Must be an industry identifier from the table of application types below (case-sensitive)|
+|`softwareDistributionStrategy`|`String` |The type of the software distribution strategy. Must be one of the distribution strategy identifiers from the table below (case-sensitive)|
+|`isDevelopmentOnly`           |`Boolean`|If true, the system is not shown as part of customer's portfolio, in the UI this is known as the "Excluded from dashboards" toggle|
+|`remark`                      |`String` |Remark(s) about the system as (possibly empty) free-format text. Must be between 0 and 300 characters. Can contain blanks: true|
+|`externalID`                  |`String` |Allow customers to record an external identifier for a system. free-format text. Must be between 0 and 60 characters. Can contain blanks: true|
 
+### Software distribution strategy 
 The software distribution strategy identifiers have the following meaning:
 
 |`softwareDistributionStrategy` identifier|Software Distribution Strategy|
@@ -272,6 +277,8 @@ The software distribution strategy identifiers have the following meaning:
 |NOT_DISTRIBUTED|Software is not distributed to third parties|
 |NETWORK_SERVICE|Software is not distributed, but is available to third parties as a network service (e.g. SaaS)|
 |DISTRIBUTED|Software is distributed to third parties (e.g. as on-premise solution or device software)|
+
+### Lifecycle phase 
 
 The lifecycle phase identifiers have the following meaning:
 
@@ -282,6 +289,8 @@ The lifecycle phase identifiers have the following meaning:
 |MAINTENANCE|Servicing and maintenance|
 |EOL|End-of-life (in production but minimal maintenance)|
 |DECOMMISSIONED|Decommissioned / Phased out (no longer in production)|
+
+### Target industry phase 
 
 The target industry phase identifiers have the following meaning:
 
@@ -317,6 +326,7 @@ The target industry phase identifiers have the following meaning:
 |SIG1000|Government|
 |SIG1100|Education|
 
+### Deployment type
 The deployment type identifiers have the following meaning:
 
 |`deploymentType` identifier|Deployment Type|
@@ -325,6 +335,8 @@ The deployment type identifiers have the following meaning:
 |CONNECTED|A system that interacts with a public-facing system via the network. The system is not accessible via the public internet|
 |INTERNAL|A system that can only be reached by users via VPN or the company intranet. The system has no interaction with public-facing systems|
 |PHYSICAL|A system that can only be reached by users with access to a physical location. The system cannot be reached from an internal network and has no interaction with public-facing systems|
+
+### Application type
 
 The possible application types are as follows:
 
@@ -341,6 +353,9 @@ The possible application types are as follows:
 |FUNCTIONAL_APPLICATIONS|
 |KNOWLEDGE_AND_DOCUMENT_MANAGEMENT|
 |PERSONAL_PRODUCTIVITY_APPLICATIONS|
+
+
+### Technology categories
 
 The possible technology categories are as follows:
 
@@ -363,7 +378,7 @@ The possible technology categories are as follows:
 |TEMPLATING|
 |WEB|
 
-### Systems lifecycle management
+### System lifecycle management
 
 Sigrid allows you to deactivate a given system.
 
@@ -394,7 +409,7 @@ The response format on a successful request is, as an example, for SIG's `bch` s
 
 If the request body is not in the expected format, the returned response status will be: `400 BAD REQUEST`.
 
-### Systems goals
+### System goals
 
 Sigrid allows you to define quality objectives for a system. This helps to set some realistic and feasible expectations per system, considering both the system's business context and its current technical state: business-critical systems using modern technologies require more ambitious targets than legacy systems.
 
