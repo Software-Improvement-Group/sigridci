@@ -191,19 +191,33 @@ Please Note: dependency exclusions may be necessary in case your system resolves
 
 **Note: This requires a [Sigrid license for Software Security](https://www.softwareimprovementgroup.com/solutions/sigrid-software-security/). Without this license, you will not be able to see security results in Sigrid.**
 
-Sigrid uses a combination of its own security checks and security checks performed by third party tools. It then combines the results, benchmarks them, and reports on the overall results.
+### Third Party Findings
+
+Sigrid uses a combination of its own security checks and security checks performed by third party tools. It then combines the results, benchmarks them, and reports on the overall results. As an example, the following configuration options are available to include or exclude certain code and/or security analyzers:
 
     thirdpartyfindings:
       enabled: true
       exclude:
         - ".*/scripts/.*[.]sh"
-          
-The `thirdpartyfindings` section supports the following options:
+      disabled_analyzers:
+        - "Google ErrorProne"
+        - "SemGrep"
+      enabled_analyzers:
+        - "VMWare CSA"
 
-| Option name | Required? | Description                                                                         |
-|-------------|-----------|-------------------------------------------------------------------------------------|
-| `enabled`   | Yes       | Set to `true` to enable security analysis.                                          |
-| `exclude`   | No        | List of file/directory patterns that should be excluded from the security analysis. |
+       
+This `thirdpartyfindings` section in the scope file supports the following options:
+
+| Option name             | Required? | Description                                                                         |
+|-------------------------|-----------|-------------------------------------------------------------------------------------|
+| `enabled`               | Yes       | Set to `true` to enable security analysis.                                          |
+| `exclude`               | No        | List of file/directory patterns that should be excluded from the security analysis. |
+| `disabled_analyzers`[1] | No        | Defining a list of disabled specific scanning tools.                                |
+| `enabled_analyzers` [1] | No        | Defining a list of specific scanning tools to enable (if not enabled by default).   |
+
+[1]: You can see a list of already enabled analyzers in your security overview if you group by Finding >> Origin ([see the system security page](https://docs.sigrid-says.com/capabilities/system-security.html#different-possible-grouping-of-security-findings)).
+
+For the list of all supported analyzers, see [the specific technology support section](technology-support.md#supported-security-analyzers).
 
 ## Architecture Quality
 
