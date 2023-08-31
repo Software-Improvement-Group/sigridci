@@ -21,7 +21,7 @@ The various options and sections are explained in more detail in the remainder o
 
 ## When should you customize the configuration?
 
-Whenever you need behavior that is custom for your project. Common examples are to [exclude code](#excluding-files-and-directories), to [include/exclude specific parts of the code or programming languages](#defining-include-and-exclude-patterns), or to[resolving ambiguities](#resolving-pattern-match-ambiguities-that-may-stall-analysis).
+Whenever you need behavior that is custom for your project. Common examples are to [exclude code](#excluding-files-and-directories), to [include/exclude specific parts of the code or programming languages](#defining-include-and-exclude-patterns), or to [resolve ambiguities](#resolving-pattern-match-ambiguities-that-may-stall-analysis).
 
 ## Editing scope files
 
