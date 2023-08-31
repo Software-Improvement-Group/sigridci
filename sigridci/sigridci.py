@@ -33,7 +33,7 @@ def parsePublishOptions(args):
         runMode=parseRunMode(args),
         sourceDir=args.source,
         excludePatterns=args.exclude.split(","),
-        includePatterns=[f'/{path}/' for path in args.include.split(",")],
+        includePatterns=args.include.split(","),
         includeHistory=args.include_history,
         showUploadContents=args.showupload,
         targetRating=parseTarget(args.targetquality),
