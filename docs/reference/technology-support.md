@@ -1,9 +1,9 @@
 Technology support
 ==================
 
-The table below describes all technologies that can be analyzed by Sigrid. The first column refers to how the technology should be named in the [configuration file](analysis-scope-configuration.md). 
+The table below describes all technologies that can be analyzed by Sigrid. The first column refers to how the technology should be named in the [configuration file](analysis-scope-configuration.md), specifically for setting languages in your scope file, [see the technology support section](../reference/analysis-scope-configuration.md#technology-support).
 
-Technologies are sometimes referred to by multiple names. For example, some people call their code NodeJS instead of JavaScript. If we're being pedantic, JavaScript is the name of the programming language and NodeJS is the name of the runtime. However, in practice many people just use these names interchangeably, so both are listed to prevent confusion.
+Technologies are sometimes referred to by multiple names. For example, some people call their code NodeJS instead of JavaScript. If we are being pedantic, JavaScript is the name of the programming language and NodeJS is the name of the runtime. However, in practice many people just use these names interchangeably, so both are listed to prevent confusion.
 
 Finally, note the column "supported Sigrid capabilities" does not list Open Source Health. The reason is that Open Source Health is based on open source ecosystems, not specific technologies. Refer to the section on [supported technologies for Open Source Health](#supported-open-source-ecosystems) for more information.
 
@@ -353,6 +353,36 @@ In addition to supporting 300+ technologies, Sigrid also supports various open s
 | Unmanaged JAR files   | Java                   |
 | Unmanaged DLL files   | C#                     |
 | Unmanaged JS files    | JavaScript             |
+
+
+## Supported security analyzers
+These are the supported security analyzers as you may see them in your security findings overview. You can use the literal text in the `Display name` below to enable or disable specific analyzers, if deemed necessary. For such configuration, see the [Security/Third Party Findings section section on the system security page](../reference/analysis-scope-configuration.md#third-party-findings).
+
+| Display name           | Technology                       | Note                       |
+|------------------------|----------------------------------|----------------------------|
+| Astree                 | C, C++                           |                            |
+| FlawFinder             | C                                | Semgrep plugin             |
+| ErrorProne.NET         | C#                               |                            |
+| Microsoft Code Quality | C#                               | FxCop                      |
+| MultithreadingAnalyzer | C#                               |                            |
+| Puma Security          | C#                               |                            |
+| SecurityCodeScan       | C#                               |                            |
+| SonarQube (C#)         | C#                               |                            |
+| KICS                   | Docker, Ansible, k8s, etc.       |                            |
+| FB Contrib             | Java                             |                            |
+| Facebook Infer         | Java                             | Disabled by default        |
+| FindSecBugs            | Java                             |                            |
+| Google ErrorProne      | Java                             |                            |
+| SonarQube (Java)       | Java                             |                            |
+| SpotBugs               | Java                             |                            |
+| MobSF                  | Java-Android                     | Semgrep plugin             |
+| SemGrep                | Java,Python,PHP,Ruby,JS,TS, etc. |                            |
+| VMWare CSA             | Java, C#, configurations         | Cloud Suitability Analyzer |
+| ESLint                 | JS,TS                            | Semgrep plugin             |
+| NodeJS Scan            | JS,TS                            | Semgrep plugin             |
+| Gosec                  | Go                               | Semgrep plugin             |
+| Bandit                 | Python                           | Semgrep plugin             |
+
 
 ## Requesting additional technology support
 

@@ -13,7 +13,7 @@ This is by far the simplest approach: in Sigrid, simply go to the system setting
 
 <img src="../images/metadata-ui.png" width="600" />
 
-Note the screenshot only shows part of the metadata page. The full page contains options related to the context in which the system is being developed, such as *Business criticality*, *Lifecycle phase*, and *Deployment type*.
+Note the screenshot only shows part of the metadata page. The full page contains options related to the context in which the system is being developed, such as *Business criticality*, *Lifecycle phase*, and *Deployment type*. All possible options can also be seen on the [Sigrid API metadata end point page](../reference/sigrid-api-documentation.md#system-metadata).
 
 They can be set with a drop-down menu. 
 
