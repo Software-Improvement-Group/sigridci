@@ -88,5 +88,11 @@ class SystemUploadPacker:
         return False
 
     def isIncluded(self, filePath):
+        includePatterns = self.options.includePatterns or []
+        if len(includePatterns) == 0:
+            return True
         normalizedPath = filePath.replace("\\", "/")
-        return self.options.includePattern in normalizedPath
+        for include in includePatterns:
+            if include != "" and include.strip() in normalizedPath:
+                return True
+        return False
