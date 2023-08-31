@@ -28,6 +28,10 @@ inputs:
     description: "Comma-separated list of files and directories that should not be uploaded."
     required: false
     default: "/bin/"
+  include:
+    description: "Comma-separated list of files and directories that should be included in the upload."
+    required: false
+    default: "/bin/"
   includehistory:
     description: "When enabled, includes the repository history in the upload (true/false). Required for architecture quality analysis."
     required: false
