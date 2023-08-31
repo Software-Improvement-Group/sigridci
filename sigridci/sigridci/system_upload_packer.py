@@ -55,7 +55,7 @@ class SystemUploadPacker:
         for root, dirs, files in os.walk(self.options.sourceDir):
             for file in sorted(files):
                 filePath = os.path.join(root, file)
-                if file != outputFile and not self.isExcluded(filePath):
+                if file != outputFile and (not self.isExcluded(filePath) and self.isIncluded(filePath)):
                     relativePath = os.path.relpath(os.path.join(root, file), self.options.sourceDir)
                     hasContents = True
                     if self.options.showUploadContents:
@@ -86,3 +86,7 @@ class SystemUploadPacker:
             if exclude != "" and exclude.strip() in normalizedPath:
                 return True
         return False
+
+    def isIncluded(self, filePath):
+        normalizedPath = filePath.replace("\\", "/")
+        return self.options.includePattern in normalizedPath
