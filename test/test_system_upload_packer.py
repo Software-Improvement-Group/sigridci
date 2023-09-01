@@ -100,13 +100,9 @@ class SystemUploadPackerTest(TestCase):
     def testCustomExcludePatterns(self):
         sourceDir = tempfile.mkdtemp()
         self.createTempFile(sourceDir, "a.py", "a")
-        subDirB = sourceDir + "/b"
-        os.mkdir(subDirB)
-        self.createTempFile(subDirB, "b.py", "b")
-
-        subDirC = sourceDir + "/c"
-        os.mkdir(subDirC)
-        self.createTempFile(subDirC, "c.py", "c")
+        subDir = sourceDir + "/b"
+        os.mkdir(subDir)
+        self.createTempFile(subDir, "b.py", "b")
         
         outputFile = tempfile.mkstemp()[1]
 
