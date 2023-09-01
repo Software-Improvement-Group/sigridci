@@ -33,7 +33,6 @@ class PublishOptions:
     sourceDir: str
     subsystem: str = ""
     excludePatterns: List[str] = field(default_factory=lambda: [])
-    includePatterns: List[str] = field(default_factory=lambda: [])
     includeHistory: bool = False
     showUploadContents: bool = False
     targetRating: Union[float, str] = "sigrid"
