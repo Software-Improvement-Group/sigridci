@@ -33,7 +33,6 @@ def parsePublishOptions(args):
         runMode=parseRunMode(args),
         sourceDir=args.source,
         excludePatterns=args.exclude.split(","),
-        includePatterns=args.include.split(","),
         includeHistory=args.include_history,
         showUploadContents=args.showupload,
         targetRating=parseTarget(args.targetquality),
@@ -67,7 +66,6 @@ if __name__ == "__main__":
     parser.add_argument("--publish", action="store_true", help="Publishes analysis results to Sigrid.")
     parser.add_argument("--publishonly", action="store_true", help="Only publishes to Sigrid without waiting for results.")
     parser.add_argument("--exclude", type=str, default="", help="Comma-separated list of files/directories to exclude.")
-    parser.add_argument("--include", type=str, default="", help="Comma-separated list of files/directories to include.")
     parser.add_argument("--showupload", action="store_true", help="Logs the contents of the upload published to Sigrid.")
     parser.add_argument("--include-history", action="store_true", help="Publish repository history to Sigrid.")
     parser.add_argument("--sigridurl", type=str, default="https://sigrid-says.com", help=SUPPRESS)
