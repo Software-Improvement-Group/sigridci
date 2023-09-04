@@ -96,7 +96,7 @@ In the Grouping menu in the top left under *"Finding"*, the following types of g
 * *"Origin"* refers to the originating tool of the finding.
 * *"Severity"* orders on level of severity (based on CVSS).
 * *"Status"* lists the statuses as [mentioned above](#different-statuses-of-security-findings).
-* *"Type"* shows a specific list of vulnerabilities. This is especially useful for technical analysis, since sometimes, a whole category/type of findings may be set to *"False positive"*. 
+* *"Type"* shows a specific list of vulnerabilities. This is especially useful for technical analysis, since sometimes, a whole category/type of findings may be set to *"False positive"* (also, see [below in the prioritizing section](#a-general-typical-strategy-for-processing-security-findings)). 
 * *"Weakness"* orders on type of weaknesse (based on [MITRE's *CWE* database](https://cwe.mitre.org/)). Weaknesses are defined somewhat higher level than *"Type"*. 
 
 <img src="../images/system-security-grouping-location-ex-background.png" width="250" />
@@ -190,8 +190,8 @@ SIG can help with such threat analysis efforts as custom consultancy services. P
 ### Prioritizing security findings
   * **Sprint approaches:** A tactic during sprints is to use a kind of *Boy Scout* approach, where you compare findings for files while you are modifying them. This tends to be efficient because you are already working in/analyzing the code. Consider making this part of the *Definition of Done*. See also [the agile development workflow](../workflows/agile-development-process.md#for-maintainability-focus-on-technical-debt-that-is-affecting-you-right-now).
     * Please see the [Agile workflow page regarding refinement/planning](../workflows/agile-development-process.md#triage-security-and-osh-findings) for a further discussion on processing security findings in an Agile workflow. 
-* *Prioritizing by severity* is the typical approach, and this is faithful to agile practices (assuming you choose the action with the highest return first). This way you move from urgent to less urgent findings.
-* Prioritizing based on grouping by patterns means that you may exclude or solve many findings in one go. There are indeed cases when a whole class of findings can be excluded because for some reason the findings are not applicable or can be resolved in one place.
+* **Prioritizing by severity** is the typical approach, and this is faithful to agile practices (assuming you choose the action with the highest return first). This way you move from urgent to less urgent findings.
+* **Prioritizing by pattern grouping** means that you may exclude or solve many findings in one go. There are indeed cases when a whole class of findings can be excluded because for some reason the findings are not applicable or can be resolved in one place. You can arrive by this grouping e.g. by using "Finding Type" (specific vulnerability) or "CWE" (more general weakness). See our [section on grouping findings above](#different-possible-grouping-of-security-findings).
 
 ## SIG may offer consultancy services to help you with security
 Depending on your agreement with SIG, security expertise consultancy may be available. Or this can be offered as a separate consultancy effort. See also [this question in the security FAQ](faq-security.md#to-what-extent-does-sig-provide-consultancy-for-security-findings).
