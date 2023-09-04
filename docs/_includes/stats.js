@@ -1,9 +1,12 @@
 document.addEventListener("DOMContentLoaded", () => {
-    const url = document.location.href;
-    const t = new Date().getTime();
+    const _paq = window._paq = window._paq || [];
+    _paq.push(["trackPageView"]);
+    _paq.push(["enableLinkTracking"]);
+    _paq.push(["setTrackerUrl", "https://sigrid-says.com/usage/matomo.php"]);
+    _paq.push(["setSiteId", "4"]);
 
-    const stats = document.createElement("img");
-    stats.addEventListener("load", e => stats.style.display = "none");
-    stats.src = "https://sigrid-says.com/usage/matomo.php?idsite=4&amp;rec=1&amp;url=" + url + "&amp;t=" + t;
-    document.querySelector("body").appendChild(stats);
+    const statsElement = document.createElement("script");
+    statsElement.async = true;
+    statsElement.src = "https://sigrid-says.com/usage/matomo.js";
+    document.head.appendChild(statsElement);
 });
