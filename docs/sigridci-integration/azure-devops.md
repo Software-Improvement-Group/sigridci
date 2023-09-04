@@ -47,7 +47,7 @@ stages:
         continueOnError: true
         condition: "eq(variables['Build.SourceBranch'], 'refs/heads/main')"
         steps:
-          - bash: "sigridci.py --customer <example_customer_name> --system <example_customer_name> --source . --publishonly"
+          - bash: "sigridci.py --customer <example_customer_name> --system <example_system_name> --source . --publishonly"
             env:
               SIGRID_CI_TOKEN: $(SIGRID_CI_TOKEN)
             continueOnError: true

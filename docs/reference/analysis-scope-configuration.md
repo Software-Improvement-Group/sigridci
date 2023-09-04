@@ -19,12 +19,9 @@ The following example shows a typical example of the `sigrid.yaml` configuration
       
 The various options and sections are explained in more detail in the remainder of this page.
 
-General note:
----
-Reasons why you would want to change a system's scope configuration is to avoid double matches (which fails analysis), solve an `Remainder` (undefined) component or include/exclude specific parts of the code or programming languages. See specifically the [paragraph to exclude code](#excluding-files-and-directories), their [`include` and `exclude` syntax](#defining-include-and-exclude-patterns) and [resolving ambiguities](#resolving-pattern-match-ambiguities-that-may-stall-analysis).
+## When should you customize the configuration?
 
-For more details about the structure and syntax of scope files, you can refer to the JSON validation schema that Sigrid uses. For that purpose, see [the Sigrid scope file schema under *"resources"*](../../resources/sigrid-scope-file.schema.json).
----
+Whenever you need behavior that is custom for your project. Common examples are to [exclude code](#excluding-files-and-directories), to [include/exclude specific parts of the code or programming languages](#defining-include-and-exclude-patterns), or to [resolve ambiguities](#resolving-pattern-match-ambiguities-that-may-stall-analysis).
 
 ## Editing scope files
 
@@ -292,6 +289,28 @@ The `architecture` section in the configuration has its own `exclude` option, wh
         - ".*/index[.]ts"
         
 The list of exclude patterns works in the same way as the global, top-level `exclude` option. The difference is the global option excludes files and directories from *all* Sigrid capabilities, and the architecture `exclude` option excludes them from Architecture Quality but not from other Sigrid capabilities. See the [pattern section](#defining-include-and-exclude-patterns) for more information on writing these patterns.
+
+### Highlighting undesirable dependencies
+
+Architecture Quality allows you to mark certain dependencies as "undesirable", meaning they will be shown in red in [the architecture visualization](../capabilities/architecture-quality.md). You can indicate undesirable dependencies in the configuration like so: 
+
+    architecture:
+      enabled: true
+        undesirable_dependencies:
+          - source: "backend"
+            target: "legacy"
+            
+This example will mark all dependencies from the "backend" component to the "legacy" component as "undesirable". You can also use additional options to be more specific about *which type* of dependencies are undesirable:
+
+    architecture:
+      enabled: true
+        undesirable_dependencies:
+          - source: "backend"
+            target: "legacy"
+            bidirectional: true
+            type: code_call
+
+Adding `bidirectional: true` means the dependencies are undesirable in both directions. This is basically a shorthand notation so that you do not have to configure both `A -> B` and `B -> A` separately. The `type` option can be used to only consider certain types of dependencies. In the example, since one type has been defined, code dependencies are undesirable but other types (such as interface dependencies) are still allowed.
 
 ## Configuring multi-repo systems
 
