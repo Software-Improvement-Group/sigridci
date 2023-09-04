@@ -100,9 +100,13 @@ class SystemUploadPackerTest(TestCase):
     def testCustomExcludePatterns(self):
         sourceDir = tempfile.mkdtemp()
         self.createTempFile(sourceDir, "a.py", "a")
-        subDir = sourceDir + "/b"
-        os.mkdir(subDir)
-        self.createTempFile(subDir, "b.py", "b")
+        subDirB = sourceDir + "/b"
+        os.mkdir(subDirB)
+        self.createTempFile(subDirB, "b.py", "b")
+
+        subDirC = sourceDir + "/c"
+        os.mkdir(subDirC)
+        self.createTempFile(subDirC, "c.py", "c")
         
         outputFile = tempfile.mkstemp()[1]
 
@@ -111,8 +115,95 @@ class SystemUploadPackerTest(TestCase):
         uploadPacker.prepareUpload(outputFile)
 
         self.assertEqual(os.path.exists(outputFile), True)
-        self.assertEqual(ZipFile(outputFile).namelist(), ["a.py"])
+        self.assertEqual(ZipFile(outputFile).namelist(), ["a.py", "c/c.py"])
+
+    def testEmptyStringExcludePattern(self):
+        sourceDir = tempfile.mkdtemp()
+        self.createTempFile(sourceDir, "a.py", "a")
+        subDirB = sourceDir + "/b"
+        os.mkdir(subDirB)
+        self.createTempFile(subDirB, "b.py", "b")
+        subDirC = sourceDir + "/c"
+        os.mkdir(subDirC)
+        self.createTempFile(subDirC, "c.py", "c")
         
+        outputFile = tempfile.mkstemp()[1]
+
+        options = PublishOptions("aap", "noot", RunMode.FEEDBACK_ONLY, sourceDir, excludePatterns=[""])
+        uploadPacker = SystemUploadPacker(options)
+        uploadPacker.prepareUpload(outputFile)
+
+        self.assertEqual(os.path.exists(outputFile), True)
+        self.assertEqual(ZipFile(outputFile).namelist(), ["a.py", "c/c.py", "b/b.py"])
+
+    def testEmptyStringIncludePattern(self):
+        sourceDir = tempfile.mkdtemp()
+        self.createTempFile(sourceDir, "a.py", "a")
+        subDirB = sourceDir + "/b"
+        os.mkdir(subDirB)
+        self.createTempFile(subDirB, "b.py", "b")
+        subDirC = sourceDir + "/c"
+        os.mkdir(subDirC)
+        self.createTempFile(subDirC, "c.py", "c")
+        
+        outputFile = tempfile.mkstemp()[1]
+
+        options = PublishOptions("aap", "noot", RunMode.FEEDBACK_ONLY, sourceDir, includePatterns=[""])
+        uploadPacker = SystemUploadPacker(options)
+        uploadPacker.prepareUpload(outputFile)
+
+        self.assertEqual(os.path.exists(outputFile), True)
+        self.assertEqual(ZipFile(outputFile).namelist(), ["a.py", "c/c.py", "b/b.py"])
+
+    def testCustomIncludePatterns(self):
+        sourceDir = tempfile.mkdtemp()
+        self.createTempFile(sourceDir, "a.py", "a")
+        subDirB = sourceDir + "/b"
+        os.mkdir(subDirB)
+        self.createTempFile(subDirB, "b.py", "b")
+
+        subDirC = sourceDir + "/c"
+        os.mkdir(subDirC)
+        self.createTempFile(subDirC, "c.py", "c")
+
+        subDirD = sourceDir + "/d"
+        os.mkdir(subDirD)
+        self.createTempFile(subDirD, "d.py", "d")
+        
+        outputFile = tempfile.mkstemp()[1]
+
+        options = PublishOptions("aap", "noot", RunMode.FEEDBACK_ONLY, sourceDir, includePatterns=["/c/", "/d/"])
+        uploadPacker = SystemUploadPacker(options)
+        uploadPacker.prepareUpload(outputFile)
+
+        self.assertEqual(os.path.exists(outputFile), True)
+        self.assertEqual(ZipFile(outputFile).namelist(), ["c/c.py", "d/d.py"])
+
+    
+    def testCustomIncludeAndExcludePatterns(self):
+        sourceDir = tempfile.mkdtemp()
+        self.createTempFile(sourceDir, "a.py", "a")
+        subDirB = sourceDir + "/b"
+        os.mkdir(subDirB)
+        self.createTempFile(subDirB, "b.py", "b")
+
+        subDirC = subDirB + "/c"
+        os.mkdir(subDirC)
+        self.createTempFile(subDirC, "c.py", "c")
+
+        subDirD = subDirB + "/d"
+        os.mkdir(subDirD)
+        self.createTempFile(subDirD, "d.py", "d")
+        
+        outputFile = tempfile.mkstemp()[1]
+
+        options = PublishOptions("aap", "noot", RunMode.FEEDBACK_ONLY, sourceDir, includePatterns=["/b/"], excludePatterns=["/d/"])
+        uploadPacker = SystemUploadPacker(options)
+        uploadPacker.prepareUpload(outputFile)
+
+        self.assertEqual(os.path.exists(outputFile), True)
+        self.assertEqual(ZipFile(outputFile).namelist(), ["b/b.py", "b/c/c.py"])
+
     def testIncludeGitHistory(self):
         tempDir = tempfile.mkdtemp()
         subprocess.run(["git", "clone", "https://github.com/BetterCodeHubTraining/cspacman.git", tempDir])
@@ -180,4 +271,3 @@ class SystemUploadPackerTest(TestCase):
         with open(f"{dir}/{name}", "w") as fileRef:
             fileRef.write(contents)
         return f"{dir}/{name}"
-    

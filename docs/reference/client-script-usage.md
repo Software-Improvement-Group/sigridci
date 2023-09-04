@@ -30,7 +30,8 @@ The script takes a limited number of mandatory arguments. However, Sigrid CI's b
 | `--source`          | Yes      | .                   | Path of your project's source code. Use "." for current directory.                                       |
 | `--publish`         | No       | N/A                 | Automatically publishes analysis results to Sigrid. [1]                                                  |
 | `--publishonly`     | No       | N/A                 | Publishes analysis results to Sigrid, but *does not* provide feedback in the CI environment itself. [3]  |
-| `--exclude`         | No       | /build/,.png        | Comma-separated list of file and/or directory names that should be excluded from the upload. [4]         |
+| `--exclude`         | No       | /build/,.png        | Comma-separated list of file and/or directory names that should be excluded from the upload. [4][7]      |
+| `--include`         | No       | /build/,.png        | Comma-separated list of file and/or directory names that should be included in the upload. [6][7]        |
 | `--include-history` | No       | N/A                 | See [publishing your repository history](#publishing-your-repository-history).                           |
 | `--targetquality`   | No       | 3.5                 | See [defining quality targets](#defining-quality-targets). Used to decide if the CI step should fail.    |
 | `--showupload`      | No       | N/A                 | Logs the contents of the upload before submitting it to Sigrid.                                          |
@@ -42,6 +43,8 @@ Notes:
 3. Typically, you would use the `--publish` option when committing to the main/master branch, and you would *not* use it for pull requests. See below for more information.  
 4. These files and directories are excluded *on top of* Sigrid's default excludes. By default, Sigrid excludes things like third party libraries (e.g. `/node_modules/` for NPM libraries, build output (e.g. `/target/` for Maven builds), and generated code. 
 5. The `--subsystem` option can be used to map multiple repositories to the same Sigrid system. Refer to the [documentation on mapping repositories to systems](../organization-integration/systems.md) for more information.
+6. Include can be used to narrow down the upload to specific folders and/or files. In addition, exclude can be used to exclude files and folders from the included folders.
+7. Folders should always be surrounded by '/' characters
 
 ## What's the difference between `--publish` and `--publishonly`?
 
