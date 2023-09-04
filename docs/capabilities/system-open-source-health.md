@@ -57,3 +57,6 @@ If you change the category, the help mouseover will also change and provide you 
 ## Filtering internal dependencies
 Internal dependencies can be filtered manually, such that they will not be resolved with the Open Source Health APIs that Sigrid uses.
 [Please see the Open Source Health paragraph in our scope configuration document](../reference/analysis-scope-configuration.md#open-source-health) or [this related question in the FAQ](../capabilities/faq-security.md#does-sig-filter-when-resolving-our-systems-dependencies).
+
+## Attacking the findings list
+Since there is a plausible possibility that open source vulnerabilities are actually exploitable problems, this is the place to start as a security fix backlog. Of course, context matters. And not every update is of equal difficulty. See [the prioritization section on the security page](system-security.md#filtering-results-for-false-positives-starting-with-open-source-vulnerabilities) for more considerations.
