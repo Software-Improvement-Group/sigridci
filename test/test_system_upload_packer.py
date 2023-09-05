@@ -115,7 +115,7 @@ class SystemUploadPackerTest(TestCase):
         uploadPacker.prepareUpload(outputFile)
 
         self.assertEqual(os.path.exists(outputFile), True)
-        self.assertEqual(ZipFile(outputFile).namelist(), ["a.py", "c/c.py"])
+        self.assertEqual(sorted(ZipFile(outputFile).namelist()), ["a.py", "c/c.py"])
 
     def testEmptyStringExcludePattern(self):
         sourceDir = tempfile.mkdtemp()
@@ -134,7 +134,7 @@ class SystemUploadPackerTest(TestCase):
         uploadPacker.prepareUpload(outputFile)
 
         self.assertEqual(os.path.exists(outputFile), True)
-        self.assertEqual(ZipFile(outputFile).namelist(), ["a.py", "c/c.py", "b/b.py"])
+        self.assertEqual(sorted(ZipFile(outputFile).namelist()), ["a.py", "b/b.py", "c/c.py"])
 
     def testEmptyStringIncludePattern(self):
         sourceDir = tempfile.mkdtemp()
@@ -153,7 +153,7 @@ class SystemUploadPackerTest(TestCase):
         uploadPacker.prepareUpload(outputFile)
 
         self.assertEqual(os.path.exists(outputFile), True)
-        self.assertEqual(ZipFile(outputFile).namelist(), ["a.py", "c/c.py", "b/b.py"])
+        self.assertEqual(sorted(ZipFile(outputFile).namelist()), ["a.py", "b/b.py", "c/c.py"])
 
     def testCustomIncludePatterns(self):
         sourceDir = tempfile.mkdtemp()
@@ -177,7 +177,7 @@ class SystemUploadPackerTest(TestCase):
         uploadPacker.prepareUpload(outputFile)
 
         self.assertEqual(os.path.exists(outputFile), True)
-        self.assertEqual(ZipFile(outputFile).namelist(), ["c/c.py", "d/d.py"])
+        self.assertEqual(sorted(ZipFile(outputFile).namelist()), ["c/c.py", "d/d.py"])
 
     
     def testCustomIncludeAndExcludePatterns(self):
@@ -202,7 +202,7 @@ class SystemUploadPackerTest(TestCase):
         uploadPacker.prepareUpload(outputFile)
 
         self.assertEqual(os.path.exists(outputFile), True)
-        self.assertEqual(ZipFile(outputFile).namelist(), ["b/b.py", "b/c/c.py"])
+        self.assertEqual(sorted(ZipFile(outputFile).namelist()), ["b/b.py", "b/c/c.py"])
 
     def testIncludeGitHistory(self):
         tempDir = tempfile.mkdtemp()
