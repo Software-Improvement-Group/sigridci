@@ -157,7 +157,7 @@ For example, imagine that you have defined components manually and test code fol
    components:
       - name: "Back-end"
         include:
-          - ".*/backend/specific-component[^/]*-Tests?/.*[.]java" # Instead of defining production code with a cut-off directory of `.*/backend/specific-component/.*[.]java`, you could include test code in this way, if the naming convention is indeed followed consistently. 
+          - ".*/backend/specific-component[^/]*-[Tt]ests?/.*[.]java" # Instead of defining production code with a cut-off directory of `.*/backend/specific-component/.*[.]java`, you could include test code in this way, if the naming convention is indeed followed consistently and an example directory would be /backend/specific-component-integration-tests/. 
  
 
 
