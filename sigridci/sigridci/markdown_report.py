@@ -94,6 +94,9 @@ class MarkdownReport(Report):
         return categoryOrder
 
     def renderRefactoringCandidatesTable(self, refactoringCandidates):
+        if len(refactoringCandidates) == 0:
+            return ""
+
         md = ""
         md += "| Risk | System property | Location |\n"
         md += "|------|-----------------|----------|\n"
