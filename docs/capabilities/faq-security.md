@@ -57,7 +57,7 @@ Open Source Health produces security findings for the version of the open source
     
 
 ### We have a lot of (new) security findings. What should we do first?
-Please see [elaboration on such strategies in the system-level security page](system-security.md#a-general-typical-strategy-for-processing-security-findings), or [specifically the paragraph on filtering security findings](system-security.md#filtering-results-for-false-positives).
+Please see [elaboration on such strategies in the system-level security page](system-security.md#a-general-typical-strategy-for-processing-security-findings), or [specifically the paragraph on filtering security findings](system-security.md#filtering-results-for-false-positives-starting-with-open-source-vulnerabilities).
 
 ### To what extent does SIG provide consultancy for security findings?
 
