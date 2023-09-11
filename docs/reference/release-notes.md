@@ -10,6 +10,7 @@ SIG uses [continuous delivery](https://en.wikipedia.org/wiki/Continuous_delivery
   - Note: In case you formerly had both React and JavaScript in scope of Sigrid measurements and they were configured as separate technologies, then now you only the code together as part of JavaScript technology. This may have two effects for your maintainability metrics:
     - JavaScript volume in Person Months may have somewhat grown because different productivity factors between React and JavaScript are now equalized. The impact depends on the volume ratio React:JavaScript.
     - Call dependencies between React and JavaScript are now more accurate. Therefore you may seem more dependencies and this may result in a (slightly) lower module coupling score.   
+- **Command line options:** `--include` is added to the command line options of `sigridci.py`. `--exclude` already allowed you to remove specific folders / files from the upload. With the addition of `--include` you can now narrow down the uploaded folders / files even more by specifying the set of folders / files to include.
 
 ### August 9, 2023
 
