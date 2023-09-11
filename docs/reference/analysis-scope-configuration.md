@@ -119,13 +119,13 @@ Component detection is based on the project's directory structure. What "compone
 
 Components can be defined in several ways, which are explained below.
 
-**Option 1: Defining components based on directory depth**
+### **Option 1: Defining components based on directory depth**
 
 The simple option is to simply base the components on directory depth. The following example will use the project's top-level directories as components.
 
     component_depth: 1
     
-**Option 2: Defining components based on base directories**
+### **Option 2: Defining components based on base directories**
 
 In some projects, using directory depth will not accurately reflect the actual component structure. The more advanced options allows you to define components explicitly:
 
@@ -133,8 +133,9 @@ In some projects, using directory depth will not accurately reflect the actual c
       - "modules"
       - "modules/specific"
       - "" # This "empty string" includes the `root` directory, as it appears in the upload folder structure, as a separate component. While this is like setting `"component_depth: 1"`, in this way you are able to split only some folders into separate components (in this case, `"modules"` and `"modules/specific"`) 
+
       
-**Option 3: Defining components manually**
+### **Option 3: Defining components manually**
 
 In some cases the components really do not match the directory structure, and the only way to define components is by manually listing what should go where. In the example below, regular expressions are used to define what files and directories belong to each component. The syntax is identical to the patterns used in the `exclude` section. These `include` and `exclude` patterns work as explained in the [patterns section](#defining-include-and-exclude-patterns).
 
@@ -146,7 +147,19 @@ In some cases the components really do not match the directory structure, and th
         include:
           - ".*/cs/findbugs/log/.*"
            
-In general you should try to avoid defining components in this way: not because it is not possible, but because it is hard to maintain. This might work perfectly well for your system's *current* codebase, but what's going to happen when someone moves a file or adds a directory? This type of component configuration will require constant maintenance.
+In general you should try to avoid defining components in this way: not because it is not possible, but because it is hard to maintain. This might work perfectly well for your system's *current* codebase, but what is going to happen when someone moves a file or adds a directory? This type of component configuration will require constant maintenance.
+
+Note regarding test code mapping per component:
+In case that test code resides in the same directory tree as the base directories (i.e. deeper in the tree than production code) ***and*** they are correctly identified as test code (either by default detection or manually under `languages:`), test code will be mapped correctly to its corresponding component. Either way this implies a test code naming convention that is applied consistently. Which you would expect anyway. Note that on a higher level, the `production:` and `test:` filtering will split any code that ends up in scope between production and test. For this reason, you do not need to, and cannot, define production and test code within a component. 
+
+For example, imagine that you have defined components manually and test code follows a pattern where the component name is suffixed with `-Test` or `-Tests` as the last word in the folder name, a pattern could be configured like so:
+
+   components:
+      - name: "Back-end"
+        include:
+          - ".*/backend/specific-component[^/]*-[Tt]ests?/.*[.]java" # Instead of defining production code with a cut-off directory of `.*/backend/specific-component/.*[.]java`, you could include test code in this way, if the naming convention is indeed followed consistently and an example directory would be /backend/specific-component-integration-tests/. 
+ 
+
 
 ### Resolving pattern match ambiguities that may stall analysis
 An analysis may fail if pattern matches are ambiguous. Examples:
