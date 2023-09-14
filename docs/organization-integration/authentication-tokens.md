@@ -38,7 +38,7 @@ Sign in to Sigrid and navigate to the user settings page as explained above. The
 
 ## Expiriation of a token
 
-Tokens automatically expire after one year. You as a creator will get notification emails asking you to create a new token.
+Tokens automatically expire after one year. A month before the expiration date, you as a creator will get multiple notification emails asking you to create a new token.
 
 ## Token permissions
 
