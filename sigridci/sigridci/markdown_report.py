@@ -15,6 +15,7 @@
 import html
 import os
 
+from .objective import Objective, ObjectiveStatus
 from .report import Report
 
 
@@ -64,14 +65,17 @@ class MarkdownReport(Report):
         return md
 
     def renderSummary(self, feedback, options):
+        status = Objective.determineStatus(feedback, options)
         target = f"{options.targetRating:.1f} stars"
 
-        if not self.isFeedbackAvailable(feedback):
-            return "** You did not change any files that are measured by Sigrid **\n\n"
-        elif self.meetsObjectives(feedback, options):
+        if status == ObjectiveStatus.ACHIEVED:
             return f"**✅ You wrote maintainable code and passed your Sigrid objective of {target}**\n\n"
-        else:
+        elif status == ObjectiveStatus.IMPROVED:
+            return f"**↗️ You wrote maintainable code and passed your Sigrid objective of {target}**\n\n"
+        elif status == ObjectiveStatus.STAGNANT:
             return f"**❌ Your code failed to meet your Sigrid objective of {target}**\n\n"
+        else:
+            return "**You did not change any files that are measured by Sigrid **\n\n"
 
     def renderRatingsTable(self, feedback):
         md = ""
