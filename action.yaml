@@ -28,6 +28,10 @@ inputs:
     description: "Comma-separated list of files and directories that should not be uploaded."
     required: false
     default: "/bin/"
+  include:
+    description: "Comma-separated list of files and directories that should be included in the upload."
+    required: false
+    default: ""
   includehistory:
     description: "When enabled, includes the repository history in the upload (true/false). Required for architecture quality analysis."
     required: false
@@ -99,6 +103,8 @@ runs:
     - "--exclude"
     - ${{ inputs.exclude }}
     - ${{ (inputs.showupload == 'true' && '--showupload') || '--dummy' }}
+    - "--include"
+    - ${{ inputs.include }}
     - "--subsystem"
     - ${{ inputs.subsystem }}
   env:
@@ -119,4 +125,3 @@ runs:
 branding:
   icon: hexagon
   color: purple
-  
