@@ -71,7 +71,7 @@ class MarkdownReport(Report):
         if status == ObjectiveStatus.ACHIEVED:
             return f"**✅ You wrote maintainable code and passed your Sigrid objective of {target}**\n\n"
         elif status == ObjectiveStatus.IMPROVED:
-            return f"**↗️ You wrote maintainable code and passed your Sigrid objective of {target}**\n\n"
+            return f"**↗️ You improved your code's maintainability towards your Sigrid objective of {target}**\n\n"
         elif status == ObjectiveStatus.STAGNANT:
             return f"**❌ Your code failed to meet your Sigrid objective of {target}**\n\n"
         else:
