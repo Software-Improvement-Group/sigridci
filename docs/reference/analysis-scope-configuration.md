@@ -50,10 +50,10 @@ The following example specifies a component that includes all `.js` and `.jsx` f
 
     components:
     - name: "Our new React website"
-        include:
-          - ".*/frontend/.*[.]jsx?"
-        exclude:
-          - ".*[.]spec[.]jsx?" #excluding all `spec.js` files from this component, wherever they are; alternatively, limiting to files within a `/frontend/` directory tree, `.*/frontend/.*[.]spec[.]js`
+      include:
+      - ".*/frontend/.*[.]jsx?"
+      exclude:
+      - ".*[.]spec[.]jsx?" #excluding all `spec.js` files from this component, wherever they are; alternatively, limiting to files within a `/frontend/` directory tree, `.*/frontend/.*[.]spec[.]js`
           
 When you specify both `include` and `exclude` patterns, the exclude patterns take precedence. In this example, the file `frontend/home.jsx` would be included, but the file `frontend/example.spec.jsx` would be excluded. This is much easier and maintainable than trying `.*(?<![.]spec)[.]jsx?` under `include`, even though that would work.
 
@@ -61,14 +61,10 @@ Since we know that spec.js files are meant to be test files, what you probably w
 
     components:
     - name: "Our new React website"
-      production:
-        include:
-        - ".*/frontend/.*[.]jsx?"
-        exclude:
-        - ".*[.]spec[.]jsx?"
-      test:
-        include:
-        - ".*[.]spec[.]jsx?"
+      include:
+      - ".*/frontend/.*[.]jsx?"
+      exclude:
+      - ".*[.]spec[.]jsx?"
 
 As a convention, all `include` and `exclude` patterns always start with `.*/`. It is tempting to always define patterns relative to the root of the codebase, but it is important to realize that what is considered the "root" is flexible in Sigrid. Depending on how you [map your repositories to systems](../organization-integration/systems.md), the root of your repository might not match the root of the Sigrid system that contains your repository. Starting all patterns `.*/` will avoid confusion in such situations.
 
@@ -81,7 +77,7 @@ As a convention, all `include` and `exclude` patterns always start with `.*/`. I
 - Since the commonly used *`.*`* is greedy, with deep directory structures it may happen that your search term appears in other places than you want, e.g. deeper level directories. Being as specific as possible helps you catch the right folders and files. Commonly, you might be looking for specific file names, while those same search terms should not appear in directory names. For example, you may search for files with *Build* in the name, but avoiding */Build/* directories, since those may contain generated or compiled code. To find filenames specifically, or whenever you want to avoid a deeper level directory, a useful pattern is `[^/]*` or `[^/]+`. This pattern consumes characters as long as it does not find a `/`. When used as `/[^/]*[.]java` it will ensure to catch a filename ending with `.java`. You could also have defined a character set that excludes the folder separator *"/"* with a set like `.*/[\\w-][.]java`, but this is prone to omissions.  
 - Abide by the developer wisdom that solving a problem with a regular expression leads you to have 2 problems. Regular expressions are powerful and may even be fun, but try to match your needs with the simplest possible pattern. Matching "positive" patterns, including the `exclude` option, is far easier than trying with e.g. negative lookaheads `(?!..)`, because catching a full file path is difficult with its non-capturing behavior. There are cases where patterns may work such as `((?![unwanted string]).)+`, but these cases are hard to get right and debug. Also, negative lookbehinds (`?<!`) are not recommended ([rather use an `exclude` pattern as above](#defining-include-and-exclude-patterns)), because they require a known character length and position. 
 
-### YAML indentation rules
+### Scoping YAML indentation rules
 
 The configuration is sensitive to indentation.
 - System-wide elements are on the first column, like `exclude:` (the `exclude:` in the top of the configuration which defines a system-wide exclusion), `components:`, `languages:`.
@@ -123,13 +119,13 @@ Component detection is based on the project's directory structure. What "compone
 
 Components can be defined in several ways, which are explained below.
 
-**Option 1: Defining components based on directory depth**
+### **Option 1: Defining components based on directory depth**
 
 The simple option is to simply base the components on directory depth. The following example will use the project's top-level directories as components.
 
     component_depth: 1
     
-**Option 2: Defining components based on base directories**
+### **Option 2: Defining components based on base directories**
 
 In some projects, using directory depth will not accurately reflect the actual component structure. The more advanced options allows you to define components explicitly:
 
@@ -137,8 +133,9 @@ In some projects, using directory depth will not accurately reflect the actual c
       - "modules"
       - "modules/specific"
       - "" # This "empty string" includes the `root` directory, as it appears in the upload folder structure, as a separate component. While this is like setting `"component_depth: 1"`, in this way you are able to split only some folders into separate components (in this case, `"modules"` and `"modules/specific"`) 
+
       
-**Option 3: Defining components manually**
+### **Option 3: Defining components manually**
 
 In some cases the components really do not match the directory structure, and the only way to define components is by manually listing what should go where. In the example below, regular expressions are used to define what files and directories belong to each component. The syntax is identical to the patterns used in the `exclude` section. These `include` and `exclude` patterns work as explained in the [patterns section](#defining-include-and-exclude-patterns).
 
@@ -150,7 +147,19 @@ In some cases the components really do not match the directory structure, and th
         include:
           - ".*/cs/findbugs/log/.*"
            
-In general you should try to avoid defining components in this way: not because it is not possible, but because it is hard to maintain. This might work perfectly well for your system's *current* codebase, but what's going to happen when someone moves a file or adds a directory? This type of component configuration will require constant maintenance.
+In general you should try to avoid defining components in this way: not because it is not possible, but because it is hard to maintain. This might work perfectly well for your system's *current* codebase, but what is going to happen when someone moves a file or adds a directory? This type of component configuration will require constant maintenance.
+
+Note regarding test code mapping per component:
+In case that test code resides in the same directory tree as the base directories (i.e. deeper in the tree than production code) ***and*** they are correctly identified as test code (either by default detection or manually under `languages:`), test code will be mapped correctly to its corresponding component. Either way this implies a test code naming convention that is applied consistently. Which you would expect anyway. Note that on a higher level, the `production:` and `test:` filtering will split any code that ends up in scope between production and test. For this reason, you do not need to, and cannot, define production and test code within a component. 
+
+For example, imagine that you have defined components manually and test code follows a pattern where the component name is suffixed with `-Test` or `-Tests` as the last word in the folder name, a pattern could be configured like so:
+
+   components:
+      - name: "Back-end"
+        include:
+          - ".*/backend/specific-component[^/]*-[Tt]ests?/.*[.]java" # Instead of defining production code with a cut-off directory of `.*/backend/specific-component/.*[.]java`, you could include test code in this way, if the naming convention is indeed followed consistently and an example directory would be /backend/specific-component-integration-tests/. 
+ 
+
 
 ### Resolving pattern match ambiguities that may stall analysis
 An analysis may fail if pattern matches are ambiguous. Examples:
