@@ -71,7 +71,7 @@ You might have noticed that some dependencies are shown in red. These dependenci
 
 In some cases, you might want to communicate additional information through Sigrid's architecture view. Such information does not directly originate from the source code, but adds some context that makes the architecture easier to find and interpret. 
 
-You can define *groups* and *annotations* in [your configuration](../reference/analysis-scope-configuration.md#architecture-quality). This information will then be depicted as an overlap on top of the architecture visualization in Sigrid.
+You can define *groups* and *annotations* in [your configuration](../reference/analysis-scope-configuration.md#architecture-quality). This information will then be depicted as an overlay on top of the architecture visualization in Sigrid.
 
 <img src="../images/architecture-grouping.png" width="300" />
 
