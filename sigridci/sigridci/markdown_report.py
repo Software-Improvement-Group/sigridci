@@ -69,11 +69,11 @@ class MarkdownReport(Report):
         target = f"{options.targetRating:.1f} stars"
 
         if status == ObjectiveStatus.ACHIEVED:
-            return f"**✅ You wrote maintainable code and passed your Sigrid objective of {target}**\n\n"
+            return f"**✅ You wrote maintainable code and achieved your Sigrid objective of {target}**\n\n"
         elif status == ObjectiveStatus.IMPROVED:
             return f"**↗️ You improved your code's maintainability towards your Sigrid objective of {target}**\n\n"
         elif status == ObjectiveStatus.STAGNANT:
-            return f"**❌ Your code failed to meet your Sigrid objective of {target}**\n\n"
+            return f"**❌ Your code did not manage to improve towards your Sigrid objective of {target}**\n\n"
         else:
             return "**You did not change any files that are measured by Sigrid **\n\n"
 
