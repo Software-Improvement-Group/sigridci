@@ -152,6 +152,9 @@
         "type": {
           "type": "string"
         },
+        "count": {
+          "type": "integer"
+        },
         "bidirectional": {
           "type": "boolean"
         }
