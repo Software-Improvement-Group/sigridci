@@ -1,7 +1,6 @@
 # Importing Fortify on Demand security findings into Sigrid
 
-Sigrid allows you to import your security findings into Sigrid so you can use Sigrid as single source of truth for all software quality needs.\
-Imported findings will show up in the Security Findings page in Sigrid.
+Sigrid allows you to import your security findings into Sigrid so you can use Sigrid as single source of truth for all software quality needs. Imported findings will show up in the Security Findings page in Sigrid.
 
 ## Prerequisites
 
@@ -16,7 +15,7 @@ Sigrid does not specify how you run your scans. This can be on-demand in your pi
 
 The Sigrid integration uses Fortify's [VunerabilityExporter](https://github.com/fortify/FortifyVulnerabilityExporter) tool to extract the findings from Fortify in the `SARIF` format. This Sarif export file should be placed in a `.sigrid` folder in the root of your codebase and pushed to Sigrid. It will then be automatically processed when you push your code to Sigrid.
 
-To ensure compatibility with Sigrid, please use the provided Fortify VulnerabilityExporter configuration file. Place this configuration file in the `.sigrid` folder in your repository root: [Sigrid_Fortify_export.yml](#sigrid_fortify_exportyml)
+To ensure compatibility with Sigrid, please use the provided Fortify `VulnerabilityExporter` configuration file. Place this configuration file in the `.sigrid` folder in your repository root: [Sigrid_Fortify_export.yml](#sigrid_fortify_exportyml).
 
 Below are guidelines for specific CI platforms. If yours is not listed, it will still be possible to integrate Fortify with Sigrid using a similar approach.
 
@@ -37,7 +36,7 @@ This Github action extracts the latest findings from Sigrid, commits the export 
    * `SIGRID_SYSTEM`: Your system name as defined in Sigrid.
 5. Change the top section so that this action runs when you want, e.g. on a specific schedule or event. Default: Daily at 5:30 AM. [Github docs on triggering actions](https://docs.github.com/en/actions/using-workflows/events-that-trigger-workflows).
 
-Note that this action also includes the `sigrid-publish` workflow to push all code to Sigrid. (The last two steps in this action) This is optional if you are already using a separate action to push code to Sigrid, but pushing too often is not harmful.
+Note that this action also includes the `sigrid-publish` workflow to push all code to Sigrid. This is optional if you are already using a separate action to push code to Sigrid, but pushing too often is not harmful.
 
 {% raw %}
 ```yml
@@ -96,7 +95,7 @@ jobs:
 
 ### Gitlab / BitBucket
 
-There are no detailed instructions at this time. However, the Fortify VulnerabilityExporter documentation explains how to enable the exporter for [Gitlab](https://github.com/fortify/FortifyVulnerabilityExporter/blob/main/USAGE.md#gitlab-integration) and [Bitbucket](https://github.com/fortify/FortifyVulnerabilityExporter/blob/main/USAGE.md#bitbucket-integration) Please use these instructions together with the [Sigrid_Fortify_export.yml](#sigrid_fortify_exportyml) export configuration file and ensure that the resulting SARIF file is committed to the `.sigrid` folder in the repository root. It can then be published to Sigrid alongside the code using the Sigrid CI integration for Gitlab or Bitbucket.
+There are no detailed instructions at this time. However, the Fortify `VulnerabilityExporter` documentation explains how to enable the exporter for [Gitlab](https://github.com/fortify/FortifyVulnerabilityExporter/blob/main/USAGE.md#gitlab-integration) and [Bitbucket](https://github.com/fortify/FortifyVulnerabilityExporter/blob/main/USAGE.md#bitbucket-integration) Please use these instructions together with the [Sigrid_Fortify_export.yml](#sigrid_fortify_exportyml) export configuration file and ensure that the resulting SARIF file is committed to the `.sigrid` folder in the repository root. It can then be published to Sigrid alongside the code using the Sigrid CI integration for Gitlab or Bitbucket.
 
 
 ### Sigrid_Fortify_export.yml
