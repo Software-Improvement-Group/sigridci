@@ -2,8 +2,7 @@
 
 **Note: This documentation does not yet completely describe how to export Checkmarx results using your CI platform, but it does provide pointers for doing so. Please contact SIG support if you need help getting up and running.**
 
-Sigrid allows you to import your security findings into Sigrid so you can use Sigrid as single source of truth for all software quality needs.\
-Imported findings will show up in the Security Findings page in Sigrid.
+Sigrid allows you to import your security findings into Sigrid so you can use Sigrid as single source of truth for all software quality needs. Imported findings will show up in the Security Findings page in Sigrid.
 
 ## Prerequisites
 
@@ -12,7 +11,7 @@ Imported findings will show up in the Security Findings page in Sigrid.
 
 ## Running scans with Checkmarx
 
-Sigrid does not specify how you run your scans. This can be on-demand in your pipeline, or on a regular schedule. For setting up Checkmarx and running scans, please use the [Checkmarx SAST documentation](https://checkmarx.com/resource/documents/en/34965-46398-sast-user-guide.html).
+Sigrid does not specify how you run should your scans. This can be on-demand in your pipeline, or scheduled. For setting up Checkmarx and running scans, please use the [Checkmarx SAST documentation](https://checkmarx.com/resource/documents/en/34965-46398-sast-user-guide.html).
 
 ## Importing results into Sigrid
 
@@ -21,7 +20,7 @@ Checkmarx results can be exported using the tool [CxFlow](https://github.com/che
 - [CxFlow download page](https://github.com/checkmarx-ltd/cx-flow/releases)
 - [CxFlow documentation](https://github.com/checkmarx-ltd/cx-flow/wiki/)
 
-Below is a sample CxFlow configuration file that can be used. It should be tailored to your situation, but the export format should be Sarif. the [CxFlow wiki](https://github.com/checkmarx-ltd/cx-flow/wiki/Configuration) documents available configuration options.
+Below is a sample CxFlow configuration file that can be used. It should be tailored to your situation, but the export format should be Sarif. See the [CxFlow wiki](https://github.com/checkmarx-ltd/cx-flow/wiki/Configuration) documents available configuration options.
 
 This can be executed in a CI pipeline. CxFlow provides [tutorials to integrate with various CI platforms](https://github.com/checkmarx-ltd/cx-flow/wiki/Tutorials). The simplest version is running e.g.: `java -jar cx-flow.jar --spring.config.location=cxflow-config.yml --scan --cx-project=<project> -- app=<app> --f=<codebase>`
 
