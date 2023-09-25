@@ -328,11 +328,11 @@ You can define architecture groups and annotations, and these annotations are th
     architecture:
       enabled: true
       grouping:
-        name: "Title of my architecture group"
-        include:
-          - some_component
-          - other_component
-        annotation: "Slightly longer text that adds more context beyond just the name."
+        - name: "Title of my architecture group"
+          include:
+            - some_component
+            - other_component
+          annotation: "Slightly longer text that adds more context beyond just the name."
         
 The contents of the `include` option refer to the component names you see in Architecture Quality.
 
