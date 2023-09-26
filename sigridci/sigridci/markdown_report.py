@@ -42,7 +42,7 @@ class MarkdownReport(Report):
         unchanged = self.filterRefactoringCandidates(feedback, ["unchanged"])
 
         md = "# Sigrid maintainability feedback\n\n"
-        md += self.renderSummary(feedback, options)
+        md += self.renderSummary(feedback, options) + "\n\n"
         md += f"Sigrid compared your code against the baseline of {self.formatBaseline(feedback)}.\n\n"
 
         md += "## 👍 What went well?\n\n"
@@ -69,13 +69,13 @@ class MarkdownReport(Report):
         target = f"{options.targetRating:.1f} stars"
 
         if status == ObjectiveStatus.ACHIEVED:
-            return f"**✅ You wrote maintainable code and achieved your Sigrid objective of {target}**\n\n"
+            return f"**✅  You wrote maintainable code and achieved your Sigrid objective of {target}**"
         elif status == ObjectiveStatus.IMPROVED:
-            return f"**↗️ You improved your code's maintainability towards your Sigrid objective of {target}**\n\n"
+            return f"**↗️  You improved your code's maintainability towards your Sigrid objective of {target}**"
         elif status == ObjectiveStatus.STAGNANT:
-            return f"**❌ Your code did not manage to improve towards your Sigrid objective of {target}**\n\n"
+            return f"**❌  Your code did not manage to improve towards your Sigrid objective of {target}**"
         else:
-            return "**You did not change any files that are measured by Sigrid **\n\n"
+            return "**🟰  You did not change any files that are measured by Sigrid**"
 
     def renderRatingsTable(self, feedback):
         md = ""
@@ -94,8 +94,7 @@ class MarkdownReport(Report):
         return [rc for rc in feedback["refactoringCandidates"] if rc["category"] in categories]
 
     def sortRefactoringCandidates(self, rc):
-        categoryOrder = list(self.RISK_CATEGORY_SYMBOLS).index(rc["riskCategory"])
-        return categoryOrder
+        return list(self.RISK_CATEGORY_SYMBOLS).index(rc["riskCategory"])
 
     def renderRefactoringCandidatesTable(self, refactoringCandidates):
         if len(refactoringCandidates) == 0:
@@ -112,14 +111,3 @@ class MarkdownReport(Report):
             md += f"| {symbol} | {metric} | {location} |\n"
 
         return md + "\n"
-
-    def formatRefactoringCandidateLink(self, rc):
-        entries = rc["subject"].split("::")[-1].split("\n")
-        codeLinkBase = os.environ.get("CODE_LINK_BASE", "")
-
-        if codeLinkBase:
-            extractLabel = lambda entry: entry.replace("(", "\\(").replace(")", "\\)").strip()
-            extractPath = lambda entry: entry.split(":")[0].split("(")[0].strip()
-            return ", ".join([f"[{extractLabel(entry)}]({codeLinkBase}/{extractPath(entry)})" for entry in entries])
-        else:
-            return ", ".join([entry for entry in entries])

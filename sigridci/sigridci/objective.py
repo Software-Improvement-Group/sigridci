@@ -35,7 +35,7 @@ class Objective:
             return ObjectiveStatus.UNKNOWN
         elif rating >= target:
             return ObjectiveStatus.ACHIEVED
-        elif before != None and rating >= before:
+        elif before != None and rating > before:
             return ObjectiveStatus.IMPROVED
         else:
             return ObjectiveStatus.STAGNANT
