@@ -67,6 +67,14 @@ You might have noticed that some dependencies are shown in red. These dependenci
 
 <img src="../images/architecture-undesirable-dependency.png" width="350" />
 
+### Grouping and annotating components
+
+In some cases, you might want to communicate additional information through Sigrid's architecture view. Such information does not directly originate from the source code, but adds some context that makes the architecture easier to find and interpret. 
+
+You can define *groups* and *annotations* in [your configuration](../reference/analysis-scope-configuration.md#architecture-quality). This information will then be depicted as an overlay on top of the architecture visualization in Sigrid.
+
+<img src="../images/architecture-grouping.png" width="300" />
+
 ## Frequently asked questions
 
 See [Architecture Quality: frequently asked questions](faq-architecture.md) for more detailed information on operational details regarding Architecture Quality. This includes questions regarding uploading code, technology support, and configuration.

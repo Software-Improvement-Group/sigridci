@@ -301,7 +301,7 @@ The list of exclude patterns works in the same way as the global, top-level `exc
 
 ### Highlighting undesirable dependencies
 
-Architecture Quality allows you to mark certain dependencies as "undesirable", meaning they will be shown in red in [the architecture visualization](../capabilities/architecture-quality.md). You can indicate undesirable dependencies in the configuration like so: 
+Architecture Quality allows you to [mark certain dependencies as undesirable](../capabilities/architecture-quality.md#highlighting-undesirable-dependencies). You can configure which dependencies should be considered undesirable:
 
     architecture:
       enabled: true
@@ -320,6 +320,21 @@ This example will mark all dependencies from the "backend" component to the "leg
             type: code_call
 
 Adding `bidirectional: true` means the dependencies are undesirable in both directions. This is basically a shorthand notation so that you do not have to configure both `A -> B` and `B -> A` separately. The `type` option can be used to only consider certain types of dependencies. In the example, since one type has been defined, code dependencies are undesirable but other types (such as interface dependencies) are still allowed.
+
+### Grouping and annotating components in Architecture Quality
+
+You can define architecture groups and annotations, and these annotations are then [displayed on top of the architecture visualization](../capabilities/architecture-quality.md#grouping-and-annotating-components). As with the other customization options, this is done in the configuration:
+
+    architecture:
+      enabled: true
+      grouping:
+        - name: "Title of my architecture group"
+          include:
+            - some_component
+            - other_component
+          annotation: "Slightly longer text that adds more context beyond just the name."
+        
+The contents of the `include` option refer to the component names you see in Architecture Quality.
 
 ## Configuring multi-repo systems
 
