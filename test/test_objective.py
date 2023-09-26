@@ -45,13 +45,18 @@ class ObjectiveTest(TestCase):
         status = Objective.determineStatus(feedback, self.options)
         self.assertEqual(status, ObjectiveStatus.IMPROVED)
 
-    def testImprovedComparedToBaseline(self):
-        feedback = self.mockFeedback(3.2, None, 3.3)
+    def testImprovedComparedToBefore(self):
+        feedback = self.mockFeedback(3.4, 3.2, 3.3)
         status = Objective.determineStatus(feedback, self.options)
         self.assertEqual(status, ObjectiveStatus.IMPROVED)
 
     def testStagnantIfObjectiveNotMet(self):
         feedback = self.mockFeedback(4.0, 3.0, 3.0)
+        status = Objective.determineStatus(feedback, self.options)
+        self.assertEqual(status, ObjectiveStatus.STAGNANT)
+
+    def testStagnantIfCodeGotWorse(self):
+        feedback = self.mockFeedback(4.0, 3.0, 2.8)
         status = Objective.determineStatus(feedback, self.options)
         self.assertEqual(status, ObjectiveStatus.STAGNANT)
 
