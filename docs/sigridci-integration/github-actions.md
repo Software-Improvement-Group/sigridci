@@ -88,13 +88,6 @@ jobs:
         env:
           SIGRID_CI_TOKEN: "${{ secrets.SIGRID_CI_TOKEN }}"
         run: "./sigridci/sigridci/sigridci.py --customer <example_customer_name> --system <example_system_name> --source ."
-      - name: "Save Sigrid CI results"
-        if: always()
-        uses: actions/upload-artifact@v2
-        with:
-          path: "sigrid-ci-output/**"
-          retention-days: 7
-          if-no-files-found: ignore
       - name: "Sigrid pull request feedback"
         uses: mshick/add-pr-comment@v2
         if: always()
