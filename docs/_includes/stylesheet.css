@@ -94,10 +94,6 @@ h2, h3 {
     font-size: 10px !important;
 }
 
-.container nav .toc a.subSubPage {
-    padding-left: 80px !important;
-    font-size: 10px !important;
-}
 .container nav .currentCategory {
     display: block;
 }
