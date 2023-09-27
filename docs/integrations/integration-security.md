@@ -18,8 +18,8 @@ Whichever security tool you use, the process of importing into Sigrid is largely
 
 Many tools that export SARIF will be supported with no or minimal extra effort from SIG, contact us to be sure. The below tools are guaranteed to work:
 
-- [Fortify (SARIF format)](system-security-importing-fortify.md)
-- [Checkmarx (SARIF format)](system-security-importing-checkmarx.md)
+- [Fortify (SARIF format)](system-security-fortify.md)
+- [Checkmarx (SARIF format)](system-security-checkmarx.md)
 
 ## Triaging findings: Which system is in control?
 Security findings typically need to be processed and triaged to determine whether they are false positives, prioritized, etc. When importing external results, you can choose to either do the triage in your own tool, or in Sigrid which [also provides this feature](system-security.md#changing-a-findings-status-and-audit-trail). To ensure consistency, make an explicit choice which system is in charge of triage. Where possible, Sigrid respects already triaged findings during its import.
