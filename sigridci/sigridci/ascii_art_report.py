@@ -14,6 +14,7 @@
 
 import sys
 
+from .objective import Objective, ObjectiveStatus
 from .publish_options import RunMode
 from .report import Report
 
@@ -84,14 +85,14 @@ class AsciiArtReport(Report):
                 print(self.formatRefactoringCandidate(rc), file=self.output)
 
     def getRatingColor(self, feedback, options, metric):
-        metricValue = feedback["newCodeRatings"].get(metric, None)
+        status = Objective.determineStatus(feedback, options)
 
-        if metricValue == None:
+        if status == ObjectiveStatus.UNKNOWN:
             return self.ANSI_BLUE
-        elif self.meetsObjectives(feedback, options) or self.meetsMetricObjective(feedback, options, metric):
-            return self.ANSI_GREEN
-        else:
+        if status == ObjectiveStatus.STAGNANT:
             return self.ANSI_RED
+        else:
+            return self.ANSI_GREEN
 
     def formatRefactoringCandidate(self, rc):
         category = ("(" + rc["category"] + ")").ljust(14)

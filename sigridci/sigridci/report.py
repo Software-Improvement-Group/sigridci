@@ -15,6 +15,8 @@
 import urllib.parse
 from datetime import datetime
 
+from .objective import Objective, ObjectiveStatus
+
 
 class Report:
     REFACTORING_CANDIDATE_METRICS = [
@@ -47,17 +49,6 @@ class Report:
             return naText
         return "%.1f" % ratings[metric]
 
-    def isFeedbackAvailable(self, feedback):
-        return feedback["newCodeRatings"].get("MAINTAINABILITY", None) != None
-
-    def meetsObjectives(self, feedback, options):
-        return self.meetsMetricObjective(feedback, options, "MAINTAINABILITY")
-
-    def meetsMetricObjective(self, feedback, options, metric):
-        rating = feedback["newCodeRatings"].get(metric, None)
-        target = options.targetRating
-        return rating == None or target in (None, "sigrid") or rating >= target
-
     def formatBaseline(self, feedback):
         if not feedback.get("baseline", None):
             return "N/A"
@@ -76,3 +67,16 @@ class Report:
     def getLandingPage(self, analysisId, options):
         targetRating = "%.1f" % options.targetRating
         return self.getSigridUrl(options) + f"/-/sigrid-ci/{analysisId}?targetRating={targetRating}"
+
+    def getSummaryText(self, feedback, options):
+        status = Objective.determineStatus(feedback, options)
+        target = f"{options.targetRating:.1f} stars"
+
+        if status == ObjectiveStatus.ACHIEVED:
+            return f"✅  You wrote maintainable code and achieved your Sigrid objective of {target}"
+        elif status == ObjectiveStatus.IMPROVED:
+            return f"↗️  You improved your code's maintainability towards your Sigrid objective of {target}"
+        elif status == ObjectiveStatus.STAGNANT:
+            return f"❌  Your code did not manage to improve towards your Sigrid objective of {target}"
+        else:
+            return "🟰  You did not change any files that are measured by Sigrid"
