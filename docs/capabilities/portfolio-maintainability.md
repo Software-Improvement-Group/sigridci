@@ -46,7 +46,7 @@ To gauge portfolio health and portfolio trends, example analysis questions are:
 
 ## Portfolio view by system lifecycle phase
 Below, systems are grouped by lifecycle phase. A lifecycle phase is an indication of a system’s maturity and "adaptability needs", their expected path of continuation. They range from: Initial development > Evolution > Servicing & maintenance > End-of-life. You will generally expect to see a higher maintainability for younger systems (Initial development and Evolution), because they have a long time of changes ahead of them. Lower code quality early on in a system’s life will hurt more over the long term than it would for a system that is already considered "end-of-life". 
-Setting this lifecycle metadata is discussed in the [metadata page](../organization-integration/metadata.md), or specifically its section on the [Sigrid API metadata end point page](../reference/sigrid-api-documentation.md#lifecycle-phase).
+Setting this lifecycle metadata is discussed in the [metadata page](../organization-integration/metadata.md), or specifically its section on the [Sigrid API metadata end point page](../integrations/sigrid-api-documentation.md#lifecycle-phase).
 
 <img src="../images/help-button.png" class="inline" /> The "?" help buttons explain the meaning of the different types of settings.
 
