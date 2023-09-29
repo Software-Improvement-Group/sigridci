@@ -13,7 +13,7 @@ The status of quality goals are shown in the System Objective Overview on the ri
 
 Since a period of time has been selected, the change within this period is shown. On the right side (Delta) a change will be noted by an equal sign, upward arrow, or downward arrow. Details of changes in objectives are shown in the Quality Overview bar on the top. 
 
-On the left, system details can be edited. Clicking on the edit button will bring you to the [metadata](../organization-integration/metadata.md) page. This will allow, and influence, filtering on these metadata fields, such as "Division" or "Business criticality". For all possible metadata options, see also the [Sigrid API metadata end point page](../reference/sigrid-api-documentation.md#system-metadata).
+On the left, system details can be edited. Clicking on the edit button will bring you to the [metadata](../organization-integration/metadata.md) page. This will allow, and influence, filtering on these metadata fields, such as "Division" or "Business criticality". For all possible metadata options, see also the [Sigrid API metadata end point page](../integrations/sigrid-api-documentation.md#system-metadata).
 
 ## Objectives
 
