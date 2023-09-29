@@ -106,8 +106,9 @@ class MarkdownReport(Report):
 
         for rc in sorted(refactoringCandidates, key=self.sortRefactoringCandidates):
             symbol = self.RISK_CATEGORY_SYMBOLS[rc["riskCategory"]]
-            metric = self.formatMetricName(rc["metric"])
+            metricName = self.formatMetricName(rc["metric"])
+            metricInfo = f"**{metricName}**<br />({rc['category'].title()})"
             location = html.escape(rc["subject"]).replace("::", "<br />").replace("\n", "<br />")
-            md += f"| {symbol} | {metric} | {location} |\n"
+            md += f"| {symbol} | {metricInfo} | {location} |\n"
 
         return md + "\n"

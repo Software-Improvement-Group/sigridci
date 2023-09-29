@@ -63,8 +63,8 @@ class MarkdownReportTest(TestCase):
             
             | Risk | System property | Location |
             |------|-----------------|----------|
-            | 🟠 | Unit Size | aap |
-            | 🟡 | Unit Size | noot |
+            | 🟠 | **Unit Size**<br />(Introduced) | aap |
+            | 🟡 | **Unit Size**<br />(Worsened) | noot |
             
             
             ## 📚 Remaining technical debt
@@ -73,7 +73,7 @@ class MarkdownReportTest(TestCase):
             
             | Risk | System property | Location |
             |------|-----------------|----------|
-            | 🔴 | Unit Complexity | mies |
+            | 🔴 | **Unit Complexity**<br />(Unchanged) | mies |
             
             
             ## Sigrid ratings
@@ -138,9 +138,9 @@ class MarkdownReportTest(TestCase):
         expected = """
             | Risk | System property | Location |
             |------|-----------------|----------|
-            | 🔴 | Unit Complexity | mies |
-            | 🟠 | Unit Size | aap |
-            | 🟡 | Unit Size | noot |
+            | 🔴 | **Unit Complexity**<br />(Introduced) | mies |
+            | 🟠 | **Unit Size**<br />(Introduced) | aap |
+            | 🟡 | **Unit Size**<br />(Introduced) | noot |
         """
 
         self.assertEqual(table.strip(), inspect.cleandoc(expected).strip())
