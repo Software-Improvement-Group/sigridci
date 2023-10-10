@@ -52,7 +52,7 @@ class AsciiArtReport(Report):
                 self.formatRating(feedback["newCodeRatings"], metric)
             ]
 
-            self.printTableRow(row, None)
+            self.printTableRow(row)
 
     def printTableRow(self, row):
         formattedRow = "%-27s%-25s%-18s" % tuple(row)
