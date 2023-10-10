@@ -42,7 +42,7 @@ class MarkdownReport(Report):
         unchanged = self.filterRefactoringCandidates(feedback, ["unchanged"])
 
         md = "# Sigrid maintainability feedback\n\n"
-        md += f"**{self.getSummaryText(feedback, options)}**\n\n"
+        md += f"{self.renderSummary(feedback, options)}\n\n"
         md += f"Sigrid compared your code against the baseline of {self.formatBaseline(feedback)}.\n\n"
 
         md += "## 👍 What went well?\n\n"
