@@ -415,7 +415,7 @@ Sigrid allows you to define quality objectives for a system. This helps to set s
 
 <img src="../images/sigrid-objectives.png" width="500" />
 
-Once you have defined quality objectives in Sigrid, you can [use these targets in Sigrid CI](client-script-usage.md#defining-quality-targets). You can also retrieve a system's objectives and corresponding targets via the API:
+Once you have defined quality objectives in Sigrid, you can [use these targets in Sigrid CI](../reference/client-script-usage.md#defining-quality-targets). You can also retrieve a system's objectives and corresponding targets via the API:
 
     GET https://sigrid-says.com/rest/analysis-results/api/v1/objectives/{customer}/{system}/config
     

@@ -17,6 +17,14 @@ SIG uses [continuous delivery](https://en.wikipedia.org/wiki/Continuous_delivery
 - **Technology support:** We have improved dependency detection for Kotlin. This means you might notice more dependencies for your Kotlin systems in Maintainability, Architecture Quality, and Code Explorer.
 - **Architecture Quality:** The terminology for the Knowledge Distribution metric has been changed, to make it more clear what is actually measured and how these numbers should be interpreted.
 
+### September 25, 2023
+
+- **Security:** Added "External Integrations" category. Moved [OSH](../capabilities/osh-upload-instructions.md) and [REST API](../integrations/sigrid-api-documentation.md) pages there. Added [SAST (static analysis tooling)](../integrations/integration-security.md) explanation page. Specifically added separate pages for integration with [Checkmarx](../integrations/integration-security-checkmarx.md) and [Fortify](../integrations/integration-security-fortify.md).
+- **Security:** Large additions in the [system security page](../capabilities/system-security.md), e.g. [filtering security results](../capabilities/system-security.md#filtering-results-for-false-positives-starting-with-open-source-vulnerabilities) and [prioritizing findings](../capabilities/system-security.md#prioritizing-security-findings). Also, a new section clarifying [the way that CVSS scores are calculated in Sigrid](../capabilities/system-security.md#context-and-meaning-of-cvss-security-metrics-from-asset-to-risk) and how they can be interpreted.
+- **Security:** Clarified and added [third party findings options](../reference/analysis-scope-configuration.md#third-party-findings) in the scoping configuration page. Clarifications in the [technology support page](../reference/technology-support.md), e.g. added a [third party findings analyzer technology support table](../reference/technology-support.md#supported-security-analyzers).
+- **Architecture Quality:** New [architecture quality](../capabilities/architecture-quality.md) options added, e.g. [grouping and annotating components](../capabilities/architecture-quality.md#grouping-and-annotating-components).
+- **Documentation:** Fixed unclarities in the [self-service configuration](analysis-scope-configuration.md) page regarding component definitions and mapping test code when components are defined manually.
+
 ### August 28, 2023
 
 - **Architecture Quality:** Sigrid can now identify and visualize dependencies that are considered undesirable. You can specify these dependencies in the [Sigrid configuration](analysis-scope-configuration.md#architecture-quality).
@@ -48,7 +56,7 @@ SIG uses [continuous delivery](https://en.wikipedia.org/wiki/Continuous_delivery
 - **Open Source Health:** The [Python Poetry](https://python-poetry.org) dependency management tool is now supported by Sigrid. Refer to the [Open Source Health upload instructions](../capabilities/osh-upload-instructions) for more information.
 - **Open Source Health:** When using Yarn, multiple versions for the same dependency would sometimes be reported. This has been changed so that only the version defined in `package.json` is reported by Sigrid.
 - **User management:** Non-administrator users can now use the User Management page to see who "their" administrator is, which is helpful if they were not quite sure who to contact on their side (which is sometimes the case for very large portfolios).
-- **Sigrid API:** It is now possible to [deactivate systems via the Sigrid API](sigrid-api-documentation.md). Previously, this could only be done via the user interface.
+- **Sigrid API:** It is now possible to [deactivate systems via the Sigrid API](../integrations/sigrid-api-documentation.md). Previously, this could only be done via the user interface.
 
 ### June 5, 2023
 
