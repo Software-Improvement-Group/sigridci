@@ -65,17 +65,7 @@ class MarkdownReport(Report):
         return md
 
     def renderSummary(self, feedback, options):
-        status = Objective.determineStatus(feedback, options)
-        target = f"{options.targetRating:.1f} stars"
-
-        if status == ObjectiveStatus.ACHIEVED:
-            return f"**✅  You wrote maintainable code and achieved your Sigrid objective of {target}**"
-        elif status == ObjectiveStatus.IMPROVED:
-            return f"**↗️  You improved your code's maintainability towards your Sigrid objective of {target}**"
-        elif status == ObjectiveStatus.WORSENED:
-            return f"**❌  Your code did not manage to improve towards your Sigrid objective of {target}**"
-        else:
-            return "**🟰  You did not change any files that are measured by Sigrid**"
+        return f"**{self.getSummaryText(feedback, options)}**"
 
     def renderRatingsTable(self, feedback):
         md = ""

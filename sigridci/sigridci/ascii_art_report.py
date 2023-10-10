@@ -54,12 +54,9 @@ class AsciiArtReport(Report):
 
             self.printTableRow(row, None)
 
-    def printTableRow(self, row, color=None):
+    def printTableRow(self, row):
         formattedRow = "%-27s%-25s%-18s" % tuple(row)
-        if color:
-            self.printColor(formattedRow, color)
-        else:
-            print(formattedRow, file=self.output)
+        print(formattedRow, file=self.output)
 
     def printHeader(self, header):
         print("", file=self.output)
@@ -80,16 +77,6 @@ class AsciiArtReport(Report):
         else:
             for rc in refactoringCandidates:
                 print(self.formatRefactoringCandidate(rc), file=self.output)
-
-    def getRatingColor(self, feedback, options):
-        status = Objective.determineStatus(feedback, options)
-
-        if status == ObjectiveStatus.UNKNOWN:
-            return self.ANSI_BLUE
-        if status == ObjectiveStatus.WORSENED:
-            return self.ANSI_RED
-        else:
-            return self.ANSI_GREEN
 
     def formatRefactoringCandidate(self, rc):
         category = ("(" + rc["category"] + ")").ljust(14)
