@@ -25,7 +25,7 @@ class AsciiArtReport(Report):
     ANSI_YELLOW = "\033[33m"
     ANSI_RED = "\033[91m"
     ANSI_BLUE = "\033[96m"
-    LINE_WIDTH = 89
+    LINE_WIDTH = 70
 
     def __init__(self, output=sys.stdout, ansiColors=True):
         super().__init__()
@@ -40,8 +40,7 @@ class AsciiArtReport(Report):
             self.printMetric(feedback, metric)
 
         self.printHeader("Maintainability ratings")
-        self.printTableRow(["System property", f"Baseline on {self.formatBaseline(feedback)}",
-                            "New/changed code", "Target", "Overall" if publish else ""] )
+        self.printTableRow(["System property", f"Baseline on {self.formatBaseline(feedback)}", "New/changed code"])
 
         for metric in self.METRICS:
             if metric == "MAINTAINABILITY":
@@ -50,15 +49,13 @@ class AsciiArtReport(Report):
             row = [
                 self.formatMetricName(metric),
                 "(" + self.formatRating(feedback["baselineRatings"], metric) + ")",
-                self.formatRating(feedback["newCodeRatings"], metric),
-                "%.1f" % options.targetRating if metric == "MAINTAINABILITY" else "",
-                self.formatRating(feedback["baselineRatings"], metric) if publish else ""
+                self.formatRating(feedback["newCodeRatings"], metric)
             ]
 
-            self.printTableRow(row, self.getRatingColor(feedback, options, metric))
+            self.printTableRow(row, None)
 
     def printTableRow(self, row, color=None):
-        formattedRow = "%-27s%-25s%-20s%-10s%-7s" % tuple(row)
+        formattedRow = "%-27s%-25s%-18s" % tuple(row)
         if color:
             self.printColor(formattedRow, color)
         else:
@@ -84,7 +81,7 @@ class AsciiArtReport(Report):
             for rc in refactoringCandidates:
                 print(self.formatRefactoringCandidate(rc), file=self.output)
 
-    def getRatingColor(self, feedback, options, metric):
+    def getRatingColor(self, feedback, options):
         status = Objective.determineStatus(feedback, options)
 
         if status == ObjectiveStatus.UNKNOWN:
