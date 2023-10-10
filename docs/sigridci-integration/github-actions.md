@@ -196,7 +196,7 @@ Sigrid CI provides feedback directly in your pull request:
 
 <img src="../images/github-markdown.png" width="600" />
 
-The end of the textual output provides a link to Sigrid, which you can use in order to use Sigrid for interpreting your analysis results.
+The end of the textual output provides a link to Sigrid, which you can follow to use Sigrid for interpreting your analysis results.
 
 ### Adding a Sigrid CI badge to your repository
 
