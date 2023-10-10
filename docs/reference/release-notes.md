@@ -3,6 +3,20 @@ Sigrid release notes
 
 SIG uses [continuous delivery](https://en.wikipedia.org/wiki/Continuous_delivery), meaning that every change to Sigrid or the underlying analysis is released once our development pipeline has completed. On average, we release somewhere between 10 and 20 times per day. This page therefore doesn't list every single change, since that would quickly lead to an excessively long list of small changes. Instead, this page lists Sigrid and analysis changes that we consider noteworthy for the typical Sigrid user.
 
+### October 9, 2023
+
+- **Sigrid CI:** The Sigrid CI output for GitHub has been significantly improved:
+  - Sigrid CI will now pass as long as your code improved *towards* your quality objectives. Previously, you had to *meet* your quality objectives for every single change. The old behavior can lead to frustration when you're maintaining legacy code and are trying to improve it: you can make significant improvements, but Sigrid CI would nevertheless fail your changes for not improving them *enough*. In retrospect this behavior is a bit too strict, especially in situations where the legacy code has significant technical debt but the quality objectives are very ambitious. The new behavior is much more encouraging in this type of situation, and the focus on incremental improvement also combines very well with an agile mindset.
+  - We also changes the structure of the Sigrid CI feedback. The feedback now follows the structure of an agile retrospective: we first focus on what went well, then on what could be better. This means more focus on the actual changes, and less focus on previously existing technical debt. We have discussed and validated this with many developers, and people find this way of communicating feedback is more fair.
+  - And finally, Sigrid CI is now displayed directly in the GitHub pull request, removing the need for additional clicks.
+  - Refer to the [GitHub integration documentation](../sigridci-integration/github-actions.md) for more information on how to integrate the new output in your pipeline.
+  - These improvements are initially provided for the Sigrid CI GitHub integration since it's the most used. Over the coming months, we will work towards bringing similar improvements to Sigrid CI integrations for other development platforms, prioritizing by usage.
+  
+<img src="../images/github-markdown.png" width="350" />
+
+- **Technology support:** We have improved dependency detection for Kotlin. This means you might notice more dependencies for your Kotlin systems in Maintainability, Architecture Quality, and Code Explorer.
+- **Architecture Quality:** The terminology for the Knowledge Distribution metric has been changed, to make it more clear what is actually measured and how these numbers should be interpreted.
+
 ### August 28, 2023
 
 - **Architecture Quality:** Sigrid can now identify and visualize dependencies that are considered undesirable. You can specify these dependencies in the [Sigrid configuration](analysis-scope-configuration.md#architecture-quality).

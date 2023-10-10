@@ -36,14 +36,14 @@ class PipelineSummaryReport(Report):
 
         # If you publish(only) we never break the build
         # We can break the build when running on a branch or pull request.
-        if options.runMode == RunMode.FEEDBACK_ONLY and status == ObjectiveStatus.STAGNANT:
+        if options.runMode == RunMode.FEEDBACK_ONLY and status == ObjectiveStatus.WORSENED:
             sys.exit(1)
 
     def printConclusionMessage(self, feedback, options, status):
         message = self.getSummaryText(feedback, options)
 
         asciiArt = AsciiArtReport(self.output, self.ansiColors)
-        color = asciiArt.ANSI_YELLOW if status == ObjectiveStatus.STAGNANT else asciiArt.ANSI_GREEN
+        color = asciiArt.ANSI_YELLOW if status == ObjectiveStatus.WORSENED else asciiArt.ANSI_GREEN
         asciiArt.printColor(f"** {message} **", asciiArt.ANSI_BOLD + color)
 
     def printLandingPage(self, analysisId, options):

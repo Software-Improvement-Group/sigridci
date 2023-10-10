@@ -47,7 +47,7 @@ class JUnitFormatReport(Report):
         status = Objective.determineStatus(feedback, options)
         failures = []
 
-        if status == ObjectiveStatus.STAGNANT:
+        if status == ObjectiveStatus.WORSENED:
             for metric in self.REFACTORING_CANDIDATE_METRICS:
                 failures += [self.formatFinding(rc) for rc in self.getRefactoringCandidates(feedback, metric)]
 

@@ -31,44 +31,62 @@ class ObjectiveTest(TestCase):
         )
 
     def testUnknownIfRatingIsNotAvailable(self):
-        feedback = self.mockFeedback(4.0, None, None)
+        feedback = self.mockFeedback(4.0, None, None, None)
         status = Objective.determineStatus(feedback, self.options)
         self.assertEqual(status, ObjectiveStatus.UNKNOWN)
 
     def testObjectiveAchieved(self):
-        feedback = self.mockFeedback(4.0, 3.0, 5.0)
+        feedback = self.mockFeedback(4.0, 3.0, 5.0, 5.0)
         status = Objective.determineStatus(feedback, self.options)
         self.assertEqual(status, ObjectiveStatus.ACHIEVED)
 
     def testObjectiveFailedButStillImproved(self):
-        feedback = self.mockFeedback(4.0, 3.0, 3.3)
+        feedback = self.mockFeedback(4.0, 3.0, 3.3, 3.3)
         status = Objective.determineStatus(feedback, self.options)
         self.assertEqual(status, ObjectiveStatus.IMPROVED)
 
-    def testImprovedComparedToBefore(self):
-        feedback = self.mockFeedback(3.4, 3.2, 3.3)
+    def testImprovedChangedCode(self):
+        feedback = self.mockFeedback(3.4, 3.2, 3.3, 3.3)
         status = Objective.determineStatus(feedback, self.options)
         self.assertEqual(status, ObjectiveStatus.IMPROVED)
 
-    def testStagnantIfObjectiveNotMet(self):
-        feedback = self.mockFeedback(4.0, 3.0, 3.0)
+    def testWorsenedChangedCode(self):
+        feedback = self.mockFeedback(4.0, 3.0, 2.8, 2.8)
         status = Objective.determineStatus(feedback, self.options)
-        self.assertEqual(status, ObjectiveStatus.STAGNANT)
+        self.assertEqual(status, ObjectiveStatus.WORSENED)
 
-    def testStagnantIfCodeGotWorse(self):
-        feedback = self.mockFeedback(4.0, 3.0, 2.8)
+    def testChangedCodeTheSameCountsAsImproved(self):
+        feedback = self.mockFeedback(4.0, 3.0, 3.0, 3.0)
         status = Objective.determineStatus(feedback, self.options)
-        self.assertEqual(status, ObjectiveStatus.STAGNANT)
+        self.assertEqual(status, ObjectiveStatus.IMPROVED)
 
-    def mockFeedback(self, baselineRating, beforeRating, newCodeRating):
+    def testNewCodeIsBetterButBelowObjectiveAndNoChangedCode(self):
+        feedback = self.mockFeedback(2.0, None, None, 3.0)
+        status = Objective.determineStatus(feedback, self.options)
+        self.assertEqual(status, ObjectiveStatus.IMPROVED)
+
+    def testNewCodeIsWorseAndNoChangedCode(self):
+        feedback = self.mockFeedback(2.0, None, None, 1.9)
+        status = Objective.determineStatus(feedback, self.options)
+        self.assertEqual(status, ObjectiveStatus.WORSENED)
+
+    def testNewCodeAchievesTargetAndNoChangedCode(self):
+        feedback = self.mockFeedback(2.0, None, None, 4.5)
+        status = Objective.determineStatus(feedback, self.options)
+        self.assertEqual(status, ObjectiveStatus.ACHIEVED)
+
+    def mockFeedback(self, baseline, changedBefore, changedAfter, newAndChanged):
         return {
             "baselineRatings" : {
-                "MAINTAINABILITY" : baselineRating
+                "MAINTAINABILITY" : baseline
             },
             "changedCodeBeforeRatings" : {
-                "MAINTAINABILITY" : beforeRating
+                "MAINTAINABILITY" : changedBefore
+            },
+            "changedCodeAfterRatings" : {
+                "MAINTAINABILITY" : changedAfter
             },
             "newCodeRatings" : {
-                "MAINTAINABILITY" : newCodeRating
+                "MAINTAINABILITY" : newAndChanged
             }
         }

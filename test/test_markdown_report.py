@@ -37,6 +37,7 @@ class MarkdownReportTest(TestCase):
             "baseline": "20220110",
             "baselineRatings": {"DUPLICATION": 4.0, "UNIT_SIZE": 4.0, "MAINTAINABILITY": 4.0},
             "changedCodeBeforeRatings" : {"MAINTAINABILITY" : 2.6},
+            "changedCodeAfterRatings" : {"MAINTAINABILITY" : 2.8},
             "newCodeRatings": {"DUPLICATION": 5.0, "UNIT_SIZE": 2.0, "MAINTAINABILITY": 3.0},
             "overallRatings": {"DUPLICATION": 4.5, "UNIT_SIZE": 3.0, "MAINTAINABILITY": 3.4},
             "refactoringCandidates": refactoringCandidates
@@ -183,6 +184,7 @@ class MarkdownReportTest(TestCase):
         feedback = {
             "baselineRatings": {"MAINTAINABILITY": 3.0},
             "changedCodeBeforeRatings" : {"MAINTAINABILITY" : 2.8},
+            "changedCodeAfterRatings" : {"MAINTAINABILITY" : 2.9},
             "newCodeRatings": {"MAINTAINABILITY": 2.9},
             "overallRatings": {"MAINTAINABILITY": 3.1}
         }

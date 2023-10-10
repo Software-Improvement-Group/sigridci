@@ -62,7 +62,7 @@ class StaticHtmlReport(Report):
 
     def formatPassed(self, feedback, options):
         status = Objective.determineStatus(feedback, options)
-        return "failed" if status == ObjectiveStatus.STAGNANT else "passed"
+        return "failed" if status == ObjectiveStatus.WORSENED else "passed"
 
     def formatRefactoringCandidates(self, feedback, metric):
         refactoringCandidates = self.getRefactoringCandidates(feedback, metric)

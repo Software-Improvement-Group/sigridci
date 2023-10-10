@@ -89,7 +89,7 @@ class AsciiArtReport(Report):
 
         if status == ObjectiveStatus.UNKNOWN:
             return self.ANSI_BLUE
-        if status == ObjectiveStatus.STAGNANT:
+        if status == ObjectiveStatus.WORSENED:
             return self.ANSI_RED
         else:
             return self.ANSI_GREEN

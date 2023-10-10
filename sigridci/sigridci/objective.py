@@ -18,7 +18,7 @@ from enum import Enum
 class ObjectiveStatus(Enum):
     ACHIEVED = 1
     IMPROVED = 2
-    STAGNANT = 3
+    WORSENED = 3
     UNKNOWN = 4
 
 
@@ -26,16 +26,19 @@ class Objective:
 
     @staticmethod
     def determineStatus(feedback, options):
-        rating = feedback["newCodeRatings"].get("MAINTAINABILITY", None)
         target = options.targetRating
+        newAndChangedAfter = feedback["newCodeRatings"].get("MAINTAINABILITY", None)
         baseline = feedback["baselineRatings"].get("MAINTAINABILITY", None)
-        before = feedback["changedCodeBeforeRatings"].get("MAINTAINABILITY", baseline)
+        changedCodeBefore = feedback.get("changedCodeBeforeRatings", {}).get("MAINTAINABILITY", None)
+        changedCodeAfter = feedback.get("changedCodeAfterRatings", {}).get("MAINTAINABILITY", None)
 
-        if rating == None or target in (None, "sigrid"):
+        if newAndChangedAfter == None or target in (None, "sigrid"):
             return ObjectiveStatus.UNKNOWN
-        elif rating >= target:
+        elif newAndChangedAfter >= target:
             return ObjectiveStatus.ACHIEVED
-        elif before != None and rating > before:
+        elif changedCodeBefore != None and changedCodeAfter != None and changedCodeAfter >= changedCodeBefore:
+            return ObjectiveStatus.IMPROVED
+        elif newAndChangedAfter >= baseline:
             return ObjectiveStatus.IMPROVED
         else:
-            return ObjectiveStatus.STAGNANT
+            return ObjectiveStatus.WORSENED
