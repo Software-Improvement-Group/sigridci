@@ -16,6 +16,7 @@ import os
 import sys
 
 from .ascii_art_report import AsciiArtReport
+from .json_report import JsonReport
 from .junit_format_report import JUnitFormatReport
 from .markdown_report import MarkdownReport
 from .pipeline_summary_report import PipelineSummaryReport
@@ -51,6 +52,7 @@ class SigridCiRunner:
             MarkdownReport(),
             StaticHtmlReport(),
             JUnitFormatReport(),
+            JsonReport(),
             PipelineSummaryReport()
         ]
 

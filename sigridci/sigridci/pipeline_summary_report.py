@@ -15,14 +15,12 @@
 import sys
 
 from .ascii_art_report import AsciiArtReport
+from .objective import Objective, ObjectiveStatus
 from .publish_options import RunMode
 from .report import Report
 
 
 class PipelineSummaryReport(Report):
-    MESSAGE_NA = "\n** SIGRID CI RUN COMPLETE: NO FILES CONSIDERED FOR MAINTAINABILITY WERE CHANGED **\n"
-    MESSAGE_PASS = "\n** SIGRID CI RUN COMPLETE: YOU WROTE MAINTAINABLE CODE AND REACHED THE TARGET **\n"
-    MESSAGE_FAIL = "\n** SIGRID CI RUN COMPLETE: THE CODE YOU WROTE DID NOT MEET THE TARGET FOR MAINTAINABLE CODE **\n"
 
     def __init__(self, output=sys.stdout, ansiColors=True):
         super().__init__()
@@ -30,22 +28,23 @@ class PipelineSummaryReport(Report):
         self.ansiColors = ansiColors
 
     def generate(self, analysisId, feedback, options):
-        self.printConclusionMessage(feedback, options)
+        status = Objective.determineStatus(feedback, options)
+
+        print("", file=self.output)
+        self.printConclusionMessage(feedback, options, status)
         self.printLandingPage(analysisId, options)
+
         # If you publish(only) we never break the build
         # We can break the build when running on a branch or pull request.
-        if options.runMode == RunMode.FEEDBACK_ONLY and not self.meetsObjectives(feedback, options):
+        if options.runMode == RunMode.FEEDBACK_ONLY and status == ObjectiveStatus.WORSENED:
             sys.exit(1)
 
-    def printConclusionMessage(self, feedback, options):
-        asciiArt = AsciiArtReport(self.output, self.ansiColors)
+    def printConclusionMessage(self, feedback, options, status):
+        message = self.getSummaryText(feedback, options)
 
-        if not self.isFeedbackAvailable(feedback):
-            asciiArt.printColor(self.MESSAGE_NA, asciiArt.ANSI_BOLD + asciiArt.ANSI_BLUE)
-        elif self.meetsObjectives(feedback, options):
-            asciiArt.printColor(self.MESSAGE_PASS, asciiArt.ANSI_BOLD + asciiArt.ANSI_GREEN)
-        else:
-            asciiArt.printColor(self.MESSAGE_FAIL, asciiArt.ANSI_BOLD + asciiArt.ANSI_YELLOW)
+        asciiArt = AsciiArtReport(self.output, self.ansiColors)
+        color = asciiArt.ANSI_YELLOW if status == ObjectiveStatus.WORSENED else asciiArt.ANSI_GREEN
+        asciiArt.printColor(f"** {message} **", asciiArt.ANSI_BOLD + color)
 
     def printLandingPage(self, analysisId, options):
         landingPage = self.getLandingPage(analysisId, options)

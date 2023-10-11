@@ -88,6 +88,19 @@ jobs:
         env:
           SIGRID_CI_TOKEN: "${{ secrets.SIGRID_CI_TOKEN }}"
         run: "./sigridci/sigridci/sigridci.py --customer <example_customer_name> --system <example_system_name> --source ."
+      - name: "Save Sigrid CI results"
+        if: always()
+        uses: actions/upload-artifact@v2
+        with:
+          path: "sigrid-ci-output/**"
+          retention-days: 7
+          if-no-files-found: ignore
+      - name: "Sigrid pull request feedback"
+        uses: mshick/add-pr-comment@v2
+        if: always()
+        with:
+          message-id: sigrid
+          message-path: sigrid-ci-output/feedback.md
 ```
 {% endraw %}
 
@@ -179,21 +192,11 @@ Clicking the small indicator will show a pop-up with some more information:
 
 Select "Details" to see the output from the Sigrid CI check:
 
-Sigrid CI provides multiple levels of feedback. The first and fastest type of feedback is directly produced in the CI output, as shown in the following screenshot:
+Sigrid CI provides feedback directly in your pull request:
 
-<img src="../images/github-action-feedback.png" width="600" />
+<img src="../images/github-markdown.png" width="600" />
 
-The output consists of the following:
-
-- A list of refactoring candidates that were introduced in your merge request. This allows you to understand what quality issues you caused, which in turn allows you to fix them quickly. Note that quality is obviously important, but you are not expected to always fix every single issue. As long as you meet the target, it's fine.
-- An overview of all ratings, compared against the system as a whole. This allows you to check if your changes improved the system, or accidentally made things worse.
-- The final conclusion on whether your changes and merge request meet the quality target.
-
-The end of the textual output provides a link to the Sigrid landing page. You can open this URL in order to use Sigrid for interpreting your analysis results.
-
-<img src="../images/landing-page.png" width="700" />
-
-Whether you should use the text output or the Sigrid page is largely down to personal preference: the text output is faster to acces and more concise, while Sigrid allows you to view results in a more visual and interactive way. 
+The end of the textual output provides a link to Sigrid, which you can follow to use Sigrid for interpreting your analysis results.
 
 ### Adding a Sigrid CI badge to your repository
 

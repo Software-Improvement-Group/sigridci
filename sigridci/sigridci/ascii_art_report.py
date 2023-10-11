@@ -14,6 +14,7 @@
 
 import sys
 
+from .objective import Objective, ObjectiveStatus
 from .publish_options import RunMode
 from .report import Report
 
@@ -24,7 +25,7 @@ class AsciiArtReport(Report):
     ANSI_YELLOW = "\033[33m"
     ANSI_RED = "\033[91m"
     ANSI_BLUE = "\033[96m"
-    LINE_WIDTH = 89
+    LINE_WIDTH = 70
 
     def __init__(self, output=sys.stdout, ansiColors=True):
         super().__init__()
@@ -39,8 +40,7 @@ class AsciiArtReport(Report):
             self.printMetric(feedback, metric)
 
         self.printHeader("Maintainability ratings")
-        self.printTableRow(["System property", f"Baseline on {self.formatBaseline(feedback)}",
-                            "New/changed code", "Target", "Overall" if publish else ""] )
+        self.printTableRow(["System property", f"Baseline on {self.formatBaseline(feedback)}", "New/changed code"])
 
         for metric in self.METRICS:
             if metric == "MAINTAINABILITY":
@@ -49,19 +49,14 @@ class AsciiArtReport(Report):
             row = [
                 self.formatMetricName(metric),
                 "(" + self.formatRating(feedback["baselineRatings"], metric) + ")",
-                self.formatRating(feedback["newCodeRatings"], metric),
-                "%.1f" % options.targetRating if metric == "MAINTAINABILITY" else "",
-                self.formatRating(feedback["baselineRatings"], metric) if publish else ""
+                self.formatRating(feedback["newCodeRatings"], metric)
             ]
 
-            self.printTableRow(row, self.getRatingColor(feedback, options, metric))
+            self.printTableRow(row)
 
-    def printTableRow(self, row, color=None):
-        formattedRow = "%-27s%-25s%-20s%-10s%-7s" % tuple(row)
-        if color:
-            self.printColor(formattedRow, color)
-        else:
-            print(formattedRow, file=self.output)
+    def printTableRow(self, row):
+        formattedRow = "%-27s%-25s%-18s" % tuple(row)
+        print(formattedRow, file=self.output)
 
     def printHeader(self, header):
         print("", file=self.output)
@@ -82,16 +77,6 @@ class AsciiArtReport(Report):
         else:
             for rc in refactoringCandidates:
                 print(self.formatRefactoringCandidate(rc), file=self.output)
-
-    def getRatingColor(self, feedback, options, metric):
-        metricValue = feedback["newCodeRatings"].get(metric, None)
-
-        if metricValue == None:
-            return self.ANSI_BLUE
-        elif self.meetsObjectives(feedback, options) or self.meetsMetricObjective(feedback, options, metric):
-            return self.ANSI_GREEN
-        else:
-            return self.ANSI_RED
 
     def formatRefactoringCandidate(self, rc):
         category = ("(" + rc["category"] + ")").ljust(14)

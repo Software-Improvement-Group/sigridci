@@ -27,7 +27,10 @@ Whenever you need behavior that is custom for your project. Common examples are 
 
 Since scope files are part of your repository, you can edit them using your preferred text editor. Sigrid scope configuration files are registered with [SchemaStore.org](https://schemastore.org), which means you get IDE features like content assist and error detection while you're editing the file. 
 
-- In [Visual Studio Code](https://code.visualstudio.com), support is automatically provided if you are using the recommended file name of `sigrid.yaml`. If you are using a different file name, you can select the Sigrid JSON schema manually using the *"select JSON schema"* option located in the bottom right of the editor window.
+- In [Visual Studio Code](https://code.visualstudio.com), support is automatically provided if you have installed the [YAML Language Support extension](https://marketplace.visualstudio.com/items?itemName=redhat.vscode-yaml). If you open a file called `sigrid.yaml`, Visual Studio Code will automatically identify the file as a Sigrid configuration file, as seen in the bottom right of the screenshot below.
+
+<img src="../images/visual-studio-code-support.png" width="400" />
+
 - In [JetBrains IDEs](https://www.jetbrains.com), which include IntelliJ IDEA, WebStorm, and PyCharm, you can get editor support by selecting *Sigrid scope configuration file* in the bottom right of the editor window. After you have done this the first time, the IDE will automatically provide editor support when you open other `sigrid.yaml` files in the future.
 
 <img src="../images/scope-file-ide.png" width="400" />

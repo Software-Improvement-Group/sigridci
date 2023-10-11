@@ -1,6 +1,6 @@
 <img src="docs/images/sigrid-logo-black.svg" width="200" align="center" />
 
-# Sigrid | One platform to manage your entire IT organization
+# Sigrid | Software Assurance Platform
 
 [Sigrid](https://www.softwareimprovementgroup.com/solutions/sigrid-software-assurance-platform/) helps you to improve your software by measuring your system's code quality, and then compares the results against a benchmark of 10,000 industry systems to give you concrete advice on areas where you can improve.
 
