@@ -205,7 +205,7 @@ class MarkdownReportTest(TestCase):
 
         report = MarkdownReport()
         summary = report.renderSummary(feedback, self.options)
-        expected = "**⚠️  Your code did not manage to improve towards your Sigrid objective of 3.5 stars**"
+        expected = "**⚠️  Your code did not improve towards your Sigrid objective of 3.5 stars**"
 
         self.assertEqual(summary, expected)
 
