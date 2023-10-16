@@ -162,7 +162,7 @@ class MarkdownReportTest(TestCase):
 
         report = MarkdownReport()
         summary = report.renderSummary(feedback, self.options)
-        expected = "**🟰  You did not change any files that are measured by Sigrid**"
+        expected = "**⚪️  You did not change any files that are measured by Sigrid**"
 
         self.assertEqual(summary, expected)
 
@@ -205,7 +205,7 @@ class MarkdownReportTest(TestCase):
 
         report = MarkdownReport()
         summary = report.renderSummary(feedback, self.options)
-        expected = "**❌  Your code did not manage to improve towards your Sigrid objective of 3.5 stars**"
+        expected = "**⚠️  Your code did not manage to improve towards your Sigrid objective of 3.5 stars**"
 
         self.assertEqual(summary, expected)
 
@@ -220,6 +220,19 @@ class MarkdownReportTest(TestCase):
         report = MarkdownReport()
         summary = report.renderSummary(feedback, self.options)
         expected = "**✅  You wrote maintainable code and achieved your Sigrid objective of 3.5 stars**"
+
+        self.assertEqual(summary, expected)
+
+    def testSpecialStatusIfNewCodeIsTheSameQuality(self):
+        feedback = {
+            "baselineRatings": {"MAINTAINABILITY": 3.0},
+            "newCodeRatings": {"MAINTAINABILITY": 3.0},
+            "overallRatings": {"MAINTAINABILITY": 3.0}
+        }
+
+        report = MarkdownReport()
+        summary = report.renderSummary(feedback, self.options)
+        expected = "**⏸️️  You didn't improve your code, but it also didn't get any worse**"
 
         self.assertEqual(summary, expected)
 

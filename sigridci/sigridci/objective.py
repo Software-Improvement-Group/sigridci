@@ -18,8 +18,9 @@ from enum import Enum
 class ObjectiveStatus(Enum):
     ACHIEVED = 1
     IMPROVED = 2
-    WORSENED = 3
-    UNKNOWN = 4
+    UNCHANGED = 3
+    WORSENED = 4
+    UNKNOWN = 5
 
 
 class Objective:
@@ -34,11 +35,27 @@ class Objective:
 
         if newAndChangedAfter == None or target in (None, "sigrid"):
             return ObjectiveStatus.UNKNOWN
-        elif newAndChangedAfter >= target:
+
+        # We're using a split norm. If you've achieved your objective, we let
+        # you pass regardless of the trend. This is intentional to avoid being
+        # unreasonably negative (i.e. failing people that drop from 4.5 to 4.3
+        # stars). Only when you *don't* meet your objective do we start looking
+        # at the trend and whether you're moving in the right direction.
+        if newAndChangedAfter >= target:
             return ObjectiveStatus.ACHIEVED
-        elif changedCodeBefore != None and changedCodeAfter != None and changedCodeAfter >= changedCodeBefore:
-            return ObjectiveStatus.IMPROVED
-        elif newAndChangedAfter >= baseline:
-            return ObjectiveStatus.IMPROVED
+
+        hasChangedCode = changedCodeBefore != None and changedCodeAfter != None
+
+        if hasChangedCode:
+            return Objective.determineStatusBasedOnTrend(changedCodeBefore, changedCodeAfter)
         else:
+            return Objective.determineStatusBasedOnTrend(baseline, newAndChangedAfter)
+
+    @staticmethod
+    def determineStatusBasedOnTrend(previous, current):
+        if current > previous:
+            return ObjectiveStatus.IMPROVED
+        elif current < previous:
             return ObjectiveStatus.WORSENED
+        else:
+            return ObjectiveStatus.UNCHANGED

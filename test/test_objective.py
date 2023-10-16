@@ -55,10 +55,10 @@ class ObjectiveTest(TestCase):
         status = Objective.determineStatus(feedback, self.options)
         self.assertEqual(status, ObjectiveStatus.WORSENED)
 
-    def testChangedCodeTheSameCountsAsImproved(self):
+    def testChangedCodeTheSameQuality(self):
         feedback = self.mockFeedback(4.0, 3.0, 3.0, 3.0)
         status = Objective.determineStatus(feedback, self.options)
-        self.assertEqual(status, ObjectiveStatus.IMPROVED)
+        self.assertEqual(status, ObjectiveStatus.UNCHANGED)
 
     def testNewCodeIsBetterButBelowObjectiveAndNoChangedCode(self):
         feedback = self.mockFeedback(2.0, None, None, 3.0)

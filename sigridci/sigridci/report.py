@@ -76,7 +76,9 @@ class Report:
             return f"✅  You wrote maintainable code and achieved your Sigrid objective of {target}"
         elif status == ObjectiveStatus.IMPROVED:
             return f"↗️  You improved your code's maintainability towards your Sigrid objective of {target}"
+        elif status == ObjectiveStatus.UNCHANGED:
+            return "⏸️️  You didn't improve your code, but it also didn't get any worse"
         elif status == ObjectiveStatus.WORSENED:
-            return f"❌  Your code did not manage to improve towards your Sigrid objective of {target}"
+            return f"⚠️  Your code did not manage to improve towards your Sigrid objective of {target}"
         else:
-            return "🟰  You did not change any files that are measured by Sigrid"
+            return "⚪️  You did not change any files that are measured by Sigrid"
