@@ -162,7 +162,7 @@ class MarkdownReportTest(TestCase):
 
         report = MarkdownReport()
         summary = report.renderSummary(feedback, self.options)
-        expected = "**⚪️  You did not change any files that are measured by Sigrid**"
+        expected = "**💭️  You did not change any files that are measured by Sigrid**"
 
         self.assertEqual(summary, expected)
 

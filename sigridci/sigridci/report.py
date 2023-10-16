@@ -81,4 +81,4 @@ class Report:
         elif status == ObjectiveStatus.WORSENED:
             return f"⚠️  Your code did not manage to improve towards your Sigrid objective of {target}"
         else:
-            return "⚪️  You did not change any files that are measured by Sigrid"
+            return "💭️  You did not change any files that are measured by Sigrid"
