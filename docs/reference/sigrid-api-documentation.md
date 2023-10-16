@@ -19,7 +19,38 @@ curl -H 'Authorization: Bearer {SIGRID_CI_TOKEN}' https://sigrid-says.com/rest/a
 
 In the example, `{customer}` refers to your company's Sigrid account name, and `{SIGRID_CI_TOKEN}` refers to your authentication token.
 
+### Including deactivated and/or excluded systems
+
+In Sigrid's web-based user interface, several portfolio (customer) level dashboards by default 
+hides deactivated systems and excluded systems. The filter panel on the right hand side provides 
+two toggles to override this behavior:
+
+<img src="../images/dashboard-toggles.png" width="202" />
+
+A system can be deactivated, or excluded from dashboards, in the metadata settings page:
+
+<img src="../images/metadata-deactivate.png" width="843" />
+
+Sigrid's REST API mimics this behavior, as follows:
+* All portfolio-level endpoints by default do not include deactivated nor excluded systems in 
+  their responses.
+* Deactivated systems can be included in the response by adding a boolean query parameter 
+  `hideDeactivatedSystems` and set it to `false`, `no`, or `0`. For instance, `GET 
+  /api/v1/maintainability/{customer}&hideDeactivatedSystems=false` includes deactivated systems 
+  in the response.
+* Excluded systems can be included in the response by adding a boolean query parameter
+  `hideExcludedSystems` and set it to `false`, `no`, or `0`. For instance, `GET
+  /api/v1/maintainability/{customer}&hideExcludedSystems=false` includes development-only systems
+  in the response.
+
 ## Available end points
+
+* [Maintainability ratings](#maintainability-ratings)
+* [Security and reliability findings](#security-and-reliability-findings)
+* [Vulnerable libraries in Open Source Health](#vulnerable-libraries-in-open-source-health)
+* [System metadata](#system-metadata)
+* [System lifecycle management](#system-lifecycle-management)
+* [System objectives](#system-objectives)
 
 ### Maintainability ratings
 
@@ -30,7 +61,8 @@ Maintainability ratings for a given customer are available via three endpoints:
 
 The parameter `{customer}` refers to your Sigrid account name. 
 
-Example response:
+<details>
+  <summary>Example response</summary>
 
 ```json
 {
@@ -51,16 +83,23 @@ Example response:
     ]
 }
 ```
+</details>
 
 The top-level `maintainability` and `maintainabilityDate` refer to the *current* state of each system. The `allRatings` array contains a list of all *historic* measurements, which can be used for reporting or trend information.
 
-### Security findings
+### Security and reliability findings
 
-`GET https://sigrid-says.com/rest/analysis-results/api/v1/security-findings/{customer}/{system}`
+Sigrid's REST API provides two endpoints to get security or reliability findings for a system:
+* Security findings: `GET https://sigrid-says.com/rest/analysis-results/api/v1/security-findings/
+  {customer}/{system}`
+* Reliability findings: `GET https://sigrid-says.
+  com/rest/analysis-results/api/v1/reliability-findings/{customer}/
+  {system}`
 
-Returns all security findings for the specified system. The parameters `{customer}` and `{system}` refer to your Sigrid account name and system ID respectively. 
+The parameters `{customer}` and `{system}` refer to your Sigrid account name and system ID respectively. 
 
-Example response:
+<details>
+  <summary>Example response</summary>
 
 ```json
 [
@@ -94,6 +133,7 @@ Example response:
     }
 ]
 ```
+</details>
 
 ### Vulnerable libraries in Open Source Health
 
@@ -107,7 +147,8 @@ The path parameters `{customer}` and `{system}` refer to your Sigrid account nam
 
 The response format is based on the CycloneDX format for an [SBOM (software bill of materials)](https://en.wikipedia.org/wiki/Software_bill_of_materials). 
 
-Example response for a single system:
+<details>
+  <summary>Example response for a single system</summary>
 
 ```json
 {
@@ -155,6 +196,8 @@ Example response for a single system:
     ]
 }
 ```
+</details>
+
 The endpoint that returns third-party vulnerabilities for all systems for the given customer returns an array of SBOMs, one for each system as follows:
 ```
 {
@@ -181,6 +224,9 @@ System metadata can be viewed and updated using the following three endpoints:
 
 The path parameters `{customer}` and `{system}` refer to your Sigrid account name and system ID respectively.
 
+<details>
+  <summary>Example system-level `GET` and `PATCH` response</summary>
+
 The response format of both system-level endpoints (`GET` and `PATCH`) is as follows:
 ```json
 {
@@ -201,6 +247,10 @@ The response format of both system-level endpoints (`GET` and `PATCH`) is as fol
   "technologyCategory": "MODERN_GENERAL_PURPOSE"
 }
 ```
+</details>
+
+<details>
+  <summary>Example customer-level response</summary>
 
 The response format of the customer-level endpoint (`GET https://sigrid-says.com/rest/analysis-results/api/v1/system-metadata/{customer}`) is as follows:
 ```json
@@ -226,6 +276,7 @@ The response format of the customer-level endpoint (`GET https://sigrid-says.com
   }
 ]
 ```
+</details>
 
 All properties can be null except for `supplierNames` and `teamNames` (which are always an array, but possibly empty), and `isDevelopmentOnly` (which is always true or false).
 
@@ -264,6 +315,9 @@ The metadata fields are described by the following table. Note that the setting 
 |`remark`|`String`|Remark(s) about the system as (possibly empty) free-format text. Must be between 0 and 300 characters. Can contain blanks: true|
 |`externalID`|`String`|Allow customers to record an external identifier for a system. free-format text. Must be between 0 and 60 characters. Can contain blanks: true|
 
+<details>
+  <summary>Lifecycle phases</summary>
+
 The lifecycle phase identifiers have the following meaning:
 
 |`lifecyclePhase` identifier|System lifecycle phase|
@@ -273,6 +327,11 @@ The lifecycle phase identifiers have the following meaning:
 |MAINTENANCE|Servicing and maintenance|
 |EOL|End-of-life (in production but minimal maintenance)|
 |DECOMMISSIONED|Decommissioned / Phased out (no longer in production)|
+
+</details>
+
+<details>
+  <summary>Target industries</summary>
 
 The target industry phase identifiers have the following meaning:
 
@@ -308,6 +367,11 @@ The target industry phase identifiers have the following meaning:
 |SIG1000|Government|
 |SIG1100|Education|
 
+</details>
+
+<details>
+  <summary>Deployment types</summary>
+
 The deployment type identifiers have the following meaning:
 
 |`deploymentType` identifier|Deployment Type|
@@ -316,6 +380,11 @@ The deployment type identifiers have the following meaning:
 |CONNECTED|A system that interacts with a public-facing system via the network. The system is not accessible via the public internet|
 |INTERNAL|A system that can only be reached by users via VPN or the company intranet. The system has no interaction with public-facing systems|
 |PHYSICAL|A system that can only be reached by users with access to a physical location. The system cannot be reached from an internal network and has no interaction with public-facing systems|
+
+</details>
+
+<details>
+  <summary>Application types</summary>
 
 The possible application types are as follows:
 
@@ -332,6 +401,11 @@ The possible application types are as follows:
 |FUNCTIONAL_APPLICATIONS|
 |KNOWLEDGE_AND_DOCUMENT_MANAGEMENT|
 |PERSONAL_PRODUCTIVITY_APPLICATIONS|
+
+</details>
+
+<details>
+  <summary>Technology categories</summary>
 
 The possible technology categories are as follows:
 
@@ -354,7 +428,9 @@ The possible technology categories are as follows:
 |TEMPLATING|
 |WEB|
 
-### Systems lifecycle management
+</details>
+
+### System lifecycle management
 
 Sigrid allows you to deactivate a given system.
 
@@ -385,7 +461,7 @@ The response format on a successful request is, as an example, for SIG's `bch` s
 
 If the request body is not in the expected format, the returned response status will be: `400 BAD REQUEST`.
 
-### Systems goals
+### System objectives
 
 Sigrid allows you to define quality objectives for a system. This helps to set some realistic and feasible expectations per system, considering both the system's business context and its current technical state: business-critical systems using modern technologies require more ambitious targets than legacy systems.
 
