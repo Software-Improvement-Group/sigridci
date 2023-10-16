@@ -12,8 +12,10 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-from unittest import TestCase
+import os
+from unittest import TestCase, mock
 
+from sigridci.sigridci.publish_options import PublishOptions, RunMode
 from sigridci.sigridci.sigrid_api_client import SigridApiClient
 
 
@@ -24,3 +26,10 @@ class SigridApiClientTest(TestCase):
         self.assertFalse(SigridApiClient.isValidToken(""))
         self.assertFalse(SigridApiClient.isValidToken("$"))
         self.assertTrue(SigridApiClient.isValidToken("zeiYh/WYQ==" * 10))
+
+    @mock.patch.dict(os.environ, {"SIGRID_CI_TOKEN" : "mytoken\n"})
+    def testStripTrailingWhitespaxceFromToken(self):
+        options = PublishOptions("aap", "noot", runMode=RunMode.PUBLISH_ONLY, sourceDir="/tmp")
+        apiClient = SigridApiClient(options)
+
+        self.assertEquals("mytoken", apiClient.token)
