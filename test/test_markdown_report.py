@@ -232,7 +232,7 @@ class MarkdownReportTest(TestCase):
 
         report = MarkdownReport()
         summary = report.renderSummary(feedback, self.options)
-        expected = "**⏸️️  You didn't improve your code, but it also didn't get any worse**"
+        expected = "**⏸️️  Your rating did not change and is still below your objective of 3.5 stars**"
 
         self.assertEqual(summary, expected)
 

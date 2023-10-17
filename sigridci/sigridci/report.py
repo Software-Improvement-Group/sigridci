@@ -77,7 +77,7 @@ class Report:
         elif status == ObjectiveStatus.IMPROVED:
             return f"↗️  You improved your code's maintainability towards your Sigrid objective of {target}"
         elif status == ObjectiveStatus.UNCHANGED:
-            return "⏸️️  You didn't improve your code, but it also didn't get any worse"
+            return f"⏸️️  Your rating did not change and is still below your objective of {target}"
         elif status == ObjectiveStatus.WORSENED:
             return f"⚠️  Your code did not improve towards your Sigrid objective of {target}"
         else:
