@@ -15,6 +15,7 @@
 import html
 import os
 
+from .objective import Objective, ObjectiveStatus
 from .report import Report
 
 
@@ -31,11 +32,6 @@ class StaticHtmlReport(Report):
         with open(reportFile, encoding="utf-8", mode="w") as f:
             f.write(template)
 
-        print("")
-        print("You can find the full results here:")
-        print(f"    {reportFile}")
-        print("")
-
     def renderHtmlFeedback(self, template, feedback, options):
         placeholders = {
             "CUSTOMER" : html.escape(options.customer),
@@ -44,7 +40,7 @@ class StaticHtmlReport(Report):
             "LINES_OF_CODE_TOUCHED" : "%d" % feedback.get("newCodeLinesOfCode", 0),
             "BASELINE_DATE" : self.formatBaseline(feedback),
             "SIGRID_LINK" : self.getSigridUrl(options),
-            "MAINTAINABILITY_PASSED" : ("passed" if self.meetsObjectives(feedback, options) else "failed")
+            "MAINTAINABILITY_PASSED" : self.formatPassed(feedback, options)
         }
 
         for metric in self.METRICS:
@@ -65,7 +61,8 @@ class StaticHtmlReport(Report):
         return template
 
     def formatPassed(self, feedback, options):
-        return "passed" if self.meetsObjectives(feedback, options) else "failed"
+        status = Objective.determineStatus(feedback, options)
+        return "failed" if status == ObjectiveStatus.WORSENED else "passed"
 
     def formatRefactoringCandidates(self, feedback, metric):
         refactoringCandidates = self.getRefactoringCandidates(feedback, metric)

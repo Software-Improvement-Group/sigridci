@@ -83,7 +83,7 @@ On the left-hand side column, you can filter dependencies per component and/or f
 
 <img src="../images/system-component-dependencies-file-selection.png" width="600" />
 
-## Refactoring candidates
+## Refactoring Candidates
 This view lists the top 100 findings per metric.  
 
 <img src="../images/system-refactoring-candidates.png" width="600" />
@@ -105,7 +105,7 @@ The relevant filter is shown below.
 <img src="../images/system-refactoring-candidates-filters-risk-accepted.png" width="150" />
 
 
-### Ordering of refactoring candidates
+### Ordering of Refactoring Candidates
 
 Refactoring candidates are sorted by risk impact. This is shown as maintainability risk categories, color coded as green-yellow-orange-red from lowest- to highest risk. Within each category, code is sorted by code volume (since volume is the common denominator for the maintainability metrics). [See for more details the technical documentation](../reference/sig-quality-models.md).
 
@@ -117,7 +117,7 @@ The exception in this ordering is *Duplication*, where no different degrees of r
 
 The risk impact ordering is a good indication for prioritization of findings, but it may need a case-by-case analysis. Context is a defining factor, which is discussed below. 
 
-### Dealing with Refactoring candidates
+### Dealing with Refactoring Candidates
 
 Being refactoring *candidates* should be taken literally. It is not to say that every candidate *needs* to be resolved. No system is technically perfect (or it is not for long). Every metric has tolerances for violations of the risk categories, and these violations may be defendable. 
 

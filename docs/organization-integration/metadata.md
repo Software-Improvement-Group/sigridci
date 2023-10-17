@@ -13,7 +13,7 @@ This is by far the simplest approach: in Sigrid, simply go to the system setting
 
 <img src="../images/metadata-ui.png" width="600" />
 
-Note the screenshot only shows part of the metadata page. The full page contains options related to the context in which the system is being developed, such as *Business criticality*, *Lifecycle phase*, and *Deployment type*.
+Note the screenshot only shows part of the metadata page. The full page contains options related to the context in which the system is being developed, such as *Business criticality*, *Lifecycle phase*, and *Deployment type*. All possible options can also be seen on the [Sigrid API metadata end point page](../integrations/sigrid-api-documentation.md#system-metadata).
 
 They can be set with a drop-down menu. 
 
@@ -24,7 +24,7 @@ They can be set with a drop-down menu.
 
 ### Option 2: Using the Sigrid API to add metadata
 
-The [Sigrid API end point for metadata](../reference/sigrid-api-documentation.md#system-metadata) allows you to add metadata programmatically. This is less accessible than using the Sigrid user interface, but has the advantage that it can run automatically. This is typically used when you need to synchronize metadata from another system to Sigrid, and you want this to run in an automated way.
+The [Sigrid API end point for metadata](../integrations/sigrid-api-documentation.md#system-metadata) allows you to add metadata programmatically. This is less accessible than using the Sigrid user interface, but has the advantage that it can run automatically. This is typically used when you need to synchronize metadata from another system to Sigrid, and you want this to run in an automated way.
 
 ### Option 3: Adding metadata from a YAML file in your repository
 
@@ -52,7 +52,7 @@ metadata:
   remark: "Some notes"
 ```
 
-The [Sigrid API documentation](../reference/sigrid-api-documentation.md#system-metadata) contains descriptions of the various fields. Note that the semantics are the same: only fields present in `sigrid-metadata.yaml` are updated, others are left as-is. For example, the following `sigrid-metadata.yaml` file would _update_ the external ID and remove the current remark:
+The [Sigrid API documentation](../integrations/sigrid-api-documentation.md#system-metadata) contains descriptions of the various fields. Note that the semantics are the same: only fields present in `sigrid-metadata.yaml` are updated, others are left as-is. For example, the following `sigrid-metadata.yaml` file would _update_ the external ID and remove the current remark:
 
 ```
 metadata:

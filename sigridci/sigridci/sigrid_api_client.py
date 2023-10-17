@@ -29,7 +29,7 @@ from .upload_log import UploadLog
 class SigridApiClient:
     API_VERSION = "v1"
     POLL_INTERVAL = 30
-    POLL_ATTEMPTS = 120
+    POLL_ATTEMPTS = 60
 
     def __init__(self, options: PublishOptions):
         self.options = options
@@ -38,12 +38,13 @@ class SigridApiClient:
         self.urlCustomerName = urllib.parse.quote_plus(options.customer.lower())
         self.urlSystemName = urllib.parse.quote_plus(options.system.lower())
         self.subsystem = options.subsystem
+        self.token = os.environ["SIGRID_CI_TOKEN"].strip()
 
     def callSigridAPI(self, path, body=None, contentType=None):
         url = f"{self.baseURL}/rest/{path}"
         request = urllib.request.Request(url, body)
         request.add_header("Accept", "application/json")
-        request.add_header("Authorization", f"Bearer {os.environ['SIGRID_CI_TOKEN']}".encode("utf8"))
+        request.add_header("Authorization", f"Bearer {self.token}".encode("utf8"))
         if contentType != None:
             request.add_header("Content-Type", contentType)
 

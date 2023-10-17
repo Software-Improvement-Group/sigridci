@@ -25,9 +25,36 @@ The different elements in this page are:
 
 * The *Findings Age* tile gives an indication how long findings are known. 
 
+* The *CVSS Severity* tile summarizes a breakdown of findings according to CVSS severity ratings. A mouseover on the barchart will show the exact number of findings. A mouseover on the CVSS severity barchart shows the number of findings with that CVSS severity category. 
 
-### The scoring system with CVSS: background
-* The *CVSS Severity* tile summarizes a breakdown of findings according to CVSS severity ratings. A mouseover on the barchart will show the exact number of findings. A mouseover on the CVSS severity benchmark shows the CVSS security score and the number of findings with that severity. *CVSS* (*Common Vulnerability Scoring System*) is a security-industry standard on a 0-10 scale, developed by [NIST](https://nist.gov/), specifically its [National Vulnerability Database(NVD)](https://nvd.nist.gov/). CVSS scores are based on a benchmark of expert judgements and a well-defined calculation that estimates risk (see [NIST's current 3.1 calculator](https://nvd.nist.gov/vuln-metrics/cvss/v3-calculator/) or a [calculation preview of the to-be-released CVSS 4.0](https://www.first.org/cvss/calculator/4.0/)). Note that version 2 did not include a *"Critical"* vulnerability category.
+## Context and meaning of CVSS security metrics: from asset to risk
+
+*CVSS* (*Common Vulnerability Scoring System*) is a security-industry standard metric on a 0-10 scale, to indicate how severe a security issue *may be*. It does not signify a definite security problem, nor does lack of CVSS (or 0 score) imply security. This uncertainty is at the core of system security and mostly dependent on context. 
+
+It is important to make some distinctions by defining the elements that are necessary to properly interpret the meaning of these numbers. To simplify matters, consider the following non-exhaustive definitions: 
+
+* An *asset* is something of value. An asset exists in context, like the way that a system is connected to the outside world. 
+* A *weakness* (or flaw) is a (security-relevant) deficiency. In our context, a weakness may be catalogued as a *CWE* [see also section on CWEs below](#cwe-and-its-link-with-cre-common-requirement-enumeration). A weakness may be exploitable or not.
+* A *vulnerability* is an exploitable weakness (by a threat). In our context, a vulnerablity may be catalogued as a *CVE*. A vulnerability may be actually exploited or not.
+* A *threat* is an event/condition that causes undesirable/adverse effects to something of value (often described as *assets*). A threat may manifest or not.
+* A *risk* is a possibility of harm, a chance that an undesirable event may occur. Typically it is understood as a function of *probability* and *impact*. In this context it is useful to consider that *a risk involves an asset, a threat and a vulnerability*. A risk may occur or not. 
+
+### Sigrid's CVSS score of Raw findings signify "potential severity"
+
+We may use "risk" a lot in colloquial language, but in this context of system security, a lot has to co-occur before a risk manifests, as can be seen above. This is relevant in reading the CVSS scores in Sigrid, because without a triage and a verification context, CVSS does **not** mean *vulnerability* or *risk*. CVSS scores, even when unvalidated, are a useful indicator. Generally, triage/analyze raw security findings, you would follow the CVSS scores in descending order from "potentially most severe to - least severe".
+
+### Sigrid's CVSS scores are based on a CWE benchmark
+
+CVSS originates in research done by the US government's [National Infrastructure Advisory Council (NIAC)](https://www.cisa.gov/), further developed by the [Forum of Incident Response and Security Teams (FIRST)](https://www.first.org/). CVSS is strongly associated with the administrations for *CWEs* and *CVEs*. *CWEs* are part of the authoritative list of weakness types known as the *"Common Weakness Enumeration"* by MITRE [MITRE CWE website](https://cwe.mitre.org/). For *CVEs*, see the [National Vulnerability Database(NVD)](https://nvd.nist.gov/)). A CVE always contains a CWE, while the opposite is not necessarily true (e.g. a weakness that has not been shown to be exploitable). CWE has a hierarchical structure, so higher-level weaknesses implicitly contain lower-level ones. 
+
+### Elaboration on the CWE benchmark calculation
+
+The core idea of the CWE benchmark is that, since CWEs, CVEs and CVSSs are related, we can use CVSS data associated with CVEs to come up with a score for CWEs. A benchmarked CWE score (presented as CVSS in Sigrid) consists of the averaged CVSS scores of all linked CVEs. In this calculation process, a *weighted mean* is applied to *Impact* and *Exploitability* (these are part of the CVSS "*Core metrics*"). This configuration puts more weight on relatively infrequent, but severe vulnerabilities. In case that the size of the dataset is below a certain threshold, an algorithm will crawl through the CWE hierarchy to find more relevant data points.  
+
+For each CWE, we build its CWE hierarchy tree and determine their respective CVEs of the last 5 years and the CVE's typical CVSS estimations by security experts. This is a benchmark of expert judgements. Since context is a large factor in the severity of a security issue, the CVSS scores assigned to CWEs are further split by their attack vectors (this data is available since *Attack Vector [AV]* is part of the CVSS calculation). This split allows to make a mapping on this technical context, which should be administered in Sigrid as *Deployment type* metadata ([see metadata page, specifically the GUI to do this in Sigrid itself](../organization-integration/metadata.md#option-1-adding-metadata-in-sigrid)). This metadata emulates CVSS' "*Environmental metric group*" and provides important context to interpret its scores. If this metadata has *not* been set, Sigrid conservatively assumes "public-facing", hence the most exposed type of deployment. All the different deployment type options (as other types of metadata) can be seen on the [Sigrid API metadata end point page](../integrations/sigrid-api-documentation.md#system-metadata), specifically the [Deployment type section](../integrations/sigrid-api-documentation.md#deployment-type).
+
+
+
 
 
 ### CVSS scores in Sigrid
@@ -48,9 +75,10 @@ Based on the CVSS score of findings, they are marked and colored ranging from "I
 
 <img src="../images/system-security-icon-critical1.png" class="inline" /> *Critical*: CVSS score 9 or higher. 
 
-
+To have an idea of what a certain CVSS score approximates, see [NIST's current 3.1 calculator](https://nvd.nist.gov/vuln-metrics/cvss/v3-calculator/) or a [calculation preview of the to-be-released CVSS 4.0](https://www.first.org/cvss/calculator/4.0/)). Note that an earlier CVSS version 2 did not include a *"Critical"* vulnerability category.
 
 ## Different statuses of security findings
+
 These are the different statutes of findings. The status *"Fixed"* will be applied automatically if a finding is resolved. See [FAQ:Fixed issues are auto-detected](faq-security.md#how-does-the-automatic-detection-of-fixed-findings-work). The other statuses can be set. They are similar to those used for [system maintainability refactoring candidates](system-maintainability.md#refactoring-candidates). 
 * *"Raw"* means "not yet verified" where *"Refined"* ones mark that a finding has been confirmed manually. Inversely, a finding can be set as *"False positive"*. 
 * *"Will fix"* signals the intention to fix it, while *"Risk Accepted"* does not.
@@ -68,7 +96,7 @@ In the Grouping menu in the top left under *"Finding"*, the following types of g
 * *"Origin"* refers to the originating tool of the finding.
 * *"Severity"* orders on level of severity (based on CVSS).
 * *"Status"* lists the statuses as [mentioned above](#different-statuses-of-security-findings).
-* *"Type"* shows a specific list of vulnerabilities. This is especially useful for technical analysis, since sometimes, a whole category/type of findings may be set to *"False positive"*. 
+* *"Type"* shows a specific list of vulnerabilities. This is especially useful for technical analysis, since sometimes, a whole category/type of findings may be set to *"False positive"* (also, see [below in the prioritizing section](#a-general-typical-strategy-for-processing-security-findings)). 
 * *"Weakness"* orders on type of weaknesse (based on [MITRE's *CWE* database](https://cwe.mitre.org/)). Weaknesses are defined somewhat higher level than *"Type"*. 
 
 <img src="../images/system-security-grouping-location-ex-background.png" width="250" />
@@ -125,7 +153,7 @@ An audit trail can be seen when clicking the *"Show Audit Trail"* button. In cas
 <img src="../images/system-security-audit-trail.png" width="400" />
 
 ## CWE and its link with CRE (Common Requirement Enumeration)
-If available, the relevant *CWE* will be shown. *CWEs* are part of the authoritative list of weakness types known as the *"Common Weakness Enumeration"* by MITRE [MITRE CWE website](https://cwe.mitre.org/). The *CWE* link in the security finding will refer you to the [OWASP Common Requirement Enumeration (CRE) page](https://www.opencre.org/). This will show the CWE in context. SIG has been an active and proud contributor to this project in close collaboration with the world's application security authority [*OWASP* (Open Worldwide Application Security Project)](https://owasp.org/). *CRE* is an open source security reference knowledge base, [a nexus between *OWASP's* initiatives](https://owasp.org/projects/#owasp-projects-the-sdlc-and-the-security-wayfinder) and relevant, authoritative security reference documents originating in [MITRE](https://www.mitre.org/), [NIST](https://www.nist.gov/) and [ISO](https://www.iso.org/). 
+If available, the relevant *CWE* will be shown. The *CWE* link in the security finding will refer you to the [OWASP Common Requirement Enumeration (CRE) page](https://www.opencre.org/). This will show the CWE in context. SIG has been an active and proud contributor to this project in close collaboration with the world's application security authority [*OWASP* (Open Worldwide Application Security Project)](https://owasp.org/). *CRE* is an open source security reference knowledge base, [a nexus between *OWASP's* initiatives](https://owasp.org/projects/#owasp-projects-the-sdlc-and-the-security-wayfinder) and relevant, authoritative security reference documents originating in [MITRE](https://www.mitre.org/), [NIST](https://www.nist.gov/) and [ISO](https://www.iso.org/). 
 
 An example of openCRE is shown below.
 
@@ -151,23 +179,35 @@ As a simplification of a whole field of expertise, please do keep in mind:
 
 SIG can help with such threat analysis efforts as custom consultancy services. Please reach out to your account contact if you have questions.
 
-### Filtering results for false positives
-* **Starting with *Open Source Health*:** Assuming that Open Source Health is enabled together with Security, you probably want to start there. Vulnerable dependencies are regularly high-risk and urgent, yet relatively easy to solve (not when it concerns major framework updates for example). Generally, updating libraries has a high return on your efforts. Also, grouping the same libraries/frameworks may be favorable because you only need to go through release notes once. This might be harder if you need to cross teams to do that.
-  * **Note on legal risks in dependencies:** Any occurring *possible legal risks* (e.g. GPL) are important to discuss with your legal department. These legal license risks tend to apply only in specific cases, e.g. when you have modified the source code. SIG explicitly cannot help you with legal advice on this. 
+### Filtering results for false positives: starting with Open source vulnerabilities
+* **Starting with *Open Source Health*:** Assuming that Open Source Health is enabled together with Security, you probably want to start there. Vulnerable dependencies are regularly high-risk and urgent, yet relatively easy to solve (not when it concerns major framework updates for example). Generally, updating libraries has a high return on your efforts. Also, grouping the same libraries/frameworks may be favorable because you only need to go through release notes once. This might be harder if you need to cross teams to do that. Simplified, different scenarios in which you may need to act upon possible vulnerabilities in third party code are: 
 
-* **Filtering test/functional domains by sorting on code location:** To get an overview and to be able to make quick exclusions of false positives, it may be useful to order security findings by *component/file* [see above](#different-grouping-of-security-findings). A file-view may expose e.g. test-code, and a component-view may show that many files may lay in a certain functional domain> As an example, deployment configurations may exist in a context of which you know that they are protected from certain security risks. This may lead to a lot of exclusions and a cleaner overview of security findings. 
+  1. *There is an easy fix* or minor update ("minor" as in a small functional change, bugfix, or small increment in case of semantic versioning). Fix as soon as you can. 
+  2. *There is a (partial) fix, but* it is complicated or undependable/buggy. Plan deeper analysis first, estimate an effort range, and put it on the backlog for planning. Urgency for planning mostly depends on the potential severity/CVSS score, but there may be other considerations, like piggyback-updating it as part of another large update. This is especially true for transitive dependencies, where the dependency is in a frameworks own dependencies, and a framework upgrade will fix multiple issues. Plan testing effort accordingly, which may be important to anticipate in organizations where you need to "reserve" testing resources and capacity. 
+  3. *There is no fix*, because the owning (OSS) project is inactive, or does not consider it urgent or important enough. Also it could be that a CVE has been assigned but the owner/supplier disagrees about its exploitability and therefore does not solve (there are some examples in the Spring framework). Assess its severity first. Generally, assumptions can be made based on a library's functionality. Escalation is expected if you are using this particular library for security-sensitive operations. (De)serialization being a notorious example. Look for alternatives, also in cases where the future of a library is uncertain. In the *Open Source Health* tab, indicators for these are a combination of the <img src="../images/system-osh-icon-freshness.png" class="inline" />  *Freshness*, <img src="../images/system-osh-icon-activity.png" class="inline" />  *Activity*, and <img src="../images/system-osh-icon-stability.png" class="inline" />  *Stability* estimates.
+  4. *The vulnerability actually is a false positive*. It could be unexploitable in the system's particular context (e.g. because of deployment reasons)
+  5. *There is a fix, but the team cannot fix it themselves*: this may be the case in organizations where the team does not have Operations under its control (e.g. where deployment or PaaS is handled by another department or [governmental] organization). In that case, the inability of the team to fix it is a direct result of this organizational choice. It could be considered an inherent "accepted risk", but this is not completely fair. It does not fully release the team from responsibility. Corresponding to the severity of the issue, formal escalation should be considered part of the team's/project manager's responsibility. Impact assessment can then be done by the deployment/infra party.  
+
+  Another situation could be where you are using a specific licensed version (e.g. Redhat), where you are either contractually limited by a version, the release cycle differs from the cycle of the underlying software, or forking means that vulnerabilities may (not) be applicable.
+  5. *Actual false positive*: When you use frameworks where different major or minor versions have separate versioning paths, there might be version confusion in detecting vulnerabilities. For example, you could be on a latest 1.2 version, e.g. 1.2.3, but if there is a separate (serviced) 1.3.x fork where the latest version is 1.3.3, it may look like you are lagging behind, even when you are not. Upgrading would not necessarily be your required path, because it is not uncommon that (minor version) forks are developed where they are suited for a specific tech-stack. And with different tech-stacks, both exploitability and release cycles may be very different. 
+
+In case of false positives, you may contact Sigrid Support. Given the automatic resolution of versions and vulnerabilities on which Sigrid is based, we are dependent on the data quality of our data sources, but we will see what we can do for you. 
+
+
+* **Note on legal risks in dependencies:** Any *possible legal risk* (e.g. GPL) is important to discuss with your legal representative/department. Legal license risks tend to apply only in specific cases, e.g. when you have modified the source code. SIG explicitly cannot help you with legal advice on this. 
+
+* **Filtering false positives (e.g. test code) by grouping findings on code location or component:** To get an overview and to be able to make quick exclusions of false positives, it may be useful to order security findings by *component/file* [see above](#different-grouping-of-security-findings). A file-view may expose e.g. test-code, and a component-view may show that many files may lay in a certain functional domain. As an example, deployment configurations may exist in a context of which you know that they are protected from certain security risks. This may lead to a lot of exclusions and a cleaner overview of security findings. 
   * **Deeper analysis in the File view:** In the *File view* you can export those findings as a spreadsheet. In case of very large lists of findings it may be advantageous to browse and filter in a spreadsheet editor, and then go back and exclude them (by groups). 
 
 
 ### Prioritizing security findings
-  * **Sprint approaches:** A tactic during sprints is to use a kind of *Boy Scout* approach, where you compare findings for files while you are modifying them. This tends to be efficient because you are already working in/analyzing the code. Consider making this part of the *Definition of Done*.
+  * **Sprint approaches:** A tactic during sprints is to use a kind of *Boy Scout* approach, where you compare findings for files while you are modifying them. This tends to be efficient because you are already working in/analyzing the code. Consider making this part of the *Definition of Done*. See also [the agile development workflow](../workflows/agile-development-process.md#for-maintainability-focus-on-technical-debt-that-is-affecting-you-right-now).
     * Please see the [Agile workflow page regarding refinement/planning](../workflows/agile-development-process.md#triage-security-and-osh-findings) for a further discussion on processing security findings in an Agile workflow. 
-* *Prioritizing by severity* is the typical approach, and this is faithful to agile practices (assuming you choose the action with the highest return first). This way you move from urgent to less urgent findings.
-* Prioritizing based on grouping by patterns means that you may exclude or solve many findings in one go. There are indeed cases when a whole class of findings can be excluded because for some reason the findings are not applicable or can be resolved in one place.
+* **Prioritizing by severity** is the typical approach, and this is faithful to agile practices (assuming you choose the action with the highest return first). This way you move from urgent to less urgent findings.
+* **Prioritizing by pattern grouping** means that you may exclude or solve many findings in one go. There are indeed cases when a whole class of findings can be excluded because for some reason the findings are not applicable or can be resolved in one place. You can arrive by this grouping e.g. by using "Finding Type" (specific vulnerability) or "CWE" (more general weakness). See our [section on grouping findings above](#different-possible-grouping-of-security-findings).
 
 ## SIG may offer consultancy services to help you with security
 Depending on your agreement with SIG, security expertise consultancy may be available. Or this can be offered as a separate consultancy effort. See also [this question in the security FAQ](faq-security.md#to-what-extent-does-sig-provide-consultancy-for-security-findings).
-
 
 
 

@@ -61,6 +61,20 @@ Finally, the buttons around the page allow you to manipulate the architecture vi
 - The "reset layout" button resets the architecture visualization to its original state, which can help to restore readability.
 - The zoom buttons are an alternative way to zoom the architecture visualization, in addition to using your trackpad or mouse wheel to zoom.
 
+### Highlighting undesirable dependencies
+
+You might have noticed that some dependencies are shown in red. These dependencies are considered undesirable, either because they violate a known architectural anti-pattern (for example cyclic dependencies), or because they have been marked as undesirable in [your configuration](../reference/analysis-scope-configuration.md#architecture-quality).
+
+<img src="../images/architecture-undesirable-dependency.png" width="350" />
+
+### Grouping and annotating components
+
+In some cases, you might want to communicate additional information through Sigrid's architecture view. Such information does not directly originate from the source code, but adds some context that makes the architecture easier to find and interpret. 
+
+You can define *groups* and *annotations* in [your configuration](../reference/analysis-scope-configuration.md#architecture-quality). This information will then be depicted as an overlay on top of the architecture visualization in Sigrid.
+
+<img src="../images/architecture-grouping.png" width="300" />
+
 ## Frequently asked questions
 
 See [Architecture Quality: frequently asked questions](faq-architecture.md) for more detailed information on operational details regarding Architecture Quality. This includes questions regarding uploading code, technology support, and configuration.

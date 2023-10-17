@@ -20,6 +20,7 @@ import sys
 from argparse import ArgumentParser, SUPPRESS
 
 from sigridci.ascii_art_report import AsciiArtReport
+from sigridci.json_report import JsonReport
 from sigridci.junit_format_report import JUnitFormatReport
 from sigridci.markdown_report import MarkdownReport
 from sigridci.publish_options import PublishOptions, RunMode
@@ -39,6 +40,7 @@ def generateReports(feedbackFile, options, outputDir):
         MarkdownReport(),
         StaticHtmlReport(),
         JUnitFormatReport(),
+        JsonReport(),
         PipelineSummaryReport()
     ]
 

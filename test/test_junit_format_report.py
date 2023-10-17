@@ -26,8 +26,14 @@ class JUnitReportTest(TestCase):
 
     def testCreateXmlFileInJUnitFormat(self):
         feedback = {
+            "baselineRatings": {
+                "MAINTAINABILITY": 1.6,
+            },
+            "changedCodeBeforeRatings": {
+                "MAINTAINABILITY": 1.6,
+            },
             "newCodeRatings": {
-                "MAINTAINABILITY" : 2.0,
+                "MAINTAINABILITY" : 1.2,
                 "DUPLICATION" : 2.0,
                 "UNIT_SIZE" : 4.0,
                 "UNIT_COMPLEXITY" : 3.0
@@ -62,6 +68,12 @@ class JUnitReportTest(TestCase):
         
     def testDoNotMarkAnyTestCasesFailedIfOverallRatingIsOK(self):
         feedback = {
+            "baselineRatings": {
+                "MAINTAINABILITY": 1.6,
+            },
+            "changedCodeBeforeRatings": {
+                "MAINTAINABILITY": 1.6,
+            },
             "newCodeRatings": {
                 "MAINTAINABILITY" : 4.0,
                 "DUPLICATION" : 2.0
@@ -82,8 +94,14 @@ class JUnitReportTest(TestCase):
 
     def testReportAllSystemPropertiesIfMaintainabilityFailsEvenIfMetricSpecificTargetsFail(self):
         feedback = {
+            "baselineRatings": {
+                "MAINTAINABILITY": 1.6,
+            },
+            "changedCodeBeforeRatings": {
+                "MAINTAINABILITY": 1.6,
+            },
             "newCodeRatings": {
-                "MAINTAINABILITY" : 3.0,
+                "MAINTAINABILITY" : 1.3,
                 "UNIT_SIZE" : 4.0,
                 "UNIT_COMPLEXITY" : 4.0
             },

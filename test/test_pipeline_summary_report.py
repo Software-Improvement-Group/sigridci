@@ -12,6 +12,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
+import inspect
 from io import StringIO
 from unittest import TestCase
 
@@ -29,6 +30,7 @@ class ConclusionReportTest(TestCase):
     def testDisplayLandingPageFromClient(self):
         feedback = {
             "baseline": "20220110",
+            "changedCodeBeforeRatings" : {},
             "baselineRatings": {"DUPLICATION": 4.0, "UNIT_SIZE": 4.0, "MAINTAINABILITY": 4.0},
             "newCodeRatings": {"DUPLICATION": 5.0, "UNIT_SIZE": 2.0, "MAINTAINABILITY": 3.0},
             "overallRatings": {"DUPLICATION": 4.5, "UNIT_SIZE": 3.0, "MAINTAINABILITY": 3.2},
@@ -40,16 +42,15 @@ class ConclusionReportTest(TestCase):
         report.generate("1234", feedback, self.options)
         
         expected = """
-** SIGRID CI RUN COMPLETE: THE CODE YOU WROTE DID NOT MEET THE TARGET FOR MAINTAINABLE CODE **
-
-
--------------------------------------------------------------------------
-View your analysis results in Sigrid:
-    https://example-sigrid.com/aap/noot/-/sigrid-ci/1234?targetRating=3.5
--------------------------------------------------------------------------
+            ** ❌  Your code did not manage to improve towards your Sigrid objective of 3.5 stars **
+            
+            -------------------------------------------------------------------------
+            View your analysis results in Sigrid:
+                https://example-sigrid.com/aap/noot/-/sigrid-ci/1234?targetRating=3.5
+            -------------------------------------------------------------------------
         """
                 
-        self.assertEqual(buffer.getvalue().strip(), expected.strip())
+        self.assertEqual(buffer.getvalue().strip(), inspect.cleandoc(expected).strip())
 
     def testSigridLinkIsLowercase(self):
         self.options.customer = "Aap"
@@ -62,7 +63,8 @@ View your analysis results in Sigrid:
         
     def testSpecialTextIfNoCodeChanged(self):
         feedback = {
-            "baseine": "20220110",
+            "baseline": "20220110",
+            "changedCodeBeforeRatings" : {},
             "baselineRatings": {"DUPLICATION": 4.0, "UNIT_SIZE": 4.0, "MAINTAINABILITY": 4.0},
             "newCodeRatings": {"MAINTAINABILITY": None},
             "overallRatings": {"DUPLICATION": 4.5, "UNIT_SIZE": 3.0, "MAINTAINABILITY": 3.5},
@@ -74,13 +76,12 @@ View your analysis results in Sigrid:
         report.generate("1234", feedback, self.options)
 
         expected = """
-** SIGRID CI RUN COMPLETE: NO FILES CONSIDERED FOR MAINTAINABILITY WERE CHANGED **
-
-
--------------------------------------------------------------------------
-View your analysis results in Sigrid:
-    https://example-sigrid.com/aap/noot/-/sigrid-ci/1234?targetRating=3.5
--------------------------------------------------------------------------
+            ** 🟰  You did not change any files that are measured by Sigrid **
+            
+            -------------------------------------------------------------------------
+            View your analysis results in Sigrid:
+                https://example-sigrid.com/aap/noot/-/sigrid-ci/1234?targetRating=3.5
+            -------------------------------------------------------------------------
         """
 
-        self.assertEqual(buffer.getvalue().strip(), expected.strip())
+        self.assertEqual(buffer.getvalue().strip(), inspect.cleandoc(expected).strip())

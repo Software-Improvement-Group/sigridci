@@ -14,6 +14,7 @@
 
 from xml.dom.minidom import Document
 
+from .objective import Objective, ObjectiveStatus
 from .report import Report
 
 
@@ -43,13 +44,11 @@ class JUnitFormatReport(Report):
         return dom.toprettyxml(indent="    ")
 
     def getFailures(self, feedback, options):
-        if self.meetsObjectives(feedback, options):
-            return []
-
+        status = Objective.determineStatus(feedback, options)
         failures = []
 
-        for metric in self.REFACTORING_CANDIDATE_METRICS:
-            if not self.meetsObjectives(feedback, options):
+        if status == ObjectiveStatus.WORSENED:
+            for metric in self.REFACTORING_CANDIDATE_METRICS:
                 failures += [self.formatFinding(rc) for rc in self.getRefactoringCandidates(feedback, metric)]
 
         return failures
