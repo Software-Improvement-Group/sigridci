@@ -28,7 +28,7 @@ You can find more information on how to set up this development process integrat
 
 ## Sigrid REST API
 
-In addition to the [Sigrid user interface at sigrid-says.com](https://sigrid-says.com), you can also consume Sigrid's data via the [Sigrid REST API](https://docs.sigrid-says.com/reference/sigrid-api-documentation.html). This API can be used to integrate with Sigrid in both directions:
+In addition to the [Sigrid user interface at sigrid-says.com](https://sigrid-says.com), you can also consume Sigrid's data via the [Sigrid REST API](https://docs.sigrid-says.com/integrations/sigrid-api-documentation.html). This API can be used to integrate with Sigrid in both directions:
 
 - You can take data from your existing systems and import this data into Sigrid. And example is [metadata](https://docs.sigrid-says.com/organization-integration/metadata.html), which can be imported from Application Lifecycle Management or CMDB systems. 
 - You can also extract data from Sigrid and then feed this data into your other systems. 
