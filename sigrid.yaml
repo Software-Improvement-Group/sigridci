@@ -1,0 +1,7 @@
+component_depth: 1
+languages:
+  - name: "Python"
+thirdpartyfindings:
+  enabled: true
+architecture:
+  enabled: true
