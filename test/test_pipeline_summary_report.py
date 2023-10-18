@@ -42,7 +42,7 @@ class ConclusionReportTest(TestCase):
         report.generate("1234", feedback, self.options)
         
         expected = """
-            ** ❌  Your code did not manage to improve towards your Sigrid objective of 3.5 stars **
+            ** ⚠️  Your code did not improve towards your Sigrid objective of 3.5 stars **
             
             -------------------------------------------------------------------------
             View your analysis results in Sigrid:
@@ -76,7 +76,7 @@ class ConclusionReportTest(TestCase):
         report.generate("1234", feedback, self.options)
 
         expected = """
-            ** 🟰  You did not change any files that are measured by Sigrid **
+            ** 💭️  You did not change any files that are measured by Sigrid **
             
             -------------------------------------------------------------------------
             View your analysis results in Sigrid:
