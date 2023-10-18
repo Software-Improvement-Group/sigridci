@@ -54,7 +54,7 @@ class MarkdownReport(Report):
         md += self.renderRefactoringCandidatesTable(bad) + "\n"
 
         md += "## 📚 Remaining technical debt\n\n"
-        md += f"**{len(unchanged)}** refactoring candidates didn't get better or worse, but are still in the code.\n\n"
+        md += f"**{len(unchanged)}** refactoring candidates didn't get better or worse, but are still present in the code you touched.\n\n"
         md += self.renderRefactoringCandidatesTable(unchanged) + "\n"
 
         md += "## Sigrid ratings\n\n"
