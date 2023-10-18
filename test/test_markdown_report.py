@@ -70,7 +70,7 @@ class MarkdownReportTest(TestCase):
             
             ## 📚 Remaining technical debt
             
-            **1** refactoring candidates didn't get better or worse, but are still in the code.
+            **1** refactoring candidates didn't get better or worse, but are still present in the code you touched.
             
             | Risk | System property | Location |
             |------|-----------------|----------|
