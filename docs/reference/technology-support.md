@@ -7,6 +7,10 @@ Technologies are sometimes referred to by multiple names. For example, some peop
 
 Finally, note the column "supported Sigrid capabilities" does not list Open Source Health. The reason is that Open Source Health is based on open source ecosystems, not specific technologies. Refer to the section on [supported technologies for Open Source Health](#supported-open-source-ecosystems) for more information.
 
+<sig-toc></sig-toc>
+
+## List of supported technologies
+
 | Name in configuration file     | Display name                   | Also known as | Supported Sigrid capabilities | Notes |
 |--------------------------------|--------------------------------|---------------|-------------------------------|-------|
 | `abap`                         | ABAP                           | SAP | Maintainability |

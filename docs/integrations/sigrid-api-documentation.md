@@ -3,6 +3,8 @@ Sigrid API documentation
 
 In addition to [Sigrid CI](../README.md), Sigrid also provides a more general-purpose REST API that you can use to obtain analysis results from Sigrid. This allows you to integrate data from Sigrid into your workflow. 
 
+<sig-toc></sig-toc>
+
 ## General usage
 
 - The Sigrid API base URL is `https://sigrid-says.com/rest/analysis-results/api/v1`. 
