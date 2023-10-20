@@ -339,7 +339,7 @@ You can define architecture groups and annotations, and these annotations are th
             - other_component
           annotation: "Slightly longer text that adds more context beyond just the name."
         
-The contents of the `include` option refer to the component names you see in Architecture Quality.
+The contents of the `include` option refer to the component names you see in Architecture Quality. You can either use the exact component names, or you can use regular expressions. For example, using `target: backend.*` will match all components that have a name starting with "backend". Note you are matching the component name, not the files *within* the component.
 
 ## Configuring multi-repo systems
 
