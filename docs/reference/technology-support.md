@@ -93,6 +93,7 @@ Finally, note the column "supported Sigrid capabilities" does not list Open Sour
 | `easytrieve`                   | Easytrieve                     | | Maintainability |
 | `egl`                          | EGL                            | | Maintainability |
 | `ejs`                          | EJS                            | | Maintainability |
+| `elixir`                       | Elixir                         | | Maintainability |
 | `embeddedsql`                  | C++ Embedded SQL               | | Maintainability |
 | `erb`                          | ERB                            | | Maintainability |
 | `esql`                         | ESQL                           | | Maintainability |
@@ -358,8 +359,8 @@ In addition to supporting 300+ technologies, Sigrid also supports various open s
 | Unmanaged DLL files   | C#                     |
 | Unmanaged JS files    | JavaScript             |
 
-
 ## Supported security analyzers
+
 These are the supported security analyzers as you may see them in your security findings overview. You can use the literal text in the `Display name` below to enable or disable specific analyzers, if deemed necessary. For such configuration, see the [Security/Third Party Findings section section on the system security page](../reference/analysis-scope-configuration.md#third-party-findings).
 
 | Display name           | Technology                       | Note                       |
@@ -387,6 +388,17 @@ These are the supported security analyzers as you may see them in your security 
 | Gosec                  | Go                               | Semgrep plugin             |
 | Bandit                 | Python                           | Semgrep plugin             |
 
+## Supported software quality standards
+
+| Software quality standard | Relevant for capabilities |
+|---------------------------|---------------------------|
+| [ISO 25010](https://iso25000.com/index.php/en/iso-25000-standards/iso-25010) | Maintainability, Security, Reliability |
+| [SIG Security Model](https://softwareimprovementgroup.com/wp-content/uploads/SIG-Evaluation-Criteria-Security.pdf) | Security |
+| [OWASP Top 10](https://owasp.org/www-project-top-ten/) | Security |
+| [ISO 5055](https://www.iso.org/standard/80623.html) | Security, Reliability |
+| [CWE Top 25](https://cwe.mitre.org/top25/) | Security |
+| [PCI DSS 4.0](https://blog.pcisecuritystandards.org/pci-dss-v4-0-resource-hub) | Security |
+| [OWASP ASVS 4.0](https://owasp.org/www-pdf-archive/OWASP_Application_Security_Verification_Standard_4.0-en.pdf) | Security |
 
 ## Requesting additional technology support
 

@@ -3,6 +3,11 @@ Sigrid release notes
 
 SIG uses [continuous delivery](https://en.wikipedia.org/wiki/Continuous_delivery), meaning that every change to Sigrid or the underlying analysis is released once our development pipeline has completed. On average, we release somewhere between 10 and 20 times per day. This page therefore doesn't list every single change, since that would quickly lead to an excessively long list of small changes. Instead, this page lists Sigrid and analysis changes that we consider noteworthy for the typical Sigrid user.
 
+### October 23, 2023
+
+- **Technology support:** Added support for the [Elixir](https://elixir-lang.org) programming language.
+- **Maintainability:** The maintainability overview page now shows system volume in lines of code, in addition to the system volume in person years that was already displayed. Person years is easier to interpret by non-technical users, but technical users asked to *also* show the lines of code as they find it easier to interpret this number.
+
 ### October 9, 2023
 
 - **Sigrid CI:** The Sigrid CI output for GitHub has been significantly improved:
