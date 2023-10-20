@@ -217,10 +217,12 @@ Yes, but you will need to explicitly tell Python to trust your certificates.
 
 - First, make sure your certificate `pem` files are accessible from where you are running Sigrid CI.
   - If you are running Sigrid CI from your own environment, simply make sure the location is accessible from your pipeline.
+    - In this scenario, Python will automatically pick up certificates from your operating system's certificate store, meaning you should not need manual configuration.
+    - If the above does not work for your particular operating system, you can also use the environment variables from the next option.
   - If you are using Docker-based Sigrid CI, you will need to mount this location to make it available to the Docker container.
-- Next, point Python to where to find your PEM files by updating the following environment variables:
-  - `SSL_CERT_FILE: /path/to/mounted/cert.pem`
-  - `REQUESTS_CA_BUNDLE: /path/to/mounted/cert.pem`
+    - Next, point Python to where to find your PEM files by updating the following environment variables:
+      - `SSL_CERT_FILE: /path/to/mounted/cert.pem`
+      - `REQUESTS_CA_BUNDLE: /path/to/mounted/cert.pem`
 
 ## Contact and support
 
