@@ -5,7 +5,7 @@ Using Sigrid CI or the Sigrid API requires an *authentication token*. You can cr
 ## Who should create the token?
 
 - **If you want to use Sigrid CI for an existing system that is already part of your Sigrid account:** Any Sigrid user account with access to that system can create the token. 
-- **If you want to on-board new systems to your Sigrid account:** On-boarding systems requires additional rights. Also see [token permissions for on-boarding new systems](#token-permissions-for-on-boarding-new-systems).
+- **If you want to on-board new systems to your Sigrid account:** Also see [token permissions for on-boarding new systems](#token-permissions-for-on-boarding-new-systems).
 - **If your token is expired:** Tokens have a validaty of one year. Please create a new token.
 
 ## Creating an (new) authentication token
