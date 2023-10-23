@@ -34,7 +34,7 @@ def parsePublishOptions(args):
         sourceDir=args.source,
         excludePatterns=args.exclude.split(","),
         includePatterns=args.include.split(","),
-        includeHistory=args.include_history,
+        includeHistory=True,
         showUploadContents=args.showupload,
         targetRating=parseTarget(args.targetquality),
         sigridURL=args.sigridurl
@@ -69,8 +69,10 @@ if __name__ == "__main__":
     parser.add_argument("--exclude", type=str, default="", help="Comma-separated list of files/directories to exclude.")
     parser.add_argument("--include", type=str, default="", help="Comma-separated list of files/directories to include.")
     parser.add_argument("--showupload", action="store_true", help="Logs the contents of the upload published to Sigrid.")
-    parser.add_argument("--include-history", action="store_true", help="Publish repository history to Sigrid.")
     parser.add_argument("--sigridurl", type=str, default="https://sigrid-says.com", help=SUPPRESS)
+    # This option is now enabled by default, using an anonymized history,
+    # but we leave it here to avoid breaking people's configuration.
+    parser.add_argument("--include-history", action="store_true", help=SUPPRESS)
     # Dummy argument used when passing false to boolean arguments.
     # BooleanOptionalAction would solve this, but requires Python 3.9+.
     parser.add_argument("--dummy", action="store_true", help=SUPPRESS)

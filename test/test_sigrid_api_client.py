@@ -32,4 +32,4 @@ class SigridApiClientTest(TestCase):
         options = PublishOptions("aap", "noot", runMode=RunMode.PUBLISH_ONLY, sourceDir="/tmp")
         apiClient = SigridApiClient(options)
 
-        self.assertEquals("mytoken", apiClient.token)
+        self.assertEqual("mytoken", apiClient.token)
