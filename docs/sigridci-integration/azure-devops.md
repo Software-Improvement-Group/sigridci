@@ -7,6 +7,7 @@ Integrating Sigrid CI with Azure DevOps
 - You have created an [authentication token for using Sigrid CI](../organization-integration/authentication-tokens.md).
 - [Python 3.7 or higher](https://www.python.org) needs to be available in the CI environment if you do not use the [Docker image](https://hub.docker.com/r/softwareimprovementgroup/sigridci) published by SIG. The client scripts for Sigrid CI are based on Python.
 - The examples assume [Git](https://git-scm.com) is available on your Azure DevOps environment.
+- Sigrid CI requires the UTF-8 character encoding, as we use emoji in the command line output. Nowadays UTF-8 is the default in most environments, but if you are using a different character encoding for Python you will need to set the character encoding explicitly using the [PYTHONIOENCODING](https://docs.python.org/3/using/cmdline.html) environment variable (i.e. `export PYTHONIOENCODING=utf-8` or `set PYTHONIOENCODING=utf-8`).
 
 ## On-boarding your system to Sigrid
 

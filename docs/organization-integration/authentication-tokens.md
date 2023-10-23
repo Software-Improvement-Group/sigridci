@@ -5,7 +5,7 @@ Using Sigrid CI or the Sigrid API requires an *authentication token*. You can cr
 ## Who should create the token?
 
 - **If you want to use Sigrid CI for an existing system that is already part of your Sigrid account:** Any Sigrid user account with access to that system can create the token. 
-- **If you want to on-board new systems to your Sigrid account:** On-boarding systems requires additional rights. This requires a Sigrid user account that is authorized to access all systems. Sigrid user accounts that can *only* access certain systems *cannot* on-board systems.
+- **If you want to on-board new systems to your Sigrid account:** Also see [token permissions for on-boarding new systems](#token-permissions-for-on-boarding-new-systems).
 - **If your token is expired:** Tokens have a validaty of one year. Please create a new token.
 
 ## Creating an (new) authentication token
@@ -46,7 +46,7 @@ The systems your tokens can access are inherited from your Sigrid account's perm
 
 ## Token permissions for on-boarding new systems
 
-If your user account is authorized to access the entire portfolio, your tokens will be able to on-board more systems. If your account is restricted to only accessing a specific set of systems, your tokens can only access those systems and will not be allowed to on-board new ones.
+Every Sigrid user is able to on-board new systems. However, you might need to ask your administrator for the right permissions to access "your" system's analysis results in Sigrid itself.
 
 ## Contact and support
 
