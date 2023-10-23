@@ -1,46 +1,7 @@
 Sigrid: Frequently Asked Questions
 ==================================
 
-## Table of contents
-
-### Usage questions
-
-- [Do you support pull request integration?](#do-you-support-pull-request-integration)
-- [Does Sigrid CI fit in my workflow?](#does-sigrid-ci-fit-in-my-workflow)
-- [Which technologies do you support?](#which-technologies-do-you-support)
-- [What is my system name?](#what-is-my-system-name)
-- [How to get a token and account?](#how-to-get-a-token-and-account)
-- [What target quality should we use?](#what-target-quality-should-we-use)
-- [Where can I find more information about your metrics?](#where-can-i-find-more-information-about-your-metrics)
-- [How can I use Sigrid to improve my code maintainability?](#how-can-i-use-sigrid to-improve-my-code-maintainability)
-- [What is the maximum upload size?](#what-is-the-maximum-upload-size)
-- [Can I exclude certain files from being uploaded?](#can-i-exclude-certain-files-from-being-uploaded)
-- [Do Sigrid CI uploads get added to the Sigrid dashboard?](#do-sigrid-ci-uploads-get-added-to-the-sigrid-dashboard)
-- [What branch or commit does Sigrid CI compare against?](#what-branch-or-commit-does-sigrid-ci-compare-against)
-- [Why am I being penalized for problems that were already there?](#why-am-i-being-penalized-for-problems-that-were-already-there)
-- [Why are architecture metrics excluded from Sigrid CI?](#why-are-architecture-metrics-excluded-from-sigrid-ci)
-- [Should we fail the build if the Sigrid CI check fails?](#should-we-fail-the-build-if-the-sigrid-ci-check-fails)
-- [Why doesn't deleted code influence the rating?](#why-doesnt-deleted-code-influence-the-rating)
-- [We have a multi-repo project, can I still use Sigrid CI?](#we-have-a-multi-repo-project-can-i-still-use-sigrid-ci)
-- [Why are there differences between the directory structure as we see it in our IDE and Sigrid components?](#why-are-there-differences-between-the-directory-structure-as-we-see-it-in-our-IDE-and-Sigrid-components)
-- [Can I see which files are uploaded to Sigrid?](#can-i-see-which-files-are-uploaded-to-sigrid)
-- [Why do you have both publish and publishonly options, what's the difference?](#why-do-you-have-both-publish-and-publishonly-options-whats-the-difference)
-
-### Common problems
-
-- [What to do when the script does not work?](#what-to-do-when-the-script-does-not-work)
-- [I'm receiving an error message that certificate verification failed](#im-receiving-an-error-message-that-certificate-verification-failed)
-- [I used the subsystem option and see results from other subsystems](#i-used-the-subsystem-option-and-see-results-from-other-subsystems)
-- [Where do I find the Sigrid CI output?](#where-do-i-find-the-sigrid-ci-output)
-- [I started using Sigrid CI, and now I suddenly see more code in Sigrid](#i-started-using-sigrid-ci-and-now-i-suddenly-see-more-code-in-sigrid)
-- [I'm receiving an error message about UnicodeEncodeError](#im-receiving-an-error-message-about-unicodeencodeerror)
-- [I'm reciving an error message about dubious ownership in repository](#im-receiving-an-error-message-about-dubious-ownership-in-repository)
-
-### Infrastructure and security questions
-
-- [How do you protect our source code?](#how-do-you-protect-our-source-code)
-- [Where is your service hosted?](#where-is-your-service-hosted)
-- [Do we need to update our firewall settings?](#do-we-need-to-update-our-firewall-settings)
+<sig-toc></sig-toc>
 
 ### Sigrid Security
 
@@ -249,6 +210,19 @@ Possibly. As mentioned above, Sigrid is hosted on AWS. This means your firewall 
 - Allow outbound traffic to `sig-sigrid-ci-upload.s3.eu-central-1.amazonaws.com` on port 443
 
 [Contact SIG](mailto:support@softwareimprovementgroup.com) if you need specific information on this setup.
+
+### Do you support people using their own certificates or certificate authority?
+
+Yes, but you will need to explicitly tell Python to trust your certificates. 
+
+- First, make sure your certificate `pem` files are accessible from where you are running Sigrid CI.
+  - If you are running Sigrid CI from your own environment, simply make sure the location is accessible from your pipeline.
+    - In this scenario, Python will automatically pick up certificates from your operating system's certificate store, meaning you should not need manual configuration.
+    - If the above does not work for your particular operating system, you can also use the environment variables from the next option.
+  - If you are using Docker-based Sigrid CI, you will need to mount this location to make it available to the Docker container.
+    - Next, point Python to where to find your PEM files by updating the following environment variables:
+      - `SSL_CERT_FILE: /path/to/mounted/cert.pem`
+      - `REQUESTS_CA_BUNDLE: /path/to/mounted/cert.pem`
 
 ## Contact and support
 

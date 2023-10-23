@@ -5,14 +5,47 @@ function makeSectionLink(sectionHeader) {
     sectionHeader.appendChild(sectionLink);
 
     sectionLink.addEventListener("click", e => {
-        const anchor = sectionHeader.innerText.replace(/\s/g, "-").replace(/[^\w-]/g, "").toLowerCase();
-        const href = window.location.origin + window.location.pathname + "#" + anchor;
-        navigator.clipboard.writeText(href);
+        const url = getSectionHeaderURL(sectionLink);
+        navigator.clipboard.writeText(url);
     });
 }
 
+function getSectionHeaderURL(sectionHeader) {
+    const anchor = sectionHeader.innerText.replace(/\s/g, "-").replace(/[^\w-]/g, "").toLowerCase();
+    return window.location.origin + window.location.pathname + "#" + anchor;
+}
+
+function makeTableOfContents(toc, sectionHeaders) {
+    const title = document.createElement("strong");
+    title.innerText = "Table of contents";
+    toc.appendChild(title);
+
+    const list = document.createElement("ul");
+    toc.appendChild(list);
+    
+    for (const sectionHeader of sectionHeaders) {
+        if (sectionHeader.nodeName != "h1") {
+            const listItem = document.createElement("li");
+            listItem.classList.add(sectionHeader.nodeName.toLowerCase());
+            list.appendChild(listItem);
+        
+            const sectionLink = document.createElement("a");
+            sectionLink.innerText = sectionHeader.innerText;
+            sectionLink.href = getSectionHeaderURL(sectionHeader);
+            listItem.appendChild(sectionLink);
+        }
+    }
+}
+
 document.addEventListener("DOMContentLoaded", () => {
-    for (const sectionHeader of document.querySelectorAll("article h2, article h3, article h4")) {
+    const sectionHeaders = document.querySelectorAll("article h2, article h3, article h4");
+    const toc = document.querySelector("sig-toc");
+
+    for (const sectionHeader of sectionHeaders) {
         makeSectionLink(sectionHeader);
+    }
+    
+    if (toc && sectionHeaders.length > 0) {
+        makeTableOfContents(toc, sectionHeaders);
     }
 });

@@ -197,3 +197,26 @@ td, th {
     padding: 4px 8px 4px 8px;
     font-size: 14px;
 }
+
+sig-toc {
+    display: block;
+    width: 700px;
+    border: 1px solid #233347;
+    box-shadow: 1px 1px 5px #687483;
+    background-color: #E0E3E7;
+    padding: 16px;
+    font-size: 14px;
+}
+
+sig-toc ul {
+    margin: 8px 0px 0px 0px;
+    padding-left: 24px;
+}
+
+sig-toc .h3 {
+    margin-left: 30px;
+}
+
+sig-toc .h4 {
+    margin-left: 60px;
+}

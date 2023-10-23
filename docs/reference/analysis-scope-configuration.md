@@ -19,6 +19,8 @@ The following example shows a typical example of the `sigrid.yaml` configuration
       
 The various options and sections are explained in more detail in the remainder of this page.
 
+<sig-toc></sig-toc>
+
 ## When should you customize the configuration?
 
 Whenever you need behavior that is custom for your project. Common examples are to [exclude code](#excluding-files-and-directories), to [include/exclude specific parts of the code or programming languages](#defining-include-and-exclude-patterns), or to [resolve ambiguities](#resolving-pattern-match-ambiguities-that-may-stall-analysis).
@@ -337,7 +339,7 @@ You can define architecture groups and annotations, and these annotations are th
             - other_component
           annotation: "Slightly longer text that adds more context beyond just the name."
         
-The contents of the `include` option refer to the component names you see in Architecture Quality.
+The contents of the `include` option refer to the component names you see in Architecture Quality. You can either use the exact component names, or you can use regular expressions. For example, using `target: backend.*` will match all components that have a name starting with "backend". Note you are matching the component name, not the files *within* the component.
 
 ## Configuring multi-repo systems
 
