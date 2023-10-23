@@ -25,7 +25,7 @@ Finally, note the column "supported Sigrid capabilities" does not list Open Sour
 | `adfxml`                       | ADF XML                        | | Maintainability |
 | `agilepoint`                   | AgilePoint                     | | Maintainability |
 | `altovauml`                    | Altova UML                     | | Maintainability |
-| `angularjstemplate`            | Angular Templates              | | Maintainability |
+| `angularjstemplate`            | Angular Templates              | | Maintainability | (7) |
 | `ansible`                      | Ansible                        | | Maintainability, Security |
 | `apachecamel`                  | Apache Camel                   | | Maintainability |
 | `apex`                         | APEX                           | | Maintainability |
@@ -113,7 +113,7 @@ Finally, note the column "supported Sigrid capabilities" does not list Open Sour
 | `guidefinition`                | GUI Definition                 | | Maintainability | (5) |
 | `gupta`                        | Gupta                          | | Maintainability |
 | `haml`                         | Haml                           | | Maintainability |
-| `html`                         | HTML                           | | Maintainability |
+| `html`                         | HTML                           | | Maintainability | (7) |
 | `hql`                          | HQL                            | | Maintainability |
 | `ibmbpmbpd`                    | IBM BPM (BPD)                  | | Maintainability |
 | `ibmbpmprocess`                | IBM BPM (Process)              | | Maintainability |
@@ -332,6 +332,9 @@ Notes:
   - Use `vb` for [classic Visual Basic](https://en.wikipedia.org/wiki/Visual_Basic_(classic)), which has been end-of-life since 2008.
 5. In most cases, configuration files are not considered part of production code and are therefore not relevant for Sigrid's maintainability analysis. Only add these technologies if you consider them part of the system's production code.
 6. "Unknown technology" will be shown in Sigrid when the technology cannot be detected.
+7. Use either `html` or `angularjstemplate`, but not both.
+  - Prefer `angularjstemplate` if you're using [Angular templates](https://angular.io/guide/template-syntax).
+  - Use `html` for all other types of HTML files or templates.
 
 ## Supported open source ecosystems
 
