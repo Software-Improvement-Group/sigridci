@@ -16,7 +16,7 @@ Being able to set system-specific objectives can help you evaluate your system r
 
 ## How to define portfolio objectives? 
 
-To define a portfolio objective, the user can click on the “Add Portfolio Objective” button on the top right of the screen:
+To define a portfolio objective, the user can click on the "Add Portfolio Objective" button on the top right of the screen:
 
 <img src="../images/portfolio-objectives-add-arrow.png" width="700" />
 
