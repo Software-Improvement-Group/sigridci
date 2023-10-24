@@ -55,7 +55,7 @@ The system level and portfolio level objectives are closely related to each othe
 
 
 1. Portfolio-level objectives are intended to be used across a wide range of the customer’s systems, and, are meant to be defined based on the metadata for these systems. In other words: the effectiveness and usefulness of portfolio-level objectives will be directly related to the quality and level of granularity of the metadata.
-In order for customers to define effective portfolio-level objectives, they first need to define the “corresponding” metadata.
+In order for customers to define effective portfolio-level objectives, they first need to define the "corresponding" metadata.
 
 
 2. The portfolio-level objectives will act as a fallback in case no system-level objectives are defined, but, if they are, they will override the portfolio-level ones.
@@ -69,7 +69,7 @@ Then, during the day-to-day work, since one of these systems is being completely
 
 From this point onwards, the system-level override will be the only one in effect, and this particular system will not be affected by the portfolio-level target.
 Once the developers finish their work, they no longer require the objective to be there, so, they remove it.
-Upon removing it, the system-level override disappears, and, simultaneously, the portfolio-level objective comes into effect again, making the newly revamped system to be subjected to the higher quality standard set by the portfolio-level objective.
+Upon removing it, the system-level override disappears, and, simultaneously, the portfolio-level objective comes into effect again, making the newly revamped system subjected to the higher quality standard set by the portfolio-level objective.
 
 
 
