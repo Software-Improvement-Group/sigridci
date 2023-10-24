@@ -1,14 +1,14 @@
 Portfolio Objectives 
 
-Being able to set system specific objectives can help you evaluate your system realistically based on your business context, as well as its current lifecycle phase. However, when you have many systems, setting objectives individually for each of them becomes impractical. It's important to prioritize and set stronger or weaker targets for certain systems, according to their importance for your business. Therefore, it is critical to be able to set objectives for a group of systems. This can be done via portfolio objectives. 
+Being able to set system-specific objectives can help you evaluate your system realistically based on your business context, as well as its current lifecycle phase. However, when you have many systems, setting objectives individually for each of them becomes impractical. It's important to prioritize and set stronger or weaker targets for certain systems, according to their importance for your business. Therefore, it is critical to be able to set objectives for a group of systems. This can be done via portfolio objectives. 
 
 Portfolio Objective:  A type of objective that targets a group of systems based on similar metadata, aiming to provide an efficient and user-friendly experience that removes the need to set objectives individually for each system and better prioritization. (General rule) 
 
 
+<img src="../images/portfolio-objectives-main-table.png" width="700" />
 
 
-
-System Objective: A type of objective specific to an individual system within a portfolio that does not follow the general rule. When an objective is set at system level, the system no longer follows the objective defined at portfolio level.
+System Objective: A type of objective specific to an individual system within a portfolio that does not follow the general rule. When an objective is set at the system level, the system no longer follows the objective defined at the portfolio level.
 
 
 
