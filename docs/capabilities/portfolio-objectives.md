@@ -11,20 +11,20 @@ Portfolio Objective:  A type of objective that targets a group of systems based 
 System Objective: A type of objective specific to an individual system within a portfolio that does not follow the general rule. When an objective is set at the system level, the system no longer follows the objective defined at the portfolio level.
 
 
-
+<img src="../images/portfolio-objectives-system-detail.png" width="700" />
 
 
 How to define portfolio objectives? 
 
 To define a portfolio objective, the user can click on the “Add Portfolio Objective” button on the top right of the screen:
 
-
+<img src="../images/portfolio-objectives-add-arrow.png" width="700" />
 
 Upon clicking the button, a pop-up will appear to guide you during the creation of a portfolio objective.
 
-The pop-up will guide you towards configuring the portfolio objective:
+The pop-up will guide you toward configuring the portfolio objective:
 
-
+<img src="../images/portfolio-objectives-add-popup.png" width="700" />
 
 There will be several dropdown menus available in the pop-up.
 
@@ -32,7 +32,7 @@ There will be several dropdown menus available in the pop-up.
 There will be a Capability dropdown, that allows the user to select the specific capability for which the portfolio objective will be defined.
 
 
-Then, the Type dropdown, that allows the user to select a given objective type that is part of the capability selected in the previous step. In the example, we see that the Test Code Ratio is set as a type. This is due to the fact that Test Code Ratio is a type of objective that belongs to the Maintainability capability.
+Then, the Type dropdown, allows the user to select a given objective type that is part of the capability selected in the previous step. In the example, we see that the Test Code Ratio is set as a type. This is due to the fact that "Test Code Ratio" is a type of objective that belongs to the Maintainability capability.
 
 
 Finally, the last step allows for defining the actual value that we want our portfolio objective to be. 
