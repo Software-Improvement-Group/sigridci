@@ -1,6 +1,6 @@
 # Setting and using Sigrid Objectives
 
-## Objectives help you set direction and compare them with current state 
+## Objectives help you set direction and compare them with the current state 
 
 **Objectives** are targets that can be set in Sigrid, to compare against system status and quality trends. In this context, objectives are understood as being *non-functional requirements*. They are considered separate from metadata (see [metadata page](../organization-integration/metadata.md)), since *Objectives* do not describe characteristics of systems themselves, but where you want them to be.
 
