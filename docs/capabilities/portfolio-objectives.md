@@ -57,7 +57,8 @@ The system level and portfolio level objectives are closely related to each othe
 
 
 1. Portfolio-level objectives are intended to be used across a wide range of systems, and, are meant to be defined based on the metadata for these systems. In other words: the effectiveness and usefulness of portfolio-level objectives will be directly related to the quality and level of granularity of the metadata.
-In order for you to define effective portfolio-level objectives, you first need to define the "corresponding" metadata.
+In order for you to define effective portfolio-level objectives, you first need to define the "corresponding" metadata. Metadata is, just like the name indicates, data about your systems. An example, which we described at the beginning of this text, can be categorizing a system based on its business criticality and its lifecycle phase. Not all systems will be equally critical nor will all of them be greenfield projects backed by the most modern technologies. 
+The ability to tell Sigrid exactly how each of your systems fits into your business, as well as your software landscape, is what the metadata is about.
 
 
 2. The portfolio-level objectives will act as a fallback in case no system-level objectives are defined, but, if they are, they will override the portfolio-level ones.
