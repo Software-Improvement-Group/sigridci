@@ -16,7 +16,7 @@ Being able to set system-specific objectives can help you evaluate your system r
 
 ## How to define portfolio objectives? 
 
-To define a portfolio objective, the user can click on the "Add Portfolio Objective" button on the top right of the screen:
+To define a portfolio objective, you can click on the "Add Portfolio Objective" button on the top right of the screen:
 
 <img src="../images/portfolio-objectives-add-arrow.png" width="700" />
 
@@ -26,27 +26,29 @@ The pop-up will guide you toward configuring the portfolio objective:
 
 <img src="../images/portfolio-objectives-add-popup.png" width="700" />
 
-There will be several dropdown menus available in the pop-up.
+There are several dropdown menus available in the pop-up.
 
 
-1. There will be a Capability dropdown, that allows the user to select the specific capability for which the portfolio objective will be defined.
+1. A Capability dropdown, that allows you to select the specific capability for which the portfolio objective will be defined.
 
-2. Then, the Type dropdown, allows the user to select a given objective type that is part of the capability selected in the previous step. In the example, we see that the Test Code Ratio is set as a type. This is due to the fact that the "Test Code Ratio" objective is a type of objective that belongs to the Maintainability capability.
+2. Then, the Type dropdown, allows you to select a given objective type that is part of the capability selected in the previous step. In the example, we see that Test Code Ratio is set as a type. This is due to the fact that the "Test Code Ratio" objective is a type of objective that belongs to the Maintainability capability.
 
 3. Finally, the last step allows for defining the actual value that we want our portfolio objective to be. 
 This final field can be of two distinct types: either a free-text field, in the case of numeric objectives, or a dropdown containing a series of pre-defined values, that will be the allowed values for the given objective type.
 
-Note also the indicator that the objective will apply to all systems in a given portfolio.
+Note also the indicator that the objective will apply to all systems in your portfolio.
 
 4. Finally, we have a free-text field called Rationale. This field can be used to add any additional details on why a given objective was set and add extra details regarding the values for ensuring full clarity to all involved stakeholders.
 
 
 ## Importance of the Rationale field
 
-One of the main goals of portfolio objectives is that they allow our customers to codify business objectives in Sigrid. 
-A portfolio objective is not, exclusively, a technical objective, but, it’s also a business objective for our customers’ portfolio. 
+One of the main goals of portfolio objectives is that they allow you to codify business objectives in Sigrid. 
+A portfolio objective is not, exclusively a technical objective, but, it’s also a business objective for your portfolio.
+
+The idea behind the "Rationale" field, is that it opens up communication between development teams and the management side, in a two-way fashion: when technical goals are linked to business goals, that creates a storyline that resonates well with management, since business goals are their priority. Simultaneously, when  business goals are linked to technical goals, from the lens of the developers, that gives them the perspective on what business goal the technical work they are doing will eventually contribute to.
 An example can be as follows: consider a legacy modernization scenario, where older systems are being rewritten in a more modern version of a given technology. And, let’s assume, that in order to guide that process, a quality standard is agreed upon by all stakeholders: a maintainability rating of 4.0 stars is enforced for all systems, to ensure that the re-write doesn’t degrade the existing quality.
-Such a goal is an important business goal for the customer, and, now, with portfolio objectives, that business expectation can be seen and monitored through Sigrid.
+That is an important business goal for you and, with portfolio objectives, that business expectation can be seen and monitored through Sigrid.
 
 
 ## Relation between system-level objectives and portfolio-level objectives
@@ -54,8 +56,8 @@ Such a goal is an important business goal for the customer, and, now, with portf
 The system level and portfolio level objectives are closely related to each other, but, there are several important details to be aware of:
 
 
-1. Portfolio-level objectives are intended to be used across a wide range of the customer’s systems, and, are meant to be defined based on the metadata for these systems. In other words: the effectiveness and usefulness of portfolio-level objectives will be directly related to the quality and level of granularity of the metadata.
-In order for customers to define effective portfolio-level objectives, they first need to define the "corresponding" metadata.
+1. Portfolio-level objectives are intended to be used across a wide range of systems, and, are meant to be defined based on the metadata for these systems. In other words: the effectiveness and usefulness of portfolio-level objectives will be directly related to the quality and level of granularity of the metadata.
+In order for you to define effective portfolio-level objectives, you first need to define the "corresponding" metadata.
 
 
 2. The portfolio-level objectives will act as a fallback in case no system-level objectives are defined, but, if they are, they will override the portfolio-level ones.
