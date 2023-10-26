@@ -53,7 +53,9 @@ class Objective:
 
     @staticmethod
     def determineStatusBasedOnTrend(previous, current):
-        if current > previous:
+        if previous == None or current == None:
+            return ObjectiveStatus.UNKNOWN
+        elif current > previous:
             return ObjectiveStatus.IMPROVED
         elif current < previous:
             return ObjectiveStatus.WORSENED
