@@ -75,6 +75,11 @@ class ObjectiveTest(TestCase):
         status = Objective.determineStatus(feedback, self.options)
         self.assertEqual(status, ObjectiveStatus.ACHIEVED)
 
+    def testUnknownIfOldRatingsAreNotAvailable(self):
+        feedback = self.mockFeedback(None, None, None, 3.0)
+        status = Objective.determineStatus(feedback, self.options)
+        self.assertEqual(status, ObjectiveStatus.UNKNOWN)
+
     def mockFeedback(self, baseline, changedBefore, changedAfter, newAndChanged):
         return {
             "baselineRatings" : {
