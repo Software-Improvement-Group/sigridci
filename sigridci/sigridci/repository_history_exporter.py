@@ -55,10 +55,10 @@ class RepositoryHistoryExporter:
 
         for line in gitLog.strip().split("\n"):
             if line.startswith(("@@@", "'@@@")):
-                cells = line.split(";")
-                cells[2] = hashlib.sha256(cells[2].encode("utf8")).hexdigest()
-                cells[3] = hashlib.sha256(cells[3].encode("utf8")).hexdigest()
-                anonymized += ";".join(cells) + "\n"
+                marker, id, name, email, date, message = line.split(";")
+                name = hashlib.sha256(name.encode("utf8")).hexdigest()
+                email = hashlib.sha256(email.encode("utf8")).hexdigest()
+                anonymized += ";".join([marker, id, name, email, date, message]) + "\n"
             else:
                 anonymized += line + "\n"
 
