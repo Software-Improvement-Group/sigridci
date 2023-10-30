@@ -12,7 +12,7 @@ This FAQ specifically covers Sigrid's Architecture Quality functionality. Also c
   
 ### How do I enable the change history analysis?
 
-This will happen automatically, assuming that you enabled Architecture Quality in the scope file and the change history is available. You might need to add the `--include-history` option in the [Sigrid CI configuration](../reference/client-script-usage.md).
+This will happen automatically, assuming that you enabled Architecture Quality in the scope file and the change history is available.
 
 ### Which version control systems does SIG support for analyzing the change history?
 

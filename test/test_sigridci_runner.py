@@ -255,7 +255,7 @@ class SigridCiRunnerTest(TestCase):
     def testReadScopeFileWhenInRepository(self):
         self.createTempFile(self.tempDir, "sigrid.yaml", "component_depth: 1")
 
-        self.assertEquals(self.options.readScopeFile(), "component_depth: 1")
+        self.assertEqual(self.options.readScopeFile(), "component_depth: 1")
 
     def testScopeFileIsNoneWhenNotInRepository(self):
         self.assertIsNone(self.options.readScopeFile())

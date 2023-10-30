@@ -32,7 +32,6 @@ The script takes a limited number of mandatory arguments. However, Sigrid CI's b
 | `--publishonly`     | No       | N/A                 | Publishes analysis results to Sigrid, but *does not* provide feedback in the CI environment itself. [3]  |
 | `--exclude`         | No       | /build/,.png        | Comma-separated list of file and/or directory names that should be excluded from the upload. [4][7]      |
 | `--include`         | No       | /build/,.png        | Comma-separated list of file and/or directory names that should be included in the upload. [6][7]        |
-| `--include-history` | No       | N/A                 | See [publishing your repository history](#publishing-your-repository-history).                           |
 | `--targetquality`   | No       | 3.5                 | See [defining quality targets](#defining-quality-targets). Used to decide if the CI step should fail.    |
 | `--showupload`      | No       | N/A                 | Logs the contents of the upload before submitting it to Sigrid.                                          |
 
@@ -82,15 +81,6 @@ You can find more information on how to define, track, and use Sigrid objectives
 ### Option 2: Use a maintainability target in Sigrid CI that is different from the target in Sigrid
 
 Using the `--targetquality` parameter allows you to override the maintainability target defined in Sigrid. For example, `--targetquality 4.0` will require pull requests to be 4.0 stars even if the system-level maintainability target defined in Sigrid is 3.5 stars. You would normally use the same target in both, but in some situations you might want to be more strict or more lenient for pull requests. 
-
-## Publishing your repository history
-
-The `--include-history` option lets Sigrid CI publish your repository history to Sigrid. When enabled, this will export your Git history and publish it to Sigrid along with your source code. This information is then used in Sigrid's Architecture Quality feature to show evolution and knowledge metrics. Note that Sigrid will never report on the activities of individual developers, all data is aggregated to team level.
-
-- [The Architecture Quality feature usage documentation](../capabilities/architecture-quality.md) for information on how to utilize this information in Sigrid.
-- See the [Architecture Quality configuration](analysis-scope-configuration.md#architecture-quality) for more information on the available options.
-- The [Architecture Quality FAQ](../capabilities/faq-architecture.md) covers common questions regarding this feature, including support for specific (Git) features. 
-- This option is only supported for Git repositories, as [Git is now used by 97% of the market](https://survey.stackoverflow.co/2023/). If you don't use Git, you can still enable this option but it will have no effect.
 
 ## Contact and support
 
