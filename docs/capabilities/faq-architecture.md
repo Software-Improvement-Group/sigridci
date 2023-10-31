@@ -5,9 +5,9 @@ This FAQ specifically covers Sigrid's Architecture Quality functionality. Also c
 
 ### How do I enable Architecture Quality for my project?
 
-Architecture Quality is av available by default. Once you've published your system, you will automatically see an "Architecture" tab appear when you view your system in Sigrid.
+Architecture Quality is available by default. Once you've published your system, you will automatically see an "Architecture" tab appear when you view your system in Sigrid.
 
-You can us the [scope documentation](../reference/analysis-scope-configuration.md) to customize the Architecture Quality analysis for this system, but this is optional and not a required step.
+You can us the [scope documentation](../reference/analysis-scope-configuration.md) to customize the Architecture Quality analysis for this system, if necessary.
   
 ### How do I enable the change history analysis?
 
