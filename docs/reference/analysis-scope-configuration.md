@@ -232,12 +232,10 @@ For the list of all supported analyzers, see [the specific technology support se
 
 ## Architecture Quality
 
-**Note: This requires an Architecture Quality license, which is currently restricted to a limited customer beta. Without this license, you will not be able to see security results in Sigrid.**
-
-Similar to other Sigrid capabilities, you can enabled the Architecture Quality capability by adding a section to your configuration file:
+Architecture Quality is available by default. You can use the various scope file options to customize your analysis. The options related to architecture live in the `architecture` section in the scope file.
 
     architecture:
-      enabled: true
+      # options go here
       
 Adding this section to the configuration will automatically enable the Architecture Quality analysis every time you publish your system to Sigrid.
 
@@ -254,7 +252,6 @@ The obvious downside of this approach is that it leads to different views in Sig
 However, if it is essential for you to have the same componentization for both Maintainability and Architecture Quality, or if you really want to define your Architecture Quality view manually, it is possible to override the standard behavior in the configuration:
 
     architecture:
-      enabled: true
       custom_components: true
       
 This will disable the automatic component detection for Architecture Quality, and will instead use the [components you defined manually](#defining-components).
@@ -266,13 +263,11 @@ Architecture Quality analyzes both your source code and the repository history. 
 When you publish your repository history to Sigrid, it is automatically picked up by the Architecture Quality analysis without needing further configuration. By default, Sigrid will analyze the repository history for the last year. If you want to change this to a different period, you can manually specify the time period that should be analyzed:
 
     architecture:
-      enabled: true
       history_period_months: 6
       
 This example will change the default period of 12 months, and instead analyze only analyze the last 6 months of history. If you want to go even further, it is also possible to define an exact start date:
 
     architecture:
-      enabled: true
       history_start: "2023-01-01"
       
 ### Manually specifying architecture dependencies
@@ -280,7 +275,6 @@ This example will change the default period of 12 months, and instead analyze on
 Although Sigrid supports hundreds of technologies, there is always the possibility that Sigrid doesn't automatically detect the dependencies for your particular framework. It is therefore possible to manually define additional dependencies, which will be added on top of the automatic dependency detection:
 
     architecture:
-      enabled: true
       add_dependencies:
         - source: backend
           target: frontend
@@ -288,7 +282,6 @@ Although Sigrid supports hundreds of technologies, there is always the possibili
 The names for the `source` and `target` fields are the same you see in Sigrid's user interface. You can use the same mechanism to remove false positives from the automatic dependency detection:
 
     architecture:
-      enabled: true
       remove_dependencies:
         - source: frontend
           target: backend
@@ -298,7 +291,6 @@ The names for the `source` and `target` fields are the same you see in Sigrid's 
 The `architecture` section in the configuration has its own `exclude` option, which can be used to exclude certain files and directories from the Architecture Quality analysis.
 
     architecture:
-      enabled: true
       exclude:
         - ".*/index[.]ts"
         
@@ -309,20 +301,18 @@ The list of exclude patterns works in the same way as the global, top-level `exc
 Architecture Quality allows you to [mark certain dependencies as undesirable](../capabilities/architecture-quality.md#highlighting-undesirable-dependencies). You can configure which dependencies should be considered undesirable:
 
     architecture:
-      enabled: true
-        undesirable_dependencies:
-          - source: "backend"
-            target: "legacy"
+      undesirable_dependencies:
+        - source: "backend"
+          target: "legacy"
             
 This example will mark all dependencies from the "backend" component to the "legacy" component as "undesirable". You can also use additional options to be more specific about *which type* of dependencies are undesirable:
 
     architecture:
-      enabled: true
-        undesirable_dependencies:
-          - source: "backend"
-            target: "legacy"
-            bidirectional: true
-            type: code_call
+      undesirable_dependencies:
+        - source: "backend"
+          target: "legacy"
+          bidirectional: true
+          type: code_call
 
 Adding `bidirectional: true` means the dependencies are undesirable in both directions. This is basically a shorthand notation so that you do not have to configure both `A -> B` and `B -> A` separately. The `type` option can be used to only consider certain types of dependencies. In the example, since one type has been defined, code dependencies are undesirable but other types (such as interface dependencies) are still allowed.
 
@@ -331,7 +321,6 @@ Adding `bidirectional: true` means the dependencies are undesirable in both dire
 You can define architecture groups and annotations, and these annotations are then [displayed on top of the architecture visualization](../capabilities/architecture-quality.md#grouping-and-annotating-components). As with the other customization options, this is done in the configuration:
 
     architecture:
-      enabled: true
       grouping:
         - name: "Title of my architecture group"
           include:

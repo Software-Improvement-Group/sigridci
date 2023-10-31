@@ -5,10 +5,9 @@ This FAQ specifically covers Sigrid's Architecture Quality functionality. Also c
 
 ### How do I enable Architecture Quality for my project?
 
-  - Make sure your Sigrid license includes the Architecture Quality feature. You can check this with SIG support if you're not sure.
-  - Make sure your scope configuration file contains an `architecture` section as explained in the [scope documentation](../reference/analysis-scope-configuration.md).
-  - Publish your system to Sigrid.
-  - Architecture Quality will now be available.
+Architecture Quality is av available by default. Once you've published your system, you will automatically see an "Architecture" tab appear when you view your system in Sigrid.
+
+You can us the [scope documentation](../reference/analysis-scope-configuration.md) to customize the Architecture Quality analysis for this system, but this is optional and not a required step.
   
 ### How do I enable the change history analysis?
 
