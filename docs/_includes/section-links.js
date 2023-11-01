@@ -5,8 +5,9 @@ function makeSectionLink(sectionHeader) {
     sectionHeader.appendChild(sectionLink);
 
     sectionLink.addEventListener("click", e => {
-        const url = getSectionHeaderURL(sectionLink);
+        const url = getSectionHeaderURL(sectionHeader);
         navigator.clipboard.writeText(url);
+        window.location.href = url;
     });
 }
 
