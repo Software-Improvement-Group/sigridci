@@ -93,6 +93,7 @@ While several of the fields shown in the table above have self-evident values, s
 
 <details>
   <summary>Lifecycle phases</summary>
+  <div markdown="1">
 
 The lifecycle phase identifiers have the following meaning:
 
@@ -105,10 +106,13 @@ The lifecycle phase identifiers have the following meaning:
 |EOL|End-of-life (in production but minimal maintenance)|
 |DECOMMISSIONED|Decommissioned / Phased out (no longer in production)|
 
+</div>
+
 </details>
 
 <details>
   <summary>Target industries</summary>
+  <div markdown="1">
 
 The target industry phase identifiers have the following meaning:
 
@@ -145,6 +149,7 @@ The target industry phase identifiers have the following meaning:
 |SIG1000|Government|
 |SIG1100|Education|
 
+</div>
 
 </details>
 
