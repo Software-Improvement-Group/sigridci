@@ -201,6 +201,7 @@ The response format is based on the CycloneDX format for an [SBOM (software bill
 </details>
 
 The endpoint that returns third-party vulnerabilities for all systems for the given customer returns an array of SBOMs, one for each system as follows:
+
 ```
 {
     "customer" : "sig",
@@ -230,6 +231,7 @@ The path parameters `{customer}` and `{system}` refer to your Sigrid account nam
   <summary>Example system-level `GET` and `PATCH` response format</summary>
 
 The response format of both system-level endpoints (`GET` and `PATCH`) is as follows:
+
 ```json
 {
   "displayName" : "User-friendly system name",
@@ -255,6 +257,7 @@ The response format of both system-level endpoints (`GET` and `PATCH`) is as fol
   <summary>Example customer-level response</summary>
 
 The response format of the customer-level endpoint (`GET https://sigrid-says.com/rest/analysis-results/api/v1/system-metadata/{customer}`) is as follows:
+
 ```json
 [
   {
@@ -325,6 +328,7 @@ The metadata fields are described by the following table. Note that the setting 
 
 The software distribution strategy identifiers have the following meaning:
 
+
 |`softwareDistributionStrategy` identifier|Software Distribution Strategy|
 |---------------------------|----------------------|
 |NOT_DISTRIBUTED|Software is not distributed to third parties|
@@ -337,6 +341,7 @@ The software distribution strategy identifiers have the following meaning:
   <summary>Lifecycle phases</summary>
 
 The lifecycle phase identifiers have the following meaning:
+
 
 |`lifecyclePhase` identifier|System lifecycle phase|
 |---------------------------|----------------------|
@@ -352,6 +357,7 @@ The lifecycle phase identifiers have the following meaning:
   <summary>Target industries</summary>
 
 The target industry phase identifiers have the following meaning:
+
 
 |`targetIndustry` identifier|Industry|
 |----------|--------|
@@ -392,6 +398,7 @@ The target industry phase identifiers have the following meaning:
 
 The deployment type identifiers have the following meaning:
 
+
 |`deploymentType` identifier|Deployment Type|
 |---------------------------|---------------|
 |PUBLIC_FACING|A system that is accessible by users through the public internet|
@@ -405,6 +412,7 @@ The deployment type identifiers have the following meaning:
   <summary>Application types</summary>
 
 The possible application types are as follows:
+
 
 |`applicationType` identifier|
 |----------------------------|
@@ -426,6 +434,7 @@ The possible application types are as follows:
   <summary>Technology categories</summary>
 
 The possible technology categories are as follows:
+
 
 |`technologyCategory` identifier|
 |-------------------------------|
