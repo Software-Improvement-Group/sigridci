@@ -1,4 +1,4 @@
-# QSM (Sigrid-says.com) for Mendix customers using the Teamserver
+# QSM for Mendix customers using the Teamserver
 
 This document describes onboarding of Mendix apps to Sigrid for customers that are using the central Mendix Teamserver.
 
@@ -21,7 +21,7 @@ In order to onboard an app use the below post command where {customer} is your c
 POST `https://sigrid-says.com/rest/inboundresults/qsm/{customer}`
 
 #### Token
-Note that this endpoint requires a [SIGRID CI Authentication token](../organization-integration/authentication-tokens.md) that is valid for {customer}. 
+Note that this endpoint requires a [Sigrid CI Authentication token](../organization-integration/authentication-tokens.md) that is valid for {customer}. 
 
 ##### Headers
     - 'Authorization: Bearer YOUR_TOKEN'
@@ -66,7 +66,7 @@ In order to trigger an on-demand scan for an app use the below post command wher
 POST `https://sigrid-says.com/rest/inboundresults/qsm/{customer}/{system}`
 
 #### Token
-Note that this endpoint requires a [SIGRID CI Authentication token](../organization-integration/authentication-tokens.md) that is valid for {customer}.
+Note that this endpoint requires a [Sigrid CI Authentication token](../organization-integration/authentication-tokens.md) that is valid for {customer}.
 ##### Headers
     - 'Authorization: Bearer YOUR_TOKEN'
 ##### Body
@@ -82,8 +82,7 @@ curl --header 'Authorization: Bearer YOUR_TOKEN' -X POST https://sigrid-says.com
 
 We see that some of our customers use the Mendix Team sever to store the Mendix apps and they also use a separate CI pipeline connected the teamserver to do automated 'pipeline' tasks. This is called the 'bring your own pipeline' scenario. Some of these customers would like to scan any branch in QSM and not only scan the default mainline.
 
-In those cases the following hybrid setup will work. The trick of this hybrid set up is that the daily clone of the mainline de facto serves as a SigridCI --publish step.
+In those cases the following hybrid setup will work. The trick of this hybrid set up is that the daily clone of the mainline de facto serves as a SigridCI `--publish` step.
 
-- 1. QSM Sigrid-says.com will pull a daily clone from the team server busines as usual. It scans by default the mainline for both maintainability, open source health and security. 
-
-- 2. In the CI pipeline the customer only needs to add the SigriCI step to scan any branch against the above 'published' mainline for maintainability results.
+- QSM Sigrid-says.com will pull a daily clone from the team server busines as usual. It scans by default the mainline for both maintainability, open source health and security. 
+- In the CI pipeline the customer only needs to add the SigriCI step to scan any branch against the above 'published' mainline for maintainability results.
