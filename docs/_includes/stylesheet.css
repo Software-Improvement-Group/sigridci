@@ -43,22 +43,20 @@ h2, h3 {
     box-shadow: 1px 0px 5px #687483;
 }
 
-.container nav img {
+.container nav img.logo {
     display: block;
-    margin-left: 10px;
-    max-width: 100px;
-    margin-bottom: 30px;
+    margin-left: 24px;
+    max-width: 80px;
+    margin-bottom: 40px;
 }
 
 .container nav .toc {
-    padding-top: 20px;
     padding-bottom: 36px;
 }
 
 .container nav .toc a, .container nav .toc .category {
     display: block;
     color: #ffffff;
-    border-bottom: 1px solid #687483;
     padding: 4px 8px 4px 8px;
 }
 
@@ -72,12 +70,14 @@ h2, h3 {
     background-image: url("/images/arrow-right.svg");
     background-repeat: no-repeat;
     background-position: left;
+    background-size: 12px;
 }
 
 .container nav .toc .currentCategoryHeader {
     background-image: url("/images/arrow-down.svg");
     background-repeat: no-repeat;
     background-position: left;
+    background-size: 12px;
 }
 
 .container nav .pages {
@@ -107,8 +107,11 @@ h2, h3 {
     color: #DFC101;
     border: 1px solid #DFC101;
     padding: 4px;
-    margin-bottom: 24px;
+    margin: 0px auto 16px auto;
     text-align: center;
+    width: 170px;
+    border-radius: 4px;
+    font-size: 14px;
 }
 
 .container nav .footnote {
@@ -131,7 +134,7 @@ h2, h3 {
 
 article {
     flex: 1 1 auto;
-    padding: 110px 80px 30px 80px;
+    padding: 88px 80px 30px 80px;
     max-width: 850px;
 }
 
@@ -219,4 +222,21 @@ sig-toc .h3 {
 
 sig-toc .h4 {
     margin-left: 60px;
+}
+
+.searchForm {
+    margin-bottom: 16px;
+}
+
+.searchForm img {
+    position: absolute;
+    margin: 3px 0px 0px 28px;
+}
+
+.searchForm input[type=text] {
+    width: 180px;
+    border-radius: 4px;
+    border: none;
+    margin-left: 24px;
+    padding: 6px 4px 6px 32px;
 }
