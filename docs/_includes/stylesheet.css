@@ -13,12 +13,12 @@ body, td, th {
 }
 
 a {
-    color: #04ABC8;
+    color: #038096;
     text-decoration: none;
 }
 
 a:hover {
-    color: #038096;
+    color: #04ABC8;
     text-decoration: none;
 }
 
@@ -91,7 +91,7 @@ h2, h3 {
 
 .container nav .toc a.subPage {
     padding-left: 50px !important;
-    font-size: 10px !important;
+    font-size: 12px !important;
 }
 
 .container nav .currentCategory {
@@ -140,7 +140,7 @@ article img, article iframe {
     display: block;
     margin-left: auto;
     margin-right: auto;
-    box-shadow: 1px 1px 5px #687483;
+    box-shadow: 1px 1px 3px #687483;
 }
 
 article img.inline {
@@ -162,13 +162,12 @@ pre {
     display: block;
     max-width: 800px;
     overflow-x: scroll;
-    line-height: 1.4;
-    font-size: 14px;
-    background-color: #687483;
-    color: #ffffff;
+    line-height: 1.5;
+    font-size: 12px;
+    background-color: #d9e1eb;
+    color: #576975;
     padding: 16px;
-    border: 1px solid #233347;
-    box-shadow: 1px 1px 5px #687483;
+    box-shadow: 1px 1px 3px #687483;
     font-family: "Menlo", monospace;
     margin-left: auto;
     margin-right: auto;
@@ -200,17 +199,17 @@ td, th {
 
 sig-toc {
     display: block;
-    width: 700px;
-    border: 1px solid #233347;
-    box-shadow: 1px 1px 5px #687483;
-    background-color: #E0E3E7;
+    width: 800px;
+    box-shadow: 1px 1px 3px #687483;
+    background-color: #eceef1;
     padding: 16px;
-    font-size: 14px;
+    font-size: 12px;
 }
 
 sig-toc ul {
     margin: 8px 0px 0px 0px;
-    padding-left: 24px;
+    padding-left: 0px;
+    list-style-type: none;
 }
 
 sig-toc .h3 {
