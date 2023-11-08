@@ -16,6 +16,8 @@ Being able to set system-specific objectives can help you evaluate your system r
 
 ## How to define portfolio objectives? 
 
+<iframe width="560" height="315" src="https://www.youtube.com/embed/giNCbqQ9pnI?si=ktrKsYsx2uJmOL5Q" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+
 To define a portfolio objective, you can click on the "Add Portfolio Objective" button on the top right of the screen:
 
 <img src="../images/portfolio-objectives-add-arrow.png" width="700" />

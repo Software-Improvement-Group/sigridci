@@ -239,6 +239,8 @@ Architecture Quality is available by default. You can use the various scope file
       
 Adding this section to the configuration will automatically enable the Architecture Quality analysis every time you publish your system to Sigrid.
 
+<iframe width="560" height="315" src="https://www.youtube.com/embed/0p3ADGyg9nI?si=jKJ72GbFpTqZ7fbK" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+
 ### Components in Maintainability versus components in Architecture Quality
 
 Sigrid combines different capabilities, and those different capabilities might necessitate their own view on your system. In Sigrid's *Maintainability* pages, you get a simple breakdown into one level of components. Because you only get a single level, you need to define these components manually as explained in the [defining components](#defining-components) section.

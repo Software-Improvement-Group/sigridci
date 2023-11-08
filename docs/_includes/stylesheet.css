@@ -13,12 +13,12 @@ body, td, th {
 }
 
 a {
-    color: #04ABC8;
+    color: #038096;
     text-decoration: none;
 }
 
 a:hover {
-    color: #038096;
+    color: #04ABC8;
     text-decoration: none;
 }
 
@@ -27,8 +27,16 @@ h1 {
     font-size: 30px;
 }
 
-h2, h3 {
+h2 {
+    font-size: 22px;
     color: #334E68;
+    margin: 30px 0px 0px 0px;
+}
+
+h3 {
+    font-size: 18px;
+    color: #334E68;
+    margin: 30px 0px 0px 0px;
 }
 
 .container {
@@ -134,7 +142,7 @@ h2, h3 {
 
 article {
     flex: 1 1 auto;
-    padding: 88px 80px 30px 80px;
+    padding: 78px 80px 30px 80px;
     max-width: 850px;
 }
 
@@ -171,6 +179,7 @@ pre {
     color: #ffffff;
     padding: 16px;
     border: 1px solid #233347;
+    border-radius: 4px;
     box-shadow: 1px 1px 5px #687483;
     font-family: "Menlo", monospace;
     margin-left: auto;
@@ -205,6 +214,7 @@ sig-toc {
     display: block;
     width: 700px;
     border: 1px solid #233347;
+    border-radius: 4px;
     box-shadow: 1px 1px 5px #687483;
     background-color: #E0E3E7;
     padding: 16px;
@@ -239,4 +249,14 @@ sig-toc .h4 {
     border: none;
     margin-left: 24px;
     padding: 6px 4px 6px 32px;
+}
+
+.awesomplete li {
+    background-color: #FFFFFF;
+    padding: 4px;
+    border-top: 1px solid #E0E3E7;
+    font-size: 14px;
+    width: 500px;
+    position: absolute;
+    z-index: 2;
 }
