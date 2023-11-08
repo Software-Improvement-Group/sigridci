@@ -1,7 +1,7 @@
 Adding business context to a system using metadata
 ==================================================
 
-Adding business context to Sigrid makes it easier to interpret the results. For example, a below-market average maintainability rating of 2 stars might seem like a problem, but this depends entirely on the context. If the system is no longer actively maintained and will be decommissioned by the end of the year (i.e., its lifecycle phase is end-of-life, or EOL for short), such a rating might be perfectly acceptable. But if that system is new, uses a modern technology, and is business critical, such a rating would be considered a red flag. In both cases the technical conclusion is identical, it's the context that determines the urgency.
+Adding business context to Sigrid makes it easier to interpret the results. For example, a below-market average maintainability rating of 2 stars might seem like a problem, but this depends entirely on the context. If the system is no longer actively maintained and will be decommissioned by the end of the year (i.e., its lifecycle phase is end-of-life, or EOL for short), such a rating might be perfectly acceptable. But if that system is new, uses modern technology, and is business critical, such a rating would be considered a red flag. In both cases the technical conclusion is identical, it's the context that determines the urgency.
 
 Regarding ***Objectives***, see [our Objectives page](../capabilities/objectives.md)
 
@@ -70,6 +70,107 @@ Metadata can also be configured by passing the metadata values as parameters whe
 - When using the Sigrid CI GitHub Action published to GitHub Marketplace, you can also provide these fields as input parameters instead of environment variables. The names are again lowercase, so the input parameter would be named `applicationtype`.
 
 Note you can use the YAML file or environment variables, but not both. 
+
+## System metadata fields and corresponding allowed values
+
+The system metadata taxonomy used in Sigrid for adding business context to a system has a set of allowed values per field that need to match so that the context is correctly validated.
+
+Each of the fields presented below can only assume a single value from the list of possible values shown:
+
+| **Field name**                 | **Values**                                                                                                                                                                                                                                                                                                                      |
+|--------------------------------|---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| Software Distribution Strategy | "NOT_DISTRIBUTED", "NETWORK_SERVICE", "DISTRIBUTED"                                                                                                                                                                                                                                                                             |
+| Application Type               | ["PROCESS_CONTROLLER","TRANSACTION_PROCESSING","RESOURCE_MANAGEMENT",<br>"CASE_MANAGEMENT","DESIGN_ENGINEERING_DEVELOPMENT","ANALYTICAL",<br>"AUTHENTICATION_AND_PORTALS","COMMUNICATION","FUNCTIONAL_APPLICATIONS",<br>"KNOWLEDGE_AND_DOCUMENT_MANAGEMENT","PERSONAL_PRODUCTIVITY_APPLICATIONS"]                               |
+| Deployment Type                | ["PUBLIC_FACING","CONNECTED","INTERNAL","PHYSICAL"]                                                                                                                                                                                                                                                                             |
+| Target Industry                | ["ICD0500","ICD1750","ICD2350","ICD2710",<br>"ICD2730","ICD2750","ICD2770","ICD2790",<br>"ICD2797","ICD3350","ICD3500","ICD3700",<br>"ICD4500","ICD5300","ICD5500","ICD5700",<br>"ICD6500","ICD7500","ICD7577","ICD8300",<br>"ICD8500","ICD8630","ICD8700","ICD9530",<br>"ICD9570","SIG2200","SIG1200","SIG1000",<br>"SIG1100"] |
+| Business Criticality           | ["CRITICAL","HIGH","MEDIUM","LOW"]                                                                                                                                                                                                                                                                                              |
+| Lifecycle Phase                | ["INITIAL","EVOLUTION","MAINTENANCE","EOL","DECOMMISSIONED"]                                                                                                                                                                                                                                                                    |
+| Technology Category            | ["AGGREGATE","BPM","CUSTOMIZATION","CONFIGURATION",<br>"DATABASE","DSL","EMBEDDED","LEGACY",<br>"LOW_CODE","MAINFRAME","MODERN_GENERAL_PURPOSE",<br>"SCIENTIFIC","SCRIPTING","SDI","TEMPLATING","WEB"]                                                                                                                          |                                                                                                         |
+
+### Meaning of special values for metadata fields
+
+While several of the fields shown in the table above have self-evident values, some do not. As reference, you can find the meaning of such fields detailed below:
+
+<details>
+  <summary>Lifecycle phases</summary>
+  <div markdown="1">
+
+The lifecycle phase identifiers have the following meaning:
+
+
+|`lifecyclePhase` identifier|System lifecycle phase|
+|---------------------------|----------------------|
+|INITIAL|Initial development (pre-production)|
+|EVOLUTION|Evolution (post-production)|
+|MAINTENANCE|Servicing and maintenance|
+|EOL|End-of-life (in production but minimal maintenance)|
+|DECOMMISSIONED|Decommissioned / Phased out (no longer in production)|
+
+</div>
+
+</details>
+
+<details>
+  <summary>Target industries</summary>
+  <div markdown="1">
+
+The target industry phase identifiers have the following meaning:
+
+
+|`targetIndustry` identifier|Industry|
+|----------|--------|
+|ICD0500|Oil & Gas|
+|ICD1750|Industrial Metals & Mining|
+|ICD2350|Construction & Materials|
+|ICD2710|Aerospace & Defense|
+|ICD2730|Electronic & Electrical Equipment|
+|ICD2750|Industrial Engineering|
+|ICD2770|Industrial Transportation|
+|ICD2790|Support Services|
+|ICD2797|Industrial Suppliers|
+|ICD3350|Automobiles & Part|
+|ICD3500|Food & Beverage|
+|ICD3700|Personal & Household Goods|
+|ICD4500|Health Care|
+|ICD5300|Retail|
+|ICD5500|Media|
+|ICD5700|Travel & Leisure|
+|ICD6500|Telecommunications|
+|ICD7500|Energy|
+|ICD7577|Water|
+|ICD8300|Banking|
+|ICD8500|Insurance|
+|ICD8630|Real Estate Investment & Services|
+|ICD8700|Financial Services|
+|ICD9530|Software & Computer Services|
+|ICD9570|Technology hardware & equipment|
+|SIG2200|Legal Services|
+|SIG1200|Research|
+|SIG1000|Government|
+|SIG1100|Education|
+
+</div>
+
+</details>
+
+
+<details>
+  <summary>Deployment types</summary>
+  <div markdown="1">
+
+The deployment type identifiers have the following meaning:
+
+
+|`deploymentType` identifier|Deployment Type|
+|---------------------------|---------------|
+|PUBLIC_FACING|A system that is accessible by users through the public internet|
+|CONNECTED|A system that interacts with a public-facing system via the network. The system is not accessible via the public internet|
+|INTERNAL|A system that can only be reached by users via VPN or the company intranet. The system has no interaction with public-facing systems|
+|PHYSICAL|A system that can only be reached by users with access to a physical location. The system cannot be reached from an internal network and has no interaction with public-facing systems|
+
+</div>
+
+</details>
 
 ## Contact and support
 

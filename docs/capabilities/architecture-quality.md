@@ -53,6 +53,14 @@ Clicking on a dependency will provide you with a list of where those dependencie
 
 <img src="../images/aq-dependencies.png" width="500" />
 
+If your architecture contains a large number of components, it can be tricky to quickly identify a certain component in the architecture visualization. You can use the "folder" icon in the top left of the page to open the tree view. This provides you with a secondary way of navigating your architecture. Using the tree view is quicker in some scenarios, for example if you want to quickly check what files are located within a certain component. The tree view and the main architecture visualization are linked, so selecting a subcomponent in the tree view will also navigate to that same subcomponent in the architecture visualization.
+
+<img src="../images/aq-tree.png" width="250"/ >
+
+The tree view also includes a search option. You can use this to locate a specific system element within your architecture, such as a component, file, end point, or database. This is also linked to the main architecture visualization, so clicking on the search results will also navigate the main architecture visualization to that same system element.
+
+<img src="../images/aq-search.png" width="250"/ >
+
 Finally, the buttons around the page allow you to manipulate the architecture view:
 
 <img src="../images/aq-display-options.png" width="400" />
