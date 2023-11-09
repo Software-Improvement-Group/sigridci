@@ -266,6 +266,22 @@ class SystemUploadPackerTest(TestCase):
         ]
 
         self.assertEqual(UploadLog.history, expected)
+        
+    def testDoNotCrashOnDeadSymlinkInUpload(self):
+        sourceDir = tempfile.mkdtemp()
+        self.createTempFile(sourceDir, "a.py", "a")
+        
+        symlinkCommand = ["ln", "-s", "/tmp/nonexistent", f"{sourceDir}/dead-symlink"]
+        output = subprocess.run(symlinkCommand, stdout=subprocess.PIPE)
+        
+        self.assertEqual(0, output.returncode)
+        
+        options = PublishOptions("aap", "noot", RunMode.FEEDBACK_ONLY, sourceDir, showUploadContents=True)
+        outputFile = tempfile.mkstemp()[1]
+        uploadPacker = SystemUploadPacker(options)
+        uploadPacker.prepareUpload(outputFile)
+        
+        self.assertEqual(os.path.exists(outputFile), True)
 
     def createTempFile(self, dir, name, contents):
         with open(f"{dir}/{name}", "w") as fileRef:
