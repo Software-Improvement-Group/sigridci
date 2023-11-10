@@ -93,7 +93,7 @@ h3 {
 }
 
 .container nav .toc a.page {
-    padding-left: 30px;
+    padding-left: 25px;
     font-size: 12px;
 }
 
@@ -249,13 +249,29 @@ sig-toc .h4 {
     padding: 6px 4px 6px 32px;
 }
 
-.awesomplete li {
-    background-color: #FFFFFF;
-    padding: 4px;
-    border-top: 1px solid #E0E3E7;
-    font-size: 14px;
-    width: 500px;
+.awesomplete ul {
     position: absolute;
     z-index: 2;
+    list-style-type: none;
+    padding-left: 24px;
+    margin-top: 4px;
+}
+
+.awesomplete li {
+    background-color: #FFFFFF;
+    padding: 4px 8px 4px 8px;
+    border-top: 1px solid #E0E3E7;
+    font-size: 12px;
+    width: 500px;
     box-shadow: 1px 1px 3px #687483;
+    color: #038096;
+    cursor: pointer;
+}
+
+.awesomplete li:hover {
+    color: #04ABC8;
+}
+
+.awesomplete .visually-hidden {
+    display: none;
 }

@@ -6,26 +6,39 @@
 
 const searchIndex = {};
 
+function fillSearchIndex(item) {
+    searchIndex[item.title] = item;
+}
+
 {%- for document in index -%}
-    searchIndex[{{ document.title | smartify | strip_html | normalize_whitespace | jsonify }}] = {{ document.content | strip_html | normalize_whitespace | jsonify }};
+    fillSearchIndex({
+        title: {{ document.title | smartify | strip_html | normalize_whitespace | jsonify }},
+        content: {{ document.content | strip_html | normalize_whitespace | jsonify }},
+        url: "{{ document.url }}"
+    });
 {%- endfor -%}
 
-/*const lunrSearch = lunr(function () {
-    this.ref("name");
-    this.field("text");
+function filterSearchResults(entry, input) {
+    const item = searchIndex[entry.label];
+    const titleMatch = item.title.toLowerCase().indexOf(input.toLowerCase()) != -1;
+    const contentMatch = item.content.toLowerCase().indexOf(input.toLowerCase()) != -1;
+    return titleMatch || contentMatch;
+}
 
-    searchIndex.forEach(function (doc) {
-        this.add(doc)
-    }, this)
-});*/
+function styleSearchResult(entry, input) {
+    const listItem = document.createElement("li");
+    listItem.innerText = searchIndex[entry.label].title;
+    return listItem;
+}
 
 document.addEventListener("DOMContentLoaded", () => {
-    new Awesomplete(document.getElementById("searchResults"), {
+    const searchBox = document.getElementById("searchQuery");
+
+    new Awesomplete(searchBox, {
         list: Object.keys(searchIndex),
-        filter: (item, input) => {
-            console.log("filter");
-            console.log(item);
-            return item.toLowerCase().indexOf(input.toLowerCase()) != -1;
-        }
+        filter: filterSearchResults,
+        item: styleSearchResult
     });
+    
+    searchBox.addEventListener("awesomplete-select", e => document.location.href = searchIndex[e.text.label].url);
 });
