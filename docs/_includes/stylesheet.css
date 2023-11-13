@@ -27,8 +27,16 @@ h1 {
     font-size: 30px;
 }
 
-h2, h3 {
+h2 {
+    font-size: 22px;
     color: #334E68;
+    margin: 30px 0px 0px 0px;
+}
+
+h3 {
+    font-size: 18px;
+    color: #334E68;
+    margin: 30px 0px 0px 0px;
 }
 
 .container {
@@ -43,22 +51,20 @@ h2, h3 {
     box-shadow: 1px 0px 5px #687483;
 }
 
-.container nav img {
+.container nav img.logo {
     display: block;
-    margin-left: 10px;
-    max-width: 100px;
-    margin-bottom: 30px;
+    margin-left: 24px;
+    max-width: 80px;
+    margin-bottom: 40px;
 }
 
 .container nav .toc {
-    padding-top: 20px;
     padding-bottom: 36px;
 }
 
 .container nav .toc a, .container nav .toc .category {
     display: block;
     color: #ffffff;
-    border-bottom: 1px solid #687483;
     padding: 4px 8px 4px 8px;
 }
 
@@ -72,12 +78,14 @@ h2, h3 {
     background-image: url("/images/arrow-right.svg");
     background-repeat: no-repeat;
     background-position: left;
+    background-size: 12px;
 }
 
 .container nav .toc .currentCategoryHeader {
     background-image: url("/images/arrow-down.svg");
     background-repeat: no-repeat;
     background-position: left;
+    background-size: 12px;
 }
 
 .container nav .pages {
@@ -85,7 +93,7 @@ h2, h3 {
 }
 
 .container nav .toc a.page {
-    padding-left: 30px;
+    padding-left: 25px;
     font-size: 12px;
 }
 
@@ -107,8 +115,11 @@ h2, h3 {
     color: #DFC101;
     border: 1px solid #DFC101;
     padding: 4px;
-    margin-bottom: 24px;
+    margin: 0px auto 16px auto;
     text-align: center;
+    width: 170px;
+    border-radius: 4px;
+    font-size: 14px;
 }
 
 .container nav .footnote {
@@ -131,7 +142,7 @@ h2, h3 {
 
 article {
     flex: 1 1 auto;
-    padding: 110px 80px 30px 80px;
+    padding: 78px 80px 30px 80px;
     max-width: 850px;
 }
 
@@ -167,6 +178,7 @@ pre {
     background-color: #d9e1eb;
     color: #576975;
     padding: 16px;
+    border-radius: 4px;
     box-shadow: 1px 1px 3px #687483;
     font-family: "Menlo", monospace;
     margin-left: auto;
@@ -218,4 +230,48 @@ sig-toc .h3 {
 
 sig-toc .h4 {
     margin-left: 60px;
+}
+
+.searchForm {
+    margin-bottom: 16px;
+}
+
+.searchForm img {
+    position: absolute;
+    margin: 3px 0px 0px 28px;
+}
+
+.searchForm input[type=text] {
+    width: 180px;
+    border-radius: 4px;
+    border: none;
+    margin-left: 24px;
+    padding: 6px 4px 6px 32px;
+}
+
+.awesomplete ul {
+    position: absolute;
+    z-index: 2;
+    list-style-type: none;
+    padding-left: 24px;
+    margin-top: 4px;
+}
+
+.awesomplete li {
+    background-color: #FFFFFF;
+    padding: 4px 8px 4px 8px;
+    border-top: 1px solid #E0E3E7;
+    font-size: 12px;
+    width: 500px;
+    box-shadow: 1px 1px 3px #687483;
+    color: #038096;
+    cursor: pointer;
+}
+
+.awesomplete li:hover {
+    color: #04ABC8;
+}
+
+.awesomplete .visually-hidden {
+    display: none;
 }
