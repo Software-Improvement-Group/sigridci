@@ -1,7 +1,7 @@
 {
+  "$id": "https://json.schemastore.org/sigrid-scope-file.schema.json",
   "$schema": "http://json-schema.org/draft-07/schema#",
-  "title": "Sigrid scope configuration file",
-  "description": "Analysis scope configuration file used by Sigrid (sigrid-says.com)",
+  "additionalProperties": true,
   
   "definitions": {
     "organization": {
@@ -195,8 +195,7 @@
     }
   },
   
-  "type": "object",
-  "required": ["languages"],
+  "description": "Analysis scope configuration file used by Sigrid (sigrid-says.com)",
   
   "properties": {
     "default_excludes": {
@@ -329,7 +328,6 @@
           "$ref": "#/definitions/file_pattern_list",
           "description": "List of directory names that should be flattened and not considered as components during the analysis."
         },
-        
         "add_dependencies": {
           "$ref": "#/definitions/dependency_list",
           "description": "List of manually added dependencies on top of the ones detected automatically by the analysis."
@@ -444,5 +442,7 @@
       "required": ["enabled"]
     }
   },
-  "additionalProperties": true
+  "required": ["languages"],
+  "title": "Sigrid scope configuration file",
+  "type": "object"
 }
