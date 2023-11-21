@@ -112,6 +112,9 @@
             },
             "generated": {
               "$ref": "#/definitions/component"
+            },
+            "supplementary": {
+              "$ref": "#/definitions/component"
             }
           },
           "additionalProperties": false
@@ -138,6 +141,25 @@
       "type": "array",
       "items": {
         "type": "string"
+      }
+    },
+    "system_element": {
+      "type": "object",
+      "properties": {
+        "name": {
+          "type": "string"
+        },
+        "type": {
+          "type": "string"
+        }
+      },
+      "required": ["name"],
+      "additionalProperties": true
+    },
+    "system_element_list": {
+      "type": "array",
+      "items": {
+        "$ref": "#/definitions/system_element"
       }
     },
     "dependency": {
@@ -222,7 +244,7 @@
     },
     "model": {
       "$ref": "#/definitions/model",
-      "description": "Version of the SIG quality model that should be used for the analysis."
+      "description": "SIG Maintainability Model that should be used for the analysis, defaults to latest."
     },
     
     "alerts": {
@@ -272,6 +294,10 @@
         "exclude": {
           "$ref": "#/definitions/file_pattern_list",
           "description": "List of file/directory patterns that should be excluded from the Open Source Health analysis."
+        },
+        "model": {
+          "$ref": "#/definitions/model",
+          "description": "SIG Open Source Health model version that should be used for the analysis, defaults to latest."
         }
       },
       "additionalProperties": false,
@@ -314,7 +340,7 @@
         },
         "model": {
           "$ref": "#/definitions/model",
-          "description": "Version of the SIG Architecture Quality Model to use."
+          "description": "SIG Architecture Quality Model that should be used for the analysis, defaults to latest."
         },
         "exclude": {
           "$ref": "#/definitions/file_pattern_list",
@@ -327,6 +353,14 @@
         "flatten_directories": {
           "$ref": "#/definitions/file_pattern_list",
           "description": "List of directory names that should be flattened and not considered as components during the analysis."
+        },
+        "add_system_elements": {
+          "$ref": "#/definitions/system_element_list",
+          "description": "List of system elements that are manually defined and added to the architecture graph."
+        },
+        "remove_system_elements": {
+          "$ref": "#/definitions/system_element_list",
+          "description": "List of system elements to manually remove from the architecture graph."
         },
         "add_dependencies": {
           "$ref": "#/definitions/dependency_list",

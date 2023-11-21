@@ -67,9 +67,9 @@ Since we know that spec.js files are meant to be test files, what you probably w
     components:
     - name: "Our new React website"
       include:
-      - ".*/frontend/.*[.]jsx?"
+        - ".*/frontend/.*[.]jsx?"
       exclude:
-      - ".*[.]spec[.]jsx?"
+        - ".*[.]spec[.]jsx?"
 
 As a convention, all `include` and `exclude` patterns always start with `.*/`. It is tempting to always define patterns relative to the root of the codebase, but it is important to realize that what is considered the "root" is flexible in Sigrid. Depending on how you [map your repositories to systems](../organization-integration/systems.md), the root of your repository might not match the root of the Sigrid system that contains your repository. Starting all patterns `.*/` will avoid confusion in such situations.
 
@@ -79,12 +79,13 @@ As a convention, all `include` and `exclude` patterns always start with `.*/`. I
 - All patterns are case-sensitive. This is relevant in case you are specifically searching for naming in camelCase or PascalCase. It is then useful to search for files like `SomeTest.java`.
 - You are entering patterns inside of a YAML file. YAML uses backslashes for escape characters. So if you want to use backslashes inside of your regular expressions, for example `\S+` (i.e. "one or more non-whitespace characters"), you will need to escape the backslash: `\\S+`.
 - If you want to express a literal dot `.`, use `[.]`. This means: 1 character in a group where only `.` is permitted.
-- Since the commonly used *`.*`* is greedy, with deep directory structures it may happen that your search term appears in other places than you want, e.g. deeper level directories. Being as specific as possible helps you catch the right folders and files. Commonly, you might be looking for specific file names, while those same search terms should not appear in directory names. For example, you may search for files with *Build* in the name, but avoiding */Build/* directories, since those may contain generated or compiled code. To find filenames specifically, or whenever you want to avoid a deeper level directory, a useful pattern is `[^/]*` or `[^/]+`. This pattern consumes characters as long as it does not find a `/`. When used as `/[^/]*[.]java` it will ensure to catch a filename ending with `.java`. You could also have defined a character set that excludes the folder separator *"/"* with a set like `.*/[\\w-][.]java`, but this is prone to omissions.  
+- Since the commonly used `.*` is greedy, with deep directory structures it may happen that your search term appears in other places than you want, e.g. deeper level directories. Being as specific as possible helps you catch the right folders and files. Commonly, you might be looking for specific file names, while those same search terms should not appear in directory names. For example, you may search for files with *Build* in the name, but avoiding */Build/* directories, since those may contain generated or compiled code. To find filenames specifically, or whenever you want to avoid a deeper level directory, a useful pattern is `[^/]*` or `[^/]+`. This pattern consumes characters as long as it does not find a `/`. When used as `/[^/]*[.]java` it will ensure to catch a filename ending with `.java`. You could also have defined a character set that excludes the folder separator *"/"* with a set like `.*/[\\w-][.]java`, but this is prone to omissions.  
 - Abide by the developer wisdom that solving a problem with a regular expression leads you to have 2 problems. Regular expressions are powerful and may even be fun, but try to match your needs with the simplest possible pattern. Matching "positive" patterns, including the `exclude` option, is far easier than trying with e.g. negative lookaheads `(?!..)`, because catching a full file path is difficult with its non-capturing behavior. There are cases where patterns may work such as `((?![unwanted string]).)+`, but these cases are hard to get right and debug. Also, negative lookbehinds (`?<!`) are not recommended ([rather use an `exclude` pattern as above](#defining-include-and-exclude-patterns)), because they require a known character length and position. 
 
 ### Scoping YAML indentation rules
 
 The configuration is sensitive to indentation.
+
 - System-wide elements are on the first column, like `exclude:` (the `exclude:` in the top of the configuration which defines a system-wide exclusion), `components:`, `languages:`.
 - Their direct elements start on the first column after a "`- `", e.g. the `- name:` of a component, 
 - Indented with 2 spaces `include:` and `exclude:` of a component, **if** no context has been defined (being: `production:`, `generated:`, or `test:`). The pattern definitions of an `include:` or `exclude:` start with "`- `" at the same level. 
@@ -124,13 +125,13 @@ Component detection is based on the project's directory structure. What "compone
 
 Components can be defined in several ways, which are explained below.
 
-### **Option 1: Defining components based on directory depth**
+### Option 1: Defining components based on directory depth
 
 The simple option is to simply base the components on directory depth. The following example will use the project's top-level directories as components.
 
     component_depth: 1
     
-### **Option 2: Defining components based on base directories**
+### Option 2: Defining components based on base directories
 
 In some projects, using directory depth will not accurately reflect the actual component structure. The more advanced options allows you to define components explicitly:
 
@@ -140,7 +141,7 @@ In some projects, using directory depth will not accurately reflect the actual c
       - "" # This "empty string" includes the `root` directory, as it appears in the upload folder structure, as a separate component. While this is like setting `"component_depth: 1"`, in this way you are able to split only some folders into separate components (in this case, `"modules"` and `"modules/specific"`) 
 
       
-### **Option 3: Defining components manually**
+### Option 3: Defining components manually
 
 In some cases the components really do not match the directory structure, and the only way to define components is by manually listing what should go where. In the example below, regular expressions are used to define what files and directories belong to each component. The syntax is identical to the patterns used in the `exclude` section. These `include` and `exclude` patterns work as explained in the [patterns section](#defining-include-and-exclude-patterns).
 
@@ -159,20 +160,28 @@ In case that test code resides in the same directory tree as the base directorie
 
 For example, imagine that you have defined components manually and test code follows a pattern where the component name is suffixed with `-Test` or `-Tests` as the last word in the folder name, a pattern could be configured like so:
 
-   components:
+    components:
       - name: "Back-end"
         include:
-          - ".*/backend/specific-component[^/]*-[Tt]ests?/.*[.]java" # Instead of defining production code with a cut-off directory of `.*/backend/specific-component/.*[.]java`, you could include test code in this way, if the naming convention is indeed followed consistently and an example directory would be /backend/specific-component-integration-tests/. 
- 
-
+          # Instead of defining production code with a cut-off directory of .*/backend/specific-component/.*[.]java,
+          # you could include test code in this way, if the naming convention is indeed followed consistently and
+          # an example directory would be /backend/specific-component-integration-tests/. 
+          - ".*/backend/specific-component[^/]*-[Tt]ests?/.*[.]java" 
 
 ### Resolving pattern match ambiguities that may stall analysis
+
 An analysis may fail if pattern matches are ambiguous. Examples:
+
 - Language-level: files could be matched under different technologies that "compete" for the the same file extensions, like `.js` for JavaScript frameworks or `.xml` for any (visual) technology that exports its logic or flows as XML. You can resolve this by defining explicit `include` and `exclude` file extension or folder structure patterns.
 - Files may be matched in multiple components at the same time, in case that you have manually defined different components as described above in [the usage of include and exclude patterns](#defining-include-and-exclude-patterns). This may occur in code bases with many repeating folder path patterns. Patterns that may be transparent to you as developers because they are defined in another (IDE) configuration. Then e.g. `/integration/service/` or `/app/service/integration` could be deliberately different things, but defining 2 components based on `/integration/.*` and `/service/.*` would then not work. The easiest solution may be to extend the paths to make them more specific. If this proves too difficult or ambiguous, a list of `include` and `exclude` patterns should help you out. We know, this may require some trial and error.     
 - Files could be matched in multiple "contexts" at the same time. Contexts being `production`, `generated` or `test`. If there is a conflict between 2 contexts, the `exclude:` pattern takes precedence over the `include:` pattern [as described in the paragraph on defining `include` and `exclude` patterns](#defining-include-and-exclude-patterns). Due to this rule, code may appear in another context as you expect in case pattern matches overlap. In case there is ambiguity among all three contexts, then the analysis will fail.  
 - Files that are expected by the scoping file's language or component definition but are not matched anywhere, appear in a `Remainder` component. Code within this component will be analyzed, but it is one that you want to resolve, since it not an actual component that developers will recognize, and it will make architectural metrics less accurate.
 
+## Configuring the SIG Maintainability Model version
+
+By default, your configuration will use the latest version of the [SIG Maintainability Model](https://www.softwareimprovementgroup.com/software-analysis/), which is based on the [ISO 25010 standard for software product quality](https://www.iso.org/standard/35733.html).
+
+You can customize this by adding a `model` entry to your configuration. For example, adding `model: "2020"` will analyze your system using the 2020 of the SIG Maintainability Model. You can use this option to ensure your system is analyzed using a specific version of the model. However, in most cases you'll want to use the latest version, as the SIG Maintainability Model is recalibrated on a yearly basis to reflect industry best practices.
 
 ## Open Source Health
 
@@ -195,6 +204,7 @@ The `dependencychecker` section supports the following options:
 | `blocklist`  | Yes       | List of library names that should not be scanned. Typically used to ignore internal libraries. |
 | `transitive` | No        | When true, also scans the dependencies of your dependencies. Defaults to false.                |
 | `exclude`    | No        | List of file/directory patterns that should be excluded from the Open Source Health analysis.  |
+| `model`      | No        | SIG Open Source Health model version that should be used for the analysis, defaults to latest. |
 
 Please Note: dependency exclusions may be necessary in case your system resolves internal dependencies that could expose organization- or system name based on their internal URI. Therefore, as part of the onboarding process, please inform SIG of any such naming conventions that should be filtered. [See also this question in the FAQ on dependency filtering](../capabilities/faq-security.md#does-sig-filter-when-resolving-our-systems-dependencies).
 
@@ -216,7 +226,6 @@ Sigrid uses a combination of its own security checks and security checks perform
       enabled_analyzers:
         - "VMWare CSA"
 
-       
 This `thirdpartyfindings` section in the scope file supports the following options:
 
 | Option name             | Required? | Description                                                                         |
@@ -232,14 +241,27 @@ For the list of all supported analyzers, see [the specific technology support se
 
 ## Architecture Quality
 
-Architecture Quality is available by default. You can use the various scope file options to customize your analysis. The options related to architecture live in the `architecture` section in the scope file.
+Architecture Quality is available by default. However, you can still use the various scope file options to customize your analysis. The options related to architecture live in the `architecture` section in the scope file.
 
     architecture:
       # options go here
       
-Adding this section to the configuration will automatically enable the Architecture Quality analysis every time you publish your system to Sigrid.
-
 <iframe width="560" height="315" src="https://www.youtube.com/embed/0p3ADGyg9nI?si=jKJ72GbFpTqZ7fbK" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+
+The `architecture` section of the scope file supports the following options:
+
+| Option                     | Required | Description                                                                              |
+|----------------------------|----------|------------------------------------------------------------------------------------------|
+| `model`                    | No       | SIG Architecture Quality Model that should be used for the analysis, defaults to latest. |
+| `exclude`                  | No       | See [Excluding files and directories for Architecture Quality](#excluding-files-and-directories-for-architecture-quality). |
+| `custom_components`        | No       | See [Components in Maintainability versus components in Architecture Quality](#components-in-maintainability-versus-components-in-architecture-quality). |
+| `add_dependencies`         | No       | See [Manually specifying architecture dependencies](#manually-specifying-architecture-dependencies). |
+| `remove_dependencies`      | No       | See [Manually specifying architecture dependencies](#manually-specifying-architecture-dependencies). |
+| `undesirable_dependencies` | No       | See [Highlighting undesirable dependencies](#highlighting-undesirable-dependencies). |
+| `grouping`                 | No       | See [Grouping and annotating components in Architecture Quality](#grouping-and-annotating-components-in-architecture-quality). |
+| `history_period_months`    | No       | See [Analyzing your repository history](#analyzing-your-repository-history). |
+| `history_start`            | No       | See [Analyzing your repository history](#analyzing-your-repository-history). |
+| `history_end`              | No       | See [Analyzing your repository history](#analyzing-your-repository-history). |
 
 ### Components in Maintainability versus components in Architecture Quality
 

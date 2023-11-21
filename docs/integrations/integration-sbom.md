@@ -10,6 +10,8 @@ There are various reasons on why you would consider to import existing SBOM info
 - You are already using other tools that provide this SBOM information, and you would prefer to reuse the existing information rather than having Sigrid re-scan it.
 - Sigrid does not support some of the technologies used in your portfolio.
 
+In these scenarios, Sigrid will import the dependencies from your SBOM. It will then *enrich* your SBOM information with additional information that is not normally found in the SBOM, such as freshness information and benchmark risks. The enriched results are then added to Sigrid.
+
 That said, note that in most situations you would *not* need this feature. Sigrid supports a [large number of technologies and open source ecosystems](../reference/technology-support.md), so in most cases Sigrid will be able to provide SBOM information for your systems without the need for importing additional files. This integration exists to offer additional flexibility for the scenarios listed above.
 
 ## What types of SBOM are supported?
@@ -41,7 +43,7 @@ cyclonedx-py -e -o .sigrid/sbom.json --format json
 ```
 {% endraw %}
 
-This will generate the JSON file in the correct directory. We can now follow the [Sigrid CI instructions for GitHub Actions](../sigridci-integration.md) to publish our system to Sigrid, just like we did before. There are no special instructions or configurations to make Sigrid "see" the SBOM JSON file, this will happen automatically as long as you generate the file in the correct location.
+This will generate the JSON file in the correct directory. We can now follow the [Sigrid CI instructions for GitHub Actions](../sigridci-integration/github-actions.md) to publish our system to Sigrid, just like we did before. There are no special instructions or configurations to make Sigrid "see" the SBOM JSON file, this will happen automatically as long as you generate the file in the correct location.
 
 ## Contact and support
 
