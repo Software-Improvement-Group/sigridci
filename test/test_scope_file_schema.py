@@ -26,8 +26,19 @@ class ScopeFileSchemaTest(TestCase):
             self.schema = json.load(f)
 
     def testSchemaIsValidJson(self):
-        self.assertEqual(list(self.schema.keys()),
-            ["$schema", "title", "description", "definitions", "type", "required", "properties", "additionalProperties"])
+        fields = [
+            "$id",
+            "$schema",
+            "additionalProperties",
+            "definitions",
+            "description", 
+            "properties",
+            "required",
+            "title", 
+            "type"
+        ]
+    
+        self.assertEqual(list(self.schema.keys()), fields)
             
     def testValidScopeFileAgainstSchema(self):
         scope = """

@@ -3,6 +3,11 @@ Sigrid release notes
 
 SIG uses [continuous delivery](https://en.wikipedia.org/wiki/Continuous_delivery), meaning that every change to Sigrid or the underlying analysis is released once our development pipeline has completed. On average, we release somewhere between 10 and 20 times per day. This page therefore doesn't list every single change, since that would quickly lead to an excessively long list of small changes. Instead, this page lists Sigrid and analysis changes that we consider noteworthy for the typical Sigrid user.
 
+### November 20, 2023
+
+- **Dashboard:** It is now possible to view progress towards your portfolio objectives in two ways: Via the overall Sigrid portfolio dashboard (which already existed), and via the newly added "objectives" page. The latter gives you a more high-level overview of your overall objectives, without diving into the specifics regarding teams or systems. You can find more information in the [portfolio objectives documentation](..//capabilities/portfolio-objectives.md).
+- **Open Source Health:** Sigrid is now able to import SBOM (Software Bill Of Materials) produced by other tools. The [SBOM standard](https://en.wikipedia.org/wiki/Software_supply_chain) is emerging as the de-facto standard for software supply chains. Sigrid was already able to *export* SBOM information, but it is now also able to *import* SBOMs. Instructions are available on how to [import SBOMs into Sigrid](../integrations/integration-sbom/md).
+
 ### November 6, 2023
 
 - **Architecture Quality:** Architecture Quality is now part of the Sigrid base license! Don't miss our [Ask Me Anything](https://www.softwareimprovementgroup.com/events/sigrid-ask-me-anything/) session on November 23, which we'll use to answer questions about this new capability.
