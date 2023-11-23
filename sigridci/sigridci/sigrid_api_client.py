@@ -41,7 +41,8 @@ class SigridApiClient:
         self.token = os.environ["SIGRID_CI_TOKEN"].strip()
 
     def callSigridAPI(self, path, body=None, contentType=None):
-        url = f"{self.baseURL}/rest/{path}"
+        delimiter = "" if path.startswith("/") else "/"
+        url = f"{self.baseURL}/rest{delimiter}{path}"
         request = urllib.request.Request(url, body)
         request.add_header("Accept", "application/json")
         request.add_header("Authorization", f"Bearer {self.token}".encode("utf8"))
