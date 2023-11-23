@@ -35,30 +35,19 @@ class MarkdownReport(Report):
             f.write(markdown)
 
     def renderMarkdown(self, analysisId, feedback, options):
+        status = Objective.determineStatus(feedback, options)
         sigridLink = self.getSigridUrl(options)
         landingPage = self.getLandingPage(analysisId, options)
-        good = self.filterRefactoringCandidates(feedback, ["improved"])
-        bad = self.filterRefactoringCandidates(feedback, ["introduced", "worsened"])
-        unchanged = self.filterRefactoringCandidates(feedback, ["unchanged"])
 
         md = "# Sigrid maintainability feedback\n\n"
         md += f"{self.renderSummary(feedback, options)}\n\n"
         md += f"Sigrid compared your code against the baseline of {self.formatBaseline(feedback)}.\n\n"
 
-        md += "## 👍 What went well?\n\n"
-        md += f"You fixed or improved **{len(good)}** refactoring candidates.\n\n"
-        md += self.renderRefactoringCandidatesTable(good) + "\n"
+        if status != ObjectiveStatus.UNKNOWN:
+            md += self.renderRefactoringCandidates(feedback, options)
+            md += "## Sigrid ratings\n\n"
+            md += self.renderRatingsTable(feedback)
 
-        md += "## 👎 What could be better?\n\n"
-        md += f"Unfortunately, **{len(bad)}** refactoring candidates were introduced or got worse.\n\n"
-        md += self.renderRefactoringCandidatesTable(bad) + "\n"
-
-        md += "## 📚 Remaining technical debt\n\n"
-        md += f"**{len(unchanged)}** refactoring candidates didn't get better or worse, but are still present in the code you touched.\n\n"
-        md += self.renderRefactoringCandidatesTable(unchanged) + "\n"
-
-        md += "## Sigrid ratings\n\n"
-        md += self.renderRatingsTable(feedback)
         md += "\n----\n\n"
         md += f"- [**View this system in Sigrid**]({sigridLink})\n"
         md += f"- [**View this Sigrid CI feedback in Sigrid**]({landingPage})\n"
@@ -66,6 +55,28 @@ class MarkdownReport(Report):
 
     def renderSummary(self, feedback, options):
         return f"**{self.getSummaryText(feedback, options)}**"
+
+    def renderRefactoringCandidates(self, feedback, options):
+        good = self.filterRefactoringCandidates(feedback, ["improved"])
+        bad = self.filterRefactoringCandidates(feedback, ["introduced", "worsened"])
+        unchanged = self.filterRefactoringCandidates(feedback, ["unchanged"])
+
+        md = ""
+        md += "## 👍 What went well?\n\n"
+        md += f"You fixed or improved **{len(good)}** refactoring candidates.\n\n"
+        md += self.renderRefactoringCandidatesTable(good) + "\n"
+
+        md += "## 👎 What could be better?\n\n"
+        if len(bad) > 0:
+            md += f"Unfortunately, **{len(bad)}** refactoring candidates were introduced or got worse.\n\n"
+            md += self.renderRefactoringCandidatesTable(bad) + "\n"
+        else:
+            md += "You did not introduce any technical debt during your changes, great job!\n\n"
+
+        md += "## 📚 Remaining technical debt\n\n"
+        md += f"**{len(unchanged)}** refactoring candidates didn't get better or worse, but are still present in the code you touched.\n\n"
+        md += self.renderRefactoringCandidatesTable(unchanged) + "\n"
+        return md
 
     def renderRatingsTable(self, feedback):
         md = ""
