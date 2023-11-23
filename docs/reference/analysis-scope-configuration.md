@@ -3,6 +3,10 @@ Changing the analysis scope configuration
 
 You can change Sigrid's configuration for your project, to make Sigrid's feedback as useful and actionable as possible. We call this configuration "the scope".
 
+<sig-toc></sig-toc>
+
+## How can you customize your Sigrid configuration?
+
 By default, Sigrid will try to automatically detect the technologies you use, the component structure, and files/directories that should be excluded from the analysis. However, you can override this standard configuration with your project-specific configuration. To do this, create a file called `sigrid.yaml` and add it to the root of your repository. When you merge changes to `sigrid.yaml`, Sigrid will pick up the new configuration and apply it to subsequent scans.
 
 <iframe width="560" height="315" src="https://www.youtube.com/embed/Uomc7hUbRTw" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
@@ -18,8 +22,6 @@ The following example shows a typical example of the `sigrid.yaml` configuration
       - name: typescript
       
 The various options and sections are explained in more detail in the remainder of this page.
-
-<sig-toc></sig-toc>
 
 ## When should you customize the configuration?
 
