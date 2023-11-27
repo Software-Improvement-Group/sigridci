@@ -236,6 +236,141 @@ class MarkdownReportTest(TestCase):
 
         self.assertEqual(summary, expected)
 
+    def testWordsOfEncouragementWhenNoBadRefactoringCandidates(self):
+        refactoringCandidates = [
+            self.toRefactoringCandidate("aap", "improved", "UNIT_SIZE", "HIGH"),
+            self.toRefactoringCandidate("mies", "unchanged", "UNIT_COMPLEXITY", "VERY_HIGH")
+        ]
+
+        feedback = {
+            "baseline": "20220110",
+            "baselineRatings": {"MAINTAINABILITY": 3.0},
+            "changedCodeBeforeRatings" : {"MAINTAINABILITY" : 3.0},
+            "changedCodeAfterRatings" : {"MAINTAINABILITY" : 4.0},
+            "newCodeRatings": {"MAINTAINABILITY": 4.0},
+            "overallRatings": {"MAINTAINABILITY": 4.0},
+            "refactoringCandidates": refactoringCandidates
+        }
+
+        report = MarkdownReport()
+        markdown = report.renderMarkdown("1234", feedback, self.options)
+
+        expected = """
+            # Sigrid maintainability feedback
+
+            **✅  You wrote maintainable code and achieved your Sigrid objective of 3.5 stars**
+            
+            Sigrid compared your code against the baseline of 2022-01-10.
+            
+            ## 👍 What went well?
+            
+            You fixed or improved **1** refactoring candidates.
+            
+            | Risk | System property | Location |
+            |------|-----------------|----------|
+            | 🟠 | **Unit Size**<br />(Improved) | aap |
+            
+            
+            ## 👎 What could be better?
+            
+            You did not introduce any technical debt during your changes, great job!
+            
+            ## 📚 Remaining technical debt
+            
+            **1** refactoring candidates didn't get better or worse, but are still present in the code you touched.
+            
+            | Risk | System property | Location |
+            |------|-----------------|----------|
+            | 🔴 | **Unit Complexity**<br />(Unchanged) | mies |
+            
+            
+            ## Sigrid ratings
+            
+            | System property | Baseline on 2022-01-10 | New/changed code |
+            |-----------------|---------------------------------------------|------------------|
+            | Volume | (N/A) | N/A |
+            | Duplication | (N/A) | N/A |
+            | Unit Size | (N/A) | N/A |
+            | Unit Complexity | (N/A) | N/A |
+            | Unit Interfacing | (N/A) | N/A |
+            | Module Coupling | (N/A) | N/A |
+            | Component Independence | (N/A) | N/A |
+            | Component Entanglement | (N/A) | N/A |
+            | **Maintainability** | **(3.0)** | **4.0** |
+            
+            ----
+            
+            - [**View this system in Sigrid**](https://sigrid-says.com/aap/noot)
+            - [**View this Sigrid CI feedback in Sigrid**](https://sigrid-says.com/aap/noot/-/sigrid-ci/1234?targetRating=3.5)
+        """
+
+        self.assertEqual(markdown.strip(), inspect.cleandoc(expected).strip())
+
+    def testKeepMarkdownSimpleIfThereAreNoCodeChanges(self):
+        feedback = {
+            "baseline": "20220110",
+            "baselineRatings": {"MAINTAINABILITY": 4.0},
+            "changedCodeBeforeRatings" : {"MAINTAINABILITY" : 2.6},
+            "changedCodeAfterRatings" : {"MAINTAINABILITY" : None},
+            "newCodeRatings": {"MAINTAINABILITY": None},
+            "overallRatings": {"MAINTAINABILITY": None},
+            "refactoringCandidates": []
+        }
+
+        report = MarkdownReport()
+        markdown = report.renderMarkdown("1234", feedback, self.options)
+
+        expected = """
+            # Sigrid maintainability feedback
+    
+            **💭️  You did not change any files that are measured by Sigrid**
+            
+            Sigrid compared your code against the baseline of 2022-01-10.
+            
+            
+            ----
+            
+            - [**View this system in Sigrid**](https://sigrid-says.com/aap/noot)
+            - [**View this Sigrid CI feedback in Sigrid**](https://sigrid-says.com/aap/noot/-/sigrid-ci/1234?targetRating=3.5)
+        """
+
+        self.assertEqual(markdown.strip(), inspect.cleandoc(expected).strip())
+
+    def testDoNotShowAnyRefactoringCandidatesIfTheBaselineIsUnknown(self):
+        refactoringCandidates = [
+            self.toRefactoringCandidate("aap", "introduced", "UNIT_SIZE", "HIGH"),
+            self.toRefactoringCandidate("noot", "introduced", "UNIT_COMPLEXITY", "HIGH")
+        ]
+
+        feedback = {
+            "baseline": "20220110",
+            "baselineRatings": {"MAINTAINABILITY": None},
+            "changedCodeBeforeRatings" : {"MAINTAINABILITY" : None},
+            "changedCodeAfterRatings" : {"MAINTAINABILITY" : 2.8},
+            "newCodeRatings": {"MAINTAINABILITY": 3.0},
+            "overallRatings": {"MAINTAINABILITY": 3.4},
+            "refactoringCandidates": refactoringCandidates
+        }
+
+        report = MarkdownReport()
+        markdown = report.renderMarkdown("1234", feedback, self.options)
+
+        expected = """
+            # Sigrid maintainability feedback
+
+            **💭️  You did not change any files that are measured by Sigrid**
+            
+            Sigrid compared your code against the baseline of 2022-01-10.
+            
+            
+            ----
+            
+            - [**View this system in Sigrid**](https://sigrid-says.com/aap/noot)
+            - [**View this Sigrid CI feedback in Sigrid**](https://sigrid-says.com/aap/noot/-/sigrid-ci/1234?targetRating=3.5)
+        """
+
+        self.assertEqual(markdown.strip(), inspect.cleandoc(expected).strip())
+
     def toRefactoringCandidate(self, subject, category, metric, riskCategory):
         return {
             "subject" : subject,
