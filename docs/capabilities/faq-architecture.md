@@ -55,6 +55,10 @@ analysis will automatically detect whether the upload contains the project's cha
 *does* contain the change history, but you do *not* want to use the change history in the analysis, you can add the
 configuration option `history_enabled: false`.
 
+### Can I exclude my repository from the upload to Sigrid altogether?
+
+Yes. Sigrid CI generates a log file called `git.log`, and you can exclude this file from being uploaded. You can use the `--exclude` [option in Sigrid CI](../reference/client-script-usage.md), for example `--exclude git.log`. 
+
 ## Contact and support
 
 Feel free to contact [SIG's support department](mailto:support@softwareimprovementgroup.com) for any questions or issues you may have after reading this document, or when using Sigrid or Sigrid CI. Users in Europe can also contact us by phone at +31 20 314 0953.
