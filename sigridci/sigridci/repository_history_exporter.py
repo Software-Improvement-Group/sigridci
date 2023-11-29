@@ -38,7 +38,7 @@ class RepositoryHistoryExporter:
             output = subprocess.run(gitCommand, stdout=subprocess.PIPE)
             if output.returncode == 0:
                 UploadLog.log("Including repository history in upload")
-                history = output.stdout.decode("utf8")
+                history = output.stdout.decode("utf8", "ignore")
                 self.createHistoryExportFile(history, f"{sourceDir}/git.log")
             else:
                 UploadLog.log("Exporting repository history failed")
@@ -46,7 +46,7 @@ class RepositoryHistoryExporter:
             UploadLog.log("Error while trying to include repository history: " + str(e))
 
     def createHistoryExportFile(self, history, outputFile):
-        with open(outputFile, "w") as f:
+        with open(outputFile, "w", encoding="utf8") as f:
             for line in history.strip().split("\n"):
                 f.write(self.anonymizeHistoryEntry(line))
 
