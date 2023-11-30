@@ -11,309 +11,304 @@ Finally, note the column "supported Sigrid capabilities" does not list Open Sour
 
 ## List of supported technologies
 
-| Name in configuration file     | Display name                   | Also known as | Supported Sigrid capabilities | Notes |
-|--------------------------------|--------------------------------|---------------|-------------------------------|-------|
-| `abap`                         | ABAP                           | SAP | Maintainability |
-| `abapsmartforms`               | ABAP SmartForms                | | Maintainability |
-| `abl`                          | Abl                            | OpenEdge | Maintainability |
-| `acl`                          | ACL                            | | Maintainability |
-| `accell`                       | Accell                         | | Maintainability |
-| `actionscript`                 | ActionScript                   | | Maintainability |
-| `actionscript3`                | ActionScript 3                 | | Maintainability |
-| `ada`                          | Ada                            | | Maintainability |
-| `adabasnatural`                | Adabas Natural                 | | Maintainability |
-| `adfxml`                       | ADF XML                        | | Maintainability |
-| `agilepoint`                   | AgilePoint                     | | Maintainability |
-| `altovauml`                    | Altova UML                     | | Maintainability |
-| `angularjstemplate`            | Angular Templates              | | Maintainability | (7) |
-| `ansible`                      | Ansible                        | | Maintainability, Security |
-| `apachecamel`                  | Apache Camel                   | | Maintainability |
-| `apex`                         | APEX                           | | Maintainability |
-| `aps`                          | APS                            | | Maintainability |
-| `applicationmaster`            | Application Master             | | Maintainability |
-| `ash`                          | ArtosScript (ash)              | | Maintainability |
-| `asp`                          | ASP                            | | Maintainability |
-| `aspx`                         | ASP.NET                        | | Maintainability |
-| `assembly`                     | Assembly                       | | Maintainability |
-| `aura`                         | Aura                           | | Maintainability |
-| `axway`                        | Axway                          | | Maintainability |
-| `axystudio`                    | AxyStudio functions            | | Maintainability |
-| `axyworkflow`                  | AxyStudio workflows            | | Maintainability |
-| `basic`                        | BASIC                          | | Maintainability |
-| `batch`                        | Batch                          | | Maintainability |
-| `bea`                          | Bea Weblogic                   | | Maintainability |
-| `beanshell`                    | BeanShell                      | | Maintainability |
-| `beinformed`                   | Be Informed                    | | Maintainability |
-| `biztalk`                      | BizTalk                        | | Maintainability |
-| `biztalkrules`                 | BizTalk Rules Engine           | | Maintainability |
-| `blazerules`                   | Blaze BRM                      | | Maintainability |
-| `blueprism`                    | Blue Prism                     | | Maintainability |
-| `blueriq`                      | Blueriq flows/processes        | | Maintainability |
-| `blueriqexpressions`           | Blueriq expressions            | | Maintainability |
-| `bpel`                         | BPEL                           | | Maintainability |
-| `bpm`                          | BPMN                           | | Maintainability |
-| `brail`                        | Brail                          | | Maintainability |
-| `bsp`                          | Bsp                            | | Maintainability |
-| `c`                            | C                              | | Maintainability, Security | (1) |
-| `cache`                        | Cache                          | | Maintainability |
-| `cacheobjectscript`            | Cache ObjectScript             | | Maintainability |
-| `ccl`                          | CCL                            | | Maintainability |
-| `cgdc`                         | CGDC                           | | Maintainability |
-| `cgt`                          | CGT                            | | Maintainability |
-| `cicode`                       | Cicode                         | | Maintainability |
-| `cl`                           | CL                             | | Maintainability |
-| `clearbasic`                   | Clearbasic                     | | Maintainability |
-| `cobol`                        | Cobol                          | | Maintainability |
-| `coffeescript`                 | CoffeeScript                   | | Maintainability |
-| `coldfusion`                   | ColdFusion                     | | Maintainability |
-| `configuration`                | Configuration                  | | Maintainability | (5) |
-| `coolgenc`                     | CoolGen C                      | | Maintainability |
-| `coolgencobol`                 | CoolGen Cobol                  | | Maintainability |
-| `cordysbpm`                    | Cordys BPM                     | | Maintainability |
-| `cpp`                          | C++                            | | Maintainability, Security | (1) |
-| `csharp`                       | C#                             | .NET | Maintainability, Security |
-| `csp`                          | CSP                            | | Maintainability |
-| `css`                          | CSS                            | | Maintainability |
-| `cypher`                       | Cypher                         | | Maintainability |
-| `cucumber`                     | Cucumber                       | | Maintainability |
-| `dart`                         | Dart                           | Flutter | Maintainability |
-| `datastage`                    | Datastage                      | | Maintainability |
-| `datastageetl`                 | DatastageETL                   | | Maintainability |
-| `datastageworkflow`            | DatastageWorkflow              | | Maintainability |
-| `db2`                          | DB2                            | | Maintainability |
-| `dcl`                          | Dcl                            | | Maintainability |
-| `delphi`                       | Delphi                         | | Maintainability |
-| `delphiforms`                  | Delphi Forms                   | | Maintainability |
-| `deltacobol`                   | Delta/Cobol                    | | Maintainability |
-| `djangotemplates`              | Django Templates               | | Maintainability |
-| `docker`                       | Docker                         | | Maintainability, Security |
-| `documentumxcp`                | Documentum xCP                 | | Maintainability |
-| `drools`                       | Drools                         | | Maintainability |
-| `dscript`                      | Dscript                        | | Maintainability |
-| `easytrieve`                   | Easytrieve                     | | Maintainability |
-| `egl`                          | EGL                            | | Maintainability |
-| `ejs`                          | EJS                            | | Maintainability |
-| `elixir`                       | Elixir                         | | Maintainability |
-| `embeddedsql`                  | C++ Embedded SQL               | | Maintainability |
-| `erb`                          | ERB                            | | Maintainability |
-| `esql`                         | ESQL                           | | Maintainability |
-| `filetab`                      | File Tab                       | | Maintainability |
-| `finacle`                      | Finacle                        | | Maintainability |
-| `freeformatcobol`              | Freeformat Cobol               | | Maintainability |
-| `freemarker`                   | Freemarker                     | | Maintainability |
-| `fme`                          | FME                            | | Maintainability |
-| `fortran`                      | FORTRAN                        | | Maintainability |
-| `generated`                    | Generated                      | | Maintainability |
-| `gensym`                       | Gensym                         | | Maintainability |
-| `grpc`                         | [gRPC](https://grpc.io)        | | Maintainability |
-| `go`                           | Go                             | GoLang | Maintainability |
-| `gosu`                         | Gosu                           | | Maintainability, Security |
-| `groovy`                       | Groovy                         | | Maintainability, Security |
-| `gsp`                          | GSP                            | | Maintainability |
-| `guidefinition`                | GUI Definition                 | | Maintainability | (5) |
-| `gupta`                        | Gupta                          | | Maintainability |
-| `haml`                         | Haml                           | | Maintainability |
-| `html`                         | HTML                           | | Maintainability | (7) |
-| `hql`                          | HQL                            | | Maintainability |
-| `ibmbpmbpd`                    | IBM BPM (BPD)                  | | Maintainability |
-| `ibmbpmprocess`                | IBM BPM (Process)              | | Maintainability |
-| `ideal`                        | Ideal                          | | Maintainability |
-| `informatica`                  | Informatica                    | | Maintainability |
-| `informix4gl`                  | Informix 4GL                   | | Maintainability |
-| `informixsql`                  | Informix SQL                   | | Maintainability |
-| `ingres`                       | Ingres                         | | Maintainability |
-| `intershoppipeline`            | Intershop (Pipeline)           | | Maintainability |
-| `jasperreports`                | Jasper Reports                 | | Maintainability |
-| `jade`                         | Jade                           | | Maintainability |
-| `java`                         | Java                           | | Maintainability, Security |
-| `javafx`                       | Java FX                        | | Maintainability |
-| `javascript`                   | JavaScript                     | NodeJS | Maintainability, Security | (2) |
-| `javascript`                   | Google App Script              | | Maintainability |
-| `jbc`                          | JBC                            | | Maintainability |
-| `jbpm`                         | jBPM                           | | Maintainability |
-| `jcl`                          | JCL                            | | Maintainability |
-| `jcs`                          | JCS                            | | Maintainability |
-| `jinja`                        | Jinja                          | | Maintainability |
-| `jsf`                          | JSF                            | | Maintainability |
-| `json`                         | JSON                           | | Maintainability | (5) |
-| `jsp`                          | JSP                            | | Maintainability |
-| `kotlin`                       | Kotlin                         | | Maintainability, Security |
-| `less`                         | Less                           | | Maintainability |
-| `linc`                         | LINC                           | | Maintainability |
-| `lion`                         | Lion                           | | Maintainability |
-| `lodestar`                     | Lodestar                       | | Maintainability |
-| `logicapps`                    | Logic Apps                     | | Maintainability |
-| `logicnets`                    | LogicNets                      | | Maintainability |
-| `lotusscript`                  | LotusScript                    | | Maintainability |
-| `lua`                          | Lua                            | | Maintainability |
-| `magic`                        | Magic                          | | Maintainability |
-| `magik`                        | Magik                          | | Maintainability |
-| `magnum`                       | Magnum                         | | Maintainability |
-| `matlab`                       | Matlab                         | | Maintainability |
-| `mediationflows`               | Mediation Flows                | | Maintainability |
-| `mendix`                       | Mendix                         | | Maintainability, Security |
-| `messagebuilder`               | MessageBuilder                 | | Maintainability |
-| `mpsbehavior`                  | MPS Behavior                   | | Maintainability |
-| `mpsclass`                     | MPS Class                      | | Maintainability |
-| `mpstranslator`                | MPS Translator                 | | Maintainability |
-| `mule`                         | Mule                           | | Maintainability |
-| `mtwize`                       | MtWize                         | | Maintainability |
-| `murexdatadictionary`          | Murex Data Dictionary          | | Maintainability |
-| `murexlookuptable`             | Murex Lookup Table             | | Maintainability |
-| `murexscript`                  | Murex Script                   | | Maintainability |
-| `murexworkflow`                | Murex Workflow                 | | Maintainability |
-| `mustache`                     | Mustache                       | Handlebars | Maintainability |
-| `mysql`                        | MySQL                          | | Maintainability |
-| `naviscript`                   | Naviscript                     | | Maintainability |
-| `navision`                     | Navision                       | Dynamics NAV, AL | Maintainability |
-| `netiqidmpolicy`               | NetIQ IDM Policy               | | Maintainability |
-| `netiqidmrequest`              | NetIQ IDM Request              | | Maintainability |
-| `netiqidmworkflow`             | NetIQ IDM Workflow             | | Maintainability |
-| `netweaveridm`                 | NetweaverIDM                   | | Maintainability |
-| `nonstopsql`                   | Nonstop SQL                    | | Maintainability |
-| `normalizedsystemsjava`        | Normalized Systems Java        | | Maintainability |
-| `normalizedsystemsmodel`       | Normalized Systems Model       | | Maintainability |
-| `objectivec`                   | Objective-C                    | | Maintainability |
-| `odi`                          | ODI                            | | Maintainability |
-| `odm`                          | ODM                            | | Maintainability |
-| `omt`                          | OMT                            | | Maintainability |
-| `opa`                          | OPA                            | | Maintainability |
-| `opc`                          | OPC                            | | Maintainability |
-| `openroad`                     | OpenROAD 4GL                   | | Maintainability |
-| `oraclebpm`                    | Oracle BPM                     | | Maintainability |
-| `oracleofsaa`                  | Oracle OFSAA                   | | Maintainability |
-| `oracleworkflow`               | Oracle Workflow                | | Maintainability |
-| `ords`                         | ORDS                           | | Maintainability |
-| `osb`                          | OSB                            | | Maintainability |
-| `osbproxy`                     | OSB Proxy                      | | Maintainability |
-| `osmprocess`                   | OSM Process                    | | Maintainability |
-| `osmtask`                      | OSM Task                       | | Maintainability |
-| `outsystems`                   | OutSystems                     | | Maintainability |
-| `pascal`                       | Pascal                         | | Maintainability |
-| `pega`                         | Pega                           | | Maintainability |
-| `pegajsp`                      | PEGA JSP                       | | Maintainability |
-| `performance`                  | Performance                    | | Maintainability |
-| `perl`                         | Perl                           | | Maintainability, Security |
-| `php`                          | PHP                            | | Maintainability, Security |
-| `plc`                          | PLC - Structured Text - ABB    | | Maintainability |
-| `plc`                          | PLC - Structured Text - Schneider Electric - EcoStruxure | | Maintainability |
-| `plc`                          | PLC - Structured Text - Siemens | | Maintainability |
-| `plc`                          | PLC - Functional Block Diagram - ABB | | Maintainability |
-| `plc`                          | PLC - Functional Block Diagram - Rockwell | | Maintainability |
-| `plc`                          | PLC - Functional Block Diagram - Siemens | | Maintainability |
-| `plc`                          | PLC - Ladder Logic - Rockwell | | Maintainability |
-| `plc`                          | PLC - Structured Text - Rockwell | | Maintainability |
-| `pli`                          | PL/I                           | | Maintainability |
-| `plsql`                        | PL/SQL                         | | Maintainability |
-| `plsqlforms`                   | PL/SQL Forms                   | | Maintainability |
-| `plsqlreports`                 | PL/SQL Reports                 | | Maintainability |
-| `pluk`                         | PLUK                           | | Maintainability |
-| `polymertemplates`             | Polymer Templates              | | Maintainability |
-| `postgresql`                   | PostgreSQL                     | | Maintainability |
-| `powerbuilder`                 | Powerbuilder                   | | Maintainability |
-| `powercenter`                  | PowerCenter                    | | Maintainability |
-| `powerfx`                      | Power Fx                       | Microsoft Power Apps | Maintainability |
-| `powershell`                   | Powershell                     | | Maintainability |
-| `production`                   | Production code                | | Maintainability |
-| `progress`                     | Progress                       | OpenEdge | Maintainability |
-| `progressstrict`               | Progress (Strict)              | | Maintainability |
-| `pronto`                       | Pronto                         | | Maintainability |
-| `prt`                          | PRT                            | | Maintainability |
-| `puppet`                       | Puppet                         | | Maintainability |
-| `python`                       | Python                         | | Maintainability, Security |
-| `r`                            | R                              | | Maintainability |
-| `radience`                     | Radience                       | | Maintainability |
-| `razor`                        | Razor                          | | Maintainability |
-| `react`                        | React                          | | Maintainability, Security | (2) |
-| `regelspraak`                  | ALEF Regelspraak               | | Maintainability |
-| `regelspraakhtml`              | ALEF Regelspraak (HTML export) | | Maintainability |
-| `rexx`                         | Rexx                           | | Maintainability |
-| `robot`                        | Robot                          | | Maintainability |
-| `rpg`                          | RPG                            | | Maintainability |
-| `ruby`                         | Ruby                           | Ruby on Rails, Rails | Maintainability, Security |
-| `rust`                         | Rust                           | | Maintainability |
-| `salesforceapex`               | Salesforce Apex                | | Maintainability |
-| `salesforceflow`               | Salesforce Flow                | | Maintainability |
-| `sappo`                        | SAP PO                         | | Maintainability |
-| `sapui5`                       | SapUI5                         | | Maintainability |
-| `sas`                          | SAS                            | | Maintainability |
-| `sasflows`                     | SAS Flows                      | | Maintainability |
-| `sass`                         | Sass                           | | Maintainability |
-| `scala`                        | Scala                          | | Maintainability, Security |
-| `scl`                          | SCL                            | | Maintainability |
-| `scr`                          | SCR                            | | Maintainability |
-| `script`                       | Shell script                   | | Maintainability |
-| `servicenow`                   | ServiceNow                     | | Maintainability |
-| `siebeldeclarative`            | Siebel Declarative             | | Maintainability |
-| `siebeljs`                     | Siebel JS                      | | Maintainability |
-| `siebelscripted`               | Siebel Scripted                | | Maintainability |
-| `siebelworkflow`               | Siebel Workflow                | | Maintainability |
-| `siebeltbui`                   | Siebel TBUI                    | | Maintainability |
-| `slim`                         | Slim                           | | Maintainability |
-| `smalltalk`                    | Smalltalk                      | | Maintainability |
-| `solidity`                     | Solidity                       | | Maintainability |
-| `sonicesb`                     | Sonic ESB                      | | Maintainability |
-| `spl`                          | SPL                            | | Maintainability |
-| `sqlj`                         | SQLJ                           | | Maintainability |
-| `sqlite`                       | SQLite                         | | Maintainability |
-| `sqr`                          | SQR                            | | Maintainability |
-| `ssis`                         | SSIS                           | | Maintainability |
-| `starlimssql`                  | StarLIMS                       | | Maintainability |
-| `streamserve`                  | StreamServe                    | | Maintainability |
-| `synapse`                      | Synapse                        | | Maintainability |
-| `synon`                        | Synon                          | | Maintainability |
-| `swift`                        | Swift                          | | Maintainability, Security |
-| `t4`                           | T4                             | | Maintainability |
-| `tacl`                         | TACL                           | | Maintainability |
-| `tal`                          | TAL                            | | Maintainability |
-| `tandem`                       | Tandem                         | | Maintainability |
-| `tapestry`                     | Tapestry                       | | Maintainability |
-| `terraform`                    | Terraform                      | | Maintainability, Security |
-| `test`                         | Testcode                       | | Maintainability |
-| `thrift`                       | Thrift                         | | Maintainability |
-| `thymeleaf`                    | Thymeleaf                      | | Maintainability |
-| `tibco`                        | TIBCO BW                       | | Maintainability |
-| `tibcobe`                      | TIBCO BE (XML)                 | | Maintainability |
-| `tibcobejava`                  | TIBCO BE (Java)                | | Maintainability |
-| `tibcobestatemachine`          | TIBCO BE (State Machine)       | | Maintainability |
-| `tibcobw6`                     | TIBCO BW6                      | | Maintainability |
-| `tripleforms`                  | TriplEforms                    | | Maintainability |
-| `tsql`                         | T-SQL                          | | Maintainability |
-| `turtle`                       | Turtle                         | | Maintainability |
-| `typescript`                   | TypeScript                     | | Maintainability, Security | (3) |
-| `uil`                          | UIL (Motif)                    | | Maintainability |
-| `uniface`                      | Uniface                        | | Maintainability |
-| `until`                        | Until                          | | Maintainability |
-| `vag`                          | Visual Age                     | | Maintainability |
-| `vagrecord`                    | Visual Age Record              | | Maintainability |
-| `vb`                           | Visual Basic                   | | Maintainability, Security | (4) |
-| `vbnet`                        | Visual Basic .NET              | | Maintainability, Security | (4) |
-| `velocity`                     | Velocity                       | | Maintainability |
-| `vgl`                          | VGL                            | | Maintainability |
-| `visualforce`                  | VisualForce                    | | Maintainability |
-| `visualrpg`                    | Visual RPG                     | | Maintainability |
-| `visualobjects`                | Visual Objects                 | | Maintainability |
-| `vuejs`                        | VueJS                          | | Maintainability, Security | (2) |
-| `vuets`                        | VueTS                          | | Maintainability, Security | (3) |
-| `vulcan`                       | Vulcan.NET                     | | Maintainability |
-| `webfocus`                     | WebFocus                       | | Maintainability |
-| `webmethods`                   | WebMethods                     | | Maintainability |
-| `webmethodsbpm`                | WebMethods BPM                 | | Maintainability |
-| `websmart`                     | WebSmart                       | | Maintainability |
-| `wonderware`                   | Wonderware                     | | Maintainability |
-| `wsdl`                         | WSDL                           | | Maintainability |
-| `wtx`                          | WTX                            | | Maintainability |
-| `xaml`                         | XAML                           | | Maintainability |
-| `xml`                          | XML                            | | Maintainability | (5) |
-| `xpdl`                         | Tibco ActiveMatrix BPM         | | Maintainability |
-| `xpp`                          | X++                            | | Maintainability |
-| `xpp365`                       | X++ for Dynamics 365           | | Maintainability |
-| `xquery`                       | Xquery                         | | Maintainability |
-| `xsd`                          | XSD                            | | Maintainability |
-| `xslt`                         | XSLT                           | | Maintainability |
-| `xul`                          | XUL                            | | Maintainability |
-| `yaml`                         | YAML                           | | Maintainability | (5) |
-| `unknown`                      | Unknown technology             | | Maintainability | (6) |
+| Name in configuration file | Display name                                           | Also known as        | Supported Sigrid capabilities           | Notes |
+|----------------------------|--------------------------------------------------------|----------------------|-----------------------------------------|-------|
+| `abap`                     | ABAP                                                   | SAP                  | Maintainability, Architecture           |
+| `abapsmartforms`           | ABAP SmartForms                                        |                      | Maintainability, Architecture           |
+| `abl`                      | Abl                                                    | OpenEdge             | Maintainability, Architecture           |
+| `acl`                      | ACL                                                    |                      | Maintainability, Architecture           |
+| `accell`                   | Accell                                                 |                      | Maintainability, Architecture           |
+| `actionscript`             | ActionScript                                           |                      | Maintainability, Architecture           |
+| `actionscript3`            | ActionScript 3                                         |                      | Maintainability, Architecture           |
+| `ada`                      | Ada                                                    |                      | Maintainability, Architecture           |
+| `adabasnatural`            | Adabas Natural                                         |                      | Maintainability, Architecture           |
+| `adfxml`                   | ADF XML                                                |                      | Maintainability, Architecture           |
+| `agilepoint`               | AgilePoint                                             |                      | Maintainability, Architecture           |
+| `altovauml`                | Altova UML                                             |                      | Maintainability, Architecture           | (8) |
+| `angularjstemplate`        | Angular Templates                                      |                      | Maintainability, Architecture           | (7) |
+| `ansible`                  | Ansible                                                |                      | Maintainability, Architecture, Security |
+| `apachecamel`              | Apache Camel                                           |                      | Maintainability, Architecture           |
+| `apex`                     | Oracle APEX                                            |                      | Maintainability, Architecture           | (8) |
+| `aps`                      | APS                                                    |                      | Maintainability, Architecture           |
+| `applicationmaster`        | Application Master                                     |                      | Maintainability, Architecture           |
+| `ash`                      | ArtosScript (ash)                                      |                      | Maintainability, Architecture           |
+| `asp`                      | ASP                                                    |                      | Maintainability, Architecture           |
+| `aspx`                     | ASP.NET                                                |                      | Maintainability, Architecture           |
+| `assembly`                 | Assembly                                               |                      | Maintainability, Architecture           |
+| `aura`                     | Aura                                                   |                      | Maintainability, Architecture           |
+| `axway`                    | Axway                                                  |                      | Maintainability, Architecture           | (8) |
+| `axystudio`                | AxyStudio functions                                    |                      | Maintainability, Architecture           | (8) |
+| `axyworkflow`              | AxyStudio workflows                                    |                      | Maintainability, Architecture           |
+| `basic`                    | BASIC                                                  |                      | Maintainability, Architecture           |
+| `batch`                    | Batch                                                  |                      | Maintainability, Architecture           |
+| `bea`                      | Bea Weblogic                                           |                      | Maintainability, Architecture           |
+| `beanshell`                | BeanShell                                              |                      | Maintainability, Architecture           |
+| `beinformed`               | Be Informed                                            |                      | Maintainability, Architecture           | (8) |
+| `biztalk`                  | BizTalk                                                |                      | Maintainability, Architecture           |
+| `biztalkrules`             | BizTalk Rules Engine                                   |                      | Maintainability, Architecture           |
+| `blazerules`               | Blaze BRM                                              |                      | Maintainability, Architecture           | (8) |
+| `blueprism`                | Blue Prism                                             |                      | Maintainability, Architecture           |
+| `blueriq`                  | Blueriq flows/processes                                |                      | Maintainability, Architecture           | (8) |
+| `blueriqexpressions`       | Blueriq expressions                                    |                      | Maintainability, Architecture           | (8) |
+| `bpel`                     | BPEL                                                   |                      | Maintainability, Architecture           |
+| `bpm`                      | BPMN                                                   |                      | Maintainability, Architecture           |
+| `brail`                    | Brail                                                  |                      | Maintainability, Architecture           |
+| `bsp`                      | Bsp                                                    |                      | Maintainability, Architecture           |
+| `c`                        | C                                                      |                      | Maintainability, Architecture, Security | (1) |
+| `cache`                    | Cache                                                  |                      | Maintainability, Architecture           |
+| `cacheobjectscript`        | Cache ObjectScript                                     |                      | Maintainability, Architecture           |
+| `ccl`                      | CCL                                                    |                      | Maintainability, Architecture           |
+| `cgdc`                     | CGDC                                                   |                      | Maintainability, Architecture           |
+| `cgt`                      | CGT                                                    |                      | Maintainability, Architecture           |
+| `cicode`                   | Cicode                                                 |                      | Maintainability, Architecture           |
+| `cl`                       | CL                                                     |                      | Maintainability, Architecture           |
+| `clearbasic`               | Clearbasic                                             |                      | Maintainability, Architecture           |
+| `cobol`                    | Cobol                                                  |                      | Maintainability, Architecture           |
+| `coffeescript`             | CoffeeScript                                           |                      | Maintainability, Architecture           |
+| `coldfusion`               | ColdFusion                                             |                      | Maintainability, Architecture           |
+| `configuration`            | Configuration                                          |                      | Maintainability, Architecture           | (5) |
+| `coolgenc`                 | CoolGen C                                              |                      | Maintainability, Architecture           |
+| `coolgencobol`             | CoolGen Cobol                                          |                      | Maintainability, Architecture           |
+| `cordysbpm`                | Cordys BPM                                             |                      | Maintainability, Architecture           |
+| `cpp`                      | C++                                                    |                      | Maintainability, Architecture, Security | (1) |
+| `csharp`                   | C#                                                     | .NET                 | Maintainability, Architecture, Security |
+| `csp`                      | CSP                                                    |                      | Maintainability, Architecture           |
+| `css`                      | CSS                                                    |                      | Maintainability, Architecture           |
+| `cypher`                   | Cypher                                                 |                      | Maintainability, Architecture           |
+| `cucumber`                 | Cucumber                                               |                      | Maintainability, Architecture           |
+| `dart`                     | Dart                                                   | Flutter              | Maintainability, Architecture           |
+| `datastage`                | Datastage                                              |                      | Maintainability, Architecture           |
+| `datastageetl`             | DatastageETL                                           |                      | Maintainability, Architecture           |
+| `datastageworkflow`        | DatastageWorkflow                                      |                      | Maintainability, Architecture           |
+| `db2`                      | DB2                                                    |                      | Maintainability, Architecture           |
+| `dcl`                      | Dcl                                                    |                      | Maintainability, Architecture           |
+| `delphi`                   | Delphi                                                 |                      | Maintainability, Architecture           |
+| `delphiforms`              | Delphi Forms                                           |                      | Maintainability, Architecture           |
+| `deltacobol`               | Delta/Cobol                                            |                      | Maintainability, Architecture           |
+| `djangotemplates`          | Django Templates                                       |                      | Maintainability, Architecture           |
+| `docker`                   | Docker                                                 |                      | Maintainability, Architecture, Security |
+| `documentumxcp`            | Documentum xCP                                         |                      | Maintainability, Architecture           |
+| `drools`                   | Drools                                                 |                      | Maintainability, Architecture           |
+| `dscript`                  | Dscript                                                |                      | Maintainability, Architecture           |
+| `easytrieve`               | Easytrieve                                             |                      | Maintainability, Architecture           |
+| `egl`                      | EGL                                                    |                      | Maintainability, Architecture           |
+| `ejs`                      | EJS                                                    |                      | Maintainability, Architecture           |
+| `elixir`                   | Elixir                                                 |                      | Maintainability, Architecture           |
+| `embeddedsql`              | C++ Embedded SQL                                       |                      | Maintainability, Architecture           |
+| `erb`                      | ERB                                                    |                      | Maintainability, Architecture           |
+| `esql`                     | ESQL                                                   |                      | Maintainability, Architecture           |
+| `filetab`                  | File Tab                                               |                      | Maintainability, Architecture           |
+| `finacle`                  | Finacle                                                |                      | Maintainability, Architecture           |
+| `freeformatcobol`          | Freeformat Cobol                                       |                      | Maintainability, Architecture           |
+| `freemarker`               | Freemarker                                             |                      | Maintainability, Architecture           |
+| `fme`                      | FME                                                    |                      | Maintainability, Architecture           | (8) |
+| `fortran`                  | FORTRAN                                                |                      | Maintainability, Architecture           |
+| `gensym`                   | Gensym                                                 |                      | Maintainability, Architecture           |
+| `grpc`                     | gRPC                                                   |                      | Maintainability, Architecture           |
+| `go`                       | Go                                                     | GoLang               | Maintainability, Architecture           |
+| `gosu`                     | Gosu                                                   |                      | Maintainability, Architecture, Security |
+| `groovy`                   | Groovy                                                 |                      | Maintainability, Architecture, Security |
+| `gsp`                      | GSP                                                    |                      | Maintainability, Architecture           |
+| `guidefinition`            | GUI Definition                                         |                      | Maintainability, Architecture           | (5) |
+| `gupta`                    | Gupta                                                  |                      | Maintainability, Architecture           |
+| `haml`                     | Haml                                                   |                      | Maintainability, Architecture           |
+| `html`                     | HTML                                                   |                      | Maintainability, Architecture           | (7) |
+| `hql`                      | HQL                                                    |                      | Maintainability, Architecture           |
+| `ibmbpmbpd`                | IBM BPM (BPD)                                          |                      | Maintainability, Architecture           | (8) |
+| `ibmbpmprocess`            | IBM BPM (Process)                                      |                      | Maintainability, Architecture           | (8) |
+| `ideal`                    | Ideal                                                  |                      | Maintainability, Architecture           |
+| `informatica`              | Informatica                                            |                      | Maintainability, Architecture           |
+| `informix4gl`              | Informix 4GL                                           |                      | Maintainability, Architecture           |
+| `informixsql`              | Informix SQL                                           |                      | Maintainability, Architecture           |
+| `ingres`                   | Ingres                                                 |                      | Maintainability, Architecture           |
+| `intershoppipeline`        | Intershop (Pipeline)                                   |                      | Maintainability, Architecture           |
+| `jasperreports`            | Jasper Reports                                         |                      | Maintainability, Architecture           |
+| `jade`                     | Jade                                                   |                      | Maintainability, Architecture           |
+| `java`                     | Java                                                   |                      | Maintainability, Architecture, Security |
+| `javafx`                   | Java FX                                                |                      | Maintainability, Architecture           |
+| `javascript`               | JavaScript                                             | NodeJS               | Maintainability, Architecture, Security | (2) |
+| `javascript`               | Google App Script                                      |                      | Maintainability, Architecture           |
+| `jbc`                      | JBC                                                    |                      | Maintainability, Architecture           |
+| `jbpm`                     | jBPM                                                   |                      | Maintainability, Architecture           |
+| `jcl`                      | JCL                                                    |                      | Maintainability, Architecture           |
+| `jcs`                      | JCS                                                    |                      | Maintainability, Architecture           |
+| `jinja`                    | Jinja                                                  |                      | Maintainability, Architecture           |
+| `jsf`                      | JSF                                                    |                      | Maintainability, Architecture           |
+| `json`                     | JSON                                                   |                      | Maintainability, Architecture           | (5) |
+| `jsp`                      | JSP                                                    |                      | Maintainability, Architecture           |
+| `kotlin`                   | Kotlin                                                 |                      | Maintainability, Architecture, Security |
+| `less`                     | Less                                                   |                      | Maintainability, Architecture           |
+| `linc`                     | LINC                                                   |                      | Maintainability, Architecture           | (8) |
+| `lion`                     | Lion                                                   |                      | Maintainability, Architecture           | (8) |
+| `lodestar`                 | Lodestar                                               |                      | Maintainability, Architecture           |
+| `logicapps`                | Logic Apps                                             |                      | Maintainability, Architecture           |
+| `logicnets`                | LogicNets                                              |                      | Maintainability, Architecture           |
+| `lotusscript`              | LotusScript                                            |                      | Maintainability, Architecture           |
+| `lua`                      | Lua                                                    |                      | Maintainability, Architecture           |
+| `magic`                    | Magic                                                  |                      | Maintainability, Architecture           |
+| `magik`                    | Magik                                                  |                      | Maintainability, Architecture           |
+| `magnum`                   | Magnum                                                 |                      | Maintainability, Architecture           |
+| `matlab`                   | Matlab                                                 |                      | Maintainability, Architecture           |
+| `mediationflows`           | Mediation Flows                                        |                      | Maintainability, Architecture           |
+| `mendix`                   | Mendix                                                 |                      | Maintainability, Architecture, Security |
+| `messagebuilder`           | MessageBuilder                                         |                      | Maintainability, Architecture           |
+| `mpsbehavior`              | MPS Behavior                                           |                      | Maintainability, Architecture           | (8) |
+| `mpsclass`                 | MPS Class                                              |                      | Maintainability, Architecture           | (8) |
+| `mpstranslator`            | MPS Translator                                         |                      | Maintainability, Architecture           | (8) |
+| `mule`                     | Mule                                                   |                      | Maintainability, Architecture           |
+| `mtwize`                   | MtWize                                                 |                      | Maintainability, Architecture           |
+| `murexdatadictionary`      | Murex Data Dictionary                                  |                      | Maintainability, Architecture           |
+| `murexlookuptable`         | Murex Lookup Table                                     |                      | Maintainability, Architecture           |
+| `murexscript`              | Murex Script                                           |                      | Maintainability, Architecture           |
+| `murexworkflow`            | Murex Workflow                                         |                      | Maintainability, Architecture           |
+| `mustache`                 | Mustache                                               | Handlebars           | Maintainability, Architecture           |
+| `mysql`                    | MySQL                                                  |                      | Maintainability, Architecture           |
+| `nabsic`                   | Nabsic                                                 |                      | Maintainability, Architecture           | (8) |
+| `naviscript`               | Naviscript                                             |                      | Maintainability, Architecture           |
+| `navision`                 | Navision                                               | Dynamics NAV, AL     | Maintainability, Architecture           |
+| `netiqidmpolicy`           | NetIQ IDM Policy                                       |                      | Maintainability, Architecture           | (8) |
+| `netiqidmrequest`          | NetIQ IDM Request                                      |                      | Maintainability, Architecture           | (8) |
+| `netiqidmworkflow`         | NetIQ IDM Workflow                                     |                      | Maintainability, Architecture           | (8) |
+| `netweaveridm`             | NetweaverIDM                                           |                      | Maintainability, Architecture           |
+| `nonstopsql`               | Nonstop SQL                                            |                      | Maintainability, Architecture           |
+| `normalizedsystemsjava`    | Normalized Systems Java                                |                      | Maintainability, Architecture           |
+| `normalizedsystemsmodel`   | Normalized Systems Model                               |                      | Maintainability, Architecture           |
+| `objectivec`               | Objective-C                                            |                      | Maintainability, Architecture           |
+| `odi`                      | ODI                                                    |                      | Maintainability, Architecture           |
+| `odm`                      | ODM                                                    |                      | Maintainability, Architecture           |
+| `omt`                      | OMT                                                    |                      | Maintainability, Architecture           |
+| `opa`                      | OPA                                                    |                      | Maintainability, Architecture           |
+| `opc`                      | OPC                                                    |                      | Maintainability, Architecture           |
+| `openroad`                 | OpenROAD 4GL                                           |                      | Maintainability, Architecture           |
+| `oraclebpm`                | Oracle BPM                                             |                      | Maintainability, Architecture           |
+| `oracleofsaa`              | Oracle OFSAA                                           |                      | Maintainability, Architecture           |
+| `oracleworkflow`           | Oracle Workflow                                        |                      | Maintainability, Architecture           |
+| `ords`                     | ORDS                                                   |                      | Maintainability, Architecture           |
+| `osb`                      | OSB                                                    |                      | Maintainability, Architecture           | (8) |
+| `osbproxy`                 | OSB Proxy                                              |                      | Maintainability, Architecture           | (8) |
+| `osmprocess`               | OSM Process                                            |                      | Maintainability, Architecture           |
+| `osmtask`                  | OSM Task                                               |                      | Maintainability, Architecture           |
+| `outsystems`               | OutSystems                                             |                      | Maintainability, Architecture           | (8) |
+| `pascal`                   | Pascal                                                 |                      | Maintainability, Architecture           |
+| `pega`                     | Pega                                                   |                      | Maintainability, Architecture           | (8) |
+| `pegajsp`                  | PEGA JSP                                               |                      | Maintainability, Architecture           | (8) |
+| `perl`                     | Perl                                                   |                      | Maintainability, Architecture, Security |
+| `php`                      | PHP                                                    |                      | Maintainability, Architecture, Security |
+| `plc`                      | PLC - Structured Text - ABB                            |                      | Maintainability, Architecture           | (8) |
+| `plc`                      | PLC - Structured Text - Schneider Electric/EcoStruxure |                      | Maintainability, Architecture           | (8) |
+| `plc`                      | PLC - Structured Text - Siemens                        |                      | Maintainability, Architecture           |
+| `plc`                      | PLC - Functional Block Diagram - ABB                   |                      | Maintainability, Architecture           |
+| `plc`                      | PLC - Functional Block Diagram - Rockwell              |                      | Maintainability, Architecture           |
+| `plc`                      | PLC - Functional Block Diagram - Siemens               |                      | Maintainability, Architecture           |
+| `plc`                      | PLC - Ladder Logic - Rockwell                          |                      | Maintainability, Architecture           |
+| `plc`                      | PLC - Structured Text - Rockwell                       |                      | Maintainability, Architecture           |
+| `pli`                      | PL/I                                                   |                      | Maintainability, Architecture           |
+| `plsql`                    | PL/SQL                                                 |                      | Maintainability, Architecture           |
+| `plsqlforms`               | PL/SQL Forms                                           |                      | Maintainability, Architecture           | (8) |
+| `plsqlreports`             | PL/SQL Reports                                         |                      | Maintainability, Architecture           |
+| `pluk`                     | PLUK                                                   |                      | Maintainability, Architecture           |
+| `polymertemplates`         | Polymer Templates                                      |                      | Maintainability, Architecture           | (8) |
+| `postgresql`               | PostgreSQL                                             |                      | Maintainability, Architecture           |
+| `powerbuilder`             | Powerbuilder                                           |                      | Maintainability, Architecture           |
+| `powercenter`              | PowerCenter                                            |                      | Maintainability, Architecture           | (8) |
+| `powerfx`                  | Power Fx                                               | Microsoft Power Apps | Maintainability, Architecture           |
+| `powershell`               | Powershell                                             |                      | Maintainability, Architecture           |
+| `progress`                 | Progress                                               | OpenEdge             | Maintainability, Architecture           |
+| `pronto`                   | Pronto                                                 |                      | Maintainability, Architecture           |
+| `prt`                      | PRT                                                    |                      | Maintainability, Architecture           |
+| `puppet`                   | Puppet                                                 |                      | Maintainability, Architecture           |
+| `python`                   | Python                                                 |                      | Maintainability, Architecture, Security |
+| `r`                        | R                                                      |                      | Maintainability, Architecture           |
+| `radience`                 | Radience                                               |                      | Maintainability, Architecture           | (8) |
+| `razor`                    | Razor                                                  |                      | Maintainability, Architecture           |
+| `react`                    | React                                                  |                      | Maintainability, Architecture, Security | (2) |
+| `regelspraak`              | ALEF Regelspraak                                       |                      | Maintainability, Architecture           | (8) |
+| `regelspraakhtml`          | ALEF Regelspraak (HTML export)                         |                      | Maintainability, Architecture           | (8) |
+| `rexx`                     | Rexx                                                   |                      | Maintainability, Architecture           |
+| `robot`                    | Robot                                                  |                      | Maintainability, Architecture           |
+| `rpg`                      | RPG                                                    |                      | Maintainability, Architecture           |
+| `ruby`                     | Ruby                                                   | Ruby on Rails, Rails | Maintainability, Architecture, Security |
+| `rust`                     | Rust                                                   |                      | Maintainability, Architecture           |
+| `salesforceapex`           | Salesforce Apex                                        |                      | Maintainability, Architecture           |
+| `salesforceflow`           | Salesforce Flow                                        |                      | Maintainability, Architecture           |
+| `sappo`                    | SAP PO                                                 |                      | Maintainability, Architecture           | (8) |
+| `sapui5`                   | SapUI5                                                 |                      | Maintainability, Architecture           |
+| `sas`                      | SAS                                                    |                      | Maintainability, Architecture           |
+| `sasflows`                 | SAS Flows                                              |                      | Maintainability, Architecture           | (8) |
+| `sass`                     | Sass                                                   |                      | Maintainability, Architecture           |
+| `scala`                    | Scala                                                  |                      | Maintainability, Architecture, Security |
+| `scl`                      | SCL                                                    |                      | Maintainability, Architecture           |
+| `scr`                      | SCR                                                    |                      | Maintainability, Architecture           |
+| `script`                   | Shell script                                           |                      | Maintainability, Architecture           |
+| `servicenow`               | ServiceNow                                             |                      | Maintainability, Architecture           | (8) |
+| `siebeldeclarative`        | Siebel Declarative                                     |                      | Maintainability, Architecture           | (8) |
+| `siebeljs`                 | Siebel JS                                              |                      | Maintainability, Architecture           | (8) |
+| `siebelscripted`           | Siebel Scripted                                        |                      | Maintainability, Architecture           | (8) |
+| `siebelworkflow`           | Siebel Workflow                                        |                      | Maintainability, Architecture           | (8) |
+| `siebeltbui`               | Siebel TBUI                                            |                      | Maintainability, Architecture           | (8) |
+| `slim`                     | Slim                                                   |                      | Maintainability, Architecture           |
+| `smalltalk`                | Smalltalk                                              |                      | Maintainability, Architecture           |
+| `solidity`                 | Solidity                                               |                      | Maintainability, Architecture           |
+| `sonicesb`                 | Sonic ESB                                              |                      | Maintainability, Architecture           |
+| `spl`                      | SPL                                                    |                      | Maintainability, Architecture           |
+| `sqlj`                     | SQLJ                                                   |                      | Maintainability, Architecture           |
+| `sqlite`                   | SQLite                                                 |                      | Maintainability, Architecture           |
+| `sqr`                      | SQR                                                    |                      | Maintainability, Architecture           |
+| `ssis`                     | SSIS                                                   |                      | Maintainability, Architecture           |
+| `starlimssql`              | StarLIMS                                               |                      | Maintainability, Architecture           |
+| `streamserve`              | StreamServe                                            |                      | Maintainability, Architecture           |
+| `synapse`                  | Synapse                                                |                      | Maintainability, Architecture           |
+| `synon`                    | Synon                                                  |                      | Maintainability, Architecture           |
+| `swift`                    | Swift                                                  |                      | Maintainability, Architecture, Security |
+| `t4`                       | T4                                                     |                      | Maintainability, Architecture           |
+| `tacl`                     | TACL                                                   |                      | Maintainability, Architecture           |
+| `tal`                      | TAL                                                    |                      | Maintainability, Architecture           |
+| `tandem`                   | Tandem                                                 |                      | Maintainability, Architecture           | (8) |
+| `tapestry`                 | Tapestry                                               |                      | Maintainability, Architecture           |
+| `terraform`                | Terraform                                              |                      | Maintainability, Architecture, Security |
+| `thrift`                   | Thrift                                                 |                      | Maintainability, Architecture           |
+| `thymeleaf`                | Thymeleaf                                              |                      | Maintainability, Architecture           |
+| `tibco`                    | TIBCO BW                                               |                      | Maintainability, Architecture           |
+| `tibcobe`                  | TIBCO BE (XML)                                         |                      | Maintainability, Architecture           |
+| `tibcobejava`              | TIBCO BE (Java)                                        |                      | Maintainability, Architecture           |
+| `tibcobestatemachine`      | TIBCO BE (State Machine)                               |                      | Maintainability, Architecture           |
+| `tibcobw6`                 | TIBCO BW6                                              |                      | Maintainability, Architecture           |
+| `tripleforms`              | TriplEforms                                            |                      | Maintainability, Architecture           |
+| `tsql`                     | T-SQL                                                  |                      | Maintainability, Architecture           |
+| `turtle`                   | Turtle                                                 |                      | Maintainability, Architecture           |
+| `typescript`               | TypeScript                                             |                      | Maintainability, Architecture, Security | (3) |
+| `uil`                      | UIL (Motif)                                            |                      | Maintainability, Architecture           |
+| `uniface`                  | Uniface                                                |                      | Maintainability, Architecture           | (8) |
+| `until`                    | Until                                                  |                      | Maintainability, Architecture           |
+| `vag`                      | Visual Age                                             |                      | Maintainability, Architecture           |
+| `vagrecord`                | Visual Age Record                                      |                      | Maintainability, Architecture           |
+| `vb`                       | Visual Basic                                           |                      | Maintainability, Architecture, Security | (4) |
+| `vbnet`                    | Visual Basic .NET                                      |                      | Maintainability, Architecture, Security | (4) |
+| `velocity`                 | Velocity                                               |                      | Maintainability, Architecture           |
+| `vgl`                      | VGL                                                    |                      | Maintainability, Architecture           |
+| `visualforce`              | VisualForce                                            |                      | Maintainability, Architecture           |
+| `visualrpg`                | Visual RPG                                             |                      | Maintainability, Architecture           |
+| `visualobjects`            | Visual Objects                                         |                      | Maintainability, Architecture           |
+| `vuejs`                    | VueJS                                                  |                      | Maintainability, Architecture, Security | (2) |
+| `vuets`                    | VueTS                                                  |                      | Maintainability, Architecture, Security | (3) |
+| `vulcan`                   | Vulcan.NET                                             |                      | Maintainability, Architecture           |
+| `webfocus`                 | WebFocus                                               |                      | Maintainability, Architecture           |
+| `webmethods`               | WebMethods                                             |                      | Maintainability, Architecture           |
+| `webmethodsbpm`            | WebMethods BPM                                         |                      | Maintainability, Architecture           |
+| `websmart`                 | WebSmart                                               |                      | Maintainability, Architecture           | (8) |
+| `wonderware`               | Wonderware                                             |                      | Maintainability, Architecture           |
+| `wsdl`                     | WSDL                                                   |                      | Maintainability, Architecture           |
+| `wtx`                      | WTX                                                    |                      | Maintainability, Architecture           |
+| `xaml`                     | XAML                                                   |                      | Maintainability, Architecture           |
+| `xml`                      | XML                                                    |                      | Maintainability, Architecture           | (5) |
+| `xpdl`                     | Tibco ActiveMatrix BPM                                 |                      | Maintainability, Architecture           |
+| `xpp`                      | X++                                                    |                      | Maintainability, Architecture           | (8) |
+| `xpp365`                   | X++ for Dynamics 365                                   |                      | Maintainability, Architecture           | (8) |
+| `xquery`                   | Xquery                                                 |                      | Maintainability, Architecture           |
+| `xsd`                      | XSD                                                    |                      | Maintainability, Architecture           |
+| `xslt`                     | XSLT                                                   |                      | Maintainability, Architecture           |
+| `xul`                      | XUL                                                    |                      | Maintainability, Architecture           |
+| `yaml`                     | YAML                                                   |                      | Maintainability, Architecture           | (5) |
 
 Notes:
 
@@ -335,6 +330,7 @@ Notes:
 7. Use either `html` or `angularjstemplate`, but not both.
   - Prefer `angularjstemplate` if you're using [Angular templates](https://angular.io/guide/template-syntax).
   - Use `html` for all other types of HTML files or templates.
+8. Sigrid CI is not supported for this technology. You can still use Sigrid, but you will need to use one of the [alternative upload channels](../organization-integration/upload-instructions.md).
 
 ## Supported open source ecosystems
 
@@ -395,7 +391,7 @@ These are the supported security analyzers as you may see them in your security 
 
 | Software quality standard | Relevant for capabilities |
 |---------------------------|---------------------------|
-| [ISO 25010](https://iso25000.com/index.php/en/iso-25000-standards/iso-25010) | Maintainability, Security, Reliability |
+| [ISO 25010](https://iso25000.com/index.php/en/iso-25000-standards/iso-25010) | Maintainability, Architecture, Security, Reliability |
 | [SIG Security Model](https://softwareimprovementgroup.com/wp-content/uploads/SIG-Evaluation-Criteria-Security.pdf) | Security |
 | [OWASP Top 10](https://owasp.org/www-project-top-ten/) | Security |
 | [ISO 5055](https://www.iso.org/standard/80623.html) | Security, Reliability |
