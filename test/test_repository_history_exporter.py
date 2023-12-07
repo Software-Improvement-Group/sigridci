@@ -45,3 +45,13 @@ class RepositoryHistoryExporterTest(TestCase):
         message = "Create sigrid-publish.yml"
 
         self.assertEqual(historyEntries[0], f"'@@@;{id};{name};{email};{date};{message}'")
+
+    def testTolerantParsingOfCommitMessage(self):
+        log = "@@@;1234;John Smith;j.smith@sig.eu;2023-11-29 10:48:32 +0100;a;b;c"
+        historyExporter = RepositoryHistoryExporter()
+        result = historyExporter.anonymizeHistoryEntry(log)
+
+        expectedName = "ef61a579c907bbed674c0dbcbcf7f7af8f851538eef7b8e58c5bee0b8cfdac4a"
+        expectedEmail = "318f8c6a1732a7a6c60e2200ec56edf41780425d81e5eb30aed6fdc025edccab"
+
+        self.assertEqual(result, f"@@@;1234;{expectedName};{expectedEmail};2023-11-29 10:48:32 +0100;a\n")
