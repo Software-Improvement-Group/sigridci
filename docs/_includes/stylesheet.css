@@ -232,6 +232,22 @@ sig-toc .h4 {
     margin-left: 40px;
 }
 
+.announcement {
+    display: block;
+    color: #212c3c;
+    background-color: #DFC101;
+    text-align: center;
+    font-size: 12px;
+    box-shadow: 0px 1px 5px #687483;
+    padding: 8px;
+    z-index: 10;
+    cursor: pointer;
+}
+
+.announcement:hover {
+    color: #212c3c;
+}
+
 .searchForm {
     margin-bottom: 16px;
 }
