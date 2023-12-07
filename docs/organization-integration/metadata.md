@@ -89,7 +89,7 @@ Each of the fields presented below can only assume a single value from the list 
 
 ### Meaning of special values for metadata fields
 
-While several of the fields shown in the table above have self-evident values, some do not. As reference, you can find the meaning of such fields detailed below:
+While several of the fields shown in the table above have self-evident values, some do not. As a reference, you can find the meaning of such fields detailed below:
 
 <details>
   <summary>Lifecycle phases</summary>
@@ -171,6 +171,21 @@ The deployment type identifiers have the following meaning:
 </div>
 
 </details>
+
+### Additional metadata fields
+
+Besides the fields shown above, there is support for several additional fields to enrich the metadata of a given system.
+These additional fields are free-text fields, in the sense that their values are not part of a specific set of values. However, there are some restrictions on the possible set of values for each of the fields, which are detailed in the table below:
+
+| **Field name**      | **Values**                                                                                                                                         |
+|---------------------|----------------------------------------------------------------------------------------------------------------------------------------------------|
+| Display Name        | Free-text field containing the display name for the system (max. 60<br>characters long)                                                            |
+| Division Name       | Free-text field containing the name of the division <br>this system is associated with (max. 60 characters long)                                   |
+| Team Names          | A list where each element is a free-text field detailing the name(s)<br>of the team(s) that are involved with the system (max. 60 characters long) |
+| Supplier Names      | A list where each element is a free-text field detailing the name(s)<br>of the supplier(s) of the system (max. 60 characters long)                 |
+| In Production Since | Date in format YYYY detailing the year since the system is in <br>production (cannot be in the future)                                             |
+| Is Development Only | Boolean value categorizing the system as being development only<br>or not                                                                          |
+| Remark              | Free-text field containing any remarks about the system                                                                                            |
 
 ## Contact and support
 
