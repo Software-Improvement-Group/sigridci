@@ -27,6 +27,8 @@ from .upload_log import UploadLog
 
 
 class SigridCiRunner:
+    DEFAULT_OBJECTIVE = 3.5
+
     METADATA_FIELDS = [
         "displayName",
         "divisionName",
@@ -132,7 +134,6 @@ class SigridCiRunner:
 
     def loadSigridTarget(self):
         objectives = self.apiClient.fetchObjectives()
-        targetRating = objectives.get("NEW_CODE_QUALITY", objectives.get("MAINTAINABILITY", 3.5))
+        targetRating = objectives.get("MAINTAINABILITY", self.DEFAULT_OBJECTIVE)
         UploadLog.log("Using Sigrid for target rating (%.1f stars)" % targetRating)
         return targetRating
-
