@@ -450,7 +450,7 @@ class SigridCiRunnerTest(TestCase):
         with open(f"{self.tempDir}/sigrid-metadata.yaml") as f:
             self.assertEqual(f.read(), "metadata:\n  externalID: 1")
 
-    def testPreferNewCodeTargetIfAvailable(self):
+    def testIgnoreObsoleteNewCodeObjective(self):
         apiClient = MockApiClient(self.options)
         apiClient.responses["/analysis-results/api/v1/objectives/aap/noot/config"] = {
             "NEW_CODE_QUALITY" : 4.0,
@@ -461,7 +461,7 @@ class SigridCiRunnerTest(TestCase):
         runner.reports = []
         target = runner.loadSigridTarget()
 
-        self.assertEqual(target, 4.0)
+        self.assertEqual(target, 3.5)
 
     def testUseMaintainabilityTargetIfNoNewCodeTarget(self):
         apiClient = MockApiClient(self.options)
