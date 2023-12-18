@@ -80,7 +80,9 @@ Using the `--targetquality` parameter allows you to override the maintainability
 
 ### Additional information on configuring Sigrid CI
 
-You can find more details on how to configure Sigrid CI [here](https://docs.sigrid-says.com/sigridci-integration/github-actions.html).
+You can find more details on how to configure Sigrid CI [here](../sigridci-integration/github-actions.md).
+
+To see how Sigrid CI provides feedback directly in your pull request, review [these instructions](../sigridci-integration/github-actions.html#usage).
 
 ## Contact and support
 
