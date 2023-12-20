@@ -399,6 +399,7 @@ These are the supported security analyzers as you may see them in your security 
 | [CWE Top 25](https://cwe.mitre.org/top25/) | Security |
 | [PCI DSS 4.0](https://blog.pcisecuritystandards.org/pci-dss-v4-0-resource-hub) | Security |
 | [OWASP ASVS 4.0](https://owasp.org/www-pdf-archive/OWASP_Application_Security_Verification_Standard_4.0-en.pdf) | Security |
+| [OWASP Low-code/No-code Top 10](https://owasp.org/www-project-top-10-low-code-no-code-security-risks/) | Security |
 
 ## Requesting additional technology support
 
