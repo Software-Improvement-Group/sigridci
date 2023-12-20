@@ -230,14 +230,14 @@ Sigrid uses a combination of its own security checks and security checks perform
 
 This `thirdpartyfindings` section in the scope file supports the following options:
 
-| Option name             | Required? | Description                                                                         |
-|-------------------------|-----------|-------------------------------------------------------------------------------------|
-| `enabled`               | Yes       | Set to `true` to enable security analysis.                                          |
-| `exclude`               | No        | List of file/directory patterns that should be excluded from the security analysis. |
-| `disabled_analyzers`[1] | No        | Defining a list of disabled specific scanning tools.                                |
-| `enabled_analyzers` [1] | No        | Defining a list of specific scanning tools to enable (if not enabled by default).   |
+| Option name              | Required? | Description                                                                         |
+|--------------------------|-----------|-------------------------------------------------------------------------------------|
+| `enabled`                | Yes       | Set to `true` to enable security analysis.                                          |
+| `exclude`                | No        | List of file/directory patterns that should be excluded from the security analysis. |
+| `disabled_analyzers` [1] | No        | Defining a list of disabled specific scanning tools.                                |
+| `enabled_analyzers` [1]  | No        | Defining a list of specific scanning tools to enable (if not enabled by default).   |
 
-[1]: You can see a list of already enabled analyzers in your security overview if you group by Finding >> Origin ([see the system security page](https://docs.sigrid-says.com/capabilities/system-security.html#different-possible-grouping-of-security-findings)).
+[1]: You can see the list of enabled analyzers in your Sigrid security overview, if you [group by "Finding" and then by "Origin"](../capabilities/system-security.md#different-possible-grouping-of-security-findings).
 
 For the list of all supported analyzers, see [the specific technology support section](technology-support.md#supported-security-analyzers).
 
