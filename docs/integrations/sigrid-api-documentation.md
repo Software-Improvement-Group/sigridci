@@ -147,15 +147,17 @@ The path parameters `{customer}` and `{system}` refer to your Sigrid account nam
 - `?vulnerable=false` or no query parameter: the endpoint returns the full list of third-party libraries detected by Sigrid for the given customer/system(s), including lists of known vulnerabilities per library if any. 
 - `?vulnerable=true`: the endpoint returns only those third-party libraries detected by Sigrid for the given customer/system(s) that have at least one known vulnerability. 
 
-The response format is based on the CycloneDX format for an [SBOM (software bill of materials)](https://en.wikipedia.org/wiki/Software_bill_of_materials). 
+The response format is based on the CycloneDX (version 1.5) format for an [SBOM (software bill of materials)](https://en.wikipedia.org/wiki/Software_bill_of_materials). 
 
 <details>
   <summary>Example response for a single system</summary>
 
+Mimetype: `application/vnd.cyclonedx+json`
+
 ```json
 {
     "bomFormat": "CycloneDX",
-    "specVersion": "1.4",
+    "specVersion": "1.5",
     "version": 1,
     "metadata": {
         "timestamp": "2022-03-17T09:58:34Z",
@@ -179,21 +181,32 @@ The response format is based on the CycloneDX format for an [SBOM (software bill
             "version": "2.8.0r4",
             "purl": "pkg:npm/yui@2.8.0r4",
             "type": "library",
-            "bom-ref": "pkg:npm/yui@2.8.0r4"
+            "bom-ref": "pkg:npm/yui@2.8.0r4",
+            "evidence" : {
+                "occurrences" : [
+                    {
+                        "location" : "foo/package.json"
+                    }
+                ]
+            }
         }
     ],
     "vulnerabilities": [
         {
-            "bom-ref": "pkg:npm/yui@2.8.0r4",
             "id": "CVE-2010-4710",
             "ratings": [
                 {
                     "score": 4.3,
                     "severity": "medium",
-                    "method": "CVSSv3"
+                    "method": "CVSSv2"
                 }
             ],
-            "description": "Cross-site Scripting"
+            "description": "Cross-site Scripting",
+            "affects" : [
+                {
+                    "ref" : "pkg:npm/yui@2.8.0r4"
+                }
+            ]
         }
     ]
 }
