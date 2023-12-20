@@ -85,6 +85,7 @@ The parameter `{customer}` refers to your Sigrid account name.
     ]
 }
 ```
+
 </details>
 
 The top-level `maintainability` and `maintainabilityDate` refer to the *current* state of each system. The `allRatings` array contains a list of all *historic* measurements, which can be used for reporting or trend information.
@@ -135,6 +136,7 @@ The parameters `{customer}` and `{system}` refer to your Sigrid account name and
     }
 ]
 ```
+
 </details>
 
 ### Vulnerable libraries in Open Source Health
@@ -211,6 +213,7 @@ Mimetype: `application/vnd.cyclonedx+json`
     ]
 }
 ```
+
 </details>
 
 The endpoint that returns third-party vulnerabilities for all systems for the given customer returns an array of SBOMs, one for each system as follows:
@@ -264,6 +267,7 @@ The response format of both system-level endpoints (`GET` and `PATCH`) is as fol
   "technologyCategory": "MODERN_GENERAL_PURPOSE"
 }
 ```
+
 </details>
 
 <details>
@@ -294,6 +298,7 @@ The response format of the customer-level endpoint (`GET https://sigrid-says.com
   }
 ]
 ```
+
 </details>
 
 All properties can be null except for `supplierNames` and `teamNames` (which are always an array, but possibly empty), and `isDevelopmentOnly` (which is always true or false).
