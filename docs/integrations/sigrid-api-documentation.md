@@ -239,7 +239,9 @@ The endpoint that returns third-party vulnerabilities for all systems for the gi
 ```
 
 The `properties` member of elements of the `components` array is an array of name/value pairs. Currently, this array
-may have up to 12 items:
+may have up to 12 items, as detailed in the table below. Note that the value of a property can never be `null` according
+to the CycloneDX specification. Consequently, if Sigrid cannot determine the value of a property for whatever reason,
+it is simply missing from the `properties` array.
 
 | Name                        | Description                                                         |
 |-----------------------------|---------------------------------------------------------------------|
