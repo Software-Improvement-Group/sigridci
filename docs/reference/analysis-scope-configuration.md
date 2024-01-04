@@ -192,8 +192,8 @@ You can customize this by adding a `model` entry to your configuration. For exam
 Open Source Health allows you to scan all open sources libraries used by your system, and identify risks such as security vulnerabilities or heavily outdated libraries.
 
     dependencychecker:
-      enabled: true
-      blocklist: []
+      blocklist:
+      - ".*companyname.*"
       transitive: false
       exclude:
         - ".*/scripts/.*"
@@ -202,7 +202,6 @@ The `dependencychecker` section supports the following options:
 
 | Option name  | Required? | Description                                                                                    |
 |--------------|-----------|------------------------------------------------------------------------------------------------|
-| `enabled`    | Yes       | Set to `true` to enable Open Source Health analysis.                                           |
 | `blocklist`  | Yes       | List of library names that should not be scanned. Typically used to ignore internal libraries. |
 | `transitive` | No        | When true, also scans the dependencies of your dependencies. Defaults to false.                |
 | `exclude`    | No        | List of file/directory patterns that should be excluded from the Open Source Health analysis.  |

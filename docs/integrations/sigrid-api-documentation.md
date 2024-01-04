@@ -182,6 +182,12 @@ Mimetype: `application/vnd.cyclonedx+json`
             "name": "yui",
             "version": "2.8.0r4",
             "purl": "pkg:npm/yui@2.8.0r4",
+            "properties" : [
+                {
+                    "name" : "sigrid:risk:freshness",
+                    "value" : "HIGH"
+                }
+            ],
             "type": "library",
             "bom-ref": "pkg:npm/yui@2.8.0r4",
             "evidence" : {
@@ -231,6 +237,26 @@ The endpoint that returns third-party vulnerabilities for all systems for the gi
     ]
 }
 ```
+
+The `properties` member of elements of the `components` array is an array of name/value pairs. Currently, this array
+may have up to 12 items, as detailed in the table below. Note that the value of a property can never be `null` according
+to the CycloneDX specification. Consequently, if Sigrid cannot determine the value of a property for whatever reason,
+it is simply missing from the `properties` array.
+
+| Name                        | Description                                                                      |
+|-----------------------------|----------------------------------------------------------------------------------|
+| `sigrid:risk:vulnerability` | Vulnerability risk (one of `NONE`, `LOW`, `MEDIUM`, `HIGH`)                      |
+| `sigrid:risk:legal`         | Legal (license) risk (one of `NONE`, `LOW`, `MEDIUM`, `HIGH`)                    |
+| `sigrid:risk:freshness`     | Freshness risk (one of `NONE`, `LOW`, `MEDIUM`, `HIGH`)                          |
+| `sigrid:risk:activity`      | Activity risk (one of `NONE`, `LOW`, `MEDIUM`, `HIGH`)                           |        
+| `sigrid:risk:stability`     | Stability risk (one of `NONE`, `LOW`, `MEDIUM`, `HIGH`)                          |
+| `sigrid:risk:management`    | Dependency management risk (one of `NONE`, `LOW`, `MEDIUM`, `HIGH`)              |
+| `sigrid:releaseDate`        | Release date of the detected version (ISO 8601: YYYY-MM-DD)                      |
+| `sigrid:next:version`       | Version number of the next version                                               |
+| `sigrid:next:releaseDate`   | Release date of the next version (ISO 8601: YYYY-MM-DD)                          |
+| `sigrid:latest:version`     | Version number of the latest version                                             |
+| `sigrid:latest:releaseDate` | Release date of the latest version (ISO 8601: YYYY-MM-DD)                        |
+| `sigrid:transitive`         | Indicates whether the dependency is transitive or not (`TRANSITIVE` or `DIRECT`) |
 
 More information on the SBOM format and the various fields is available from the [CycloneDX SBOM specification](https://github.com/CycloneDX/specification).
 
