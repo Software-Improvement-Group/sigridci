@@ -32,7 +32,7 @@ Note that this endpoint requires a [Sigrid CI Authentication token](../organizat
 ```json
 {
     "userName": "[email address]", // to be used to send email notifications, not relevant for authentication in case of PAT
-    "mendixToken": "[use a Mendix PAT with model read only rights]", // For legacy projects on Teamserver-SVN an API key is also supported
+    "mendixToken": "[use a Mendix PAT with model read only rights]", // You can also update an expired Mendix PAT via the same POST, simply rerun with the new mendixToken
     "appId": "[a UUID]",
     "appName": "[the app name]",
     "teamServerBranch": "[the name of a specific branch]" // leave empty or omit alltogether to use mainline
