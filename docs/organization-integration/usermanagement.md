@@ -70,6 +70,9 @@ Then assign groups of users to your Authentication app.
 ### Example OneLogin
 Please see the separate [OneLogin page](usermanagement-example-onelogin.md).
 
+### Example Okta
+Please see the separate [OKTA page](usermanagement-example-okta.md).
+
 
 ### Info to provide to SIG
 Provide SIG with the 'App federation MetadataURL' of your authentication app.
