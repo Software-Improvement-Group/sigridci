@@ -3,6 +3,15 @@ Sigrid release notes
 
 SIG uses [continuous delivery](https://en.wikipedia.org/wiki/Continuous_delivery), meaning that every change to Sigrid or the underlying analysis is released once our development pipeline has completed. On average, we release somewhere between 10 and 20 times per day. This page therefore doesn't list every single change, since that would quickly lead to an excessively long list of small changes. Instead, this page lists Sigrid and analysis changes that we consider noteworthy for the typical Sigrid user.
 
+### January 15, 2024
+
+- **Objectives:** It is now possible to set portfolio objectives that consider technology, business context, lifecycle phase, and deployment type. This allows you to use Sigrid to define policies. For example, security requirements tend to be more strict for public-facing systems than for internal systems. Similarly, objectives tend to be more lenient for legacy systems, since they are approaching the end of their life cycle. You can use portfolio objectives to consider these aspects, so you can define objectives for your landscape without having to define them for every single system individually.
+- **User management:** Sigrid now also supports Single Sign-On integration based on [OpenID Connect](https://auth0.com/docs/authenticate/protocols/openid-connect-protocol). This support is added in addition to the existing SAML-based integration support.
+- **User management:** Your Sigrid administrators now have the ability to reset their users' MFA (multi factor authentication). Previously this could only be done by SIG support.
+- **Technology support:** Updated support for various TypeScript frameworks. The number of TypeScript frameworks is pretty much infinite, so please reach out if you believe SIG does not adequately support your preferred framework.
+- **Technology support:** Added support for new versions of [Poetry](https://python-poetry.org).
+- **Technology support:** Added support for the Baan 4GL programming language.
+
 ### November 20, 2023
 
 - **Dashboard:** It is now possible to view progress towards your portfolio objectives in two ways: Via the overall Sigrid portfolio dashboard (which already existed), and via the newly added "objectives" page. The latter gives you a more high-level overview of your overall objectives, without diving into the specifics regarding teams or systems. You can find more information in the [portfolio objectives documentation](..//capabilities/portfolio-objectives.md).
@@ -14,7 +23,7 @@ SIG uses [continuous delivery](https://en.wikipedia.org/wiki/Continuous_delivery
 - **Architecture Quality:** Architecture Quality now includes an optional tree view. This can be used as a secondary way of navigating your architecture, in addition to the main architecture visualization. 
 - **Architecture Quality:** Architecture Quality now has a search option. This allows you to quickly find system elements within your architecture, such as components, files, end points, or databases.
 
-<img src="../images/aq-search.png" width="200"/ >
+<img src="../images/aq-search.png" width="200" />
 
 - **Architecture Quality:** The metric detail panel now includes the option to export the measurement results to Excel.
 - **Open Source Health:** Sigrid can now identify the [Reciprocal Public License](https://opensource.org/license/rpl-1-5/). For commercial organizations using open source software, this license is seen as high risk due to its requirements.
