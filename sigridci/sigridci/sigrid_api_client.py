@@ -119,6 +119,8 @@ class SigridApiClient:
 
         if self.subsystem:
             path += "?subsystem=" + urllib.parse.quote_plus(self.subsystem)
+        elif self.options.convert:
+            path += "?convert=" + urllib.parse.quote_plus(self.options.convert)
 
         return self.retry(lambda: self.callSigridAPI(path))
 

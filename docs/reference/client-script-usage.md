@@ -22,18 +22,19 @@ The [general Sigrid CI documentation](../sigridci-integration/development-workfl
 
 The script takes a limited number of mandatory arguments. However, Sigrid CI's behavior can be configured and customized using a large number of optional arguments that can be used to align Sigrid CI's behavior to your development team's workflow. The following arguments are available:
 
-| Argument            | Required | Example value       | Description                                                                                              |
-|---------------------|----------|---------------------|----------------------------------------------------------------------------------------------------------|
-| `--customer`        | Yes      | examplecustomername | Name of your organization's Sigrid account. Contact SIG support if you're not sure about this. [1]       |
-| `--system`          | Yes      | examplesystemname   | Name of your system in Sigrid. Contact SIG support if you're not sure about this. [2]                    |
-| `--subsystem `      | No       | frontend            | Used to map between repository directory structure versus the one known by Sigrid. [5]                   |
-| `--source`          | Yes      | .                   | Path of your project's source code. Use "." for current directory.                                       |
-| `--publish`         | No       | N/A                 | Automatically publishes analysis results to Sigrid. [1]                                                  |
-| `--publishonly`     | No       | N/A                 | Publishes analysis results to Sigrid, but *does not* provide feedback in the CI environment itself. [3]  |
-| `--exclude`         | No       | /build/,.png        | Comma-separated list of file and/or directory names that should be excluded from the upload. [4, 7]      |
-| `--include`         | No       | /build/,.png        | Comma-separated list of file and/or directory names that should be included in the upload. [6, 7]        |
-| `--targetquality`   | No       | 3.5                 | See [defining quality objectives](#defining-quality-objectives).                                         |
-| `--showupload`      | No       | N/A                 | Logs the contents of the upload before submitting it to Sigrid.                                          |
+| Argument          | Required | Example value       | Description                                                                                                                       |
+|-------------------|----------|---------------------|-----------------------------------------------------------------------------------------------------------------------------------|
+| `--customer`      | Yes      | examplecustomername | Name of your organization's Sigrid account. Contact SIG support if you're not sure about this. [1]                                |
+| `--system`        | Yes      | examplesystemname   | Name of your system in Sigrid. Contact SIG support if you're not sure about this. [2]                                             |
+| `--subsystem `    | No       | frontend            | Used to map between repository directory structure versus the one known by Sigrid. [5]                                            |
+| `--source`        | Yes      | .                   | Path of your project's source code. Use "." for current directory.                                                                |
+| `--publish`       | No       | N/A                 | Automatically publishes analysis results to Sigrid. [1]                                                                           |
+| `--publishonly`   | No       | N/A                 | Publishes analysis results to Sigrid, but *does not* provide feedback in the CI environment itself. [3]                           |
+| `--exclude`       | No       | /build/,.png        | Comma-separated list of file and/or directory names that should be excluded from the upload. [4, 7]                               |
+| `--include`       | No       | /build/,.png        | Comma-separated list of file and/or directory names that should be included in the upload. [6, 7]                                 |
+| `--targetquality` | No       | 3.5                 | See [defining quality objectives](#defining-quality-objectives).                                                                  |
+| `--showupload`    | No       | N/A                 | Logs the contents of the upload before submitting it to Sigrid.                                                                   |
+| `--convert`       | No       | beinformed          | Used for some technologies. See [technology conversion configuration](technology-support.md#technology-conversion-configuration). |
 
 Notes:
 

@@ -33,3 +33,28 @@ class SigridApiClientTest(TestCase):
         apiClient = SigridApiClient(options)
 
         self.assertEqual("mytoken", apiClient.token)
+
+    @mock.patch.dict(os.environ, {"SIGRID_CI_TOKEN" : "mytoken\n"})
+    def testAddSubsystemParameter(self):
+        options = PublishOptions("aap", "noot", runMode=RunMode.PUBLISH_ONLY, sourceDir="/tmp", subsystem="mies")
+        apiClient = ApiStub(options)
+        apiClient.obtainUploadLocation(True)
+
+        self.assertEqual(apiClient.called, ["/inboundresults/sig/aap/noot/ci/uploads/v1/publishonly?subsystem=mies"])
+
+    @mock.patch.dict(os.environ, {"SIGRID_CI_TOKEN" : "mytoken\n"})
+    def testAddConvertParameter(self):
+        options = PublishOptions("aap", "noot", runMode=RunMode.PUBLISH_ONLY, sourceDir="/tmp", convert="beinformed")
+        apiClient = ApiStub(options)
+        apiClient.obtainUploadLocation(True)
+
+        self.assertEqual(apiClient.called, ["/inboundresults/sig/aap/noot/ci/uploads/v1/publishonly?convert=beinformed"])
+
+
+class ApiStub(SigridApiClient):
+    def __init__(self, options: PublishOptions):
+        super().__init__(options)
+        self.called = []
+
+    def callSigridAPI(self, path, body=None, contentType=None):
+        self.called.append(path)

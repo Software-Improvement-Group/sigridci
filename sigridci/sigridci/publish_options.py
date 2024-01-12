@@ -36,6 +36,7 @@ class PublishOptions:
     includePatterns: List[str] = field(default_factory=lambda: [])
     includeHistory: bool = False
     showUploadContents: bool = False
+    convert: str = None
     targetRating: Union[float, str] = "sigrid"
     sigridURL: str = "https://sigrid-says.com"
     partner: str = "sig"

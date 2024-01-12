@@ -43,6 +43,9 @@ inputs:
   subsystem:
     description: "Used to map between repository directory structure versus the one known by Sigrid."
     required: false
+  convert:
+    description: "Convert upload format. Only required for certain technologies, see Sigrid documentation for details."
+    required: false
     
   # Sigrid metadata
   displayname:
