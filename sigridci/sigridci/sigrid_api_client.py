@@ -68,16 +68,16 @@ class SigridApiClient:
                     return response
             except urllib.error.HTTPError as e:
                 if e.code == 401:
-                    UploadLog.log(f"You are not authenticated to Sigrid (HTTP status {e.code}), please check if your token is valid")
+                    UploadLog.log(f"You are not authenticated to Sigrid (HTTP status {e.code} for {e.url}), please check if your token is valid")
                     sys.exit(1)
                 elif e.code == 403:
-                    UploadLog.log(f"You are not authorized to access Sigrid for this system (HTTP status {e.code})")
+                    UploadLog.log(f"You are not authorized to access Sigrid for this system (HTTP status {e.code} for {e.url})")
                     sys.exit(1)
                 elif e.code == 410:
                     if e.reason:
-                        UploadLog.log(f"{e.reason} (HTTP status {e.code})")
+                        UploadLog.log(f"{e.reason} (HTTP status {e.code} for {e.url})")
                     else:
-                        UploadLog.log(f"The system no longer exists (HTTP status {e.code})")
+                        UploadLog.log(f"The system no longer exists (HTTP status {e.code} for {e.url})")
                     sys.exit(1)
                 elif allow404 and e.code == 404:
                     return False
