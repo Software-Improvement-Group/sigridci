@@ -50,6 +50,7 @@ Sigrid's REST API mimics this behavior, as follows:
 * [Maintainability ratings](#maintainability-ratings)
 * [Security and reliability findings](#security-and-reliability-findings)
 * [Vulnerable libraries in Open Source Health](#vulnerable-libraries-in-open-source-health)
+* [Architecture quality ratings](#architecture-quality-ratings)
 * [System metadata](#system-metadata)
 * [System lifecycle management](#system-lifecycle-management)
 * [System objectives](#system-objectives)
@@ -63,7 +64,7 @@ Maintainability ratings for a given customer are available via three endpoints:
 
 The parameter `{customer}` refers to your Sigrid account name. 
 
-<details>
+<details markdown="1">
   <summary>Example response</summary>
 
 ```json
@@ -101,7 +102,7 @@ Sigrid's REST API provides two endpoints to get security or reliability findings
 
 The parameters `{customer}` and `{system}` refer to your Sigrid account name and system ID respectively. 
 
-<details>
+<details markdown="1">
   <summary>Example response</summary>
 
 ```json
@@ -151,7 +152,7 @@ The path parameters `{customer}` and `{system}` refer to your Sigrid account nam
 
 The response format is based on the CycloneDX (version 1.5) format for an [SBOM (software bill of materials)](https://en.wikipedia.org/wiki/Software_bill_of_materials). 
 
-<details>
+<details markdown="1">
   <summary>Example response for a single system</summary>
 
 Mimetype: `application/vnd.cyclonedx+json`
@@ -260,6 +261,56 @@ it is simply missing from the `properties` array.
 
 More information on the SBOM format and the various fields is available from the [CycloneDX SBOM specification](https://github.com/CycloneDX/specification).
 
+### Architecture quality ratings
+
+Arcitecture quality ratings for a given customer are available via two endpoints:
+- `GET https://sigrid-says.com/rest/analysis-results/api/v1/architecture-quality/{customer}`: get architecture quality ratings for all systems of the given customer the current user has access to.
+- `GET https://sigrid-says.com/rest/analysis-results/api/v1/architecture-quality/{customer}/{system}`: get architecture quality ratings of the given system of the given customer.
+
+The path parameters `{customer}` and `{system}` refer to your Sigrid account name and system ID respectively.
+
+<details markdown="1">
+  <summary>Example system-level response format</summary>
+
+The response format of the system-level endpoint is as follows:
+
+```json
+{
+  "customer" : "my-sigrid-account-name",
+  "system" : "my-system-name",
+  "snapshotDate" : "2022-01-31",
+  "analysisDate" : "2022-02-28",
+  "modelVersion" : "1.4",
+  "ratings" : {
+    "architecture" : 3.84,
+    "subcharacteristics" : {
+      "dataAccess" : 3.5,
+      "technologyStack" : 4.18,
+      "evolution" : 3.71,
+      "communication" : 3.83,
+      "structure" : 4.07,
+      "knowledge" : 3.74
+    },
+    "systemProperties" : {
+      "componentCoupling" : 2.86,
+      "codeReuse" : 5.38,
+      "knowledgeDistribution" : 3.24,
+      "boundedEvolution" : 4.21,
+      "componentFreshness" : 4.23,
+      "communicationCentralization" : 3.18,
+      "technologyPrevalence" : 4.18,
+      "codeBreakdown" : 3.27,
+      "componentCohesion" : 4.46,
+      "dataCoupling" : 3.5
+    }
+  }
+}
+```
+</details>
+
+The customer-level endpoint retuns an array with each element identical to the system-level response.
+
+
 ### System metadata
 
 System metadata can be viewed and updated using the following three endpoints:
@@ -269,7 +320,7 @@ System metadata can be viewed and updated using the following three endpoints:
 
 The path parameters `{customer}` and `{system}` refer to your Sigrid account name and system ID respectively.
 
-<details>
+<details markdown="1">
   <summary>Example system-level `GET` and `PATCH` response format</summary>
 
 The response format of both system-level endpoints (`GET` and `PATCH`) is as follows:
@@ -296,7 +347,7 @@ The response format of both system-level endpoints (`GET` and `PATCH`) is as fol
 
 </details>
 
-<details>
+<details markdown="1">
   <summary>Example customer-level response</summary>
 
 The response format of the customer-level endpoint (`GET https://sigrid-says.com/rest/analysis-results/api/v1/system-metadata/{customer}`) is as follows:
