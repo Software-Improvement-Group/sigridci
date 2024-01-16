@@ -47,19 +47,13 @@ Sigrid's REST API mimics this behavior, as follows:
 
 ## Available end points
 
-- [Sigrid API documentation](#sigrid-api-documentation)
-  - [General usage](#general-usage)
-    - [Including deactivated and/or excluded systems](#including-deactivated-andor-excluded-systems)
-  - [Available end points](#available-end-points)
-    - [Maintainability ratings](#maintainability-ratings)
-    - [Security and reliability findings](#security-and-reliability-findings)
-    - [Vulnerable libraries in Open Source Health](#vulnerable-libraries-in-open-source-health)
-    - [Architecture quality ratings](#architecture-quality-ratings)
-    - [System metadata](#system-metadata)
-    - [Metadata fields](#metadata-fields)
-    - [System lifecycle management](#system-lifecycle-management)
-    - [System objectives](#system-objectives)
-  - [Contact and support](#contact-and-support)
+* [Maintainability ratings](#maintainability-ratings)
+* [Security and reliability findings](#security-and-reliability-findings)
+* [Vulnerable libraries in Open Source Health](#vulnerable-libraries-in-open-source-health)
+* [Architecture quality ratings](#architecture-quality-ratings)
+* [System metadata](#system-metadata)
+* [System lifecycle management](#system-lifecycle-management)
+* [System objectives](#system-objectives)
 
 ### Maintainability ratings
 
