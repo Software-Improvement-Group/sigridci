@@ -509,7 +509,7 @@ class SigridCiRunnerTest(TestCase):
 
         self.assertTrue(1 in raised.exception.args)
         self.assertEqual(UploadLog.history,
-            ["System i-am-not-active has been deactivated (HTTP status 410 for /analysis-results/sigridci/aap/aap-i-am-not-active/v1/ci)"])
+            ["System i-am-not-active has been deactivated (HTTP status 410 for /analysis-results/sigridci/aap/i-am-not-active/v1/ci)"])
 
     def createTempFile(self, dir, name, contents):
         with open(f"{dir}/{name}", "w") as fileRef:
@@ -538,7 +538,7 @@ class MockApiClient(SigridApiClient):
 
         if path.endswith("/sigridci/aap/i-am-not-active/v1/ci"):
             # Mock a HTTP 410.
-            raise urllib.error.HTTPError(path, 410, "System aap-i-am-not-active has been deactivated", {}, StringIO(""))
+            raise urllib.error.HTTPError(path, 410, "System i-am-not-active has been deactivated", {}, StringIO(""))
 
         defaultResponse = {"ciRunId" : "123", "uploadUrl" : "dummy"}
         return self.responses.get(path, defaultResponse)
