@@ -499,7 +499,7 @@ class SigridCiRunnerTest(TestCase):
     def testExitWhenSystemIsNotActive(self):
         self.createTempFile(self.tempDir, "a.py", "print(123)")
 
-        self.options.system = "inactive"
+        self.options.system = "aap-i-am-not-active"
 
         apiClient = MockApiClient(self.options)
         runner = SigridCiRunner(self.options, apiClient)
@@ -509,7 +509,7 @@ class SigridCiRunnerTest(TestCase):
 
         self.assertTrue(1 in raised.exception.args)
         self.assertEqual(UploadLog.history,
-            ["System inactive has been deactivated (HTTP status 410 for /analysis-results/sigridci/aap/inactive/v1/ci)"])
+            ["System inactive has been deactivated (HTTP status 410 for /analysis-results/sigridci/aap/aap-i-am-not-active/v1/ci)"])
 
     def createTempFile(self, dir, name, contents):
         with open(f"{dir}/{name}", "w") as fileRef:
