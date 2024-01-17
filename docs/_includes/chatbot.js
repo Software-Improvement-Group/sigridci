@@ -11,7 +11,7 @@ function sendMessageToServer(message) {
     var newMessageDiv = document.createElement('div');
     var messagesContainer = document.getElementById('chatbot-messages');
     messagesContainer.appendChild(newMessageDiv);
-    displayMessage(newMessageDiv, "User: "+message);
+    displayMessage(newMessageDiv, messagesContainer,"User: "+message);
 
     // Show typing indicator
     document.getElementById('chatbot-typing').style.display = 'block';
@@ -24,6 +24,11 @@ function sendMessageToServer(message) {
         body: JSON.stringify({ message: message, history: [] }),
     })
         .then(async response => {
+            var newMessageDiv = document.createElement('div');
+            var messagesContainer = document.getElementById('chatbot-messages');
+            messagesContainer.appendChild(newMessageDiv);
+            displayMessage(newMessageDiv, messagesContainer,"SigridBot: ");
+
             const reader = response.body.getReader();
             while (true) {
                 await new Promise(resolve => setTimeout(resolve, 80));
@@ -31,7 +36,7 @@ function sendMessageToServer(message) {
                 const {done, value} = await reader.read();
                 if (done) break;
                 console.log(new TextDecoder().decode(value));
-                displayMessage(newMessageDiv, new TextDecoder().decode(value));
+                displayMessage(newMessageDiv, messagesContainer, new TextDecoder().decode(value));
                 // Process each chunk of data here
             }
         })
@@ -44,9 +49,10 @@ function sendMessageToServer(message) {
         });
 }
 
-function displayMessage(newMessageDiv, message) {
+function displayMessage(newMessageDiv,messagesContainer, message) {
     newMessageDiv.textContent += message;
+    newMessageDiv.textContent += '\n';
 
     // Scroll to the latest message
-    //messagesContainer.scrollTop = messagesContainer.scrollHeight;
+    messagesContainer.scrollTop = messagesContainer.scrollHeight;
 }
