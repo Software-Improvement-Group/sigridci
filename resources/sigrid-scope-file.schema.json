@@ -360,7 +360,8 @@
         }
       },
       "additionalProperties": false,
-      "required": ["enabled", "id"]
+      "required": ["enabled", "id"],
+      "description": "Deprecated, this option is not intended for self scoping and will be removed"
     },
     
     "architecture": {

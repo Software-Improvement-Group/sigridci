@@ -50,6 +50,7 @@ Sigrid's REST API mimics this behavior, as follows:
 * [Maintainability ratings](#maintainability-ratings)
 * [Security and reliability findings](#security-and-reliability-findings)
 * [Vulnerable libraries in Open Source Health](#vulnerable-libraries-in-open-source-health)
+* [Architecture quality ratings](#architecture-quality-ratings)
 * [System metadata](#system-metadata)
 * [System lifecycle management](#system-lifecycle-management)
 * [System objectives](#system-objectives)
@@ -63,7 +64,7 @@ Maintainability ratings for a given customer are available via three endpoints:
 
 The parameter `{customer}` refers to your Sigrid account name. 
 
-<details>
+<details markdown="1">
   <summary>Example response</summary>
 
 ```json
@@ -85,6 +86,7 @@ The parameter `{customer}` refers to your Sigrid account name.
     ]
 }
 ```
+
 </details>
 
 The top-level `maintainability` and `maintainabilityDate` refer to the *current* state of each system. The `allRatings` array contains a list of all *historic* measurements, which can be used for reporting or trend information.
@@ -100,7 +102,7 @@ Sigrid's REST API provides two endpoints to get security or reliability findings
 
 The parameters `{customer}` and `{system}` refer to your Sigrid account name and system ID respectively. 
 
-<details>
+<details markdown="1">
   <summary>Example response</summary>
 
 ```json
@@ -135,6 +137,7 @@ The parameters `{customer}` and `{system}` refer to your Sigrid account name and
     }
 ]
 ```
+
 </details>
 
 ### Vulnerable libraries in Open Source Health
@@ -147,15 +150,17 @@ The path parameters `{customer}` and `{system}` refer to your Sigrid account nam
 - `?vulnerable=false` or no query parameter: the endpoint returns the full list of third-party libraries detected by Sigrid for the given customer/system(s), including lists of known vulnerabilities per library if any. 
 - `?vulnerable=true`: the endpoint returns only those third-party libraries detected by Sigrid for the given customer/system(s) that have at least one known vulnerability. 
 
-The response format is based on the CycloneDX format for an [SBOM (software bill of materials)](https://en.wikipedia.org/wiki/Software_bill_of_materials). 
+The response format is based on the CycloneDX (version 1.5) format for an [SBOM (software bill of materials)](https://en.wikipedia.org/wiki/Software_bill_of_materials). 
 
-<details>
+<details markdown="1">
   <summary>Example response for a single system</summary>
+
+Mimetype: `application/vnd.cyclonedx+json`
 
 ```json
 {
     "bomFormat": "CycloneDX",
-    "specVersion": "1.4",
+    "specVersion": "1.5",
     "version": 1,
     "metadata": {
         "timestamp": "2022-03-17T09:58:34Z",
@@ -178,26 +183,44 @@ The response format is based on the CycloneDX format for an [SBOM (software bill
             "name": "yui",
             "version": "2.8.0r4",
             "purl": "pkg:npm/yui@2.8.0r4",
+            "properties" : [
+                {
+                    "name" : "sigrid:risk:freshness",
+                    "value" : "HIGH"
+                }
+            ],
             "type": "library",
-            "bom-ref": "pkg:npm/yui@2.8.0r4"
+            "bom-ref": "pkg:npm/yui@2.8.0r4",
+            "evidence" : {
+                "occurrences" : [
+                    {
+                        "location" : "foo/package.json"
+                    }
+                ]
+            }
         }
     ],
     "vulnerabilities": [
         {
-            "bom-ref": "pkg:npm/yui@2.8.0r4",
             "id": "CVE-2010-4710",
             "ratings": [
                 {
                     "score": 4.3,
                     "severity": "medium",
-                    "method": "CVSSv3"
+                    "method": "CVSSv2"
                 }
             ],
-            "description": "Cross-site Scripting"
+            "description": "Cross-site Scripting",
+            "affects" : [
+                {
+                    "ref" : "pkg:npm/yui@2.8.0r4"
+                }
+            ]
         }
     ]
 }
 ```
+
 </details>
 
 The endpoint that returns third-party vulnerabilities for all systems for the given customer returns an array of SBOMs, one for each system as follows:
@@ -216,7 +239,77 @@ The endpoint that returns third-party vulnerabilities for all systems for the gi
 }
 ```
 
+The `properties` member of elements of the `components` array is an array of name/value pairs. Currently, this array
+may have up to 12 items, as detailed in the table below. Note that the value of a property can never be `null` according
+to the CycloneDX specification. Consequently, if Sigrid cannot determine the value of a property for whatever reason,
+it is simply missing from the `properties` array.
+
+| Name                        | Description                                                                      |
+|-----------------------------|----------------------------------------------------------------------------------|
+| `sigrid:risk:vulnerability` | Vulnerability risk (one of `NONE`, `LOW`, `MEDIUM`, `HIGH`)                      |
+| `sigrid:risk:legal`         | Legal (license) risk (one of `NONE`, `LOW`, `MEDIUM`, `HIGH`)                    |
+| `sigrid:risk:freshness`     | Freshness risk (one of `NONE`, `LOW`, `MEDIUM`, `HIGH`)                          |
+| `sigrid:risk:activity`      | Activity risk (one of `NONE`, `LOW`, `MEDIUM`, `HIGH`)                           |        
+| `sigrid:risk:stability`     | Stability risk (one of `NONE`, `LOW`, `MEDIUM`, `HIGH`)                          |
+| `sigrid:risk:management`    | Dependency management risk (one of `NONE`, `LOW`, `MEDIUM`, `HIGH`)              |
+| `sigrid:releaseDate`        | Release date of the detected version (ISO 8601: YYYY-MM-DD)                      |
+| `sigrid:next:version`       | Version number of the next version                                               |
+| `sigrid:next:releaseDate`   | Release date of the next version (ISO 8601: YYYY-MM-DD)                          |
+| `sigrid:latest:version`     | Version number of the latest version                                             |
+| `sigrid:latest:releaseDate` | Release date of the latest version (ISO 8601: YYYY-MM-DD)                        |
+| `sigrid:transitive`         | Indicates whether the dependency is transitive or not (`TRANSITIVE` or `DIRECT`) |
+
 More information on the SBOM format and the various fields is available from the [CycloneDX SBOM specification](https://github.com/CycloneDX/specification).
+
+### Architecture quality ratings
+
+Arcitecture quality ratings for a given customer are available via two endpoints:
+- `GET https://sigrid-says.com/rest/analysis-results/api/v1/architecture-quality/{customer}`: get architecture quality ratings for all systems of the given customer the current user has access to.
+- `GET https://sigrid-says.com/rest/analysis-results/api/v1/architecture-quality/{customer}/{system}`: get architecture quality ratings of the given system of the given customer.
+
+The path parameters `{customer}` and `{system}` refer to your Sigrid account name and system ID respectively.
+
+<details markdown="1">
+  <summary>Example system-level response format</summary>
+
+The response format of the system-level endpoint is as follows:
+
+```json
+{
+  "customer" : "my-sigrid-account-name",
+  "system" : "my-system-name",
+  "snapshotDate" : "2022-01-31",
+  "analysisDate" : "2022-02-28",
+  "modelVersion" : "1.4",
+  "ratings" : {
+    "architecture" : 3.84,
+    "subcharacteristics" : {
+      "dataAccess" : 3.5,
+      "technologyStack" : 4.18,
+      "evolution" : 3.71,
+      "communication" : 3.83,
+      "structure" : 4.07,
+      "knowledge" : 3.74
+    },
+    "systemProperties" : {
+      "componentCoupling" : 2.86,
+      "codeReuse" : 5.38,
+      "knowledgeDistribution" : 3.24,
+      "boundedEvolution" : 4.21,
+      "componentFreshness" : 4.23,
+      "communicationCentralization" : 3.18,
+      "technologyPrevalence" : 4.18,
+      "codeBreakdown" : 3.27,
+      "componentCohesion" : 4.46,
+      "dataCoupling" : 3.5
+    }
+  }
+}
+```
+</details>
+
+The customer-level endpoint retuns an array with each element identical to the system-level response.
+
 
 ### System metadata
 
@@ -227,7 +320,7 @@ System metadata can be viewed and updated using the following three endpoints:
 
 The path parameters `{customer}` and `{system}` refer to your Sigrid account name and system ID respectively.
 
-<details>
+<details markdown="1">
   <summary>Example system-level `GET` and `PATCH` response format</summary>
 
 The response format of both system-level endpoints (`GET` and `PATCH`) is as follows:
@@ -251,9 +344,10 @@ The response format of both system-level endpoints (`GET` and `PATCH`) is as fol
   "technologyCategory": "MODERN_GENERAL_PURPOSE"
 }
 ```
+
 </details>
 
-<details>
+<details markdown="1">
   <summary>Example customer-level response</summary>
 
 The response format of the customer-level endpoint (`GET https://sigrid-says.com/rest/analysis-results/api/v1/system-metadata/{customer}`) is as follows:
@@ -281,6 +375,7 @@ The response format of the customer-level endpoint (`GET https://sigrid-says.com
   }
 ]
 ```
+
 </details>
 
 All properties can be null except for `supplierNames` and `teamNames` (which are always an array, but possibly empty), and `isDevelopmentOnly` (which is always true or false).

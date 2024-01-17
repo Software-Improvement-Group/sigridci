@@ -23,6 +23,19 @@ What do you need:
  `mx:modelrepository:repo:read Read access to Team Server Git repositories and Team Server API`  
 - For scalability you can create a PAT for a system users that has access to all your projects.
 
+## how to update an expired Mendix Personal Acces Token for an onboarded Mendix project
+
+You onboarded a system in QSM but after a while you see that there are no new analyses in the dashboard? The most common reason is that the Personal Acces Token that was used to onboard the Mendix project in QSM has become invalid. This happens when the developer who created the Personal Acces Token no longer is part of the team.
+
+- create a new [Personal Acces Token](https://docs.mendix.com/apidocs-mxsdk/mxsdk/set-up-your-pat/).
+When creating the PAT please choose these read only security settings:
+ `mx:modelrepository:repo:read Read access to Team Server Git repositories and Team Server API`
+- update the new token in Sigrid by re-running [Scripted: Onboarding via a POST command to the Sigrid API](../sigridci-integration/mendix-teamserver.md).
+
+
+
+
+
 ## Contact and support
 
 Feel free to contact [SIG's support department](mailto:support@softwareimprovementgroup.com) for any questions or issues you may have after reading this document, or when using Sigrid or Sigrid CI. Users in Europe can also contact us by phone at +31 20 314 0953.
