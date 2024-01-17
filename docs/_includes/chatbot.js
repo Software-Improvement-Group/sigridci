@@ -8,7 +8,11 @@ document.getElementById('chatbot-send').addEventListener('click', function() {
 
 function sendMessageToServer(message) {
     console.log("Sending....")
-    displayMessage("User: "+message);
+    var newMessageDiv = document.createElement('div');
+    var messagesContainer = document.getElementById('chatbot-messages');
+    messagesContainer.appendChild(newMessageDiv);
+    displayMessage(newMessageDiv, "User: "+message);
+
     // Show typing indicator
     document.getElementById('chatbot-typing').style.display = 'block';
     // Example POST request with Fetch API
@@ -19,10 +23,17 @@ function sendMessageToServer(message) {
         },
         body: JSON.stringify({ message: message, history: [] }),
     })
-        .then(response => response.json())
-        .then(data => {
-            console.log(data);
-            displayMessage("SigridBot: "+data.reply);
+        .then(async response => {
+            const reader = response.body.getReader();
+            while (true) {
+                await new Promise(resolve => setTimeout(resolve, 80));
+
+                const {done, value} = await reader.read();
+                if (done) break;
+                console.log(new TextDecoder().decode(value));
+                displayMessage(newMessageDiv, new TextDecoder().decode(value));
+                // Process each chunk of data here
+            }
         })
         .catch((error) => {
             console.error('Error:', error);
@@ -33,12 +44,9 @@ function sendMessageToServer(message) {
         });
 }
 
-function displayMessage(message) {
-    var messagesContainer = document.getElementById('chatbot-messages');
-    var newMessageDiv = document.createElement('div');
-    newMessageDiv.textContent = message;
-    messagesContainer.appendChild(newMessageDiv);
+function displayMessage(newMessageDiv, message) {
+    newMessageDiv.textContent += message;
 
     // Scroll to the latest message
-    messagesContainer.scrollTop = messagesContainer.scrollHeight;
+    //messagesContainer.scrollTop = messagesContainer.scrollHeight;
 }
