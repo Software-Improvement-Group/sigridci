@@ -117,7 +117,9 @@ class SigridApiClient:
         elif self.options.runMode == RunMode.FEEDBACK_AND_PUBLISH:
             path += "/publish"
 
-        if self.subsystem:
+        if self.subsystem and self.options.convert:
+            path += "?subsystem=" + urllib.parse.quote_plus(self.subsystem) + "&convert=" + urllib.parse.quote_plus(self.options.convert)
+        elif self.subsystem:
             path += "?subsystem=" + urllib.parse.quote_plus(self.subsystem)
         elif self.options.convert:
             path += "?convert=" + urllib.parse.quote_plus(self.options.convert)
