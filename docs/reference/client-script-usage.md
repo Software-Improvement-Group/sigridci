@@ -57,10 +57,10 @@ Sigrid CI can run in different "modes", depending on your [development process a
 So when to use these options:
 
 - If you want feedback on your new/changed code, *without* publishing your code to Sigrid, run the script without the publish options. This is suitable for a workflow with pull requests, as you can use it to receive feedback on your pull request.
-- If you want to publish your code to Sigrid, *and* you want Sigrid CI to give your feedback on your new/changed code, use the `--publish` option. This is suitable for people that use a workflow without pull requests where everyone is making changes to the main/master branch.
-- If you want to publish your code to Sigrid, but you do *not* want feedback on your new/changed code, use the `--publishonly` option.
-  - This is suitable for merge commits to the main/master branch. In that situation you don't need feedback, since you *already had* your feedback in the pull request and there is no reason to receive the same feedback again when merging your changes. 
-  - Moreover, this publishes your code to Sigrid in a fire-and-forget fashion, which is faster since the script will not wait for the analysis to complete and will immediately exit. This is suitable for the main/master branch scenario described above, but can also be used in other situation where the fire-and-forget behavior is preferred.
+- If you want to publish your code to Sigrid, *and* you want Sigrid CI to give your feedback on your new/changed code, use the `--publish` option. This is suitable for people who use a workflow without pull requests where everyone is making changes to the main/master branch.
+- If you want to publish your code to Sigrid, but do *not* want feedback on your new/changed code, use the `--publishonly` option.
+  - This is suitable for merge commits to the main/master branch. In that situation, you don't need feedback, since you *already had* your feedback in the pull request and there is no reason to receive the same feedback again when merging your changes. 
+  - Moreover, this publishes your code to Sigrid in a fire-and-forget fashion, which is faster since the script will not wait for the analysis to complete and will immediately exit. This is suitable for the main/master branch scenario described above, but can also be used in other situations where the fire-and-forget behavior is preferred.
 
 ## Defining quality objectives
 
@@ -72,15 +72,17 @@ By default, Sigrid CI will use the maintainability target you've defined for you
 
 <img src="../images/sigrid-objectives.png" width="500" />
 
-* **Default setting:** If you do not set any objective, Sigrid CI will use a default target of 3.5 stars. This is the lower threshold of the better-than-average 4-star range. Four star code quality is the level that SIG recommends for systems with modern technologies in active development.
-* **Specific objective for new- and changed code**: If you have set a specific objective for new- and changed code, that objective will automatically be used for Sigrid CI (since Sigrid CI focuses on giving feedback on new/changed code specifically). Given that you may expect 4 star quality for modern system development, that could be a target for newly added code.
-* **Same objective for system/new/changed code quality**: If you have set a maintainability rating objective, but not specifically one for new- and changed code, your "normal" maintainability objective will be used.
-
-You can find more information on how to define, track, and use Sigrid objectives in the [objectives section](../capabilities/objectives.md).
+* **Default setting:** If you do not set any objective, Sigrid CI will use a default target of 3.5 stars. This is the lower threshold of the better-than-average 4-star range. Four-star code quality is the level that SIG recommends for systems with modern technologies in active development.
 
 ### Option 2: Use a maintainability target in Sigrid CI that is different from the target in Sigrid
 
-Using the `--targetquality` parameter allows you to override the maintainability target defined in Sigrid. For example, `--targetquality 4.0` will require pull requests to be 4.0 stars even if the system-level maintainability target defined in Sigrid is 3.5 stars. You would normally use the same target in both, but in some situations you might want to be more strict or more lenient for pull requests. 
+Using the `--targetquality` parameter allows you to override the maintainability target defined in Sigrid. For example, `--targetquality 4.0` will require pull requests to be 4.0 stars even if the system-level maintainability target defined in Sigrid is 3.5 stars. You would normally use the same target in both, but in some situations, you might want to be more strict or more lenient for pull requests. 
+
+### Additional information on configuring Sigrid CI
+
+You can find more details on how to configure Sigrid CI [here](../sigridci-integration/github-actions.md).
+
+To see how Sigrid CI provides feedback directly in your pull request, review [these instructions](../sigridci-integration/github-actions.md#usage).
 
 ## Contact and support
 
