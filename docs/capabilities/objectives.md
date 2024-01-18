@@ -14,8 +14,17 @@ Portfolio Objective:  A type of objective that targets a group of systems based 
 
 System Objective: A type of objective specific to an individual system within a portfolio that does not follow the general rule. When an objective is set at system level, the system no longer follows the objective defined at the portfolio-level.
 
+## Setting Objectives
 
-// TODO SETTING
+You can set Portfolio Objectives by selecting the Objectives tab from the menu bar.  
+
+<img src="../images/setting-portfolio-objectives.png" width="675" />
+
+and to Set System Objectives, navigate to your desired system's overview page, and Click on Modify Objectives. You can find your desired system from the treemap or search the column under the Treemap.
+
+## How to set Objectives
+
+Find out more in the section [how to define objectives](../capabilities/portfolio-objectives.md). 
 
 ## Comparing status and objectives in the System Overview page
 
@@ -27,7 +36,7 @@ Objectives show the evolution of the system quality over time. Thereby they are 
 
 ## Understanding Objectives in detail: System Overview page
 
-Objectives can be set as below in the *System Overview* page:
+Objectives can be set as below on the *System Overview* page:
 
 <img src="../images/objectives-system.png" width="600" />
 
