@@ -6,15 +6,16 @@
 
 Objectives can be set per different quality characteristics and levels of detail. Examples are: a range of desired *Maintainability*, desired *New code quality*, minimum *Test code ratio*, or the maximum number of *Medium risk vulnerabilities* in libraries (*Open Source Health*). 
 
+## Objectives
 
-## Setting Objectives
-<img src="../images/settings-gear.png" class="inline" /> You can set *Objectives* by using the settings gear button, in the menu under *Objectives*. 
+You can set two types of Objectives by using the settings gear button, in the menu under Objectives. one at portfolio level and one at system level. A system can have both portfolio and system-level objectives. 
 
-<img src="../images/system-settings-menu-objectives.png" width="150" />
+Portfolio Objective:  A type of objective that targets a group of systems based on similar metadata, aiming to provide an efficient and user-friendly experience that removes the need to set objectives individually for each system and better prioritization. (General rule).
 
-They can be set as such:
+System Objective: A type of objective specific to an individual system within a portfolio that does not follow the general rule. When an objective is set at system level, the system no longer follows the objective defined at the portfolio-level.
 
-<img src="../images/system-objectives-settings.png" width="200" />
+
+// TODO SETTING
 
 ## Comparing status and objectives in the System Overview page
 
