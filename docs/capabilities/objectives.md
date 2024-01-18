@@ -40,10 +40,21 @@ Objectives can be set as below on the *System Overview* page:
 
 <img src="../images/objectives-system.png" width="600" />
 
-The different columns mean the following:
+There are six different columns which mean the following:
 
-1. *Status* column (1): The *Status* tells you whether the target for an objective is being met in the currently analyzed snapshot.
-The green checkmark shows that the test code ratio is at least 50%.
-2. *Capability* column (2): A *Capability* can be understood as a desirable code quality characteristic where an objective falls into. 
-3. *Target* column (3): The *Target* is the desired measurable value of the objective. It is important to revisit this periodically, because targets will likely vary over time. A likely cause for a target change is the system's *Lifecycle*. Similarly, *Business criticality* typically also is a determinant. 
-4. *Delta* column (4): The delta on the image above now shows an "=" sign, but it could also show an upwards arrow or a downwards arrow. This shows the difference with the previously analyzed snapshot.
+1. *Status* checkmark: The leftmost checkmark is a visual indicator that tells you whether the target for an objective is being met in the currently analyzed snapshot.
+The green checkmark shows that the test code ratio is at least 80% and that the maintainability rating target is also being met.
+2. *Capability* column: A *Capability* can be understood as a desirable code quality characteristic where an objective falls into.
+3. *Type* column: The *Type* indicates the type of the objective which is dependent on the capability. Examples of types of objectives include: Maintainability, Dependency Upgrade Period, Test Code Ratio, etc. 
+4. *Target* column: The *Target* is the desired measurable value of the objective. It is important to revisit this periodically, because targets will likely vary over time. A likely cause for a target change is the system's *Lifecycle*. Similarly, *Business criticality* typically also is a determinant. 
+5. *Delta* column: The delta can have several values: Achieved, Improved, Unchanged, Unknown and Worsened.
+6. *Level* column: The level at which an objective is being applied: it can either be a specific system-level objective override, that only applies to a specific system (System in the table) or it can be a portfolio-level objective that applies to all systems in a portfolio.
+
+### Detailed information about the Delta column
+
+Objectives are measured for a specific code snapshot, which will typically fall within the selected period in the UI. The delta column attempts to present a comprehensive overview of the relationship between the delta and the state of an objective at the start and the end of the period.
+The relationship between these three values is what defines the value that gets displayed in the column, according to the table below:
+
+<img src="../images/delta-targets-relationship.png" width="680" />
+
+ 
