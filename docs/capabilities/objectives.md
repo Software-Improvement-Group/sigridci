@@ -8,7 +8,7 @@ Objectives can be set per different quality characteristics and levels of detail
 
 ## Objectives
 
-You can set two types of Objectives by using the settings gear button, in the menu under Objectives. one at portfolio level and one at system level. A system can have both portfolio and system-level objectives. 
+You can set two types of Objectives in the menu under Objectives. Portfolio-level or system-level objectives. A system can have both portfolio and system-level objectives. 
 
 Portfolio Objective:  A type of objective that targets a group of systems based on similar metadata, aiming to provide an efficient and user-friendly experience that removes the need to set objectives individually for each system and better prioritization. (General rule).
 
