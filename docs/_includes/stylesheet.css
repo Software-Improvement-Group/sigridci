@@ -291,3 +291,52 @@ sig-toc .h4 {
 .awesomplete .visually-hidden {
     display: none;
 }
+
+#chatbot {
+    position: fixed;
+    bottom: 10px;
+    right: 10px;
+    width: 300px;
+    background-color: white;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    padding: 10px;
+    box-shadow: 0 0 10px rgba(0,0,0,0.2);
+}
+
+#chatbot-messages {
+    height: 280px;
+    overflow-y: auto;
+    margin-bottom: 10px;
+}
+
+#chatbot-input {
+    width: calc(100% - 70px);
+}
+
+#chatbot-send {
+    width: 50px;
+}
+
+#chatbot-typing {
+    text-align: center;
+}
+
+.dot {
+    height: 10px;
+    width: 10px;
+    margin: 0 2px;
+    background-color: #333;
+    border-radius: 50%;
+    display: inline-block;
+    animation: typing 1.4s infinite ease-in-out;
+}
+
+.dot:nth-child(1) { animation-delay: -0.32s; }
+.dot:nth-child(2) { animation-delay: -0.16s; }
+
+@keyframes typing {
+    0%, 80%, 100% { transform: scale(0); }
+    40% { transform: scale(1.0); }
+}
+
