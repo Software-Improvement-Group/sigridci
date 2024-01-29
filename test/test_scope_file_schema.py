@@ -34,6 +34,7 @@ class ScopeFileSchemaTest(TestCase):
             "description", 
             "properties",
             "required",
+            "not",
             "title", 
             "type"
         ]
@@ -64,3 +65,17 @@ class ScopeFileSchemaTest(TestCase):
             jsonschema.validate(instance=parsedScope, schema=self.schema)
         except jsonschema.ValidationError as e:
             self.assertEqual("$.languages[1]", e.json_path)
+
+    def testDisallowedSection(self):
+        scope = """
+                languages:
+                  - Java
+                checkmarx:
+                  enabled: true
+                """
+
+        try:
+            parsedScope = yaml.load(scope, Loader=yaml.FullLoader)
+            jsonschema.validate(instance=parsedScope, schema=self.schema)
+        except jsonschema.ValidationError as e:
+            self.assertTrue(e.message.endswith("should not be valid under {'required': ['checkmarx']}"))
