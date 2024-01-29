@@ -65,9 +65,9 @@ if __name__ == "__main__":
         sys.exit(1)
 
     options = PublishOptions(
-        partner=args.partner,
-        customer=args.customer,
-        system=args.system,
+        partner=args.partner.lower(),
+        customer=args.customer.lower(),
+        system=args.system.lower(),
         sourceDir="/tmp",
         runMode=RunMode.FEEDBACK_ONLY,
         targetRating=args.targetquality,
