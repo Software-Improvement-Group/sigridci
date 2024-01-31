@@ -94,11 +94,8 @@ The top-level `maintainability` and `maintainabilityDate` refer to the *current*
 ### Security and reliability findings
 
 Sigrid's REST API provides two endpoints to get security or reliability findings for a system:
-* Security findings: `GET https://sigrid-says.com/rest/analysis-results/api/v1/security-findings/
-  {customer}/{system}`
-* Reliability findings: `GET https://sigrid-says.
-  com/rest/analysis-results/api/v1/reliability-findings/{customer}/
-  {system}`
+* Security findings: `GET https://sigrid-says.com/rest/analysis-results/api/v1/security-findings/{customer}/{system}`
+* Reliability findings: `GET https://sigrid-says.com/rest/analysis-results/api/v1/reliability-findings/{customer}/{system}`
 
 The parameters `{customer}` and `{system}` refer to your Sigrid account name and system ID respectively. 
 
