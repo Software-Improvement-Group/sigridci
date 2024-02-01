@@ -8,7 +8,15 @@ There are multiple ways to upload your source code. The best and recommended way
 
 Integrating Sigrid CI into your pipeline allows you to automatically publish your source code to Sigrid after every change. It also allows you to receive feedback from Sigrid within your development environment.
 
-This documentation includes instructions for how you can integrate Sigrid CI into your development environment. See the "Sigrid CI" section in the menu for an overview of supported platforms. The documentation also explains how Sigrid CI fits into various [development processes and workflows](../sigridci-integration/development-workflows.md).
+### The general steps to start with CI:
+
+- SIG will create an empty Sigrid and a first user per customer.
+- The first user needs to create a [PAT token](../organization-integration/authentication-tokens.md).
+- Based on your environment the respective Sigrid CI jobs will need to configured with the above token.
+
+See the "Sigrid CI" section in the menu for an overview of supported platforms. The documentation also explains how Sigrid CI fits into various [development processes and workflows](../sigridci-integration/development-workflows.md).
+
+
 
 ## Uploading source code using SFTP
 
