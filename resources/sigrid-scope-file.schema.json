@@ -2,7 +2,7 @@
   "$id": "https://json.schemastore.org/sigrid-scope-file.schema.json",
   "$schema": "http://json-schema.org/draft-07/schema#",
   "additionalProperties": true,
-  
+
   "definitions": {
     "organization": {
       "type": "string",
@@ -248,9 +248,9 @@
       "additionalProperties": true
     }
   },
-  
+
   "description": "Analysis scope configuration file used by Sigrid (sigrid-says.com)",
-  
+
   "properties": {
     "default_excludes": {
       "type": "boolean",
@@ -278,7 +278,7 @@
       "$ref": "#/definitions/model",
       "description": "SIG Maintainability Model that should be used for the analysis, defaults to latest."
     },
-    
+
     "alerts": {
       "type": "object",
       "properties": {
@@ -297,7 +297,7 @@
       },
       "additionalProperties": false
     },
-    
+
     "dependencychecker": {
       "type": "object",
       "properties": {
@@ -335,35 +335,7 @@
       "additionalProperties": false,
       "required": []
     },
-    
-    "checkmarx": {
-      "type": "object",
-      "properties": {
-        "enabled": {
-          "type": "boolean",
-          "description": "Indicates that this system should be scanned for vulnerabilities using Checkmarx."
-        },
-        "id": {
-          "anyOf": [
-            {
-              "type": "integer"
-            },
-            {
-              "type": "string"
-            }
-          ],
-          "description": "Unique ID to identify the Checkmarx project."
-        },
-        "username": {
-          "type": "string",
-          "description": "Your Checkmarx username."
-        }
-      },
-      "additionalProperties": false,
-      "required": ["enabled", "id"],
-      "description": "Deprecated, this option is not intended for self scoping and will be removed"
-    },
-    
+
     "architecture": {
       "type": "object",
       "properties": {
@@ -518,6 +490,7 @@
     }
   },
   "required": ["languages"],
+  "not": {"required": ["checkmarx"]},
   "title": "Sigrid scope configuration file",
   "type": "object"
 }
