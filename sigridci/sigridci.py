@@ -38,6 +38,7 @@ def parsePublishOptions(args):
         includeHistory=True,
         showUploadContents=args.showupload,
         targetRating=parseTarget(args.targetquality),
+        outputDir=args.out,
         sigridURL=args.sigridurl
     )
 
@@ -71,6 +72,7 @@ if __name__ == "__main__":
     parser.add_argument("--exclude", type=str, default="", help="Comma-separated list of files/directories to exclude.")
     parser.add_argument("--include", type=str, default="", help="Comma-separated list of files/directories to include.")
     parser.add_argument("--showupload", action="store_true", help="Logs the contents of the upload published to Sigrid.")
+    parser.add_argument("--out", type=str, default="sigrid-ci-output", help="Output directory for Sigrid CI feedback.")
     parser.add_argument("--sigridurl", type=str, default="https://sigrid-says.com", help=SUPPRESS)
     # This option is now enabled by default, using an anonymized history,
     # but we leave it here to avoid breaking people's configuration.

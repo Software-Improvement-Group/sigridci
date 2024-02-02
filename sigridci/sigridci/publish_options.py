@@ -38,6 +38,7 @@ class PublishOptions:
     showUploadContents: bool = False
     convert: str = None
     targetRating: Union[float, str] = "sigrid"
+    outputDir: str = "sigrid-ci-output"
     sigridURL: str = "https://sigrid-says.com"
     partner: str = "sig"
 

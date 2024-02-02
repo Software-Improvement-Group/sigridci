@@ -46,6 +46,10 @@ inputs:
   convert:
     description: "Convert upload format. Only required for certain technologies, see Sigrid documentation for details."
     required: false
+  out:
+    description: "Output directory for Sigrid CI feedback."
+    required: false
+    default: "sigrid-ci-output"
     
   # Sigrid metadata
   displayname:

@@ -28,7 +28,6 @@ class AsciiArtReport(Report):
     LINE_WIDTH = 70
 
     def __init__(self, output=sys.stdout, ansiColors=True):
-        super().__init__()
         self.output = output
         self.ansiColors = ansiColors
 

@@ -23,7 +23,6 @@ from .report import Report
 class PipelineSummaryReport(Report):
 
     def __init__(self, output=sys.stdout, ansiColors=True):
-        super().__init__()
         self.output = output
         self.ansiColors = ansiColors
 

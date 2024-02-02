@@ -30,7 +30,7 @@ class MarkdownReport(Report):
     }
 
     def generate(self, analysisId, feedback, options):
-        with open(os.path.abspath(f"{self.outputDir}/feedback.md"), "w", encoding="utf-8") as f:
+        with open(os.path.abspath(f"{options.outputDir}/feedback.md"), "w", encoding="utf-8") as f:
             markdown = self.renderMarkdown(analysisId, feedback, options)
             f.write(markdown)
 

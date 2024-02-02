@@ -28,7 +28,7 @@ class StaticHtmlReport(Report):
             template = f.read()
             template = self.renderHtmlFeedback(template, feedback, options)
 
-        reportFile = os.path.abspath(f"{self.outputDir}/index.html")
+        reportFile = os.path.abspath(f"{options.outputDir}/index.html")
         with open(reportFile, encoding="utf-8", mode="w") as f:
             f.write(template)
 

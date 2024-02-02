@@ -101,6 +101,7 @@ class MarkdownReportTest(TestCase):
 
     def testCustomOuputDirectory(self):
         tempDir = tempfile.mkdtemp()
+        self.options.outputDir = tempDir
 
         refactoringCandidates = [
             self.toRefactoringCandidate("aap", "introduced", "UNIT_SIZE", "HIGH"),
@@ -118,7 +119,6 @@ class MarkdownReportTest(TestCase):
         }
 
         report = MarkdownReport()
-        report.outputDir = tempDir
         report.generate("1234", feedback, self.options)
         markdown = report.renderMarkdown("1234", feedback, self.options)
 
