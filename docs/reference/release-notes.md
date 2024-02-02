@@ -5,7 +5,7 @@ SIG uses [continuous delivery](https://en.wikipedia.org/wiki/Continuous_delivery
 
 ### February 5, 2024
 
-- **Sigrid CI:** The output directory where Sigrid CI saves feedback is now a configurable. See the [option reference](client-script-usage.md) for details.
+- **Sigrid CI:** The output directory where Sigrid CI saves feedback is now a configurable. See the [options reference](client-script-usage.md) for details.
 
 ### January 29, 2024
 
