@@ -30,6 +30,7 @@ def parsePublishOptions(args):
         customer=args.customer.lower(),
         system=args.system.lower(),
         subsystem=args.subsystem,
+        convert=args.convert,
         runMode=parseRunMode(args),
         sourceDir=args.source,
         excludePatterns=args.exclude.split(","),
@@ -62,6 +63,7 @@ if __name__ == "__main__":
     parser.add_argument("--customer", type=str, help="Name of your organization's Sigrid account.")
     parser.add_argument("--system", type=str, help="Name of your system in Sigrid, letters/digits/hyphens only.")
     parser.add_argument("--subsystem", type=str, default="", help="Publishes your code as a subsystem within a Sigrid system.")
+    parser.add_argument("--convert", type=str, default="", help="Code conversion for specific technologies")
     parser.add_argument("--source", type=str, help="Path of your project's source code.")
     parser.add_argument("--targetquality", type=str, default="sigrid", help=SUPPRESS)
     parser.add_argument("--publish", action="store_true", help="Publishes analysis results to Sigrid.")
