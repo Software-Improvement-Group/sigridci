@@ -3,6 +3,11 @@ Sigrid release notes
 
 SIG uses [continuous delivery](https://en.wikipedia.org/wiki/Continuous_delivery), meaning that every change to Sigrid or the underlying analysis is released once our development pipeline has completed. On average, we release somewhere between 10 and 20 times per day. This page therefore doesn't list every single change, since that would quickly lead to an excessively long list of small changes. Instead, this page lists Sigrid and analysis changes that we consider noteworthy for the typical Sigrid user.
 
+### January 29, 2024
+
+- **Sigrid CI:** Sigrid CI now supports 41 additional technologies. The [technology support list](technology-support.md) has been updated to reflect the updated support.
+- **Sigrid API:** You can now also use the API to retrieve Architecture Quality ratings. Refer to the [API documentation](../integrations/sigrid-api-documentation.md#architecture-quality-ratings) for more information.
+
 ### January 15, 2024
 
 - **Objectives:** It is now possible to set portfolio objectives that consider technology, business context, lifecycle phase, and deployment type. This allows you to use Sigrid to define policies. For example, security requirements tend to be more strict for public-facing systems than for internal systems. Similarly, objectives tend to be more lenient for legacy systems, since they are approaching the end of their life cycle. You can use portfolio objectives to consider these aspects, so you can define objectives for your landscape without having to define them for every single system individually.

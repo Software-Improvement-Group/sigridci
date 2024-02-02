@@ -24,11 +24,11 @@ Finally, note the column "supported Sigrid capabilities" does not list Open Sour
 | `adabasnatural`            | Adabas Natural                                         |                      | Maintainability, Architecture           |
 | `adfxml`                   | ADF XML                                                |                      | Maintainability,                        |
 | `agilepoint`               | AgilePoint                                             |                      | Maintainability, Architecture           |
-| `altovauml`                | Altova UML                                             |                      | Maintainability, Architecture           | (8) |
-| `angularjstemplate`        | Angular Templates                                      |                      | Maintainability                         | (7) |
+| `altovauml`                | Altova UML                                             |                      | Maintainability, Architecture           | (8)   |
+| `angularjstemplate`        | Angular Templates                                      |                      | Maintainability                         | (7)   |
 | `ansible`                  | Ansible                                                |                      | Maintainability, Security               |
 | `apachecamel`              | Apache Camel                                           |                      | Maintainability, Architecture           |
-| `apex`                     | Oracle APEX                                            |                      | Maintainability, Architecture           | (8) |
+| `apex`                     | Oracle APEX                                            |                      | Maintainability, Architecture           | (8)   |
 | `aps`                      | APS                                                    |                      | Maintainability, Architecture           |
 | `applicationmaster`        | Application Master                                     |                      | Maintainability, Architecture           |
 | `ash`                      | ArtosScript (ash)                                      |                      | Maintainability, Architecture           |
@@ -36,26 +36,26 @@ Finally, note the column "supported Sigrid capabilities" does not list Open Sour
 | `aspx`                     | ASP.NET                                                |                      | Maintainability, Architecture           |
 | `assembly`                 | Assembly                                               |                      | Maintainability, Architecture           |
 | `aura`                     | Aura                                                   |                      | Maintainability, Architecture           |
-| `axway`                    | Axway                                                  |                      | Maintainability, Architecture           | (8) |
-| `axystudio`                | AxyStudio functions                                    |                      | Maintainability                         | (8) |
+| `axway`                    | Axway                                                  |                      | Maintainability, Architecture           | (8)   |
+| `axystudio`                | AxyStudio functions                                    |                      | Maintainability                         | (8)   |
 | `axyworkflow`              | AxyStudio workflows                                    |                      | Maintainability, Architecture           |
-| `baan`                     | Baan                                                   |                      | Maintainability                         | (8) |
+| `baan`                     | Baan                                                   |                      | Maintainability                         | (8)   |
 | `basic`                    | BASIC                                                  |                      | Maintainability, Architecture           |
 | `batch`                    | Batch                                                  |                      | Maintainability, Architecture           |
 | `bea`                      | Bea Weblogic                                           |                      | Maintainability, Architecture           |
 | `beanshell`                | BeanShell                                              |                      | Maintainability                         |
-| `beinformed`               | Be Informed                                            |                      | Maintainability, Architecture           | (8) |
+| `beinformed`               | Be Informed                                            |                      | Maintainability, Architecture           | (8)   |
 | `biztalk`                  | BizTalk                                                |                      | Maintainability, Architecture           |
 | `biztalkrules`             | BizTalk Rules Engine                                   |                      | Maintainability                         |
-| `blazerules`               | Blaze BRM                                              |                      | Maintainability                         | (8) |
+| `blazerules`               | Blaze BRM                                              |                      | Maintainability                         | (8)   |
 | `blueprism`                | Blue Prism                                             |                      | Maintainability, Architecture           |
-| `blueriq`                  | Blueriq flows/processes                                |                      | Maintainability, Architecture           | (8) |
-| `blueriqexpressions`       | Blueriq expressions                                    |                      | Maintainability, Architecture           | (8) |
+| `blueriq`                  | Blueriq flows/processes                                |                      | Maintainability, Architecture           | (8)   |
+| `blueriqexpressions`       | Blueriq expressions                                    |                      | Maintainability, Architecture           | (8)   |
 | `bpel`                     | BPEL                                                   |                      | Maintainability, Architecture           |
 | `bpm`                      | BPMN                                                   |                      | Maintainability, Architecture           |
 | `brail`                    | Brail                                                  |                      | Maintainability                         |
 | `bsp`                      | Bsp                                                    |                      | Maintainability, Architecture           |
-| `c`                        | C                                                      |                      | Maintainability, Architecture, Security | (1) |
+| `c`                        | C                                                      |                      | Maintainability, Architecture, Security | (1)   |
 | `cache`                    | Cache                                                  |                      | Maintainability, Architecture           |
 | `cacheobjectscript`        | Cache ObjectScript                                     |                      | Maintainability, Architecture           |
 | `ccl`                      | CCL                                                    |                      | Maintainability, Architecture           |
@@ -67,11 +67,11 @@ Finally, note the column "supported Sigrid capabilities" does not list Open Sour
 | `cobol`                    | Cobol                                                  |                      | Maintainability, Architecture           |
 | `coffeescript`             | CoffeeScript                                           |                      | Maintainability, Architecture           |
 | `coldfusion`               | ColdFusion                                             |                      | Maintainability, Architecture           |
-| `configuration`            | Configuration                                          |                      | Maintainability                         | (5) |
+| `configuration`            | Configuration                                          |                      | Maintainability                         | (5)   |
 | `coolgenc`                 | CoolGen C                                              |                      | Maintainability, Architecture           |
 | `coolgencobol`             | CoolGen Cobol                                          |                      | Maintainability, Architecture           |
 | `cordysbpm`                | Cordys BPM                                             |                      | Maintainability, Architecture           |
-| `cpp`                      | C++                                                    |                      | Maintainability, Architecture, Security | (1) |
+| `cpp`                      | C++                                                    |                      | Maintainability, Architecture, Security | (1)   |
 | `csharp`                   | C#                                                     | .NET                 | Maintainability, Architecture, Security |
 | `csp`                      | CSP                                                    |                      | Maintainability, Architecture           |
 | `css`                      | CSS                                                    |                      | Maintainability, Architecture           |
@@ -102,7 +102,7 @@ Finally, note the column "supported Sigrid capabilities" does not list Open Sour
 | `finacle`                  | Finacle                                                |                      | Maintainability, Architecture           |
 | `freeformatcobol`          | Freeformat Cobol                                       |                      | Maintainability, Architecture           |
 | `freemarker`               | Freemarker                                             |                      | Maintainability, Architecture           |
-| `fme`                      | FME                                                    |                      | Maintainability, Architecture           | (8) |
+| `fme`                      | FME                                                    |                      | Maintainability, Architecture           | (8)   |
 | `fortran`                  | FORTRAN                                                |                      | Maintainability, Architecture           |
 | `gensym`                   | Gensym                                                 |                      | Maintainability, Architecture           |
 | `grpc`                     | gRPC                                                   |                      | Maintainability, Architecture           |
@@ -110,13 +110,13 @@ Finally, note the column "supported Sigrid capabilities" does not list Open Sour
 | `gosu`                     | Gosu                                                   |                      | Maintainability, Architecture, Security |
 | `groovy`                   | Groovy                                                 |                      | Maintainability, Architecture, Security |
 | `gsp`                      | GSP                                                    |                      | Maintainability, Architecture           |
-| `guidefinition`            | GUI Definition                                         |                      | Maintainability                         | (5) |
+| `guidefinition`            | GUI Definition                                         |                      | Maintainability                         | (5)   |
 | `gupta`                    | Gupta                                                  |                      | Maintainability, Architecture           |
 | `haml`                     | Haml                                                   |                      | Maintainability, Architecture           |
-| `html`                     | HTML                                                   |                      | Maintainability, Architecture           | (7) |
+| `html`                     | HTML                                                   |                      | Maintainability, Architecture           | (7)   |
 | `hql`                      | HQL                                                    |                      | Maintainability, Architecture           |
-| `ibmbpmbpd`                | IBM BPM (BPD)                                          |                      | Maintainability, Architecture           | (8) |
-| `ibmbpmprocess`            | IBM BPM (Process)                                      |                      | Maintainability, Architecture           | (8) |
+| `ibmbpmbpd`                | IBM BPM (BPD)                                          |                      | Maintainability, Architecture           | (8)   |
+| `ibmbpmprocess`            | IBM BPM (Process)                                      |                      | Maintainability, Architecture           | (8)   |
 | `ideal`                    | Ideal                                                  |                      | Maintainability, Architecture           |
 | `informatica`              | Informatica                                            |                      | Maintainability                         |
 | `informix4gl`              | Informix 4GL                                           |                      | Maintainability, Architecture           |
@@ -127,7 +127,7 @@ Finally, note the column "supported Sigrid capabilities" does not list Open Sour
 | `jade`                     | Jade                                                   |                      | Maintainability, Architecture           |
 | `java`                     | Java                                                   |                      | Maintainability, Architecture, Security |
 | `javafx`                   | Java FX                                                |                      | Maintainability, Architecture           |
-| `javascript`               | JavaScript                                             | NodeJS               | Maintainability, Architecture, Security | (2) |
+| `javascript`               | JavaScript                                             | NodeJS               | Maintainability, Architecture, Security | (2)   |
 | `javascript`               | Google App Script                                      |                      | Maintainability, Architecture           |
 | `jbc`                      | JBC                                                    |                      | Maintainability, Architecture           |
 | `jbpm`                     | jBPM                                                   |                      | Maintainability, Architecture           |
@@ -135,12 +135,12 @@ Finally, note the column "supported Sigrid capabilities" does not list Open Sour
 | `jcs`                      | JCS                                                    |                      | Maintainability, Architecture           |
 | `jinja`                    | Jinja                                                  |                      | Maintainability, Architecture           |
 | `jsf`                      | JSF                                                    |                      | Maintainability, Architecture           |
-| `json`                     | JSON                                                   |                      | Maintainability, Architecture           | (5) |
+| `json`                     | JSON                                                   |                      | Maintainability, Architecture           | (5)   |
 | `jsp`                      | JSP                                                    |                      | Maintainability, Architecture           |
 | `kotlin`                   | Kotlin                                                 |                      | Maintainability, Architecture, Security |
 | `less`                     | Less                                                   |                      | Maintainability, Architecture           |
-| `linc`                     | LINC                                                   |                      | Maintainability, Architecture           | (8) |
-| `lion`                     | Lion                                                   |                      | Maintainability, Architecture           | (8) |
+| `linc`                     | LINC                                                   |                      | Maintainability, Architecture           | (8)   |
+| `lion`                     | Lion                                                   |                      | Maintainability, Architecture           | (8)   |
 | `lodestar`                 | Lodestar                                               |                      | Maintainability, Architecture           |
 | `logicapps`                | Logic Apps                                             |                      | Maintainability                         |
 | `logicnets`                | LogicNets                                              |                      | Maintainability, Architecture           |
@@ -151,11 +151,11 @@ Finally, note the column "supported Sigrid capabilities" does not list Open Sour
 | `magnum`                   | Magnum                                                 |                      | Maintainability, Architecture           |
 | `matlab`                   | Matlab                                                 |                      | Maintainability, Architecture           |
 | `mediationflows`           | Mediation Flows                                        |                      | Maintainability, Architecture           |
-| `mendix`                   | Mendix                                                 |                      | Maintainability, Architecture, Security |
+| `mendix`                   | Mendix                                                 |                      | Maintainability, Architecture, Security | (9)   |
 | `messagebuilder`           | MessageBuilder                                         |                      | Maintainability, Architecture           |
-| `mpsbehavior`              | MPS Behavior                                           |                      | Maintainability                         | (8) |
-| `mpsclass`                 | MPS Class                                              |                      | Maintainability                         | (8) |
-| `mpstranslator`            | MPS Translator                                         |                      | Maintainability                         | (8) |
+| `mpsbehavior`              | MPS Behavior                                           |                      | Maintainability                         | (8)   |
+| `mpsclass`                 | MPS Class                                              |                      | Maintainability                         | (8)   |
+| `mpstranslator`            | MPS Translator                                         |                      | Maintainability                         | (8)   |
 | `mule`                     | Mule                                                   |                      | Maintainability, Architecture           |
 | `mtwize`                   | MtWize                                                 |                      | Maintainability, Architecture           |
 | `murexdatadictionary`      | Murex Data Dictionary                                  |                      | Maintainability, Architecture           |
@@ -164,12 +164,12 @@ Finally, note the column "supported Sigrid capabilities" does not list Open Sour
 | `murexworkflow`            | Murex Workflow                                         |                      | Maintainability, Architecture           |
 | `mustache`                 | Mustache                                               | Handlebars           | Maintainability, Architecture           |
 | `mysql`                    | MySQL                                                  |                      | Maintainability, Architecture           |
-| `nabsic`                   | Nabsic                                                 |                      | Maintainability, Architecture           | (8) |
+| `nabsic`                   | Nabsic                                                 |                      | Maintainability, Architecture           | (8)   |
 | `naviscript`               | Naviscript                                             |                      | Maintainability, Architecture           |
 | `navision`                 | Navision                                               | Dynamics NAV, AL     | Maintainability, Architecture           |
-| `netiqidmpolicy`           | NetIQ IDM Policy                                       |                      | Maintainability                         | (8) |
-| `netiqidmrequest`          | NetIQ IDM Request                                      |                      | Maintainability                         | (8) |
-| `netiqidmworkflow`         | NetIQ IDM Workflow                                     |                      | Maintainability                         | (8) |
+| `netiqidmpolicy`           | NetIQ IDM Policy                                       |                      | Maintainability                         | (8)   |
+| `netiqidmrequest`          | NetIQ IDM Request                                      |                      | Maintainability                         | (8)   |
+| `netiqidmworkflow`         | NetIQ IDM Workflow                                     |                      | Maintainability                         | (8)   |
 | `netweaveridm`             | NetweaverIDM                                           |                      | Maintainability, Architecture           |
 | `nonstopsql`               | Nonstop SQL                                            |                      | Maintainability, Architecture           |
 | `normalizedsystemsjava`    | Normalized Systems Java                                |                      | Maintainability, Architecture           |
@@ -185,18 +185,18 @@ Finally, note the column "supported Sigrid capabilities" does not list Open Sour
 | `oracleofsaa`              | Oracle OFSAA                                           |                      | Maintainability, Architecture           |
 | `oracleworkflow`           | Oracle Workflow                                        |                      | Maintainability, Architecture           |
 | `ords`                     | ORDS                                                   |                      | Maintainability                         |
-| `osb`                      | OSB                                                    |                      | Maintainability, Architecture           | (8) |
-| `osbproxy`                 | OSB Proxy                                              |                      | Maintainability, Architecture           | (8) |
+| `osb`                      | OSB                                                    |                      | Maintainability, Architecture           | (8)   |
+| `osbproxy`                 | OSB Proxy                                              |                      | Maintainability, Architecture           | (8)   |
 | `osmprocess`               | OSM Process                                            |                      | Maintainability, Architecture           |
 | `osmtask`                  | OSM Task                                               |                      | Maintainability, Architecture           |
-| `outsystems`               | OutSystems                                             |                      | Maintainability, Architecture           | (8) |
+| `outsystems`               | OutSystems                                             |                      | Maintainability, Architecture           | (9)   |
 | `pascal`                   | Pascal                                                 |                      | Maintainability, Architecture           |
-| `pega`                     | Pega                                                   |                      | Maintainability                         | (8) |
-| `pegajsp`                  | PEGA JSP                                               |                      | Maintainability                         | (8) |
+| `pega`                     | Pega                                                   |                      | Maintainability                         | (9)   |
+| `pegajsp`                  | PEGA JSP                                               |                      | Maintainability                         | (9)   |
 | `perl`                     | Perl                                                   |                      | Maintainability, Architecture, Security |
 | `php`                      | PHP                                                    |                      | Maintainability, Architecture, Security |
-| `plc`                      | PLC - Structured Text - ABB                            |                      | Maintainability, Architecture           | (8) |
-| `plc`                      | PLC - Structured Text - Schneider Electric/EcoStruxure |                      | Maintainability, Architecture           | (8) |
+| `plc`                      | PLC - Structured Text - ABB                            |                      | Maintainability, Architecture           | (8)   |
+| `plc`                      | PLC - Structured Text - Schneider Electric/EcoStruxure |                      | Maintainability, Architecture           | (8)   |
 | `plc`                      | PLC - Structured Text - Siemens                        |                      | Maintainability, Architecture           |
 | `plc`                      | PLC - Functional Block Diagram - ABB                   |                      | Maintainability, Architecture           |
 | `plc`                      | PLC - Functional Block Diagram - Rockwell              |                      | Maintainability, Architecture           |
@@ -205,13 +205,13 @@ Finally, note the column "supported Sigrid capabilities" does not list Open Sour
 | `plc`                      | PLC - Structured Text - Rockwell                       |                      | Maintainability, Architecture           |
 | `pli`                      | PL/I                                                   |                      | Maintainability, Architecture           |
 | `plsql`                    | PL/SQL                                                 |                      | Maintainability, Architecture           |
-| `plsqlforms`               | PL/SQL Forms                                           |                      | Maintainability                         | (8) |
+| `plsqlforms`               | PL/SQL Forms                                           |                      | Maintainability                         | (8)   |
 | `plsqlreports`             | PL/SQL Reports                                         |                      | Maintainability                         |
 | `pluk`                     | PLUK                                                   |                      | Maintainability, Architecture           |
-| `polymertemplates`         | Polymer Templates                                      |                      | Maintainability, Architecture           | (8) |
+| `polymertemplates`         | Polymer Templates                                      |                      | Maintainability, Architecture           | (8)   |
 | `postgresql`               | PostgreSQL                                             |                      | Maintainability, Architecture           |
 | `powerbuilder`             | Powerbuilder                                           |                      | Maintainability, Architecture           |
-| `powercenter`              | PowerCenter                                            |                      | Maintainability, Architecture           | (8) |
+| `powercenter`              | PowerCenter                                            |                      | Maintainability, Architecture           | (8)   |
 | `powerfx`                  | Power Fx                                               | Microsoft Power Apps | Maintainability                         |
 | `powershell`               | Powershell                                             |                      | Maintainability, Architecture           |
 | `progress`                 | Progress                                               | OpenEdge             | Maintainability, Architecture           |
@@ -220,11 +220,11 @@ Finally, note the column "supported Sigrid capabilities" does not list Open Sour
 | `puppet`                   | Puppet                                                 |                      | Maintainability, Architecture           |
 | `python`                   | Python                                                 |                      | Maintainability, Architecture, Security |
 | `r`                        | R                                                      |                      | Maintainability, Architecture           |
-| `radience`                 | Radience                                               |                      | Maintainability, Architecture           | (8) |
+| `radience`                 | Radience                                               |                      | Maintainability, Architecture           | (8)   |
 | `razor`                    | Razor                                                  |                      | Maintainability, Architecture           |
-| `react`                    | React                                                  |                      | Maintainability, Architecture, Security | (2) |
-| `regelspraak`              | ALEF Regelspraak                                       |                      | Maintainability, Architecture           | (8) |
-| `regelspraakhtml`          | ALEF Regelspraak (HTML export)                         |                      | Maintainability, Architecture           | (8) |
+| `react`                    | React                                                  |                      | Maintainability, Architecture, Security | (2)   |
+| `regelspraak`              | ALEF Regelspraak                                       |                      | Maintainability, Architecture           | (8)   |
+| `regelspraakhtml`          | ALEF Regelspraak (HTML export)                         |                      | Maintainability, Architecture           | (8)   |
 | `rexx`                     | Rexx                                                   |                      | Maintainability, Architecture           |
 | `robot`                    | Robot                                                  |                      | Maintainability                         |
 | `rpg`                      | RPG                                                    |                      | Maintainability, Architecture           |
@@ -232,21 +232,21 @@ Finally, note the column "supported Sigrid capabilities" does not list Open Sour
 | `rust`                     | Rust                                                   |                      | Maintainability, Architecture           |
 | `salesforceapex`           | Salesforce Apex                                        |                      | Maintainability, Architecture           |
 | `salesforceflow`           | Salesforce Flow                                        |                      | Maintainability, Architecture           |
-| `sappo`                    | SAP PO                                                 |                      | Maintainability, Architecture           | (8) |
+| `sappo`                    | SAP PO                                                 |                      | Maintainability, Architecture           | (8)   |
 | `sapui5`                   | SapUI5                                                 |                      | Maintainability, Architecture           |
 | `sas`                      | SAS                                                    |                      | Maintainability, Architecture           |
-| `sasflows`                 | SAS Flows                                              |                      | Maintainability                         | (8) |
+| `sasflows`                 | SAS Flows                                              |                      | Maintainability                         | (8)   |
 | `sass`                     | Sass                                                   |                      | Maintainability, Architecture           |
 | `scala`                    | Scala                                                  |                      | Maintainability, Architecture, Security |
 | `scl`                      | SCL                                                    |                      | Maintainability, Architecture           |
 | `scr`                      | SCR                                                    |                      | Maintainability, Architecture           |
 | `script`                   | Shell script                                           |                      | Maintainability, Architecture           |
-| `servicenow`               | ServiceNow                                             |                      | Maintainability, Architecture           | (8) |
-| `siebeldeclarative`        | Siebel Declarative                                     |                      | Maintainability, Architecture           | (8) |
-| `siebeljs`                 | Siebel JS                                              |                      | Maintainability, Architecture           | (8) |
-| `siebelscripted`           | Siebel Scripted                                        |                      | Maintainability, Architecture           | (8) |
-| `siebelworkflow`           | Siebel Workflow                                        |                      | Maintainability, Architecture           | (8) |
-| `siebeltbui`               | Siebel TBUI                                            |                      | Maintainability, Architecture           | (8) |
+| `servicenow`               | ServiceNow                                             |                      | Maintainability, Architecture           | (8)   |
+| `siebeldeclarative`        | Siebel Declarative                                     |                      | Maintainability, Architecture           | (8)   |
+| `siebeljs`                 | Siebel JS                                              |                      | Maintainability, Architecture           | (8)   |
+| `siebelscripted`           | Siebel Scripted                                        |                      | Maintainability, Architecture           | (8)   |
+| `siebelworkflow`           | Siebel Workflow                                        |                      | Maintainability, Architecture           | (8)   |
+| `siebeltbui`               | Siebel TBUI                                            |                      | Maintainability, Architecture           | (8)   |
 | `slim`                     | Slim                                                   |                      | Maintainability                         |
 | `smalltalk`                | Smalltalk                                              |                      | Maintainability, Architecture           |
 | `solidity`                 | Solidity                                               |                      | Maintainability, Architecture           |
@@ -264,7 +264,7 @@ Finally, note the column "supported Sigrid capabilities" does not list Open Sour
 | `t4`                       | T4                                                     |                      | Maintainability                         |
 | `tacl`                     | TACL                                                   |                      | Maintainability, Architecture           |
 | `tal`                      | TAL                                                    |                      | Maintainability                         |
-| `tandem`                   | Tandem                                                 |                      | Maintainability, Architecture           | (8) |
+| `tandem`                   | Tandem                                                 |                      | Maintainability, Architecture           | (8)   |
 | `tapestry`                 | Tapestry                                               |                      | Maintainability, Architecture           |
 | `terraform`                | Terraform                                              |                      | Maintainability, Architecture, Security |
 | `thrift`                   | Thrift                                                 |                      | Maintainability, Architecture           |
@@ -277,39 +277,39 @@ Finally, note the column "supported Sigrid capabilities" does not list Open Sour
 | `tripleforms`              | TriplEforms                                            |                      | Maintainability                         |
 | `tsql`                     | T-SQL                                                  |                      | Maintainability, Architecture           |
 | `turtle`                   | Turtle                                                 |                      | Maintainability                         |
-| `typescript`               | TypeScript                                             |                      | Maintainability, Architecture, Security | (3) |
+| `typescript`               | TypeScript                                             |                      | Maintainability, Architecture, Security | (3)   |
 | `uil`                      | UIL (Motif)                                            |                      | Maintainability, Architecture           |
-| `uniface`                  | Uniface                                                |                      | Maintainability, Architecture           | (8) |
+| `uniface`                  | Uniface                                                |                      | Maintainability, Architecture           | (8)   |
 | `until`                    | Until                                                  |                      | Maintainability, Architecture           |
 | `vag`                      | Visual Age                                             |                      | Maintainability, Architecture           |
 | `vagrecord`                | Visual Age Record                                      |                      | Maintainability, Architecture           |
-| `vb`                       | Visual Basic                                           |                      | Maintainability, Architecture, Security | (4) |
-| `vbnet`                    | Visual Basic .NET                                      |                      | Maintainability, Architecture, Security | (4) |
+| `vb`                       | Visual Basic                                           |                      | Maintainability, Architecture, Security | (4)   |
+| `vbnet`                    | Visual Basic .NET                                      |                      | Maintainability, Architecture, Security | (4)   |
 | `velocity`                 | Velocity                                               |                      | Maintainability, Architecture           |
 | `vgl`                      | VGL                                                    |                      | Maintainability                         |
 | `visualforce`              | VisualForce                                            |                      | Maintainability                         |
 | `visualrpg`                | Visual RPG                                             |                      | Maintainability, Architecture           |
 | `visualobjects`            | Visual Objects                                         |                      | Maintainability, Architecture           |
-| `vuejs`                    | VueJS                                                  |                      | Maintainability, Architecture, Security | (2) |
-| `vuets`                    | VueTS                                                  |                      | Maintainability, Architecture, Security | (3) |
+| `vuejs`                    | VueJS                                                  |                      | Maintainability, Architecture, Security | (2)   |
+| `vuets`                    | VueTS                                                  |                      | Maintainability, Architecture, Security | (3)   |
 | `vulcan`                   | Vulcan.NET                                             |                      | Maintainability, Architecture           |
 | `webfocus`                 | WebFocus                                               |                      | Maintainability, Architecture           |
 | `webmethods`               | WebMethods                                             |                      | Maintainability, Architecture           |
 | `webmethodsbpm`            | WebMethods BPM                                         |                      | Maintainability, Architecture           |
-| `websmart`                 | WebSmart                                               |                      | Maintainability, Architecture           | (8) |
+| `websmart`                 | WebSmart                                               |                      | Maintainability, Architecture           | (8)   |
 | `wonderware`               | Wonderware                                             |                      | Maintainability                         |
 | `wsdl`                     | WSDL                                                   |                      | Maintainability, Architecture           |
 | `wtx`                      | WTX                                                    |                      | Maintainability                         |
 | `xaml`                     | XAML                                                   |                      | Maintainability, Architecture           |
-| `xml`                      | XML                                                    |                      | Maintainability, Architecture           | (5) |
+| `xml`                      | XML                                                    |                      | Maintainability, Architecture           | (5)   |
 | `xpdl`                     | Tibco ActiveMatrix BPM                                 |                      | Maintainability                         |
-| `xpp`                      | X++                                                    |                      | Maintainability, Architecture           | (8) |
-| `xpp365`                   | X++ for Dynamics 365                                   |                      | Maintainability, Architecture           | (8) |
+| `xpp`                      | X++                                                    |                      | Maintainability, Architecture           | (8)   |
+| `xpp365`                   | X++ for Dynamics 365                                   |                      | Maintainability, Architecture           | (8)   |
 | `xquery`                   | Xquery                                                 |                      | Maintainability, Architecture           |
 | `xsd`                      | XSD                                                    |                      | Maintainability, Architecture           |
 | `xslt`                     | XSLT                                                   |                      | Maintainability, Architecture           |
 | `xul`                      | XUL                                                    |                      | Maintainability                         |
-| `yaml`                     | YAML                                                   |                      | Maintainability, Architecture           | (5) |
+| `yaml`                     | YAML                                                   |                      | Maintainability, Architecture           | (5)   |
 
 Notes:
 
@@ -331,7 +331,58 @@ Notes:
 7. Use either `html` or `angularjstemplate`, but not both.
   - Prefer `angularjstemplate` if you're using [Angular templates](https://angular.io/guide/template-syntax).
   - Use `html` for all other types of HTML files or templates.
-8. Sigrid CI is not supported for this technology. You can still use Sigrid, but you will need to use one of the [alternative upload channels](../organization-integration/upload-instructions.md).
+8. You can use Sigrid CI for this technology, but you will need to use a special option. See instructions on how to [technology conversion configuration](#technology-conversion-configuration) below.
+9. Sigrid CI is not supported for this technology. You can still use Sigrid, but you will need to use one of the [alternative upload channels](../organization-integration/upload-instructions.md).
+
+## Technology conversion configuration
+
+For the vast majority of technologies, you can simply publish your repository and have your code analyzed by Sigrid. However, a small number of technologies cannot be analyzed by Sigrid in its "native" format. In those situations, Sigrid needs to convert these technologies to another format before it can be analyzed.
+
+This configuration can be managed using the `--convert` [option in Sigrid CI](client-script-usage.md#command-line-options). This is only applicable for the following technologies:
+
+| Technology          | Value of the `--convert` option                                         |
+|---------------------|-------------------------------------------------------------------------|
+| ABB Control Builder | `ABBControlBuilder`                                                     |
+| Altova UML          | `AltovaUML`                                                             |
+| Oracle APEX         | `Apex`                                                                  |
+| Axmodel             | `Axmodel`                                                               |
+| Axway               | `Axway`                                                                 |
+| Axystudio           | `Axystudio`                                                             |
+| BRM                 | `BRM`                                                                   |
+| Be Informed         | `Beinformed`                                                            |
+| Blueriq             | `Blueriq`                                                               |
+| Data Bricks         | `Databricks`                                                            |
+| Ecostruxure         | `Ecostruxure`                                                           |
+| FME                 | `FME`                                                                   |
+| IBM BPM             | `IbmBpm`                                                                |
+| Infinite Blue       | `Infiniteblue`                                                          |
+| Linc                | `Linc`                                                                  |
+| Lion                | `Lion`                                                                  |
+| Lion/COBOL          | `LionCobol`                                                             |
+| MPS                 | `MPSLanguage`                                                           |
+| Nabsic              | `Nabsic`                                                                |
+| NetIQ IDM           | `NetIQIDM`                                                              |
+| OSB Pipeline        | `OSBPipeline`                                                           |
+| OutSystems          | `Outsystems` or `OutsystemsExporter` (contact SIG support for details)  |
+| PEGA                | `Pega` or `PegaFilter` (contact SIG support for details)                |
+| PL/SQL Headstart    | `PlsqlHeadstart`                                                        |
+| PL/SQL Forms        | `Plsqlforms`                                                            |
+| Polymer             | `Polymer`                                                               |
+| PowerCenter         | `Powercenter`                                                           |
+| Radience            | `Radience`                                                              |
+| Regelspraak         | `Regelspraak` or `Regelspraakhtml` (contact SIG support for details)    |
+| Sailpoint BeanShell | `Sailpointbeanshell`                                                    |
+| SAP PO              | `Sappo`                                                                 |
+| SAS Flows           | `Sasflows`                                                              |
+| ServiceNow          | `ServiceNow`                                                            |
+| Siebel              | `SiebelProject` or `SiebelRepository` (contact SIG support for details) |
+| Uniface             | `Ssduniface` or `Unifacexml` (contact SIG support for details)          |
+| Tandem              | `Tandem`                                                                |
+| TRS                 | `Trs`                                                                   |
+| USoft               | `Usoft` or `UsoftEsi` (contact SIG support for details)                 |
+| WebSmart            | `Websmart`                                                              |
+| X++                 | `Xpp`                                                                   |
+| X++ 365             | `Xpp`                                                                   |
 
 ## Supported open source ecosystems
 
