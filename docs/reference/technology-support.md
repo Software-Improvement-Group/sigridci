@@ -189,7 +189,7 @@ Finally, note the column "supported Sigrid capabilities" does not list Open Sour
 | `osbproxy`                 | OSB Proxy                                              |                      | Maintainability, Architecture           | (8)   |
 | `osmprocess`               | OSM Process                                            |                      | Maintainability, Architecture           |
 | `osmtask`                  | OSM Task                                               |                      | Maintainability, Architecture           |
-| `outsystems`               | OutSystems                                             |                      | Maintainability, Architecture           | (8)   |
+| `outsystems`               | OutSystems                                             |                      | Maintainability, Architecture           | (9)   |
 | `pascal`                   | Pascal                                                 |                      | Maintainability, Architecture           |
 | `pega`                     | Pega                                                   |                      | Maintainability                         | (9)   |
 | `pegajsp`                  | PEGA JSP                                               |                      | Maintainability                         | (9)   |
