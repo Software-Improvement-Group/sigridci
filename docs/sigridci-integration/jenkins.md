@@ -5,7 +5,10 @@ Integrating Sigrid CI into your Jenkins pipeline
 
 - You have a [Sigrid](https://sigrid-says.com) user account. 
 - You have created an [authentication token for using Sigrid CI](../organization-integration/authentication-tokens.md).
-- [Python 3.7 or higher](https://www.python.org) needs to be available in the CI environment. 
+- [Python 3.7 or higher](https://www.python.org) needs to be available in the CI environment.
+
+### Some notes about the output directory
+- The Sigrid CI container writes several files in its output directory, which defaults to the container working directory. It writes these files as a non-privileged user configured in our Dockerfile (currently: user `sigridci`). If you bind-mount a host volume to the output directory, ensure that this container user has write permission for the mounted directory, which typically means you need to make this directory world-writeable on the host.
 
 ## On-boarding your system to Sigrid
 
