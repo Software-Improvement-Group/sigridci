@@ -37,7 +37,6 @@ class SigridApiClient:
         self.urlPartnerName = urllib.parse.quote_plus(options.partner.lower())
         self.urlCustomerName = urllib.parse.quote_plus(options.customer.lower())
         self.urlSystemName = urllib.parse.quote_plus(options.system.lower())
-        self.subsystem = options.subsystem
         self.token = os.environ["SIGRID_CI_TOKEN"].strip()
 
     def callSigridAPI(self, path, body=None, contentType=None):
@@ -117,8 +116,12 @@ class SigridApiClient:
         elif self.options.runMode == RunMode.FEEDBACK_AND_PUBLISH:
             path += "/publish"
 
-        if self.subsystem:
-            path += "?subsystem=" + urllib.parse.quote_plus(self.subsystem)
+        if self.options.subsystem and self.options.convert:
+            path += "?subsystem=" + urllib.parse.quote_plus(self.options.subsystem) + "&convert=" + urllib.parse.quote_plus(self.options.convert)
+        elif self.options.subsystem:
+            path += "?subsystem=" + urllib.parse.quote_plus(self.options.subsystem)
+        elif self.options.convert:
+            path += "?convert=" + urllib.parse.quote_plus(self.options.convert)
 
         return self.retry(lambda: self.callSigridAPI(path))
 
