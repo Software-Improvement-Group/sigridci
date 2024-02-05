@@ -15,8 +15,9 @@ This page describes the options and the technical setup.
 With this module, a Sigrid administrator can perform all the basic authentication tasks out of the box.
 
 ### Note
-- Your users will need to set a password and optionally MFA (multi-factor authentication)
-- You will need to actively revoke access for people that no longer work for you by deleting them from user management manually.
+- That your users will need to set a password.
+- Sigrid support can make the use of MFA (multi-factor authentication) manadatory for your users.
+- You will need to actively revoke access users that have left your company by deleting them from user management.
 
 ### Sigrid administrator tasks
 - Create users based on their email, first and last name.
