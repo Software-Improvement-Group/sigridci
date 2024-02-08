@@ -20,5 +20,5 @@ from .report import Report
 class JsonReport(Report):
 
     def generate(self, analysisId, feedback, options):
-        with open(f"{self.outputDir}/sigridci.json", "w") as f:
+        with open(f"{options.outputDir}/sigridci.json", "w") as f:
             json.dump(feedback, f, indent=4)

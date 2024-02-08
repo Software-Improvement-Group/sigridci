@@ -81,8 +81,8 @@ class SigridCiRunner:
         feedback = self.apiClient.fetchAnalysisResults(analysisId)
         self.displayMetadata()
 
-        if not os.path.exists("sigrid-ci-output"):
-            os.mkdir("sigrid-ci-output")
+        if not os.path.exists(self.options.outputDir):
+            os.mkdir(self.options.outputDir)
 
         for report in self.reports:
             report.generate(analysisId, feedback, self.options)

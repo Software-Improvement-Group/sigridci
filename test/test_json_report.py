@@ -17,6 +17,7 @@ import tempfile
 from unittest import TestCase
 
 from sigridci.sigridci.json_report import JsonReport
+from sigridci.sigridci.publish_options import PublishOptions, RunMode
 
 
 class JsonReportTest(TestCase):
@@ -31,11 +32,18 @@ class JsonReportTest(TestCase):
             "overallRatings": {"DUPLICATION": 4.5, "UNIT_SIZE": 3.0, "MAINTAINABILITY": 3.4}
         }
 
-        report = JsonReport()
-        report.outputDir = tempfile.mkdtemp()
-        report.generate("1234", feedback, None)
+        options = PublishOptions(
+            customer="aap",
+            system="noot",
+            runMode=RunMode.FEEDBACK_ONLY,
+            sourceDir="/tmp",
+            outputDir=tempfile.mkdtemp()
+        )
 
-        with open(f"{report.outputDir}/sigridci.json", "r") as f:
+        report = JsonReport()
+        report.generate("1234", feedback, options)
+
+        with open(f"{options.outputDir}/sigridci.json", "r") as f:
             contents = f.read()
 
         expected = """

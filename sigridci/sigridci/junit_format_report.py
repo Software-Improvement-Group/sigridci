@@ -21,7 +21,7 @@ from .report import Report
 class JUnitFormatReport(Report):
 
     def generate(self, analysisId, feedback, options):
-        with open(f"{self.outputDir}/sigridci-junit-format-report.xml", "w") as fileRef:
+        with open(f"{options.outputDir}/sigridci-junit-format-report.xml", "w") as fileRef:
             fileRef.write(self.generateXML(feedback, options))
 
     def generateXML(self, feedback, options):

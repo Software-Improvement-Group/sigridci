@@ -35,6 +35,7 @@ The script takes a limited number of mandatory arguments. However, Sigrid CI's b
 | `--targetquality` | No       | 3.5                 | See [defining quality objectives](#defining-quality-objectives).                                                                  |
 | `--showupload`    | No       | N/A                 | Logs the contents of the upload before submitting it to Sigrid.                                                                   |
 | `--convert`       | No       | beinformed          | Used for some technologies. See [technology conversion configuration](technology-support.md#technology-conversion-configuration). |
+| `--out`           | No       | /tmp                | Output directory for Sigrid CI feedback, default is `sigrid-ci-output`.                                                           |
 
 Notes:
 
