@@ -28,12 +28,12 @@ from sigridci.pipeline_summary_report import PipelineSummaryReport
 from sigridci.static_html_report import StaticHtmlReport
 
 
-def generateReports(feedbackFile, options, outputDir):
+def generateReports(feedbackFile, options):
     with open(feedbackFile, "r") as f:
         feedback = json.load(f)
 
-    if not os.path.exists(args.out):
-        os.mkdir(args.out)
+    if not os.path.exists(options.outputDir):
+        os.mkdir(options.outputDir)
 
     reports = [
         AsciiArtReport(),
@@ -45,7 +45,6 @@ def generateReports(feedbackFile, options, outputDir):
     ]
 
     for report in reports:
-        report.outputDir = outputDir
         report.generate("", feedback, options)
 
 
@@ -71,7 +70,8 @@ if __name__ == "__main__":
         sourceDir="/tmp",
         runMode=RunMode.FEEDBACK_ONLY,
         targetRating=args.targetquality,
+        outputDir=args.out,
         sigridURL=args.sigridurl
     )
 
-    generateReports(args.sat_ci_json, options, args.out)
+    generateReports(args.sat_ci_json, options)
