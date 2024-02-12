@@ -23,6 +23,7 @@ from .upload_log import UploadLog
 class RepositoryHistoryExporter:
     GIT_LOG_FORMAT = "@@@;%H;%an;%ae;%ad;%s"
     CUTOFF_DATE = datetime.now() + timedelta(days=-365)
+    LIGHTWEIGHT_HISTORY_EXPORT_FILE = "git.log"
 
     def exportHistory(self, sourceDir):
         if os.path.exists(f"{sourceDir}/.git"):
@@ -39,7 +40,7 @@ class RepositoryHistoryExporter:
             if output.returncode == 0:
                 UploadLog.log("Including repository history in upload")
                 history = output.stdout.decode("utf8", "ignore")
-                self.createHistoryExportFile(history, f"{sourceDir}/git.log")
+                self.createHistoryExportFile(history, f"{sourceDir}/{self.LIGHTWEIGHT_HISTORY_EXPORT_FILE}")
             else:
                 UploadLog.log("Exporting repository history failed")
         except Exception as e:

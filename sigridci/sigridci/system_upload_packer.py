@@ -23,6 +23,7 @@ from .upload_log import UploadLog
 
 class SystemUploadPacker:
     MAX_UPLOAD_SIZE_MB = 500
+    ALWAYS_INCLUDE = (RepositoryHistoryExporter.LIGHTWEIGHT_HISTORY_EXPORT_FILE)
 
     DEFAULT_EXCLUDES = [
         "$tf/",
@@ -86,7 +87,7 @@ class SystemUploadPacker:
 
     def isIncluded(self, filePath):
         includePatterns = self.options.includePatterns or []
-        if len(includePatterns) == 0 or includePatterns == [""]:
+        if len(includePatterns) == 0 or includePatterns == [""] or filePath.endswith(self.ALWAYS_INCLUDE):
             return True
         normalizedPath = filePath.replace("\\", "/")
         return any(include for include in includePatterns if include != "" and include.strip() in normalizedPath)
