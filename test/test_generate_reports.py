@@ -13,20 +13,17 @@
 # limitations under the License.
 
 import os
+import sys
 import tempfile
+from contextlib import contextmanager
+from pathlib import Path
 from unittest import TestCase
 
-# The entry point script is not part of a Python module, so we
-# are forced to use the infamous Python path modification for
-# this test.
-import sys
-sys.path.append("sigridci")
-
-from generate_reports import generateReports
-from sigridci.publish_options import PublishOptions, RunMode
+from sigridci.sigridci.publish_options import PublishOptions, RunMode
 
 
 class GenerateReportsTest(TestCase):
+
 
     def testOutputDirectoryIsConfigurable(self):
         tempDir = tempfile.mkdtemp()
@@ -44,7 +41,25 @@ class GenerateReportsTest(TestCase):
                 "refactoringCandidates": []
             }""")
 
-        generateReports(f"{tempDir}/test.json", options)
+        with customizePath():
+            from generate_reports import generateReports
+            generateReports(f"{tempDir}/test.json", options)
 
         self.assertTrue(os.path.exists(outputDir))
         self.assertTrue(os.path.exists(f"{outputDir}/feedback.md"))
+
+
+@contextmanager
+def customizePath():
+    """
+    The entry point script is not part of a Python module, so we
+    are forced to use the infamous Python path modification for
+    this test.
+    """
+    projectDir = Path(__file__).parent.parent.absolute()
+    moduleDir = f"{projectDir}/sigridci"
+    try:
+        sys.path.insert(0, moduleDir)
+        yield
+    finally:
+        sys.path.remove(moduleDir)
