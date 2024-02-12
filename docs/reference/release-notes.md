@@ -6,7 +6,7 @@ SIG uses [continuous delivery](https://en.wikipedia.org/wiki/Continuous_delivery
 ### February 12, 2024
 
 - **Sigrid CI:** The output directory where Sigrid CI saves feedback is now a configurable. See the [options reference](client-script-usage.md) for details.
-- **Open Source Health:** The Sigrid user interface now shows whether dependencies are direct or transitive. This is helpful when using the [transitive option for Open Source Health](analysis-scope-configuration.md#open-source-health), as it allows you to quickly determine a dependency's origin.
+- **Open Source Health:** The Sigrid user interface now shows whether dependencies are direct or transitive (currently only for Maven and NPM). This is helpful when using the [transitive option for Open Source Health](analysis-scope-configuration.md#open-source-health), as it allows you to quickly determine a dependency's origin.
 - **User management:** It is now possible to force MFA (Multi Factor Authentication) for Sigrid users. Contact SIG support for guidance on how to best introduce this option for existing Sigrid accounts. 
 
 ### January 29, 2024
