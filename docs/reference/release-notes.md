@@ -3,9 +3,11 @@ Sigrid release notes
 
 SIG uses [continuous delivery](https://en.wikipedia.org/wiki/Continuous_delivery), meaning that every change to Sigrid or the underlying analysis is released once our development pipeline has completed. On average, we release somewhere between 10 and 20 times per day. This page therefore doesn't list every single change, since that would quickly lead to an excessively long list of small changes. Instead, this page lists Sigrid and analysis changes that we consider noteworthy for the typical Sigrid user.
 
-### February 5, 2024
+### February 12, 2024
 
 - **Sigrid CI:** The output directory where Sigrid CI saves feedback is now a configurable. See the [options reference](client-script-usage.md) for details.
+- **Open Source Health:** The Sigrid user interface now shows whether dependencies are direct or transitive. This is helpful when using the [transitive option for Open Source Health](analysis-scope-configuration.md#open-source-health), as it allows you to quickly determine a dependency's origin.
+- **User management:** It is now possible to force MFA (Multi Factor Authentication) for Sigrid users. Contact SIG support for guidance on how to best introduce this option for existing Sigrid accounts. 
 
 ### January 29, 2024
 
