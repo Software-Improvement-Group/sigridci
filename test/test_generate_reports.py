@@ -16,7 +16,7 @@ import os
 import sys
 import tempfile
 from contextlib import contextmanager
-from pathlib import Path
+from importlib import import_module
 from unittest import TestCase
 
 from sigridci.sigridci.publish_options import PublishOptions, RunMode
@@ -41,8 +41,8 @@ class GenerateReportsTest(TestCase):
                 "refactoringCandidates": []
             }""")
 
-        with customizePath():
-            from generate_reports import generateReports
+        with mockModulePath():
+            from sigridci.generate_reports import generateReports
             generateReports(f"{tempDir}/test.json", options)
 
         self.assertTrue(os.path.exists(outputDir))
@@ -50,16 +50,21 @@ class GenerateReportsTest(TestCase):
 
 
 @contextmanager
-def customizePath():
-    """
-    The entry point script is not part of a Python module, so we
-    are forced to use the infamous Python path modification for
-    this test.
-    """
-    projectDir = Path(__file__).parent.parent.absolute()
-    moduleDir = f"{projectDir}/sigridci"
+def mockModulePath():
+    mockModules = [
+        "ascii_art_report",
+        "json_report",
+        "junit_format_report",
+        "markdown_report",
+        "publish_options",
+        "pipeline_summary_report",
+        "static_html_report",
+    ]
+
     try:
-        sys.path.insert(0, moduleDir)
+        for mockModule in mockModules:
+            sys.modules[f"sigridci.{mockModule}"] = import_module(f"sigridci.sigridci.{mockModule}")
         yield
     finally:
-        sys.path.remove(moduleDir)
+        for mockModule in mockModules:
+            del sys.modules[f"sigridci.{mockModule}"]
