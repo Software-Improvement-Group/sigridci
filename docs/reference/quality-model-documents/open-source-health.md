@@ -69,7 +69,7 @@ SIG considers a best practice.
 More in general, producers should strive to reduce risks measured by the
 SIG Open Source Health Quality Model properties as much as possible.
 
-## 3.1 Vulnerabilities
+## Vulnerabilities
 
 Security vulnerabilities in open source dependencies pose a significant
 threat to software integrity and security. The transparency of open
@@ -148,7 +148,7 @@ is in the table below:
 To score a 4 stars rating for this property, a system should have at
 most four dependencies associated with low-risk licenses.
 
-## 3.4 Activity
+## Activity
 
 Adopting third-party open source dependencies with an active support
 community is important, as it significantly influences the reliability
@@ -172,7 +172,7 @@ should not exceed 6%.
 - The percentage of dependencies latest released more than 5 years ago
 should not exceed 5,2%.
 
-## 3.5 Management
+## Management
 
 Effective third-party open source dependency management is crucial for
 software development. Utilizing package managers streamlines most of the
