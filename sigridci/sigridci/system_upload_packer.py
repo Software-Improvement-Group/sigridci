@@ -24,6 +24,7 @@ from .upload_log import UploadLog
 class SystemUploadPacker:
     MAX_UPLOAD_SIZE_MB = 500
     ALWAYS_INCLUDE = (RepositoryHistoryExporter.LIGHTWEIGHT_HISTORY_EXPORT_FILE)
+    EXCLUDE_EXTENSIONS = (".7z", ".gz", ".tgz" , ".zip", ".rar" , ".tar", ".db", ".jpg", ".png")
 
     DEFAULT_EXCLUDES = [
         "$tf/",
@@ -34,12 +35,15 @@ class SystemUploadPacker:
         "sigridci/",
         "sigrid-ci-output/",
         "target/",
+        ".angular/",
         ".git/",
         ".gitattributes",
         ".gitignore",
+        ".gradle/",
         ".idea/",
-        ".jpg",
-        ".png"
+        ".m2/",
+        ".terraform/",
+        ".yarn/"
     ]
 
     def __init__(self, options: PublishOptions):
@@ -81,8 +85,12 @@ class SystemUploadPacker:
             UploadLog.log("Warning: Upload is very small, source directory might not contain all source code")
 
     def isExcluded(self, filePath):
-        excludePatterns = self.DEFAULT_EXCLUDES + (self.options.excludePatterns or [])
         normalizedPath = filePath.replace("\\", "/")
+
+        if normalizedPath.lower().endswith(self.EXCLUDE_EXTENSIONS):
+            return True
+
+        excludePatterns = self.DEFAULT_EXCLUDES + (self.options.excludePatterns or [])
         return any(exclude for exclude in excludePatterns if exclude != "" and exclude.strip() in normalizedPath)
 
     def isIncluded(self, filePath):

@@ -282,6 +282,21 @@ class SystemUploadPackerTest(TestCase):
 
         self.assertEqual(UploadLog.history, expected)
 
+    def testExcludeFileExtensions(self):
+        sourceDir = tempfile.mkdtemp()
+        self.createTempFile(sourceDir, "a.py", "")
+        self.createTempFile(sourceDir, "b.zip", "")
+        self.createTempFile(sourceDir, "c.tar", "")
+
+        outputFile = tempfile.mkstemp()[1]
+
+        options = PublishOptions("aap", "noot", RunMode.FEEDBACK_ONLY, sourceDir)
+        uploadPacker = SystemUploadPacker(options)
+        uploadPacker.prepareUpload(outputFile)
+
+        self.assertEqual(os.path.exists(outputFile), True)
+        self.assertEqual(ZipFile(outputFile).namelist(), ["a.py"])
+
     def createTempFile(self, dir, name, contents):
         with open(f"{dir}/{name}", "w") as fileRef:
             fileRef.write(contents)
