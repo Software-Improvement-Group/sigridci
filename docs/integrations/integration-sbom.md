@@ -19,6 +19,7 @@ That said, note that in most situations you would *not* need this feature. Sigri
 Sigrid's SBOM import support is not based on specific tools, but on specific *standards*. One of the goals of SBOM is to provide a standardized structure for different tools to provide this type of information. There are two commonly used "flavors" of SBOM, and both are supported by Sigrid:
 
 - [CycloneDX SBOM](https://cyclonedx.org/capabilities/sbom/)
+  - Sigrid supports CycloneDX version 1.4. This is recommended by the official [CycloneDX library](https://github.com/CycloneDX/cdxgen), as many downstream tools do not support version 1.5 yet.
 - [SPDX SBOM](https://github.com/opensbom-generator/spdx-sbom-generator)
 
 Both are able to export the SBOM information to a JSON file, which can then be imported by Sigrid.
