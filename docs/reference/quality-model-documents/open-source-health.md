@@ -58,9 +58,9 @@ thresholds for each of them.
 
 # Guidance for producers
 
-For each measurement, the threshold values are provided that are
-required for a 4 stars rating. Minor variation in percentages or
-measurements could produce small variation in the resulting ratings.
+For each measurement, the values provided are the ones necessary to achieve
+a 4-star rating. Minor variations in percentages or measurements could
+produce small variation in the resulting ratings.
 
 Note that these values are meant as guidance for software producers, and
 are not meant to be strictly applicable, nor as a representation of what
