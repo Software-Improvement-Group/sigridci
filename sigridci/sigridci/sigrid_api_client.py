@@ -39,6 +39,8 @@ class SigridApiClient:
         self.urlSystemName = urllib.parse.quote_plus(options.system.lower())
         self.token = os.environ["SIGRID_CI_TOKEN"].strip()
 
+        UploadLog.log(f"Using token ending in '****{self.token[-4:]}'")
+
     def callSigridAPI(self, path, body=None, contentType=None):
         delimiter = "" if path.startswith("/") else "/"
         url = f"{self.baseURL}/rest{delimiter}{path}"
