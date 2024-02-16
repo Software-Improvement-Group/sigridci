@@ -11,7 +11,11 @@ You can us the [scope documentation](../reference/analysis-scope-configuration.m
   
 ### How do I enable the change history analysis?
 
-This will happen automatically, assuming that you enabled Architecture Quality in the scope file and the change history is available.
+This will happen automatically, assuming that you enabled Architecture Quality in the scope file and the change history is available. You can upload your git change history in multiple ways:
+1. Configure your CI system to generate a `git.log` file and include that in the upload to SIG at the repository root. For accurate results please make sure you are generating the log file for the exact code/branch that is uploaded to Sigrid. You can produce the `git.log` file by using the following command:
+> `git --no-pager log --date=iso --format='@@@;%H;%an;%ae;%ad;%s' --numstat --no-merges > git.log`  
+2. Include the entire `.git` directory of your project in the upload to SIG. (This may result in a large upload size increase)
+
 
 ### Which version control systems does SIG support for analyzing the change history?
 
