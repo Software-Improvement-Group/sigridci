@@ -1,5 +1,5 @@
 name: ci
-on: [push]
+on: [push, pull_request]
 jobs:
   ci:
     name: "Python unit tests"
@@ -12,6 +12,7 @@ jobs:
   dockerci:
     name: "Sigrid CI in Docker"
     runs-on: ubuntu-latest
+    if: github.repository == "Software-Improvement-Group/sigridci"
     steps:
       - name: "Check out repository"
         uses: actions/checkout@v3

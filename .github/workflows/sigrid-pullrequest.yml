@@ -2,6 +2,7 @@ name: sigrid-pullrequest
 on: [pull_request]
 jobs:
   sigridci:
+    if: github.repository == "Software-Improvement-Group/sigridci"
     runs-on: ubuntu-latest
     steps:
       - name: "Check out repository"
