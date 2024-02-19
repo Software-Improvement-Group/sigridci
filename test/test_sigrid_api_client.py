@@ -17,9 +17,13 @@ from unittest import TestCase, mock
 
 from sigridci.sigridci.publish_options import PublishOptions, RunMode
 from sigridci.sigridci.sigrid_api_client import SigridApiClient
+from sigridci.sigridci.upload_log import UploadLog
 
 
 class SigridApiClientTest(TestCase):
+
+    def tearDown(self):
+        UploadLog.clear()
 
     def testIsValidToken(self):
         self.assertFalse(SigridApiClient.isValidToken(None))
@@ -57,6 +61,13 @@ class SigridApiClientTest(TestCase):
         apiClient.obtainUploadLocation(True)
 
         self.assertEqual(apiClient.called, ["/inboundresults/sig/aap/noot/ci/uploads/v1/publishonly?subsystem=mies&convert=beinformed"])
+
+    @mock.patch.dict(os.environ, {"SIGRID_CI_TOKEN" : "mytoken\n"})
+    def testLogToken(self):
+        options = PublishOptions("aap", "noot", runMode=RunMode.PUBLISH_ONLY, sourceDir="/tmp", showUploadContents=True)
+        ApiStub(options)
+
+        self.assertEqual(["Using token ending in '****oken'"], UploadLog.history)
 
 
 class ApiStub(SigridApiClient):

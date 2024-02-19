@@ -57,6 +57,7 @@ class SigridCiRunnerTest(TestCase):
         runner.run()
 
         expectedLog = [
+            "Using token ending in '****ummy'",
             "Found system in Sigrid",
             "Creating upload",
             "Upload size is 1 MB",
@@ -90,6 +91,7 @@ class SigridCiRunnerTest(TestCase):
         runner.run()
 
         expectedLog = [
+            "Using token ending in '****ummy'",
             "Found system in Sigrid",
             "Creating upload",
             "Upload size is 1 MB",
@@ -123,6 +125,7 @@ class SigridCiRunnerTest(TestCase):
         runner.run()
 
         expectedLog = [
+            "Using token ending in '****ummy'",
             "Found system in Sigrid",
             "Creating upload",
             "Upload size is 1 MB",
@@ -153,6 +156,7 @@ class SigridCiRunnerTest(TestCase):
         runner.run()
 
         expectedLog = [
+            "Using token ending in '****ummy'",
             "System is not yet on-boarded to Sigrid",
             "Creating upload",
             "Upload size is 1 MB",
@@ -211,6 +215,7 @@ class SigridCiRunnerTest(TestCase):
         runner.run()
 
         expectedLog = [
+            "Using token ending in '****ummy'",
             "Found system in Sigrid",
             "Creating upload",
             "Upload size is 1 MB",
@@ -234,6 +239,7 @@ class SigridCiRunnerTest(TestCase):
         runner.reports = []
 
         expectedLog = [
+            "Using token ending in '****ummy'",
             "Found system in Sigrid",
             "Creating upload",
             "Upload size is 1 MB",
@@ -272,6 +278,7 @@ class SigridCiRunnerTest(TestCase):
         runner.run()
 
         expectedLog = [
+            "Using token ending in '****ummy'",
             "Found system in Sigrid",
             "Validating scope configuration file",
             "Validation passed",
@@ -300,6 +307,7 @@ class SigridCiRunnerTest(TestCase):
             runner.run()
 
         expectedLog = [
+            "Using token ending in '****ummy'",
             "Found system in Sigrid",
             "Validating scope configuration file",
             "--------------------------------------------------------------------------------",
@@ -321,6 +329,7 @@ class SigridCiRunnerTest(TestCase):
         runner.run()
 
         expectedLog = [
+            "Using token ending in '****ummy'",
             "Found system in Sigrid",
             "Creating upload",
             "Upload size is 1 MB",
@@ -345,12 +354,13 @@ class SigridCiRunnerTest(TestCase):
         runner.run()
 
         expectedLog = [
+            "Using token ending in '****ummy'",
             "Found system in Sigrid",
             "Validating Sigrid metadata file",
             "Validation passed"
         ]
 
-        self.assertEqual(UploadLog.history[0:3], expectedLog)
+        self.assertEqual(UploadLog.history[0:4], expectedLog)
 
     def testFailIfMetadataFileIsNotValid(self):
         self.createTempFile(self.tempDir, "sigrid-metadata.yaml", "metadata:\n  typo: aap")
@@ -365,6 +375,7 @@ class SigridCiRunnerTest(TestCase):
             runner.run()
 
         expectedLog = [
+            "Using token ending in '****ummy'",
             "Found system in Sigrid",
             "Validating Sigrid metadata file",
             "--------------------------------------------------------------------------------",
@@ -384,6 +395,7 @@ class SigridCiRunnerTest(TestCase):
             runner.run()
 
         expectedLog = [
+            "Using token ending in '****ummy'",
             "Found system in Sigrid",
             "Creating upload",
             "Upload size is 1 MB"
@@ -507,9 +519,13 @@ class SigridCiRunnerTest(TestCase):
         with self.assertRaises(SystemExit) as raised:
             runner.run()
 
+        expectedLog = [
+            "Using token ending in '****ummy'",
+            "System i-am-not-active has been deactivated (HTTP status 410 for /analysis-results/sigridci/aap/i-am-not-active/v1/ci)"
+        ]
+
         self.assertTrue(1 in raised.exception.args)
-        self.assertEqual(UploadLog.history,
-            ["System i-am-not-active has been deactivated (HTTP status 410 for /analysis-results/sigridci/aap/i-am-not-active/v1/ci)"])
+        self.assertEqual(expectedLog, UploadLog.history)
 
     def createTempFile(self, dir, name, contents):
         with open(f"{dir}/{name}", "w") as fileRef:
