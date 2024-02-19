@@ -1,7 +1,7 @@
 name: ci
 on: [push, pull_request]
 jobs:
-  ci:
+  unittests:
     name: "Python unit tests"
     runs-on: ubuntu-latest
     steps:
@@ -9,20 +9,3 @@ jobs:
         uses: actions/checkout@v3
       - run: "pip3 install -r test/requirements.txt --user"
       - run: "python3 -m unittest"
-  dockerci:
-    name: "Sigrid CI in Docker"
-    runs-on: ubuntu-latest
-    if: github.repository == "Software-Improvement-Group/sigridci"
-    steps:
-      - name: "Check out repository"
-        uses: actions/checkout@v3
-      - name: "Special case: We use Sigrid CI on itself, so if we want its own code to be analyzed we need a copy"
-        run: "cp -r sigridci/sigridci src && cp sigridci/*.py src"
-      - name: "Run Sigrid CI in Docker"
-        uses: ./
-        id: dockertest
-        with:
-          customer: "sig"
-          system: "sigridci-client"
-        env:
-          SIGRID_CI_TOKEN: "${{ secrets.SIGRID_CI_TOKEN }}"
