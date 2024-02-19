@@ -1,4 +1,4 @@
-name: ci
+name: unittests
 on: [push]
 jobs:
   unittests:
