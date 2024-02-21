@@ -3,6 +3,16 @@ Sigrid release notes
 
 SIG uses [continuous delivery](https://en.wikipedia.org/wiki/Continuous_delivery), meaning that every change to Sigrid or the underlying analysis is released once our development pipeline has completed. On average, we release somewhere between 10 and 20 times per day. This page therefore doesn't list every single change, since that would quickly lead to an excessively long list of small changes. Instead, this page lists Sigrid and analysis changes that we consider noteworthy for the typical Sigrid user.
 
+### February 26, 2024
+
+- **On-premise:** The documentation for Sigrid on-premise is now also available from this documentation. This was previously covered by a series of PDF documents, but having all Sigrid documentation in a central location makes it easier to navigate.
+- **User management:** Added support for user groups. This makes it significantly easier to manage Sigrid access for portfolios with large numbers of systems and/or large numbers of people. You can find more information on how to use user groups in [the extended user management documentation](../organization-integration/user-management.md).
+- **User management:** It is now possible to change the default access rights for Single Sign-On Users. You can choose between no access (which is the default) or access to all systems. The latter is both more suitable and more convenient for organizations that have a culture of transparency, where everyone can see the entire Sigrid portfolio. This is an organization-level setting, so contact SIG support to discuss how to change this setting if you're interested.
+- **Technology support:** Improved Kotlin dependency detection. This removes incorrectly detected dependencies to constructors.
+- **Technology support:** Open Source Health now supports [Cargo](https://crates.io), which is typically used in combination with `crates.io` for dependency management in Rust systems.
+- **Open Source Health:** Improved support for Maven properties.
+- **Open Source Health:** The [SIG Open Source Health quality model](quality-model-documents/open-source-health.md) is now documented.
+
 ### February 12, 2024
 
 - **Sigrid CI:** The output directory where Sigrid CI saves feedback is now a configurable. See the [options reference](client-script-usage.md) for details.
