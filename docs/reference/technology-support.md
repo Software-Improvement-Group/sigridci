@@ -345,7 +345,6 @@ This configuration can be managed using the `--convert` [option in Sigrid CI](cl
 | ABB Control Builder | `ABBControlBuilder`                                                     |
 | Altova UML          | `AltovaUML`                                                             |
 | Oracle APEX         | `Apex`                                                                  |
-| Axmodel             | `Axmodel`                                                               |
 | Axway               | `Axway`                                                                 |
 | Axystudio           | `Axystudio`                                                             |
 | BRM                 | `BRM`                                                                   |
@@ -382,7 +381,7 @@ This configuration can be managed using the `--convert` [option in Sigrid CI](cl
 | USoft               | `Usoft` or `UsoftEsi` (contact SIG support for details)                 |
 | WebSmart            | `Websmart`                                                              |
 | X++                 | `Xpp`                                                                   |
-| X++ 365             | `Xpp`                                                                   |
+| X++ 365             | `Axmodel`                                                               |
 
 ## Supported open source ecosystems
 
