@@ -56,8 +56,8 @@ This also means SIG does not provide back-porting changes to old versions: If yo
 
 In addition to updating Sigrid itself, you will also need to periodicially update your environment in which Sigrid runs. SIG uses the following support policy for infrastructure component versions:
 
-- For Kubernetes, we support the latest 3 major versions. You can track the Kubernetes version history in [this overview](https://kubernetes.io/releases/).
-- For Postgres, we also support the latest 3 major versions. You can track the Postgres version history in [this overview](https://www.postgresql.org/support/versioning/).
+- For Kubernetes, we support the latest 2 major versions. You can track the Kubernetes version history in [this overview](https://kubernetes.io/releases/).
+- For Postgres, we also support the latest 2 major versions. You can track the Postgres version history in [this overview](https://www.postgresql.org/support/versioning/).
 
 ## Deploying Sigrid into a Kubernetes cluster
 
