@@ -37,7 +37,7 @@ This does not necessarily mean you need to *immediately* pull the Docker contain
 
 Although Sigrid consists of several Docker containers, you will need to update them collectively. It is theoretically possible to update some containers without updating other containers, but this gets complicated very quickly and we don't recommend this way of working to our on-premise clients. So when you update Sigrid on-premise, you will need to update all Docker containers to the same version.
 
-This also means SIG does not provide back-porting changes to old versions: If you want to access new features or bugfixes, you will need to update the Docker containers to the latest version. 
+This also means SIG does not back-port any changes to older versions: If you want to access new features or bugfixes, you will need to update the Docker containers to the latest version. 
 
 ### Updating your environment
 
