@@ -39,6 +39,17 @@ h3 {
     margin: 30px 0px 0px 0px;
 }
 
+ul {
+    list-style: none;
+    padding-left: 24px;
+}
+
+li::before {
+    content: '\25A0';
+    color: #DFC101;
+    padding-right: 8px;
+}
+
 .container {
     display: flex;
     min-height: 100%;
@@ -142,7 +153,7 @@ h3 {
 
 article {
     flex: 1 1 auto;
-    padding: 78px 80px 30px 80px;
+    padding: 78px 100px 30px 100px;
     max-width: 850px;
 }
 
