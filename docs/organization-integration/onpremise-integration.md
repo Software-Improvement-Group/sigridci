@@ -1,6 +1,6 @@
 # Sigrid on-premise integration
 
-Most of this documentation refers to the software-as-a-service version of Sigrid, which can be accessed via [sigrid-says.com](https://sigrid-says.com) and is used by the large majority of Sigrid users. However, SIG also offers an on-premise version of Sigrid. This document covers everything you need to integrate Sigrid on-premise in your environment. It also covers the functional differences between the SaaS version and the on-premise version, though these differences are relative minor.
+Most of this documentation refers to the software-as-a-service version of Sigrid, which can be accessed via [sigrid-says.com](https://sigrid-says.com) and is used by the vast majority of Sigrid users. However, SIG also offers an on-premise version of Sigrid. This document covers everything you need to integrate Sigrid on-premise in your environment. It also covers the functional differences between the SaaS version and the on-premise version, though these differences are relatively minor.
 
 <sig-toc></sig-toc>
 
