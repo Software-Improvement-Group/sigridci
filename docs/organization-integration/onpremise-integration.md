@@ -48,7 +48,7 @@ In addition to updating Sigrid itself, you will also need to periodicially updat
 
 ## Deploying Sigrid into a Kubernetes cluster
 
-SIG will provide you with the [Helm Chart templates](https://helm.sh) to configure Sigrid on-premise.
+SIG will provide you with a [Helm Chart](https://helm.sh) to configure and install Sigrid on-premise. A Postgres database needs to be set up separately.
 
 ## Identity provider integration
 
