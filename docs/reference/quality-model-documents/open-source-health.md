@@ -1,12 +1,9 @@
-SIG Open Source Health Quality Model
-=========================================
-
-### Guidance for producers
-December 7, 2023
+SIG Open Source Health Quality Model: Guidance for producers
+============================================================
 
 <sig-toc></sig-toc>
 
-# Introduction
+## Introduction
 
 Contemporary software development heavily relies on open source
 third-party dependencies. Dependencies reduce the burden of spending
@@ -38,7 +35,7 @@ Throughout this document, the terms "package" and "dependency" refer to
 third-party open source dependency integrated and used by a software
 product.
 
-# Model Definitions
+## Model Definitions
 
 The SIG Open Source Health Quality Model measurements are performed on
 third-party open source dependencies.
@@ -56,7 +53,7 @@ As such, for each of the above SIG has associated a property, that is
 captured by a metric. The rest of this document outlines the details and
 thresholds for each of them.
 
-# Guidance for producers
+## Guidance for producers
 
 For each measurement, the values provided are the ones necessary to achieve
 a 4-star rating. Minor variations in percentages or measurements could
@@ -191,6 +188,7 @@ To score a 4 stars rating for this property, a system should have at
 most 4,2% unmanaged dependencies.
 
 ## Contact and support
+
 Feel free to contact SIG’s support department for any questions or issues 
 you may have after reading this document, or when using Sigrid. 
 Users in Europe can also contact us by phone at +31 20 314 0953.
