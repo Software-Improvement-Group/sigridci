@@ -71,7 +71,7 @@ Locate the `sigrid-stack.auth-api` section in your Helm Chart's `values.yaml` fi
 
 ## Development platform integration
 
-In the on-premise version of Sigrid CI, the analysis runs locally as part of your continuous integration pipeline. Importing the analysis results into Sigrid is also done within the pipeline. Unlike the software-as-a-service version, the on-premise version of Sigrid CI does *not* publish your source code to Sigrid, so your source code never leaves your development platform.
+In the on-premise version of Sigrid CI, the analysis runs as part of your continuous integration pipeline. Importing the analysis results into Sigrid is also done within the pipeline. Unlike the software-as-a-service version, the on-premise version of Sigrid CI does *not* publish your source code to Sigrid, so your source code never leaves your development platform.
 
 The on-premise Sigrid CI requires the `sigrid-multi-analysis-import` Docker container. The steps for including this container in your pipeline are different for each development platform. The next sections cover some common examples:
 
