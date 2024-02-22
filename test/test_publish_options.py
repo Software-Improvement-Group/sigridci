@@ -49,6 +49,7 @@ class PublishOptionsTest(TestCase):
         self.assertFalse(self.toOptions("noot", "-aap").isValidSystemName())
         self.assertFalse(self.toOptions("noot", "a" * 65).isValidSystemName())
         self.assertFalse(self.toOptions("noot", "aap--aap").isValidSystemName())
+        self.assertFalse(self.toOptions("noot", "20230222").isValidSystemName())
 
     def toOptions(self, customer, system, tempDir="/tmp"):
         return PublishOptions(customer, system, RunMode.FEEDBACK_ONLY, tempDir)

@@ -48,6 +48,7 @@ class PublishOptions:
     def isValidSystemName(self):
         return self.SYSTEM_NAME_PATTERN.match(self.system) and \
             len(self.system) >= self.SYSTEM_NAME_LENGTH.start and \
+            not self.system.isdigit() and \
             (len(self.system) + len(self.customer) + 1) in self.SYSTEM_NAME_LENGTH
 
     def readScopeFile(self):
