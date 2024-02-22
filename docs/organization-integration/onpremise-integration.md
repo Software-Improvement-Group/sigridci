@@ -48,7 +48,16 @@ SIG releases the Sigrid Docker containers based on a [continuous delivery](https
 
 This does not necessarily mean you need to *immediately* pull the Docker containers after every release. However, you need to pull the latest versions of the Docker containers at least once a month. SIG does not provide support for versions of the Docker containers over a month old. Updating frequently reduces the "delta" between the current version and the new version, thereby reducing update risk. Once a month is merely the *minimum* update frequency, we actually recommend you update as frequently as possible.
 
+Although Sigrid consists of several Docker containers, you will need to update them collectively. It is theoretically possible to update some containers without updating other containers, but this gets complicated very quickly and we don't recommend this way of working to our on-premise clients. So when you update Sigrid on-premise, you will need to update all Docker containers to the same version.
+
 This also means SIG does not provide back-porting changes to old versions: If you want to access new features or bugfixes, you will need to update the Docker containers to the latest version. 
+
+### Updating your environment
+
+In addition to updating Sigrid itself, you will also need to periodicially update your environment in which Sigrid runs. SIG uses the following support policy for infrastructure component versions:
+
+- For Kubernetes, we support the latest 3 major versions. You can track the Kubernetes version history in [this overview](https://kubernetes.io/releases/).
+- For Postgres, we also support the latest 3 major versions. You can track the Postgres version history in [this overview](https://www.postgresql.org/support/versioning/).
 
 ## Deploying Sigrid into a Kubernetes cluster
 
