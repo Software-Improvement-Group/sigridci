@@ -52,7 +52,7 @@ SIG will provide you with a [Helm Chart](https://helm.sh) to configure and insta
 
 ## Identity provider integration
 
-Sigrid on-premise integrates with your identity provider through [OpenID Connect](https://openid.net/developers/how-connect-works/). You can either use an identity provider that "natively" supports OpenID Connect, or you can use middleware like [Dex](https://dexidp.io) or [KeyCloak](https://www.keycloak.org) that allows your identity provider to integrate with other systems.
+Sigrid on-premise integrates with your identity provider through [OpenID Connect](https://openid.net/developers/how-connect-works/). You can either use an identity provider that "natively" supports OpenID Connect, or you can use middleware like [Dex](https://dexidp.io) that allows your identity provider to integrate with other systems. The installation of Dex is an optional feature of the Sigrid Helm chart. Alternatively, [KeyCloak](https://www.keycloak.org) can also be used to connect Sigrid to different identity providers, however this should be installed separately.
 
 Locate the `sigrid-stack.auth-api` section in your Helm Chart's `values.yaml` file. Update the configuration properties so that they refer to your identity provider. 
 
