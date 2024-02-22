@@ -31,7 +31,7 @@ Some Sigrid on-premise features are *optional* based on your environment:
 - You need to have an identity provider supporting OpenID Connect, since Sigrid will integrate with this for authentication.
 - You need to allow outbound internet traffic in order to support Sigrid’s Open Source Health feature. Sigrid needs to connect to external sources to check for the latest vulnerability data.
   - If you do not allow outbound internet access, the Open Source Health feature is not available. The rest of Sigrid is unaffected.
-- For viewing source code within Sigrid, you need to provide a development platform that is integrated with th esame identity provider as Sigrid itself.
+- For viewing source code within Sigrid, you need to provide a development platform that is integrated with the same identity provider as Sigrid itself.
   - The view source functionality is optional, without this integration the rest of Sigrid is unaffected.
 
 ## Obtaining Sigrid on-premise
