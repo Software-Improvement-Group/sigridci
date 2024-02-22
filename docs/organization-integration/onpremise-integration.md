@@ -12,7 +12,7 @@ Most of this documentation refers to the software-as-a-service version of Sigrid
   - Application containers that should be deployed permanently in a [Kubernetes](https://en.wikipedia.org/wiki/Kubernetes) cluster, based on a [Helm chart](https://helm.sh) that is provided by SIG.
   - Analysis containers that run from a build pipeline within your development environment (e.g. GitHub or GitLab). These analysis containers may also be started on Kubernetes, but that is not a requirement.
 - SIG provides the necessary images through a container registry. The section [obtaining Sigrid on-premise](#obtaining-sigrid-on-premise) contains more information on how you can obtain and update these Docker containers.
-- Authentication is based on your identity provider, using [OpenID Connect](https://openid.net/developers/how-connect-works/). 
+- Authentication is based on your identity provider, using [OpenID Connect](https://openid.net/developers/how-connect-works/). Alternatively, [SAML](https://en.wikipedia.org/wiki/SAML_2.0) or [LDAP](https://en.wikipedia.org/wiki/Lightweight_Directory_Access_Protocol) are also supported, through [Dex](https://dexidp.io/).
 - Analyses are triggered from a build pipeline. The analysis results are then imported into a Postgres database, so they can be viewed in Sigrid.
 - Large files are stored in an [S3-compatible object store](https://aws.amazon.com/s3/).
 
