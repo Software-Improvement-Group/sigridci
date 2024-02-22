@@ -10,7 +10,7 @@ Most of this documentation refers to the software-as-a-service version of Sigrid
 
 - Sigrid on-premise is based on [Docker containers](https://en.wikipedia.org/wiki/Docker_%28software%29). There are two types of containers:
   - Application containers that should be deployed permanently in a [Kubernetes](https://en.wikipedia.org/wiki/Kubernetes) cluster, based on a [Helm chart](https://helm.sh) that is provided by SIG.
-  - Analysis containers that run from a build pipeline within your development environment (e.g. GitHub or GitLab).
+  - Analysis containers that run from a build pipeline within your development environment (e.g. GitHub or GitLab). These analysis containers may also be started on Kubernetes, but that is not a requirement.
 - SIG provides the necessary images through a container registry. The section [obtaining Sigrid on-premise](#obtaining-sigrid-on-premise) contains more information on how you can obtain and update these Docker containers.
 - Authentication is based on your identity provider, using [OpenID Connect](https://openid.net/developers/how-connect-works/). 
 - Analyses are triggered from a build pipeline. The analysis results are then imported into a Postgres database, so they can be viewed in Sigrid.
