@@ -10,29 +10,16 @@ Most of this documentation refers to the software-as-a-service version of Sigrid
 
 - Sigrid on-premise is based on [Docker containers](https://en.wikipedia.org/wiki/Docker_%28software%29). There are two types of containers:
   - Application containers that should be deployed permanently in a [Kubernetes](https://en.wikipedia.org/wiki/Kubernetes) cluster, based on a [Helm chart](https://helm.sh) that is provided by SIG.
-  - Analysis containers that run from a build pipeline within your development environment (e.g. GitHub or GitLab). These analysis containers may also be started on Kubernetes, but that is not a requirement.
+  - Analysis containers that run from a build pipeline within your development platform. These analysis containers may also be started on Kubernetes, but that is not a requirement. Supported development platforms are listed in [development platform integration](#development-platform-integration).
 - SIG provides the necessary images through a container registry. The section [obtaining Sigrid on-premise](#obtaining-sigrid-on-premise) contains more information on how you can obtain and update these Docker containers.
 - Authentication is based on your identity provider, using [OpenID Connect](https://openid.net/developers/how-connect-works/). Alternatively, [SAML](https://en.wikipedia.org/wiki/SAML_2.0) or [LDAP](https://en.wikipedia.org/wiki/Lightweight_Directory_Access_Protocol) are also supported, through [Dex](https://dexidp.io/).
 - Analyses are triggered from a build pipeline. The analysis results are then imported into a Postgres database, so they can be viewed in Sigrid.
 - Large files are stored in an [S3-compatible object store](https://aws.amazon.com/s3/).
 
-Some Sigrid on-premise features are *optional* based on your environment:
+Some Sigrid on-premise features are *optional*:
 
-- The Open Source Health feature requires outbound internet access, to retrieve the latest version of all known vulnerabilities in open source libraries. 
-- When viewing detailed analysis results, Sigrid displays relevant source code files within Sigrid. For this to work, a web-accessible code storage needs to be available. This integrates with Sigrid via [OAuth](https://oauth.net/2/). For this to work, the identity provider used for Sigrid authentication and for the code storage needs to be the same.
-
-### Environment requirements
-
-- Your infrastructure needs to support running applications on Kubernetes.
-- You need to pull Sigrid container images from DockerHub.
-  - If you do not allow outbound internet access, a custom air-gapped installation and update procedure needs to be designed, documented and followed.
-- You need to support and manage a Postgres database service.
-- You need to have a development platform with a continuous integration pipeline, since Sigrid will integrate with this pipeline. Supported development platforms are listed in the "Sigrid CI pipeline integration" in this documentation.
-- You need to have an identity provider supporting OpenID Connect, since Sigrid will integrate with this for authentication.
-- You need to allow outbound internet traffic in order to support Sigrid’s Open Source Health feature. Sigrid needs to connect to external sources to check for the latest vulnerability data.
-  - If you do not allow outbound internet access, the Open Source Health feature is not available. The rest of Sigrid is unaffected.
-- For viewing source code within Sigrid, you need to provide a development platform that is integrated with the same identity provider as Sigrid itself.
-  - The view source functionality is optional, without this integration the rest of Sigrid is unaffected.
+- The Open Source Health feature requires outbound internet access. Sigrid needs to connect to external sources to check for the latest vulnerability data for open source libraries. If you do not allow outbound internet access, the Open Source Health feature is not available. The rest of Sigrid is unaffected.
+- When viewing detailed analysis results, Sigrid displays relevant source code files within Sigrid. For this to work, a web-accessible code storage needs to be available. This integrates with Sigrid via [OAuth](https://oauth.net/2/). For this to work, the identity provider used for Sigrid authentication and for the code storage needs to be the same. For viewing source code within Sigrid, you need to provide a development platform that is integrated with the same identity provider as Sigrid itself. The view source functionality is optional, without this integration the rest of Sigrid is unaffected.
 
 ## Obtaining Sigrid on-premise
 
