@@ -172,6 +172,7 @@ Next, you will need to schedule *when* you're going to publish your system to Si
 ## Functional differences in Sigrid on-premise
 
 - The on-premise Sigrid distribution is single tenant. You cannot create your own "tenants", all systems and analyses will end up in your portfolio. That said, you can still use Sigrid’s user management to define which people should have access to which systems.
+- [Mendix Quallty and Security Management](https://www.softwareimprovementgroup.com/mendix-quality-and-security-management-powered-by-sigrid/) is only available if you are using Mendix in combination with GitHub or GitLab.
 
 ## Technical differences in Sigrid on-premise
 
