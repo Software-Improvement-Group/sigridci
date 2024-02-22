@@ -135,7 +135,7 @@ sigridci-onpremise:
 ```
 
 - This example assumes your pipeline includes a stage called `test`. If your pipeline is structured differently you will need to replace this with the name of the appropriate stage where you want Sigrid CI to run. 
-- Replace `YOUR_SIGRID_CUSTOMER` and `YOUR_SIGRID_SYSTEM` with your Sigrid customer account name and system name respectively. If you're not sure about your Sigrid customer account name, ask your Sigrid administrator. You can choose your own system name, though system names can only contain letters, numbers, and hyphens.
+- Replace `YOUR_SIGRID_CUSTOMER` and `YOUR_SIGRID_SYSTEM` with your Sigrid customer account name and system name, respectively. If you're not sure about your Sigrid customer account name, ask your Sigrid administrator. You can choose your own system name, though system names can only contain letters, numbers, and hyphens.
 - Replace `YOUR_DATABASE_HOST` with your Postgres database host name. Your GitLab pipeline should be able to access this host.
 - Use `$SIGRID_REVIEW_ONPREM_POSTGRES_IMPORTER_PASS` to configure the password of your Postgres database. Use [GitLab secrets](https://docs.gitlab.com/ee/ci/secrets/) to provide this password, *do not* hard-code this password in your YAML file.
 - The `rules` section at the bottom means Sigrid CI will only run as a scheduled job. Refer to the [GitLab documentation on how to create scheduled pipelines](https://docs.gitlab.com/ee/ci/pipelines/schedules.html) so that you can periodically publish your system to Sigrid, for example as a nightly build. Remove the `rules` section if you want to use Sigrid CI continuously and publish your system to Sigrid after every commit. 
