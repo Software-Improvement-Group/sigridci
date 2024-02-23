@@ -35,6 +35,7 @@ The following examples shows an example of a `sigrid-metadata.yaml` file:
 ```
 metadata:
   displayName: "MyBank back-end"
+  externalDisplayName: "MyBank component"
   divisionName: "My division"
   teamNames:
     - "My Team"
@@ -180,6 +181,7 @@ These additional fields are free-text fields, in the sense that their values are
 | **Field name**      | **Values**                                                                                                                                         |
 |---------------------|----------------------------------------------------------------------------------------------------------------------------------------------------|
 | Display Name        | Free-text field containing the display name for the system (max. 60<br>characters long)                                                            |
+| External Display Name| Free-text field containing the display name for the system (max. 60<br>characters long)                                                            |
 | Division Name       | Free-text field containing the name of the division <br>this system is associated with (max. 60 characters long)                                   |
 | Team Names          | A list where each element is a free-text field detailing the name(s)<br>of the team(s) that are involved with the system (max. 60 characters long) |
 | Supplier Names      | A list where each element is a free-text field detailing the name(s)<br>of the supplier(s) of the system (max. 60 characters long)                 |
