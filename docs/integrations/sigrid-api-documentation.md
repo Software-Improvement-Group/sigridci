@@ -402,8 +402,10 @@ The metadata fields are described by the following table. Note that the setting 
 |Path                          |Type     |Description                                                                                                                               |
 |------------------------------|---------|------------------------------------------------------------------------------------------------------------------------------------------|
 |`displayName`                 |`String` |The display name of the system. Must be between 0 and 60 characters. Can contain blanks: true|
+|`externalDisplayName`         |`String` |The external display name of the system. Must be between 0 and 60 characters. Can contain blanks: true|
 |`divisionName`                |`String` |The name of the division this system belongs to. Must be between 0 and 60 characters. Can contain blanks: true|
 |`supplierNames`               |`Array`  |Array of the names of the suppliers for this system|
+|`teamNames`                   |`Array`  |Array of the names of the teams maintaining this system|
 |`inProductionSince`           |`Number` |The year the system went into production. Cannot be later than the current year, must be at least 1960|
 |`businessCriticality`         |`String` |Importance of the system in terms of the effects of it not being available on the user's business. Must match any of the following values (case-sensitive): CRITICAL, HIGH, MEDIUM, LOW|
 |`lifecyclePhase`              |`String` |The phase of its lifecycle the system is in. Must be an industry identifier from the table of lifecycle phase identifiers below (case-sensitive)|
