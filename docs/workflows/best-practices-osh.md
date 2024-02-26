@@ -4,6 +4,7 @@
 - TODOs 
   - consider how to use context/meta-information to refine policies?
   - make sure duplication is avoided as much as sensible by cross-referencing to sections.
+
 -->
 
 <details>
@@ -23,7 +24,9 @@ This means that examples that are derived from customer systems, or that expose 
 - [Sigrid guidance for producers](https://docs.sigrid-says.com/reference/quality-model-documents/open-source-health.html)
    - we should be consistent with this; e.g. when setting default targets?
 - [Library Management Practices](https://softwareimprovementgroupcom.sharepoint.com/:p:/r/sites/Internalprojects/SEF/Shared%20Documents/Input/20200526_LibraryManagementBestPractices.pptx?d=w2d1b408f0aab4c6182fcd3f055020926&csf=1&web=1&e=LMfkRh)
-- ... 
+- [DPA V4 documentation](https://softwareimprovementgroupcom.sharepoint.com/:p:/r/sites/Deliveryprojects/P20140006BestPracticeEvaluationFramework/Shared%20Documents/Training/2023-DPA-V3-V4-introduction-long.pptx?d=w8b589f9f0eaf4201b2e1d5d7299b7e17&csf=1&web=1&e=tigu97) 
+- ...
+  
 ---
 </details>  
 
@@ -166,7 +169,14 @@ There are a number of policies on how to address open source libraries during de
   - The outside visibility: ​External Facing or Distributed​ 
     > [? is this the right classification?]
   - public facing systemen eerst--> 0 (x risk) vulnerabilities
-- When a vulnerability is found, it will be remediated within a time period according to below table [not here]
+- When a vulnerability is found, it will be remediated within a time period according to this table:
+  | CVSSv3 Range | Label | Remediation Deadline |
+  | --- | --- |--- |
+  | 9.0 – 10.0 | Critical | Within 1 working day |
+  | 7.0 – 8.9 | High | Within 14 days |
+  | 4.0 – 6.9 | Medium | Within 60 days |
+  | 0.1 – 3.9 | Low | Within 1 year |
+
 - If no remediation is available, [Company] will do a risk assessment which will have one of 3 outcomes:
   - If we find that the vulnerability does not pose any actual risk, we will ‘allowlist’ it. This requires CISO approval. This allowlist will be reviewed as part of the half-yearly measurement cycle.
   - We will mitigate the risk in some other way. If, for example, we do not want to allowlist. the entire library because of its importance but the vulnerability is limited to a single method, we can test for the use of that method and fail the pipeline in that case.
@@ -221,13 +231,15 @@ Always Manage libraries with a package manager (don’t mix third party code wit
 ### 10. Adopting a new library
 - checklist:
   - Does it have open issues?​
-  - Is the license compatible?​
+  - Is the license acceptable?​
+    - Libraries must have a license acceptable to <org>.  <org> maintains a list of common licenses used in free and open-source software (FOSS); if a library has a license listed as acceptable, it can be used. 
+  - How is the code quality of the library? 
   - Does it contain optimizations for performance, maintainability, functionality?​
   - Is the new version compatible?  ​
   - How mature is the version?​
   - Is it stable enough?​
   - Are many people using it (e.g. check github stars)
-  - How is the code quality of the library? 
+
   
 ### 11. When a library does not support requirements
 Basic rule: libraries should not be modified or customised: ​One of the main benefits of libraries/frameworks, is that they provide functionality without the duty of maintaining it. ​With customizing, you lose this benefit while being dependent on the changes that the community makes!​
