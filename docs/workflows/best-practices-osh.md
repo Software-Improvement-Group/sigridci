@@ -69,8 +69,8 @@ These jobs have been grouped in three categories: first some incidental jobs; ty
 
 ## The OSH model
 The SIG Open Source Health model is described in the following places:
-- The SIGRID documentation contains the [OSH guidance for producers](https://docs.sigrid-says.com/reference/quality-model-documents/open-source-health.html)
-- wiki page "How to interpret OSH findings"
+- The Sigrid documentation contains the [OSH guidance for producers](https://docs.sigrid-says.com/reference/quality-model-documents/open-source-health.html)
+- Wiki page "How to interpret OSH findings"
 - "OSH quality model" wiki page
 - And now the guide for producers is also in the Sigrid documentation
 - [And would benefit from a nice integration..]
@@ -81,31 +81,37 @@ The SIG Open Source Health model is described in the following places:
 In this section, we are describing guidelines, hints and tips on how to achieve healthy use of open source libraries in your application. Where applicable, we explain how Sigrid can be used to achieve this.
 
 
-### General guidelines for your application development
+### 0. General guidelines for your application development
 There are a number of topics to consider that are not directly related to which libraries you use, but how you organize the development of the application itself.
 
 The following guidelines should be considered as compliance rules for framework and library management (comply or explain):​
 
 #### Keep application source code separate from frameworks/libraries​.
-1. Do not change the source code of used frameworks/libraries
-2. Do not add project or organization specific headers 
+1. _Do not change the source code of used frameworks/libraries._
+2. _Do not add project or organization specific headers._ 
     > [LB: to what??? to the source code of libraries or frameworks?]​
-3. Use only a single version of each library or framework​
+3. _Use only a single version of each library or framework​._
+
 
 #### Regression tests and maintainability of the application code are key to updating frameworks/libraries​
-> TODO: can we turn the next bullets into more actionable guidelines?
-- If it is hard to update a library, chances are the problem lies in your codebase.​
-- Low module coupling and component independence make it easier to change code implementation (such as dealing with new versions of a library) while keeping the same behavior/requirements.​
-- Regression tests help to identify breaking changes in updates.​​
+If it is hard to update a library, chances are the problem lies in your codebase.​
+1. _Keep module coupling and component independence low_, to make it easier to change code implementation (such as dealing with new versions of a library) while keeping the same behavior/requirements.
+1. _Develop, maintain and run regression tests._ These help to identify breaking changes in updates.​​
 
 
-### 1. Define OSH related policies
-- Which libraries are allowed
-- the use of a package manager
-- how frequent to check for vulnerabilities and other risks in open source libraries
-- goals for library freshness
-  - (max number versions you may stay behind)
-- how fast new vulnerabilities have to be resolved (depending on the criticality)
+### 1. Define OSH related policies for development
+There are a number of policies on how to address open source libraries during development. For most of these policies, minimal requirements should be set for all teams; individual teams may agree on more stringent rules. 
+1. _Declare which libraries are allowed to be used_
+   - Create an _allow-list_. This list requires CISO approval. The allowlist must be reviewed regularly (a few times per year): define when this review will happen.
+   - For determining whether to include libraries, see the criteria defined in the section [Adopting a new library](#adopting-a-new-library).
+2. _Define the usage of a package manager_: this requires choosing preferably one per technology 
+   > (+communicate to developers, + embedding in the pipeline?). 
+3. _Set the thresholds for library risks_ that are (not) acceptable: this is applicable to all types of risks. 
+   - These goals can be set in the [Sigrid objectives](#TBD)
+   - Goals for the amount of and allowed types of vulnerabilities
+   - Goals for library freshness. e.g. in terms of time since a new version has been released, or the maximum number of versions you may stay behind.
+4. _Define how frequent to check for risks_ such as vulnerabilities and other risks in open source libraries
+5. _Define how fast new vulnerabilities have to be resolved_; this will depend on the criticality. See the section on [Handling detected vulnerabilities](#6-handling-detected-vulnerabilities) for details.
 
 
 
@@ -153,12 +159,13 @@ The following guidelines should be considered as compliance rules for framework 
     - [Updating a library](#updating-a-library) 
 
 
-### Handling detected vulnerabilities
-- Security risks of a certain framework or library should be determined based on at least two aspects: 
-  - ​1) The severity level of known vulnerabilities for the artefact​
-  - 2) The mission of the components where the framework or the library will be applied​ 
-    - Non mission critical / ​Mission ​critical / ​External Facing or Distributed​
-- public facing systemen eerst--> 0 (x risk) vulnerabilities
+### 6. Handling detected vulnerabilities
+- Security risks of a certain framework or library should be determined based on at least the following aspects:
+  ​- The severity level of known vulnerabilities for the artifact​
+  - The mission of the components where the framework or the library will be applied​: Non mission critical / ​Mission ​critical
+  - The outside visibility: ​External Facing or Distributed​ 
+    > [? is this the right classification?]
+  - public facing systemen eerst--> 0 (x risk) vulnerabilities
 - When a vulnerability is found, it will be remediated within a time period according to below table [not here]
 - If no remediation is available, [Company] will do a risk assessment which will have one of 3 outcomes:
   - If we find that the vulnerability does not pose any actual risk, we will ‘allowlist’ it. This requires CISO approval. This allowlist will be reviewed as part of the half-yearly measurement cycle.
@@ -166,7 +173,7 @@ The following guidelines should be considered as compliance rules for framework 
   - [In](http://3.in/) extreme cases, we will shut down the application until the vulnerability is resolved.
   - note: when addressing the vulnerabilities of a specific library by updating to a newer version, that always also improves the freshness
   
-### Handling detected license issues
+### 7. Handling detected license issues
 - Libraries must have an acceptable license.
   - This may be a paid license or an acceptable open-source license. [Company] maintains a list of common licenses used in free and open-source software (FOSS); if a library has a license listed as acceptable, it can be used. Otherwise, see if an alternative is available, or contact the [applicable role] to discuss whether the license is acceptable.
 - See also the License Risk Evaluation Framework slide at the bottom of the wiki page: [OSH interpret results wikipage: https://softwareimprovementgroup.atlassian.net/wiki/spaces/SSM/pages/50317951024/How+to+interpret+Open-Source+health+findings](https://workflowy.com/#/c9c4745b6b6b)
@@ -174,14 +181,14 @@ The following guidelines should be considered as compliance rules for framework 
   - e.g. when developing open-source software, more licenses are acceptable.
   - it also depends on how you use a library: it is sometimes needed/a solution to wrap the library in an executable component that can be used by calling, instead of becoming a part of the codebase.
 
-### Handling detected lack of freshness
+### 8. Handling detected lack of freshness
 - The teams are responsible for keeping libraries reasonably up to date: 
   - small library updates can be updated as part of regular maintenance; 
   - larger updates (e.g. major versions or frameworks) should be planned explicitly as part of a development sprint.
 
 
 
-### Updating a library
+### 9. Updating a library
 There can be several reasons to consider updating a library.
 
 Checklist before updating:
@@ -211,7 +218,7 @@ Always Manage libraries with a package manager (don’t mix third party code wit
     - Whilst easier in the short term, with this strategy you will end up with a system which depends on outdated and unmaintained libraries, where you can't use some other libraries since they require a newer version of that library which you can't upgrade and at some point. You may lose the ability to fix some issues at all.​
 
 
-### Adopting a new library
+### 10. Adopting a new library
 - checklist:
   - Does it have open issues?​
   - Is the license compatible?​
@@ -222,18 +229,20 @@ Always Manage libraries with a package manager (don’t mix third party code wit
   - Are many people using it (e.g. check github stars)
   - How is the code quality of the library? 
   
-### When a library does not support requirements
+### 11. When a library does not support requirements
 Basic rule: libraries should not be modified or customised: ​One of the main benefits of libraries/frameworks, is that they provide functionality without the duty of maintaining it. ​With customizing, you lose this benefit while being dependent on the changes that the community makes!​
 
 If no other solution is feasible and a modification is absolutely required (or: the costs of alternative solutions are very high), the source code should be 'adopted' (if permitted by its license) and put into a designated area in a version control system. The modification should be documented so that it can be re-applied whenever a newer version of the library is made available.
 
-### When a bug is detected in a library
+### 12. When a bug is detected in a library
 During development, while testing your application code, you may find out there is a bug in a library.
 - If the bug has already been fixed in a newer version of the library, then consider updating ([Updating a library])
 - You may be able to wrap the relevant library call(s) with extra code that corrects or hides the bug.
 - Or you can look at the code of the library and develop a bug fix: 
   - you can temporarily use the [modified library](#modify library) while merging back the bug fix into library (be aware of the license). Once the community has accepted the fix, remove the local code​
   - Or you can wait until a new version that includes the bug fix has been published and [update](#updating-a-library) 
+
+
 
 
 
