@@ -16,8 +16,6 @@ Integrating Sigrid CI into your pipeline allows you to automatically publish you
 
 See the "Sigrid CI" section in the menu for an overview of supported platforms. The documentation also explains how Sigrid CI fits into various [development processes and workflows](../sigridci-integration/development-workflows.md).
 
-
-
 ## Uploading source code using SFTP
 
 The preferred method to upload source code is Sigrid CI, but SIG also offers SFTP uploads for situations where Sigrid CI cannot be used.
@@ -28,7 +26,7 @@ The default folder you connect to is referred to as your home folder. You are fr
 
 The requirements below must be fulfilled to ensure uploaded files can be processed automatically and correctly:
 
-- Create one ZIP file for each source code snapshot (standard compression, do not create nested ZIP files).
+- Create one ZIP file for each source code snapshot. Refer to the list of [supported file formats](#supported-sftp-file-formats) and [instructions for creating a ZIP file for your ststem](#creating-a-zip-file-for-your-system).
 - Keep the internal structure of the ZIP file consistent across snapshots.
 - Add the date of the source code snapshot to the file name, in the format `yyyymmdd`.
 - Use the following naming convention for files you upload: `<application name>–<date>.zip` (for example: `myportal–20200922.zip`).
@@ -92,7 +90,7 @@ Connections to our upload server can be made using an SFTP client, such as [WinS
 The process for manual uploads is as follows:
 
 1. Client determines what source code to upload.
-2. Client archives all files into a ZIP file
+2. Client archives all files into a ZIP file. Refer to our [instructions for creating a zip file for your system](#creating-a-zip-file-for-your-system).
 3. Client uploads file(s) to SIG using SIG upload facility. See below for details.
 4. SIG receives files and validates the upload.
 5. SIG informs client and involved SIG employees about successful upload.
@@ -113,6 +111,24 @@ The usage of the portal is straightforward:
 6. Click on 'Upload'
 7. Wait for the system to finalize the file transfer (this may take some time, depending on network traffic and size of the file)
 8. The system returns with a message and provides the opportunity to upload another file
+
+## Creating a ZIP file for your system
+
+If you use Sigrid CI, this ZIP file is created automatically and you can skip this section. If you are using SFTP or manual uploads, you will need to create the ZIP file yourself using these guidelines.
+
+Prefer regular ZIP files, and avoid nested ZIP files. The following example can be used to create a ZIP file on the command line:
+
+```
+git clone https://github.com/LeaVerou/awesomplete.git code
+cd code
+git --no-pager log --date=iso --format='@@@;%H;%an;%ae;%ad;%s' --numstat --no-merges > git.log
+rm -rf .git
+zip -d code code.zip
+```
+
+The only thing you need to change in this example, is replace the URL of the repository with your own system's URL. 
+
+This will clone a Git repository, and then create a ZIP file containing both the source code and the change history. The latter is used for Sigrid's [architecture quality](../capabilities/architecture-quality.md) analysis. We create a log file containing this change history, and afterwards we deleted the `.git` directory to make the ZIP file smaller and faster to upload. 
 
 ## Contact and support
 
