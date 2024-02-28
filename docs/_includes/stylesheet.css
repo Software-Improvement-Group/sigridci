@@ -41,13 +41,18 @@ h3 {
 
 ul {
     list-style: none;
-    padding-left: 24px;
+    padding-left: 32px;
 }
 
 li::before {
     content: '\25A0';
     color: #DFC101;
     padding-right: 8px;
+    margin-left: -1em;
+}
+
+summary {
+    cursor: pointer;
 }
 
 .container {
