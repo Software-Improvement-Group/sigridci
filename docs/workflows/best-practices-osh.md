@@ -30,17 +30,18 @@ This means that examples that are derived from customer systems, or that expose 
 ---
 </details>  
 
+> NOTE: This document is a collection of the knowledge that we have accumulated within SIG on the best practices for achieving Open Source Health. Its purpose within SIG is to have all this knowledge documented in one place, such that we have a shared base as consultants, and also a document that we can share with customers that are in search of concrete advice on how to get things in place for healthy open source usage. 
+
+
 ## Introduction
 
-The purpose of this document is to collect the knowledge that we have accumulated within SIG on the best practices for achieving Open Source Health.
-The document collects all relevant information and sources that can provide concrete and actionable guidelines, hints and tips on how to achieve healthy use of open source libraries in your application. This covers how to get started, how to stay in control, and how to act when health deteriorates. 
+The purpose of this document is to provide concrete and actionable guidelines, hints and tips on how to achieve healthy use of open source libraries in your application. 
+This covers how to get started, how to stay in control, and how to act when health deteriorates. 
 Where applicable, we explain how Sigrid can be used to achieve this.
 
 
 
 ## OSH Jobs to be done
-> TODO: 'Library Management Practices' proposes these situations: new version / low activity / vulnerability detected / bug detected / functionality missing / compatibility break; perhaps add the latter? 
-
 
 The guidelines and best practices have been structured based on the concept of 'jobs to be done': the idea is to look at the actual tasks that stakeholders need to conduct, and provide them with help to do those tasks. Jobs can embed/refer to other tasks.
 
@@ -60,7 +61,7 @@ These jobs have been grouped in three categories: first some incidental jobs; ty
 6. Handling detected vulnerabilities
 7. Handling detected license issues
 8. Handling detected lack of freshness
-9. _Handling detected lack of activity_
+9. _Handling detected lack of activity_ (TBD)
 
 #### Handling libraries
 
@@ -68,7 +69,7 @@ These jobs have been grouped in three categories: first some incidental jobs; ty
 10. Adopting a new library
 11. When a library does not support requirements
 12. When a bug is detected in a library
-
+13. _Compatibility break_ (TBD)
 
 ## The OSH model
 The SIG Open Source Health model is described in the following places:
@@ -163,21 +164,24 @@ There are a number of policies on how to address open source libraries during de
 
 
 ### 6. Handling detected vulnerabilities
-- Security risks of a certain framework or library should be determined based on at least the following aspects:
-  ​- The severity level of known vulnerabilities for the artifact​
-  - The mission of the components where the framework or the library will be applied​: Non mission critical / ​Mission ​critical
-  - The outside visibility: ​External Facing or Distributed​ 
-    > [? is this the right classification?]
-  - public facing systemen eerst--> 0 (x risk) vulnerabilities
-- When a vulnerability is found, it will be remediated within a time period according to this table:
-  | CVSSv3 Range | Label | Remediation Deadline |
-  | --- | --- |--- |
-  | 9.0 – 10.0 | Critical | Within 1 working day |
-  | 7.0 – 8.9 | High | Within 14 days |
-  | 4.0 – 6.9 | Medium | Within 60 days |
-  | 0.1 – 3.9 | Low | Within 1 year |
+Security risks of a certain framework or library should be determined based on at least the following aspects: 
+​- The severity level of known vulnerabilities for the artifact​
+- The mission of the components where the framework or the library will be applied​: Non mission critical / ​Mission ​critical
+- The outside visibility: ​External Facing or Distributed​ 
+  > [? is this the right classification?]
+  - public facing systems need to be tackled first, and should not have any  vulnerabilities of risk category _high_ and higher.
 
-- If no remediation is available, [Company] will do a risk assessment which will have one of 3 outcomes:
+When a vulnerability is found, it will be remediated within a specified time period.
+  The table below is a suggestion how to specify this, depending on the criticality of the system:
+  | CVSSv3 Range | Label | Remediation Deadline Critical | Remediation Deadline Regular |
+  | --- | --- | --- | --- |
+  | 9.0 – 10.0 | Critical | Within 1 working day | Within 1 working day | 
+  | 7.0 – 8.9 | High | Within 14 days | Within 30 days |
+  | 4.0 – 6.9 | Medium | Within 60 days | Within 90 days |
+  | 0.1 – 3.9 | Low | Within 1 year | Within 1 year |
+  > TODO: check that the above table makes sense, especially the added last column..
+
+- If no remediation is available, do a risk assessment which will have one of 3 outcomes:
   - If we find that the vulnerability does not pose any actual risk, we will ‘allowlist’ it. This requires CISO approval. This allowlist will be reviewed as part of the half-yearly measurement cycle.
   - We will mitigate the risk in some other way. If, for example, we do not want to allowlist. the entire library because of its importance but the vulnerability is limited to a single method, we can test for the use of that method and fail the pipeline in that case.
   - [In](http://3.in/) extreme cases, we will shut down the application until the vulnerability is resolved.
