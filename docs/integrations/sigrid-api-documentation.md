@@ -417,7 +417,7 @@ The metadata fields are described by the following table. Note that the setting 
 |`remark`                      |`String` |Remark(s) about the system as (possibly empty) free-format text. Must be between 0 and 300 characters. Can contain blanks: true|
 |`externalID`                  |`String` |Allow customers to record an external identifier for a system. free-format text. Must be between 0 and 60 characters. Can contain blanks: true|
 
-The specific set of values that are allowed for each field can be found in the respective section on the [system metadata fields and allowed values](https://docs.sigrid-says.com/organization-integration/metadata.html#system-metadata-fields-and-corresponding-allowed-values) on the system metadata page.
+The specific set of values that are allowed for each field can be found in the respective section on the [system metadata fields and allowed values](../organization-integration/metadata.md#system-metadata-fields-and-corresponding-allowed-values) on the system metadata page.
 
 ### System lifecycle management
 
