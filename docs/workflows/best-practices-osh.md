@@ -120,9 +120,13 @@ There are a number of policies on how to address open source libraries during de
 
 
 ### 2. Implement usage of a package manager
-- depends on technology: do we have suggestions?
-- what if your technology does not come with a package manager?
+Use package managers to automate management of updates​; integrate them in the development pipeline​​​.
+Package managers are specific for the technology or library ecosystem you are using. 
 
+These are some of the common package managers:
+* ...
+
+In case you use a technology that does not come with a package manager, manual checking and updating is required.
 
 ### 3. Improving portfolio and system-level OSH
 - In case a package manager is not used, or only partially, this is a good topic to start with, since it will make the other improvement steps easier, faster, and less error-prone.
@@ -146,19 +150,21 @@ There are a number of policies on how to address open source libraries during de
   
 
 ### 4. Setting up Sigrid OSH
--  Define  Sigrid objectives
-  - Portfolio/System
-
+(other steps? e.g. create allowlist?)
+-  Define Sigrid objectives
+   - See Sigrid documentation [perhaps not make this a separate section?]
+   - first portfolio level, consider whether system-level exceptions are needed.
 
 
 ### 5. Scan the software for health issues
 - Frameworks and libraries should be scanned frequently (preferably daily, but no less than every 3 months) to make sure there are no severe vulnerabilities in them.
 - Use Sigrid to continuously review libraries:
   - For existence of known vulnerabilities.
-  - For acceptable license
+  - For risks in licenses
   - For up-to-date-ness (freshness)
 - When to use the scan results: 
-  - Do triaging during refinement. You need to decide if libraries need to be updated during the upcoming sprint, either because vulnerabilities have been found or because the team agrees it is falling too far behind the latest version. 
+  - Do triaging of scan results during refinement. You need to decide if libraries need to be updated during the upcoming sprint, either because vulnerabilities have been found or because the team agrees it is falling too far behind the latest version. 
+  - A licensing risk will usually only appear when a library has been newly introduced.
   Likely actions:
     - [Updating a library](#updating-a-library) 
 
@@ -328,13 +334,11 @@ A:
 - Use tooling to automate managing the updates​ --> this is one of the OSH topics
   - Integrate tools in the development pipeline​​​
 - Embed library management in the development process​
-  - Review frameworks/libraries as close as possible at the start of iterations​
+  - Review frameworks/libraries [updates?] as close as possible at the start of iterations​  --> during backlog refinement?
   - If you cannot embed this in development iterations, use a standalone schedule for updates (< once a month)​
   - When using stabilization branches, only update for critical fixes ​
   - Don’t mix updating and adding functionality in the same tickets, so you can rollback updates.​
-- Try to avoid multiple versions of the same library, as they add the same effort as a separate library​​
+- 
 - Consider each library/framework as a backlog item, and make it the responsibility of developers​
-  - Avoiding use of multiple versions of the same framework/library​
-  - Preventing using multiple frameworks/libraries for the same functionalities ​
-  - Re-estimating effort and creating visibility in growing technical debt of outdated frameworks/libraries​​
-
+  - Avoiding use of multiple versions of the same framework/library​, as they add the same effort as a separate library​​
+  - ?? Re-estimating effort and creating visibility in growing technical debt of outdated frameworks/libraries​​
