@@ -4,6 +4,8 @@
 - TODOs 
   - consider how to use context/meta-information to refine policies?
   - make sure duplication is avoided as much as sensible by cross-referencing to sections.
+  - Check that the benchmark risk categories and the guidance for producers should be consistent with the methodology & guidelines: so same scales etc.
+  - Make sure we are aligned with DPA v4! (can we refer to it?)
 
 -->
 
@@ -30,71 +32,79 @@ This means that examples that are derived from customer systems, or that expose 
 ---
 </details>  
 
-> NOTE: This document is a collection of the knowledge that we have accumulated within SIG on the best practices for achieving Open Source Health. Its purpose within SIG is to have all this knowledge documented in one place, such that we have a shared base as consultants, and also a document that we can share with customers that are in search of concrete advice on how to get things in place for healthy open source usage. 
+> NOTE for internal use: This document is a collection of the knowledge that we have accumulated within SIG on the best practices for achieving Open Source Health. Its purpose within SIG is to have all this knowledge documented in one place, such that we have a shared base as consultants, and also a document that we can share with customers that are in search of concrete advice on how to get things in place for healthy open source usage. 
 
 
 ## Introduction
 
-The purpose of this document is to provide concrete and actionable guidelines, hints and tips on how to achieve healthy use of open source libraries in your application. 
+The purpose of this document is to provide concrete and actionable guidelines, hints and tips on how to achieve healthy use of open source libraries and frameworks in your application. 
 This covers how to get started, how to stay in control, and how to act when health deteriorates. 
 Where applicable, we explain how Sigrid can be used to achieve this.
 
 
 
-## OSH Jobs to be done
+### OSH Jobs to be done
 
-The guidelines and best practices have been structured based on the concept of 'jobs to be done': the idea is to look at the actual tasks that stakeholders need to conduct, and provide them with help to do those tasks. Jobs can embed/refer to other tasks.
+The guidelines and best practices have been structured based on the concept of 'jobs to be done': the idea is to look at the actual tasks that stakeholders need to conduct, and provide them with help to do those tasks. Jobs can embed, or refer to, other tasks.
+
+> TODO: update this next paragraph
 
 These jobs have been grouped in three categories: first some incidental jobs; typically tasks that are required to start up a healthy open source usage in development, that may need to be revisited or updated on a regular basis. Secondly the various types of tasks that are needed to ensure continued health of libraries (note that even when application code is not actively maintained for a while, the health of open source libraries may diminish!). And thirdly a set of practical tasks in handling libraries as a developer.
 
+<!--  another, obvious form of structuring the contents in this document is in a (simple) design pattern format, which is centered around a problem to be addressed. That format can provide more structure, and allows for (1) putting a problem into a context, (2) adding details, special cases and practical suggestions without cluttering the main message.
+> base structure could be: name - problem - solution - (implementation in Sigrid) - consequences 
+--> 
 
-#### Incidental Jobs
-1. Define OSH related policies
-2. Implement usage of a package manager
-3. Improving portfolio and system-level OSH
-4. Setting up Sigrid OSH
+#### Be equipped for healthy open source usage
+1. General guidelines for your application development
+2. Define OSH-related policies
+3. How to improve portfolio and system-level OSH
 
 
-#### Ensuring health of libraries
+#### Ensuring your open source stays healthy
 
-5. Scan the software for issues
-6. Handling detected vulnerabilities
-7. Handling detected license issues
-8. Handling detected lack of freshness
-9. _Handling detected lack of activity_ (TBD)
+4. Scan the software for issues
+5. Handling detected vulnerabilities
+6. Handling detected license issues
+7. Handling detected lack of freshness
+8. _Handling detected lack of activity_ (TBD)
+
 
 #### Handling libraries
 
-9. Updating a library [New library version available]
-10. Adopting a new library
-11. When a library does not support requirements
-12. When a bug is detected in a library
-13. _Compatibility break_ (TBD)
+9. Updating a library
+10.  Adopting a new library
+11.  When a library does not meet requirements
 
-## The OSH model
+
+### About the SIG OSH model
 The SIG Open Source Health model is described in the following places:
-- The Sigrid documentation contains the [OSH guidance for producers](https://docs.sigrid-says.com/reference/quality-model-documents/open-source-health.html)
-- Wiki page "How to interpret OSH findings"
-- "OSH quality model" wiki page
-- And now the guide for producers is also in the Sigrid documentation
-- [And would benefit from a nice integration..]
-- The benchmark risk categories should inform (be consistent with) the methodology, similar for the guidance for producers.
+- The [OSH guidance for producers](https://docs.sigrid-says.com/reference/quality-model-documents/open-source-health.html) is also part of the Sigrid documentation.
+
+And more internal details for SIG are here (since some proprietary info):
+- Wiki page ["How to interpret OSH findings" wikipage](https://softwareimprovementgroup.atlassian.net/wiki/spaces/SSM/pages/50317951024/How+to+interpret+Open-Source+health+findings).
+  > is this now redundant?
+- Wiki page ["OSH quality model" wiki page](https://softwareimprovementgroup.atlassian.net/wiki/spaces/DEL/pages/50594021377/Open+Source+Health+Quality+Model). 
 
 
-## Guidelines for Jobs to be done:
-In this section, we are describing guidelines, hints and tips on how to achieve healthy use of open source libraries in your application. Where applicable, we explain how Sigrid can be used to achieve this.
 
 
-### 0. General guidelines for your application development
+## Be equipped for healthy open source usage
+
+This section prescribes a typical way of working for ensuring healthy open source usage; in specific situations, you may adapt this approach, but it is best to follow a comply-or-explain approach.
+
+> NOTE: should this subsection come after the next one on OSH policies?
+
+### General guidelines for your application development
 There are a number of topics to consider that are not directly related to which libraries you use, but how you organize the development of the application itself.
-
-The following guidelines should be considered as compliance rules for framework and library management (comply or explain):​
+The following guidelines should be considered as compliance rules for framework and library management:​
 
 #### Keep application source code separate from frameworks/libraries​.
-1. _Do not change the source code of used frameworks/libraries._
+1. _Do not change the source code of used frameworks/libraries._: depending on the technology used, you often do not need source code at all, but will use binaries of the libraries.
 2. _Do not add project or organization specific headers._ 
     > [LB: to what??? to the source code of libraries or frameworks?]​
-3. _Use only a single version of each library or framework​._
+3. _Use only a single version of each library or framework​._: Also, do not have copies of the same library installed. 
+   Note that in some cases, you can have a library _L1_ that requires _M_, and a library _L2_ that requires another version of _M_; in such cases you may not be able to influence this (depending on what your package manager allows), but at least ensure your application code does not directly rely on multiple versions of the same library.
 
 
 #### Regression tests and maintainability of the application code are key to updating frameworks/libraries​
@@ -103,32 +113,37 @@ If it is hard to update a library, chances are the problem lies in your codeb
 1. _Develop, maintain and run regression tests._ These help to identify breaking changes in updates.​​
 
 
-### 1. Define OSH related policies for development
+
+### Define OSH related policies for development
 There are a number of policies on how to address open source libraries during development. For most of these policies, minimal requirements should be set for all teams; individual teams may agree on more stringent rules. 
-1. _Declare which libraries are allowed to be used_
-   - Create an _allow-list_. This list requires CISO approval. The allowlist must be reviewed regularly (a few times per year): define when this review will happen.
-   - For determining whether to include libraries, see the criteria defined in the section [Adopting a new library](#adopting-a-new-library).
-2. _Define the usage of a package manager_: this requires choosing preferably one per technology 
-   > (+communicate to developers, + embedding in the pipeline?). 
-3. _Set the thresholds for library risks_ that are (not) acceptable: this is applicable to all types of risks. 
-   - These goals can be set in the [Sigrid objectives](#TBD)
-   - Goals for the amount of and allowed types of vulnerabilities
-   - Goals for library freshness. e.g. in terms of time since a new version has been released, or the maximum number of versions you may stay behind.
-4. _Define how frequent to check for risks_ such as vulnerabilities and other risks in open source libraries
-5. _Define how fast new vulnerabilities have to be resolved_; this will depend on the criticality. See the section on [Handling detected vulnerabilities](#6-handling-detected-vulnerabilities) for details.
+
+1. _Define the usage of a package manager_: choose the package manager(s) to be used, at least per system, preferably shared across the organization. Depending on the technologies that are used, you may need multiple package managers.
+   - The package managers need to be integrated in your CI/CD pipeline.
+  <!-- more useful info here: https://gurukuldevops.com/package-management-in-devops-tools-and-best-practices/ -->   
+
+1. _Set the thresholds for library risks_ that are (not) acceptable: this is applicable to all types of risks. These goals can be set in the [Sigrid objectives](#TBD). Define goals for:
+   - The amount of and allowed types of vulnerabilities
+   - the allowed licenses
+   - Library freshness. e.g. in terms of time since a new version has been released, or the maximum number of versions you may stay behind.
+
+1. _Define how frequent to check for risks_ such as vulnerabilities and other risks in open source libraries. It is advised to make this 
+
+1. _Define how fast new vulnerabilities have to be resolved_; this will depend on the criticality. See the section on [Handling detected vulnerabilities](#6-handling-detected-vulnerabilities) for details.
+
+1. _Declare which libraries should not be checked_
+   - This is useful when a library has properties that cause Sigrid to signal a risk, but that risk is a false positive. 
+   - Create an _ignore-list_. This list requires CISO approval. The ignore-list must be reviewed regularly (a few times per year): define when this review will happen.
+   - Do note that if a library is put on the ignore-list since the reported vulnerability-list is a false positive, that does not necessarily mean that the other types of risk should be ignored as well.
+   > NOTE: this was called the 'allow-list', but 'ignore-list' seems to carry the purpose better.
+
+   > TODO: (how) can customers set up an ignore-list for Sigrid?
+
+1. Optionally: _Define a shared permitted-list_: it can be useful (and in some organizations required) to have a shared list of libraries that are permitted. 
+  This list can have an advisory role, functioning as a list of libraries that have already been checked, and are likely already in use. it can also have the role of a clearance list, where developers have only permission to use libraries from the permitted-list, and must seek approval for libraries that are not on that list. 
+  For determining whether to include libraries, see the criteria defined in the section [Adopting a new library](#adopting-a-new-library).
 
 
-
-### 2. Implement usage of a package manager
-Use package managers to automate management of updates​; integrate them in the development pipeline​​​.
-Package managers are specific for the technology or library ecosystem you are using. 
-
-These are some of the common package managers:
-* ...
-
-In case you use a technology that does not come with a package manager, manual checking and updating is required.
-
-### 3. Improving portfolio and system-level OSH
+### How to improve portfolio and system-level OSH
 - In case a package manager is not used, or only partially, this is a good topic to start with, since it will make the other improvement steps easier, faster, and less error-prone.
 > TODO: should we advise to compile a portfolio-level overview of which libraries are used, and conduct an assessment of each library (independent of its context) regarding the risks? it can make sense (and it is a practice at some organizations) to have a set of 'approved'/white-listed libraries--sometimes only those are allowed to be used.
 - First focus on vulnerabilities
@@ -149,11 +164,9 @@ In case you use a technology that does not come with a package manager, manual c
 - Where to start/how to tackle OSH techdebt incrementally
   
 
-### 4. Setting up Sigrid OSH
-(other steps? e.g. create allowlist?)
--  Define Sigrid objectives
-   - See Sigrid documentation [perhaps not make this a separate section?]
-   - first portfolio level, consider whether system-level exceptions are needed.
+
+## Ensuring your open source stays healthy
+In this section, we are describing guidelines, hints and tips on how to maintain healthy use of open source libraries in your application. Where applicable, we explain how Sigrid can be used to achieve this.
 
 
 ### 5. Scan the software for health issues
@@ -207,6 +220,8 @@ When a vulnerability is found, it will be remediated within a specified time per
   - larger updates (e.g. major versions or frameworks) should be planned explicitly as part of a development sprint.
 
 
+## Handling your libraries
+
 
 ### 9. Updating a library
 There can be several reasons to consider updating a library.
@@ -239,6 +254,8 @@ Always Manage libraries with a package manager (don’t mix third party code wit
 
 
 ### 10. Adopting a new library
+> this also applies to frameworks
+> often, libraries are part of an eco-system; e.g. eclipse, apache, where it makes a lot of sense (consistency, frictionless compatibility) to pick a library from the same ecosystem, when that meets the necessary requirements. 
 - checklist:
   - Does it have open issues?​
   - Is the license acceptable?​
@@ -252,11 +269,16 @@ Always Manage libraries with a package manager (don’t mix third party code wit
 
   
 ### 11. When a library does not support requirements
+There are several reasons why a library does not support the needs and requirements:
+1. Function mismatch: this can be because a library is missing features that cannot easily be added on top, or because it makes assumptions or choices that are different from the ones in the application.
+2. Bug in library: typically detected after a library has been adopted, so the cost of switching is non-neglible.
+3. Compatibility break: when a library does not (or no longer) works well together with another library.
+
 Basic rule: libraries should not be modified or customised: ​One of the main benefits of libraries/frameworks, is that they provide functionality without the duty of maintaining it. ​With customizing, you lose this benefit while being dependent on the changes that the community makes!​
 
 If no other solution is feasible and a modification is absolutely required (or: the costs of alternative solutions are very high), the source code should be 'adopted' (if permitted by its license) and put into a designated area in a version control system. The modification should be documented so that it can be re-applied whenever a newer version of the library is made available.
 
-### 12. When a bug is detected in a library
+#### When a bug is detected in a library
 During development, while testing your application code, you may find out there is a bug in a library.
 - If the bug has already been fixed in a newer version of the library, then consider updating ([Updating a library])
 - You may be able to wrap the relevant library call(s) with extra code that corrects or hides the bug.
@@ -264,7 +286,7 @@ During development, while testing your application code, you may find out there 
   - you can temporarily use the [modified library](#modify library) while merging back the bug fix into library (be aware of the license). Once the community has accepted the fix, remove the local code​
   - Or you can wait until a new version that includes the bug fix has been published and [update](#updating-a-library) 
 
-
+#### _Compatibility break_ (TBD)
 
 
 
