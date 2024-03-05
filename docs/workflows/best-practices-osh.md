@@ -126,7 +126,7 @@ There are a number of policies on how to address open source libraries during de
    - the allowed licenses
    - Library freshness. e.g. in terms of time since a new version has been released, or the maximum number of versions you may stay behind.
 
-1. _Define how frequent to check for risks_ such as vulnerabilities and other risks in open source libraries. It is advised to make this 
+1. _Define how frequent to check for risks_ such as vulnerabilities and other risks in open source libraries. At least make this a fixed part of your sprint rhythm. See also [Where OSH fits in your workflow](#where-oshsigrid-fits-in-your-workflow-going-concern) 
 
 1. _Define how fast new vulnerabilities have to be resolved_; this will depend on the criticality. See the section on [Handling detected vulnerabilities](#6-handling-detected-vulnerabilities) for details.
 
@@ -145,7 +145,7 @@ There are a number of policies on how to address open source libraries during de
 
 ### How to improve portfolio and system-level OSH
 - In case a package manager is not used, or only partially, this is a good topic to start with, since it will make the other improvement steps easier, faster, and less error-prone.
-> TODO: should we advise to compile a portfolio-level overview of which libraries are used, and conduct an assessment of each library (independent of its context) regarding the risks? it can make sense (and it is a practice at some organizations) to have a set of 'approved'/white-listed libraries--sometimes only those are allowed to be used.
+
 - First focus on vulnerabilities
   - do a threat analysis to prioritize the systems that are most risk-prone to security attacks
     - e.g. public-facing systems first 
