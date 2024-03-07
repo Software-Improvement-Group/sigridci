@@ -20,7 +20,7 @@ Login to the Google admin console and add a serviceprovider called 'Sigrid'.
 
 <img src="../images/google-saml-1.png" width="800" /><br />
 
-### Share the metadata SIG
+### Share the metadata
 
 - download the Metadata
 - send the metatadata.xml file to [Support](mailto:support@softwareimprovementgroup.com)
