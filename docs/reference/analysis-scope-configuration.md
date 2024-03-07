@@ -51,7 +51,7 @@ Patterns are defined using regular expressions, as explained in the next section
 
 ### Defining include and exclude patterns
 
-Various options across the scope configuration file allow you to define `include` and `exclude` patterns. At first glance, many people expect these patterns to behave like [Glob patterns](https://en.wikipedia.org/wiki/Glob_(programming) (for example `*.py`), but Sigrid actually uses [regular expressions](https://en.wikipedia.org/wiki/Regular_expression) instead. The reason for this is fairly straightforward: regular expressions are more flexible, which is relevant considering the large number of technologies and conventions that Sigrid needs to support.
+Various options across the scope configuration file allow you to define `include` and `exclude` patterns. At first glance, many people expect these patterns to behave like [Glob patterns](https://en.wikipedia.org/wiki/Glob_%28programming%29) (for example `*.py`), but Sigrid actually uses [regular expressions](https://en.wikipedia.org/wiki/Regular_expression) instead. The reason for this is fairly straightforward: regular expressions are more flexible, which is relevant considering the large number of technologies and conventions that Sigrid needs to support.
 
 The following example specifies a component that includes all `.js` and `.jsx` files with a path that includes the `frontend` directory, except files ending with `.spec.jsx`:
 
@@ -236,9 +236,7 @@ This `thirdpartyfindings` section in the scope file supports the following optio
 | `disabled_analyzers` [1] | No        | Defining a list of disabled specific scanning tools.                                |
 | `enabled_analyzers` [1]  | No        | Defining a list of specific scanning tools to enable (if not enabled by default).   |
 
-[1]: You can see the list of enabled analyzers in your Sigrid security overview, if you [group by "Finding" and then by "Origin"](../capabilities/system-security.md#different-possible-grouping-of-security-findings).
-
-For the list of all supported analyzers, see [the specific technology support section](technology-support.md#supported-security-analyzers).
+1. You can see the list of enabled analyzers in your Sigrid security overview, if you [group by finding and then by origin](../capabilities/system-security.md#different-possible-grouping-of-security-findings). For the list of all supported analyzers, see [the technology support section](technology-support.md#supported-security-analyzers).
 
 ## Architecture Quality
 

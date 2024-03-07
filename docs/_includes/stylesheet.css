@@ -41,13 +41,18 @@ h3 {
 
 ul {
     list-style: none;
-    padding-left: 24px;
+    padding-left: 32px;
 }
 
-li::before {
+ul li::before {
     content: '\25A0';
     color: #DFC101;
     padding-right: 8px;
+    margin-left: -1em;
+}
+
+summary {
+    cursor: pointer;
 }
 
 .container {
@@ -231,7 +236,7 @@ sig-toc {
 
 sig-toc ul {
     margin: 8px 0px 0px 0px;
-    padding-left: 0px;
+    padding-left: 16px;
     list-style-type: none;
 }
 

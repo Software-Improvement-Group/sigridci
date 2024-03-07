@@ -275,6 +275,7 @@ Finally, note the column "supported Sigrid capabilities" does not list Open Sour
 | `tibcobestatemachine`      | TIBCO BE (State Machine)                               |                      | Maintainability, Architecture           |
 | `tibcobw6`                 | TIBCO BW6                                              |                      | Maintainability, Architecture           |
 | `tripleforms`              | TriplEforms                                            |                      | Maintainability                         |
+| `trs`                      | TRS                                                    |                      | Maintainability                         | (8)   |
 | `tsql`                     | T-SQL                                                  |                      | Maintainability, Architecture           |
 | `turtle`                   | Turtle                                                 |                      | Maintainability                         |
 | `typescript`               | TypeScript                                             |                      | Maintainability, Architecture, Security | (3)   |
@@ -303,7 +304,7 @@ Finally, note the column "supported Sigrid capabilities" does not list Open Sour
 | `xaml`                     | XAML                                                   |                      | Maintainability, Architecture           |
 | `xml`                      | XML                                                    |                      | Maintainability, Architecture           | (5)   |
 | `xpdl`                     | Tibco ActiveMatrix BPM                                 |                      | Maintainability                         |
-| `xpp`                      | X++                                                    |                      | Maintainability, Architecture           | (8)   |
+| `xpp`                      | X++ AX                                                 |                      | Maintainability, Architecture           | (8)   |
 | `xpp365`                   | X++ for Dynamics 365                                   |                      | Maintainability, Architecture           | (8)   |
 | `xquery`                   | Xquery                                                 |                      | Maintainability, Architecture           |
 | `xsd`                      | XSD                                                    |                      | Maintainability, Architecture           |
