@@ -476,7 +476,7 @@ In addition to the general usage of the Sigrid API, users also can also perform 
 ### Usage
 
 * The Sigrid UM API base URL is `https://sigrid-says.com/rest/auth/api`.
-* Authentication for the Sigrid API uses the same [authentication tokens](https://docs.sigrid-says.com/organization-integration/authentication-tokens.html) that are used by Sigrid CI.
+* Authentication for the Sigrid API uses the same [authentication tokens](../organization-integration/authentication-tokens.md) that are used by Sigrid CI.
 * You need to pass the authentication token to each request in the HTTP header: `Authorization: Bearer {SIGRID_PERSONAL_TOKEN}`.
 * All end points will return HTTP status 401 if the token is invalid, expired or revoked.
 * All end points will return HTTP status 403 if the token belongs to an non-admin user.
