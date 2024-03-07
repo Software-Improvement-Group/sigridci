@@ -1,4 +1,4 @@
-# Best Practices for Open Source Health (OSH)
+# Guidelines for healthy use of Open Source
 
 <!-- 
 - TODOs 
@@ -61,11 +61,11 @@ These jobs have been grouped in three categories: first some general guidelines 
 #### Ensuring your open source stays healthy
 > NOTE: in a way, having a separate job for _each_ property in the OSH quality model would be a nice structure for practitioners as well? 
 
-1. Scan the software for issues
-2. Handling detected vulnerabilities
-3. Handling detected license issues
-4. Handling detected lack of freshness
-5. _Handling detected lack of activity_ (TBD)
+4. Scan the software for issues
+5. Handling detected vulnerabilities
+6. Handling detected license issues
+7. Handling detected lack of freshness
+8. _Handling detected lack of activity_ (TBD)
 
 
 #### Handling libraries
@@ -92,7 +92,7 @@ And more internal details for SIG are here (since some proprietary info):
 This section prescribes a typical way of working for ensuring healthy open source usage; in specific situations, you may adapt this approach, but it is best to follow a comply-or-explain approach.
 
 
-### General guidelines for your application development
+### 1. General guidelines for your application development
 > NOTE: should this subsection come after the next one on OSH policies?
 
 There are a number of topics to consider that are not directly related to the libraries themselves, but to the way you organize the development of the application itself.
@@ -113,7 +113,7 @@ If it is hard to update a library, chances are the problem lies in your codeb
 
 
 
-### Define OSH related policies for development
+### 2. Define OSH related policies for development
 There are a number of policies on how to address open source libraries during development. For most of these policies, minimal requirements should be set for all teams; individual teams may agree on more stringent rules. 
 
 1. _Define the usage of a package manager_: choose the package manager(s) to be used, at least per system, preferably shared across the organization. Depending on the technologies that are used, you may need multiple package managers.
@@ -152,7 +152,7 @@ There are a number of policies on how to address open source libraries during de
   For determining whether to include libraries, see the criteria defined in the section [Adopting a new library](#adopting-a-new-library).
 
 
-### How to improve portfolio and system-level OSH [ROUGH DRAFT]
+### 3. How to improve portfolio and system-level OSH [ROUGH DRAFT]
 Especially for a new Sigrid, at the system and portfolio level there can _a lot_ of things that need to be fixed; this sections aims to provide some advice on how to tackle all those jobs incrementally, starting with the most critical and high-ROI topics first.
 
 - In case a package manager is not used, or only partially, this is a good topic to start with, since it will make the other improvement steps easier, faster, and less error-prone.
@@ -178,7 +178,7 @@ Especially for a new Sigrid, at the system and portfolio level there can _a lot_
 In this section, we are describing guidelines, hints and tips on how to maintain healthy use of open source libraries in your application. Where applicable, we explain how Sigrid can be used to achieve this.
 
 
-### 5. Scan the software for health issues [ROUGH DRAFT]
+### 4. Scan the software for health issues [ROUGH DRAFT]
 - Frameworks and libraries should be scanned frequently (preferably daily, but no less than every 3 months) to make sure there are no severe vulnerabilities in them.
 - Use Sigrid to continuously review libraries:
   - For existence of known vulnerabilities.
@@ -191,7 +191,7 @@ In this section, we are describing guidelines, hints and tips on how to maintain
     - [Updating a library](#updating-a-library) 
 
 
-### 6. Handling detected vulnerabilities
+### 5. Handling detected vulnerabilities
 Security risks of a certain framework or library should be determined based on at least the following aspects: 
 ​- The severity level of known vulnerabilities for the artifact​
 - The mission of the components where the framework or the library will be applied​: Non mission critical / ​Mission ​critical
@@ -216,7 +216,7 @@ When a vulnerability is found, it will be remediated within a specified time per
   - note: when addressing the vulnerabilities of a specific library by updating to a newer version, that always also improves the freshness
   
 
-### 7. Handling detected license issues
+### 6. Handling detected license issues
 - Libraries must have an acceptable license.
   - This may be a paid license or an acceptable open-source license. [Company] maintains a list of common licenses used in free and open-source software (FOSS); if a library has a license listed as acceptable, it can be used. Otherwise, see if an alternative is available, or contact the [applicable role] to discuss whether the license is acceptable.
 - See also the License Risk Evaluation Framework slide at the bottom of the wiki page: [OSH interpret results wiki page: https://softwareimprovementgroup.atlassian.net/wiki/spaces/SSM/pages/50317951024/How+to+interpret+Open-Source+health+findings](https://workflowy.com/#/c9c4745b6b6b)
@@ -225,11 +225,12 @@ When a vulnerability is found, it will be remediated within a specified time per
   - it also depends on how you use a library: it is sometimes needed/a solution to wrap the library in an executable component that can be used by calling, instead of becoming a part of the codebase.
 
 
-### 8. Handling detected lack of freshness [ROUGH DRAFT]
+### 7. Handling detected lack of freshness [ROUGH DRAFT]
 - The teams are responsible for keeping libraries reasonably up to date: 
   - small library updates can be updated as part of regular maintenance; 
   - larger updates (e.g. major versions or frameworks) should be planned explicitly as part of a development sprint.
 
+### 8. _Handling detected lack of activity_ (TBD)
 
 ## Handling your libraries
 
@@ -266,7 +267,7 @@ Always Manage libraries with a package manager (don’t mix third party code wit
 
 ### 10. Adopting a new library [ROUGH DRAFT]
 > this also applies to frameworks
-> often, libraries are part of an ecosystem; e.g. eclipse, Apache, where it makes a lot of sense (consistency, frictionless compatibility) to pick a library from the same ecosystem, when that meets the necessary requirements. 
+> often, libraries are part of an ecosystem, or work within a certain application framework; e.g. eclipse, Apache, where it makes a lot of sense (consistency, frictionless compatibility) to pick a library from the same ecosystem, when that meets the necessary requirements. 
 - checklist:
   - Does it have open issues?​
   - Is the license acceptable?​
@@ -279,7 +280,7 @@ Always Manage libraries with a package manager (don’t mix third party code wit
   - Are many people using it (e.g. check GitHub stars)
 
 
-### 11. When a library does not support requirements [ROUGH DRAFT]
+### 11. When a library does not support requirements
 There are several possible reasons why a library does not support the needs and requirements:
 1. _Functional mismatch_: a library is missing features that cannot easily be added on top, or the implementation of the library is based on assumptions or choices that are incompatible with the ones in the application.
 2. _Bug in library implementation_: typically detected after a library has been adopted, so the cost of switching is non-neglible.
