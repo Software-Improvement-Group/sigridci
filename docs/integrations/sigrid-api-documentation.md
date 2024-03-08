@@ -484,7 +484,7 @@ In addition to the general usage of the Sigrid API, users also can also perform 
 
 The following example shows how to call the User Management API via `curl`:
 
-```
+```shell
 curl -H 'Authorization: Bearer {SIGRID_PERSONAL_TOKEN}' https://sigrid-says.com/rest/auth/api/user-management/{customer}/users
 ```
 
@@ -492,7 +492,7 @@ curl -H 'Authorization: Bearer {SIGRID_PERSONAL_TOKEN}' https://sigrid-says.com/
 
 A number of endpoints are available that make managing existing users within the portfolio easier:
 
-- `GET https://sigrid-says.com/rest/auth/api/user-management/{customer}/users`: Returns a ist all users within a portfolio
+- `GET https://sigrid-says.com/rest/auth/api/user-management/{customer}/users`: Returns a list all users within a portfolio
 - `GET https://sigrid-says.com/rest/auth/api/user-management/{customer}/users/{userId}`: Returns a user based on their unique identifier
 - `PUT https://sigrid-says.com/rest/auth/api/user-management/{customer}/users/{userID}/permissions`: Updates the permissions granted to a specific user
 
@@ -502,18 +502,18 @@ The response format upon successful request of a single user looks like the foll
 
 ```json
 {
-  "id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
-  "firstName": "string",
-  "lastName": "string",
-  "email": "string",
-  "isAdmin": true,
-  "accessToAll": true,
-  "systems": [
-    {
-      "systemName": "string"
-    }
-  ],
-  "lastLoginAt": "2024-03-07T16:54:33.438Z"
+	"id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
+	"firstName": "string",
+	"lastName": "string",
+	"email": "string",
+	"isAdmin": true,
+  	"accessToAll": true,
+  	"systems": [
+    	{
+      		"systemName": "string"
+    	}
+  	],
+	"lastLoginAt": "2024-03-07T16:54:33.438Z"
 }
 ```
 
@@ -530,44 +530,44 @@ $ curl 'https://sigrid-says.com/rest/auth/api/user-management/{customer}/users/{
     -H 'Content-Type: application/json' \
     -H 'Authorization: Bearer {SIGRID_PERSONAL_TOKEN}' \
     -d '{
-	"accessToAll: false",
-	"systems" : [ 
+	"accessToAll": false,
+	"systems": [ 
 		{
-			"systemName" = "system-a"
+			"systemName": "system-a"
 		},
 		{
-			"systemName" = "system-b"
+			"systemName": "system-b"
 		},
 		{
-			"systemName" = "system-c"
-	}
+			"systemName": "system-c"
+	]
 }'
 ```
 
-This request will _replace_ the set of system permissions granted to the specified user with the set provided in the request body consisting of 3 systems - System A, B and C. No other change is made, so user details such as firstName / lastName / email all will remain as-is upon successful request of this endpoint.
+This request will _replace_ the set of system permissions granted to the specified user with the set provided in the request body consisting of 3 systems - system-a, system-b and system-c. No other change is made, so user details such as firstName / lastName / email all will remain as-is upon successful request of this endpoint.
 
 Upon succesful request of the above endpoint for a user with id `d987c69d-464f-4276-bea8-5780cc782b97`, the response format for `GET https://sigrid-says.com/rest/auth/api/user-management/{customer}/users/d987c69d-464f-4276-bea8-5780cc782b97` :
 
 ```json
 {
-  "id": "d987c69d-464f-4276-bea8-5780cc782b97",
-  "firstName": "string",
-  "lastName": "string",
-  "email": "string",
-  "isAdmin": false,
-  "accessToAll": false,
-  "systems": [
-    {
-		"systemName" = "system-a"
-	},
-	{
-		"systemName" = "system-b"
-	},
-	{
-		"systemName" = "system-c"
-	}
-  ],
-  "lastLoginAt": "2024-03-07T16:54:33.438Z"
+	"id": "d987c69d-464f-4276-bea8-5780cc782b97",
+	"firstName": "string",
+	"lastName": "string",
+	"email": "string",
+	"isAdmin": false,
+	"accessToAll": false,
+	"systems": [
+		{
+			"systemName": "system-a"
+		},
+		{
+			"systemName": "system-b"
+		},
+		{
+			"systemName": "system-c"
+		}
+	],
+	"lastLoginAt": "2024-03-07T16:54:33.438Z"
 }
 ```
 
@@ -580,7 +580,7 @@ For more information, see the detailed section on [user management in Sigrid.](.
 In addition to managing individual user permissions within the portfolio, authorization group permissions can also be managed via the API. This allows for bulk editing of permissions users inherit based on their authorization group membership, as well as the set of users that are part of a specified group. 
 
 Available endpoints include:
-- `GET https://sigrid-says.com/rest/auth/api/user-management/{customer}/groups`: Returns a ist all authorization groups defined within a portfolio
+- `GET https://sigrid-says.com/rest/auth/api/user-management/{customer}/groups`: Returns a list all authorization groups defined within a portfolio
 - `GET https://sigrid-says.com/rest/auth/api/user-management/{customer}/groups/{groupId}`: Returns an authorization group based on their unique identifier
 - `PUT https://sigrid-says.com/rest/auth/api/user-management/{customer}/groups/{groupID}/permissions`: Updates the permissions granted to the authorization group, with all users within the group inheriting the updated permissions
 - `PUT https://sigrid-says.com/rest/auth/api/user-management/{customer}/groups/{groupID}/members`: Updates the set of users that are part of the authorization group
@@ -591,19 +591,19 @@ The response format upon successful request of a single authorization group look
 
 ```json
 {
-  "id": "string($uuid)",
-  "name": "string",
-  "description": "string",
-  "users": [
-    "string($uuid)"
-  ],
-  "systems": [
-    {
-      "systemName": "string"
-    }
-  ],
-  "updatedAt": "2024-03-07T17:41:59.278Z",
-  "updatedByUser": "3fa85f64-5717-4562-b3fc-2c963f66afa6"
+	"id": "string($uuid)",
+	"name": "string",
+	"description": "string",
+	"users": [
+    	"string($uuid)"
+  	],
+	"systems": [
+    	{
+			"systemName": "string"
+    	}
+	],
+	"updatedAt": "2024-03-07T17:41:59.278Z",
+	"updatedByUser": "3fa85f64-5717-4562-b3fc-2c963f66afa6"
 }
 ```
 
@@ -619,48 +619,48 @@ An example request could be the following:
 
 ```shell
 $ curl 'https://sigrid-says.com/rest/auth/api/user-management/{customer}/groups/{groupID}/permissions' -X PATCH \
-    -H 'Content-Type: application/json' \
-    -H 'Authorization: Bearer {SIGRID_PERSONAL_TOKEN}' \
-    -d '{
-  "systems" : [ 
-    {
-		"systemName" = "system-x"
-	},
-	{
-		"systemName" = "system-y"
-	},
-	{
-		"systemName" = "system-z"
-	}
-  ]
+	-H 'Content-Type: application/json' \
+	-H 'Authorization: Bearer {SIGRID_PERSONAL_TOKEN}' \
+	-d '{
+	"systems": [ 
+    	{
+			"systemName": "system-x"
+		},
+		{
+			"systemName": "system-y"
+		},
+		{
+			"systemName": "system-z"
+		}
+	]
 }'
 ```
 
-This request will _replace_ the set of system permissions granted to the specified authorization group with the set provided in the request body consisting of 3 systems - System X, Y and Z.
+This request will _replace_ the set of system permissions granted to the specified authorization group with the set provided in the request body consisting of 3 systems - system-x, system-y and system-z.
 
-Upon succesful request of the above endpoint for a user with id `f4a702ac-b998-44e1-a271-840a3f75e6d2`, the response format for `GET https://sigrid-says.com/rest/auth/api/user-management/{customer}/groups/f4a702ac-b998-44e1-a271-840a3f75e6d2` :
+Upon succesful request of the above endpoint for a group with id `f4a702ac-b998-44e1-a271-840a3f75e6d2`, the response format for `GET https://sigrid-says.com/rest/auth/api/user-management/{customer}/groups/f4a702ac-b998-44e1-a271-840a3f75e6d2` :
 
 ```json
 {
-  "id": "f4a702ac-b998-44e1-a271-840a3f75e6d2",
-  "name": "string",
-  "description": "string",
-  "users": [
-    "3fa85f64-5717-4562-b3fc-2c963f66afa6"
-  ],
-  "systems": [
-    {
-		"systemName" = "system-x"
-	},
-	{
-		"systemName" = "system-y"
-	},
-	{
-		"systemName" = "system-z"
-	}
-  ],
-  "updatedAt": "2024-03-07T17:41:59.278Z",
-  "updatedByUser": "3fa85f64-5717-4562-b3fc-2c963f66afa6"
+	"id": "f4a702ac-b998-44e1-a271-840a3f75e6d2",
+	"name": "string",
+	"description": "string",
+	"users": [
+		"3fa85f64-5717-4562-b3fc-2c963f66afa6"
+  	],
+	"systems": [
+    	{
+			"systemName": "system-x"
+		},
+		{
+			"systemName": "system-y"
+		},
+		{
+			"systemName": "system-z"
+		}
+	],
+	"updatedAt": "2024-03-07T17:41:59.278Z",
+	"updatedByUser": "3fa85f64-5717-4562-b3fc-2c963f66afa6"
 }
 ```
 
@@ -669,41 +669,41 @@ The process for updating membership to a group is done in a very similar manner 
 An example request on the same group could be the following:
 
 ```shell
-$ curl 'https://sigrid-says.com/rest/auth/api/user-management/{customer}/groups/987xzy/members' -X PATCH \
-    -H 'Content-Type: application/json' \
+$ curl 'https://sigrid-says.com/rest/auth/api/user-management/{customer}/groups/f4a702ac-b998-44e1-a271-840a3f75e6d2/members' -X PATCH \
+	-H 'Content-Type: application/json' \
     -H 'Authorization: Bearer {SIGRID_PERSONAL_TOKEN}' \
     -d '{
-  "users": [ 
-      "d987c69d-464f-4276-bea8-5780cc782b97"
-      "3fa85f64-5717-4562-b3fc-2c963f66afa6" 
-  ]
-}'
+		"users": [ 
+			"d987c69d-464f-4276-bea8-5780cc782b97",
+			"3fa85f64-5717-4562-b3fc-2c963f66afa6" 
+		]
+	}'
 ```
 
 Successful response format of this request would look like the following, with the updated members now inheriting the permissions assigned in the previous example:
 
 ```json
 {
-  "id": "987xyz",
-  "name": "string",
-  "description": "string",
-  "users": [
-      "d987c69d-464f-4276-bea8-5780cc782b97"
-      "3fa85f64-5717-4562-b3fc-2c963f66afa6" 
-  ],
-  "systems": [
-    {
-		"systemName" = "system-x"
-	},
-	{
-		"systemName" = "system-y"
-	},
-	{
-		"systemName" = "system-z"
-	}
-  ],
-  "updatedAt": "2024-03-07T17:41:59.278Z",
-  "updatedByUser": "3fa85f64-5717-4562-b3fc-2c963f66afa6"
+	"id": "f4a702ac-b998-44e1-a271-840a3f75e6d2",
+	"name": "string",
+	"description": "string",
+	"users": [
+    	"d987c69d-464f-4276-bea8-5780cc782b97",
+    	"3fa85f64-5717-4562-b3fc-2c963f66afa6" 
+  	],
+  	"systems": [
+    	{
+			"systemName": "system-x"
+		},
+		{
+			"systemName": "system-y"
+		},
+		{
+			"systemName": "system-z"
+		}
+	],
+	"updatedAt": "2024-03-07T17:41:59.278Z",
+	"updatedByUser": "3fa85f64-5717-4562-b3fc-2c963f66afa6"	
 }
 ```
 
