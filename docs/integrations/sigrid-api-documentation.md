@@ -485,7 +485,7 @@ In addition to the general usage of the Sigrid API, users also can also perform 
 The following example shows how to call the User Management API via `curl`:
 
 ```
-curl -H 'Authorization: Bearer {SIGRID_PERSONAL_TOKEN}' https://sigrid-says.com/rest/auth/api/user-management/{customer}/users - Return all users created for the specified customer.
+curl -H 'Authorization: Bearer {SIGRID_PERSONAL_TOKEN}' https://sigrid-says.com/rest/auth/api/user-management/{customer}/users
 ```
 
 ### Managing individual user permissions
@@ -530,28 +530,42 @@ $ curl 'https://sigrid-says.com/rest/auth/api/user-management/{customer}/users/{
     -H 'Content-Type: application/json' \
     -H 'Authorization: Bearer {SIGRID_PERSONAL_TOKEN}' \
     -d '{
-  "systems" : [ "System A", "System B", "System C" ],
+	"accessToAll: false",
+	"systems" : [ 
+		{
+			"systemName" = "system-a"
+		},
+		{
+			"systemName" = "system-b"
+		},
+		{
+			"systemName" = "system-c"
+	}
 }'
 ```
 
 This request will _replace_ the set of system permissions granted to the specified user with the set provided in the request body consisting of 3 systems - System A, B and C. No other change is made, so user details such as firstName / lastName / email all will remain as-is upon successful request of this endpoint.
 
-The response format on a successful request is, as an example, for a user with the unique id of `123abcd`:
+Upon succesful request of the above endpoint for a user with id `d987c69d-464f-4276-bea8-5780cc782b97`, the response format for `GET https://sigrid-says.com/rest/auth/api/user-management/{customer}/users/d987c69d-464f-4276-bea8-5780cc782b97` :
 
 ```json
 {
-  "id": "123abcd",
+  "id": "d987c69d-464f-4276-bea8-5780cc782b97",
   "firstName": "string",
   "lastName": "string",
   "email": "string",
   "isAdmin": false,
-  "accessToAll": true,
+  "accessToAll": false,
   "systems": [
     {
-      "systemName": "System A"
-      "systemName": "System B"
-      "systemName": "System C"
-    }
+		"systemName" = "system-a"
+	},
+	{
+		"systemName" = "system-b"
+	},
+	{
+		"systemName" = "system-c"
+	}
   ],
   "lastLoginAt": "2024-03-07T16:54:33.438Z"
 }
@@ -595,8 +609,8 @@ The response format upon successful request of a single authorization group look
 
 Unlike the response received when leveraging the endpoint to return a single user, groups have two fields that can be modified via the API: `users` and `systems`. 
 
-- The `users` field contains the set of users that are members of the authorization group and will inherit the permissions granted to the group. A user is denoted by a string representing their unique identifier hash.
-- The `systems`field contins the set of systems authorized to be accessible by the group, similar to how it is defined for an individual user. System are denoted by their system name when onboarded in sigrid. 
+- The `users` field contains the set of users that are members of the authorization group and will inherit the permissions granted to the group. A user is denoted by a UUID representing their unique identifier hash.
+- The `systems`field contains the set of systems authorized to be accessible by the group, similar to how it is defined for an individual user. System are denoted by their system name when onboarded in sigrid. 
     - __NOTE:__ This name can be different from the display name seen in Sigrid, be sure to use the name the sytem was attributed during onboarding. 
 
 When leveraging the `PUT https://sigrid-says.com/rest/auth/api/user-management/{customer}/groups/{groupID}/permissions` endpoint, the user must include in the request body the permissions to be updated. 
@@ -609,20 +623,26 @@ $ curl 'https://sigrid-says.com/rest/auth/api/user-management/{customer}/groups/
     -H 'Authorization: Bearer {SIGRID_PERSONAL_TOKEN}' \
     -d '{
   "systems" : [ 
-      "System X"
-      "System Y"
-      "System Z" 
+    {
+		"systemName" = "system-x"
+	},
+	{
+		"systemName" = "system-y"
+	},
+	{
+		"systemName" = "system-z"
+	}
   ]
 }'
 ```
 
 This request will _replace_ the set of system permissions granted to the specified authorization group with the set provided in the request body consisting of 3 systems - System X, Y and Z.
 
-The response format on a successful request is, as an example, for an authorization group with the unique id of `987xyz`:
+Upon succesful request of the above endpoint for a user with id `f4a702ac-b998-44e1-a271-840a3f75e6d2`, the response format for `GET https://sigrid-says.com/rest/auth/api/user-management/{customer}/groups/f4a702ac-b998-44e1-a271-840a3f75e6d2` :
 
 ```json
 {
-  "id": "987xyz",
+  "id": "f4a702ac-b998-44e1-a271-840a3f75e6d2",
   "name": "string",
   "description": "string",
   "users": [
@@ -630,10 +650,14 @@ The response format on a successful request is, as an example, for an authorizat
   ],
   "systems": [
     {
-      "systemName": "System X"
-      "systemName": "System Y"
-      "systemName": "System Z"
-    }
+		"systemName" = "system-x"
+	},
+	{
+		"systemName" = "system-y"
+	},
+	{
+		"systemName" = "system-z"
+	}
   ],
   "updatedAt": "2024-03-07T17:41:59.278Z",
   "updatedByUser": "3fa85f64-5717-4562-b3fc-2c963f66afa6"
@@ -650,8 +674,8 @@ $ curl 'https://sigrid-says.com/rest/auth/api/user-management/{customer}/groups/
     -H 'Authorization: Bearer {SIGRID_PERSONAL_TOKEN}' \
     -d '{
   "users": [ 
-      "123abc"
-      "3fa85f" 
+      "d987c69d-464f-4276-bea8-5780cc782b97"
+      "3fa85f64-5717-4562-b3fc-2c963f66afa6" 
   ]
 }'
 ```
@@ -664,15 +688,19 @@ Successful response format of this request would look like the following, with t
   "name": "string",
   "description": "string",
   "users": [
-    "123abc"
-    "3fa85f"
+      "d987c69d-464f-4276-bea8-5780cc782b97"
+      "3fa85f64-5717-4562-b3fc-2c963f66afa6" 
   ],
   "systems": [
     {
-      "systemName": "System X"
-      "systemName": "System Y"
-      "systemName": "System Z"
-    }
+		"systemName" = "system-x"
+	},
+	{
+		"systemName" = "system-y"
+	},
+	{
+		"systemName" = "system-z"
+	}
   ],
   "updatedAt": "2024-03-07T17:41:59.278Z",
   "updatedByUser": "3fa85f64-5717-4562-b3fc-2c963f66afa6"
