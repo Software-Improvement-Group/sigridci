@@ -76,6 +76,9 @@ Please see the separate [OneLogin page](usermanagement-example-onelogin.md).
 ### Example Okta
 Please see the separate [OKTA page](usermanagement-example-okta.md).
 
+### Example Google
+Please see the separate [Google page](usermanagement-example-google.md).
+
 
 ### Info to provide to SIG
 Provide SIG with the 'App federation MetadataURL' of your authentication app.
