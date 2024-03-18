@@ -32,7 +32,7 @@ There are several dropdown menus available in the pop-up.
 
 - A Capability dropdown, that allows you to select the specific capability for which the portfolio objective will be defined.
 
-- Then, the Type dropdown, allows you to select a given objective type that is part of the capability selected in the previous step. In the example, we see that Test Code Ratio is set as a type. This is due to the fact that the "Test Code Ratio" objective is a type of objective that belongs to the Maintainability capability.
+- The Type dropdown allows you to select a given objective type that is part of the capability selected in the previous step. In the example, we see that Test Code Ratio is set as a type. This is because the "Test Code Ratio" objective is a type of objective that belongs to the Maintainability capability.
 
 -  Then, we can define the actual value that we want our portfolio objective to be. 
 This final field can be of two distinct types: either a free-text field, in the case of numeric objectives, or a dropdown containing a series of pre-defined values, that will be the allowed values for the given objective type.
