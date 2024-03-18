@@ -31,6 +31,8 @@ The pop-up will guide you toward configuring the portfolio objective:
 There are several dropdown menus available in the pop-up.
 
 
+<img src="../images/portfolio-objectives-add-popup-step1.png" width="700" />
+
 1. A Capability dropdown, that allows you to select the specific capability for which the portfolio objective will be defined.
 
 2. Then, the Type dropdown, allows you to select a given objective type that is part of the capability selected in the previous step. In the example, we see that Test Code Ratio is set as a type. This is due to the fact that the "Test Code Ratio" objective is a type of objective that belongs to the Maintainability capability.
