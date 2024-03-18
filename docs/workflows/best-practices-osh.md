@@ -34,6 +34,9 @@ This means that examples that are derived from customer systems, or that expose 
 
 > NOTE for internal use: This document is a collection of the knowledge that we have accumulated within SIG on the best practices for achieving Open Source Health. Its purpose within SIG is to have all this knowledge documented in one place, such that we have a shared base as consultants, and also a document that we can share with customers that are in search of concrete advice on how to get things in place for healthy open source usage. 
 
+## Table of contents:
+<sig-toc></sig-toc>
+
 
 ## Introduction
 
@@ -73,6 +76,12 @@ These jobs have been grouped in three categories: first some general guidelines 
 9. Updating a library
 10.  Adopting a new library
 11.  When a library does not meet requirements
+
+
+---
+**A word of caution:** _The guidelines and steps that follow are intended to be helpful in making decisions and taking proper actions; since every application context is unique, these guidelines and steps should never replace logical thinking, taking your unique situation into account!_
+
+---
 
 
 ### About the SIG OSH model
@@ -152,25 +161,31 @@ There are a number of policies on how to address open source libraries during de
   For determining whether to include libraries, see the criteria defined in the section [Adopting a new library](#adopting-a-new-library).
 
 
-### 3. How to improve portfolio and system-level OSH [ROUGH DRAFT]
-Especially for a new Sigrid, at the system and portfolio level there can _a lot_ of things that need to be fixed; this sections aims to provide some advice on how to tackle all those jobs incrementally, starting with the most critical and high-ROI topics first.
+### 3. How to improve portfolio and system-level OSH
+Especially for a new Sigrid, at the system and portfolio level there can be an abundance of OSH related issues that need to be fixed; this section provides some advice on how to tackle all those jobs incrementally, starting with the most critical and high-ROI topics first.
 
-- In case a package manager is not used, or only partially, this is a good topic to start with, since it will make the other improvement steps easier, faster, and less error-prone.
+1. In case no package manager is used, or not for all libraries (all technologies), it makes a lot of sense to start with the adoption of a package manager. This it will make all other improvement steps easier, faster, and less error-prone.
 
-- First focus on vulnerabilities
-  - do a threat analysis to prioritize the systems that are most risk-prone to security attacks
-    - e.g. public-facing systems first 
-    - systems dealing with the most sensitive data
-  - Focus on removing all high risk vulnerabilities first
-- Secondly, consider legal risks due to licenses: 
+2. The next step is to focus on vulnerabilities, since these threaten your application security in the short term:
+  - Start with a quick threat analysis to prioritize the systems that are most risk-prone to security attacks: in particular public-facing systems with the most privacy-sensitive data or transactions should be at the top of this list.
+  - Focus on removing all high risk vulnerabilities first, continue with medium risk vulnerabilities.
+  > DECIDE: or do other OSH risks before starting with the medium risks?
+
+3. Consider legal risks due to unacceptable licenses. 
   - This is often an important part of due diligence when a product or organization is being considered for take-over.
-  > TODO are there any heuristics on where best to start/what to prioritize? 
-- For the other properties: 
+  - The highest priority are libraries that are used in an application without the proper rights; for example libraries that do not allow commercial use (if you are a commercial organization). Some of those require paying a license fee; which is the most straightforward means of addressing the issue.
+  > QUESTION: how often does this happen with open source libraries? Is there a way to register compliance, or does this require adding the library to the ignore list?
+  - A next category to consider are the copy-left licenses, which typically do require the application that uses those libraries to be distributed with the same license (and e.g. also made open-source). Depending on your situation, such libraries should be marked as a legal risk.
+  - The main way of addressing legal risk due to unacceptable licenses is by replacing the library with another one.
+  
+  
+4. For the other properties: 
   - investigate the risks of heavily outdated and perhaps no longer maintained libraries: Make sure to look at the product lifecycle, end-of-support date and maintenance activity. 
   - Do an impact analysis and plan the needed effort to mitigate the risks. This can be -a series of- updates, or complete replacement of a library. 
   - ​​Open source dependencies can be compared in terms of activity on tools like [https://www.openhub.net/](https://www.openhub.net/)​
   - Looking at the bug reports of inactive libraries, and the fixed bugs or improvements of outdated libraries can give good information of the relevance of updating.
-- When many libraries require (multiple or major) version updates, the level of test coverage of a system can be used to prioritize systems that involve fewer risks for undetected defects due to incompatible updates.  
+
+When many libraries require (multiple or major) version updates, the level of test coverage of a system can be used as an additional factor for prioritization: systems with high test coverage have a lower risk  of running into defects at run-time due to incompatible updates.  
   
 
 
@@ -216,7 +231,7 @@ When a vulnerability is found, it will be remediated within a specified time per
   - note: when addressing the vulnerabilities of a specific library by updating to a newer version, that always also improves the freshness
   
 
-### 6. Handling detected license issues
+### 6. Handling detected license issues [ROUGH DRAFT]
 - Libraries must have an acceptable license.
   - This may be a paid license or an acceptable open-source license. [Company] maintains a list of common licenses used in free and open-source software (FOSS); if a library has a license listed as acceptable, it can be used. Otherwise, see if an alternative is available, or contact the [applicable role] to discuss whether the license is acceptable.
 - See also the License Risk Evaluation Framework slide at the bottom of the wiki page: [OSH interpret results wiki page: https://softwareimprovementgroup.atlassian.net/wiki/spaces/SSM/pages/50317951024/How+to+interpret+Open-Source+health+findings](https://workflowy.com/#/c9c4745b6b6b)
@@ -294,6 +309,14 @@ The basic rule is that _library implementations should not be modified or custom
   - Alternatively, you can temporarily use the modified library while merging back the bug fix into the library (be aware of the license). Once the community has accepted the fix, you can update and remove the local code​.
 
 - If no other solution is feasible and a modification is absolutely required (or: the costs of alternative solutions are very high), the source code should be 'adopted' (if permitted by its license) and put into a designated area in a version control system. The modification should be documented so that it can be re-applied whenever a newer version of the library is made available.
+
+### 12. Replacing a library
+There can be multiple reasons that require discarding a library and replacing it with another; e.g. since the previous library has high vulnerability risks that are unlikely to be fixed soon, because of licensing issues, or since the library is very much outdated and is no longer being maintained. 
+
+In _most_ cases, locally [hmm] rebuilding a common functionality is not the best option: just assume that doing that will take much more time than expected, and will also require you to maintain the code in the future. So looking for an alternative library is most likely the best choice.
+
+- need to identify all the locations in the application that use the library
+- how about a new interface? it may be useful to build a wrapper around the newly adopted library that mimics the old interface.
 
 
 ## Where OSH/Sigrid fits in your workflow (going-concern)  [ROUGH DRAFT]
