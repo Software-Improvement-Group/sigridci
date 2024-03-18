@@ -26,12 +26,9 @@ Upon clicking the button, a pop-up will appear to guide you during the creation 
 
 The pop-up will guide you toward configuring the portfolio objective:
 
-<img src="../images/portfolio-objectives-add-popup.png" width="700" />
+<img src="../images/portfolio-objectives-add-popup-step1.png" width="700" />
 
 There are several dropdown menus available in the pop-up.
-
-
-<img src="../images/portfolio-objectives-add-popup-step1.png" width="700" />
 
 1. A Capability dropdown, that allows you to select the specific capability for which the portfolio objective will be defined.
 
@@ -40,7 +37,7 @@ There are several dropdown menus available in the pop-up.
 3. Finally, the last step allows for defining the actual value that we want our portfolio objective to be. 
 This final field can be of two distinct types: either a free-text field, in the case of numeric objectives, or a dropdown containing a series of pre-defined values, that will be the allowed values for the given objective type.
 
-Note also the indicator that the objective will apply to all systems in your portfolio.
+<img src="../images/portfolio-objectives-add-popup.png" width="700" />
 
 4. Finally, we have a free-text field called Rationale. This field can be used to add any additional details on why a given objective was set and add extra details regarding the values for ensuring full clarity to all involved stakeholders.
 
