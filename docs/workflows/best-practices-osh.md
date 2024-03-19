@@ -68,8 +68,8 @@ These jobs have been grouped in three categories: first some general guidelines 
 5. Handling detected vulnerabilities
 6. Handling detected license issues
 7. Handling detected lack of freshness
-8. _Handling detected lack of activity_ (TBD)
-
+8. Handling detected lack of activity
+ [NOTE Asma]: Lack of activity should be handled, community activity is key for vulnerabiltiy detection and patching. (see research for Huwawei on Open source maturity)
 
 #### Handling libraries
 
@@ -113,13 +113,13 @@ The following guidelines should be considered as compliance rules for framework 
     > [LB: to what??? to the source code of libraries or frameworks?]​
 3. _Use only a single version of each library or framework​._: Also, do not have copies of the same library installed. 
    Note that in some cases, you can have a library _L1_ that requires _M_, and a library _L2_ that requires another version of _M_; in such cases you may not be able to influence this (depending on what your package manager allows), but at least ensure your application code does not directly rely on multiple versions of the same library.
-
+[Note Asma] Point 3 sounds like transitive dependency management, what are the best practices there to handle those in a package manager? Also at which lvl of transitivity do we stop caring? --> indeed in some package managers you actually do have influence over the versions of indirect dependencies, discuss this. exercising influence over this makes sense for security purposes, but otherwise its impact *should* be encapsulated.
 
 #### Regression tests and maintainability of the application code are key to updating frameworks/libraries​
 If it is hard to update a library, chances are the problem lies in your codebase.​
 1. _Keep module coupling and component independence low_, to make it easier to change code implementation (such as dealing with new versions of a library) while keeping the same behavior/requirements.
 1. _Develop, maintain and run regression tests._ These help to identify breaking changes in updates.​​
-
+[Note Asma] aren't breaking changes mentioned in the update notes? Analysing those might be a good first step to identify those before upgrading.
 
 
 ### 2. Define OSH related policies for development
@@ -133,6 +133,9 @@ There are a number of policies on how to address open source libraries during de
    - The amount of and allowed types of vulnerabilities.
    - The allowed licenses.
    - Library freshness; the time since a new version of a library has been released.
+
+[Note Asma] Amount of vulnerabilites is not always a fitting metric. Having a goal to reach 0 critical and or high risk findings makes sense. Low and mediums are often present in larger numbers 
+and are more acceptable to have. Impact of the vulnerablities should be assesed. Also if the vulnerablity is present in a fuction that is not used, the risk is minimized.  --> these are especially arguments that can be used for suppressing/ignoring a vulnerability warning?
 
    We advise the following objectives:
    - _No library vulnerabilities_
