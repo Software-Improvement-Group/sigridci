@@ -452,11 +452,17 @@ If the request body is not in the expected format, the returned response status 
 
 ### System objectives
 
-Sigrid allows you to define quality objectives for a system. This helps to set some realistic and feasible expectations per system, considering both the system's business context and its current technical state: business-critical systems using modern technologies require more ambitious targets than legacy systems.
+Sigrid allows you to define quality objectives for a system, either per system, or as 
+portfolio-wide objectives that apply to all systems that match the conditions of the portfolio 
+objective. Defining quality objectives helps to set some realistic and feasible expectations, 
+considering both the system's business context and its current technical state. 
+For instance, typically business-critical systems using modern technologies require more ambitious 
+targets than legacy systems.
 
 <img src="../images/sigrid-objectives.png" width="500" />
 
-Once you have defined quality objectives in Sigrid, you can [use these targets in Sigrid CI](../reference/client-script-usage.md#defining-quality-targets). You can also retrieve a system's objectives and corresponding targets via the API:
+Once you have defined quality objectives in Sigrid, you can [use these targets in Sigrid CI](../reference/client-script-usage.md#defining-quality-targets). 
+You can also retrieve a system's objectives and corresponding targets via the API:
 
     GET https://sigrid-says.com/rest/analysis-results/api/v1/objectives/{customer}/{system}/config
     
@@ -468,6 +474,20 @@ This end point will return the following response structure:
       "OSH_MAX_SEVERITY": "LOW",
       "TEST_CODE_RATIO": 0.8
     }
+
+In Sigrid, a system always has at most one objective per type. So in the above example, the 
+objective for the overall maintainability rating is apparently 4.0. The endpoint does not 
+currently indicate _why_ the maintainability target (in this example) is 4.0. There are two 
+possible reasons:
+- A user defined a system-level maintainability target of 4.0 stars for the given system. It 
+  doesn't matter whether there is a portfolio-wide maintainability target that the given system 
+  matches, as system-level objectives always have precedence.
+- There's no system-level maintainability target defined for the given system. However, there is at 
+  least one portfolio-wide objective that sets a maintainability target of 4.0, the given system 
+  matches the condition(s) of that objective, and there's no portfolio-wide maintainability 
+  objective with a target higher than 4.0 with conditions the given system also matches.
+
+In both cases, the endpoint returns `"MAINTAINABILITY": 4.0`.
     
 ## Managing user permissions via API
 
