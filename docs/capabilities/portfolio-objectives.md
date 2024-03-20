@@ -26,21 +26,23 @@ Upon clicking the button, a pop-up will appear to guide you during the creation 
 
 The pop-up will guide you toward configuring the portfolio objective:
 
-<img src="../images/portfolio-objectives-add-popup.png" width="700" />
+<img src="../images/portfolio-objectives-add-popup-step1.png" width="700" />
 
 There are several dropdown menus available in the pop-up.
 
+- A Capability dropdown, that allows you to select the specific capability for which the portfolio objective will be defined.
 
-1. A Capability dropdown, that allows you to select the specific capability for which the portfolio objective will be defined.
+- The Type dropdown allows you to select a given objective type that is part of the capability selected in the previous step. In the example, we see that Test Code Ratio is set as a type. This is because the "Test Code Ratio" objective is a type of objective that belongs to the Maintainability capability.
 
-2. Then, the Type dropdown, allows you to select a given objective type that is part of the capability selected in the previous step. In the example, we see that Test Code Ratio is set as a type. This is due to the fact that the "Test Code Ratio" objective is a type of objective that belongs to the Maintainability capability.
-
-3. Finally, the last step allows for defining the actual value that we want our portfolio objective to be. 
+-  Then, we can define the actual value that we want our portfolio objective to be. 
 This final field can be of two distinct types: either a free-text field, in the case of numeric objectives, or a dropdown containing a series of pre-defined values, that will be the allowed values for the given objective type.
 
-Note also the indicator that the objective will apply to all systems in your portfolio.
+<img src="../images/portfolio-objectives-add-popup-step2.png" width="700" />
 
-4. Finally, we have a free-text field called Rationale. This field can be used to add any additional details on why a given objective was set and add extra details regarding the values for ensuring full clarity to all involved stakeholders.
+- Once you are done with selecting the type of objective you want to define, you can then start applying the objective to a group of systems based on their shared metadata. You can apply objectives based on the system's technology category, Business criticality, Life cycle phase or deployment type.
+Being able to set system-specific objectives can help you evaluate your system realistically, based on the system’s context. For example, you can set a specific quality objective for a system that is programmed using legacy technologies or a system that is end-of-life. It's important to prioritize and set higher or lower targets (= different objectives) for certain systems.  For example, systems that are public-facing might have stronger security objectives, or systems built with legacy technology might have lower maintainability objectives.
+
+- Finally, we have a free-text field called Rationale. This field can be used to add any additional details on why a given objective was set and add extra details regarding the values for ensuring full clarity to all involved stakeholders.
 
 
 ## Importance of the Rationale field
