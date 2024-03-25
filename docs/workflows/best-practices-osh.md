@@ -139,38 +139,30 @@ There are a number of policies on how to address open source libraries during de
    - The package managers need to be integrated in your CI/CD pipeline.
   <!-- more useful info here: https://gurukuldevops.com/package-management-in-devops-tools-and-best-practices/ -->   
 
-2. _Set the thresholds for library risks_ that are (not) acceptable: this is applicable to all types of risks. Set these goals in the [Sigrid objectives](#TBD). Define goals for:
-   - The amount of and allowed types of vulnerabilities.
-   - The allowed licenses.
-   - Library freshness; the time since a new version of a library has been released.
+2. _Set the thresholds for library risks_ that are (not) acceptable: this is applicable to all types of risks. Set these goals in the [Sigrid objectives](#TBD).
 
-> NOTE Shima: I still think we should be more specific about this amount
+  We advise the following objectives:
 
-   We advise the following objectives:
-   - _No library vulnerabilities_
+   - _No library vulnerabilities_: having vulnerabilities of medium or higher risk is generally not acceptable as a goal, and since there are relatively few low-risk vulnerabilities in practice, a 'clean sweep' of all vulnerabilities is preferred.
    - _No unacceptable licenses_; for a typical context this means no licenses that come with obligations or restrictions for commercial usage (see the [OSH Guidelines for producers](../reference/quality-model-components/open-source-health.md) for more details.). In Sigrid these are classified as low-risk, and include the MIT, BSD, and Apache licenses.
    - _Ensure overall OSH quality rating is 4.0 stars or more_
      <!-- alternative: - _No libraries that are longer out-of-date than 6 months_ --> 
-   > NOTE1: the exact definition above may change, as we are still figuring out if/how to adopt the OSH star rating  
-   > NOTE2: it would make sense if our advice here would be in line with the guidance for producers.. (or: it is confusing and inconsistent if not--although the goals are slightly different..)
-   > NOTE3: motivation for 'no vulnerabilities at all'; we consider having medium and high-risk vulnerabilities not acceptable (as a goal), and since it turns out that there are relatively few low-risk vulnerabilities in practice, why not wipe out all vulnerabilities.
+     > NOTE: check that the above is in line with the guidance for producers, or explain why not.
 
-1. _Define how frequent to check for risks_ such as vulnerabilities and other risks in open source libraries. At least make this a fixed part of your sprint rhythm. See also [Where OSH fits in your workflow](#where-oshsigrid-fits-in-your-workflow-going-concern) 
-[Note Asma] We can advice something in line with the Dependabot workflow, each merge etc. 
-LB: could not find a place where this is described..
+1. _Define how frequent to check for risks_ such as vulnerabilities and other risks in open source libraries. We suggest checking daily for vulnerabilities and quarterly for other OSH risks. See section [4. Scan the software for health issues](#4-scan-the-software-for-health-issues) for more details. 
 
-1. _Define how fast new vulnerabilities have to be resolved_; this will depend on the criticality. See the section on [Handling detected vulnerabilities](#6-handling-detected-vulnerabilities) for details.
+2. _Define how fast new vulnerabilities have to be resolved_; this will depend on the criticality. See the section on [Handling detected vulnerabilities](#6-handling-detected-vulnerabilities) for details.
 
-2. _Declare which libraries should not be checked_
+<!-- eventually this *can* be removed when we can refine OSH findings in Sigrid?-->
+4. _Declare which libraries should not be checked_
    - This is useful when a library has properties that cause Sigrid to signal a risk, but that risk is a false positive. 
    - Create an _ignore-list_. This list requires CISO approval. The ignore-list must be reviewed regularly (a few times per year): define when this review will happen.
    - Do note that if a library is put on the ignore-list since the reported vulnerability-list is a false positive, that does not necessarily mean that the other types of risk should be ignored as well.
    > NOTE: this was called the 'allow-list', but 'ignore-list' seems to carry the purpose better.
+   > NOTE: describe how to do this now in the scope file???
 
-   > TODO: (how) can customers set up an ignore-list for Sigrid?
-   > TODO: on the backlog for Sigrid: instead of an ignore-list, be able to snooze/hide false positives from OSH (refine OSH findings) → check status
 
-3. Optionally: _Define a shared permitted-list_: it can be useful (and in some organizations required) to have a shared list of libraries that are permitted. 
+5. Optionally: _Define a shared permitted-list_: it can be useful (and in some organizations required) to have a shared list of libraries that are permitted. 
   This list can have an advisory role, functioning as a list of libraries that have already been checked, and are likely already in use. it can also have the role of a clearance list, where developers have only permission to use libraries from the permitted-list, and must seek approval for libraries that are not on that list. 
   For determining whether to include libraries, see the criteria defined in the section [Adopting a new library](#adopting-a-new-library).
 [Note Asma] If you have a permitted list, there should be a guideline describing the requirements for a lib to be permitted. Cerntainly when you want to be able to go from POC to MVP.
@@ -232,32 +224,43 @@ For timely handling of open source health risks, there are two concerns:
    <!-- so what to do in that case??-->
    The most common mitigation will be [updating a library](#updating-a-library). 
 
+ See also [Where OSH fits in your workflow](#where-oshsigrid-fits-in-your-workflow-going-concern) for details on how to integrate library handling in your workflow.
+
 
 ### 5. Handling detected vulnerabilities
-Security risks of a certain framework or library should be determined based on at least the following aspects: 
 
-* The severity level of known vulnerabilities for the artifact​
-* The mission of the components where the framework or the library will be applied​: Non mission critical / ​Mission ​critical
-* The outside visibility: ​External Facing or Distributed​ 
-  > [? is this the right classification?]
-  - public facing systems need to be tackled first, and should not have any vulnerabilities of risk category _high_ and higher.
+> TODO: or first discuss when, then how??
+#### How to remediate vulnerabilities
 
-When a vulnerability is found, it will be remediated within a specified time period.
-  The table below is a suggestion how to specify this, depending on the criticality of the system:
-  | CVSSv3 Range | Label | Remediation Deadline Critical | Remediation Deadline Regular |
+The primary means of remediating a vulnerability is to update the library: in most cases, vulnerabilities (especially critical ones) are only published once a patch is available in a new version of the library. See section [9. Updating a library](#9-updating-a-library) for more details. Do check that the vulnerability is indeed solved in the newer version of the library.
+
+If no such remediation is available, do a risk assessment which will have one of these outcomes:
+- If we find that the vulnerability does not pose any actual risk, we can ‘allowlist’ it: that means we allow the specific vulnerability for this library/application to be present. This requires CISO approval. This _allowlist_ will be reviewed as part of a half-yearly measurement cycle. 
+  <!-- we already have a 'permitted-list' for checked and permitted libraries, and an 'ignore-list' for libraries that are not checked; is this a third category? -> I think OSH findings refinement should solve this dilemma? -->
+   > TODO: how to do this in Sigrid?
+
+- We can mitigate the risk in some other way. If, for example, the vulnerability is limited to a single method in the library that is not called by our application. We can then test for the use of that method and fail the pipeline in that case, to prevent future accidental risks. 
+  
+- We may be able to replace, or stop using, the library completely; see [12. Replacing a library](#12-replacing-a-library) for more details.
+- In extreme cases, we will shut down the application until the vulnerability is resolved.
+
+#### When to remediate vulnerabilities
+Security risks, and hence the urgency of fixing a vulnerability, of a certain framework or library should be determined based on at least the following aspects: 
+
+* The severity level of the detected vulnerabilities for the artifact​.
+* The connectedness of the specific application: in particular the category `public facing` is the group of systems for which vulnerabilities need to be resolved most urgently. This information can be specified in the [Sigrid metadata](https://docs.sigrid-says.com/organization-integration/metadata.html) as the _deployment type_; we summarise all non-public facing categories (`connected`, `internal` and `physical`) as `local`.
+
+Additional considerations for prioritizing vulnerability handling can also be business criticality, lifecycle phase and the privacy sensitivity of the data that an application handles.
+
+When a vulnerability is found, it must be remediated within a specified time period.
+  The table below is a suggestion how quickly, depending on the connectedness of the system:
+  | CVSSv3 Range | Label | Remediation Deadline Public facing | Remediation Deadline Local |
   | --- | --- | --- | --- |
-  | 9.0 – 10.0 | Critical | Within 1 working day | Within 1 working day | 
+  | 9.0 – 10.0 | Critical | Within 1 working day | Within 14 days | 
   | 7.0 – 8.9 | High | Within 14 days | Within 30 days |
-  | 4.0 – 6.9 | Medium | Within 60 days | Within 90 days |
-  | 0.1 – 3.9 | Low | Within 1 year | Within 1 year |
-  > TODO: check that the above table makes sense, especially the added last column
-> NOTE Shima: Based on this, I would say we are not being consistent with our timelines above, also I think we should be more clear about the priority of Vunerability, so if this goes more on top, and highlighting the importance of addressing vunerability, I think we can link the tiem frames more accuratly. In short, we should stick to nightly scan.
-> LB: indeed, if you do a monthly scan, then solving critical issue within a day makes no sense.. -> make this explicit
-- If no remediation is available, do a risk assessment which will have one of 3 outcomes:
-  - If we find that the vulnerability does not pose any actual risk, we will ‘allowlist’ it. This requires CISO approval. This allowlist will be reviewed as part of the half-yearly measurement cycle.
-  - We will mitigate the risk in some other way. If, for example, we do not want to allowlist. the entire library because of its importance but the vulnerability is limited to a single method, we can test for the use of that method and fail the pipeline in that case.
-  - [In](http://3.in/) extreme cases, we will shut down the application until the vulnerability is resolved.
-  - note: when addressing the vulnerabilities of a specific library by updating to a newer version, that always also improves the freshness
+  | 4.0 – 6.9 | Medium | Within 30 days | Within 60 days |
+  | 0.1 – 3.9 | Low | Within 60 days | Within 90 days |
+
   
 
 ### 6. Handling detected license issues [ROUGH DRAFT]
@@ -267,6 +270,7 @@ When a vulnerability is found, it will be remediated within a specified time per
 - Note that the risk depends on the context: 
   - e.g. when developing open-source software, more licenses are acceptable.
   - it also depends on how you use a library: it is sometimes needed/a solution to wrap the library in an executable component that can be used by calling, instead of becoming a part of the codebase.
+  - SIG assesses whether a license is generally considered a risk for commercial software. Contact an IT lawyer to discuss license risks specifically for the code analyzed as well as the way it will be used.
 
 
 ### 7. Handling detected lack of freshness [ROUGH DRAFT]
@@ -282,7 +286,8 @@ When a vulnerability is found, it will be remediated within a specified time per
 ## Handling your libraries
 
 
-### 9. Updating a library [ROUGH DRAFT]
+### 9. Updating a library
+#### [ROUGH DRAFT]
 There can be several reasons to consider updating a library.
 
 > factor this section out to 'reviewing a library (update)'?
@@ -315,6 +320,7 @@ The library needs transitive dependencies that have become incompatible with nee
     - This strategy implies that you don’t update unless you have to. You stay with the current version of the third-party library until you notice something wrong in your application, no matter how often the vendor publishes an update. ​
     - Whilst easier in the short term, with this strategy you will end up with a system which depends on outdated and unmaintained libraries, where you can't use some other libraries since they require a newer version of that library which you can't upgrade and at some point. You may lose the ability to fix some issues at all.​
     - 
+- note: when addressing the vulnerabilities of a specific library by updating to a newer version, that always also improves the freshness
 
 
 ### 10. Adopting a new library [ROUGH DRAFT]
@@ -379,6 +385,14 @@ Whenever choosing a new library or updating to a new version, consider the follo
 
 
 ## Where OSH/Sigrid fits in your workflow (going-concern)  [ROUGH DRAFT]
+
+tasks to do repeatedly:
+- scan for issues (daily/..)
+- remediate vulnerabilities (depends on urgency)
+- remediate other OSH findings ()
+- revisit 'allow-list' and 'permitted-list' (with CISO, half-year basis)
+  
+
 > see [https://docs.sigrid-says.com/workflows/agile-development-process.html#where-does-sigrid-fit-in-scrum-rituals](https://docs.sigrid-says.com/workflows/agile-development-process.html#where-does-sigrid-fit-in-scrum-rituals)
 - Refinement:
   - triaging OSH issues
@@ -392,6 +406,7 @@ Whenever choosing a new library or updating to a new version, consider the follo
   - [When do you see the impact of the changes? when merging after the review?]
 - Sprint retrospective: 
   - make sure you have actually addressed the findings you set out to fix in your sprint planning.
+ 
   
 ## Frequently Asked Questions  [ROUGH DRAFT]
 
