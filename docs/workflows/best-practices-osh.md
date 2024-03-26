@@ -263,21 +263,37 @@ The table below is a proposal how fast you should resolve vulnerabilities, depen
 
 
 ### 6. Handling detected license issues 
+> SIG assesses whether a license is generally considered a risk for commercial software. Contact an IT lawyer to discuss license risks specifically for the code analyzed as well as the way it will be used.
 
+Usually, license risks will appear whenever a library is scanned for the first time; either because the application is scanned for the first time, or the library has just been introduced.
+
+```mermaid
+graph TD;
+    A-->B;
+    A-->C;
+    B-->D;
+    C-->D;
+```
+
+#### Assess the license risk
 Libraries must have an acceptable license.
   - This may be a paid license or an acceptable open-source license. [Company] maintains a list of common licenses used in free and open-source software (FOSS); if a library has a license listed as acceptable, it can be used. Otherwise, see if an alternative is available, or contact the [applicable role] to discuss whether the license is acceptable.
+
+- Note that the risk depends on the context: 
+  - e.g. when developing open-source software, more licenses are acceptable.
+  - it also depends on how you use a library: it is sometimes needed/a solution to wrap the library in an executable component that can be used by calling, instead of becoming a part of the codebase.
 
 <!-- decided to add this, since it is such useful information when an actual license risk pops up and needs to be assessed -->
 <!-- | Risk level | License category | Common licenses | Distribution Mechanism | -->
 | Risk level | License category | Common licenses | Distribute modified code | Distribute linked libraries | Linked libs through network | Internal use only |
 | ---------- | ---------------- | --------------- | :----------------------: | :-------------------------: | :----------: | :-----------------------: |
-| none | permissive | Apache / MIT / BSD| Ok | Ok | Ok | Ok |
-| low | Weak copy-left | LGPL / MPL / CC-BY-ND | prohibited | Ok | Ok | Ok |
-| medium | Strong copy-left | GPL | prohibited | prohibited | Ok | Ok |
-| high | Viral | AGPL / CC-BY-NC / EUPL | prohibited | prohibited | prohibited | Ok |
-| critical | EULA / non-OSS / custom | prohibited | prohibited | prohibited | prohibited |
+| none     | permissive       | Apache / MIT / BSD| Ok | Ok | Ok | Ok |
+| low      | Weak copy-left   | LGPL / MPL / CC-BY-ND | prohibited | Ok | Ok | Ok |
+| medium   | Strong copy-left | GPL | prohibited | prohibited | Ok | Ok |
+| high     | Viral            | AGPL / CC-BY-NC / EUPL | prohibited | prohibited | prohibited | Ok |
+| critical | Commercial       | EULA / non-OSS / custom | prohibited | prohibited | prohibited | prohibited |
 
-<!-- #### or alternatively a table  with octigons:
+<!-- #### or alternatively a table  with octicons:
 | Risk level | License category | Common licenses | Distribute modified code | Distribute linked libraries | Linked libs through network | Internal use only |
 | ---------- | ---------------- | --------------- | :----------------------: | :-------------------------: | :----------: | :-----------------------: |
 | none | permissive | Apache / MIT / BSD| {% octicon "check" aria-label="prohibited" %} | {% octicon "check" aria-label="prohibited" %} | {% octicon "check" aria-label="prohibited" %} | {% octicon "check" aria-label="prohibited" %} |
@@ -286,12 +302,12 @@ Libraries must have an acceptable license.
 | high | Viral | AGPL / CC-BY-NC / EUPL | {% octicon "x" aria-label="no" %} | {% octicon "x" aria-label="no" %} | {% octicon "x" aria-label="no" %} | {% octicon "check" aria-label="yes" %} |
 | critical | EULA / non-OSS / custom | {% octicon "x" aria-label="no" %} | {% octicon "x" aria-label="no" %} | {% octicon "x" aria-label="no" %} | {% octicon "x" aria-label="no" %} | -->
 
-
-- Note that the risk depends on the context: 
-  - e.g. when developing open-source software, more licenses are acceptable.
-  - it also depends on how you use a library: it is sometimes needed/a solution to wrap the library in an executable component that can be used by calling, instead of becoming a part of the codebase.
-  - SIG assesses whether a license is generally considered a risk for commercial software. Contact an IT lawyer to discuss license risks specifically for the code analyzed as well as the way it will be used.
-
+#### Possible actions
+Depending on the circumstances, one or more of the following actions can be taken to remediate detected licensing issues
+* Ensure that libraries with commercial licenses are properly registered and paid for. 
+* [When applicable] Add a license to the shared list of acceptable licenses (this may involve an approval process).
+* [When applicable] Adjust the distribution model of the application to avoid violating the terms of the library license. For example, distribute linked libraries instead of (modified) source code.
+* Stop using a library with unacceptable licensing conditions: in practice this means [12. Replacing a library](#12-replacing-a-library).
 
 ### 7. Handling detected lack of freshness
 #### [ROUGH DRAFT]
