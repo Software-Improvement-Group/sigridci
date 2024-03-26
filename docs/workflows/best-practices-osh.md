@@ -176,10 +176,7 @@ Especially for a new Sigrid, at the system and portfolio level there can be an a
 
 2. The next step is to focus on vulnerabilities, since these threaten your application security in the short term:
    - Start with a quick threat analysis to prioritize the systems that are most risk-prone: in particular business-critical systems with the most privacy-sensitive data or transactions should be at the top of this list.
-   - Focus on removing all high risk vulnerabilities first, continue with medium risk vulnerabilities.
-
-> DECIDE: or do other OSH risks before starting with the medium risks?
-
+   - Focus on removing all critical and high risk vulnerabilities first, continue with the remaining vulnerabilities.
 
 3. Consider legal risks due to unacceptable licenses:
    - The highest priority are libraries that are used in an application without the proper rights; for example libraries that do not allow commercial use (if you are a commercial organization). Some of those require paying a license fee; which is the most straightforward means of addressing the issue.
@@ -238,6 +235,7 @@ If no such remediation is available, do a risk assessment which will have one of
 - If we find that the vulnerability does not pose any actual risk, we can ‘allowlist’ it: that means we allow the specific vulnerability for this library/application to be present. This requires CISO approval. This _allowlist_ will be reviewed as part of a half-yearly measurement cycle. 
   <!-- we already have a 'permitted-list' for checked and permitted libraries, and an 'ignore-list' for libraries that are not checked; is this a third category? -> I think OSH findings refinement should solve this dilemma? -->
    > TODO: how to do this in Sigrid?
+<!-- later: refer to explanations when they are added to the OSH -->
 
 - We can mitigate the risk in some other way. If, for example, the vulnerability is limited to a single method in the library that is not called by our application. We can then test for the use of that method and fail the pipeline in that case, to prevent future accidental risks. 
   
@@ -253,27 +251,42 @@ Security risks, and hence the urgency of fixing a vulnerability, of a certain fr
 Additional considerations for prioritizing vulnerability handling can also be business criticality, lifecycle phase and the privacy sensitivity of the data that an application handles.
 
 When a vulnerability is found, it must be remediated within a specified time period.
-  The table below is a suggestion how quickly, depending on the connectedness of the system:
-  | CVSSv3 Range | Label | Remediation Deadline Public facing | Remediation Deadline Local |
+The table below is a proposal how fast you should resolve vulnerabilities, depending on the risk level and the connectedness of the system:
+
+  | CVSSv3 Range | Risk Label | Remediation Deadline Public facing | Remediation Deadline Local |
   | --- | --- | --- | --- |
   | 9.0 – 10.0 | Critical | Within 1 working day | Within 14 days | 
   | 7.0 – 8.9 | High | Within 14 days | Within 30 days |
   | 4.0 – 6.9 | Medium | Within 30 days | Within 60 days |
   | 0.1 – 3.9 | Low | Within 60 days | Within 90 days |
 
-  
 
-### 6. Handling detected license issues [ROUGH DRAFT]
-- Libraries must have an acceptable license.
+
+### 6. Handling detected license issues 
+#### [ROUGH DRAFT]
+
+Libraries must have an acceptable license.
   - This may be a paid license or an acceptable open-source license. [Company] maintains a list of common licenses used in free and open-source software (FOSS); if a library has a license listed as acceptable, it can be used. Otherwise, see if an alternative is available, or contact the [applicable role] to discuss whether the license is acceptable.
-- See also the License Risk Evaluation Framework slide at the bottom of the wiki page: [OSH interpret results wiki page: https://softwareimprovementgroup.atlassian.net/wiki/spaces/SSM/pages/50317951024/How+to+interpret+Open-Source+health+findings](https://workflowy.com/#/c9c4745b6b6b)
+
+<!-- decided to add this, since it is such useful information when an actual license risk pops up and needs to be assessed -->
+<!-- | Risk level | License category | Common licenses | Distribution Mechanism | -->
+| Risk level | License category | Distribute modified code | Distribute linked libraries | Linked libs through network | Internal use only |
+| ---------- | ---------------- | :----------------------: | :-------------------------: | :----------: | :-----------------------: |
+| none | permissive | Apache / MIT / BSD| {% octicon "check" %} | {% octicon "check" %} | {% octicon "check" %} | {% octicon "check" %} |
+| low | Weak copy-left | LGPL /MPL /CC-BY-ND | {% octicon "x" %} | {% octicon "check" %} | {% octicon "check" %} | {% octicon "check" %} |
+| medium | Strong copy-left | GPL | {% octicon "x" %} | {% octicon "x" %} | {% octicon "check" %} | {% octicon "check" %} |
+| high | Viral | AGPL / CC-BY-NC / EUPL | {% octicon "x" %} | {% octicon "x" %} | {% octicon "x" %} | {% octicon "check" %} |
+| critical | EULA / non-OSS / custom | {% octicon "x" %} | {% octicon "x" %} | {% octicon "x" %} | {% octicon "x" %} |
+
+
 - Note that the risk depends on the context: 
   - e.g. when developing open-source software, more licenses are acceptable.
   - it also depends on how you use a library: it is sometimes needed/a solution to wrap the library in an executable component that can be used by calling, instead of becoming a part of the codebase.
   - SIG assesses whether a license is generally considered a risk for commercial software. Contact an IT lawyer to discuss license risks specifically for the code analyzed as well as the way it will be used.
 
 
-### 7. Handling detected lack of freshness [ROUGH DRAFT]
+### 7. Handling detected lack of freshness
+#### [ROUGH DRAFT]
 - The teams are responsible for keeping libraries reasonably up to date: 
   - small library updates can be updated as part of regular maintenance; 
   - larger updates (e.g. major versions or frameworks) should be planned explicitly.
@@ -323,7 +336,8 @@ The library needs transitive dependencies that have become incompatible with nee
 - note: when addressing the vulnerabilities of a specific library by updating to a newer version, that always also improves the freshness
 
 
-### 10. Adopting a new library [ROUGH DRAFT]
+### 10. Adopting a new library
+#### [ROUGH DRAFT]
 - this also applies to frameworks
 - often, libraries are part of an ecosystem, or work within a certain application framework; e.g. eclipse, Apache, where it makes a lot of sense (consistency, frictionless compatibility) to pick a library from the same ecosystem, when that meets the necessary requirements. 
 
