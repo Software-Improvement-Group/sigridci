@@ -268,7 +268,7 @@ The table below is a proposal how fast you should resolve vulnerabilities, depen
 Usually, license risks will appear whenever a library is scanned for the first time; either because the application is scanned for the first time, or the library has just been introduced.
 
 ```mermaid
-graph TD;
+graph TD; %% flow chart 
     D[license risk detected]-->A[Assess risk];
     A-->D{does risk apply with distribution model?};
     D--|yes|-->R{Can distribution model be adjusted?};
