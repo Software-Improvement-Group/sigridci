@@ -3,6 +3,11 @@ Sigrid release notes
 
 SIG uses [continuous delivery](https://en.wikipedia.org/wiki/Continuous_delivery), meaning that every change to Sigrid or the underlying analysis is released once our development pipeline has completed. On average, we release somewhere between 10 and 20 times per day. This page therefore doesn't list every single change, since that would quickly lead to an excessively long list of small changes. Instead, this page lists Sigrid and analysis changes that we consider noteworthy for the typical Sigrid user.
 
+### March 24, 2024
+
+- **Technology support:** Improved support for Mendix, we allow branch names including spaces to be onboarded.
+- **Technology support:** Improved support for Rust unit detection, dependency detection, and test code identification.
+
 ### March 11, 2024
 
 - **Objectives:** The Portfolio Objectives page now allows you to drill-down, which helps you to determine which teams and systems are compliant versus non-compliant. 
