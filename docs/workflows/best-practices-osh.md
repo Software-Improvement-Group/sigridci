@@ -270,7 +270,7 @@ Usually, license risks will appear whenever a library is scanned for the first t
 ```mermaid
 graph TD; 
     D[license risk detected]-->A[Assess risk];
-    A-->D{does risk apply with distribution model?};
+    A-->D{"Does\n risk apply\n with distribution\n model?"};
     D--|yes|-->D_yes{Can distribution model be adjusted?};
     D--|no|-->D_no["Add license to acceptable-list"]-->E["Done."];
     D_yes--[yes]-->M[Modify distribution model]-->E;
