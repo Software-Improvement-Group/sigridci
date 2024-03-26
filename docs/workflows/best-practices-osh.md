@@ -271,10 +271,10 @@ Usually, license risks will appear whenever a library is scanned for the first t
 graph TD; 
     D[license risk detected]-->A[Assess risk];
     A-->D{does risk apply with distribution model?};
-    D--|yes|-->R{Can distribution model be adjusted?};
-    D--|no|-->["Add license to acceptable-list"]-->E[Done.];
-    R--[yes]-->[Modify distribution model]-->E;
-    R--[no]-->[Replace library]-->E;
+    D--|yes|-->D_yes{Can distribution model be adjusted?};
+    D--|no|-->D_no["Add license to acceptable-list"]-->E["Done."];
+    D_yes--[yes]-->M[Modify distribution model]-->E;
+    D_yes--[no]-->R[Replace library]-->E;
 ```
 
 #### Assess the license risk
