@@ -453,6 +453,31 @@ These are the supported security analyzers as you may see them in your security 
 | [OWASP ASVS 4.0](https://owasp.org/www-pdf-archive/OWASP_Application_Security_Verification_Standard_4.0-en.pdf) | Security |
 | [OWASP Low-code/No-code Top 10](https://owasp.org/www-project-top-10-low-code-no-code-security-risks/) | Security |
 
+## Supported technologies containing AI explanations
+
+For a subset of our technologies, we offer AI-generated explanations related to refactoring candidates and security findings, to make these more actionable and easier to understand.
+Below is the list of technologies for which we currently offer these AI-generated explanations:
+
+| Technology |
+|------------|
+| C#         |
+| Dart       |
+| Elixir     |
+| Go         |
+| Groovy     |
+| Java       |
+| JavaScript |
+| Kotlin     |
+| Lua        |
+| Objective-C|
+| Python     |
+| Ruby       |
+| Rust       |
+| Scala      |
+| Swift      |
+| TypeScript |
+
+
 ## Requesting additional technology support
 
 Even with 300+ supported technologies, we are still continuously working on adding support for new technologies and frameworks and updating our technology support for new technology versions. You can contact us using the information provided below if you believe we should extend technology support for your organization.
