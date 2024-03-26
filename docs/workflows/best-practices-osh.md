@@ -269,13 +269,22 @@ Libraries must have an acceptable license.
 
 <!-- decided to add this, since it is such useful information when an actual license risk pops up and needs to be assessed -->
 <!-- | Risk level | License category | Common licenses | Distribution Mechanism | -->
-| Risk level | License category | Distribute modified code | Distribute linked libraries | Linked libs through network | Internal use only |
-| ---------- | ---------------- | :----------------------: | :-------------------------: | :----------: | :-----------------------: |
-| none | permissive | Apache / MIT / BSD| {% octicon "check" %} | {% octicon "check" %} | {% octicon "check" %} | {% octicon "check" %} |
-| low | Weak copy-left | LGPL / MPL / CC-BY-ND | {% octicon "x" %} | {% octicon "check" %} | {% octicon "check" %} | {% octicon "check" %} |
-| medium | Strong copy-left | GPL | {% octicon "x" %} | {% octicon "x" %} | {% octicon "check" %} | {% octicon "check" %} |
-| high | Viral | AGPL / CC-BY-NC / EUPL | {% octicon "x" %} | {% octicon "x" %} | {% octicon "x" %} | {% octicon "check" aria-label="yes" %} |
-| critical | EULA / non-OSS / custom | {% octicon "x" %} | {% octicon "x" %} | {% octicon "x" %} | {% octicon "x" aria-label="no" %} |
+| Risk level | License category | Common licenses | Distribute modified code | Distribute linked libraries | Linked libs through network | Internal use only |
+| ---------- | ---------------- | --------------- | :----------------------: | :-------------------------: | :----------: | :-----------------------: |
+| none | permissive | Apache / MIT / BSD| Ok | Ok | Ok | Ok |
+| low | Weak copy-left | LGPL / MPL / CC-BY-ND | prohibited | Ok | Ok | Ok |
+| medium | Strong copy-left | GPL | prohibited | prohibited | Ok | Ok |
+| high | Viral | AGPL / CC-BY-NC / EUPL | prohibited | prohibited | prohibited | Ok |
+| critical | EULA / non-OSS / custom | prohibited | prohibited | prohibited | prohibited |
+
+<!-- #### or alternatively a table  with octigons:
+| Risk level | License category | Common licenses | Distribute modified code | Distribute linked libraries | Linked libs through network | Internal use only |
+| ---------- | ---------------- | --------------- | :----------------------: | :-------------------------: | :----------: | :-----------------------: |
+| none | permissive | Apache / MIT / BSD| {% octicon "check" aria-label="prohibited" %} | {% octicon "check" aria-label="prohibited" %} | {% octicon "check" aria-label="prohibited" %} | {% octicon "check" aria-label="prohibited" %} |
+| low | Weak copy-left | LGPL / MPL / CC-BY-ND | {% octicon "x" aria-label="no" %} | {% octicon "check" aria-label="prohibited" %} | {% octicon "check" aria-label="prohibited" %} | {% octicon "check" aria-label="prohibited" %} |
+| medium | Strong copy-left | GPL | {% octicon "x" aria-label="no" %} | {% octicon "x" aria-label="no" %} | {% octicon "check" aria-label="prohibited" %} | {% octicon "check" aria-label="prohibited" %} |
+| high | Viral | AGPL / CC-BY-NC / EUPL | {% octicon "x" aria-label="no" %} | {% octicon "x" aria-label="no" %} | {% octicon "x" aria-label="no" %} | {% octicon "check" aria-label="yes" %} |
+| critical | EULA / non-OSS / custom | {% octicon "x" aria-label="no" %} | {% octicon "x" aria-label="no" %} | {% octicon "x" aria-label="no" %} | {% octicon "x" aria-label="no" %} | -->
 
 
 - Note that the risk depends on the context: 
