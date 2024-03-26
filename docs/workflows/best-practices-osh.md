@@ -263,7 +263,6 @@ The table below is a proposal how fast you should resolve vulnerabilities, depen
 
 
 ### 6. Handling detected license issues 
-#### [ROUGH DRAFT]
 
 Libraries must have an acceptable license.
   - This may be a paid license or an acceptable open-source license. [Company] maintains a list of common licenses used in free and open-source software (FOSS); if a library has a license listed as acceptable, it can be used. Otherwise, see if an alternative is available, or contact the [applicable role] to discuss whether the license is acceptable.
@@ -273,10 +272,10 @@ Libraries must have an acceptable license.
 | Risk level | License category | Distribute modified code | Distribute linked libraries | Linked libs through network | Internal use only |
 | ---------- | ---------------- | :----------------------: | :-------------------------: | :----------: | :-----------------------: |
 | none | permissive | Apache / MIT / BSD| {% octicon "check" %} | {% octicon "check" %} | {% octicon "check" %} | {% octicon "check" %} |
-| low | Weak copy-left | LGPL /MPL /CC-BY-ND | {% octicon "x" %} | {% octicon "check" %} | {% octicon "check" %} | {% octicon "check" %} |
+| low | Weak copy-left | LGPL / MPL / CC-BY-ND | {% octicon "x" %} | {% octicon "check" %} | {% octicon "check" %} | {% octicon "check" %} |
 | medium | Strong copy-left | GPL | {% octicon "x" %} | {% octicon "x" %} | {% octicon "check" %} | {% octicon "check" %} |
-| high | Viral | AGPL / CC-BY-NC / EUPL | {% octicon "x" %} | {% octicon "x" %} | {% octicon "x" %} | {% octicon "check" %} |
-| critical | EULA / non-OSS / custom | {% octicon "x" %} | {% octicon "x" %} | {% octicon "x" %} | {% octicon "x" %} |
+| high | Viral | AGPL / CC-BY-NC / EUPL | {% octicon "x" %} | {% octicon "x" %} | {% octicon "x" %} | {% octicon "check" aria-label="yes" %} |
+| critical | EULA / non-OSS / custom | {% octicon "x" %} | {% octicon "x" %} | {% octicon "x" %} | {% octicon "x" aria-label="no" %} |
 
 
 - Note that the risk depends on the context: 
@@ -457,9 +456,12 @@ Q:
 A: 
 
 ---
-Q: 
-
-A: 
+- Objection: Yes, this is a known vulnerability, but we don't even know whether it is actually exploitable, we may not be using the vulnerable method.
+  - SIG opinion: in 90% of the cases, it takes less time to update, than to figure out whether you are vulnerable or not. So just do it. The other 10% contains frameworks that are used everywhere, or a major update, or systems that have no test code and a rigid pre-release manual testing setup). Those 10% can do the investigation into whether they are actually vulnerable.
+- Objection: Updating is hard because we need to manually re-test our entire system / get approval / wait for the next quarterly release / are not using a package manager
+  - SIG opinion: You have bigger problems than outdated libraries. Update the most important vulnerable dependencies, and invest in test automation and your development process.
+- Objection: It's a bad practice to be on the latest version all the time, they tend to be unstable and contain bugs.
+  - SIG opinion: Agree (although it's not that bad in practice). This is why we do not recommend to have everything green for Freshness, and everything less than 1 month not updated is still green.
 
 ---
 
