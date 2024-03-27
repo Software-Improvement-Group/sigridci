@@ -229,7 +229,7 @@ Finally, note the column "supported Sigrid capabilities" does not list Open Sour
 | `robot`                    | Robot                                                  |                      | Maintainability                         |
 | `rpg`                      | RPG                                                    |                      | Maintainability, Architecture           |
 | `ruby`                     | Ruby                                                   | Ruby on Rails, Rails | Maintainability, Architecture, Security |
-| `rust`                     | Rust                                                   |                      | Maintainability, Architecture           |
+| `rust`                     | Rust                                                   |                      | Maintainability, Architecture           | (8)   |
 | `salesforceapex`           | Salesforce Apex                                        |                      | Maintainability, Architecture           |
 | `salesforceflow`           | Salesforce Flow                                        |                      | Maintainability, Architecture           |
 | `sappo`                    | SAP PO                                                 |                      | Maintainability, Architecture           | (8)   |
@@ -371,6 +371,7 @@ This configuration can be managed using the `--convert` [option in Sigrid CI](cl
 | PowerCenter         | `Powercenter`                                                           |
 | Radience            | `Radience`                                                              |
 | Regelspraak         | `Regelspraak` or `Regelspraakhtml` (contact SIG support for details)    |
+| Rust                | `Rust`                                                                  |
 | Sailpoint BeanShell | `Sailpointbeanshell`                                                    |
 | SAP PO              | `Sappo`                                                                 |
 | SAS Flows           | `Sasflows`                                                              |
