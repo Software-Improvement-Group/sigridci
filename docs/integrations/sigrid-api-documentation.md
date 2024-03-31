@@ -462,11 +462,15 @@ targets than legacy systems.
 <img src="../images/sigrid-objectives.png" width="500" />
 
 Once you have defined quality objectives in Sigrid, you can [use these targets in Sigrid CI](../reference/client-script-usage.md#defining-quality-targets). 
-You can also retrieve a system's objectives and corresponding targets via the API:
+You can also retrieve, edit and delete a system's objectives and corresponding targets via the API:
 
     GET https://sigrid-says.com/rest/analysis-results/api/v1/objectives/{customer}/{system}/config
+
+    PUT https://sigrid-says.com/rest/analysis-results/api/v1/objectives/{customer}/{system}
+
+    DELETE https://sigrid-says.com/rest/analysis-results/api/v1/objectives/{customer}/{system}/{type}
     
-This end point will return the following response structure:
+The GET endpoint returns the following response structure:
 
     {
       "MAINTAINABILITY": 4.0,
@@ -488,7 +492,50 @@ possible reasons:
   objective with a target higher than 4.0 with conditions the given system also matches.
 
 In both cases, the endpoint returns `"MAINTAINABILITY": 4.0`.
-    
+
+The `PUT` endpoint can be used to create a new system-level objective, or edit an existing one. 
+It takes a request body with the following structure:
+
+```json
+{
+  "type": "TEST_CODE_RATIO",
+  "target": 0.7
+}
+```
+
+| Type                     | Description                                       | Allowed target values                                         |
+|--------------------------|---------------------------------------------------|---------------------------------------------------------------|
+| MAINTAINABILITY          | Overall maintainability rating                    | Decimal number between 0.5 and 5.5, inclusive                 |
+| TEST_CODE_RATIO          | Test code ratio                                   | Positive decimal number, e.g. 0.7 sets a target of 70%        |
+| ARCHITECTURE_QUALITY     | Decimal number between 0.5 and 5.5, inclusive     | Decimal number between 0.5 and 5.5, inclusive                 |
+| OSH_MAX_SEVERITY         | Highest allowed severity of known vulnerabilities | One of: `"NONE"`, `"LOW"`, `"MEDIUM"`, `"HIGH"`               |
+| OSH_MAX_FRESHNESS_RISK   | Highest allowed freshness risk                    | One of: `"NONE"`, `"LOW"`, `"MEDIUM"`, `"HIGH"`               | 
+| OSH_MAX_LICENSE_RISK     | Highest allowed license risk                      | One of: `"NONE"`, `"LOW"`, `"MEDIUM"`, `"HIGH"`               |
+| SECURITY_MAX_SEVERITY    | Highest allowed severity of security findings     | One of: `"NONE"`, `"LOW"`, `"MEDIUM"`, `"HIGH"`, `"CRITICAL"` |
+| RELIABILITY_MAX_SEVERITY | Highest allowed severity of reliability findings  | One of: `"NONE"`, `"LOW"`, `"MEDIUM"`, `"HIGH"`, `"CRITICAL"` | 
+
+The `PUT` endpoint returns the objective created, like so:
+
+```json
+{
+  "target": 0.7,
+  "level": "SYSTEM",
+  "type": "TEST_CODE_RATIO",
+  "feature": "MAINTAINABILITY"
+}
+```
+
+The `DELETE` endpoint deletes the _system_ objective of the given type, using the type names 
+from the above table. For instance:
+
+```
+DELETE https://sigrid-says.com/rest/analysis-results/api/v1/objectives/{customer}/{system}
+/TEST_CODE_RATIO
+```
+
+This would delete the system-level test code ratio objective, if it exists at the system level, and 
+return 204. In case the objective does not exist at the system level, the endpoint returns 404. 
+
 ## Managing user permissions via API
 
 In addition to the general usage of the Sigrid API, users also can also perform user management tasks via the API as an alternative to doing these tasks within the web-based user interface of Sigrid itself. This also allows Sigrid administrators to better construct automated processes for managing the access to systems for their users.
