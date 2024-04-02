@@ -267,6 +267,7 @@ The table below is a proposal how fast you should resolve vulnerabilities, depen
 
 Usually, license risks will appear whenever a library is scanned for the first time; either because the application is scanned for the first time, or the library has just been introduced.
 
+> COMMENT: here's an experiment with a graphical overview of the process: does that really help?? (NB: to be viewed on Github)
 ```mermaid
 graph TD; 
     Start([license risk detected]) --> A[Assess risk];
@@ -278,12 +279,19 @@ graph TD;
 ```
 
 #### Assess the license risk
-Libraries must have an acceptable license.
-  - This may be a paid license or an acceptable open-source license. [Company] maintains a list of common licenses used in free and open-source software (FOSS); if a library has a license listed as acceptable, it can be used. Otherwise, see if an alternative is available, or contact the [applicable role] to discuss whether the license is acceptable.
+- Libraries must have an acceptable license. This may be a paid license or an acceptable open-source license. 
+- Maintain a list of common licenses used in free and open-source software (FOSS); if a library has a license listed as acceptable, it can be used. Otherwise, see if an alternative is available, or contact the [applicable role] to discuss whether the license is acceptable.
 
-- Note that the risk depends on the context: 
-  - e.g. when developing open-source software, more licenses are acceptable.
-  - it also depends on how you use a library: it is sometimes needed/a solution to wrap the library in an executable component that can be used by calling, instead of becoming a part of the codebase.
+- Note that the actual risk of using a library with a certain license depends on the context: 
+  - e.g. when developing open-source software, more of the licenses are acceptable.
+  - It also depends on how you distribute a library:
+    - distribute the source code of the library, after making changes to it.
+    - as linked libraries, not the actual source code.
+    - linked libraries are called through the network.
+    - libraries are used internally only.
+
+The following table shows how various types of licenses are (not) suitable for different distribution policies, and explains how these common licenses are mapped to general risk levels. But do note that if you distribution model is clear, and the value listed for the particular license-distribution model is 'ok' in the table, then your actual licensing risk is minimal:
+
 
 <!-- decided to add this, since it is such useful information when an actual license risk pops up and needs to be assessed -->
 <!-- | Risk level | License category | Common licenses | Distribution Mechanism | -->
@@ -311,15 +319,24 @@ Depending on the circumstances, one or more of the following actions can be take
 * [When applicable] Adjust the distribution model of the application to avoid violating the terms of the library license. For example, distribute linked libraries instead of (modified) source code.
 * Stop using a library with unacceptable licensing conditions: in practice this means [12. Replacing a library](#12-replacing-a-library).
 
-### 7. Handling detected lack of freshness
-#### [ROUGH DRAFT]
-- The teams are responsible for keeping libraries reasonably up to date: 
-  - small library updates can be updated as part of regular maintenance; 
-  - larger updates (e.g. major versions or frameworks) should be planned explicitly.
 
-### 8. _Handling detected lack of activity_ (TBD)
+
+### 7. Handling detected lack of freshness
+
+Lack of freshness occures when there is a newer version of a library available, but that version is not used in the application.
+
+Development teams are responsible for keeping libraries up-to-date to a recent version: this may be part of [How to remediate vulnerabilites](#how-to-remediate-vulnerabilities), to make sure that bug fixes and improvements are incorporated, for compatibility with other libraries, or to ensure that future updates will not be too complicated or require a large effort all at once.
+
+The remedy for lack of freshness is always [Updating a library](#9-updating-a-library), possible exceptions are:
+- the newer version has a vulnerability for which a fix is not available (very rare)
+- the newer version is not compatible with other libraries.
+<!-- this actually also overlaps with 'updating a library', but maybe still good to have these 2 sentences here? -->
+
+
+### 8. Handling detected lack of activity
 
  [NOTE Asma]: Lack of activity should be handled, community activity is key for vulnerabiltiy detection and patching. (see research for Huwawei on Open source maturity)
+
 
 
 ## Handling your libraries
@@ -328,6 +345,13 @@ Depending on the circumstances, one or more of the following actions can be take
 ### 9. Updating a library
 #### [ROUGH DRAFT]
 There can be several reasons to consider updating a library.
+
+> The effort involved can be estimated from release notes, and is typically also indicated by [semantic versioning](https://semver.org/): where a patch or minor version update should require very little effort, whereas for major version updates the effort _can_ be substantial.
+
+> Planning of library updates:
+> - Small library updates can be updated as part of regular maintenance. 
+> - Larger updates (e.g. major versions or frameworks) should be planned explicitly.
+
 
 > factor this section out to 'reviewing a library (update)'?
 Checklist before updating:
@@ -402,6 +426,8 @@ The basic rule is that _library implementations should not be modified or custom
 
 - If no other solution is feasible and a modification is absolutely required (or: the costs of alternative solutions are very high), the source code can be forked and put into a designated area in a version control system. In this case carefully consider the possible legal ramifications, e.g. should you make the modified version open source as well. The modification should be documented so that it can be re-applied whenever a newer version of the library is made available.
 
+
+
 ### 12. Replacing a library
 > merge with adopting a new library?
 There can be multiple reasons that require discarding a library and replacing it with another; e.g. since the previous library has high vulnerability risks that are unlikely to be fixed soon, because of licensing issues, or since the library is very much outdated and is no longer being maintained. 
@@ -410,6 +436,7 @@ In _most_ cases, rebuilding a common functionality is not the best option: just 
 
 - need to identify all the locations in the application that use the library
 - how about a new interface? it may be useful to build a wrapper around the newly adopted library that mimics the old interface.
+
 
 
 ### 13. Reviewing a library
@@ -424,7 +451,8 @@ Whenever choosing a new library or updating to a new version, consider the follo
 
 
 
-## Where OSH/Sigrid fits in your workflow (going-concern)  [ROUGH DRAFT]
+## Where OSH/Sigrid fits in your workflow (going-concern)  
+#### [ROUGH DRAFT]
 
 tasks to do repeatedly:
 - scan for issues (daily/..)
