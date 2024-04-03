@@ -413,32 +413,34 @@ The basic rule is that _library implementations should not be modified or custom
 
 
 ### 12. Replacing a library
-> merge with adopting a new library?
-There can be multiple reasons that require discarding a library and replacing it with another; e.g. since the previous library has high vulnerability risks that are unlikely to be fixed soon, because of licensing issues, or since the library is very much outdated and is no longer being maintained. 
+There can be multiple reasons that require discarding a library and replacing it with another; see [11. When a library does not meet requirements](#11-when-a-library-does-not-meet-requirements) for such situations.
 
 In _most_ cases, rebuilding a common functionality is not the best option: just assume that doing that will take much more time than expected, and will also require you to maintain the code in the future. So looking for an alternative library is most likely the best choice, unless there is only very specific and limited behavior that you need now (and in the foreseeable future).
 
-- need to identify all the locations in the application that use the library
-- how about a new interface? it may be useful to build a wrapper around the newly adopted library that mimics the old interface.
+See section [10. Selecting a new library](#10-selecting-a-new-library) for guidelines on how to pick a new library.
+
+One major concern when replacing a library with a new one is that a new library will most likely come with a new API; this means that all the locations in the application that use that library may need to be identified and adjusted. This can be more than just the identifiers of method calls, but also the data types that are passed back and forth to the library API can be different, which _may_ impact the calling code substantially. 
+
+One consideration in this respect can be to wrap the new library and in this way provide an interface that is equal, or more similar, to the previous library.
 
 
 
 ### 13. Reviewing a library
 Whenever choosing a new library or updating to a new version, consider the following review criteria:
-- What are the known vulnerabilities?
-- Is the license acceptable?​ (and/or is the library in the shared permitted-list). See also [Handling detected license issues](#handling-detected-license-issues).
-- Is the new version compatible?  ​(release notes should indicate any breaking changes)
-- Is the code quality (esp. maintainability) of the library acceptable (>3.0 stars)? 
-- How mature is the version?​ (e.g. an x.0 version tends to be a bit more immature). Are there still -relevant- open issues? Use a stable version unless there is a real reason not to do so. An example might be that a Release Candidate fixes a vulnerability and you do not want to wait for the stable version to come out.
-- Are there enough users of the library? (check for example the number of downloads, or amount of GitHub stars).
+1. What are the known vulnerabilities?
+2. Is the license acceptable?​ (and/or is the library in the shared permitted-list). See also [Handling detected license issues](#handling-detected-license-issues).
+3. Is an updated version compatible with the previous version?  ​(release notes should indicate any breaking changes)
+4. Is the code quality (esp. maintainability) of the library acceptable (>3.0 stars)? 
+5. How mature is the version?​ (e.g. an x.0 version tends to be a bit more immature). Are there still -relevant- open issues? Use a stable version unless there is a real reason not to do so. An example might be that a Release Candidate fixes a vulnerability and you do not want to wait for the stable version to come out.
+6. Are there enough users of the library? (check for example the number of downloads, or amount of GitHub stars).
 
-- compatibility break
+<!-- - compatibility breaks
   - Compatibility breaks can be caused by the framework/library no longer supporting the technologies used in the system.​
     - e.g. if the libraries are using newer language versions? 
   - Analyze the impact and consider the following things:​
      - What is the impact of updating the application to make it compatible?​
      - Are there alternatives of the library?​
-     - Are the technologies used still relevant for the future of the system?​
+     - Are the technologies used still relevant for the future of the system?​ -->
 <!-- check this text by marijn:
 You were using a (deprecated) method that's no longer available. Your IDE will likely make you aware of this.
 A nastier version is that you weren't using the library correctly and the new version is less forgiving but without alarms going off.
