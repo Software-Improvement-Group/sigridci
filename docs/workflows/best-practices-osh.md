@@ -7,6 +7,7 @@
   - Check that the benchmark risk categories and the guidance for producers should be consistent with the methodology & guidelines: so same scales etc.
   - Make sure we are aligned with DPA v4! (can we refer to it?)
   - check consistent usage of the term third party library (marco: open-source dependency)
+  - check that we cross-reference all sections
   - comments marijn:
     - Bijvoorbeeld: volgens kan er 1 job zijn voor 'replacing an existing library or using a new one' waarbij het enige verschil is dat je voor het 'replacement' scenario moet checken waar je de oude lib gebruikt en hoe de interface van de nieuwe anders is. OK; ik denk dat ik replacing houdt, en verwijs naar adopting
     - Ander voorbeeld: in 'updating a library' staat min of meer dezelfde checklist als bij 'adopting a library'
@@ -224,9 +225,9 @@ For timely handling of open source health risks, there are two concerns:
  See also [Where OSH fits in your workflow](#where-oshsigrid-fits-in-your-workflow-going-concern) for details on how to integrate library handling in your workflow.
 
 
-### 5. Handling detected vulnerabilities
+### 5. Handling vulnerabilities
 
-> TODO: or first discuss when, then how??
+> TODO: or reverse the order of _when_, and _how_?
 #### How to remediate vulnerabilities
 
 The primary means of remediating a vulnerability is to update the library: in most cases, vulnerabilities (especially critical ones) are only published once a patch is available in a new version of the library. See section [9. Updating a library](#9-updating-a-library) for more details. Do check that the vulnerability is indeed solved in the newer version of the library.
@@ -262,11 +263,12 @@ The table below is a proposal how fast you should resolve vulnerabilities, depen
 
 
 
-### 6. Handling detected license issues 
-> SIG assesses whether a license is generally considered a risk for commercial software. Contact an IT lawyer to discuss license risks specifically for the code analyzed as well as the way it will be used.
+### 6. Handling license issues 
+> SIG assesses whether a license is generally considered a risk for use within commercial software. Contact an IT lawyer to discuss license risks specifically for the code analyzed as well as the way it will be used.
 
 Usually, license risks will appear whenever a library is scanned for the first time; either because the application is scanned for the first time, or the library has just been introduced.
 
+---
 > COMMENT: here's an experiment with a graphical overview of the process: does that really help?? (NB: to be viewed on Github)
 ```mermaid
 graph TD; 
@@ -277,6 +279,7 @@ graph TD;
     D_yes -- yes --> M[Modify\n distribution model] --> E;
     D_yes -- no --> R[Replace library] --> E;
 ```
+---
 
 #### Assess the license risk
 - Libraries must have an acceptable license. This may be a paid license or an acceptable open-source license. 
@@ -321,7 +324,7 @@ Depending on the circumstances, one or more of the following actions can be take
 
 
 
-### 7. Handling detected lack of freshness
+### 7. Handling lack of freshness
 
 Lack of freshness occures when there is a newer version of a library available, but that version is not used in the application.
 
@@ -333,9 +336,20 @@ The remedy for lack of freshness is always [Updating a library](#9-updating-a-li
 <!-- this actually also overlaps with 'updating a library', but maybe still good to have these 2 sentences here? -->
 
 
-### 8. Handling detected lack of activity
+### 8. Handling lack of activity
+Lack of activity in the development of a library is not an urgent problem, but it is a long-term concern, in particular since it precludes detecting and patching security vulnerabilities. 
+This issue cannot be resolved by application developers, except by [Replacing a library](#12-replacing-a-library).
 
- [NOTE Asma]: Lack of activity should be handled, community activity is key for vulnerabiltiy detection and patching. (see research for Huwawei on Open source maturity)
+
+
+### 8.5 Handling insufficient package management [OPTION]
+
+> NOTE: perhaps a few lines about what it can mean when you have package managers in use, but still score insufficiently.
+
+- This may be due to e.g. Java JARs or javascript source files that have been copied directly into your code base. 
+- perhaps you also use libraries that are not part of an ecosystem that is handled by the package manager
+- perhaps you use libraries for a technology that does not have an (adequate/acceptable) package manager
+...
 
 
 
@@ -343,47 +357,27 @@ The remedy for lack of freshness is always [Updating a library](#9-updating-a-li
 
 
 ### 9. Updating a library
-#### [ROUGH DRAFT]
-There can be several reasons to consider updating a library.
+There can be several reasons to consider updating a library: 
+- _Urgent reasons_: when a vulnerability is detected in a library that has been resolved in a new version, or a bug has been resolved in a newer version.
+- _Hygiene_: ensure that the version of a library that you use does not fall behind too much, since that will make your life as a developer harder.
 
-> The effort involved can be estimated from release notes, and is typically also indicated by [semantic versioning](https://semver.org/): where a patch or minor version update should require very little effort, whereas for major version updates the effort _can_ be substantial.
+Updating to a newer version will always also improve the freshness rating. Using a package manager, updates may be installed automatically, or require updating the version constraints in the configuration file (sometimes called 'manifest') of the package manager.
 
-> Planning of library updates:
-> - Small library updates can be updated as part of regular maintenance. 
-> - Larger updates (e.g. major versions or frameworks) should be planned explicitly.
+The _effort involved in updating_ a library can be estimated based on the release notes, and also [semantic versioning](https://semver.org/): where a patch or minor version update should require very little effort, whereas for major version updates the effort _can_ be substantial.
+
+_Scheduling library updates:_
+- Small library updates can be updated as part of regular maintenance. 
+- Larger updates (e.g. major versions or frameworks) should be planned explicitly.
 
 
-> factor this section out to 'reviewing a library (update)'?
-Checklist before updating:
-- Does it have open issues?​
-- check the update notes for breaking changes
-- Is the license (still) compatible?​
-  - → [Handling detected license issues](#handling-detected-license-issues)
+_Ground rule: never postpone updating_
+- The longer you postpone updating, the bigger the eventual pain. As your system grows and evolves, the costs and risks of upgrading an old library increase. Such an accumulation of maintenance debt may lead to a much larger effort than in the case of smaller, incremental updates.​
+- if a new, stable version comes out: don't wait, start testing. If it's really core and really important, already start testing with release candidates.
+- Do adopt the "If it ain’t broke, don’t fix it" strategy​
+  - This strategy implies that you do not update unless you *have to*. You stay with the current version of the third-party library until you notice something wrong in your application, no matter how often the vendor publishes an update. ​
+  - Whilst easier in the short term, with this strategy you will end up with a system that depends on outdated and unmaintained libraries, where you cannot use some other libraries since they require a newer version of that library which you cannot upgrade and at some point. You may lose the ability to fix some issues at all.​
+- only when a new version breaks the behavior of the application, postponing may be warranted.
 
-Use a stable version unless there is a real reason not to do so. An example might be that a Release Candidate fixes a vulnerability and you don't want to wait for the stable version to come out.
-
-If your ecosystem allows it, use a package manager.
-
-- compatibility break
-  - Compatibility breaks can be caused by the framework/library no longer supporting the technologies used in the system.​
-    - e.g. if the libraries are using newer language versions? 
-  - Analyze the impact and consider the following things:​
-     - What is the impact of updating the system to make it compatible?​
-     - Are there alternatives of the library?​
-     - Are the technologies used still relevant for the future of the system?​
-[marijn]:
-You were using a (deprecated) method that's no longer available. Your IDE will likely make you aware of this.
-A nastier version is that you weren't using the library correctly and the new version is less forgiving but without alarms going off.
-The library needs transitive dependencies that have become incompatible with needs of other libraries
-
-- when is postponing updates a good idea?
-  - The longer you postpone updating, the bigger the eventual pain. As your system grows and evolves, the costs and risks of upgrading an old library increase. Such an accumulation of maintenance debt may lead to a much larger effort than in the case of smaller incremental updates.​
-  - if a new, stable version comes out: don't wait, start testing. If it's really core and really important, already start testing with release candidates.
-  - Don’t go for the "If it ain’t broke, don’t fix it" strategy​
-    - This strategy implies that you don’t update unless you have to. You stay with the current version of the third-party library until you notice something wrong in your application, no matter how often the vendor publishes an update. ​
-    - Whilst easier in the short term, with this strategy you will end up with a system which depends on outdated and unmaintained libraries, where you can't use some other libraries since they require a newer version of that library which you can't upgrade and at some point. You may lose the ability to fix some issues at all.​
-    - 
-- note: when addressing the vulnerabilities of a specific library by updating to a newer version, that always also improves the freshness
 
 
 ### 10. Adopting a new library
@@ -441,13 +435,24 @@ In _most_ cases, rebuilding a common functionality is not the best option: just 
 
 ### 13. Reviewing a library
 Whenever choosing a new library or updating to a new version, consider the following review criteria:
-- What are the known vulnerabilties?
-- Is the license acceptable?​ (and/or is the library in the shared permitted-list)
-- Is the new version compatible?  ​(release notes will indicate breaking changes)
+- What are the known vulnerabilities?
+- Is the license acceptable?​ (and/or is the library in the shared permitted-list). See also [Handling detected license issues](#handling-detected-license-issues).
+- Is the new version compatible?  ​(release notes should indicate any breaking changes)
 - Is the code quality (esp. maintainability) of the library acceptable (>3.0 stars)? 
-- How mature is the version?​ (e.g. an x.0 version tends to be a bit more immature)
-- Are many people using it (e.g. check GitHub stars, downloads)
-<!-- [too hard to judge?]  Is it stable enough?​ -->
+- How mature is the version?​ (e.g. an x.0 version tends to be a bit more immature). Are there still -relevant- open issues? Use a stable version unless there is a real reason not to do so. An example might be that a Release Candidate fixes a vulnerability and you do not want to wait for the stable version to come out.
+- Are there enough users of the library? (check for example the number of downloads, or amount of GitHub stars).
+
+- compatibility break
+  - Compatibility breaks can be caused by the framework/library no longer supporting the technologies used in the system.​
+    - e.g. if the libraries are using newer language versions? 
+  - Analyze the impact and consider the following things:​
+     - What is the impact of updating the application to make it compatible?​
+     - Are there alternatives of the library?​
+     - Are the technologies used still relevant for the future of the system?​
+<!-- check this text by marijn:
+You were using a (deprecated) method that's no longer available. Your IDE will likely make you aware of this.
+A nastier version is that you weren't using the library correctly and the new version is less forgiving but without alarms going off.
+The library needs transitive dependencies that have become incompatible with needs of other libraries -->
 
 
 
