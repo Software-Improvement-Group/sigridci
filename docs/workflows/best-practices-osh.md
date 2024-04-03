@@ -380,24 +380,18 @@ _Ground rule: never postpone updating_
 
 
 
-### 10. Adopting a new library
-#### [ROUGH DRAFT]
-- this also applies to frameworks
-- often, libraries are part of an ecosystem, or work within a certain application framework; e.g. eclipse, Apache, where it makes a lot of sense (consistency, frictionless compatibility) to pick a library from the same ecosystem, when that meets the necessary requirements. 
+### 10. Selecting a new library
+The main criterion for selecting a new library is when a non-trivial amount of commonplace behavior is needed within the application: implementing such behavior from scratch is typically more time-consuming and error-prone than predicted, hence reuse from an (open source) library may be the better option. 
+ 
+Often, libraries are part of an ecosystem, or work within a certain application framework, such as Eclipse, or Apache, where it makes a lot of sense (consistency, frictionless compatibility) to pick a library from the same ecosystem, if that meets the necessary requirements. 
 
-- checklist:
-  - Does it have open issues?​
-  - Is the license acceptable?​
-    - Libraries must have a license acceptable to <org>.  maintains a list of common licenses used in free and open-source software (FOSS); if a library has a license listed as acceptable, it can be used. 
-  - How is the code quality of the library? 
-  - Does it contain optimizations for performance, maintainability, functionality?​
-  - Is the new version compatible?  ​
-  - How mature is the version?​
-  - Is it stable enough?​
-  - Are many people using it (e.g. check GitHub stars)
+See section [Reviewing a library](#13-reviewing-a-library) for a detailed checklist of properties to consider before adopting a new library.
+
+A more extensive discussion of selecting (including reviewing) open source libraries can be found in this [talk](https://portal.gitnation.org/contents/is-it-the-one-how-to-select-an-open-source-library).
 
 
-### 11. When a library does not support requirements
+
+### 11. When a library does not meet requirements
 > 1) update 
 > 1a) pull request of issue aanmaken bij maintainer (noemen we nu nog niet) 
 > 2) vervangen 
