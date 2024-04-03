@@ -392,27 +392,23 @@ A more extensive discussion of selecting (including reviewing) open source libra
 
 
 ### 11. When a library does not meet requirements
-> 1) update 
-> 1a) pull request of issue aanmaken bij maintainer (noemen we nu nog niet) 
-> 2) vervangen 
-> 3) (if all else fails) adopteren.
 
-<!-- these are not OSH-specific -->
+<!-- these are not all OSH-specific--but  -->
 There are several possible reasons why a library does not support the needs and requirements:
 1. _It's Open Source Health has unacceptable risks_. 
 1. _Functional mismatch_: a library is missing features that cannot easily be added on top, or the implementation of the library is based on assumptions or choices that are incompatible with the ones in the application.
 2. _Bug in library implementation_: typically detected after a library has been adopted, so the cost of switching is non-neglible.
-3. _Compatibility break_: a library does not (or no longer) work well together with another library or the application itself, due to changes in any of the involved components.
+3. _Compatibility break_: a library does not (or no longer) work well together with another library or the application itself, due to changes in the APIs of any of the involved components.
 
 The basic rule is that _library implementations should not be modified or customized_: ​One of the main benefits of libraries and frameworks, is that they provide functionality without the duty of maintaining it. After customizing a library implementation, you lose this benefit while being dependent on the changes that the community makes.​
 
-- First, check whether a newer version of the library may solve the issue, then consider updating ([Updating a library](#9-updating-a-library-rough-draft)); you may also wait a bit until a fix is being released, especially when the issue is being worked on.
-- If the issue is a bug or lacking feature, you can file an issue at the maintainer of the library. 
-- If the issue is a bug or lacking feature, you can also look at the implementation of the library and develop a fix: 
+1. First, check whether a newer version of the library may solve the issue, then consider updating ([Updating a library](#9-updating-a-library-rough-draft)); you may also wait a bit until a fix is being released, especially when the issue is being worked on.
+2. If the issue is a bug or lacking feature, you can file an issue at the maintainer of the library. 
+3. If the issue is a bug or lacking feature, you can also look at the implementation of the library and develop a fix: 
   - You may be able to wrap the relevant library call(s) with extra code that corrects or hides the bug.
   - Alternatively, you can temporarily use the modified library while merging back the bug fix into the library (be aware of the license). Once the community has accepted the fix, you can update and remove the local code​.
-
-- If no other solution is feasible and a modification is absolutely required (or: the costs of alternative solutions are very high), the source code can be forked and put into a designated area in a version control system. In this case carefully consider the possible legal ramifications, e.g. should you make the modified version open source as well. The modification should be documented so that it can be re-applied whenever a newer version of the library is made available.
+4. Consider whether another library that implements similar functionality is available, and the costs of adopting that library are acceptable. Check [Replacing a library](#12-replacing-a-library) for more details.
+5. If no other solution is feasible and a modification is absolutely required (or: the costs of alternative solutions are very high), the source code can be forked and put into a designated area in a version control system. In this case carefully consider the possible legal ramifications, e.g. should you make the modified version open source as well. The modification should be documented so that it can be re-applied whenever a newer version of the library is made available.
 
 
 
