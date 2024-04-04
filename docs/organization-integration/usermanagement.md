@@ -1,11 +1,11 @@
 User management in Sigrid
 ===========================================
 
-When managing user access to Sigrid we need to consider both Authentication (can you enter?) and Authorisation (what can you see?). 
+When managing user access to Sigrid we need to consider both Authentication (can you enter?) and Authorization (what can you see?). 
 - Authentication is the step where users are allowed to enter the platform. After Authenication is successful, 
-- Authorisation defines which user can access the analysis results of which systems.
+- Authorization defines which user can access the analysis results of which systems.
 
-Sigrid offers two ways of managing Authentication and one type of Authorisation. 
+Sigrid offers two ways of managing Authentication and one type of Authorization. 
 
 This page describes the options and the technical setup.
 
@@ -23,7 +23,7 @@ With this module, a Sigrid administrator can perform all the basic authenticatio
 - Create users based on their email, first and last name.
 - Resend lost and temporary passwords.
 - Check the last login and MFA status.
-- Do authorisation tasks to define who can see what in Sigrid.
+- Do authorization tasks to define who can see what in Sigrid.
 - Delete users
 
 ### Setup customer side
@@ -41,7 +41,7 @@ When Sigrid is linked to your SSO the user provisioning is done by the IdP. Sigr
 
 ### Sigrid administrator tasks
 - Check the last login
-- Do authorisation tasks to define who can see what in Sigrid
+- Do authorization tasks to define who can see what in Sigrid
 
 ### Setup on client side
 Create an Enterprise application 'app' in your IdP with the following details: 
@@ -76,6 +76,9 @@ Please see the separate [OneLogin page](usermanagement-example-onelogin.md).
 ### Example Okta
 Please see the separate [OKTA page](usermanagement-example-okta.md).
 
+### Example Google
+Please see the separate [Google page](usermanagement-example-google.md).
+
 
 ### Info to provide to SIG
 Provide SIG with the 'App federation MetadataURL' of your authentication app.
@@ -85,7 +88,7 @@ The information will include your app's identifier, redirectURL etc.
 SIG will setup SSO for you. You will have your own customer-specific URL Sigrid.
 https://customername.sigrid-says.com
 
-# Authorisation in Sigrid
+# Authorization in Sigrid
 The product team is actively developing the user management pages to cater to more use cases. At the moment the user manages the following functions.
 
 ### Two types of users
@@ -112,8 +115,8 @@ For more information on assigning metadata to systems, please see the separate [
 
 __Note:__ Bulk assignment of system access can be done both when assigning permissions to a single user, as well as when defining permissions for authorization groups.
 
-### Authorisation groups
-Administrators also have the ability to specify system access in bulk for groups of users, by creating an authorisation group entity by which users can be added to this group along with a permission set. All users added to a defined authorisation group will inherit access rights to systems authorized for the group. 
+### Authorization groups
+Administrators also have the ability to specify system access in bulk for groups of users, by creating an authorization group entity by which users can be added to this group along with a permission set. All users added to a defined authorization group will inherit access rights to systems authorized for the group. 
 
 #### Creating groups in User Management
 
@@ -123,11 +126,11 @@ You can find the user group table on the User Management page by switching to th
 
 Creating a new user group is simple and follows a very similar process for assigning permissions to users. From the "Groups" tab, simply click the "Add user group" button and this will trigger a new dialog to appear.
 
-From here you can input a descriptive name for the new authorisation group as well as a description of the responsibility of this group.
+From here you can input a descriptive name for the new authorization group as well as a description of the responsibility of this group.
 
 <img src="../images/um-group-details-dialog.png" width="600" />
 
-Upon saving of the group details, the authorisation group is created. At this state the group will have no users or system access, but the group entity does exist and will populate the User Groups table.
+Upon saving of the group details, the authorization group is created. At this state the group will have no users or system access, but the group entity does exist and will populate the User Groups table.
 
 <img src="../images/um-group-created.png" width="600" />
 
@@ -143,12 +146,15 @@ System assignment can be done one-by-one, or in bulk using the metadata based bu
 
 <img src="../images/um-groups-assigning-permissions.png" width="600" />
 
-Naturally, any change in the permissions of a group will be reflected in the permissions of all users present in the group. Some key things to keep in mind when assigning permissions via authorisation groups are the following:
+Naturally, any change in the permissions of a group will be reflected in the permissions of all users present in the group. Some key things to keep in mind when assigning permissions via authorization groups are the following:
 - Inherited access rights to systems are in addition to any current rights the a user may have, it does not overwrite existing authorization rights of the user.
 - Users can be part of multiple groups, and will inherit all access rights of any groups they are a part of. Again, inheritance of one group's access rights does not overwrite the inheritance another group's access rights, these access rights are simply combined in total. Any overlap in access will simply see the user retain access right to the overlapped system.
 - Inherited access rights are not possible to be revoked piece-wise, to remove inherited system access from a group requires the user to be removed from said group.
 - System level access for the group is defined in the same manner as it is for an individual, and includes the same ability to bulk assign systems to a group via the use of the access control filters for teams. suppliers or divisions.
 
+### User Management via Sigrid API
+
+Apart from the web-based user interface of Sigrid, users and authorization groups can be managed via several endpoints available in the Sigrid API. Please see [how to manage user permission](../integrations/sigrid-api-documentation.md#managing-user-permissions-via-API) via API for more information.
 
 ### Passwords
 The administrator can help users by resending a forgotten password or the initial temporary password.
