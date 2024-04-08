@@ -72,7 +72,7 @@ These jobs have been grouped in three categories: first some general guidelines 
 
 
 ### About the SIG OSH model
-The SIG Open Source Health model is described here in the documentation: [OSH guidance for producers](../reference/quality-model-documents/open-source-health.html).
+The SIG Open Source Health model is described here in the documentation: [OSH guidance for producers](../reference/quality-model-documents/open-source-health.md).
 
 <!-- And more internal details for SIG are here (since some proprietary info):
 - Wiki page ["How to interpret OSH findings" wikipage](https://softwareimprovementgroup.atlassian.net/wiki/spaces/SSM/pages/50317951024/How+to+interpret+Open-Source+health+findings).
@@ -120,7 +120,7 @@ There are a number of policies on how to address open source libraries during de
   We advise the following objectives:
 
    - _No library vulnerabilities_: having vulnerabilities of medium or higher risk is generally not acceptable as a goal, and since there are relatively few low-risk vulnerabilities in practice, a 'clean sweep' of all vulnerabilities is preferred.
-   - _No unacceptable licenses_; for a typical context this means no licenses that come with obligations or restrictions for commercial usage (see the [OSH Guidelines for producers](../reference/quality-model-components/open-source-health.md) for more details.). In Sigrid these are classified as low-risk, and include the MIT, BSD, and Apache licenses.
+   - _No unacceptable licenses_; for a typical context this means no licenses that come with obligations or restrictions for commercial usage (see the [OSH Guidelines for producers](../reference/quality-model-documents/open-source-health.md) for more details.). In Sigrid these are classified as low-risk, and include the MIT, BSD, and Apache licenses.
    - _Ensure overall OSH quality rating is 4.0 stars or more_
  
 1. _Define how frequent to check for risks_ such as vulnerabilities and other risks in open source libraries. We suggest checking daily for vulnerabilities and quarterly for other OSH risks. See section [4. Scan the software for health issues](#4-scan-the-software-for-health-issues) for more details. 
