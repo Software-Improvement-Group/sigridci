@@ -6,40 +6,21 @@
   - make sure duplication is avoided as much as sensible by cross-referencing to sections.
   - Check that the benchmark risk categories and the guidance for producers should be consistent with the methodology & guidelines: so same scales etc.
   - Make sure we are aligned with DPA v4! (can we refer to it?)
+  - and with the guidance for producers
+  - we have to explicitly address: what if we did not reach 4 stars -> then look at the underlying measurements
   - check consistent usage of the term third party library (marco: open-source dependency)
   - check that we cross-reference all sections
+  - create an overall flow chart?
   - comments marijn:
     - Bijvoorbeeld: volgens kan er 1 job zijn voor 'replacing an existing library or using a new one' waarbij het enige verschil is dat je voor het 'replacement' scenario moet checken waar je de oude lib gebruikt en hoe de interface van de nieuwe anders is. OK; ik denk dat ik replacing houdt, en verwijs naar adopting
     - Ander voorbeeld: in 'updating a library' staat min of meer dezelfde checklist als bij 'adopting a library'
     voorstel: bij updating, verwijs naar de checklist in 'adopting' (of een aparte 'review' sectie)
     - Nog iets: onder het kopje 'When a library does not support requirements' staan redenen om een library te vervangen die allemaal los staan van OSH, maar die ook weer terugkomen on Vervolgens staat onder 'Replacing a library' een aantal redenen om te replacen die wel weer aan OSH vast zitten. Volgens mij is er eigenlijk 1 flow die neerkomt op 'Ik ben niet blij met mijn library vanwege whatever, dan 1) update 1a) pull request of issue aanmaken bij maintainer (noemen we nu nog niet) 2) vervangen 3) (if all else fails) adopteren.
-  - Nog iets: in 'How to improve portfolio and system-level OSH' kunnen we volgens mij op een hoger niveau blijven. Nu beschrijven we daar bepaalde details die ook terugkomen in de 'Handling....' secties.
+    - Nog iets: in 'How to improve portfolio and system-level OSH' kunnen we volgens mij op een hoger niveau blijven. Nu beschrijven we daar bepaalde details die ook terugkomen in de 'Handling....' secties.
+  - [Marco]: I feel the text in "Structure and overview" and #### Be equipped for healthy open source usage can be merged. I find the text above that introduces this list very... informal, but at the same time not straightforward to understand.
 -->
 
-<details>
-<summary>Input documents used</summary>
-Proposed goal: The Sigrid documentation should be the single source [of truth] of knowledge about Sigrid, the quality models, and SIG Best Practices, thus replacing most of these documents.
-
-Exceptions are SIG and customer confidential information and slide decks that are (really) needed for presentations.
-This means that examples that are derived from customer systems, or that expose internal detail about the benchmark need to be written down elsewhere (for now in the wiki).
- 
-- [Sigrid documentation](https://docs.sigrid-says.com/)
-- [Internal software development guidelines from SIG Development team](https://softwareimprovementgroup.atlassian.net/wiki/spaces/ISMS/pages/50314183293/ISMS+P16.+Software+Development)
-- OSH model slides (Open with Powerpoint--New from template)
-  - there are almost no explanatory slides for OSH in the PPT slide templates (only one overview and 2 templates for findings)
-- ["How to interpret OSH findings" wikipage](https://softwareimprovementgroup.atlassian.net/wiki/spaces/SSM/pages/50317951024/How+to+interpret+Open-Source+health+findings)
-  - See also the License Risk Evaluation Framework slide at the bottom of the wiki page: [OSH interpret results wikipage](https://softwareimprovementgroup.atlassian.net/wiki/spaces/SSM/pages/50317951024/How+to+interpret+Open-Source+health+findings)
-- ["OSH quality model" wiki page](https://softwareimprovementgroup.atlassian.net/wiki/spaces/DEL/pages/50594021377/Open+Source+Health+Quality+Model) 
-- [Sigrid guidance for producers](https://docs.sigrid-says.com/reference/quality-model-documents/open-source-health.html)
-   - we should be consistent with this; e.g. when setting default targets?
-- [Library Management Practices](https://softwareimprovementgroupcom.sharepoint.com/:p:/r/sites/Internalprojects/SEF/Shared%20Documents/Input/20200526_LibraryManagementBestPractices.pptx?d=w2d1b408f0aab4c6182fcd3f055020926&csf=1&web=1&e=LMfkRh)
-- [DPA V4 documentation](https://softwareimprovementgroupcom.sharepoint.com/:p:/r/sites/Deliveryprojects/P20140006BestPracticeEvaluationFramework/Shared%20Documents/Training/2023-DPA-V3-V4-introduction-long.pptx?d=w8b589f9f0eaf4201b2e1d5d7299b7e17&csf=1&web=1&e=tigu97) 
-- ...
-  
----
-</details>  
-
-> NOTE for internal use: This document is a collection of the knowledge that we have accumulated within SIG on the best practices for achieving Open Source Health. Its purpose within SIG is to have all this knowledge documented in one place, such that we have a shared base as consultants, and also a document that we can share with customers that are in search of concrete advice on how to get things in place for healthy open source usage. 
+<!-- > NOTE for internal use: This document is a collection of the knowledge that we have accumulated within SIG on the best practices for achieving Open Source Health. Its purpose within SIG is to have all this knowledge documented in one place, such that we have a shared base as consultants, and also a document that we can share with customers that are in search of concrete advice on how to get things in place for healthy open source usage.  -->
 
 ## Table of contents:
 <sig-toc></sig-toc>
@@ -53,15 +34,13 @@ Where applicable, we explain how Sigrid can be used to achieve this.
 
 
 ### Structure and overview
-> [Marco]: I feel the text in "Structure and overview" and #### Be equipped for healthy open source usage can be merged. I find the text above that introduces this list very... informal, but at the same time not straightforward to understand.
+
 
 The guidelines and best practices have been structured based on 'jobs to be done': the idea is to look at the actual tasks that stakeholders need to conduct, and provide them with help to do those tasks. Jobs can embed, or refer to, other jobs.
 
 These jobs have been grouped in three categories: first some general guidelines for conducting healthy open source usage in development, that help to get started, and may need to be revisited or updated on a regular basis. Secondly the various types of tasks that are needed to ensure continued health of libraries (note that even when application code is not actively maintained for a while, the health of open source libraries may diminish!). And thirdly a set of practical tasks in handling libraries as a developer.
 
-<!--  another, obvious form of structuring the contents in this document is in a (simple) design pattern format, which is centered around a problem to be addressed. That format can provide more structure, and allows for (1) putting a problem into a context, (2) adding details, special cases and practical suggestions without cluttering the main message.
-> base structure could be: name - problem - solution - (implementation in Sigrid) - consequences 
---> 
+
 
 #### Be equipped for healthy open source usage
 1. General guidelines for your application development
@@ -93,14 +72,12 @@ These jobs have been grouped in three categories: first some general guidelines 
 
 
 ### About the SIG OSH model
-The SIG Open Source Health model is described in the following places:
-- The [OSH guidance for producers](https://docs.sigrid-says.com/reference/quality-model-documents/open-source-health.html) is also part of the Sigrid documentation.
+The SIG Open Source Health model is described here in the documentation: [OSH guidance for producers](../reference/quality-model-documents/open-source-health.html).
 
-And more internal details for SIG are here (since some proprietary info):
+<!-- And more internal details for SIG are here (since some proprietary info):
 - Wiki page ["How to interpret OSH findings" wikipage](https://softwareimprovementgroup.atlassian.net/wiki/spaces/SSM/pages/50317951024/How+to+interpret+Open-Source+health+findings).
   > Is this now redundant?
-- Wiki page ["OSH quality model" wiki page](https://softwareimprovementgroup.atlassian.net/wiki/spaces/DEL/pages/50594021377/Open+Source+Health+Quality+Model). 
-
+- Wiki page ["OSH quality model" wiki page](https://softwareimprovementgroup.atlassian.net/wiki/spaces/DEL/pages/50594021377/Open+Source+Health+Quality+Model).  -->
 
 
 
@@ -110,16 +87,14 @@ This section prescribes a typical way of working for ensuring healthy open sourc
 
 
 ### 1. General guidelines for your application development
-> NOTE: should this subsection come after the next one on OSH policies?
+<!-- > NOTE: should this subsection come after the next one on OSH policies? -->
 
 There are a number of topics to consider that are not directly related to the libraries themselves, but to the way you organize the development of the application itself.
 The following guidelines should be considered as compliance rules for framework and library management:​
 
 #### Keep application source code separate from frameworks/libraries​.
 1. _Do not change the source code of used frameworks/libraries._: depending on the technology used, you often do not need source code at all, but will use binaries of the libraries.
-2. _Do not add project or organization specific headers._ 
-    > [TODO: to what??? to the source code of libraries or frameworks?]​
-3. _Only a single version of each library or framework​ should be used directly._: Also, do not have copies of the same library installed. It may well be that one or more of your libraries is importing another version of the same library that your application uses; such indirect use is mostly out of scope.
+1. _Only a single version of each library or framework​ should be used directly._: Also, do not have copies of the same library installed. It may well be that one or more of your libraries is importing another version of the same library that your application uses; such indirect use is mostly out of scope.
 <!--  This discussion is perhaps too detailed/nuanced?
    Note that in some cases, you can have a library _L1_ that requires _M_, and a library _L2_ that requires another version of _M_; in such cases you may not be able to influence this (depending on what your package manager allows), but at least ensure your application code does not directly rely on multiple versions of the same library.
   [Note Asma] Point 3 sounds like transitive dependency management, what are the best practices there to handle those in a package manager? Also at which lvl of transitivity do we stop caring? 
@@ -147,9 +122,7 @@ There are a number of policies on how to address open source libraries during de
    - _No library vulnerabilities_: having vulnerabilities of medium or higher risk is generally not acceptable as a goal, and since there are relatively few low-risk vulnerabilities in practice, a 'clean sweep' of all vulnerabilities is preferred.
    - _No unacceptable licenses_; for a typical context this means no licenses that come with obligations or restrictions for commercial usage (see the [OSH Guidelines for producers](../reference/quality-model-components/open-source-health.md) for more details.). In Sigrid these are classified as low-risk, and include the MIT, BSD, and Apache licenses.
    - _Ensure overall OSH quality rating is 4.0 stars or more_
-     <!-- alternative: - _No libraries that are longer out-of-date than 6 months_ --> 
-     > NOTE: check that the above is in line with the guidance for producers, or explain why not.
-
+ 
 1. _Define how frequent to check for risks_ such as vulnerabilities and other risks in open source libraries. We suggest checking daily for vulnerabilities and quarterly for other OSH risks. See section [4. Scan the software for health issues](#4-scan-the-software-for-health-issues) for more details. 
 
 2. _Define how fast new vulnerabilities have to be resolved_; this will depend on the criticality. See the section on [Handling detected vulnerabilities](#6-handling-detected-vulnerabilities) for details.
@@ -159,15 +132,14 @@ There are a number of policies on how to address open source libraries during de
    - This is useful when a library has properties that cause Sigrid to signal a risk, but that risk is a false positive. 
    - Create an _ignore-list_. This list requires CISO approval. The ignore-list must be reviewed regularly (a few times per year): define when this review will happen.
    - Do note that if a library is put on the ignore-list since the reported vulnerability-list is a false positive, that does not necessarily mean that the other types of risk should be ignored as well.
-   > NOTE: this was called the 'allow-list', but 'ignore-list' seems to carry the purpose better.
-   > NOTE: describe how to do this now in the scope file???
+
+   <!-- > NOTE: describe how to do this now in the scope file??? -->
 
 
 5. Optionally: _Define a shared permitted-list_: it can be useful (and in some organizations required) to have a shared list of libraries that are permitted. 
-  This list can have an advisory role, functioning as a list of libraries that have already been checked, and are likely already in use. it can also have the role of a clearance list, where developers have only permission to use libraries from the permitted-list, and must seek approval for libraries that are not on that list. 
+  This list can have an advisory role, functioning as a list of libraries that have already been checked, and are likely already in use. It can also have the role of a clearance list, where developers have only permission to use libraries from the permitted-list, and must seek approval for libraries that are not on that list. 
   For determining whether to include libraries, see the criteria defined in the section [Adopting a new library](#adopting-a-new-library).
-[Note Asma] If you have a permitted list, there should be a guideline describing the requirements for a lib to be permitted. Cerntainly when you want to be able to go from POC to MVP.
-LB: ? is there more than the section #adopting-a-new-library?
+
 
 
 ### 3. How to improve portfolio and system-level OSH
@@ -181,10 +153,9 @@ Especially for a new Sigrid, at the system and portfolio level there can be an a
 
 3. Consider legal risks due to unacceptable licenses:
    - The highest priority are libraries that are used in an application without the proper rights; for example libraries that do not allow commercial use (if you are a commercial organization). Some of those require paying a license fee; which is the most straightforward means of addressing the issue.
-   > TODO: check guidance for producers for more suggestions
-
-   > TODO: QUESTION: how often does this happen with open source libraries? Is there a way to register compliance, or does this require adding the library to the ignore list?
-
+   <!-- > TODO: check guidance for producers for more suggestions -->
+    <!-- NB: changing licenses are pointed out as a growing concern in this year's Thoughtworks Technology Radar -->
+   <!-- > TODO: QUESTION: how often does this happen with open source libraries? Is there a way to register compliance, or does this require adding the library to the ignore list? -->
     - A next category to consider are the copy-left licenses, which typically do require the application that uses those libraries to be distributed with the same license (and e.g. also made open-source). Depending on your situation, such libraries should be marked as a legal risk.
     - The main way of addressing legal risk due to unacceptable licenses is by replacing the library with another one.
   
@@ -204,8 +175,6 @@ In this section, we are describing guidelines, hints and tips on how to maintain
 
 
 ### 4. Scan the software for health issues
-
-<!-- >> NOTE Shima: earlier we made a note that library health should be a part of their sprint, this is contradictory to above statement, I think we should stick to one recommended suggestion, what is the best practice, if it is sprint, then that should be the message. e.g. for known vunerabilitities, if objective is none, then that means 3 months is perhaps too late. So is there a best practice for resolution time then that should match also scan frequency etc. see also section 5 on handling vulnerabilities -->
 
 For timely handling of open source health risks, there are two concerns:
 1) _Risks that appear due to changes in the code_: these need to be signalled as soon as possible (short feedback loops make it much more efficient to make changes); doing the scanning as part of the CI/CD pipeline using `sigridci` addresses this.
@@ -398,7 +367,7 @@ There are several possible reasons why a library does not support the needs and 
 1. _It's Open Source Health has unacceptable risks_. 
 1. _Functional mismatch_: a library is missing features that cannot easily be added on top, or the implementation of the library is based on assumptions or choices that are incompatible with the ones in the application.
 2. _Bug in library implementation_: typically detected after a library has been adopted, so the cost of switching is non-neglible.
-3. _Compatibility break_: a library does not (or no longer) work well together with another library or the application itself, due to changes in the APIs of any of the involved components.
+3. _Compatibility break_: a library does not (or no longer) work well together with another library or the application itself, due to changes in the APIs of involved components.
 
 The basic rule is that _library implementations should not be modified or customized_: ​One of the main benefits of libraries and frameworks, is that they provide functionality without the duty of maintaining it. After customizing a library implementation, you lose this benefit while being dependent on the changes that the community makes.​
 
@@ -431,7 +400,7 @@ Whenever choosing a new library or updating to a new version, consider the follo
 2. Is the license acceptable?​ (and/or is the library in the shared permitted-list). See also [Handling detected license issues](#handling-detected-license-issues).
 3. Is an updated version compatible with the previous version?  ​(release notes should indicate any breaking changes)
 4. Is the code quality (esp. maintainability) of the library acceptable (>3.0 stars)? 
-5. How mature is the version?​ (e.g. an x.0 version tends to be a bit more immature). Are there still -relevant- open issues? Use a stable version unless there is a real reason not to do so. An example might be that a Release Candidate fixes a vulnerability and you do not want to wait for the stable version to come out.
+5. How mature is the version?​ (e.g. an x.0 version tends to be a bit more immature). Are there still -relevant- open issues? Use a stable version unless there is a real reason not to do so. An example might be that a Release Candidate fixes a vulnerability, and you do not want to wait for the stable version to come out.
 6. Are there enough users of the library? (check for example the number of downloads, or amount of GitHub stars).
 
 <!-- - compatibility breaks
@@ -447,7 +416,7 @@ A nastier version is that you weren't using the library correctly and the new ve
 The library needs transitive dependencies that have become incompatible with needs of other libraries -->
 
 
-
+<!-- 
 ## Where OSH/Sigrid fits in your workflow (going-concern)  
 #### [ROUGH DRAFT]
 
@@ -471,8 +440,8 @@ tasks to do repeatedly:
   - [When do you see the impact of the changes? when merging after the review?]
 - Sprint retrospective: 
   - make sure you have actually addressed the findings you set out to fix in your sprint planning.
- 
-  
+  -->
+<!--   
 ## Frequently Asked Questions  [ROUGH DRAFT]
 
 Q: why not adopt a ‘if it ain’t broke, don’t fix it’ strategy for updating libraries?
@@ -515,9 +484,9 @@ A:
 - Objection: It's a bad practice to be on the latest version all the time, they tend to be unstable and contain bugs.
   - SIG opinion: Agree (although it's not that bad in practice). This is why we do not recommend to have everything green for Freshness, and everything less than 1 month not updated is still green.
 
----
+--- -->
 
-
+<!-- 
 ## Input: List of Best practices
 > TODO: distribute these over the various JTBD?
 
@@ -534,4 +503,4 @@ A:
 - 
 - Consider each library/framework as a backlog item, and make it the responsibility of developers​
   - Avoiding use of multiple versions of the same framework/library​, as they add the same effort as a separate library​​
-  - ?? Re-estimating effort and creating visibility in growing technical debt of outdated frameworks/libraries​​
+  - ?? Re-estimating effort and creating visibility in growing technical debt of outdated frameworks/libraries​​ -->
