@@ -112,7 +112,7 @@ There are a number of policies on how to address open source libraries during de
 
 2. _Set the thresholds for library risks_ that are (not) acceptable: this is applicable to all types of risks. Set these goals in the [Sigrid objectives](#TBD).
 
-  We advise the following objectives:
+   We advise the following objectives:
 
    - _No library vulnerabilities_: having vulnerabilities of medium or higher risk is generally not acceptable as a goal, and since there are relatively few low-risk vulnerabilities in practice, a 'clean sweep' of all vulnerabilities is preferred.
    - _No unacceptable licenses_; for a typical context this means no licenses that come with obligations or restrictions for commercial usage (see the [OSH Guidelines for producers](../reference/quality-model-documents/open-source-health.md) for more details.). In Sigrid these are classified as low-risk, and include the MIT, BSD, and Apache licenses.
@@ -123,7 +123,7 @@ There are a number of policies on how to address open source libraries during de
 2. _Define how fast new vulnerabilities have to be resolved_; this will depend on the criticality. See the section on [Handling detected vulnerabilities](#6-handling-detected-vulnerabilities) for details.
 
 <!-- eventually this *can* be removed when we can refine OSH findings in Sigrid?-->
-4. _Declare which libraries should not be checked_
+5. _Declare which libraries should not be checked_
    - This is useful when a library has properties that cause Sigrid to signal a risk, but that risk is a false positive. 
    - Create an _ignore-list_. This list requires CISO approval. The ignore-list must be reviewed regularly (a few times per year): define when this review will happen.
    - Do note that if a library is put on the ignore-list since the reported vulnerability-list is a false positive, that does not necessarily mean that the other types of risk should be ignored as well.
@@ -131,7 +131,7 @@ There are a number of policies on how to address open source libraries during de
    <!-- > NOTE: describe how to do this now in the scope file??? -->
 
 
-5. Optionally: _Define a shared permitted-list_: it can be useful (and in some organizations required) to have a shared list of libraries that are permitted. 
+6. Optionally: _Define a shared permitted-list_: it can be useful (and in some organizations required) to have a shared list of libraries that are permitted. 
   This list can have an advisory role, functioning as a list of libraries that have already been checked, and are likely already in use. It can also have the role of a clearance list, where developers have only permission to use libraries from the permitted-list, and must seek approval for libraries that are not on that list. 
   For determining whether to include libraries, see the criteria defined in the section [Adopting a new library](#adopting-a-new-library).
 
