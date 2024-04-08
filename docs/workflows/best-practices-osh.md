@@ -43,9 +43,9 @@ These jobs have been grouped in three categories: first some general guidelines 
 
 
 #### Be equipped for healthy open source usage
-1. General guidelines for your application development
-2. Define OSH-related policies
-3. How to improve portfolio and system-level OSH
+1. Define OSH-related policies
+2. How to improve portfolio and system-level OSH
+3. General guidelines for your application development
 
 #### Ensuring your open source stays healthy
 4. Scan the software for issues
@@ -191,7 +191,6 @@ For timely handling of open source health risks, there are two concerns:
 
 ### 5. Handling vulnerabilities
 
-> TODO: or reverse the order of _when_, and _how_?
 #### How to remediate vulnerabilities
 
 The primary means of remediating a vulnerability is to update the library: in most cases, vulnerabilities (especially critical ones) are only published once a patch is available in a new version of the library. See section [9. Updating a library](#9-updating-a-library) for more details. Do check that the vulnerability is indeed solved in the newer version of the library.
@@ -305,7 +304,7 @@ Lack of activity in the development of a library is not an urgent problem, but i
 This issue cannot be resolved by application developers, except by [Replacing a library](#12-replacing-a-library).
 
 
-
+<!-- 
 ### 8.5 Handling insufficient package management [OPTION]
 
 > NOTE: perhaps a few lines about what it can mean when you have package managers in use, but still score insufficiently.
@@ -313,7 +312,7 @@ This issue cannot be resolved by application developers, except by [Replacing a 
 - This may be due to e.g. Java JARs or javascript source files that have been copied directly into your code base. 
 - perhaps you also use libraries that are not part of an ecosystem that is handled by the package manager
 - perhaps you use libraries for a technology that does not have an (adequate/acceptable) package manager
-...
+... -->
 
 
 
