@@ -216,7 +216,7 @@ If no such remediation is available, do a risk assessment which will have one of
 Security risks, and hence the urgency of fixing a vulnerability, of a certain framework or library should be determined based on at least the following aspects: 
 
 * The severity level of the detected vulnerabilities for the artifact​.
-* The connectedness of the specific application: in particular the category `public facing` is the group of systems for which vulnerabilities need to be resolved most urgently. This information can be specified in the [Sigrid metadata](https://docs.sigrid-says.com/organization-integration/metadata.html) as the _deployment type_; we summarise all non-public facing categories (`connected`, `internal` and `physical`) as `local`.
+* The connectedness of the specific application: in particular the category `public facing` is the group of systems for which vulnerabilities need to be resolved most urgently. This information can be specified in the [Sigrid metadata](../organization-integration/metadata.md) as the _deployment type_; we summarise all non-public facing categories (`connected`, `internal` and `physical`) as `local`.
 
 Additional considerations for prioritizing vulnerability handling can also be business criticality, lifecycle phase and the privacy sensitivity of the data that an application handles.
 
@@ -427,7 +427,7 @@ tasks to do repeatedly:
 - revisit 'allow-list' and 'permitted-list' (with CISO, half-year basis)
   
 
-> see [https://docs.sigrid-says.com/workflows/agile-development-process.html#where-does-sigrid-fit-in-scrum-rituals](https://docs.sigrid-says.com/workflows/agile-development-process.html#where-does-sigrid-fit-in-scrum-rituals)
+> see [workflows/agile-development-process.html#where-does-sigrid-fit-in-scrum-rituals](../workflows/agile-development-process.md#where-does-sigrid-fit-in-scrum-rituals)
 - Refinement:
   - triaging OSH issues
 - Sprint Planning
