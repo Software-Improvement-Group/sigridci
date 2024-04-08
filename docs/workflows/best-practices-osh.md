@@ -47,19 +47,14 @@ These jobs have been grouped in three categories: first some general guidelines 
 2. Define OSH-related policies
 3. How to improve portfolio and system-level OSH
 
-
 #### Ensuring your open source stays healthy
-> NOTE: in a way, having a separate job for _each_ property in the OSH quality model would be a nice structure for practitioners as well? 
-
 4. Scan the software for issues
 5. Handling detected vulnerabilities
 6. Handling detected license issues
 7. Handling detected lack of freshness
 8. Handling detected lack of activity
 
-
 #### Handling libraries
-
 9. Updating a library
 10.  Adopting a new library
 11.  When a library does not meet the requirements
