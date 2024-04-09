@@ -31,9 +31,7 @@ The pop-up will guide you toward configuring the portfolio objective:
 There are several dropdown menus available in the pop-up.
 
 - A Capability dropdown, that allows you to select the specific capability for which the portfolio objective will be defined.
-
 - The Type dropdown allows you to select a given objective type that is part of the capability selected in the previous step. In the example, we see that Test Code Ratio is set as a type. This is because the "Test Code Ratio" objective is a type of objective that belongs to the Maintainability capability.
-
 -  Then, we can define the actual value that we want our portfolio objective to be. 
 This final field can be of two distinct types: either a free-text field, in the case of numeric objectives, or a dropdown containing a series of pre-defined values, that will be the allowed values for the given objective type.
 
@@ -41,7 +39,6 @@ This final field can be of two distinct types: either a free-text field, in the 
 
 - Once you are done with selecting the type of objective you want to define, you can then start applying the objective to a group of systems based on their shared metadata. You can apply objectives based on the system's technology category, Business criticality, Life cycle phase or deployment type.
 Being able to set system-specific objectives can help you evaluate your system realistically, based on the system’s context. For example, you can set a specific quality objective for a system that is programmed using legacy technologies or a system that is end-of-life. It's important to prioritize and set higher or lower targets (= different objectives) for certain systems.  For example, systems that are public-facing might have stronger security objectives, or systems built with legacy technology might have lower maintainability objectives.
-
 - Finally, we have a free-text field called Rationale. This field can be used to add any additional details on why a given objective was set and add extra details regarding the values for ensuring full clarity to all involved stakeholders.
 
 
@@ -57,17 +54,14 @@ That is an important business goal for you and, with portfolio objectives, that 
 
 ## Relation between system-level objectives and portfolio-level objectives
 
-The system level and portfolio level objectives are closely related to each other, but, there are several important details to be aware of:
+The system level and portfolio level objectives are closely related to each other, but, there are several important details to be aware of.
 
-
-1. Portfolio-level objectives are like policies. Every policy can have exceptions, but, simultaneously, it's important that there is a more general policy to fall back on. These objectives are intended to be used across a wide range of systems, and, are meant to be defined based on the metadata for these systems.
-
+Portfolio-level objectives are like policies. Every policy can have exceptions, but, simultaneously, it's important that there is a more general policy to fall back on. These objectives are intended to be used across a wide range of systems, and, are meant to be defined based on the metadata for these systems.
 In other words: the effectiveness and usefulness of portfolio-level objectives will be directly related to the quality and level of granularity of the metadata.
 In order for you to define effective portfolio-level objectives, you first need to define the "corresponding" metadata. Metadata is, just like the name indicates, data about your systems. An example, which we described at the beginning of this text, can be categorizing a system based on its business criticality and its lifecycle phase. Not all systems will be equally critical nor will all of them be greenfield projects backed by the most modern technologies. 
 The ability to tell Sigrid exactly how each of your systems fits into your business, as well as your software landscape, is what the metadata is about.
 
-
-2. The portfolio-level objectives will act as a fallback in case no system-level objectives are defined, but, if they are, they will override the portfolio-level ones.
+The portfolio-level objectives will act as a fallback in case no system-level objectives are defined, but, if they are, they will override the portfolio-level ones.
 
 
 ### Practical scenario
