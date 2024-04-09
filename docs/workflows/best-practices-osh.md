@@ -198,7 +198,7 @@ The primary means of remediating a vulnerability is to update the library: in mo
 If no such remediation is available, do a risk assessment which will have one of these outcomes:
 - If we find that the vulnerability does not pose any actual risk, we can ‘allowlist’ it: that means we allow the specific vulnerability for this library/application to be present. This requires CISO approval. This _allowlist_ will be reviewed as part of a half-yearly measurement cycle. 
   <!-- we already have a 'permitted-list' for checked and permitted libraries, and an 'ignore-list' for libraries that are not checked; is this a third category? -> I think OSH findings refinement should solve this dilemma? -->
-   > TODO: how to do this in Sigrid?
+<!-- > TODO: how to do this in Sigrid? -->
 <!-- later: refer to explanations when they are added to the OSH -->
 
 - We can mitigate the risk in some other way. If, for example, the vulnerability is limited to a single method in the library that is not called by our application. We can then test for the use of that method and fail the pipeline in that case, to prevent future accidental risks. 
@@ -231,23 +231,10 @@ The table below is a proposal how fast you should resolve vulnerabilities, depen
 
 Usually, license risks will appear whenever a library is scanned for the first time; either because the application is scanned for the first time, or the library has just been introduced.
 
----
-> COMMENT: here's an experiment with a graphical overview of the process: does that really help?? (NB: to be viewed on Github)
-```mermaid
-graph TD; 
-    Start([license risk detected]) --> A[Assess risk];
-    A --> D{{"Does\n risk apply\n with distribution\n model?"}};
-    D -- yes --> D_yes{{"Can\n distribution\n model be\n adjusted?"}};
-    D -- no --> D_no["Add license to\n acceptable-list"] --> E(["Done."]);
-    D_yes -- yes --> M[Modify\n distribution model] --> E;
-    D_yes -- no --> R[Replace library] --> E;
-```
----
 
 #### Assess the license risk
 - Libraries must have an acceptable license. This may be a paid license or an acceptable open-source license. 
-- Maintain a list of common licenses used in free and open-source software (FOSS); if a library has a license listed as acceptable, it can be used. Otherwise, see if an alternative is available, or contact the [applicable role] to discuss whether the license is acceptable.
-
+- Maintain a list of common licenses used in free and open-source software (FOSS); if a library has a license listed as acceptable, it can be used. Otherwise, see if an alternative is available, or contact the responsible in your organisation to discuss whether the license is acceptable.
 - Note that the actual risk of using a library with a certain license depends on the context: 
   - e.g. when developing open-source software, more of the licenses are acceptable.
   - It also depends on how you distribute a library:
@@ -256,7 +243,7 @@ graph TD;
     - linked libraries are called through the network.
     - libraries are used internally only.
 
-The following table shows how various types of licenses are (not) suitable for different distribution policies, and explains how these common licenses are mapped to general risk levels. But do note that if you distribution model is clear, and the value listed for the particular license-distribution model is 'ok' in the table, then your actual licensing risk is minimal:
+The following table shows how various types of licenses are (not) suitable for different distribution policies, and explains how these common licenses are mapped to general risk levels. But do note that if your distribution model is clear, and the value listed for the particular license-distribution model is 'ok' in the table, then your actual licensing risk is minimal:
 
 
 <!-- decided to add this, since it is such useful information when an actual license risk pops up and needs to be assessed -->
