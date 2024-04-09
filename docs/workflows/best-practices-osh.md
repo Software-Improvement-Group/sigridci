@@ -63,7 +63,7 @@ These jobs have been grouped in three categories: first some general guidelines 
 ---
 
 
-### About the SIG OSH model
+### About the SIG Open Source Health (OSH) model
 The SIG Open Source Health model is described here in the documentation: [OSH guidance for producers](../reference/quality-model-documents/open-source-health.md).
 
 <!-- And more internal details for SIG are here (since some proprietary info):
@@ -96,7 +96,7 @@ There are a number of policies on how to address open source libraries during de
    - Do note that if a library is put on the ignore-list since the reported vulnerability-list is a false positive, that does not necessarily mean that the other types of risk should be ignored as well.
 6. Optionally: _Define a shared permitted-list_: it can be useful (and in some organizations required) to have a shared list of libraries that are permitted. 
   - This list can have an advisory role, functioning as a list of libraries that have already been checked, and are likely already in use. It can also have the role of a clearance list, where developers have only permission to use libraries from the permitted-list, and must seek approval for libraries that are not on that list. 
-  - For determining whether to include libraries, see the criteria defined in the section [Selecting a new library](#10-selecting-a-new-library).
+  - For determining whether to include libraries, see the criteria defined in the section [10. Selecting a new library](#10-selecting-a-new-library).
 
 
 
@@ -117,18 +117,17 @@ Especially for a new Sigrid, at the system and portfolio level there can be an a
    - ​​Open source libraries can be compared in terms of activity on tools like [https://www.openhub.net/](https://www.openhub.net/)​
    - Looking at the bug reports of inactive libraries, and the fixed bugs or improvements of outdated libraries can give good information of the relevance of updating.
 
-When many libraries require (multiple or major) version updates, the level of test coverage of a system can be used as an additional factor for prioritization: systems with high test coverage have a lower risk  of running into defects at run-time due to incompatible updates.  
+When many libraries require (multiple or major) version updates, the level of test coverage of a system can be used as an additional factor for prioritization: systems with high test coverage have a lower risk of running into defects at run-time due to incompatible updates.  
   
 
 ### 3. General guidelines for your application development
-<!-- > NOTE: should this subsection come after the next one on OSH policies? -->
 
 There are a number of topics to consider that are not directly related to the libraries themselves, but to the way you organize the development of the application itself.
 The following guidelines should be considered as compliance rules for framework and library management:​
 
 #### Keep application source code separate from frameworks/libraries​.
-1. _Do not change the source code of used frameworks/libraries._: depending on the technology used, you often do not need source code at all, but will use binaries of the libraries.
-1. _Only a single version of each library or framework​ should be used directly._: Also, do not have copies of the same library installed. It may well be that one or more of your libraries is importing another version of the same library that your application uses; such indirect use is mostly out of scope.
+1. _Do not change the source code of used frameworks/libraries_: depending on the technology used, you often do not need source code at all, but will use binaries of the libraries.
+1. _Only a single version of each library or framework​ should be used directly_: Also, do not have copies of the same library installed. It may well be that one or more of your libraries is importing another version of the same library that your application uses; such indirect use is mostly out of scope.
 <!--  This discussion is perhaps too detailed/nuanced?
    Note that in some cases, you can have a library _L1_ that requires _M_, and a library _L2_ that requires another version of _M_; in such cases you may not be able to influence this (depending on what your package manager allows), but at least ensure your application code does not directly rely on multiple versions of the same library.
   [Note Asma] Point 3 sounds like transitive dependency management, what are the best practices there to handle those in a package manager? Also at which lvl of transitivity do we stop caring? 
@@ -154,11 +153,9 @@ For timely handling of open source health risks, there are two concerns:
    
    The risks that are detected are best addressed immediately, _before_ merging the new code.
 
-2) _Risks that appear due to changes in the ecosystem over time_: these require regular scans, even when the application code does not change. For this category,
-
-   2a. Vulnerabilities require frequent scanning: preferably daily, at least every 2 weeks.
-
-   2b. The other OSH properties are less volatile and urgent, and monthly to quarterly scanning is sufficient for those.
+2) _Risks that appear due to changes in the ecosystem over time_: these require regular scans, even when the application code does not change. For this category:
+   - Vulnerabilities require frequent scanning: preferably daily, at least every 2 weeks.
+   - The other OSH properties are less volatile and urgent, and monthly to quarterly scanning is sufficient for those.
 
    A good time to triage scan results is during refinement for the next sprint: You need to decide to address the detected risks during the upcoming sprint, or possibly create a backlog item. In some cases, the detected risk is considered a false positive, or acceptable risk that can be ignored. The most common mitigation will be [updating a library](#9-updating-a-library). 
 
@@ -166,16 +163,6 @@ For timely handling of open source health risks, there are two concerns:
 
 
 ### 5. Handling vulnerabilities
-
-#### How to remediate vulnerabilities
-
-The primary means of remediating a vulnerability is to update the library: in most cases, vulnerabilities (especially critical ones) are only published once a patch is available in a new version of the library. See section [9. Updating a library](#9-updating-a-library) for more details. Do check that the vulnerability is indeed solved in the newer version of the library.
-
-If no such remediation is available, do a risk assessment which will have one of these outcomes:
-- If we find that the vulnerability does not pose any actual risk, we can ‘allowlist’ it: that means we allow the specific vulnerability for this library/application to be present. This requires CISO approval. This _allowlist_ will be reviewed as part of a half-yearly measurement cycle. 
-- We can mitigate the risk in some other way. If, for example, the vulnerability is limited to a single method in the library that is not called by our application. We can then test for the use of that method and fail the pipeline in that case, to prevent future accidental risks.  
-- We may be able to replace, or stop using, the library completely; see [12. Replacing a library](#12-replacing-a-library) for more details.
-- In extreme cases, we will shut down the application until the vulnerability is resolved.
 
 #### When to remediate vulnerabilities
 Security risks, and hence the urgency of fixing a vulnerability, of a certain framework or library should be determined based on at least the following aspects: 
@@ -196,6 +183,17 @@ The table below is a proposal how fast you should resolve vulnerabilities, depen
 | 0.1 – 3.9 | Low | Within 60 days | Within 90 days |
 
 
+#### How to remediate vulnerabilities
+
+The primary means of remediating a vulnerability is to update the library: in most cases, vulnerabilities (especially critical ones) are only published once a patch is available in a new version of the library. See section [9. Updating a library](#9-updating-a-library) for more details. Do check that the vulnerability is indeed solved in the newer version of the library.
+
+If no such remediation is available, do a risk assessment which will have one of these outcomes:
+- If we find that the vulnerability does not pose any actual risk, we can ‘allowlist’ it: that means we allow the specific vulnerability for this library/application to be present. This requires CISO approval. This _allowlist_ will be reviewed as part of a half-yearly measurement cycle. 
+- We can mitigate the risk in some other way. If, for example, the vulnerability is limited to a single method in the library that is not called by our application. We can then test for the use of that method and fail the pipeline in that case, to prevent future accidental risks.  
+- We may be able to replace, or stop using, the library completely; see [12. Replacing a library](#12-replacing-a-library) for more details.
+- In extreme cases, we will shut down the application until the vulnerability is resolved.
+
+
 
 ### 6. Handling license issues 
 > SIG assesses whether a license is generally considered a risk for use within commercial software. Contact an IT lawyer to discuss license risks specifically for the code analyzed as well as the way it will be used.
@@ -205,14 +203,14 @@ Usually, license risks will appear whenever a library is scanned for the first t
 
 #### Assess the license risk
 - Libraries must have an acceptable license. This may be a paid license or an acceptable open-source license. 
-- Maintain a list of common licenses used in free and open-source software (FOSS); if a library has a license listed as acceptable, it can be used. Otherwise, see if an alternative is available, or contact the responsible in your organisation to discuss whether the license is acceptable.
+- Maintain a list of common licenses used in free and open-source software (FOSS); if a library has a license listed as acceptable, it can be used. Otherwise, see if an alternative is available, or contact the responsible in your organization to discuss whether the license is acceptable.
 - Note that the actual risk of using a library with a certain license depends on the context: 
   - e.g. when developing open-source software, more of the licenses are acceptable.
   - It also depends on how you distribute a library:
-    - distribute the source code of the library, after making changes to it.
-    - as linked libraries, not the actual source code.
-    - linked libraries are called through the network.
-    - libraries are used internally only.
+    - Distribute the source code of the library, after making changes to it.
+    - As linked libraries, not the actual source code.
+    - Linked libraries are called through the network.
+    - Libraries are used internally only.
 
 The following table shows how various types of licenses are (not) suitable for different distribution policies, and explains how these common licenses are mapped to general risk levels. But do note that if your distribution model is clear, and the value listed for the particular license-distribution model is 'ok' in the table, then your actual licensing risk is minimal:
 
@@ -238,9 +236,9 @@ Depending on the circumstances, one or more of the following actions can be take
 
 ### 7. Handling lack of freshness
 
-Lack of freshness occures when there is a newer version of a library available, but that version is not used in the application.
+Lack of freshness occurs when there is a newer version of a library available, but that version is not used in the application.
 
-Development teams are responsible for keeping libraries up-to-date to a recent version: this may be part of [How to remediate vulnerabilites](#how-to-remediate-vulnerabilities), to make sure that bug fixes and improvements are incorporated, for compatibility with other libraries, or to ensure that future updates will not be too complicated or require a large effort all at once.
+Development teams are responsible for keeping libraries up-to-date to a recent version: this may be part of [How to remediate vulnerabilities](#how-to-remediate-vulnerabilities), to make sure that bug fixes and improvements are incorporated, for compatibility with other libraries, or to ensure that future updates will not be too complicated or require a large effort all at once.
 
 The remedy for lack of freshness is always [Updating a library](#9-updating-a-library), possible exceptions are:
 - the newer version has a vulnerability for which a fix is not available (very rare)
@@ -288,7 +286,7 @@ _Ground rule: never postpone updating_
 - Do _not_ adopt the "If it ain’t broke, don’t fix it" strategy​
   - This strategy implies that you do not update unless you *have to*. You stay with the current version of the third-party library until you notice something wrong in your application, no matter how often the vendor publishes an update. ​
   - Whilst easier in the short term, with this strategy you will end up with a system that depends on outdated and unmaintained libraries, where you cannot use some other libraries since they require a newer version of that library which you cannot upgrade and at some point. You may lose the ability to fix some issues at all.​
-- only when a new version breaks the behavior of the application, postponing may be warranted.
+- Only when a new version breaks the behavior of the application, postponing may be warranted.
 
 
 
@@ -305,20 +303,20 @@ A more extensive discussion of selecting (including reviewing) open source libra
 
 ### 11. When a library does not meet requirements
 
-<!-- these are not all OSH-specific--but  -->
-There are several possible reasons why a library does not support the needs and requirements:
+There are several possible cases where a library does not support the needs and requirements:
 1. _It's Open Source Health has unacceptable risks_. 
-1. _Functional mismatch_: a library is missing features that cannot easily be added on top, or the implementation of the library is based on assumptions or choices that are incompatible with the ones in the application.
-2. _Bug in library implementation_: typically detected after a library has been adopted, so the cost of switching is non-neglible.
-3. _Compatibility break_: a library does not (or no longer) work well together with another library or the application itself, due to changes in the APIs of involved components.
+2. _Functional mismatch_: a library is missing features that cannot easily be added on top, or the implementation of the library is based on assumptions or choices that are incompatible with the ones in the application.
+3. _Bug in library implementation_: typically detected after a library has been adopted, so the cost of switching is non-negligible.
+4. _Compatibility break_: a library does not (or no longer) work well together with another library or the application itself, due to changes in the APIs of involved components.
 
 The basic rule is that _library implementations should not be modified or customized_: ​One of the main benefits of libraries and frameworks, is that they provide functionality without the duty of maintaining it. After customizing a library implementation, you lose this benefit while being dependent on the changes that the community makes.​
 
+How to address failing requirements:
 1. First, check whether a newer version of the library may solve the issue, then consider updating ([Updating a library](#9-updating-a-library)); you may also wait a bit until a fix is being released, especially when the issue is being worked on.
 2. If the issue is a bug or lacking feature, you can file an issue at the maintainer of the library. 
 3. If the issue is a bug or lacking feature, you can also look at the implementation of the library and develop a fix: 
-  - You may be able to wrap the relevant library call(s) with extra code that corrects or hides the bug.
-  - Alternatively, you can temporarily use the modified library while merging back the bug fix into the library (be aware of the license). Once the community has accepted the fix, you can update and remove the local code​.
+   - You may be able to wrap the relevant library call(s) with extra code that corrects or hides the bug.
+   - Alternatively, you can temporarily use the modified library while merging back the bug fix into the library (be aware of the license). Once the community has accepted the fix, you can update and remove the local code​.
 4. Consider whether another library that implements similar functionality is available, and the costs of adopting that library are acceptable. Check [Replacing a library](#12-replacing-a-library) for more details.
 5. If no other solution is feasible and a modification is absolutely required (or: the costs of alternative solutions are very high), the source code can be forked and put into a designated area in a version control system. In this case carefully consider the possible legal ramifications, e.g. should you make the modified version open source as well. The modification should be documented so that it can be re-applied whenever a newer version of the library is made available.
 
@@ -331,9 +329,7 @@ In _most_ cases, rebuilding a common functionality is not the best option: just 
 
 See section [10. Selecting a new library](#10-selecting-a-new-library) for guidelines on how to pick a new library.
 
-One major concern when replacing a library with a new one is that a new library will most likely come with a new API; this means that all the locations in the application that use that library may need to be identified and adjusted. This can be more than just the identifiers of method calls, but also the data types that are passed back and forth to the library API can be different, which _may_ impact the calling code substantially. 
-
-One consideration in this respect can be to wrap the new library and in this way provide an interface that is equal, or more similar, to the previous library.
+One major concern when replacing a library with a new one is that a new library will most likely come with a new API; this means that all the locations in the application that use that library may need to be identified and adjusted. This can be more than just the identifiers of method calls, but also the data types that are passed back and forth to the library API can be different, which _may_ impact the calling code substantially. An approach in this case can be to wrap the new library and in this way provide an interface that is equal, or more similar, to the previous library.
 
 
 
