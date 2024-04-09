@@ -40,21 +40,21 @@ These jobs have been grouped in three categories: first some general guidelines 
 
 
 #### Be equipped for healthy open source usage
-1. Define OSH-related policies
-2. How to improve portfolio and system-level OSH
-3. General guidelines for your application development
+1. [Define OSH-related policies](#1-define-osh-related-policies-for-development)
+2. [How to improve portfolio and system-level OSH](#2-how-to-improve-portfolio-and-system-level-osh)
+3. [General guidelines for your application development](#3-general-guidelines-for-your-application-development)
 
 #### Ensuring your open source stays healthy
-4. Scan the software for issues
-5. Handling detected vulnerabilities
-6. Handling detected license issues
-7. Handling detected lack of freshness
-8. Handling detected lack of activity
+4. [Scan the software for issues](#4-scan-the-software-for-health-issues)
+5. [Handling vulnerabilities](#5-handling-vulnerabilities)
+6. [Handling license issues](#6-handling-license-issues)
+7. [Handling lack of freshness](#7-handling-lack-of-freshness)
+8. [Handling lack of activity](#8-handling-lack-of-activity)
 
 #### Handling libraries
-9. Updating a library
-10.  Selecting a new library
-11.  When a library does not meet the requirements
+9. [Updating a library](#9-updating-a-library)
+10.  [Selecting a new library](#10-selecting-a-new-library)
+11.  [When a library does not meet the requirements](#11-when-a-library-does-not-meet-requirements)
 
 
 ---
@@ -78,29 +78,8 @@ The SIG Open Source Health model is described here in the documentation: [OSH gu
 This section prescribes a typical way of working for ensuring healthy open source usage; in specific situations, you may adapt this approach, but it is best to follow a comply-or-explain approach.
 
 
-### 1. General guidelines for your application development
-<!-- > NOTE: should this subsection come after the next one on OSH policies? -->
 
-There are a number of topics to consider that are not directly related to the libraries themselves, but to the way you organize the development of the application itself.
-The following guidelines should be considered as compliance rules for framework and library management:​
-
-#### Keep application source code separate from frameworks/libraries​.
-1. _Do not change the source code of used frameworks/libraries._: depending on the technology used, you often do not need source code at all, but will use binaries of the libraries.
-1. _Only a single version of each library or framework​ should be used directly._: Also, do not have copies of the same library installed. It may well be that one or more of your libraries is importing another version of the same library that your application uses; such indirect use is mostly out of scope.
-<!--  This discussion is perhaps too detailed/nuanced?
-   Note that in some cases, you can have a library _L1_ that requires _M_, and a library _L2_ that requires another version of _M_; in such cases you may not be able to influence this (depending on what your package manager allows), but at least ensure your application code does not directly rely on multiple versions of the same library.
-  [Note Asma] Point 3 sounds like transitive dependency management, what are the best practices there to handle those in a package manager? Also at which lvl of transitivity do we stop caring? 
-  LB:  indeed in some package managers you actually do have influence over the versions of indirect dependencies, discuss this. exercising influence over this makes sense for security purposes, but otherwise its impact *should* be encapsulated.
--->
-
-#### Regression tests and maintainability of the application code are key to updating frameworks/libraries​
-If it is hard to update a library, chances are the problem lies in your codebase.​
-1. _Keep module coupling and component independence low_, to make it easier to change code implementation (such as dealing with new versions of a library) while keeping the same behavior/requirements.
-1. _Develop, maintain and run regression tests._ These help to identify breaking changes in updates.​​
-
-
-
-### 2. Define OSH related policies for development
+### 1. Define OSH related policies for development
 There are a number of policies on how to address open source libraries during development. For most of these policies, minimal requirements should be set for all teams; individual teams may agree on more stringent rules. 
 
 1. _Define the usage of a package manager_: choose the package manager(s) to be used, at least per system, preferably shared across the organization. Depending on the technologies that are used, you may need multiple package managers.
@@ -121,7 +100,7 @@ There are a number of policies on how to address open source libraries during de
 
 
 
-### 3. How to improve portfolio and system-level OSH
+### 2. How to improve portfolio and system-level OSH
 Especially for a new Sigrid, at the system and portfolio level there can be an abundance of OSH related issues that need to be fixed; this section provides some advice on how to tackle all those jobs incrementally, starting with the most critical and high-ROI topics first; Sigrid is designed specifically to help you focus on the highest priority issues.
 
 1. In case no package manager is used, or not for all libraries (all technologies), it makes a lot of sense to start with the -extended- use of a package manager. This it will make all other improvement steps easier, faster, and less error-prone.
@@ -140,6 +119,27 @@ Especially for a new Sigrid, at the system and portfolio level there can be an a
 
 When many libraries require (multiple or major) version updates, the level of test coverage of a system can be used as an additional factor for prioritization: systems with high test coverage have a lower risk  of running into defects at run-time due to incompatible updates.  
   
+
+### 3. General guidelines for your application development
+<!-- > NOTE: should this subsection come after the next one on OSH policies? -->
+
+There are a number of topics to consider that are not directly related to the libraries themselves, but to the way you organize the development of the application itself.
+The following guidelines should be considered as compliance rules for framework and library management:​
+
+#### Keep application source code separate from frameworks/libraries​.
+1. _Do not change the source code of used frameworks/libraries._: depending on the technology used, you often do not need source code at all, but will use binaries of the libraries.
+1. _Only a single version of each library or framework​ should be used directly._: Also, do not have copies of the same library installed. It may well be that one or more of your libraries is importing another version of the same library that your application uses; such indirect use is mostly out of scope.
+<!--  This discussion is perhaps too detailed/nuanced?
+   Note that in some cases, you can have a library _L1_ that requires _M_, and a library _L2_ that requires another version of _M_; in such cases you may not be able to influence this (depending on what your package manager allows), but at least ensure your application code does not directly rely on multiple versions of the same library.
+  [Note Asma] Point 3 sounds like transitive dependency management, what are the best practices there to handle those in a package manager? Also at which lvl of transitivity do we stop caring? 
+  LB:  indeed in some package managers you actually do have influence over the versions of indirect dependencies, discuss this. exercising influence over this makes sense for security purposes, but otherwise its impact *should* be encapsulated.
+-->
+
+#### Regression tests and maintainability of the application code are key to updating frameworks/libraries​
+If it is hard to update a library, chances are the problem lies in your codebase.​
+1. _Keep module coupling and component independence low_, to make it easier to change code implementation (such as dealing with new versions of a library) while keeping the same behavior/requirements.
+1. _Develop, maintain and run regression tests._ These help to identify breaking changes in updates.​​
+
 
 
 ## Ensuring your open source stays healthy
