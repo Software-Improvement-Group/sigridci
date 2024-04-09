@@ -269,14 +269,7 @@ The following table shows how various types of licenses are (not) suitable for d
 | high     | Viral            | AGPL / CC-BY-NC / EUPL | prohibited | prohibited | prohibited | Ok |
 | critical | Commercial       | EULA / non-OSS / custom | prohibited | prohibited | prohibited | prohibited |
 
-<!-- #### or alternatively a table  with octicons:
-| Risk level | License category | Common licenses | Distribute modified code | Distribute linked libraries | Linked libs through network | Internal use only |
-| ---------- | ---------------- | --------------- | :----------------------: | :-------------------------: | :----------: | :-----------------------: |
-| none | permissive | Apache / MIT / BSD| {% octicon "check" aria-label="prohibited" %} | {% octicon "check" aria-label="prohibited" %} | {% octicon "check" aria-label="prohibited" %} | {% octicon "check" aria-label="prohibited" %} |
-| low | Weak copy-left | LGPL / MPL / CC-BY-ND | {% octicon "x" aria-label="no" %} | {% octicon "check" aria-label="prohibited" %} | {% octicon "check" aria-label="prohibited" %} | {% octicon "check" aria-label="prohibited" %} |
-| medium | Strong copy-left | GPL | {% octicon "x" aria-label="no" %} | {% octicon "x" aria-label="no" %} | {% octicon "check" aria-label="prohibited" %} | {% octicon "check" aria-label="prohibited" %} |
-| high | Viral | AGPL / CC-BY-NC / EUPL | {% octicon "x" aria-label="no" %} | {% octicon "x" aria-label="no" %} | {% octicon "x" aria-label="no" %} | {% octicon "check" aria-label="yes" %} |
-| critical | EULA / non-OSS / custom | {% octicon "x" aria-label="no" %} | {% octicon "x" aria-label="no" %} | {% octicon "x" aria-label="no" %} | {% octicon "x" aria-label="no" %} | -->
+
 
 #### Possible actions
 Depending on the circumstances, one or more of the following actions can be taken to remediate detected licensing issues
