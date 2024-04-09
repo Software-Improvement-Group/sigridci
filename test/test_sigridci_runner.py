@@ -173,7 +173,6 @@ class SigridCiRunnerTest(TestCase):
 
         expectedCalls = [
             "/analysis-results/sigridci/aap/noot/v1/ci",
-            "/analysis-results/api/v1/system-metadata/aap/noot",
             "/inboundresults/sig/aap/noot/ci/uploads/v1/onboarding",
             "UPLOAD"
         ]
