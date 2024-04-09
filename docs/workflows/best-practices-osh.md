@@ -245,7 +245,6 @@ graph TD;
 #### Assess the license risk
 - Libraries must have an acceptable license. This may be a paid license or an acceptable open-source license. 
 - Maintain a list of common licenses used in free and open-source software (FOSS); if a library has a license listed as acceptable, it can be used. Otherwise, see if an alternative is available, or contact the [applicable role] to discuss whether the license is acceptable.
-
 - Note that the actual risk of using a library with a certain license depends on the context: 
   - e.g. when developing open-source software, more of the licenses are acceptable.
   - It also depends on how you distribute a library:
