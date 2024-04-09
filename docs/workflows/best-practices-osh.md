@@ -22,9 +22,7 @@
 
 <!-- > NOTE for internal use: This document is a collection of the knowledge that we have accumulated within SIG on the best practices for achieving Open Source Health. Its purpose within SIG is to have all this knowledge documented in one place, such that we have a shared base as consultants, and also a document that we can share with customers that are in search of concrete advice on how to get things in place for healthy open source usage.  -->
 
-## Table of contents:
 <sig-toc></sig-toc>
-
 
 ## Introduction
 
