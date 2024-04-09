@@ -210,12 +210,12 @@ Additional considerations for prioritizing vulnerability handling can also be bu
 When a vulnerability is found, it must be remediated within a specified time period.
 The table below is a proposal how fast you should resolve vulnerabilities, depending on the risk level and the connectedness of the system:
 
-  | CVSSv3 Range | Risk Label | Remediation Deadline Public facing | Remediation Deadline Local |
-  | --- | --- | --- | --- |
-  | 9.0 – 10.0 | Critical | Within 1 working day | Within 14 days | 
-  | 7.0 – 8.9 | High | Within 14 days | Within 30 days |
-  | 4.0 – 6.9 | Medium | Within 30 days | Within 60 days |
-  | 0.1 – 3.9 | Low | Within 60 days | Within 90 days |
+| CVSSv3 Range | Risk Label | Remediation Deadline Public facing | Remediation Deadline Local |
+|-----|-----|-----|-----|
+| 9.0 – 10.0 | Critical | Within 1 working day | Within 14 days | 
+| 7.0 – 8.9 | High | Within 14 days | Within 30 days |
+| 4.0 – 6.9 | Medium | Within 30 days | Within 60 days |
+| 0.1 – 3.9 | Low | Within 60 days | Within 90 days |
 
 
 
