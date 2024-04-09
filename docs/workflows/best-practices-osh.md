@@ -106,32 +106,19 @@ There are a number of policies on how to address open source libraries during de
 
 1. _Define the usage of a package manager_: choose the package manager(s) to be used, at least per system, preferably shared across the organization. Depending on the technologies that are used, you may need multiple package managers.
    - The package managers need to be integrated in your CI/CD pipeline.
-  <!-- more useful info here: https://gurukuldevops.com/package-management-in-devops-tools-and-best-practices/ -->   
-
-2. _Set the thresholds for library risks_ that are (not) acceptable: this is applicable to all types of risks. Set these goals in the [Sigrid objectives](#TBD).
-
-   We advise the following objectives:
-
+2. _Set the thresholds for library risks_ that are (not) acceptable: this is applicable to all types of risks. Set these goals in the [Sigrid objectives](#TBD). We advise the following objectives:
    - _No library vulnerabilities_: having vulnerabilities of medium or higher risk is generally not acceptable as a goal, and since there are relatively few low-risk vulnerabilities in practice, a 'clean sweep' of all vulnerabilities is preferred.
    - _No unacceptable licenses_; for a typical context this means no licenses that come with obligations or restrictions for commercial usage (see the [OSH Guidelines for producers](../reference/quality-model-documents/open-source-health.md) for more details.). In Sigrid these are classified as low-risk, and include the MIT, BSD, and Apache licenses.
-   - _Ensure overall OSH quality rating is 4.0 stars or more_
- 
+   - _Ensure overall OSH quality rating is 4.0 stars or more_ 
 1. _Define how frequent to check for risks_ such as vulnerabilities and other risks in open source libraries. We suggest checking daily for vulnerabilities and quarterly for other OSH risks. See section [4. Scan the software for health issues](#4-scan-the-software-for-health-issues) for more details. 
-
 2. _Define how fast new vulnerabilities have to be resolved_; this will depend on the criticality. See the section on [Handling detected vulnerabilities](#6-handling-detected-vulnerabilities) for details.
-
-<!-- eventually this *can* be removed when we can refine OSH findings in Sigrid?-->
 5. _Declare which libraries should not be checked_
    - This is useful when a library has properties that cause Sigrid to signal a risk, but that risk is a false positive. 
    - Create an _ignore-list_. This list requires CISO approval. The ignore-list must be reviewed regularly (a few times per year): define when this review will happen.
    - Do note that if a library is put on the ignore-list since the reported vulnerability-list is a false positive, that does not necessarily mean that the other types of risk should be ignored as well.
-
-   <!-- > NOTE: describe how to do this now in the scope file??? -->
-
-
 6. Optionally: _Define a shared permitted-list_: it can be useful (and in some organizations required) to have a shared list of libraries that are permitted. 
-  This list can have an advisory role, functioning as a list of libraries that have already been checked, and are likely already in use. It can also have the role of a clearance list, where developers have only permission to use libraries from the permitted-list, and must seek approval for libraries that are not on that list. 
-  For determining whether to include libraries, see the criteria defined in the section [Adopting a new library](#adopting-a-new-library).
+  - This list can have an advisory role, functioning as a list of libraries that have already been checked, and are likely already in use. It can also have the role of a clearance list, where developers have only permission to use libraries from the permitted-list, and must seek approval for libraries that are not on that list. 
+  - For determining whether to include libraries, see the criteria defined in the section [Adopting a new library](#adopting-a-new-library).
 
 
 
@@ -139,20 +126,13 @@ There are a number of policies on how to address open source libraries during de
 Especially for a new Sigrid, at the system and portfolio level there can be an abundance of OSH related issues that need to be fixed; this section provides some advice on how to tackle all those jobs incrementally, starting with the most critical and high-ROI topics first; Sigrid is designed specifically to help you focus on the highest priority issues.
 
 1. In case no package manager is used, or not for all libraries (all technologies), it makes a lot of sense to start with the adoption of a package manager. This it will make all other improvement steps easier, faster, and less error-prone.
-
 2. The next step is to focus on vulnerabilities, since these threaten your application security in the short term:
    - Start with a quick threat analysis to prioritize the systems that are most risk-prone: in particular business-critical systems with the most privacy-sensitive data or transactions should be at the top of this list.
    - Focus on removing all critical and high risk vulnerabilities first, continue with the remaining vulnerabilities.
-
 3. Consider legal risks due to unacceptable licenses:
    - The highest priority are libraries that are used in an application without the proper rights; for example libraries that do not allow commercial use (if you are a commercial organization). Some of those require paying a license fee; which is the most straightforward means of addressing the issue.
-   <!-- > TODO: check guidance for producers for more suggestions -->
-    <!-- NB: changing licenses are pointed out as a growing concern in this year's Thoughtworks Technology Radar -->
-   <!-- > TODO: QUESTION: how often does this happen with open source libraries? Is there a way to register compliance, or does this require adding the library to the ignore list? -->
-    - A next category to consider are the copy-left licenses, which typically do require the application that uses those libraries to be distributed with the same license (and e.g. also made open-source). Depending on your situation, such libraries should be marked as a legal risk.
-    - The main way of addressing legal risk due to unacceptable licenses is by replacing the library with another one.
-  
-  
+   - A next category to consider are the copy-left licenses, which typically do require the application that uses those libraries to be distributed with the same license (and e.g. also made open-source). Depending on your situation, such libraries should be marked as a legal risk.
+   - The main way of addressing legal risk due to unacceptable licenses is by replacing the library with another one.
 4. For the other properties: 
    - investigate the risks of heavily outdated and perhaps no longer maintained libraries: look at the product lifecycle, end-of-support date and maintenance activity to verify that there is a real need for replacing the library.
    - Do an impact analysis and plan the needed effort to mitigate the risks. This can be -a series of- updates, or complete replacement of a library. 
@@ -170,6 +150,7 @@ In this section, we are describing guidelines, hints and tips on how to maintain
 ### 4. Scan the software for health issues
 
 For timely handling of open source health risks, there are two concerns:
+
 1) _Risks that appear due to changes in the code_: these need to be signalled as soon as possible (short feedback loops make it much more efficient to make changes); doing the scanning as part of the CI/CD pipeline using `sigridci` addresses this.
    
    The risks that are detected are best addressed immediately, _before_ merging the new code.
@@ -180,11 +161,9 @@ For timely handling of open source health risks, there are two concerns:
 
    2b. The other OSH properties are less volatile and urgent, and monthly to quarterly scanning is sufficient for those.
 
-   A good time to triage scan results is during refinement for the next sprint: You need to decide to address the detected risks during the upcoming sprint, or possibly create a backlog item. In some cases, the detected risk is considered a false positive, or acceptable risk that can be ignored. 
-   <!-- so what to do in that case??-->
-   The most common mitigation will be [updating a library](#updating-a-library). 
+   A good time to triage scan results is during refinement for the next sprint: You need to decide to address the detected risks during the upcoming sprint, or possibly create a backlog item. In some cases, the detected risk is considered a false positive, or acceptable risk that can be ignored. The most common mitigation will be [updating a library](#updating-a-library). 
 
- See also [Where OSH fits in your workflow](#where-oshsigrid-fits-in-your-workflow-going-concern) for details on how to integrate library handling in your workflow.
+See also [Where OSH fits in your workflow](#where-oshsigrid-fits-in-your-workflow-going-concern) for details on how to integrate library handling in your workflow.
 
 
 ### 5. Handling vulnerabilities
@@ -239,10 +218,8 @@ Usually, license risks will appear whenever a library is scanned for the first t
 The following table shows how various types of licenses are (not) suitable for different distribution policies, and explains how these common licenses are mapped to general risk levels. But do note that if your distribution model is clear, and the value listed for the particular license-distribution model is 'ok' in the table, then your actual licensing risk is minimal:
 
 
-<!-- decided to add this, since it is such useful information when an actual license risk pops up and needs to be assessed -->
-<!-- | Risk level | License category | Common licenses | Distribution Mechanism | -->
 | Risk level | License category | Common licenses | Distribute modified code | Distribute linked libraries | Linked libs through network | Internal use only |
-| ---------- | ---------------- | --------------- | :----------------------: | :-------------------------: | :----------: | :-----------------------: |
+|------------|------------------|-----------------|------------------------|---------------------------|------------|-------------------------|
 | none     | permissive       | Apache / MIT / BSD| Ok | Ok | Ok | Ok |
 | low      | Weak copy-left   | LGPL / MPL / CC-BY-ND | prohibited | Ok | Ok | Ok |
 | medium   | Strong copy-left | GPL | prohibited | prohibited | Ok | Ok |
