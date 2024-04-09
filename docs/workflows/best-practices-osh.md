@@ -22,9 +22,7 @@
 
 <!-- > NOTE for internal use: This document is a collection of the knowledge that we have accumulated within SIG on the best practices for achieving Open Source Health. Its purpose within SIG is to have all this knowledge documented in one place, such that we have a shared base as consultants, and also a document that we can share with customers that are in search of concrete advice on how to get things in place for healthy open source usage.  -->
 
-## Table of contents:
 <sig-toc></sig-toc>
-
 
 ## Introduction
 
@@ -197,12 +195,7 @@ The primary means of remediating a vulnerability is to update the library: in mo
 
 If no such remediation is available, do a risk assessment which will have one of these outcomes:
 - If we find that the vulnerability does not pose any actual risk, we can ‘allowlist’ it: that means we allow the specific vulnerability for this library/application to be present. This requires CISO approval. This _allowlist_ will be reviewed as part of a half-yearly measurement cycle. 
-  <!-- we already have a 'permitted-list' for checked and permitted libraries, and an 'ignore-list' for libraries that are not checked; is this a third category? -> I think OSH findings refinement should solve this dilemma? -->
-<!-- > TODO: how to do this in Sigrid? -->
-<!-- later: refer to explanations when they are added to the OSH -->
-
-- We can mitigate the risk in some other way. If, for example, the vulnerability is limited to a single method in the library that is not called by our application. We can then test for the use of that method and fail the pipeline in that case, to prevent future accidental risks. 
-  
+- We can mitigate the risk in some other way. If, for example, the vulnerability is limited to a single method in the library that is not called by our application. We can then test for the use of that method and fail the pipeline in that case, to prevent future accidental risks.  
 - We may be able to replace, or stop using, the library completely; see [12. Replacing a library](#12-replacing-a-library) for more details.
 - In extreme cases, we will shut down the application until the vulnerability is resolved.
 
