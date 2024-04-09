@@ -60,10 +60,9 @@ class SigridCiRunner:
 
     def run(self):
         systemExists = self.apiClient.checkSystemExists()
-        existingMetadata = self.apiClient.fetchMetadata()
         UploadLog.log("Found system in Sigrid" if systemExists else "System is not yet on-boarded to Sigrid")
 
-        if systemExists and not existingMetadata.get("active", True):
+        if systemExists and not self.apiClient.fetchMetadata().get("active", True):
             UploadLog.log("System has been deactivated in Sigrid")
             sys.exit(1)
 
