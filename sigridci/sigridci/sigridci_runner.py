@@ -63,7 +63,7 @@ class SigridCiRunner:
         UploadLog.log("Found system in Sigrid" if systemExists else "System is not yet on-boarded to Sigrid")
 
         if systemExists and not self.apiClient.fetchMetadata().get("active", True):
-            UploadLog.log("System has been deactivated by your Sigrid administrator, in the Sigrid system settings page")
+            UploadLog.log("Publish blocked: System has been deactivated by your Sigrid administrator, in the Sigrid system settings page")
             sys.exit(1)
 
         self.prepareMetadata()
