@@ -545,7 +545,7 @@ class SigridCiRunnerTest(TestCase):
         expectedLog = [
             "Using token ending in '****ummy'",
             "Found system in Sigrid",
-            "System has been deactivated in Sigrid"
+            "Publish blocked: System has been deactivated by your Sigrid administrator, in the Sigrid system settings page"
         ]
 
         expectedCalls = [
