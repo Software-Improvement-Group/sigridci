@@ -71,6 +71,7 @@ class SigridCiRunnerTest(TestCase):
 
         expectedCalls = [
             "/analysis-results/sigridci/aap/noot/v1/ci",
+            "/analysis-results/api/v1/system-metadata/aap/noot",
             "/inboundresults/sig/aap/noot/ci/uploads/v1",
             "UPLOAD",
             "/analysis-results/sigridci/aap/noot/v1/ci/results/123",
@@ -105,6 +106,7 @@ class SigridCiRunnerTest(TestCase):
 
         expectedCalls = [
             "/analysis-results/sigridci/aap/noot/v1/ci",
+            "/analysis-results/api/v1/system-metadata/aap/noot",
             "/inboundresults/sig/aap/noot/ci/uploads/v1/publish",
             "UPLOAD",
             "/analysis-results/sigridci/aap/noot/v1/ci/results/123",
@@ -139,6 +141,7 @@ class SigridCiRunnerTest(TestCase):
 
         expectedCalls = [
             "/analysis-results/sigridci/aap/noot/v1/ci",
+            "/analysis-results/api/v1/system-metadata/aap/noot",
             "/inboundresults/sig/aap/noot/ci/uploads/v1/publishonly",
             "UPLOAD",
             "/analysis-results/api/v1/system-metadata/aap/noot"
@@ -190,6 +193,7 @@ class SigridCiRunnerTest(TestCase):
 
         expectedCalls = [
             "/analysis-results/sigridci/aap/noot/v1/ci",
+            "/analysis-results/api/v1/system-metadata/aap/noot",
             "/inboundresults/sig/aap/noot/ci/uploads/v1/publish?subsystem=mysubsystem",
             "UPLOAD",
             "/analysis-results/sigridci/aap/noot/v1/ci/results/123",
@@ -526,6 +530,31 @@ class SigridCiRunnerTest(TestCase):
 
         self.assertTrue(1 in raised.exception.args)
         self.assertEqual(expectedLog, UploadLog.history)
+
+    def testSkipForDeactivatedSystems(self):
+        self.createTempFile(self.tempDir, "a.py", "print(123)")
+
+        apiClient = MockApiClient(self.options, systemExists=True)
+        apiClient.responses["/analysis-results/api/v1/system-metadata/aap/noot"] = {"active" : False}
+
+        runner = SigridCiRunner(self.options, apiClient)
+        runner.reports = []
+        with self.assertRaises(SystemExit) as raised:
+            runner.run()
+
+        expectedLog = [
+            "Using token ending in '****ummy'",
+            "Found system in Sigrid",
+            "Publish blocked: System has been deactivated by your Sigrid administrator, in the Sigrid system settings page"
+        ]
+
+        expectedCalls = [
+            "/analysis-results/sigridci/aap/noot/v1/ci",
+            "/analysis-results/api/v1/system-metadata/aap/noot"
+        ]
+
+        self.assertEqual(UploadLog.history, expectedLog)
+        self.assertEqual(apiClient.called, expectedCalls)
 
     def createTempFile(self, dir, name, contents):
         with open(f"{dir}/{name}", "w") as fileRef:
