@@ -3,7 +3,7 @@ The Sigrid platform checks code written in over 300 technologies on many quality
 This amounts to tens of thousands of unique code checks that are performed by the Sigrid platform.
 Generative AI is used as a solution to ensure each and every finding in every technology in Sigrid is presented with a detailed explanation of the problem at hand as well as with actionable and technology-specific mitigation advice.
 
-## Where can I find AI explanations
+## Where can I find AI explanations?
 You can find several AI explanations through out the platform. 
 Sigrid capabilities that have already been covered by AI explanations are:
 - Maintainability Refactoring Candidates
@@ -11,6 +11,7 @@ Sigrid capabilities that have already been covered by AI explanations are:
 - Reliability findings
 - Performance Efficiency findings
 - Cloud Readiness findings
+
 Please note that Sigrid's knowledge base is continuously expanding
 
 ## How does Sigrid generate AI explanations?
