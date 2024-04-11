@@ -12,16 +12,19 @@ Sigrid capabilities that have already been covered by AI explanations are:
 - Performance Efficiency findings
 - Cloud Readiness findings
 
-Please note that Sigrid's knowledge base is continuously expanding
+Please note that Sigrid's knowledge base is continuously expanding.
 
 ## How does Sigrid generate AI explanations?
-Sigrid AI explanations are based on a unique knowledge base of invaluable sources on each and every technology, collected by SIG in 20+ years of software consultancy.
-Additionally, best in class public data sources that are embedded in Sigrid's explanations are [OWASP](https://owasp.org), [OpenCRE](https://opencre.org), [Common Weakness Enumeration](https://cwe.mitre.org) and [NIST National Vulnerability Database](https://nvd.nist.gov/). Additionally, documentation from code scan tools that Sigrid uses for its code analysis are used to compile the best possible explanation of a finding.
+Sigrid AI explanations are based on a unique knowledge base of invaluable sources on each and every technology, collected by SIG in over 20 years of software consultancy. Additionally, best in-class public data sources that are embedded in Sigrid’s explanations are [OWASP](https://owasp.org), [OpenCRE](https://opencre.org), [Common Weakness Enumeration](https://cwe.mitre.org) and [NIST National Vulnerability Database](https://nvd.nist.gov/).
+Documentation from code scanning tools that Sigrid uses for its code analysis are also used to offer the best possible explanation of a finding.
 
 ## Does Sigrid generate advice specific to my source code?
 No. Currently, Sigrid AI explanations are pre-generated per individual quality check. This means the source code in which the finding was detected is not used in the generated explanation. 
 
 Further augmentation and enrichment of the Sigrid platform using AI is planned in future releases. Please note that Sigrid does not make use of public LLM APIs, but instead runs it's own private LLM instance in accordance with SIG's security and data sovereignty policies.
+
+## I have a question or suggestion regarding a specific explanation
+Your feedback is much appreciated. Please [contact our support team](mailto:support@softwareimprovementgroup.com) should you have a question or suggestion for us regarding an AI explanation in Sigrid.
 
 ## Disclaimer
 Sigrid's AI explanations have been compiled with the greatest care and based on best-in-class data sources. While we strive for presenting the most accurate information to our users possible, the nature of AI generated content is that it can contain inaccuracies or errors. Always verify critical information with reliable sources.
