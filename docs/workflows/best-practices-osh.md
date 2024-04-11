@@ -8,13 +8,9 @@
   - and with the guidance for producers
   - we have to explicitly address: what if we did not reach 4 stars -> then look at the underlying measurements
   - check consistent usage of the term third party library (marco: open-source dependency)
-  - check that we cross-reference all sections
-  - create an overall flow chart?
+   - create an overall flow chart? (but not in mermaid..)
   - comments marijn:
-    - Bijvoorbeeld: volgens kan er 1 job zijn voor 'replacing an existing library or using a new one' waarbij het enige verschil is dat je voor het 'replacement' scenario moet checken waar je de oude lib gebruikt en hoe de interface van de nieuwe anders is. OK; ik denk dat ik replacing houdt, en verwijs naar adopting
-    - Ander voorbeeld: in 'updating a library' staat min of meer dezelfde checklist als bij 'adopting a library'
-    voorstel: bij updating, verwijs naar de checklist in 'adopting' (of een aparte 'review' sectie)
-    - Nog iets: onder het kopje 'When a library does not support requirements' staan redenen om een library te vervangen die allemaal los staan van OSH, maar die ook weer terugkomen on Vervolgens staat onder 'Replacing a library' een aantal redenen om te replacen die wel weer aan OSH vast zitten. Volgens mij is er eigenlijk 1 flow die neerkomt op 'Ik ben niet blij met mijn library vanwege whatever, dan 1) update 1a) pull request of issue aanmaken bij maintainer (noemen we nu nog niet) 2) vervangen 3) (if all else fails) adopteren.
+     - Nog iets: onder het kopje 'When a library does not support requirements' staan redenen om een library te vervangen die allemaal los staan van OSH, maar die ook weer terugkomen on Vervolgens staat onder 'Replacing a library' een aantal redenen om te replacen die wel weer aan OSH vast zitten. Volgens mij is er eigenlijk 1 flow die neerkomt op 'Ik ben niet blij met mijn library vanwege whatever, dan 1) update 1a) pull request of issue aanmaken bij maintainer (noemen we nu nog niet) 2) vervangen 3) (if all else fails) adopteren.
     - Nog iets: in 'How to improve portfolio and system-level OSH' kunnen we volgens mij op een hoger niveau blijven. Nu beschrijven we daar bepaalde details die ook terugkomen in de 'Handling....' secties.
   - [Marco]: I feel the text in "Structure and overview" and #### Be equipped for healthy open source usage can be merged. I find the text above that introduces this list very... informal, but at the same time not straightforward to understand.
 -->
