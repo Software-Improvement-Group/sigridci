@@ -29,34 +29,36 @@
 </head>
 
 <body>
-<div class="thankyou">
-    <img src="/images/feedback/thankyou.svg" />
-    <div class="buttons">
-        <a href="/">
-            <img src="/images/feedback/button-docs.svg" />
-        </a>
-        <a href="mailto:support@softwareimprovementgroup.com">
-            <img src="/images/feedback/button-support.svg" />
-        </a>
+    <div class="thankyou">
+        <img src="/images/feedback/thankyou.svg" />
+        <div class="buttons">
+            <a href="/">
+                <img src="/images/feedback/button-docs.svg" />
+            </a>
+            <a href="https://academy.sigrid-says.com">
+                <img src="/images/feedback/button-academy.svg" />
+            </a>
+            <a href="mailto:support@softwareimprovementgroup.com">
+                <img src="/images/feedback/button-support.svg" />
+            </a>
+        </div>
     </div>
-</div>
 
-<script>
-    document.addEventListener("DOMContentLoaded", () => {
-        const statsURL = "https://sigrid-says.com/usage/matomo.php";
-        const params = new URLSearchParams(window.location.search);
+    <script>
+        document.addEventListener("DOMContentLoaded", () => {
+            const statsURL = "https://sigrid-says.com/usage/matomo.php";
+            const params = new URLSearchParams(window.location.search);
 
+            if (params.has("feature") && params.has("feedback") && params.has("system")) {
+                const feature = encodeURIComponent(params.get("feature"));
+                const feedback = encodeURIComponent(params.get("feedback"));
+                const system = encodeURIComponent(params.get("system"));
 
-        if (params.has("feature") && params.has("feedback") && params.has("system")) {
-            const feature = encodeURIComponent(params.get("feature"));
-            const feedback = encodeURIComponent(params.get("feedback"));
-            const system = encodeURIComponent(params.get("system"));
-
-            const statsElement = document.createElement("img");
-            statsElement.src = `${statsURL}?idsite=6&rec=1&ca=1&e_c=${feature}&e_a=${feedback}&e_n=${system}`;
-            document.body.appendChild(statsElement);
-        }
-    });
-</script>
+                const statsElement = document.createElement("img");
+                statsElement.src = `${statsURL}?idsite=6&rec=1&ca=1&e_c=${feature}&e_a=${feedback}&e_n=${system}`;
+                document.body.appendChild(statsElement);
+            }
+        });
+    </script>
 </body>
 </html>
