@@ -24,7 +24,7 @@ class MarkdownReportTest(TestCase):
     maxDiff = None
 
     def setUp(self):
-        self.options = PublishOptions("aap", "noot", RunMode.FEEDBACK_ONLY, "/tmp", targetRating=3.5)
+        self.options = PublishOptions("aap", "noot", RunMode.FEEDBACK_ONLY, "/tmp", targetRating=3.5, feedbackURL="")
 
     def testMarkdown(self):
         refactoringCandidates = [
@@ -367,6 +367,71 @@ class MarkdownReportTest(TestCase):
             
             - [**View this system in Sigrid**](https://sigrid-says.com/aap/noot)
             - [**View this Sigrid CI feedback in Sigrid**](https://sigrid-says.com/aap/noot/-/sigrid-ci/1234?targetRating=3.5)
+        """
+
+        self.assertEqual(markdown.strip(), inspect.cleandoc(expected).strip())
+
+    def testIncludeFeedbackLinks(self):
+        self.options.feedbackURL = "https://example.com"
+
+        feedback = {
+            "baselineRatings": {"MAINTAINABILITY": 3.0},
+            "changedCodeBeforeRatings" : {"MAINTAINABILITY" : 2.8},
+            "newCodeRatings": {"MAINTAINABILITY": 2.8},
+            "overallRatings": {"MAINTAINABILITY": 3.0},
+            "refactoringCandidates": []
+        }
+
+        report = MarkdownReport()
+        markdown = report.renderMarkdown("1234", feedback, self.options)
+
+        expected = """
+            # Sigrid maintainability feedback
+
+            **⚠️  Your code did not improve towards your Sigrid objective of 3.5 stars**
+            
+            Sigrid compared your code against the baseline of N/A.
+            
+            ## 👍 What went well?
+
+            You fixed or improved **0** refactoring candidates.
+            
+            
+            ## 👎 What could be better?
+            
+            You did not introduce any technical debt during your changes, great job!
+            
+            ## 📚 Remaining technical debt
+            
+            **0** refactoring candidates didn't get better or worse, but are still present in the code you touched.
+            
+            
+            ## Sigrid ratings
+            
+            | System property | Baseline on N/A | New/changed code |
+            |-----------------|---------------------------------------------|------------------|
+            | Volume | (N/A) | N/A |
+            | Duplication | (N/A) | N/A |
+            | Unit Size | (N/A) | N/A |
+            | Unit Complexity | (N/A) | N/A |
+            | Unit Interfacing | (N/A) | N/A |
+            | Module Coupling | (N/A) | N/A |
+            | Component Independence | (N/A) | N/A |
+            | Component Entanglement | (N/A) | N/A |
+            | **Maintainability** | **(3.0)** | **2.8** |
+            
+            ----
+            
+            - [**View this system in Sigrid**](https://sigrid-says.com/aap/noot)
+            - [**View this Sigrid CI feedback in Sigrid**](https://sigrid-says.com/aap/noot/-/sigrid-ci/1234?targetRating=3.5)
+            
+            ----
+            
+            ## Did you find this feedback helpful?
+            
+            - ✅ [Yes, these findings are useful](https://example.com?feature=sigridci.feedback&feedback=useful&system=sig-aap-noot)
+            - 🔸 [The findings are false positives](https://example.com?feature=sigridci.feedback&feedback=falsepositive&system=sig-aap-noot)
+            - 🔹 [These findings are not so important to me](https://example.com?feature=sigridci.feedback&feedback=unimportant&system=sig-aap-noot)
         """
 
         self.assertEqual(markdown.strip(), inspect.cleandoc(expected).strip())
