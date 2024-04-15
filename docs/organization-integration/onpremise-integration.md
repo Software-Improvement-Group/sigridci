@@ -164,7 +164,7 @@ Next, you will need to schedule *when* you're going to publish your system to Si
 ## Functional/technical differences in Sigrid on-premise
 
 - The on-premise Sigrid distribution is single tenant. You cannot create your own "tenants", all systems and analyses will end up in your portfolio. That said, you can still use Sigrid’s user management to define which people should have access to which systems.
-- You are required to use Sigrid CI for publishing source code. SFTP uploads and manual uploads are not supported.
+- You are required to use the [development platform integration](#development-platform-integration) to publish your source code to Sigrid. SFTP uploads and manual uploads are not supported.
 - [Multi-repo systems](systems.md#sigrid-view-is-based-on-business-applications) are not supported. You are responsible for publishing source code from your development platform to Sigrid.
 - Using the [snapshot converter](../reference/technology-support.md#technology-conversion-configuration) is not supported. You are responsible for publishing source code in a format that is supported by Sigrid.
 - The on-premise Sigrid distribution does not support scheduling. It is assumed that analyses are performed from your continuous integration pipeline.
