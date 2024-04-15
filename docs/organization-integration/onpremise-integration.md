@@ -168,6 +168,7 @@ Next, you will need to schedule *when* you're going to publish your system to Si
 - [Multi-repo systems](systems.md#sigrid-view-is-based-on-business-applications) are not supported. You are responsible for publishing source code from your development platform to Sigrid.
 - Using the [snapshot converter](../reference/technology-support.md#technology-conversion-configuration) is not supported. You are responsible for publishing source code in a format that is supported by Sigrid.
 - The on-premise Sigrid distribution does not support scheduling. It is assumed that analyses are performed from your continuous integration pipeline.
+- The "view source" feature will show the *current* state of the file in your development platform, which might be different from the version of the file that was analyzed by Sigrid.
 
 ## Contact and support
 
