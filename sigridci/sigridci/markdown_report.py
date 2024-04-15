@@ -121,4 +121,4 @@ class MarkdownReport(Report):
         return md + "\n"
 
     def getFeedbackLink(self, options, feedback):
-        return f"{options.feedbackURL}?feature=sigridci.feedback&feedback={feedback}&system={options.getSystemId()}"
+        return f"{options.feedbackURL}?feature=sigridci-feedback&feedback={feedback}&system={options.getSystemId()}"
