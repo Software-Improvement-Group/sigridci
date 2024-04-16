@@ -12,7 +12,8 @@ Proposed goal: The Sigrid documentation should be the single source [of truth] o
 Exceptions are SIG and customer confidential information and slide decks that are (really) needed for presentations.
 This means that examples that are derived from customer systems, or that expose internal detail about the benchmark need to be written down elsewhere (for now in the wiki).
  
-- [Sigrid documentation](https://docs.sigrid-says.com/)
+- [Sigrid documentation on Portfolio Objectives](../capabilities/portfolio-objectives.html)
+- [Sigrid documentation on System Objectives](../capabilities/portfolio-objectives.html)
 - [Portfolio objectives training](https://softwareimprovementgroupcom.sharepoint.com/:p:/r/sites/CustomerSuccessManagement/Shared%20Documents/General/Feature%20rollout/Portfolio%20Objectives/Objectives%20Training%20ppt%20.pptx?d=w17f5a45ac6154d4499518a6282b2492d&csf=1&web=1&e=zzwrKo)
 - [SIG Internal Wiki](https://softwareimprovementgroup.atlassian.net/wiki/spaces/~63fc8e08896d10ebd47010ba/pages/50739576841/Effective+workflow+and+governance+practice+around+Global+objective+setting+in+Sigrid)  
 ---
