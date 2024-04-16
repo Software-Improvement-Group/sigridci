@@ -14,13 +14,12 @@ This means that examples that are derived from customer systems, or that expose 
  
 - [Sigrid documentation](https://docs.sigrid-says.com/)
 - [Portfolio objectives training](https://softwareimprovementgroupcom.sharepoint.com/:p:/r/sites/CustomerSuccessManagement/Shared%20Documents/General/Feature%20rollout/Portfolio%20Objectives/Objectives%20Training%20ppt%20.pptx?d=w17f5a45ac6154d4499518a6282b2492d&csf=1&web=1&e=zzwrKo)
-- ...
-  
+- [SIG Internal Wiki](https://softwareimprovementgroup.atlassian.net/wiki/spaces/~63fc8e08896d10ebd47010ba/pages/50739576841/Effective+workflow+and+governance+practice+around+Global+objective+setting+in+Sigrid)  
 ---
 </details>  
 
 ## Table of contents:
-<sig-toc></sig-toc>
+<sig-toc>To be added</sig-toc>
 
 
 ## Introduction
@@ -31,8 +30,6 @@ The purpose of this document is to provide concrete and actionable guidelines, h
 ### Structure and overview
 
 The guidelines and best practices have been structured based on 'jobs to be done': the idea is to look at the actual tasks that stakeholders need to perform, and provide them with help to do those tasks. Jobs can embed, or refer to, other jobs.
-
-These jobs have been grouped in three categories: first some general guidelines for conducting healthy open source usage in development, that help to get started, and may need to be revisited or updated on a regular basis. Secondly the various types of tasks that are needed to ensure continued health of libraries (note that even when application code is not actively maintained for a while, the health of open source libraries may diminish!). And thirdly a set of practical tasks in handling libraries as a developer.
 
 <!--  another, obvious form of structuring the contents in this document is in a (simple) design pattern format, which is centered around a problem to be addressed. That format can provide more structure, and allows for (1) putting a problem into a context, (2) adding details, special cases and practical suggestions without cluttering the main message.
 > base structure could be: name - problem - solution - (implementation in Sigrid) - consequences 
@@ -48,7 +45,7 @@ The goal of objectives is to decide for each application how good it needs to be
 
 ### Objectives and team autonomy
 
-It shouldn’t. At the core of Sigrid are generic engineering best practices that most engineers would subscribe to. Most engineers are happy to delegate the work of enforcing/monitoring these best practices to Sigrid so they can focus on the more sophisticated engineering challenges that are specific to their product. Sigrid best practices are an enabler for more specific engineering tasks.
+Sometimes, setting quality standards in a top-down way meets with resistance from teams, as they feel it clashes with the autonomy they desire. In most cases, it doesn't. At the core of Sigrid are generic engineering best practices that most engineers would subscribe to. Most engineers are happy to delegate the work of enforcing/monitoring these best practices to Sigrid so they can focus on the more sophisticated engineering challenges that are specific to their product. We consider Sigrid best practices to be an enabler for more specific engineering tasks.
 
 As for autonomy, that is not absolute to begin with. Even the most autonomous teams work within the financial and strategic constraints of their organization. There is no reason such constraints should not exist when it comes to engineering. In many situations, teams will appreciate having explicitly agreed upon quality standards, so they have leverage when discussing the trade-off between quality and e.g. new feature requests.
 
@@ -57,30 +54,40 @@ As for autonomy, that is not absolute to begin with. Even the most autonomous te
 ## Using Software Quality Objectives: Jobs to be Done
 
 1. Identify a scope - a set of applications for which it make sense to set objectives
+1. Establish Governance Structure: Set up a governance structure to oversee the objective-setting process.
 1. Set objectives - decide how good systems need to be
     1. Configure Metadata - helps slice and dice the portfolio
     1. Identify Relevant Organizational Goals - what does the organization want to achieve? 
     1. Link Goals to Objectives - establish the quality level required to meet the goals
-1. Monitor objectives and take action - decide on what to do in case objectives aren't met
-1. Maintain objectives - things change. Make sure this is reflected in the objectives
+    1. Configure Objectives - Configure the Objectives to reflect the outcome of the previous steps
+1. Monitor Objectives - Keep track of adherence and correct if needed.
+1. Review Objectives and Governance - Make sure objectives reflect the current situation and the process works.
 
 ### Identify a scope
-To be sure, setting objectives for a single system has value. But in most situations, business value isn't provided by a single system so setting objectives for just one system does not help to meaningfully improve things. At the same time, going through this exercise for the whole organization can be impractical. So, it helps to identify a meaningful set of systems to set objectives for. While identifying a workable scope isn't an exact science, workable scopes have certain characteristics:
+To be sure, setting objectives for a single system has value. But in most situations, business value isn't provided by a single system so setting objectives for just one system does not help to meaningfully improve things. At the same time, going through this exercise for the whole organization in one go can be impractical. So, it helps to identify a meaningful set of systems to set objectives for. While identifying a workable scope isn't an exact science, workable scopes have certain characteristics:
 - A limited amount of people needs to be involved to make decisions
-- The selected systems support a single business process (or a limited, coherent set) and/or a limited/coherent set of business goals.
-- The amount of teams involved is somewhere between 1 and 5
+- The selected systems support a limited, coherent set of business processes and/or a limited/coherent set of business goals.
 
 Typically, divisions or departments are a good starting point (although in large organizations, these might still be quite big). A technology platform (e.g. a low code platform) can be a useful scope because they often exist to accelerate development to decrease the time to market, which is a useful goal to base objectives on. The downside is that they typically support a variety of business processes which makes that less usable as a source of a limited, coherent set of business goals.
 
+### Establish Governance Structure
+It needs to be clear who gets to decide what. Typically, the decision making involves engineering leaders. For the day-to-day management, different models are possible. Some organizations prefer a cross-functional team responsible for defining, reviewing objectives and interacting with engineering teams regularly. Others add this to the existing engineering leadership roles.
+
+It is important to raise awareness with all stakeholders that meeting objectives is a serious concern that may have impact on the feature planning. The best practice is to allow teams and product/project owners/managers to come to a balanced priority setting themselves, but an escalation path needs to be provided to resolve conflicts if they arise.
+
 ### Set Objectives
+
+Good objectives have the following characteristics:
 - **Indisputable** All teams agree on the objectives unanimously to avoid discussions​
 - **Relevant** Related to the context and the company objectives, e.g., impact on time-to-market​
 - **Achievable** Being realistic given the numbers and timelines, and allowing prioritization on impact​
 - **Modifiable**  Objectives should be continuously evaluated, refined, and become stricter along the maturity of the process​
 - **Actionable**  Not meeting an objective should lead to concrete actions
 
+The following sections describe how to get there.
+
 #### Configure Metadata
-With metadata, context can be added to help set meaningful objectives for certain categories of systems. As an example, security requirements for a system might be stricter for systems that are public-facing than for systems that can only be accessed through an internal network. [This page](https://docs.sigrid-says.com/organization-integration/metadata.html) explains how to do this.
+First off, configuring metadata is essential for effective use of Sigrid, not just objective setting. We describe it here because it's essential for objective setting. With metadata, context can be added to help set meaningful objectives for certain categories of systems. As an example, security requirements for a system might be stricter for systems that are public-facing than for systems that can only be accessed through an internal network. [This page](https://docs.sigrid-says.com/organization-integration/metadata.html) explains how to do this.
 
 #### Identify Relevant Organizational Goals
 
@@ -95,5 +102,30 @@ Often, goals link to each other. Increasing revenue might be achieved in part by
 
 #### Link Goals to Objectives
 
+The goal of linking goals to objectives is to create a view on software quality that is shared by technical and non-technical stakeholders. It is to ensure that the objectives that will be configures in the next step are considered an organization concern as opposed to a purely technical concern.
+
+The following table indicates how the technical concerns measured in Sigrid connect to typical organizational concerns:
 [Table that links organizational concerns to technical objectives]
 
+#### Configure Objectives
+
+Our recommended approach is to set an ambitious baseline and define exceptions as needed. For each concern, a separate best practice document provides our recommended (set of) objective(s). Since these recommended objectives assume well-written code in modern technologies, they are sometimes difficult to achieve for existing systems. For these systems, exceptions can be made either by configuring conditional portfolio objectives or system-level objectives. Some examples:
+- Mainframe code may be held to a lower maintainability standard by using a conditional objective based on the Technology category
+- An older Java system might be held to a lower architecture standard by setting a system-level objective.
+
+Make sure to add a rationale to each objective.
+
+
+### Monitor Objective Status
+
+Use Sigrid to monitor progress towards objectives and track system quality over time. Leverage the reporting and analytics capabilities of Sigrid to generate insights into trends, identify areas for improvement, and make data-driven decisions. Regularly communicate progress updates to stakeholders to keep them informed and engaged.
+
+Note that most of the work can and should be done in the teams. If the objective-setting process has been done correctly, the team understands and subscribes to the objectives set, so they can monitor and perform corrective action themselves. 
+
+### Review Objectives and Governance
+
+Conduct periodic reviews of objectives, especially ones that allow for exemptions to global objectives, to ensure ongoing alignment with organizational priorities and evolving business needs. Adjust objectives and policies as necessary based on feedback, lessons learned, and changes in the operating environment with the responsible teams. 
+
+Conduct periodic reviews of your objective-setting process based on feedback and lessons learned. Solicit input from stakeholders on how to improve the process, streamline workflows, and enhance governance practices. Be open to adopting new tools and methodologies that can help optimize the objective-setting process and drive better outcomes.
+
+Both the objectives themselves as well as the governance should be reviewed as often as needed, but at least twice per year. It is often useful to combine both types of reviews because they can inform each other, e.g. an objective might not be met because the work necessary could not be prioritized.
