@@ -71,7 +71,8 @@ if __name__ == "__main__":
         runMode=RunMode.FEEDBACK_ONLY,
         targetRating=args.targetquality,
         outputDir=args.out,
-        sigridURL=args.sigridurl
+        sigridURL=args.sigridurl,
+        feedbackURL=""
     )
 
     generateReports(args.sat_ci_json, options)

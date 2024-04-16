@@ -429,7 +429,8 @@ class MarkdownReportTest(TestCase):
             
             ## Did you find this feedback helpful?
             
-            We will use this information to improve Sigrid.
+            We would like to know your thoughts to make Sigrid better.
+            Your username will remain confidential throughout the process.
             
             - ✅ [Yes, these findings are useful](https://example.com?feature=sigridci.feedback&feedback=useful&system=sig-aap-noot)
             - 🔸 [The findings are false positives](https://example.com?feature=sigridci.feedback&feedback=falsepositive&system=sig-aap-noot)
