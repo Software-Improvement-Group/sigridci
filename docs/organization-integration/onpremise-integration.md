@@ -6,6 +6,11 @@ Most of this documentation refers to the software-as-a-service version of Sigrid
 
 ## High-level overview
 
+From a deployment perspective, on-premise Sigrid consists of two "parts":
+
+- **Sigrid** is the Sigrid web application, which you access from your browser.
+- **Sigrid CI** runs within your development platform (e.g. GitHub). It performs the analyses and then publishes the results to Sigrid.
+
 <img src="../images/onpremise-overview.png" width="600" />
 
 - Sigrid on-premise is based on [Docker containers](https://en.wikipedia.org/wiki/Docker_%28software%29). There are two types of containers:
@@ -156,14 +161,14 @@ stages:
 
 Next, you will need to schedule *when* you're going to publish your system to Sigrid. Azure DevOps allows you to [schedule pipelines](https://learn.microsoft.com/en-us/azure/devops/pipelines/process/scheduled-triggers?view=azure-devops&tabs=yaml). You can use this to periodically publish your system to Sigrid, for example as a nightly build. Alternatively, you can use Sigrid CI on a more continuous basis by running the pipeline step after every commit.
 
-## Functional differences in Sigrid on-premise
+## Functional/technical differences in Sigrid on-premise
 
 - The on-premise Sigrid distribution is single tenant. You cannot create your own "tenants", all systems and analyses will end up in your portfolio. That said, you can still use Sigrid’s user management to define which people should have access to which systems.
-- [Mendix Quality and Security Management](https://www.softwareimprovementgroup.com/mendix-quality-and-security-management-powered-by-sigrid/) is only available if you are using Mendix in combination with GitHub or GitLab.
-
-## Technical differences in Sigrid on-premise
-
+- You are required to use the [development platform integration](#development-platform-integration) to publish your source code to Sigrid. SFTP uploads and manual uploads are not supported.
+- [Multi-repo systems](systems.md#sigrid-view-is-based-on-business-applications) are not supported. You are responsible for publishing source code from your development platform to Sigrid.
+- Using the [snapshot converter](../reference/technology-support.md#technology-conversion-configuration) is not supported. You are responsible for publishing source code in a format that is supported by Sigrid.
 - The on-premise Sigrid distribution does not support scheduling. It is assumed that analyses are performed from your continuous integration pipeline.
+- The "view source" feature will show the *current* state of the file in your development platform, which might be different from the version of the file that was analyzed by Sigrid.
 
 ## Contact and support
 
