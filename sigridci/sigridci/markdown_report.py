@@ -54,6 +54,7 @@ class MarkdownReport(Report):
         if options.feedbackURL:
             md += "\n----\n\n"
             md += "## Did you find this feedback helpful?\n\n"
+            md += "We will use this information to improve Sigrid.\n\n"
             md += f"- ✅ [Yes, these findings are useful]({self.getFeedbackLink(options, 'useful')})\n"
             md += f"- 🔸 [The findings are false positives]({self.getFeedbackLink(options, 'falsepositive')})\n"
             md += f"- 🔹 [These findings are not so important to me]({self.getFeedbackLink(options, 'unimportant')})\n"
