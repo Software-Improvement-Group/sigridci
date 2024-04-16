@@ -88,7 +88,7 @@ Good objectives have the following characteristics:
 The following sections describe how to get there.
 
 #### Configure Metadata
-First off, configuring metadata is essential for effective use of Sigrid, not just objective setting. We describe it here because it's essential for objective setting. With metadata, context can be added to help set meaningful objectives for certain categories of systems. As an example, security requirements for a system might be stricter for systems that are public-facing than for systems that can only be accessed through an internal network. [This page](https://docs.sigrid-says.com/organization-integration/metadata.html) explains how to do this.
+First off, configuring metadata is essential for effective use of Sigrid, not just objective setting. We describe it here because it's essential for objective setting. With metadata, context can be added to help set meaningful objectives for certain categories of systems. As an example, security requirements for a system might be stricter for systems that are public-facing than for systems that can only be accessed through an internal network. [This page](../organization-integration/metadata.html) explains how to do this.
 
 #### Identify Relevant Organizational Goals
 
