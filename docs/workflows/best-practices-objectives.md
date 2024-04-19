@@ -50,7 +50,9 @@ Sometimes, setting quality standards in a top-down way meets with resistance fro
 
 As for autonomy, that is not absolute to begin with. Even the most autonomous teams work within the financial and strategic constraints of their organization. There is no reason such constraints should not exist when it comes to engineering. In many situations, teams will appreciate having explicitly agreed upon quality standards, so they have leverage when discussing the trade-off between quality and e.g. new feature requests.
 
-[Picture of a hybrid model]
+The picture below depicts the hybrid model that we recommend. It aims to strike a middle ground between a top-down model that leaves teams with very little autonomy to address problems as they see fit and the fully autonomous model where management has very little control even if that would benefit the teams.
+
+<img src="../images/hybrid-model.png" width="700" />
 
 ## Using Software Quality Objectives: Jobs to be Done
 
@@ -61,6 +63,7 @@ As for autonomy, that is not absolute to begin with. Even the most autonomous te
     1. Identify Relevant Organizational Goals - what does the organization want to achieve? 
     1. Link Goals to Objectives - establish the quality level required to meet the goals
     1. Configure Objectives - Configure the Objectives to reflect the outcome of the previous steps
+1. Document and train - ensure everyone involved knows what is expected of them
 1. Monitor Objectives - Keep track of adherence and correct if needed.
 1. Review Objectives and Governance - Make sure objectives reflect the current situation and the process works.
 
@@ -106,7 +109,8 @@ Often, goals link to each other. Increasing revenue might be achieved in part by
 The goal of linking goals to objectives is to create a view on software quality that is shared by technical and non-technical stakeholders. It is to ensure that the objectives that will be configures in the next step are considered an organization concern as opposed to a purely technical concern.
 
 The following table indicates how the technical concerns measured in Sigrid connect to typical organizational concerns:
-[Table that links organizational concerns to technical objectives]
+
+<img src="../images/business-technical-concerns.png" width="700" />
 
 #### Configure Objectives
 
@@ -116,6 +120,12 @@ Our recommended approach is to set an ambitious baseline and define exceptions a
 
 Make sure to add a rationale to each objective.
 
+### Document and train
+
+Everyone involved in and affected by the objective-setting process needs to know how it works and what is expected of them. Obviously, the objectives that are set and the rationale provided are a starting point but at least two more things are needed:
+- Teams need to be made aware of the objectives, their rationale and what is expected of them
+- The process of monitoring and review (as described) below need to be documented in a place that is accessible to all stakeholders. If an existing process framework is in place. Examples include SAFe or an ISO based ISMS (Information Security Management System) or QMS (Quality Management System).
+Specifically, it is important that an escalation path exists if not enough priority is given to meeting objectives.
 
 ### Monitor Objective Status
 
