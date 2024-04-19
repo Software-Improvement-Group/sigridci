@@ -12,6 +12,8 @@ Sigrid capabilities that have already been covered by AI explanations are:
 - Performance Efficiency findings
 - Cloud Readiness findings
 
+<img src="../images/ai-explanations.gif" width="800" />
+
 Please note that Sigrid's knowledge base is continuously expanding.
 
 ## How does Sigrid generate AI explanations?
