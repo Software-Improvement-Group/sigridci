@@ -335,6 +335,30 @@ Notes:
 8. You can use Sigrid CI for this technology, but you will need to use a special option. See instructions on how to [technology conversion configuration](#technology-conversion-configuration) below.
 9. Sigrid CI is not supported for this technology. You can still use Sigrid, but you will need to use one of the [alternative upload channels](../organization-integration/upload-instructions.md).
 
+## AI explanation support
+
+For a subset of our technologies, we offer AI-generated explanations related to refactoring candidates and security findings, to make these more actionable and easier to understand.
+Below is the list of technologies for which we currently offer these AI-generated explanations:
+
+| Technology |
+|------------|
+| C#         |
+| Dart       |
+| Elixir     |
+| Go         |
+| Groovy     |
+| Java       |
+| JavaScript |
+| Kotlin     |
+| Lua        |
+| Objective-C|
+| Python     |
+| Ruby       |
+| Rust       |
+| Scala      |
+| Swift      |
+| TypeScript |
+
 ## Technology conversion configuration
 
 For the vast majority of technologies, you can simply publish your repository and have your code analyzed by Sigrid. However, a small number of technologies cannot be analyzed by Sigrid in its "native" format. In those situations, Sigrid needs to convert these technologies to another format before it can be analyzed.
@@ -453,6 +477,7 @@ These are the supported security analyzers as you may see them in your security 
 | [PCI DSS 4.0](https://blog.pcisecuritystandards.org/pci-dss-v4-0-resource-hub) | Security |
 | [OWASP ASVS 4.0](https://owasp.org/www-pdf-archive/OWASP_Application_Security_Verification_Standard_4.0-en.pdf) | Security |
 | [OWASP Low-code/No-code Top 10](https://owasp.org/www-project-top-10-low-code-no-code-security-risks/) | Security |
+
 
 ## Requesting additional technology support
 
