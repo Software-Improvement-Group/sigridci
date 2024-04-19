@@ -58,7 +58,7 @@ If you use the configuration DSL to define your dependencies, Sigrid will automa
     
 Defining dependencies in this way will work just fine. However, there are much more flexible ways. You can define `ext` properties. You can define properties in `gradle.properties`. You can have full-blown Groovy/Kotlin logic. If you project uses these dynamic features, Sigrid might not be able to pick up all dependencies (again, it's hard to say where the line is exactly, since Gradle is so flexible).
 
-However, Gradle also supports [lockfiles](https://docs.gradle.org/current/userguide/dependency_locking.html). These lockfiles define exactly which libraries and version are used by your projects, and are committed to your repository. If your codebase contains a Gradle lockfile, Sigrid will use this lockfile instead of `build.gradle`. This ensures Sigrid is able to extract all of your project's dependencies. Note that using a lockfile is a best practice even without considering Sigrid, as this allows for fully reproducible builds.
+However, Gradle also supports [lockfiles](https://docs.gradle.org/current/userguide/dependency_locking.html). These lockfiles define exactly which libraries and version are used by your projects, and are committed to your repository. If your codebase contains a Gradle lockfile, Sigrid will use this lockfile instead of `build.gradle`. This ensures Sigrid is able to extract all of your project's dependencies. Note that using a lockfile is a best practice even without considering Sigrid, as this allows for fully reproducible builds. Sigrid will only consider lockfiles when transitive scanning is set to true. 
 
 ### NPM
 

@@ -40,10 +40,14 @@ class PublishOptions:
     targetRating: Union[float, str] = "sigrid"
     outputDir: str = "sigrid-ci-output"
     sigridURL: str = "https://sigrid-says.com"
+    feedbackURL: str = "https://docs.sigrid-says.com/landing/feedback.html"
     partner: str = "sig"
 
     SYSTEM_NAME_PATTERN = re.compile("^[a-z0-9]+(-[a-z0-9]+)*$", re.IGNORECASE)
     SYSTEM_NAME_LENGTH = range(2, 65)
+
+    def getSystemId(self):
+        return f"{self.partner}-{self.customer}-{self.system}"
 
     def isValidSystemName(self):
         return self.SYSTEM_NAME_PATTERN.match(self.system) and \
