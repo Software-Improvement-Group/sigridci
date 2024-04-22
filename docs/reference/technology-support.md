@@ -343,7 +343,7 @@ Below is the list of technologies for which we currently offer these AI-generate
 | Technology         |
 |--------------------|
 | ABAP               |
-| ABL                |
+| Abl                |
 | Angular Templates  |
 | ASP.NET            |
 | C                  |
