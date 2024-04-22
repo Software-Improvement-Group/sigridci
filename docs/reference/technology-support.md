@@ -343,7 +343,7 @@ Below is the list of technologies for which we currently offer these AI-generate
 | Technology         |
 |--------------------|
 | ABAP               |
-| Progress ABL       |
+| Progress           |
 | Angular Templates  |
 | ASP.NET            |
 | C                  |
@@ -360,7 +360,6 @@ Below is the list of technologies for which we currently offer these AI-generate
 | Kotlin             |
 | Lua                |
 | Objective-C        |
-| Progress 4GL       |
 | PL/SQL             |
 | Python             |
 | Razor              |
