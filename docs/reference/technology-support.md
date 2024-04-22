@@ -343,13 +343,12 @@ Below is the list of technologies for which we currently offer these AI-generate
 | Technology         |
 |--------------------|
 | ABAP               |
-| Progress           |
 | Angular Templates  |
 | ASP.NET            |
 | C                  |
-| Cobol              |
-| C++                |
 | C#                 |
+| C++                |
+| Cobol              |
 | Dart               |
 | Delphi             |
 | Elixir             |
@@ -361,6 +360,7 @@ Below is the list of technologies for which we currently offer these AI-generate
 | Lua                |
 | Objective-C        |
 | PL/SQL             |
+| Progress           |
 | Python             |
 | Razor              |
 | React              |
