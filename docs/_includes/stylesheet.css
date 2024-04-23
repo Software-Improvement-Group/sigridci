@@ -13,7 +13,7 @@ body, td, th {
 }
 
 a {
-    color: #038096;
+    color: #1A65FF;
     text-decoration: none;
 }
 
@@ -46,7 +46,7 @@ ul {
 
 ul li::before {
     content: '\25A0';
-    color: #DFC101;
+    color: #F8C716;
     padding-right: 8px;
     margin-left: -1em;
 }
@@ -83,7 +83,7 @@ summary {
 
 .container nav {
     flex: 0 0 280px;
-    background-color: #233347;
+    background-color: #151632;
     padding: 30px 20px 30px 20px;
     box-shadow: 1px 0px 5px #687483;
 }
@@ -106,7 +106,7 @@ summary {
 }
 
 .container nav .toc .category {
-    color: #DFC101;
+    color: #FFFFFF;
     cursor: pointer;
     padding-left: 24px;
 }
@@ -132,31 +132,38 @@ summary {
 .container nav .toc a.page {
     padding-left: 25px;
     font-size: 12px;
+    color: #F8C716;
 }
 
 .container nav .toc a.subPage {
     padding-left: 40px !important;
     font-size: 12px !important;
+    color: #F8C716;
 }
 
 .container nav .currentCategory {
     display: block;
 }
 
-.container nav .toc a:hover, .toc .currentPage, nav .sigridLink:hover {
+.container nav .toc a:hover, .toc .currentPage {
     background-color: rgba(255, 255, 255, 0.2);
 }
 
 .container nav .sigridLink {
     display: block;
-    color: #DFC101;
-    border: 1px solid #DFC101;
+    background-color: #F8C716;
+    color: #151632;
     padding: 4px;
-    margin: 0px auto 16px auto;
+    margin-bottom: 16px;
     text-align: center;
     width: 170px;
-    border-radius: 4px;
+    border-radius: 15px;
     font-size: 14px;
+}
+
+.container nav .sigridLink:hover {
+    background-color: #1A65FF;
+    color: #FFFFFF;
 }
 
 .container nav .footnote {
@@ -249,8 +256,7 @@ td, th {
 sig-toc {
     display: block;
     width: 800px;
-    box-shadow: 1px 1px 3px #687483;
-    background-color: #eceef1;
+    background-color: #DEF0F8;
     padding: 16px;
     font-size: 12px;
 }
@@ -269,10 +275,14 @@ sig-toc .h4 {
     margin-left: 40px;
 }
 
+sig-toc a {
+    color: #151632;
+}
+
 .announcement {
     display: block;
-    color: #334E68;
-    background-color: #92D7E3;
+    color: #151632;
+    background-color: #D4D6DA;
     text-align: center;
     font-size: 12px;
     font-weight: bold;
