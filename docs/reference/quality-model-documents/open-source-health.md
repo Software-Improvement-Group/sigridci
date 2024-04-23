@@ -1,4 +1,4 @@
-SIG Open Source Health Quality Model 2023: Guidance for producers
+SIG Open Source Health Quality Model 2024: Guidance for producers
 =================================================================
 
 <sig-toc></sig-toc>
