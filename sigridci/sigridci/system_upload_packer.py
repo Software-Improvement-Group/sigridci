@@ -24,7 +24,11 @@ from .upload_log import UploadLog
 class SystemUploadPacker:
     MAX_UPLOAD_SIZE_MB = 500
     ALWAYS_INCLUDE = (RepositoryHistoryExporter.LIGHTWEIGHT_HISTORY_EXPORT_FILE)
-    EXCLUDE_EXTENSIONS = (".7z", ".gz", ".tgz" , ".zip", ".rar" , ".tar", ".db", ".jpg", ".png")
+    EXCLUDE_EXTENSIONS = (".7z", ".amr", ".avi", ".bil", ".bmp", ".db", ".doc", ".docx", ".exe", ".f4v", ".gif", ".gz",
+                          ".heic", ".ico", ".iso", ".jpeg", ".jpg", ".m4a", ".mkv", ".mpeg", ".mpg", ".mpl", ".mov",
+                          ".mp3", ".mp4", ".msi", ".otf", ".pdb", ".png", ".ppt", ".pptx", ".rar", ".sbn", ".shx",
+                          ".shp", ".svg", ".swf", ".tar", ".tgz", ".tiff", ".ttf", ".wmv", ".woff", ".woff2", ".xls",
+                          ".xlsm", ".xlsx", ".zip")
 
     DEFAULT_EXCLUDES = [
         "$tf/",
