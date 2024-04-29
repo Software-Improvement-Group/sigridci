@@ -65,11 +65,22 @@ blockquote {
 }
 
 aside {
+    background-image: url("/images/icon-attention.svg");
     background-color: #EBE6F9;
-    padding: 20px;
+    background-repeat: no-repeat;
+    background-position: 10px 20px;
+    background-size: 24px;
+    padding: 20px 20px 20px 50px;
     margin-top: 30px;
     margin-bottom: 30px;
     display: block;
+}
+
+aside::before {
+    content: "Attention";
+    display: block;
+    font-weight: 600;
+    color: #687483;
 }
 
 summary {
