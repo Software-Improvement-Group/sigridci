@@ -88,13 +88,15 @@ There are a number of policies on how to address open source libraries during de
 2. _Set the thresholds for library risks_ that are (not) acceptable: this is applicable to all types of risks. Set these goals in the [Sigrid objectives](../capabilities/portfolio-objectives.md). SIG advises the following objectives: <!-- we would like to make the following statements stand out as directives -->
    - _No library vulnerabilities_: having vulnerabilities of medium or higher risk is generally not acceptable as a goal, and since there are relatively few low-risk vulnerabilities in practice, a 'clean sweep' of all vulnerabilities is preferred.
    - _No unacceptable licenses_; for a typical context this means no licenses that come with obligations or restrictions for commercial usage (see the [OSH Guidelines for producers](../reference/quality-model-documents/open-source-health.md) for more details.). In Sigrid these are classified as no-risk, and include the MIT, BSD, and Apache licenses.
-   - _Ensure overall OSH quality rating is 4.0 stars or more_ 
+   - _Ensure overall OSH quality rating is 4.0 stars [^1] or more_ 
 
-2. _Define how frequent to check for risks_ such as vulnerabilities and other risks in open source libraries. Preferably check daily for vulnerabilities and quarterly for other OSH risks. See section [4. Scan the software for health issues](#4-scan-the-software-for-health-issues) for more details. 
+[^1]: OSH benchmarked star ratings are a new Sigrid feature that will be released in May 2024
+
+1. _Define how frequent to check for risks_ such as vulnerabilities and other risks in open source libraries. Preferably check daily for vulnerabilities and quarterly for other OSH risks. See section [4. Scan the software for health issues](#4-scan-the-software-for-health-issues) for more details. 
   
-3. _Define how fast new vulnerabilities have to be resolved_; this will depend on the criticality. See the section on [Handling vulnerabilities](#5-handling-vulnerabilities) for details.
+2. _Define how fast new vulnerabilities have to be resolved_; this will depend on the criticality. See the section on [Handling vulnerabilities](#5-handling-vulnerabilities) for details.
 
-4. _Declare which libraries should not be checked_
+3. _Declare which libraries should not be checked_
    - This is useful when a library has properties that cause Sigrid to signal a risk, but that risk is a false positive. 
    - Create an _ignore-list_. This list requires CISO approval. The ignore-list must be reviewed regularly (a few times per year): define when this review will happen.
   
@@ -102,7 +104,7 @@ There are a number of policies on how to address open source libraries during de
 
      > ⚠️ **Warning:** Do note that if a library is put on the ignore-list since the reported vulnerability is a false positive, that does not necessarily mean that the other types of risk for that library should be ignored as well.
 
-5. Optionally: _Define a shared permitted-list_: it can be useful (and in some organizations required) to have a shared list of libraries that are permitted. 
+4. Optionally: _Define a shared permitted-list_: it can be useful (and in some organizations required) to have a shared list of libraries that are permitted. 
   - This list can have an advisory role, functioning as a list of libraries that have already been checked, and are likely already in use. It can also have the role of a clearance list, where developers have only permission to use libraries from the permitted-list, and must seek approval for libraries that are not on that list. 
   - For determining whether to include libraries, see the criteria defined in the section [10. Selecting a new library](#10-selecting-a-new-library).
 
@@ -164,7 +166,7 @@ For timely handling of open source health risks, there are two concerns:
    - Vulnerabilities require frequent scanning: preferably daily, at least every 2 weeks.
    - The other OSH properties are less volatile and urgent, and monthly to quarterly scanning is sufficient for those.
 
-   > ⚠️ **Warning:** OSH analysis is conducted whenever Sigrid receives an update through [Sigrid CI](../sigridci-integration/development-workflows.html), or in the form of a new snapshot [upload](../organization-integration/upload-instructions.html). Hence for systems that are inactive, new vulnerabilities in the ecosystem are not visible in Sigrid. 
+   > ⚠️ **Warning:** OSH analysis is conducted whenever Sigrid receives an update through [Sigrid CI](../sigridci-integration/development-workflows.html), or in the form of a new snapshot [upload](../organization-integration/upload-instructions.html). Hence, for systems that are inactive, new vulnerabilities in the ecosystem are not visible in Sigrid. 
 
 A good time to triage scan results is during refinement for the next sprint: You need to decide to address the detected risks during the upcoming sprint, or possibly create a backlog item. In some cases, the detected risk is considered a false positive, or acceptable risk that can be ignored. The most common mitigation will be [updating a library](#9-updating-a-library). 
 
@@ -197,7 +199,7 @@ The table below is a proposal how fast you should resolve vulnerabilities, depen
 The primary means of remediating a vulnerability is to update the library: in most cases, vulnerabilities (especially critical ones) are only published once a patch is available in a new version of the library. See section [9. Updating a library](#9-updating-a-library) for more details. Do check that the vulnerability is indeed solved in the newer version of the library.
 
 If no such remediation is available, do a risk assessment which will have one of these outcomes:
-- If the vulnerability does not pose any actual risk, ‘allowlist’ it: that means you allow the specific vulnerability for this library/application to be present. This requires approval from a CISO or other applicable role. This _allowlist_ will be reviewed as part of a half-yearly measurement cycle. 
+- If the vulnerability does not pose any actual risk, ‘allow-list’ it: that means you allow the specific vulnerability for this library/application to be present. This requires approval from a CISO or other applicable role. This _allowlist_ will be reviewed as part of a half-yearly measurement cycle. 
 - The risk can be mitigated in some other way. If, for example, the vulnerability is limited to a single method in the library that is not called by our application. You can then test for the use of that method and fail the pipeline in that case, to prevent future accidental risks.  
 - The library can be replaced, or no longer used, completely; see [12. Replacing a library](#12-replacing-a-library) for more details.
 - In extreme cases, you may need to shut down the application until the vulnerability is resolved.
