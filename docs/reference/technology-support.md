@@ -340,24 +340,39 @@ Notes:
 For a subset of our technologies, we offer AI-generated explanations related to refactoring candidates and security findings, to make these more actionable and easier to understand.
 Below is the list of technologies for which we currently offer these AI-generated explanations:
 
-| Technology |
-|------------|
-| C#         |
-| Dart       |
-| Elixir     |
-| Go         |
-| Groovy     |
-| Java       |
-| JavaScript |
-| Kotlin     |
-| Lua        |
-| Objective-C|
-| Python     |
-| Ruby       |
-| Rust       |
-| Scala      |
-| Swift      |
-| TypeScript |
+| Technology         |
+|--------------------|
+| ABAP               |
+| Abl                |
+| Angular Templates  |
+| ASP.NET            |
+| C                  |
+| C#                 |
+| C++                |
+| Cobol              |
+| Dart               |
+| Delphi             |
+| Elixir             |
+| Go                 |
+| Groovy             |
+| Java               |
+| JavaScript         |
+| Kotlin             |
+| Lua                |
+| Objective-C        |
+| PL/SQL             |
+| Progress           |
+| Python             |
+| Razor              |
+| React              |
+| Ruby               |
+| Rust               |
+| Scala              |
+| Swift              |
+| T-SQL              |
+| TypeScript         |
+| VueJS              |
+
 
 ## Technology conversion configuration
 

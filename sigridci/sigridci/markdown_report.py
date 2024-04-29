@@ -51,7 +51,7 @@ class MarkdownReport(Report):
         md += "\n----\n\n"
         md += f"- [**View this system in Sigrid**]({sigridLink})\n"
         md += f"- [**View this Sigrid CI feedback in Sigrid**]({landingPage})\n"
-        if options.feedbackURL:
+        if options.feedbackURL and status != ObjectiveStatus.UNKNOWN:
             md += "\n----\n\n"
             md += "## Did you find this feedback helpful?\n\n"
             md += "We would like to know your thoughts to make Sigrid better.\n"
