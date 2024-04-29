@@ -22,7 +22,7 @@ While nobody is fundamentally against building good software, doing that in prac
 
 Of course, there's no one answer to the question 'how good does my application need to be?'. This depends on various aspects, such as whether or not the application is accessible over the internet (security is more important for public facing systems), or lifecycle stage it is in (newly developed applications should be maintainable, for end-of-life applications this is less important).
 
-The goal of objectives is to decide for each application how good it needs to be and recording the outcome of those decisions in Sigrid. By evaluating the gap between the current quality of your applications and the objective, you don't just learn where quality is lacking, but also where it's hurting your organization the most. That's the thinking behind it. A quick sidenote: Sigrid supports creating objectives for different categories of applications so you don't have to configure each individual app.
+The goal of objectives is to decide for each application how good it needs to be and to record the outcome of those decisions in Sigrid. By evaluating the gap between the current quality of your applications and the objective, you don't just learn where quality is lacking, but also where it's hurting your organization the most. That's the thinking behind it. A quick sidenote: Sigrid supports creating objectives for different categories of applications so you don't have to configure each individual app.
 
 ### Objectives and team autonomy
 
@@ -34,7 +34,9 @@ The picture below depicts the hybrid model that we recommend. It aims to strike 
 
 <img src="../images/hybrid-model.png" width="700" />
 
-## Using Software Quality Objectives: Jobs to be Done
+## Using software quality objectives: jobs to be done
+
+As stated, the goal of objectives is to decide for each application how good it needs to be and to record the outcome of those decisions in Sigrid. This is easier said than done, not because of the actions to be performed in Sigrid, but because of the organization required. All stakeholders need to be involved and aligned which works differently in each organization. Because of this, the first job two jobs are about making sure that the initial scope (1) is meaningful but not too big to establish a workable governance structure (2). Once this has been done, the objective setting can take place, followed by monitoring and reviewing both the objectives themselves and the goverance process established around. The latter may trigger enlarging the scope. This is the list of jobs, the following sections describe them in more detail:
 
 1. [Identify a scope](#1-identify-a-scope) - a set of applications for which it make sense to set objectives
 1. [Establish Governance Structure](#2-establish-governance-structure) - Set up a governance structure to oversee the objective-setting process.
@@ -54,12 +56,12 @@ To be sure, setting objectives for a single system has value. But in most situat
 
 Typically, divisions or departments are a good starting point (although in large organizations, these might still be quite big). A technology platform (e.g. a low code platform) can be a useful scope because they often exist to accelerate development to decrease the time to market, which is a useful goal to base objectives on. The downside is that they typically support a variety of business processes which makes that less usable as a source of a limited, coherent set of business goals.
 
-### 2. Establish Governance Structure
-It needs to be clear who gets to decide what. Typically, the decision making involves engineering leaders. For the day-to-day management, different models are possible. Some organizations prefer a cross-functional team responsible for defining, reviewing objectives and interacting with engineering teams regularly. Others add this to the existing engineering leadership roles.
+### 2. Establish governance structure
+It needs to be clear who gets to decide what. Typically, the decision making involves engineering leaders (e.g. architects, lead developers, etc.). For the day-to-day management, different models are possible. Some organizations prefer a cross-functional team responsible for defining, reviewing objectives and interacting with engineering teams regularly. Others add this to the existing engineering leadership roles.
 
 It is important to raise awareness with all stakeholders that meeting objectives is a serious concern that may have impact on the feature planning. The best practice is to allow teams and product/project owners/managers to come to a balanced priority setting themselves, but an escalation path needs to be provided to resolve conflicts if they arise.
 
-### 3. Set Objectives
+### 3. Set objectives
 
 Good objectives have the following characteristics:
 - **Indisputable** All teams agree on the objectives unanimously to avoid discussions​
@@ -70,10 +72,10 @@ Good objectives have the following characteristics:
 
 The following sections describe how to get there.
 
-#### 3.1 Configure Metadata
+#### 3.1 Configure metadata
 First off, configuring metadata is essential for effective use of Sigrid, not just objective setting. We describe it here because it's essential for objective setting. With metadata, context can be added to help set meaningful objectives for certain categories of systems. As an example, security requirements for a system might be stricter for systems that are public-facing than for systems that can only be accessed through an internal network. [This page](../organization-integration/metadata.html) explains how to do this.
 
-#### 3.2 Identify Relevant Organizational Goals
+#### 3.2 Identify relevant organizational goals
 
 First off, this section is not about actually _creating_ organizational goals. It assumes organizational goals to be present in some shape or form. It's about identifying those goals that can be reached through software. Typical examples of such goals include:
 - Increase revenue
@@ -84,7 +86,7 @@ First off, this section is not about actually _creating_ organizational goals. I
 
 Often, goals link to each other. Increasing revenue might be achieved in part by increasing customer satisfaction, for example. In general, it helps to be as specific as possible. Also, don't rule out goals too early because they seem unrelated to software.
 
-#### 3.3 Link Goals to Objectives
+#### 3.3 Link goals to objectives
 
 The goal of linking goals to objectives is to create a view on software quality that is shared by technical and non-technical stakeholders. It is to ensure that the objectives that will be configures in the next step are considered an organization concern as opposed to a purely technical concern.
 
@@ -92,7 +94,9 @@ The following table indicates how the technical concerns measured in Sigrid conn
 
 <img src="../images/business-technical-concerns.png" width="700" />
 
-#### 3.4 Configure Objectives
+The goal of this table is to facilitate the exercise of linking technical objectives to business concerns. It does not imply that the technical concerns listed fully cover the business concerns they link to. As an example, the 'security' concern,which is in Sigrid, is important to address the business concern 'security', but so are various measures against social engineering, which are not in Sigrid.
+
+#### 3.4 Configure objectives
 
 Our recommended approach is to set an ambitious baseline and define exceptions as needed. For each concern, a separate best practice document provides our recommended (set of) objective(s). Since these recommended objectives assume well-written code in modern technologies, they are sometimes difficult to achieve for existing systems. For these systems, exceptions can be made either by configuring conditional portfolio objectives or system-level objectives. Some examples:
 - Mainframe code may be held to a lower maintainability standard by using a conditional objective based on the Technology category
@@ -107,13 +111,13 @@ Everyone involved in and affected by the objective-setting process needs to know
 - The process of monitoring and review (as described) below need to be documented in a place that is accessible to all stakeholders. If an existing process framework is in place. Examples include SAFe or an ISO based ISMS (Information Security Management System) or QMS (Quality Management System).
 Specifically, it is important that an escalation path exists if not enough priority is given to meeting objectives.
 
-### 5. Monitor Objective Status
+### 5. Monitor objective status
 
 Use Sigrid to monitor progress towards objectives and track system quality over time. Leverage the reporting and analytics capabilities of Sigrid to generate insights into trends, identify areas for improvement, and make data-driven decisions. Regularly communicate progress updates to stakeholders to keep them informed and engaged.
 
 Note that most of the work can and should be done in the teams. If the objective-setting process has been done correctly, the team understands and subscribes to the objectives set, so they can monitor and perform corrective action themselves. 
 
-### 6. Review Objectives and Governance
+### 6. Review objectives and governance
 
 Conduct periodic reviews of objectives, especially ones that allow for exemptions to global objectives, to ensure ongoing alignment with organizational priorities and evolving business needs. Adjust objectives and policies as necessary based on feedback, lessons learned, and changes in the operating environment with the responsible teams. 
 
