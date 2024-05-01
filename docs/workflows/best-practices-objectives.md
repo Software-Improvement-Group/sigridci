@@ -16,13 +16,13 @@ The guidelines and best practices have been structured based on 'jobs to be done
 > base structure could be: name - problem - solution - (implementation in Sigrid) - consequences 
 --> 
 
-### The thinking behind objectives
+### Why you should set objectives
 
-While nobody is fundamentally against building good software, doing that in practice is not always easy. A common problem is that for most organizations, building software isn't their goal in life, rather, it's a means to an end. For new features, it's typically (reasonably) clear how they contribute to these organizational goals. For any technical improvement work, a lot less, so technical improvements take a back seat to feature work. The result is a vicious cycle of increasing tecnnical debt and a growing backlog of technical work. Sigrid aims to break that cycle by making quality measurable and creating a clear connection to these organizational goals. This allows technical improvements to enter in a fair competition with feature work and prevail.
+While nobody is fundamentally against building good software, doing that in practice is not always easy. A common problem is that for most organizations, building software isn't their goal in life, rather, it is a means to an end. For new features, it is typically (reasonably) clear how they contribute to these organizational goals. For any technical improvement work, a lot less, so technical improvements take a back seat to feature work. The result is a vicious cycle of increasing technical debt and a growing backlog of technical work. Sigrid aims to break that cycle by making quality measurable and creating a clear connection to these organizational goals. This allows technical improvements to enter in a fair competition with feature work and have a fair chance of winning.
 
-Of course, there's no one answer to the question 'how good does my application need to be?'. This depends on various aspects, such as whether or not the application is accessible over the internet (security is more important for public facing systems), or lifecycle stage it is in (newly developed applications should be maintainable, for end-of-life applications this is less important).
+Of course, there is no one answer to the question 'how good does my application need to be?'. This depends on various aspects, such as whether or not the application is accessible over the internet (security is more important for public facing systems), or lifecycle stage it is in (newly developed applications should be maintainable, for end-of-life applications this is less important).
 
-The goal of objectives is to decide for each application how good it needs to be and to record the outcome of those decisions in Sigrid. By evaluating the gap between the current quality of your applications and the objective, you don't just learn where quality is lacking, but also where it's hurting your organization the most. That's the thinking behind it. A quick sidenote: Sigrid supports creating objectives for different categories of applications so you don't have to configure each individual app.
+The goal of objectives is to decide for each application how good it needs to be and to record the outcome of those decisions in Sigrid. By evaluating the gap between the current quality of your applications and the objective, you don't just learn where quality is lacking, but also where it is hurting your organization the most. That is why you should set objectives. A quick side note: Sigrid supports creating objectives for different categories of applications so you don't have to configure each individual app.
 
 ### Objectives and team autonomy
 
@@ -36,7 +36,7 @@ The picture below depicts the hybrid model that we recommend. It aims to strike 
 
 ## Using software quality objectives: jobs to be done
 
-As stated, the goal of objectives is to decide for each application how good it needs to be and to record the outcome of those decisions in Sigrid. This is easier said than done, not because of the actions to be performed in Sigrid, but because of the organization required. All stakeholders need to be involved and aligned which works differently in each organization. Because of this, the first job two jobs are about making sure that the initial scope (1) is meaningful but not too big to establish a workable governance structure (2). Once this has been done, the objective setting can take place, followed by monitoring and reviewing both the objectives themselves and the goverance process established around. The latter may trigger enlarging the scope. This is the list of jobs, the following sections describe them in more detail:
+As stated, the goal of objectives is to decide for each application how good it needs to be and to record the outcome of those decisions in Sigrid. This is easier said than done, not because of the actions to be performed in Sigrid, but because of the organization required. All stakeholders need to be involved and aligned which works differently in each organization. Because of this, the first job two jobs are about making sure that the initial scope (1) is meaningful but not too big to establish a workable governance structure (2). Once this has been done, the objective setting can take place, followed by monitoring and reviewing both the objectives themselves and the governance process established around. The latter may trigger enlarging the scope. This is the list of jobs, the following sections describe them in more detail:
 
 1. [Identify a scope](#1-identify-a-scope) - a set of applications for which it make sense to set objectives
 1. [Establish Governance Structure](#2-establish-governance-structure) - Set up a governance structure to oversee the objective-setting process.
@@ -57,7 +57,7 @@ To be sure, setting objectives for a single system has value. But in most situat
 Typically, divisions or departments are a good starting point (although in large organizations, these might still be quite big). A technology platform (e.g. a low code platform) can be a useful scope because they often exist to accelerate development to decrease the time to market, which is a useful goal to base objectives on. The downside is that they typically support a variety of business processes which makes that less usable as a source of a limited, coherent set of business goals.
 
 ### 2. Establish governance structure
-It needs to be clear who gets to decide what. Typically, the decision making involves engineering leaders (e.g. architects, lead developers, etc.). For the day-to-day management, different models are possible. Some organizations prefer a cross-functional team responsible for defining, reviewing objectives and interacting with engineering teams regularly. Others add this to the existing engineering leadership roles.
+It needs to be clear who gets to decide what. Typically, the decision making involves engineering leaders (e.g. architects, lead developers, etc.). For the day-to-day management, different models are possible. Some organizations prefer a dedicated cross-functional team responsible for defining, reviewing objectives and interacting with engineering teams regularly. Others add this to the existing engineering leadership roles.
 
 It is important to raise awareness with all stakeholders that meeting objectives is a serious concern that may have impact on the feature planning. The best practice is to allow teams and product/project owners/managers to come to a balanced priority setting themselves, but an escalation path needs to be provided to resolve conflicts if they arise.
 
@@ -73,11 +73,11 @@ Good objectives have the following characteristics:
 The following sections describe how to get there.
 
 #### 3.1 Configure metadata
-First off, configuring metadata is essential for effective use of Sigrid, not just objective setting. We describe it here because it's essential for objective setting. With metadata, context can be added to help set meaningful objectives for certain categories of systems. As an example, security requirements for a system might be stricter for systems that are public-facing than for systems that can only be accessed through an internal network. [This page](../organization-integration/metadata.html) explains how to do this.
+First off, configuring metadata is essential for effective use of Sigrid, not just objective setting. We describe it here because it is essential for objective setting. With metadata, context can be added to help set meaningful objectives for certain categories of systems. As an example, security requirements for a system might be stricter for systems that are public-facing than for systems that can only be accessed through an internal network. [This page](../organization-integration/metadata.html) explains how to do this in Sigrid.
 
 #### 3.2 Identify relevant organizational goals
 
-First off, this section is not about actually _creating_ organizational goals. It assumes organizational goals to be present in some shape or form. It's about identifying those goals that can be reached through software. Typical examples of such goals include:
+First off, this section is not about actually _creating_ organizational goals. It assumes organizational goals to be present in some shape or form. It is about identifying those goals that can be reached through software. Typical examples of such goals include:
 - Increase revenue
 - Reduce time-to-market
 - Lower costs
@@ -92,7 +92,13 @@ The goal of linking goals to objectives is to create a view on software quality 
 
 The following table indicates how the technical concerns measured in Sigrid connect to typical organizational concerns:
 
-<img src="../images/business-technical-concerns.png" width="700" />
+| ⬇ Technical Concerns / Organizational Concerns ➡ | Market Adaptability | Time to Market | Availability | Cost Efficiency | Security | Compliance | Scalability |
+|----------|----------|----------|----------|----------|----------|----------|----------|
+| Open-Source Health | Up to date libraries makes code easier to change | | | | Non-vulnerable libraries reduce security risks | Non-vulnerable, appropriately license libraries reduce compliance risks | |
+| Maintainability | Maintainable code is easier to change | Maintainable code is quicker to change | |    Maintainable code is cheaper to change | |  | Maintainable code scales better |
+| Security | | | Secure code is less prone to downtime caused by attacks | | Secure code reduces security risks | Secure code is less prone to compliance risks | |
+| Architecture Quality | Well-architected code is easier to change | Well-architected code is easier to change | Well-architected code is easier to make high-available | Well-architected code is cheaper to change |  | | Well-architected code is easier to scale |
+
 
 The goal of this table is to facilitate the exercise of linking technical objectives to business concerns. It does not imply that the technical concerns listed fully cover the business concerns they link to. As an example, the 'security' concern,which is in Sigrid, is important to address the business concern 'security', but so are various measures against social engineering, which are not in Sigrid.
 
