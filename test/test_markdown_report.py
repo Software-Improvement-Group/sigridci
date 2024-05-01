@@ -439,6 +439,34 @@ class MarkdownReportTest(TestCase):
 
         self.assertEqual(markdown.strip(), inspect.cleandoc(expected).strip())
 
+    def testDoNotIncludeFeedbackLinksIfNothingHappened(self):
+        feedback = {
+            "baselineRatings": {},
+            "changedCodeBeforeRatings" : {},
+            "newCodeRatings": {},
+            "overallRatings": {},
+            "refactoringCandidates": []
+        }
+
+        report = MarkdownReport()
+        markdown = report.renderMarkdown("1234", feedback, self.options)
+
+        expected = """
+            # Sigrid maintainability feedback
+            
+            **💭️  You did not change any files that are measured by Sigrid**
+            
+            Sigrid compared your code against the baseline of N/A.
+            
+            
+            ----
+            
+            - [**View this system in Sigrid**](https://sigrid-says.com/aap/noot)
+            - [**View this Sigrid CI feedback in Sigrid**](https://sigrid-says.com/aap/noot/-/sigrid-ci/1234?targetRating=3.5)
+        """
+
+        self.assertEqual(markdown.strip(), inspect.cleandoc(expected).strip())
+
     def toRefactoringCandidate(self, subject, category, metric, riskCategory):
         return {
             "subject" : subject,

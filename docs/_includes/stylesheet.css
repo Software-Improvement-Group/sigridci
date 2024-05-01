@@ -51,6 +51,38 @@ ul li::before {
     margin-left: -1em;
 }
 
+hr {
+    width: 650px;
+    color: #B7B7B7;
+    margin-top: 40px;
+    margin-bottom: 40px;
+}
+
+blockquote {
+    border-left: 2px solid #212C3C;
+    padding-left: 25px;
+    margin-left: 2px;
+}
+
+aside {
+    background-image: url("/images/icon-attention.svg");
+    background-color: #EBE6F9;
+    background-repeat: no-repeat;
+    background-position: 12px 20px;
+    background-size: 24px;
+    padding: 20px 20px 20px 50px;
+    margin-top: 30px;
+    margin-bottom: 30px;
+    display: block;
+}
+
+aside::before {
+    content: "Attention";
+    display: block;
+    font-weight: 600;
+    color: #687483;
+}
+
 summary {
     cursor: pointer;
 }
