@@ -63,7 +63,7 @@ Note that these values are meant as guidance for software producers, and
 are not meant to be strictly applicable, nor as a representation of what
 SIG considers a best practice. For more reference on what SIG considers best
 practices on Open Source health, please refer to 
-[our workflows page](../../workflows/best-practices-osh.html).
+[our workflows page](../../workflows/best-practices-osh.md).
 
 More in general, producers should strive to reduce risks measured by the
 SIG Open Source Health Quality Model properties as much as possible.
@@ -109,9 +109,9 @@ having:
 - The percentage of dependencies that are out-of-date for more than 1
 year should not exceed 39%.
 - The percentage of dependencies that are out-of-date for more than 2
-years should not exceed 22,9%.
+years should not exceed 22.9%.
 - The percentage of dependencies that are out-of-date for more than 3,5
-years should not exceed 11,8%.
+years should not exceed 11.8%.
 - No dependency should be out-of-date for more than 5 years. 
 
 ## License use
@@ -167,11 +167,11 @@ To score a 4 stars rating for this property a producer should aim at
 having:
 
 - The percentage of dependencies latest released more than 1 year ago
-should not exceed 27,7%.
+should not exceed 27.7%.
 - The percentage of dependencies latest released more than 2 years ago
-should not exceed 20,1%.
+should not exceed 20.1%.
 - The percentage of dependencies latest released more than 4 years ago
-should not exceed 10,2%.
+should not exceed 10.2%.
 - No dependency's latest release should be more than 5,5 years old.
 
 ## Management
@@ -190,7 +190,7 @@ For the evaluation of the management property, SIG measures unmanaged
 third party open-source dependencies.
 
 To score a 4 stars rating for this property, a system should have at
-most 4,2% unmanaged dependencies.
+most 4.2% unmanaged dependencies.
 
 ## Contact and support
 
