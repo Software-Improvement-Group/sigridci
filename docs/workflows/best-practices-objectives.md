@@ -93,11 +93,11 @@ The goal of linking goals to objectives is to create a view on software quality 
 The following table indicates how the technical concerns measured in Sigrid connect to typical organizational concerns:
 
 | Organizational Concerns ➡ / Technical Concerns ⬇ | Market Adaptability | Time to Market | Availability | Cost Efficiency | Security | Compliance | Scalability |
-|----------|----------|----------|----------|----------|----------|----------|----------|
-| Open-Source Health | Up to date libraries makes code easier to change | | | | Non-vulnerable libraries reduce security risks | Non-vulnerable, appropriately licensed libraries reduce compliance risks | |
-| Maintainability | Maintainable code is easier to change | Maintainable code is quicker to change | |    Maintainable code is cheaper to change | |  | Maintainable code scales better |
-| Security | | | Secure code is less prone to downtime caused by attacks | | Secure code reduces security risks | Secure code is less prone to compliance risks | |
-| Architecture Quality | Well-architected code is easier to change | Well-architected code is easier to change | Well-architected code is easier to make high-available | Well-architected code is cheaper to change |  | | Well-architected code is easier to scale |
+|----------|:----------:|:----------:|:----------:|:----------:|:----------:|:----------:|:----------:|
+| Open-Source Health | x | | | | x | x | |
+| Maintainability | x | x | | x | |  | x |
+| Security | | | x | | x | x | |
+| Architecture Quality | x | x | x | x |  | | x |
 
 
 The goal of this table is to facilitate the exercise of linking technical objectives to business concerns. It does not imply that the technical concerns listed fully cover the business concerns they link to. As an example, the 'security' concern,which is in Sigrid, is important to address the business concern 'security', but so are various measures against social engineering, which are not in Sigrid.
