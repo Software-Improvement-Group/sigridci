@@ -104,7 +104,7 @@ The goal of this table is to facilitate the exercise of linking technical object
 
 #### 3.4 Configure objectives
 
-Our recommended approach is to set an ambitious baseline and define exceptions as needed. For each concern, a separate best practice document provides our recommended (set of) objective(s). Since these recommended objectives assume well-written code in modern technologies, they are sometimes difficult to achieve for existing systems. For these systems, exceptions can be made either by configuring conditional portfolio objectives or system-level objectives. Some examples:
+Our recommended approach is to set an ambitious baseline of [portfolio-level objectives](../capabilities/portfolio-objectives.md) and define exemptions as needed. For each technical concern, separate best practice document within the Sigrid documentation  provides our recommended (set of) objective(s). Since these recommended objectives assume well-written code in modern technologies, they are sometimes difficult to achieve for existing systems. For these systems, exemptions can be made either by configuring conditional portfolio objectives or [system-level objectives](../capabilities/objectives.md). Some examples:
 - Mainframe code may be held to a lower maintainability standard by using a conditional objective based on the Technology category
 - An older Java system might be held to a lower architecture standard by setting a system-level objective.
 
@@ -114,14 +114,14 @@ Make sure to add a rationale to each objective.
 
 Everyone involved in and affected by the objective-setting process needs to know how it works and what is expected of them. Obviously, the objectives that are set and the rationale provided are a starting point but at least two more things are needed:
 - Teams need to be made aware of the objectives, their rationale and what is expected of them
-- The process of monitoring and review (as described) below need to be documented in a place that is accessible to all stakeholders. If an existing process framework is in place. Examples include SAFe or an ISO based ISMS (Information Security Management System) or QMS (Quality Management System).
+- The process of [monitoring](#5-monitor-objective-status) and [review](#6-review-objectives-and-governance) need to be documented in a place that is accessible to all stakeholders. If an existing process framework is in place, the process can be made part of that framework. Examples include SAFe or an ISO based ISMS (Information Security Management System) or QMS (Quality Management System).
 Specifically, it is important that an escalation path exists if not enough priority is given to meeting objectives.
 
 ### 5. Monitor objective status
 
-Use Sigrid to monitor progress towards objectives and track system quality over time. Leverage the reporting and analytics capabilities of Sigrid to generate insights into trends, identify areas for improvement, and make data-driven decisions. Regularly communicate progress updates to stakeholders to keep them informed and engaged.
+Use Sigrid to monitor progress towards objectives and track system quality over time. More details can be found in the the documentation on [portfolio-level objectives](../capabilities/portfolio-objectives.md) and [system-level objectives](../capabilities/objectives.md). Leverage the reporting and analytics capabilities of Sigrid to generate insights into trends, identify areas for improvement, and make data-driven decisions. Regularly communicate progress updates to stakeholders to keep them informed and engaged.
 
-Note that most of the work can and should be done in the teams. If the objective-setting process has been done correctly, the team understands and subscribes to the objectives set, so they can monitor and perform corrective action themselves. 
+Note that most of the work can and should be done in the teams. If the objective-setting process has been done correctly, each team understands and subscribes to the objectives that have been set, so they can plan, monitor, and perform corrective action themselves. 
 
 ### 6. Review objectives and governance
 
