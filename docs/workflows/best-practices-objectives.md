@@ -92,9 +92,9 @@ The goal of linking goals to objectives is to create a view on software quality 
 
 The following table indicates how the technical concerns measured in Sigrid connect to typical organizational concerns:
 
-| ⬇ Technical Concerns / Organizational Concerns ➡ | Market Adaptability | Time to Market | Availability | Cost Efficiency | Security | Compliance | Scalability |
+| Organizational Concerns ➡ / Technical Concerns ⬇ | Market Adaptability | Time to Market | Availability | Cost Efficiency | Security | Compliance | Scalability |
 |----------|----------|----------|----------|----------|----------|----------|----------|
-| Open-Source Health | Up to date libraries makes code easier to change | | | | Non-vulnerable libraries reduce security risks | Non-vulnerable, appropriately license libraries reduce compliance risks | |
+| Open-Source Health | Up to date libraries makes code easier to change | | | | Non-vulnerable libraries reduce security risks | Non-vulnerable, appropriately licensed libraries reduce compliance risks | |
 | Maintainability | Maintainable code is easier to change | Maintainable code is quicker to change | |    Maintainable code is cheaper to change | |  | Maintainable code scales better |
 | Security | | | Secure code is less prone to downtime caused by attacks | | Secure code reduces security risks | Secure code is less prone to compliance risks | |
 | Architecture Quality | Well-architected code is easier to change | Well-architected code is easier to change | Well-architected code is easier to make high-available | Well-architected code is cheaper to change |  | | Well-architected code is easier to scale |
