@@ -1,11 +1,5 @@
 name: unittests
-env:
- BRANCH_NAME: ${{ github.head_ref || github.ref_name }} 
-
-on: 
-  push:
-    branches:
-      - BRANCH_NAME
+on: [push]
 jobs:
   unittests:
     name: "Python unit tests"
