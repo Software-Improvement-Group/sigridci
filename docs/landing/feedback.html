@@ -52,15 +52,16 @@
         document.addEventListener("DOMContentLoaded", () => {
             const statsURL = "https://sigrid-says.com/usage/matomo.php";
             const params = new URLSearchParams(window.location.search);
+            const timestamp = new Date().getTime();
 
             if (params.has("feature") && params.has("feedback") && params.has("system")) {
                 const feature = encodeURIComponent(params.get("feature"));
                 const feedback = encodeURIComponent(params.get("feedback"));
                 const system = encodeURIComponent(params.get("system"));
 
-                const statsElement = document.createElement("img");
-                statsElement.src = `${statsURL}?idsite=6&rec=1&ca=1&e_c=${feature}&e_a=${feedback}&e_n=${system}`;
-                document.body.appendChild(statsElement);
+                const image = document.createElement("img");
+                image.src = `${statsURL}?idsite=6&rec=1&ca=1&e_c=${feature}&e_a=${feedback}&e_n=${system}&t={timestamp}`;
+                document.body.appendChild(image);
             }
         });
     </script>
