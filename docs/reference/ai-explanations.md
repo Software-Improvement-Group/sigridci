@@ -9,6 +9,7 @@ Sigrid makes use of its own private LLM instance in accordance with SIG's securi
 
 ## Does Sigrid generate advice specific to my source code?
 No. Currently, Sigrid AI explanations are pre-generated per individual quality check. This means the source code in which the finding was detected is not used in the generated explanation. 
+
 Further augmentation and enrichment of the Sigrid platform using AI is planned in future releases. Please note that Sigrid does not make use of public LLM APIs, but instead runs it's own private LLM instance in accordance with SIG's security and data sovereignty policies.
 
 ## Where can I find AI explanations?
