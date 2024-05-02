@@ -1,4 +1,5 @@
 # Copyright Software Improvement Group
+# Copyright Alliander N.V.
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -64,7 +65,12 @@ class SystemUploadPacker:
         for root, dirs, files in os.walk(self.options.sourceDir):
             for file in sorted(files):
                 filePath = os.path.join(root, file)
-                if file != outputFile and not self.isExcluded(filePath) and self.isIncluded(filePath):
+                if (
+                    file != outputFile
+                    and os.path.exists(filePath)
+                    and not self.isExcluded(filePath)
+                    and self.isIncluded(filePath)
+                ):
                     relativePath = os.path.relpath(os.path.join(root, file), self.options.sourceDir)
                     hasContents = True
                     if self.options.showUploadContents:
