@@ -52,12 +52,9 @@ These jobs have been grouped in three categories: first some general guidelines 
 10.  [Selecting a new library](#10-selecting-a-new-library)
 11.  [When a library does not meet the requirements](#11-when-a-library-does-not-meet-requirements)
 
-
----
-**A word of caution:** _The guidelines and steps that follow are intended to be helpful in making decisions and taking proper actions; since every application context is unique, these guidelines and steps should never replace logical thinking, taking your unique situation into account!_
-
----
-
+<aside>
+A word of caution: The guidelines and steps that follow are intended to be helpful in making decisions and taking proper actions; since every application context is unique, these guidelines and steps should never replace logical thinking, taking your unique situation into account!
+</aside>
 
 ### About the SIG Open Source Health (OSH) model
 The SIG Open Source Health model is described here in the documentation: [OSH guidance for producers](../reference/quality-model-documents/open-source-health.md).
