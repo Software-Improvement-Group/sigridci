@@ -21,6 +21,13 @@ The overview page is shown below.
 
 <img src="../images/system-maintainability.png" width="600" />
 
+In the above picture, for the test code ratio specifically, which might not be obvious at a glance, the displayed percentage is calculated as the ratio of "test code lines" to "production code lines". 
+As an example, if there are 120 lines of test code and 100 lines of production code, the test code ratio would be:
+
+(Number of test code lines / Number of production code lines)*100 = (120/100)*100 = 120%.
+
+Note that this number is not the same as "test coverage", as it measures exclusively the size of the unit tests corresponding to the production code units that were present in the code upload. Our experience indicates that having a 100% test code ratio roughly translates to having 80% test coverage which is an empirical benchmark seen in practice that offers the best balance between practicality and assurance of code correctness.
+
 Below a detailed view of the metrics. 
 <img src="../images/help-button.png" class="inline" /> A mouse-over on the "?" help icon explains what constitutes the overall maintainability rating. The maintainability score consists of several sub-metrics that range from 1 to 5 stars, with the range 0.5 to 5.5.Please be aware that the overall score is not an average of the submetrics. For a general introduction on these metrics, see the section on [our approach](../getting-started/approach.md).
 

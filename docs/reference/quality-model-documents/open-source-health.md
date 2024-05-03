@@ -1,4 +1,4 @@
-SIG Open Source Health Quality Model 2023: Guidance for producers
+SIG Open Source Health Quality Model 2024: Guidance for producers
 =================================================================
 
 <sig-toc></sig-toc>
@@ -61,7 +61,9 @@ produce small variation in the resulting ratings.
 
 Note that these values are meant as guidance for software producers, and
 are not meant to be strictly applicable, nor as a representation of what
-SIG considers a best practice.
+SIG considers a best practice. For more reference on what SIG considers best
+practices on Open Source health, please refer to 
+[our workflows page](../../workflows/best-practices-osh.md).
 
 More in general, producers should strive to reduce risks measured by the
 SIG Open Source Health Quality Model properties as much as possible.
@@ -83,7 +85,7 @@ characteristics and severity of vulnerabilities.
 It is developed and maintained by the NIST.
 
 To score a 4 stars rating for this property, a producer should aim to
-have only low-risk vulnerabilities.
+have at most moderate-risk vulnerabilities.
 
 ## Dependency Freshness
 
@@ -104,12 +106,13 @@ available.
 To score a 4 stars rating for this property a producer should aim at
 having:
 
+- The percentage of dependencies that are out-of-date for more than 1
+year should not exceed 39%.
 - The percentage of dependencies that are out-of-date for more than 2
-years should not exceed 17%.
+years should not exceed 22.9%.
 - The percentage of dependencies that are out-of-date for more than 3,5
-years should not exceed 16%.
-- The percentage of dependencies that are out-of-date for more than 5
-years should not exceed 7%.
+years should not exceed 11.8%.
+- No dependency should be out-of-date for more than 5 years. 
 
 ## License use
 
@@ -135,12 +138,13 @@ associated with a dependency license. A brief, non-exhaustive outline of
 licenses associated with open source dependencies, and risks evaluation,
 is in the table below:
 
-| Risk        | Non-exhaustive example of licenses                         |
-|-------------|------------------------------------------------------------|
-| High risk   | AGPL (GNU Affero GPL), CC-BY-NC-ND, CC-BY-NC, CC-BY-SA     |
-| Medium risk | GPL (GNU General Public License), Mozilla, CC-BY-ND        |
-| Low risk    | LGPL (GNU Lesser GPL), CDDL, Eclipse                       |
-| No risk     | MIT, BSD, Apache                                           |
+| Risk           | Non-exhaustive example of licenses                         |
+|----------------|------------------------------------------------------------|
+| Critical risk  | AGPL (GNU Affero GPL)                                      |
+| High risk      | CC-BY-NC-ND, CC-BY-NC, CC-BY-SA                            |
+| Medium risk    | GPL (GNU General Public License), Mozilla, CC-BY-ND        |
+| Low risk       | LGPL (GNU Lesser GPL), CDDL, Eclipse                       |
+| No risk        | MIT, BSD, Apache                                           |
 
 To score a 4 stars rating for this property, a system should have at
 most four dependencies associated with low-risk licenses.
@@ -162,12 +166,13 @@ latest release date.
 To score a 4 stars rating for this property a producer should aim at
 having:
 
-- The percentage of dependencies latest released more than 1,5 years ago
-should not exceed 8,1%.
-- The percentage of dependencies latest released more than 3 years ago
-should not exceed 6%.
-- The percentage of dependencies latest released more than 5 years ago
-should not exceed 5,2%.
+- The percentage of dependencies latest released more than 1 year ago
+should not exceed 27.7%.
+- The percentage of dependencies latest released more than 2 years ago
+should not exceed 20.1%.
+- The percentage of dependencies latest released more than 4 years ago
+should not exceed 10.2%.
+- No dependency's latest release should be more than 5,5 years old.
 
 ## Management
 
@@ -185,7 +190,7 @@ For the evaluation of the management property, SIG measures unmanaged
 third party open-source dependencies.
 
 To score a 4 stars rating for this property, a system should have at
-most 4,2% unmanaged dependencies.
+most 4.2% unmanaged dependencies.
 
 ## Contact and support
 
