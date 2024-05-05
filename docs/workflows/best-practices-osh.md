@@ -132,7 +132,7 @@ The following guidelines should be considered as compliance rules for framework 
 If it is hard to update a library, chances are the problem lies in your codebase.​
 1. _Keep module coupling and component independence low_, to make it easier to change code implementation (such as dealing with new versions of a library) while keeping the same behavior/requirements.
 2. _Develop, maintain and run regression tests._ These help to identify breaking changes in updates.​​
-3. _Create an abstraction layer between the dependency and your code_, this isolates changes coming from a library update, and also makes it easier to replace the library completely.
+3. _Create an abstraction layer between the dependency and your code_ if you can foresee needing to replace it in the future. This isolates changes coming from a library update, and also makes it easier to replace the library completely.
 
 
 ## Ensuring your open source stays healthy
@@ -183,7 +183,7 @@ The primary means of remediating a vulnerability is to update the library: in mo
 If no such remediation is available, do a risk assessment which will have one of these outcomes:
 - If we find that the vulnerability does not pose any actual risk, we can ‘allowlist’ it: that means we allow the specific vulnerability for this library/application to be present. This requires CISO approval. This _allowlist_ should be reviewed as part of a half-yearly measurement cycle. 
 - We can mitigate the risk in some other way. If, for example, the vulnerability is limited to a single method in the library that is not called by our application. We can then test for the use of that method and fail the pipeline in that case, to prevent future accidental risks.  
-- We may be able to replace the libary, or stop using it completely. See [12. Replacing a library](#12-replacing-a-library) for more details.
+- We may be able to replace the library, or stop using it completely. See [12. Replacing a library](#12-replacing-a-library) for more details.
 - In extreme cases, we should shut down the application until the vulnerability is resolved.
 
 
