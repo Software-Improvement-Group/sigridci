@@ -50,7 +50,8 @@ Sigrid's REST API mimics this behavior, as follows:
 * [Maintainability ratings](#maintainability-ratings)
 * [Security and reliability findings](#security-and-reliability-findings)
 * [Vulnerable libraries in Open Source Health](#vulnerable-libraries-in-open-source-health)
-* [Architecture quality ratings](#architecture-quality-ratings)
+* [Architecture Quality ratings](#architecture-quality-ratings)
+* [Architecture Quality data](#architecture-quality-data)
 * [System metadata](#system-metadata)
 * [System lifecycle management](#system-lifecycle-management)
 * [System objectives](#system-objectives)
@@ -258,7 +259,7 @@ it is simply missing from the `properties` array.
 
 More information on the SBOM format and the various fields is available from the [CycloneDX SBOM specification](https://github.com/CycloneDX/specification).
 
-### Architecture quality ratings
+### Architecture Quality ratings
 
 Arcitecture quality ratings for a given customer are available via two endpoints:
 - `GET https://sigrid-says.com/rest/analysis-results/api/v1/architecture-quality/{customer}`: get architecture quality ratings for all systems of the given customer the current user has access to.
@@ -307,6 +308,13 @@ The response format of the system-level endpoint is as follows:
 
 The customer-level endpoint retuns an array with each element identical to the system-level response.
 
+### Architecture Quality data
+
+For reporting purposes, using the [end point for architecture rating ratings](#architecture-quality-ratings) is usually sufficient. However, some advanced use cases require the full Architecture Quality data, beyond just the ratings.
+
+The end point `GET https://sigrid-says.com/rest/analysis-results/api/v1/architecture-quality/{customer}/{system}/raw` will generate the *full* Architecture Quality analysis results, in JSON format. This end point is intended for system-to-system integrated, where one of your own systems needs to process this data without relying on the Sigrid user interface. 
+
+This end point will return the "raw" architecture graph, which is documented in the [Architecture Quality documentation](aq-json-export-format.md).
 
 ### System metadata
 
@@ -425,7 +433,7 @@ Sigrid allows you to deactivate a given system.
 
 The endpoint that enables such deactivation is:
 
-- `PATCH https://sigrid-says.com/rest/analysis-results/api/v1/systems/{customer}/{system}`: enables setting the deactivation date for a system as the instant when this endpoint was called.
+`PATCH https://sigrid-says.com/rest/analysis-results/api/v1/systems/{customer}/{system}`: enables setting the deactivation date for a system as the instant when this endpoint was called.
 
 The request format is:
 
@@ -435,9 +443,9 @@ The request format is:
 
 where the placeholder, `<deactivate_now>` can assume the following values:
 
-- `{"deactivateNow": false}` : when setting the boolean value `deactivateNow` to false, the system will be viewed by Sigrid as being active, so, setting this value to false effectively marks a system as active and re-activates a previously deactivated system;
+`{"deactivateNow": false}` : when setting the boolean value `deactivateNow` to false, the system will be viewed by Sigrid as being active, so, setting this value to false effectively marks a system as active and re-activates a previously deactivated system;
 
-- `{"deactivateNow": true}` : when this value is true, the deactivation date for the system will be set using `Instant.now()` representing the current instant when the endpoint was called. This effectively deactivates a system from the moment the endpoint was called;
+`{"deactivateNow": true}` : when this value is true, the deactivation date for the system will be set using `Instant.now()` representing the current instant when the endpoint was called. This effectively deactivates a system from the moment the endpoint was called;
 
 The response format on a successful request is, as an example, for SIG's `bch` system:
 
@@ -483,6 +491,7 @@ In Sigrid, a system always has at most one objective per type. So in the above e
 objective for the overall maintainability rating is apparently 4.0. The endpoint does not 
 currently indicate _why_ the maintainability target (in this example) is 4.0. There are two 
 possible reasons:
+
 - A user defined a system-level maintainability target of 4.0 stars for the given system. It 
   doesn't matter whether there is a portfolio-wide maintainability target that the given system 
   matches, as system-level objectives always have precedence.
