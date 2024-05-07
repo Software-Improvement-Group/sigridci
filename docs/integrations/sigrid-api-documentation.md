@@ -310,7 +310,7 @@ The customer-level endpoint retuns an array with each element identical to the s
 
 ### Architecture Quality data
 
-For reporting purposes, using the [end point for architecture rating ratings](#architecture-quality-ratings) is usually sufficient. However, some advanced use cases require the full Architecture Quality data, beyond just the ratings.
+For reporting purposes, using the [end point for architecture quality ratings](#architecture-quality-ratings) is usually sufficient. However, some advanced use cases require the full Architecture Quality data, beyond just the ratings.
 
 The end point `GET https://sigrid-says.com/rest/analysis-results/api/v1/architecture-quality/{customer}/{system}/raw` will generate the *full* Architecture Quality analysis results, in JSON format. This end point is intended for system-to-system integrated, where one of your own systems needs to process this data without relying on the Sigrid user interface. 
 
