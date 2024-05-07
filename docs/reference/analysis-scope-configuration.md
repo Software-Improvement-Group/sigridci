@@ -257,7 +257,7 @@ The `architecture` section of the scope file supports the following options:
 | `add_dependencies`         | No       | See [Manually specifying architecture dependencies](#manually-specifying-architecture-dependencies). |
 | `remove_dependencies`      | No       | See [Manually specifying architecture dependencies](#manually-specifying-architecture-dependencies). |
 | `undesirable_dependencies` | No       | See [Highlighting undesirable dependencies](#highlighting-undesirable-dependencies). |
-| `xxx`                      | No       | See [Manually specifying architecture elements](#manually-specifying-architecture-elements). |
+| `add_system_elements`                      | No       | See [Manually specifying architecture elements](#manually-specifying-architecture-elements). |
 | `grouping`                 | No       | See [Grouping and annotating components in Architecture Quality](#grouping-and-annotating-components-in-architecture-quality). |
 | `history_period_months`    | No       | See [Analyzing your repository history](#analyzing-your-repository-history). |
 | `history_start`            | No       | See [Analyzing your repository history](#analyzing-your-repository-history). |
