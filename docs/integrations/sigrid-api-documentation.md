@@ -54,7 +54,7 @@ Sigrid's REST API mimics this behavior, as follows:
 * [Architecture Quality data](#architecture-quality-data)
 * [System metadata](#system-metadata)
 * [System lifecycle management](#system-lifecycle-management)
-* [System objectives](#system-objectives)
+* [System and portfolio objectives](#system-objectives)
 
 ### Maintainability ratings
 
@@ -458,7 +458,7 @@ The response format on a successful request is, as an example, for SIG's `bch` s
 
 If the request body is not in the expected format, the returned response status will be: `400 BAD REQUEST`.
 
-### System objectives
+### System and portfolio objectives
 
 Sigrid allows you to define quality objectives for a system, either per system, or as 
 portfolio-wide objectives that apply to all systems that match the conditions of the portfolio 
@@ -474,11 +474,13 @@ You can also retrieve, edit and delete a system's objectives and corresponding t
 
     GET https://sigrid-says.com/rest/analysis-results/api/v1/objectives/{customer}/{system}/config
 
+    GET https://sigrid-says.com/rest/analysis-results/api/v1/objectives/{customer}
+
     PUT https://sigrid-says.com/rest/analysis-results/api/v1/objectives/{customer}/{system}
 
     DELETE https://sigrid-says.com/rest/analysis-results/api/v1/objectives/{customer}/{system}/{type}
     
-The GET endpoint returns the following response structure:
+The system-level GET endpoint returns the following response structure:
 
     {
       "MAINTAINABILITY": 4.0,
@@ -501,6 +503,42 @@ possible reasons:
   objective with a target higher than 4.0 with conditions the given system also matches.
 
 In both cases, the endpoint returns `"MAINTAINABILITY": 4.0`.
+
+The portfolio-level endpoint returns a response containing the portfolio-level objectives defined
+for the given portfolio, including their conditions. The response looks like the following:
+
+<details markdown="1">
+  <summary>Example portfolio-level objectives response</summary>
+
+The response format of the portfolio-level endpoint (`GET https://sigrid-says.
+com/rest/analysis-results/api/v1/objectives/{customer}`) is as follows:
+
+```json
+{
+  "objectives": [
+    {
+      "id": 5,
+      "conditions": {
+        "businessCriticality": [
+          "LOW", "MEDIUM"
+        ],
+        "deploymentType": [
+          "INTERNAL"
+        ]
+      },
+      "objective": {
+        "target": 0.5,
+        "level": "PORTFOLIO",
+        "type": "TEST_CODE_RATIO",
+        "feature": "MAINTAINABILITY"
+      },
+      "remark": "Test code ratio is 50% - this is acceptable for low or medium-criticality,internal systems."
+    }
+  ]
+}
+```
+
+</details>
 
 The `PUT` endpoint can be used to create a new system-level objective, or edit an existing one. 
 It takes a request body with the following structure:
