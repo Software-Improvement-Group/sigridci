@@ -27,13 +27,15 @@ This loop is about answering the question, is the organization in control of the
 ### How to identify each level
 Of these levels, **teams** are typically the easiest to identify, because they exist as such.
 
-**Management** can be harder because many organizations, especially larger ones, have multiple layers of management and not all of them are relevant in our context. Typically though, management represents the (strategic) organizational goals and has a budget responsiblity. They are accountable for the outcomes of software development and as such, are concerned with topics like cost, speed and risk. While this accountability ultimately lies with a CEO, the concerns can also be represented by a product owner or project manager.
+**Management** can be harder because many organizations, especially larger ones, have multiple layers of management and not all of them are relevant in our context. Typically though, management represents the (strategic) organizational goals and has a budget responsibility. They are accountable for the outcomes of software development and as such, are concerned with topics like cost, speed and risk. While this accountability ultimately lies with a CEO, the concerns can also be represented by a product owner or project manager.
 
 **Engineering leadership** is typically the hardest one to identify because it's of the three the least established and exists in various forms and to varying degrees. Engineering leadership is typically involved in (higher-level) solution design, technology choices or threat analyses. Job titles may include tech lead, architect. Engineering leadership may exist in teams and organize virtually through Communities of Practice, Guilds or Chapters. In other cases, separate engineering leadership roles or teams exist, such as enterprise architects, security specialists or Centers of Excellence.
 
 ## What is needed from each level
 
-Typically, nobody in an organization is opposed to building quality software. Rather, investing in software quality often loses out to other topics, typically features and bugs. The shift that needs to take place is that organizations allow for a fair competition to take place between feature work and technical improvements. This is not just a matter of 'the business should allow us to work on improvements instead of pushing for features'. There is a responsibility from teams and engineers to properly shape and quantify the work they think needs to be done so a fair assessment can be made. Also, teams need to accept the need for standards. In areas like security and legal, it is not practical or desirable for individual teams to assume full responsibility for their work. We consider these key ingredients of a healthy engineering culture:
+Typically, nobody in an organization is opposed to building quality software. Rather, investing in software quality often loses out to other topics, typically features and bugs. The shift that needs to take place is that organizations allow for a fair competition to take place between feature work and technical improvements. This is not just a matter of 'the business should allow us to work on improvements instead of pushing for features'. There is a responsibility from teams and engineers to properly shape and quantify the work they think needs to be done so a fair assessment can be made. Also, teams need to accept the need for standards. In areas like security and legal, it is not practical or desirable for individual teams to assume full responsibility for these aspects. 
+
+We consider these key ingredients of a healthy engineering culture:
 - Management and engineering leads remove impediments for teams
 - Management recognizes the need for technical improvements in general and takes proposals into consideration
 - Teams and Engineering shape and quantify technical improvements so they can be taken in consideration
@@ -43,6 +45,8 @@ Typically, nobody in an organization is opposed to building quality software. Ra
 This picture shows the interactions and responsibilities of the different levels:
 
 <img src="../images/organization-levels-interaction.png" width="700" />
+
+
 
 ## Strategies
 
