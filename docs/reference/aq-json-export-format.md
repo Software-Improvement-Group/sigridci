@@ -7,7 +7,7 @@ integrating their existing systems with Sigrid's Architecture Quality. This is u
 reasons:
 
 - You want to customize the Architecture Quality [configuration](analysis-scope-configuration.md).
-- You want to extract Architecture Quality data using the [Sigrid API](sigrid-api-documentation.md), to integrate
+- You want to extract Architecture Quality data using the [Sigrid API](../integrations/sigrid-api-documentation.md), to integrate
   this data with one of your own systems.
   
 In those situations, you will need to process the "raw" architecture graph beyond Sigrid's user interface. This
