@@ -1,5 +1,5 @@
 name: unittests
-on: [push]
+on: [push, pull_request]
 jobs:
   unittests:
     name: "Python unit tests"
