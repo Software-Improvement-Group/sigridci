@@ -52,9 +52,9 @@ As stated, the goal of objectives is to decide for each application how good it 
 ### 1. Identify a scope
 To be sure, setting objectives for a single system has value. But in most situations, business value isn't provided by a single system so setting objectives for just one system does not help to meaningfully improve things. At the same time, going through this exercise for the whole organization in one go can be impractical. So, it helps to identify a meaningful set of systems to set objectives for. While identifying a workable scope isn't an exact science, workable scopes have certain characteristics:
 - A limited amount of people needs to be involved to make decisions
-- The selected systems support a limited, coherent set of business processes and/or a limited/coherent set of business goals.
+- The selected systems support a limited, coherent set of business processes and/or a limited/coherent set of organizational goals.
 
-Typically, divisions or departments are a good starting point (although in large organizations, these might still be quite big). A technology platform (e.g. a low code platform) can be a useful scope because they often exist to accelerate development to decrease the time to market, which is a useful goal to base objectives on. The downside is that they typically support a variety of business processes which makes that less usable as a source of a limited, coherent set of business goals.
+Typically, divisions or departments are a good starting point (although in large organizations, these might still be quite big). A technology platform (e.g. a low code platform) can be a useful scope because they often exist to accelerate development to decrease the time to market, which is a useful goal to base objectives on. The downside is that they typically support a variety of business processes which makes that less usable as a source of a limited, coherent set of organizational goals.
 
 ### 2. Establish governance structure
 It needs to be clear who gets to decide what. Typically, the decision making involves engineering leaders (e.g. architects, lead developers, etc.). For the day-to-day management, different models are possible. Some organizations prefer a dedicated cross-functional team responsible for defining, reviewing objectives and interacting with engineering teams regularly. Others add this to the existing engineering leadership roles.
@@ -100,11 +100,11 @@ The following table indicates how the technical concerns measured in Sigrid conn
 | Architecture Quality | x | x | x | x |  | | x |
 
 
-The goal of this table is to facilitate the exercise of linking technical objectives to business concerns. It does not imply that the technical concerns listed fully cover the business concerns they link to. As an example, the 'security' concern,which is in Sigrid, is important to address the business concern 'security', but so are various measures against social engineering, which are not in Sigrid.
+The goal of this table is to facilitate the exercise of linking technical objectives to organizational concerns. It does not imply that the technical concerns listed fully cover the organizational concerns they link to. As an example, the 'security' concern,which is in Sigrid, is important to address the organizational concern 'security', but so are various measures against social engineering, which are not in Sigrid.
 
 #### 3.4 Configure objectives
 
-Our recommended approach is to set an ambitious baseline of [portfolio-level objectives](../capabilities/portfolio-objectives.md) and define exemptions as needed. For each technical concern, separate best practice document within the Sigrid documentation  provides our recommended (set of) objective(s). Since these recommended objectives assume well-written code in modern technologies, they are sometimes difficult to achieve for existing systems. For these systems, exemptions can be made either by configuring conditional portfolio objectives or [system-level objectives](../capabilities/objectives.md). Some examples:
+Our recommended approach is to set an ambitious baseline of [portfolio-level objectives](../capabilities/portfolio-objectives.md) and define exemptions as needed. For each technical concern, a separate best practice document within the Sigrid documentation provides our recommended (set of) objective(s). Since these recommended objectives assume well-written code in modern technologies, they are sometimes difficult to achieve for existing systems. For these systems, exemptions can be made either by configuring conditional portfolio objectives or [system-level objectives](../capabilities/objectives.md). Some examples:
 - Mainframe code may be held to a lower maintainability standard by using a conditional objective based on the Technology category
 - An older Java system might be held to a lower architecture standard by setting a system-level objective.
 
@@ -125,7 +125,7 @@ Note that most of the work can and should be done in the teams. If the objective
 
 ### 6. Review objectives and governance
 
-Conduct periodic reviews of objectives, especially ones that allow for exemptions to global objectives, to ensure ongoing alignment with organizational priorities and evolving business needs. Adjust objectives and policies as necessary based on feedback, lessons learned, and changes in the operating environment with the responsible teams. 
+Conduct periodic reviews of objectives, especially ones that allow for exemptions to global objectives, to ensure ongoing alignment with organizational priorities and evolving organizational needs. Adjust objectives and policies as necessary based on feedback, lessons learned, and changes in the operating environment with the responsible teams. 
 
 Conduct periodic reviews of your objective-setting process based on feedback and lessons learned. Solicit input from stakeholders on how to improve the process, streamline workflows, and enhance governance practices. Be open to adopting new tools and methodologies that can help optimize the objective-setting process and drive better outcomes.
 
