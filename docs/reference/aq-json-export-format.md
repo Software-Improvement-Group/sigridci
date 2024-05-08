@@ -37,8 +37,8 @@ picture in the previous section.
 ```
 {
   "partner": "sig",
-  "customer": "aap",
-  "system": "noot",
+  "customer": "examplecustomername",
+  "system": "examplesystemname",
   "metadata": {
     "scopeFile": "...",
     "analysisDate": "2019-03-01 10:20:58",
@@ -86,8 +86,9 @@ picture in the previous section.
   ]
 }
 ```
-
 ## Field explanations
+
+**Note:** The documentation covers all supported fields. The actual JSON output might include additional fields that are not listed below. Any fields not covered by this documentation should be considered experimental.
 
 | Field                                   | Description                                                                                                     |
 |-----------------------------------------|-----------------------------------------------------------------------------------------------------------------|
@@ -116,8 +117,8 @@ picture in the previous section.
 | dependency.description                  | Textual description of the dependency sub-type. Unlike `type`, this is purely a text label and *not* an enum.   |
 | dependency.count                        | Describes the number of dependencies. Optional, assume 1 when not specified.                                    |
 | dependency.undesirable                  | Dependency is considered undesirable as specified in the scope file. Optional field, defaults to false.         |
-| technology.name                         | Technology display name.                                                                                        |
-| technology.contextName                  | SAT context name. Note that this field is not available for technologies not supported by the SAT.              |
+| technology.name                         | Technology display name, for example "C++".                                                                     |
+| technology.contextName                  | Technology ID, for example "cpp".                                                                               |
 
 Notes:
 
@@ -158,17 +159,18 @@ Dependency types are considated into three "families":
   but that indicate parallel evolution over time. Links between architecture observations and system elements are
   also considered hidden dependencies.
 
-| Type             | Type family          | Description                                            |
-|------------------|----------------------|--------------------------------------------------------|
-| CONTAINS         | Hierarchy dependency | Parent/child relation in the static architecture.      |
-| PROVIDES         | Hierarchy dependency | Indicates the code exposes an interface.               |
-| STORES           | Hierarchy dependency | Parent/child relation in the data architecture.        |
-| CODE_CALL        | Call dependency      | Static dependency within the same process.             |
-| DATA_ACCESS      | Call dependency      | Dependency from the static architecture to data.       |
-| INTERFACE_CALL   | Call dependency      | Dynamic dependency                                     |
-| CO_EVOLUTION     | Hidden dependency    | Parallel commit history between system elements. [1]   |
-| DUPLICATION      | Hidden dependency    | Duplicated blocks of code between system elements. [1] |
-| OBSERVATION_LINK | Hidden dependency    | Connects system elements to architecture observations. |
+| Type             | Type family          | Description                                                          |
+|------------------|----------------------|----------------------------------------------------------------------|
+| CONTAINS         | Hierarchy dependency | Parent/child relation in the static architecture.                    |
+| GROUPS           | Hierarchy dependency | System element is part of a `GROUPING` defined in the configuration. |
+| PROVIDES         | Hierarchy dependency | Indicates the code exposes an interface.                             |
+| STORES           | Hierarchy dependency | Parent/child relation in the data architecture.                      |
+| CODE_CALL        | Call dependency      | Static dependency within the same process.                           |
+| DATA_ACCESS      | Call dependency      | Dependency from the static architecture to data.                     |
+| INTERFACE_CALL   | Call dependency      | Dynamic dependency                                                   |
+| CO_EVOLUTION     | Hidden dependency    | Parallel commit history between system elements. [1]                 |
+| DUPLICATION      | Hidden dependency    | Duplicated blocks of code between system elements. [1]               |
+| OBSERVATION_LINK | Hidden dependency    | Connects system elements to architecture observations.               |
 
 [1] Duplication and co-evolution don't really differentiate between "source" and "target", such dependencies are
     pretty much bidirectional. For these types, dependencies from A to B should therefore be considered to
