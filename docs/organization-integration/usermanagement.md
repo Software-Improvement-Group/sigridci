@@ -89,14 +89,29 @@ SIG will setup SSO for you. You will have your own customer-specific URL Sigrid.
 https://customername.sigrid-says.com
 
 # Authorization in Sigrid
-The product team is actively developing the user management pages to cater to more use cases. At the moment the user manages the following functions.
+While Sigrid requires minimal adminstration to gather insights in your software's quality, there are a number of tasks that must be performed to ensure your organization gets the most out of their Sigrid experience. Most important of which is the management of other user's access to system details, findings and source code within Sigrid. The following section describes the functions in place to provide this control to users.
 
 ### Types of users
-Sigrid has three types of users: Normal users, Administrators and Maintainers (aka local admin). While normal users have the typical rights to access 1 to all systems in the Sigrid portfolio, Administrator and Maintainer users have additional edit capabilities over other users within the portfolio and are considered admin-level users in Sigrid. Only Administrator users have access to the entirety of the systems within their portfolio by default.
+Sigrid utilizes role-based authorization with three roles assignable to users: 
+- **Normal users:** Default Sigrid users. Can only view all findings and details of systems they've been granted access to.
+- **Administrators:** Power users that have the ability to edit all details of all users within the portfolio, have access to all systems, and can set portfolio wide objectives that affect all systems in a given portfolio.
+- **Maintainers:** These users are localized administrators. Maintainers can perform administrative on systems they have explcit access to, but not over the entire portfolio.
+
+While normal users have the typical rights to access 1 to all systems in the Sigrid portfolio, Administrator and Maintainer users have additional edit capabilities over other users within the portfolio and are considered admin-level users in Sigrid. Only Administrator users have access to the entirety of the systems within their portfolio by default.
+
+Often organizations require a degree of control to prevent improper disclosure of sensitive information between users and teams. In order to achieve this control, Sigrid offers several admin-level roles that can be assigned to normal users, granting them access to new actions within the platform.
 
 Tasks unique to Admin-level users beyond User Management include:
 - [Setting and using Sigrid Objectives](../capabilities/objectives.md)
 - [Adding business context to a system using metadata](metadata.md)
+
+#### Administrators vs Maintainers
+
+Once portfolios hit a certain size, it can become difficult for a single admin of a large organization to perform user management effectively by themsleves. When faced with multiple systems and multiple development teams, often it is the case a single administrator user is unaware of who exactly should be granted access to which systems. Likewise, having multiple Administrators within a single Sigrid instance is typically not advised as these are permitted to access every system, finding and source code for all systems in the portfolio, which can be a point of concern for organizations that wish to restrict access based on their own internal organizational structure.
+
+In order to mitigate this pain and allow for some delegation of this work, we have introduced a new user type that behaves as a localized administrator to handle administrative tasks for only those systems relevant to their scope of the portfolio. These local administrators, which we refer to as Maintainers, are able to partially take over the tasks of authorizing users access to systems in the portfolio, as well as configuring system-related details that enhance the ability to track quality improvements and/or setting quality goals to achieve.
+
+Maintainer users have the very similar rights as Administrators in performing administrative tasks, *but only on the subset of systems* the Maintainer has been granted explicit access to by the Administrator. Naturally this means if no system has been made accessible to the Maintainer, this user effectively can not perform any administrative tasks in Sigrid - their ability to perform tasks such as setting of metadata, defining system level objectives, or authorizing users to systems is tied directly to their own authorized access.
 
 Similarly, while Maintainers enjoy additional admin-level permissions on those systems that are accessible to them, there are still limitations on specific actions that are reserved for Administrator users only. This includes the following: 
 - Maintainer users cannot authorize themselves for new systems
@@ -107,35 +122,39 @@ Similarly, while Maintainers enjoy additional admin-level permissions on those s
 
 ### Authorized Actions based on User Type
 
-For a full breakdown of tasks able to be performed by each user type, please refer to the following authorized actions table. *Note:* These actions refer to both manual within the Sigrid web interface as well as actions allowed [via the Sigrid API](../integrations/sigrid-api-documentation.md#managing-user-permissions-via-API):
+For a full breakdown of tasks able to be performed by each user type, please refer to the following authorized actions table. *Note:* These actions refer to both manual actions within the Sigrid web interface as well as actions allowed [via the Sigrid API](../integrations/sigrid-api-documentation.md#managing-user-permissions-via-API):
 
 | Action | Normal User | Maintainer | Administrator |
 | --- | --- | --- | --- |
 | **Portfolio Overview**
 | View Dashboard | ✔ | ✔ | ✔✔ | 
-| View / Retrieve Systems | ✔ | ✔ | ✔✔|
+| View Systems | ✔ | ✔ | ✔✔|
 | **Capability Specific Overviews**
 | View Dashboards | ✔ | ✔ | ✔✔ |
-| View / Retrieve Ratings | ✔ | ✔ | ✔✔ |
+| View Ratings | ✔ | ✔ | ✔✔ |
 | Favorite Systems | ✔ | ✔ | ✔✔ |
 | **Findings and Refactoring Candidates**
 | View Findings | ✔ | ✔ | ✔✔ |
-| Edit Findings |  | ✔ | ✔✔ |
+| Edit Findings | ✔ | ✔ | ✔✔ |
 | View Finding Audit Trails | ✔ | ✔ | ✔✔ |
 | Create Manual Findings |  | ✔ | ✔✔ |
+| **Source Code**
 | View Source Code | ✔ | ✔ | ✔✔ |
 | **Meta-data** 
-| View / Retrieve metadata | ✔ | ✔ | ✔✔ |
-| Define metadata |  | ✔ | ✔✔ |
+| View metadata | ✔ | ✔ | ✔✔ |
+| Configure metadata |  | ✔ | ✔✔ |
 | **Objectives**
-| View / Retrieve objectives | ✔ | ✔ | ✔✔ |
-| Edit / Create system-level objectives |  | ✔ | ✔✔ |
-| Edit / Create portfolio-level objectives |  |  | ✔✔ |
+| View objectives | ✔ | ✔ | ✔✔ |
+| Configure system-level objectives |  | ✔ | ✔✔ |
+| Configure portfolio-level objectives |  |  | ✔✔ |
 | **User Management**
-| View / Retrieve Users | ✔ | ✔ | ✔✔ |
+| View Users | ✔ | ✔ | ✔✔ |
 | Create / Delete Users |  |  | ✔✔ |
 | Edit User Permissions |  | ✔ | ✔✔ |
-| Edit User Details (other than self) | | | ✔✔ |
+| Edit User Details (other than self) |  |  | ✔✔ |
+| View User Status Details |  |  | ✔✔ |
+| Edit User Role |  |  | ✔✔ |
+| Reset User Password / MFA |  |  | ✔✔ |
 | Create / Delete Authorization Groups |  |  | ✔✔ |
 | Edit Authorization Groups |  |  | ✔✔ |
 
@@ -143,10 +162,11 @@ For a full breakdown of tasks able to be performed by each user type, please ref
 
 ✔✔ **Global Scope**: User is able to perform this action across any system in the portfolio
 
+### System level access
+
 Generally speaking, users are authorized to perform actions based on the scope of systems they have been granted access to via Sigrid's User Management module. Administrators always have access to every system within their portfolio, so naturally they can perform all actions specified in the above table across every system present within their portfolio. Conversely, Normal and Maintainer users can only perform authorized actions on systems they have been explicitly granted access to and are granted no system access by default.
 
-### System level access
-An administrator can specify on system level the access any user in the portfolio has. Once access has been granted to a user, they will be able to view all Sigrid content for the selected system. 
+Administrator and Maintainer users can specify on system level the access any user in the portfolio has - Maintainers are able to authorize users based on their own system access while administrators are able to grant access for any system within the portfolio. Once access has been granted to a user, they will be able to view all Sigrid content for the selected system. 
 
 #### Bulk assigning system access
 When creating or editing a user, it is possible to assign system access in bulk via several new system access controls. These system access controls are based on the metadata supplied for systems, allowing a user to receive access to all systems labeled with Division, Team or Supplier metadata.
@@ -163,7 +183,7 @@ For more information on assigning metadata to systems, please see the separate [
 __Note:__ Bulk assignment of system access can be done both when assigning permissions to a single user, as well as when defining permissions for authorization groups.
 
 ### Authorization groups
-Administrators also have the ability to specify system access in bulk for groups of users, by creating an authorization group entity by which users can be added to this group along with a permission set. All users added to a defined authorization group will inherit access rights to systems authorized for the group. 
+Administrators and maintainers also have the ability to specify system access in bulk for groups of users, by creating an authorization group entity by which users can be added to this group along with a permission set. All users added to a defined authorization group will inherit access rights to systems authorized for the group. 
 
 #### Creating groups in User Management
 
