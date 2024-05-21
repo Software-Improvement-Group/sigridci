@@ -313,6 +313,8 @@ You can use the same mechanism to remove false positives from the automatic depe
         - source: frontend
           target: backend
           
+The `source` and `target` options support regular expressions, so this allows you to remove all dependencies matching a certain pattern.
+          
 ### Excluding files and directories for Architecture Quality
 
 The `architecture` section in the configuration has its own `exclude` option, which can be used to exclude certain files and directories from the Architecture Quality analysis.
@@ -332,7 +334,11 @@ Architecture Quality allows you to [mark certain dependencies as undesirable](..
         - source: "backend"
           target: "legacy"
             
-This example will mark all dependencies from the "backend" component to the "legacy" component as "undesirable". You can also use additional options to be more specific about *which type* of dependencies are undesirable:
+This example will mark all dependencies from the "backend" component to the "legacy" component as "undesirable". The `source` and `target` options support regular expressions, for situations where you want to mark all dependencies matching a certain pattern as undesirable. 
+
+It is possible to combine the `undesirale_dependencies` with the [grouping option](#grouping-and-annotating-components-in-architecture-quality). This allows for some power user workflows: where you first define groups based on your target architecture, and then define how those groups should communicate with each other.
+
+You can also use additional options to be more specific about *which type* of dependencies are undesirable:
 
     architecture:
       undesirable_dependencies:
