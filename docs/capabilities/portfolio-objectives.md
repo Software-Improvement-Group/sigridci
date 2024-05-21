@@ -1,22 +1,30 @@
 # Portfolio Objectives 
 
-Being able to set system-specific objectives can help you evaluate your system realistically based on your business context, as well as its current lifecycle phase. However, when you have many systems, setting objectives individually for each of them becomes impractical. It's important to prioritize and set stronger or weaker targets for certain systems, according to their importance for your business. Therefore, it is critical to be able to set objectives for a group of systems. This can be done via portfolio objectives. 
+## About Objectives 
 
-**Portfolio Objective**:  A type of objective that targets a group of systems based on similar metadata, aiming to provide an efficient and user-friendly experience that removes the need to set objectives individually for each system and better prioritization. (General rule) 
+**Objectives** are targets that can be set in Sigrid, to compare against system status and quality trends. In this context, objectives are understood as being *non-functional requirements*. They are considered separate from metadata (see [metadata page](../organization-integration/metadata.md)), since *Objectives* do not describe characteristics of systems themselves, but where you want them to be.
 
+Objectives can be set per different quality characteristics and levels of detail. Examples are: a range of desired *Maintainability*, desired *New code quality*, minimum *Test code ratio*, or the maximum number of *Medium risk vulnerabilities* in libraries (*Open Source Health*).
+
+Our [Guidelines for using Objectives](../workflows/best-practices-objectives.md) provides more background on the thinking behind objectives and how to make them work in your organization. This section focusses on the action needed in Sigrid.
+
+Two types of objectives exist:
+
+**Portfolio Objective**:  A type of objective that targets a group of systems based on similar metadata, aiming to provide an efficient and user-friendly experience that removes the need to set objectives individually for each system and better prioritization. (General rule). 
 
 <img src="../images/portfolio-objectives-main-table.png" width="700" />
 
-
 **System Objective**: A type of objective specific to an individual system within a portfolio that does not follow the general rule. When an objective is set at the system level, the system no longer follows the objective defined at the portfolio level.
 
-
-<img src="../images/portfolio-objectives-system-detail.png" width="700" />
-
+Find out more in the section [how to define system objectives](../capabilities/objectives.md).
 
 ## How to define portfolio objectives? 
 
 <iframe width="560" height="315" src="https://www.youtube.com/embed/giNCbqQ9pnI?si=ktrKsYsx2uJmOL5Q" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+
+You can set Portfolio Objectives by selecting the Objectives tab from the menu bar.  
+
+<img src="../images/setting-portfolio-objectives.png" width="675" />
 
 To define a portfolio objective, you can click on the "Add Portfolio Objective" button on the top right of the screen:
 

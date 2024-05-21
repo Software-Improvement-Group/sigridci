@@ -257,6 +257,7 @@ The `architecture` section of the scope file supports the following options:
 | `add_dependencies`         | No       | See [Manually specifying architecture dependencies](#manually-specifying-architecture-dependencies). |
 | `remove_dependencies`      | No       | See [Manually specifying architecture dependencies](#manually-specifying-architecture-dependencies). |
 | `undesirable_dependencies` | No       | See [Highlighting undesirable dependencies](#highlighting-undesirable-dependencies). |
+| `add_system_elements`                      | No       | See [Manually specifying architecture elements](#manually-specifying-architecture-elements). |
 | `grouping`                 | No       | See [Grouping and annotating components in Architecture Quality](#grouping-and-annotating-components-in-architecture-quality). |
 | `history_period_months`    | No       | See [Analyzing your repository history](#analyzing-your-repository-history). |
 | `history_start`            | No       | See [Analyzing your repository history](#analyzing-your-repository-history). |
@@ -301,8 +302,11 @@ Although Sigrid supports hundreds of technologies, there is always the possibili
       add_dependencies:
         - source: backend
           target: frontend
+          type: code_call
             
-The names for the `source` and `target` fields are the same you see in Sigrid's user interface. You can use the same mechanism to remove false positives from the automatic dependency detection:
+The names for the `source` and `target` fields are the same you see in Sigrid's user interface. The `type` field indicates the type of dependency that should be added, for example a code call versus an interface call. The list of supported dependency types can be found in the [Architecture Quality documentation](aq-json-export-format.md).
+
+You can use the same mechanism to remove false positives from the automatic dependency detection:
 
     architecture:
       remove_dependencies:
@@ -337,7 +341,17 @@ This example will mark all dependencies from the "backend" component to the "leg
           bidirectional: true
           type: code_call
 
-Adding `bidirectional: true` means the dependencies are undesirable in both directions. This is basically a shorthand notation so that you do not have to configure both `A -> B` and `B -> A` separately. The `type` option can be used to only consider certain types of dependencies. In the example, since one type has been defined, code dependencies are undesirable but other types (such as interface dependencies) are still allowed.
+Adding `bidirectional: true` means the dependencies are undesirable in both directions. This is basically a shorthand notation so that you do not have to configure both `A -> B` and `B -> A` separately. The `type` option can be used to only consider certain types of dependencies. In the example, since one type has been defined, code dependencies are undesirable but other types (such as interface dependencies) are still allowed. The list of supported dependency types can be found in the [Architecture Quality documentation](aq-json-export-format.md).
+
+### Manually specifying architecture elements
+
+The term "system element" is used for all information that is depicted as "blocks" in the Architecture Quality view. Common examples are components, files, or databases. Normally, this detection of system elements is based on Sigrid's code analysis. However, it is possible to extend the list of system elements in the configuration. This is intended for situations where the architecture view would become considerably more clear by adding some context, but this context cannot be detected automatically.
+
+    add_system_elements:
+      - name: accounts
+        type: code_components
+      
+The following example adds a component called "accounts" to the architecture view. Refer to the [Architecture Quality documentation](aq-json-export-format.md) for an overview of all supported sytem element types. 
 
 ### Grouping and annotating components in Architecture Quality
 

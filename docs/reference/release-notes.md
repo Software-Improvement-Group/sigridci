@@ -3,11 +3,16 @@ Sigrid release notes
 
 SIG uses [continuous delivery](https://en.wikipedia.org/wiki/Continuous_delivery), meaning that every change to Sigrid or the underlying analysis is released once our development pipeline has completed. On average, we release somewhere between 10 and 20 times per day. This page therefore doesn't list every single change, since that would quickly lead to an excessively long list of small changes. Instead, this page lists Sigrid and analysis changes that we consider noteworthy for the typical Sigrid user.
 
+### May 6, 2024
+
+- **Sigrid API:** The API has been extended with end points to retrieve the status of both portfolio and system objectives. Refer to the [API documentation](../integrations/sigrid-api-documentation.md) for more information.
+- **Sigrid API:** The API has been extended with a new end point to obtain the full architecture graph used for Sigrid's [Architecture Quality page](../capabilities/architecture-quality.md). This is on top of the end point to retrieve the Architecture Quality *ratings*, which already existed. Refer to the [Sigrid API documentation](../integrations/sigrid-api-documentation#architecture-quality-data) for details.
+- **Architecture Quality:** Further customization options have been added. It was already possible to customize the architecture view by adding or removing dependencies in the configuration. This has been extended to also allow the addition of system elements, such as components, databases, or middleware. See the [Architecture Quality configuration documentation](analysis-scope-configuration.md#manually-specifying-architecture-elements) for details.
+
 ### April 22, 2024
 
 - **AI augmentation:** Sigrid now provides AI explanations for findings. The AI explanations cover 5 Sigrid capabilities (Maintainability, Security, Reliability, Performance Efficiency, Cloud Readiness) and more than 30 different technologies. Find out more on [how Sigrid uses AI](ai-explanations.md). 
 - **Sigrid CI:** If you have deactivated a system, Sigrid CI will no longer run. This was done to prevent "zombie systems", where Sigrid CI is still in the pipeline despite the system no longer appearing in the Sigrid dashboard. 
-- **Sigrid API:** The API has been extended with end points to retrieve the status of both portfolio and system objectives. Refer to the [API documentation](../integrations/sigrid-api-documentation.md) for more information.
 
 ### March 24, 2024
 
