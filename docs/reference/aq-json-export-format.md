@@ -182,6 +182,7 @@ Dependency types are considated into three "families":
 |------------------------|---------------------------------------------------------------|-------------|
 | COMMAND_LINE_INTERFACE | Can be called from the command line (i.e. `main` or similar). | No          |
 | CONTAINER              | Deployed in a (Docker) container.                             | Yes         |
+| EXTERNAL_SYSTEM        | Represents a system that is external to Sigrid.               | Yes         |
 | STATEFUL               | Deployed as a stateful long-running component.                | No          |
 | USER_INTERFACE_DESKTOP | Exposes a desktop interface (e.g. Java Swing).                | Yes         |
 | USER_INTERFACE_MOBILE  | Deployed as a mobile application (i.e. iOS or Android).       | Yes         |

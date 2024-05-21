@@ -355,9 +355,9 @@ The term "system element" is used for all information that is depicted as "block
 
     add_system_elements:
       - name: accounts
-        type: code_components
+        type: code_component
       
-The following example adds a component called "accounts" to the architecture view. Refer to the [Architecture Quality documentation](aq-json-export-format.md) for an overview of all supported sytem element types. 
+The following example adds a component called "accounts" to the architecture view. Refer to the [Architecture Quality documentation](aq-json-export-format.md) for an overview of all supported sytem element types. This same option can also be used to manually add [architecture observations](aq-json-export-format.md#architecture-observations) that are then visualized in Sigrid.
 
 ### Grouping and annotating components in Architecture Quality
 
