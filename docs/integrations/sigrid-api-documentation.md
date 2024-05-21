@@ -12,6 +12,7 @@ In addition to [Sigrid CI](../README.md), Sigrid also provides a more general-pu
 - You need to pass the authentication token to each request in the HTTP header `Authorization: Bearer {SIGRID_CI_TOKEN}`.
 - All end points will return HTTP status 401 if the token is invalid, or if the token is not authorized to access the portfolio and/or system.
 - All end points return JSON and therefore return a Content-Type of `application/json`.
+- Please use lower case when you format your api calls.
 
 The following example shows how to call the Sigrid API using `curl`:
 
@@ -19,7 +20,7 @@ The following example shows how to call the Sigrid API using `curl`:
 curl -H 'Authorization: Bearer {SIGRID_CI_TOKEN}' https://sigrid-says.com/rest/analysis-results/api/v1/maintainability/{customer}
 ```
 
-In the example, `{customer}` refers to your company's Sigrid account name, and `{SIGRID_CI_TOKEN}` refers to your authentication token.
+In the example, `{customer}` refers to your company's Sigrid account name (lower case), and `{SIGRID_CI_TOKEN}` refers to your authentication token.
 
 ### Including deactivated and/or excluded systems
 
