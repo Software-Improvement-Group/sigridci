@@ -6,28 +6,36 @@
 
 The purpose of this document is to provide concrete and actionable guidelines on how organizations should set themselves up to achieve high-quality software. While a lot of material is available on how to organize software development, most of it focusses on speed and alignment and mentions quality only in passing. Rather than adding yet another process framework, we identify three different stakeholder groups that are present in almost all organizations and describe what they are expected to do and what they should expect from each other in the quest for quality software. Our aim is for this to be complementary to existing process frameworks and we illustrate this for a couple of well-known ones.
 
-## Three stakeholder groups
+## Three stakeholder groups in a hybrid model
 
-Having consulted with many organizations, we have identified three stakeholder groups that need to be involved to achieve high quality software, structurally. These are:
+Typically, nobody in an organization is opposed to building quality software. Rather, investing in software quality often loses out to other topics, typically adding features and fixing bugs. The shift that needs to take place is that organizations allow for a fair competition to take place between feature work and technical improvements. 
+
+Having consulted with many organizations, we have identified three stakeholder groups that need to be involved to make this shift and achieve high quality software, structurally. These are:
 - Teams
 - Engineering leads
 - Management
 
-### How to identify each group
+Making the shift is not just a matter of 'the business should allow us to work on improvements instead of pushing for features'. There is a responsibility from teams and engineering leads to properly shape and quantify the work they think needs to be done so a fair assessment can be made. Also, teams need to accept the need for standards. In areas like security and legal, it is not practical or desirable for individual teams to assume full responsibility for these aspects. 
 
-Of these levels, **teams** are typically the easiest to identify, because they exist as such. 
+The picture below depicts the hybrid model that enables this shift. It aims to strike a middle ground between a top-down model that leaves teams with very little autonomy to address problems as they see fit and the fully autonomous model where management has very little control even if that would benefit the teams.
+
+<img src="../images/hybrid-model.png" width="700" />
+
+### Who is in each group?
+
+While our terminology is pretty generic, each organization is different and some mapping will need to be done to map the different groups to existing roles in an organization.
+
+Of these groups, **teams** are typically the easiest to identify, because they exist as such. 
 
 **Management** can be harder because many organizations, especially larger ones, have multiple layers of management and not all of them are relevant in our context. Typically though, management represents the (strategic) organizational goals and has a budget responsibility. They are accountable for the outcomes of software development and as such, are concerned with topics like cost, speed and risk. While this accountability ultimately lies with a CEO, the concerns can also be represented by a product owner or project manager.
 
-**Engineering leaders** are typically the hardest one to identify because it's of the three the least established and exists in various forms and to varying degrees. Engineering leadership is typically involved in (higher-level) solution design, technology choices or security analyses and policies. Job titles may include tech lead, architect. Engineering leadership may exist in teams and organize virtually through Communities of Practice, Guilds or Chapters. In other cases, separate engineering leadership roles or teams exist, such as enterprise architects, security specialists or Centers of Excellence.
+**Engineering leads** are typically the hardest one to identify because it's of the three the least established and exists in various forms and to varying degrees. Engineering leads are typically involved in (higher-level) solution design, technology choices or security analyses and policies. Job titles may include tech lead, team lead or architect. Engineering leads may exist within teams and organize virtually through Communities of Practice, Guilds or Chapters. In other cases, separate engineering lead roles or teams exist, such as enterprise architects, security specialists or Centers of Excellence. 
 
 ### The role of each group
 
-Typically, nobody in an organization is opposed to building quality software. Rather, investing in software quality often loses out to other topics, typically features and bugs. The shift that needs to take place is that organizations allow for a fair competition to take place between feature work and technical improvements. This is not just a matter of 'the business should allow us to work on improvements instead of pushing for features'. There is a responsibility from teams and engineering leads to properly shape and quantify the work they think needs to be done so a fair assessment can be made. Also, teams need to accept the need for standards. In areas like security and legal, it is not practical or desirable for individual teams to assume full responsibility for these aspects. 
+The role of **teams** in the creation of high quality software is obvious: they actually create it. They have three main instruments to leverage their craftsmanship when it comes to creating quality software: peer reviews, tests that run in the pipeline (both functional and non-functional such as Sigrid CI) and hygiene features present in the IDE. The main inputs are quality requirements set by the team themselves, engineering leads and management, including objectives set in Sigrid. In reaching their quality goals, teams may identify impediments that they cannot address themselves (or that aren’t effectively/efficiently addressed by the team, such as a change to a shared repository that affects other teams as well). These are communicated to engineering leads or management for resolution. 
 
-The role of **teams** in the creation of high quality software is obvious: they actually create it. They have three main instruments to leverage their craftsmanship when it comes to creating quality software: peer reviews, tests that run in the pipeline (both functional and non-functional such as Sigrid CI) and hygiene features present in the IDE. The main inputs are quality guidelines set by the team themselves, engineering leads and management, including objectives set in Sigrid. In reaching their quality goals, teams may identify impediments that they cannot address themselves (or that aren’t effectively/efficiently addressed by the team, such as a change to a shared repository that affects other teams as well). These are communicated to engineering leaders or management for resolution. 
-
-**Engineering leads** address engineering challenges that are bigger than a single ticket, may transcend teams and have the ability to significantly improve the quality of the software (or ensure that software-to-be-built is of good quality) but are not directly related to feature work. Examples include threat modelling and subsequent mitigations, major refactoring/rearchitecting, but also agreeing on standards for non-functional requirements and how to implement them. Inputs for this group can be concerns raised by the team that they cannot address themselves, standards that need to be met, operational problems (e.g. poor performance) or antipatterns spotted by engineering leads (team leads, tech leads, architects) themselves.
+**Engineering leads** address engineering challenges that are bigger than a single ticket, may transcend teams and have the ability to significantly improve the quality of the software (or ensure that software-to-be-built is of good quality) but are not directly related to feature work. Examples include threat modelling and subsequent mitigations, major refactoring/rearchitecting, but also agreeing on standards for non-functional requirements and how to implement them. Inputs for this group can be concerns raised by teams that they cannot address themselves, standards that need to be met, operational problems (e.g. poor performance) or antipatterns spotted by engineering leads (team leads, tech leads, architects) themselves.
 
 **Management** often has a black-box view of technology: organizational needs go in, value-adding tech comes out while cost and risk need to be controlled. They want quality software as much as anyone else as long as it can be balanced against cost and organizational needs. They should be open to technical improvement ideas put forward by teams and engineering leads but also challenge them to articulate the cost/risk/benefits of their proposals.
 
@@ -40,15 +48,18 @@ We consider these key ingredients of a healthy engineering culture:
 - Management and engineering leads set (well-motivated) standards for teams but give them autonomy otherwise
 - Teams accept the need for standards
 
-This picture shows the interactions and responsibilities of the different levels:
+This picture shows the interactions and responsibilities of the different groups:
 
-<img src="../images/organization-levels-interaction.png" width="700" />
+<img src="../images/organization-groups-interaction.png" width="700" />
 
 ## Strategies to ensure technical improvements
 
-For the different levels to understand their responsibilities in producing quality software is one thing, to ensure that technical improvements are indeed happening is another. In this section, we present some strategies that make technical improvements part of the regular workflow. These strategies are generically applicable in the sense that they can be applied in an existing development process, whatever that process might be. We have seen these strategies work for customers and/or used them ourselves. Also, you can mix-and-match strategies and switch strategies over time as you learn more or circumstances change.
+For the different groups to understand their responsibilities in producing quality software is one thing, to ensure that technical improvements are indeed happening is another. In this section, we present some strategies that make technical improvements part of the regular workflow. These strategies are generically applicable in the sense that they can be applied in an existing development process, whatever that process might be. We have seen these strategies work for customers and/or used them ourselves. Also, you can mix-and-match strategies and switch strategies over time as you learn more or circumstances change.
 
 In [another section](#embedding-technical-improvements-in-existing-frameworks), we discuss how to embed technical improvements in existing frameworks such as SAFe or SCRUM.
+
+### Set objectives in Sigrid
+Objectives can be considered a contract between the different groups. They express mutual expectations and allow groups to hold each other to account. A security lead can refer to them when teams do not upgrade vulnerable dependencies, but a team can do the same towards management to defend a refactoring proposal. [This page](best-practices-objectives.md) describes how to go about this.
 
 ### A hands-on tech lead
 A hands-on tech lead is a person that oversees the technical state of a certain codebase and makes improvements themselves (the hands-on part). This person can be part of a team but can also work for multiple teams that share the same codebase. In the latter case, they might be part of a platform team.
