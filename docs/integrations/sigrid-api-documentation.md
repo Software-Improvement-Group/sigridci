@@ -523,9 +523,7 @@ precedence rules are applied to determine which objective "wins" and gets to dec
 that system:
 
 - System-level objectives have precedence over portfolio-level objectives.
-- Conditional portfolio-level objectives have precedence over unconditional portfolio-level objectives.
-- Unconditional portfolio-level objectives have the lowest precedence, and therefore act like sensible
-  default policies for your portfolio.
+- If the metadata of a system matches more than one portfolio objective of the same type, the portfolio objective with the strictest target "wins". 
 
 This particular endpoint returns the target based on these precedence rules. The endpoint does not
 explain *why* that target exists. Use the [objectives status end point](#retrieving-objectives-status)
