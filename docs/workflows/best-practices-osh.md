@@ -28,7 +28,6 @@ Where applicable, this document explains how Sigrid can be used to achieve this.
 
 ### Structure and overview
 
-
 The guidelines and best practices have been structured based on 'jobs to be done': the idea is to look at the actual tasks that stakeholders need to conduct, and provide them with help to do those tasks. Jobs can embed, or refer to, other jobs.
 
 These jobs have been grouped in three categories: first some general guidelines for conducting healthy open source usage in development, that help to get started, and may need to be revisited or updated on a regular basis. Secondly the various types of tasks that are needed to ensure continued health of libraries (note that even when application code is not actively maintained for a while, the health of open source libraries may diminish!). And thirdly a set of practical tasks in handling libraries as a developer.
@@ -50,7 +49,8 @@ These jobs have been grouped in three categories: first some general guidelines 
 9) [Updating a library](#9-updating-a-library)  
 10) [Selecting a new library](#10-selecting-a-new-library)  
 11) [When a library does not meet the requirements](#11-when-a-library-does-not-meet-requirements)
-
+12) [Replacing a library](#12-replacing-a-library)
+13) [Reviewing a library](#13-reviewing-a-library)
 
 
 <aside>
@@ -76,27 +76,25 @@ This section prescribes a typical way of working for ensuring healthy open sourc
 ### 1. Define OSH related policies for development
 There are a number of policies on how to address open source libraries during development. For most of these policies, minimal requirements should be set for all teams; individual teams may agree on more stringent rules. 
 
-- **Define the usage of a package manager:** choose the package manager(s) to be used, at least per system, preferably shared across the organization. Depending on the technologies that are used, you may need multiple package managers.
++ **Define the usage of a package manager:** choose the package manager(s) to be used, at least per system, preferably shared across the organization. Depending on the technologies that are used, you may need multiple package managers.
   <aside>
     The package managers need to be integrated in your CI/CD pipeline.
   </aside>
 
-- **Set the thresholds for library risks** that are (not) acceptable: this is applicable to all types of risks. Set these goals in the [Sigrid objectives](../capabilities/portfolio-objectives.md). 
++ **Set the thresholds for library risks** that are (not) acceptable: this is applicable to all types of risks. Set these goals in the [Sigrid objectives](../capabilities/portfolio-objectives.md). 
+
   > SIG advises the following objectives: 
   >  - _No library vulnerabilities_: having vulnerabilities of medium or higher risk is generally not acceptable as a goal, and since there are relatively few low-risk vulnerabilities in practice, a 'clean sweep' of all vulnerabilities is preferred.
   >  - _No unacceptable licenses_; for a typical context this means no licenses that come with obligations or restrictions for commercial usage (see the [OSH Guidelines for producers](../reference/quality-model-documents/open-source-health.md) for more details.). In Sigrid these are classified as no-risk, and include the MIT, BSD, and Apache licenses.
-  >  - _Ensure overall OSH quality rating is 4.0 stars [^1] or more_ 
+  >  - _Ensure overall OSH quality rating is 4.0 stars[^1] or more_ 
 
 [^1]: OSH benchmarked star ratings are a new Sigrid feature that will be released in May 2024
 
++ **Define how frequent to check for risks** such as vulnerabilities and other risks in open source libraries. Preferably check daily for vulnerabilities and quarterly for other OSH risks. See section [4. Scan the software for health issues](#4-scan-the-software-for-health-issues) for more details. 
 
-- **Define how frequent to check for risks** such as vulnerabilities and other risks in open source libraries. Preferably check daily for vulnerabilities and quarterly for other OSH risks. See section [4. Scan the software for health issues](#4-scan-the-software-for-health-issues) for more details. 
-  
++ **Define how fast new vulnerabilities have to be resolved** This will depend on the criticality. See the section on [Handling vulnerabilities](#5-handling-vulnerabilities) for details.
 
-- **Define how fast new vulnerabilities have to be resolved** This will depend on the criticality. See the section on [Handling vulnerabilities](#5-handling-vulnerabilities) for details.
-  
-
-- **Declare which libraries should not be checked**
++ **Declare which libraries should not be checked**
    - This is useful when a library has properties that cause Sigrid to signal a risk, but that risk is a false positive. 
    - Create an _ignore-list_. This list requires CISO approval. The ignore-list must be reviewed regularly (a few times per year): define when this review will happen.
   
@@ -106,7 +104,8 @@ There are a number of policies on how to address open source libraries during de
     Do note that if a library is put on the ignore-list since the reported vulnerability is a false positive, that does not necessarily mean that the other types of risk for that library should be ignored as well.
   </aside>
 
-- Optionally: **Define a shared permitted-list**: it can be useful (and in some organizations required) to have a shared list of libraries that are permitted. 
++ Optionally: **Define a shared permitted-list**: it can be useful (and in some organizations required) to have a shared list of libraries that are permitted. 
+
   - This list can have an advisory role, functioning as a list of libraries that have already been checked, and are likely already in use. It can also have the role of a clearance list, where developers have only permission to use libraries from the permitted-list, and must seek approval for libraries that are not on that list. 
   - For determining whether to include libraries, see the criteria defined in the section [10. Selecting a new library](#10-selecting-a-new-library).
 
