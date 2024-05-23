@@ -518,20 +518,18 @@ This end point returns the following response structure:
       "TEST_CODE_RATIO": 0.8
     }
 
-In Sigrid, a system always has at most one objective per type. So in the above example, the 
-objective for the overall maintainability rating is apparently 4.0. The endpoint does not 
-currently indicate _why_ the maintainability target (in this example) is 4.0. There are two 
-possible reasons:
+Systems always have a single target per objective type. If you define multiple overlapping objectives, 
+precedence rules are applied to determine which objective "wins" and gets to decide the target for
+that system:
 
-- A user defined a system-level maintainability target of 4.0 stars for the given system. It 
-  doesn't matter whether there is a portfolio-wide maintainability target that the given system 
-  matches, as system-level objectives always have precedence.
-- There's no system-level maintainability target defined for the given system. However, there is at 
-  least one portfolio-wide objective that sets a maintainability target of 4.0, the given system 
-  matches the condition(s) of that objective, and there's no portfolio-wide maintainability 
-  objective with a target higher than 4.0 with conditions the given system also matches.
+- System-level objectives have precedence over portfolio-level objectives.
+- Conditional portfolio-level objectives have precedence over unconditional portfolio-level objectives.
+- Unconditional portfolio-level objectives have the lowest precedence, and therefore act like sensible
+  default policies for your portfolio.
 
-In both cases, the endpoint returns `"MAINTAINABILITY": 4.0`.
+This particular endpoint returns the target based on these precedence rules. The endpoint does not
+explain *why* that target exists. Use the [objectives status end point](#retrieving-objectives-status)
+to obtain more information on which objectives are applied to a system.
 
 #### Defining and editing system objectives
 
