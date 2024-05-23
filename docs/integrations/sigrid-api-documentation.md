@@ -620,7 +620,7 @@ This end point returns the following response:
 
 </details>
 
-The response contains every system in your portfolio, with each system containing all objectives that apply to that system. The objectives follow the same precedence rules as in Sigrid, so only objectives that actually apply will be included in the results.
+The response contains every system in your portfolio, with each system containing all objectives that apply to that system. The objectives follow the same precedence rules as in Sigrid, so only objectives with conditions that match the metadata of the system are included in the result.
 
 Within each objective, the `parentId` refers to the ID of a portfolio objective, which you can obtain with the [portfolio objectives end point](#retrieving-portfolio-objectives). If the objective does not have a `parentId`, it means it's a system objective.
 
