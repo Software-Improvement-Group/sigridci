@@ -579,7 +579,7 @@ return 204. In case the objective does not exist at the system level, the endpoi
 
     GET https://sigrid-says.com/rest/analysis-results/api/v1/objectives-evaluation/{customer}?startDate={start}&endDate={end}
     
-This will return the current objectives status and trend for all systems in your portfolio, for the specified time period. The `startDate` and `endDate` parameters accept dates in [ISO 8601 format](https://en.wikipedia.org/wiki/ISO_8601), for example 2024-05-17. 
+This will return the current objectives status and delta for all systems in your portfolio, for the specified time period. The `startDate` and `endDate` parameters accept dates in [ISO 8601 format](https://en.wikipedia.org/wiki/ISO_8601), for example 2024-05-17. 
 
 This end point returns the following response:
 
