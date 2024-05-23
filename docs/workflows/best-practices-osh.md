@@ -77,6 +77,7 @@ This section prescribes a typical way of working for ensuring healthy open sourc
 There are a number of policies on how to address open source libraries during development. For most of these policies, minimal requirements should be set for all teams; individual teams may agree on more stringent rules. 
 
 + **Define the usage of a package manager:** choose the package manager(s) to be used, at least per system, preferably shared across the organization. Depending on the technologies that are used, you may need multiple package managers.
+
   <aside>
     The package managers need to be integrated in your CI/CD pipeline.
   </aside>
@@ -167,7 +168,9 @@ For timely handling of open source health risks, there are two concerns:
    - Vulnerabilities require frequent scanning: preferably daily, at least every 2 weeks.
    - The other OSH properties are less volatile and urgent, and monthly to quarterly scanning is sufficient for those.
 
-   > ⚠️ **Warning:** OSH analysis is conducted whenever Sigrid receives an update through [Sigrid CI](../sigridci-integration/development-workflows.html), or in the form of a new snapshot [upload](../organization-integration/upload-instructions.html). Hence, for systems that are inactive, new vulnerabilities in the ecosystem are not visible in Sigrid. 
+  <aside> 
+    **Warning:** OSH analysis is conducted whenever Sigrid receives an update through [Sigrid CI](../sigridci-integration/development-workflows.html), or in the form of a new snapshot [upload](../organization-integration/upload-instructions.html). Hence, for systems that are inactive, new vulnerabilities in the ecosystem are not visible in Sigrid. 
+  </aside>
 
 A good time to triage scan results is during refinement for the next sprint: You need to decide to address the detected risks during the upcoming sprint, or possibly create a backlog item. In some cases, the detected risk is considered a false positive, or acceptable risk that can be ignored. The most common mitigation will be [updating a library](#9-updating-a-library). 
 
@@ -208,7 +211,10 @@ If no such remediation is available, do a risk assessment which will have one of
 
 
 ### 6. Handling license issues 
-> SIG assesses whether a license is generally considered a risk for use within commercial software. Contact an IT lawyer to discuss license risks specifically for the code analyzed as well as the way it will be used.
+
+<aside>
+  SIG assesses whether a license is generally considered a risk for use within commercial software. Contact an IT lawyer to discuss license risks specifically for the code analyzed as well as the way it will be used.
+</aside>
 
 Usually, license risks will appear whenever a library is scanned for the first time; either because the application is scanned for the first time, or the library has just been introduced.
 
@@ -219,10 +225,10 @@ Usually, license risks will appear whenever a library is scanned for the first t
 - Note that the actual risk of using a library with a certain license depends on the context: 
   - e.g. when developing open-source software, licenses that require you to make your code available as open source are acceptable, where this is not acceptable for closed-source development.
   - It also depends on how you distribute a library:
-    - Distribute the source code of the library, after making changes to it.
-    - As linked libraries, not the actual source code.
-    - Linked libraries are called through the network.
-    - Libraries are used internally only.
+    1. **Distribute modified code**: Distribute the source code of the library, after making changes to it.
+    1. **Distribute linked libraries**: As linked libraries, not the actual source code.
+    1. **Linked libs through network**: As linked libraries that are called through the network.
+    1. **Internal use only**: As libraries that are used internally only.
 
 The following table shows how various types of licenses are (not) suitable for different distribution policies, and explains how these common licenses are mapped to general risk levels. But do note that if your distribution model is clear, and the value listed for the particular license-distribution model is 'ok' in the table, then your actual licensing risk is minimal:
 
@@ -242,7 +248,7 @@ Depending on the circumstances, one or more of the following actions can be take
 * Ensure that libraries with commercial licenses are properly registered and paid for. 
 * [When applicable] Add a license to the shared list of acceptable licenses (this may involve an approval process).
 * [When applicable] Adjust the distribution model of the application to avoid violating the terms of the library license. For example, distribute linked libraries instead of (modified) source code.
-* Stop using a library with unacceptable licensing conditions: in practice this means [12. Replacing a library](#12-replacing-a-library).
+* Stop using a library with unacceptable licensing conditions: in practice this requires [Replacing a library](#12-replacing-a-library).
 
 
 
