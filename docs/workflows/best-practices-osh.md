@@ -169,7 +169,7 @@ For timely handling of open source health risks, there are two concerns:
    - The other OSH properties are less volatile and urgent, and monthly to quarterly scanning is sufficient for those.
 
   <aside> 
-    **Warning:** OSH analysis is conducted whenever Sigrid receives an update through [Sigrid CI](../sigridci-integration/development-workflows.html), or in the form of a new snapshot [upload](../organization-integration/upload-instructions.html). Hence, for systems that are inactive, new vulnerabilities in the ecosystem are not visible in Sigrid. 
+    OSH analysis is conducted whenever Sigrid receives an update through [Sigrid CI](../sigridci-integration/development-workflows.html), or in the form of a new snapshot [upload](../organization-integration/upload-instructions.html). Hence, for systems that are inactive, new vulnerabilities in the ecosystem are not visible in Sigrid. 
   </aside>
 
 A good time to triage scan results is during refinement for the next sprint: You need to decide to address the detected risks during the upcoming sprint, or possibly create a backlog item. In some cases, the detected risk is considered a false positive, or acceptable risk that can be ignored. The most common mitigation will be [updating a library](#9-updating-a-library). 
@@ -304,7 +304,7 @@ _Scheduling library updates:_
 
 > _Ground rule: never postpone updating_
   - The longer you postpone updating, the bigger the eventual pain. As your system grows and evolves, the costs and risks of upgrading an old library increase. Such an accumulation of maintenance debt may lead to a much larger effort than in the case of smaller, incremental updates.​
-  - if a new, stable version comes out: don't wait, start testing. If it's really core and really important, already start testing with release candidates.
+  - if a new, stable version comes out: don't wait, start testing. If it is really core and really important, already start testing with release candidates.
   - Do _not_ adopt the "If it ain’t broke, don’t fix it" strategy​
     - This strategy implies that you do not update unless you *have to*. You stay with the current version of the third-party library until you notice something wrong in your application, no matter how often the vendor publishes an update. ​
     - Whilst easier in the short term, with this strategy you will end up with a system that depends on outdated and unmaintained libraries, where you cannot use some other libraries since they require a newer version of that library which you cannot upgrade and at some point. You may lose the ability to fix some issues at all.​
@@ -326,7 +326,7 @@ A more extensive discussion of selecting (including reviewing) open source libra
 ### 11. When a library does not meet requirements
 
 There are several possible cases where a library does not support the needs and requirements:
-1. _It's Open Source Health has unacceptable risks_. 
+1. _Its Open Source Health has unacceptable risks_. 
 2. _Functional mismatch_: a library is missing features that cannot easily be added on top, or the implementation of the library is based on assumptions or choices that are incompatible with the ones in the application.
 3. _Bug in library implementation_: typically detected after a library has been adopted, so the cost of switching is non-negligible.
 4. _Compatibility break_: a library does not (or no longer) work well together with another library or the application itself, due to changes in the APIs of involved components.
@@ -362,7 +362,10 @@ Whenever choosing a new library or updating to a new version, consider the follo
 3. Is an updated version compatible with the previous version?  ​(release notes should indicate any breaking changes)
 4. Is the code quality (esp. maintainability) of the library acceptable (>3.0 stars)? 
 5. How mature is the version?​ (e.g. an x.0 version tends to be a bit more immature). Are there still -relevant- open issues? Use a stable version unless there is a real reason not to do so. An example might be that a Release Candidate fixes a vulnerability, and you do not want to wait for the stable version to come out.
-6. Are there enough users of the library? (check for example the number of downloads, or amount of GitHub stars).
+6. Is the library actively maintained (also discussed [here](https://docs.sigrid-says.com/reference/quality-model-documents/open-source-health#activity) ) in the Guidance for Producers), preferably by multiple developers?
+7. Are there enough users of the library? (check for example the number of downloads, or amount of GitHub stars).
+
+---
 
 <!-- - compatibility breaks
   - Compatibility breaks can be caused by the framework/library no longer supporting the technologies used in the system.​
@@ -372,7 +375,7 @@ Whenever choosing a new library or updating to a new version, consider the follo
      - Are there alternatives of the library?​
      - Are the technologies used still relevant for the future of the system?​ -->
 <!-- check this text by marijn:
-You were using a (deprecated) method that's no longer available. Your IDE will likely make you aware of this.
+You were using a (deprecated) method that is no longer available. Your IDE will likely make you aware of this.
 A nastier version is that you weren't using the library correctly and the new version is less forgiving but without alarms going off.
 The library needs transitive dependencies that have become incompatible with needs of other libraries -->
 
@@ -442,8 +445,8 @@ A:
   - SIG opinion: in 90% of the cases, it takes less time to update, than to figure out whether you are vulnerable or not. So just do it. The other 10% contains frameworks that are used everywhere, or a major update, or systems that have no test code and a rigid pre-release manual testing setup). Those 10% can do the investigation into whether they are actually vulnerable.
 - Objection: Updating is hard because we need to manually re-test our entire system / get approval / wait for the next quarterly release / are not using a package manager
   - SIG opinion: You have bigger problems than outdated libraries. Update the most important vulnerable dependencies, and invest in test automation and your development process.
-- Objection: It's a bad practice to be on the latest version all the time, they tend to be unstable and contain bugs.
-  - SIG opinion: Agree (although it's not that bad in practice). This is why we do not recommend to have everything green for Freshness, and everything less than 1 month not updated is still green.
+- Objection: It is a bad practice to be on the latest version all the time, they tend to be unstable and contain bugs.
+  - SIG opinion: Agree (although it is not that bad in practice). This is why we do not recommend to have everything green for Freshness, and everything less than 1 month not updated is still green.
 
 --- -->
 
