@@ -87,7 +87,8 @@ Set the thresholds for library risks that are (not) acceptable: this is applicab
   > SIG advises the following objectives: 
   >  - _No library vulnerabilities_: having vulnerabilities of medium or higher risk is generally not acceptable as a goal, and since there are relatively few low-risk vulnerabilities in practice, a 'clean sweep' of all vulnerabilities is preferred.
   >  - _No unacceptable licenses_; for a typical context this means no licenses that come with obligations or restrictions for commercial usage (see the [OSH Guidelines for producers](../reference/quality-model-documents/open-source-health.md) for more details.). In Sigrid these are classified as no-risk, and include the MIT, BSD, and Apache licenses.
-  >  - _Ensure overall OSH quality rating is 4.0 stars[^1] or more_. *NOTE: OSH benchmarked star ratings are a new Sigrid feature that will be released in May 2024*  
+  >  - _Ensure overall OSH quality rating is 4.0 stars or more_.  
+       **NOTE:** OSH benchmarked star ratings are a new Sigrid feature that will be released in May 2024  
 
 #### Policy III: Define how frequent to check for risks
 Preferably check daily for vulnerabilities and quarterly for other OSH risks. See section [4. Scan the software for health issues](#4-scan-the-software-for-health-issues) for more details.  
