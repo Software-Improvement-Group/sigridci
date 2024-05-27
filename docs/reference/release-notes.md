@@ -3,9 +3,14 @@ Sigrid release notes
 
 SIG uses [continuous delivery](https://en.wikipedia.org/wiki/Continuous_delivery), meaning that every change to Sigrid or the underlying analysis is released once our development pipeline has completed. On average, we release somewhere between 10 and 20 times per day. This page therefore doesn't list every single change, since that would quickly lead to an excessively long list of small changes. Instead, this page lists Sigrid and analysis changes that we consider noteworthy for the typical Sigrid user.
 
+### May 21, 2024
+
+- **Technology support:** Dependency detection for Go has been improved.
+- **Open Source Health:** For NPM libraries, Sigrid now supports libraries that changed license at some point in time. Previously, Sigrid would report on the library's *current* license, but this has been changed to report the license of the library version that is actually being used.
+- **Sigrid API:** The API has been extended with end points to retrieve the status of both portfolio and system objectives, including the current and previous status of those objectives. Refer to the [API documentation](../integrations/sigrid-api-documentation.md) for more information.
+
 ### May 6, 2024
 
-- **Sigrid API:** The API has been extended with end points to retrieve the status of both portfolio and system objectives. Refer to the [API documentation](../integrations/sigrid-api-documentation.md) for more information.
 - **Sigrid API:** The API has been extended with a new end point to obtain the full architecture graph used for Sigrid's [Architecture Quality page](../capabilities/architecture-quality.md). This is on top of the end point to retrieve the Architecture Quality *ratings*, which already existed. Refer to the [Sigrid API documentation](../integrations/sigrid-api-documentation#architecture-quality-data) for details.
 - **Architecture Quality:** Further customization options have been added. It was already possible to customize the architecture view by adding or removing dependencies in the configuration. This has been extended to also allow the addition of system elements, such as components, databases, or middleware. See the [Architecture Quality configuration documentation](analysis-scope-configuration.md#manually-specifying-architecture-elements) for details.
 
