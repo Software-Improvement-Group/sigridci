@@ -402,18 +402,39 @@ tasks to do repeatedly:
 - Sprint retrospective: 
   - make sure you have actually addressed the findings you set out to fix in your sprint planning.
   -->
-<!--   
-## Frequently Asked Questions  [ROUGH DRAFT]
 
-Q: why not adopt a ‘if it ain’t broke, don’t fix it’ strategy for updating libraries?
 
-A:
+## Frequently Asked Questions
+
+Q: Is open Source Health the most important software quality concern? 
+
+A: No, not necessarily (depending on your situation), *but* in our opinion OSH is typically the quality aspect that has a really high return on investment: with a relatively low amount of effort and expertise, large steps towards reducing the risk associated with open source usage can be made. The majority of risks can be addressed by consistently updating the libraries in use to their latest stable versions. Also, risks such as vulnerable libraries and licensing risks can be rather 
 
 ---
 
-Q: Why it is a good idea to see every library as a backlog item? 
+Q: why not adopt a ‘if it ain’t broke, don’t fix it’ strategy for updating libraries? (i.e. do not update unless you *have to*).
 
-A: Make developers aware of the risks & effort.
+A: We also addressed this in section [9. Updating a library](#9-updating-a-library): Whilst easier in the short term, with this strategy you will end up with a system that depends on outdated and unmaintained libraries, where you cannot use some other libraries since they require a newer version of that library which you cannot upgrade and at some point. You may lose the ability to fix some issues at all.​
+
+---
+
+Q: When a library has a known vulnerability, why do something about it, if you are not even sure that this vulnerability is actually exploitable? e.g. we may not be using the vulnerable method.
+
+A: This is our proposed strategy to deal with this uncertainty: in 90% of the cases, it takes less time to update, than to figure out whether you are vulnerable or not. So just do it. The other 10% contains frameworks that are used everywhere, or a major update, or systems that have no test code and a rigid pre-release manual testing setup. In those 10% of the situations, it can be worthwhile to do the investigation into whether the system is actually vulnerable.
+
+Also: you can use information about deployment to assess the exploitability of a vulnerability: typically public-facing and connected systems need to be considered more carefully; for internal systems, vulnerabilities are more relevant as a second line of defense against attacks--not unimportant either. See also section [5. Handling Vulnerabilities](#5-handling-vulnerabilities)). 
+
+---
+
+Q: Updating is hard because we need to manually re-test our entire system / get approval / wait for the next quarterly release / are not using a package manager
+
+A: You have bigger problems than outdated libraries. Update the most important vulnerable dependencies, and invest in test automation and your development process.
+
+---
+
+Q: It is a bad practice to be on the latest version all the time, they tend to be unstable and contain bugs.
+
+A: Agree (although it is not that bad in practice). This is why we do not recommend to have everything green for Freshness, and everything less than 1 month not updated is still green.
 
 ---
 
@@ -438,14 +459,12 @@ Q:
 A: 
 
 ---
-- Objection: Yes, this is a known vulnerability, but we don't even know whether it is actually exploitable, we may not be using the vulnerable method.
-  - SIG opinion: in 90% of the cases, it takes less time to update, than to figure out whether you are vulnerable or not. So just do it. The other 10% contains frameworks that are used everywhere, or a major update, or systems that have no test code and a rigid pre-release manual testing setup). Those 10% can do the investigation into whether they are actually vulnerable.
-- Objection: Updating is hard because we need to manually re-test our entire system / get approval / wait for the next quarterly release / are not using a package manager
-  - SIG opinion: You have bigger problems than outdated libraries. Update the most important vulnerable dependencies, and invest in test automation and your development process.
-- Objection: It is a bad practice to be on the latest version all the time, they tend to be unstable and contain bugs.
-  - SIG opinion: Agree (although it is not that bad in practice). This is why we do not recommend to have everything green for Freshness, and everything less than 1 month not updated is still green.
 
---- -->
+Q: Why it is a good idea to see every library as a backlog item? [LB: sure?]
+
+A: Make developers aware of the risks & effort.
+
+---
 
 <!-- 
 ## Input: List of Best practices
