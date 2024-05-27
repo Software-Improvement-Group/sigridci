@@ -52,10 +52,8 @@ These jobs have been grouped in three categories: first some general guidelines 
 12) [Replacing a library](#12-replacing-a-library)  
 13) [Reviewing a library](#13-reviewing-a-library)  
 
-
-<aside>
 A word of caution: The guidelines and steps that follow are intended to be helpful in making decisions and taking proper actions; since every application context is unique, these guidelines and steps should never replace logical thinking, taking your unique situation into account!
-</aside>
+{: .attention }
 
 ### About the SIG Open Source Health (OSH) model
 The SIG Open Source Health model is described here in the documentation: [OSH guidance for producers](../reference/quality-model-documents/open-source-health.md).
@@ -78,9 +76,9 @@ There are a number of policies on how to address open source libraries during de
 
 #### Policy I: Define the usage of a package manager
 Choose the package manager(s) to be used, at least per system, preferably shared across the organization. Depending on the technologies that are used, you may need multiple package managers.
-  <aside>
-    The package managers need to be integrated in your CI/CD pipeline.
-  </aside>  
+
+The package managers need to be integrated in your CI/CD pipeline.
+{: .attention }
 
 #### Policy II: Set the thresholds for library risks
 Set the thresholds for library risks that are (not) acceptable: this is applicable to all types of risks. Set these goals in the [Sigrid objectives](../capabilities/portfolio-objectives.md). 
@@ -99,9 +97,9 @@ This will depend on the criticality. See the section on [Handling vulnerabilitie
    - This is useful when a library has properties that cause Sigrid to signal a risk, but that risk is a false positive. 
    - Create an _ignore-list_. This list requires CISO approval. The ignore-list must be reviewed regularly (a few times per year): define when this review will happen.
     > **Sigrid How to:** _To achieve this in Sigrid, the library to ignore must be added in the scope file_
-  <aside>
-    Do note that if a library is put on the ignore-list since the reported vulnerability is a false positive, that does not necessarily mean that the other types of risk for that library should be ignored as well.
-  </aside>  
+  
+Do note that if a library is put on the ignore-list since the reported vulnerability is a false positive, that does not necessarily mean that the other types of risk for that library should be ignored as well.
+{: .attention }
 
 #### Policy VI: (Optional) Define a shared permitted-list
 A shared list of libraries that have been reviewed and approved for usage can be useful (and in some organizations required). 
@@ -165,9 +163,8 @@ For timely handling of open source health risks, there are two concerns:
   - Vulnerabilities require frequent scanning: preferably daily, at least every 2 weeks.
   - The other OSH properties are less volatile and urgent, and monthly to quarterly scanning is sufficient for those.
 
-  <aside> 
-    OSH analysis is conducted whenever Sigrid receives an update through [Sigrid CI](../sigridci-integration/development-workflows.html), or in the form of a new snapshot [upload](../organization-integration/upload-instructions.html). Hence, for systems that are inactive, new vulnerabilities in the ecosystem are not visible in Sigrid. Regularly do a forced update (or upload) to ensure your code is scanned again.
-  </aside>
+OSH analysis is conducted whenever Sigrid receives an update through [Sigrid CI](../sigridci-integration/development-workflows.html), or in the form of a new snapshot [upload](../organization-integration/upload-instructions.html). Hence, for systems that are inactive, new vulnerabilities in the ecosystem are not visible in Sigrid. Regularly do a forced update (or upload) to ensure your code is scanned again.
+{: .attention }
 
 A good time to triage scan results is during refinement for the next sprint: You need to decide to address the detected risks during the upcoming sprint, or possibly create a backlog item. In some cases, the detected risk is considered a false positive, or acceptable risk that can be ignored. The most common mitigation will be [updating a library](#9-updating-a-library). 
 
@@ -209,9 +206,8 @@ If no such remediation is available, do a risk assessment which will have one of
 
 ### 6. Handling license issues 
 
-<aside>
-  SIG assesses whether a license is generally considered a risk for use within commercial software. Contact an IT lawyer to discuss license risks specifically for the code analyzed as well as the way it will be used.
-</aside>
+SIG assesses whether a license is generally considered a risk for use within commercial software. Contact an IT lawyer to discuss license risks specifically for the code analyzed as well as the way it will be used.
+{: .attention }
 
 Usually, license risks will appear whenever a library is scanned for the first time; either because the application is scanned for the first time, or the library has just been introduced.
 
