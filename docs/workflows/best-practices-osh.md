@@ -53,7 +53,7 @@ These jobs have been grouped in three categories: first some general guidelines 
 13) [Reviewing a library](#13-reviewing-a-library)  
 
 A word of caution: The guidelines and steps that follow are intended to be helpful in making decisions and taking proper actions; since every application context is unique, these guidelines and steps should never replace logical thinking, taking your unique situation into account!
-{: .attention }
+{: .attention}
 
 ### About the SIG Open Source Health (OSH) model
 The SIG Open Source Health model is described here in the documentation: [OSH guidance for producers](../reference/quality-model-documents/open-source-health.md).
@@ -95,10 +95,10 @@ Preferably check daily for vulnerabilities and quarterly for other OSH risks. Se
 This will depend on the criticality. See the section on [Handling vulnerabilities](#5-handling-vulnerabilities) for details.  
 
 #### Policy V: Declare which libraries should not be checked
-   - This is useful when a library has properties that cause Sigrid to signal a risk, but that risk is a false positive. 
-   - Create an _ignore-list_. This list requires CISO approval. The ignore-list must be reviewed regularly (a few times per year): define when this review will happen.
-    > **Sigrid How to:** _To achieve this in Sigrid, the library to ignore must be added in the scope file_
-  
+  - This is useful when a library has properties that cause Sigrid to signal a risk, but that risk is a false positive. 
+  - Create an _ignore-list_. This list requires CISO approval. The ignore-list must be reviewed regularly (a few times per year): define when this review will happen.
+  > **Sigrid How to:** _To achieve this in Sigrid, the library to ignore must be added in the scope file_
+
 Do note that if a library is put on the ignore-list since the reported vulnerability is a false positive, that does not necessarily mean that the other types of risk for that library should be ignored as well.
 {: .attention }
 
@@ -164,8 +164,8 @@ For timely handling of open source health risks, there are two concerns:
   - Vulnerabilities require frequent scanning: preferably daily, at least every 2 weeks.
   - The other OSH properties are less volatile and urgent, and monthly to quarterly scanning is sufficient for those.
 
-OSH analysis is conducted whenever Sigrid receives an update through [Sigrid CI](../sigridci-integration/development-workflows.md), or in the form of a new snapshot [upload](../organization-integration/upload-instructions.md). Hence, for systems that are inactive, new vulnerabilities in the ecosystem are not visible in Sigrid. Regularly do a forced update (or upload) to ensure your code is scanned again.
-{: .attention }
+    OSH analysis is conducted whenever Sigrid receives an update through [Sigrid CI](../sigridci-integration/development-workflows.md), or in the form of a new snapshot [upload](../organization-integration/upload-instructions.md). Hence, for systems that are inactive, new vulnerabilities in the ecosystem are not visible in Sigrid. Regularly do a forced update (or upload) to ensure your code is scanned again.
+    {: .attention}
 
 A good time to triage scan results is during refinement for the next sprint: You need to decide to address the detected risks during the upcoming sprint, or possibly create a backlog item. In some cases, the detected risk is considered a false positive, or acceptable risk that can be ignored. The most common mitigation will be [updating a library](#9-updating-a-library). 
 
@@ -254,8 +254,8 @@ Development teams are responsible for keeping libraries up-to-date to a recent v
 
 The remedy for lack of freshness is always [Updating a library](#9-updating-a-library), possible exceptions are:
 
-- the newer version has a vulnerability for which a fix is not available (very rare)
-- the newer version is not compatible with other libraries.
+- The newer version has a vulnerability for which a fix is not available (very rare)
+- The newer version is not compatible with other libraries.
 <!-- this actually also overlaps with 'updating a library', but maybe still good to have these 2 sentences here? -->
 
 
@@ -359,7 +359,7 @@ Whenever choosing a new library or updating to a new version, consider the follo
 3. Is an updated version compatible with the previous version?  ​(release notes should indicate any breaking changes)
 4. Is the code quality (esp. maintainability) of the library acceptable (>3.0 stars)? 
 5. How mature is the version?​ (e.g. an x.0 version tends to be a bit more immature). Are there still -relevant- open issues? Use a stable version unless there is a real reason not to do so. An example might be that a Release Candidate fixes a vulnerability, and you do not want to wait for the stable version to come out.
-6. Is the library actively maintained (also discussed [here](../reference/quality-model-documents/open-source-health.md#activity) ) in the Guidance for Producers), preferably by multiple developers?
+6. Is the library actively maintained (also discussed [here](../reference/quality-model-documents/open-source-health.md#activity) in the Guidance for Producers), preferably by multiple developers?
 7. Are there enough users of the library? (check for example the number of downloads, or amount of GitHub stars).
 
 ---
