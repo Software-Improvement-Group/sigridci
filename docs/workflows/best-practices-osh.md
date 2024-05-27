@@ -113,14 +113,14 @@ A shared list of libraries that have been reviewed and approved for usage can be
 ### 2. How to improve portfolio and system-level OSH
 Especially when a system or portfolio is new in Sigrid, at the system and portfolio level there can be an abundance of OSH related issues that need to be fixed; this section provides some advice on how to tackle all those jobs incrementally, starting with the most critical and high-ROI topics first; Sigrid is designed specifically to help you focus on the highest priority issues.
 
-1. In case no package manager is used, or not for all libraries (all technologies), it makes a lot of sense to start with the -extended- use of a package manager. This it will make all other improvement steps easier, faster, and less error-prone.
-2. The next step is to focus on vulnerabilities, since these threaten your application security in the short term:
+- In case no package manager is used, or not for all libraries (all technologies), it makes a lot of sense to start with the -extended- use of a package manager. This it will make all other improvement steps easier, faster, and less error-prone.
+- The next step is to focus on vulnerabilities, since these threaten your application security in the short term:
    - Start with a quick threat analysis to prioritize the systems that are most risk-prone: this means the system where attacks would have the most impact, and the highest likelihood of an attack. In particular for systems with [business-criticality](../organization-integration/metadata.html#system-metadata-fields-and-corresponding-allowed-values) that is `CRITICAL` OR `HIGH` and systems containing privacy-sensitive data or transactions, the impact will be high. The likelihood is determined by the attack surface and exposure: so especially systems with a [deployment type](../organization-integration/metadata.html#meaning-of-special-values-for-metadata-fields) that is `PUBLIC_FACING` will have a higher likelihood.
    - Focus on removing all critical and high risk vulnerabilities first, continue with the remaining vulnerabilities.
-3. Consider legal risks due to unacceptable licenses:
+- Consider legal risks due to unacceptable licenses:
    - The highest priority are libraries that are used in an application without the proper rights; for example libraries that do not allow commercial use (if you are a commercial organization). Some of those require paying a license fee; which is the most straightforward means of addressing the issue.
    - A next category to consider are the copy-left licenses, which require the application that uses those libraries to be distributed with the same license (and e.g. also made open-source). Depending on your situation, using copyleft licenses carries the risk of not complying with license obligations, leading to consequences such as the obligation to distribute the source code and legal disputes. The main way of addressing legal risk due to unacceptable licenses is by [replacing the library with another one](#12-replacing-a-library).
-4. For the other properties: 
+- For the other properties: 
    - investigate the risks of heavily outdated and perhaps no longer maintained libraries: look at the product lifecycle, end-of-support date and maintenance activity to verify that there is a real need for [replacing the library](#12-replacing-a-library).
    - Do an impact analysis and plan the needed effort to mitigate the risks. This can be -a series of- [updates](#9-updating-a-library), or complete [replacement of a library](#12-replacing-a-library). 
    - ​​Open source libraries can be compared in terms of activity on tools like [https://www.openhub.net/](https://www.openhub.net/)​
@@ -145,8 +145,9 @@ The following guidelines should be considered as compliance rules for framework 
 
 #### Regression tests and maintainability of the application code are key to updating frameworks/libraries​
 If it is hard to update a library, chances are the problem lies in your codebase.​
-1. _Keep module coupling and component independence low_, to make it easier to change code implementation (such as dealing with new versions of a library) while keeping the same behavior/requirements.
-1. _Develop, maintain and run regression tests._ These help to identify breaking changes in updates.​​
+
+- _Keep module coupling and component independence low_, to make it easier to change code implementation (such as dealing with new versions of a library) while keeping the same behavior/requirements.
+- _Develop, maintain and run regression tests._ These help to identify breaking changes in updates.​​
 
 
 
@@ -158,13 +159,11 @@ This section describes guidelines, hints and tips on how to maintain healthy use
 
 For timely handling of open source health risks, there are two concerns:
 
-1. _Risks that appear due to changes in the code_: these need to be signalled as soon as possible (short feedback loops make it much more efficient to make changes); doing the scanning as part of the CI/CD pipeline using `sigridci` addresses this.
-   
-   The risks that are detected are best addressed immediately, _before_ merging the new code.
-
-1. _Risks that appear due to changes in the ecosystem over time_: these require regular scans, even when the application code does not change. For this category:
-   - Vulnerabilities require frequent scanning: preferably daily, at least every 2 weeks.
-   - The other OSH properties are less volatile and urgent, and monthly to quarterly scanning is sufficient for those.
+- _Risks that appear due to changes in the code_: these need to be signalled as soon as possible (short feedback loops make it much more efficient to make changes); doing the scanning as part of the CI/CD pipeline using `sigridci` addresses this.
+  - The risks that are detected are best addressed immediately, _before_ merging the new code.
+- _Risks that appear due to changes in the ecosystem over time_: these require regular scans, even when the application code does not change. For this category:
+  - Vulnerabilities require frequent scanning: preferably daily, at least every 2 weeks.
+  - The other OSH properties are less volatile and urgent, and monthly to quarterly scanning is sufficient for those.
 
   <aside> 
     OSH analysis is conducted whenever Sigrid receives an update through [Sigrid CI](../sigridci-integration/development-workflows.html), or in the form of a new snapshot [upload](../organization-integration/upload-instructions.html). Hence, for systems that are inactive, new vulnerabilities in the ecosystem are not visible in Sigrid. Regularly do a forced update (or upload) to ensure your code is scanned again.
@@ -244,8 +243,8 @@ The following table shows how various types of licenses are (not) suitable for d
 #### Possible actions
 Depending on the circumstances, one or more of the following actions can be taken to remediate detected licensing issues
 * Ensure that libraries with commercial licenses are properly registered and paid for. 
-* [When applicable] Add a license to the shared list of acceptable licenses (this may involve an approval process).
-* [When applicable] Adjust the distribution model of the application to avoid violating the terms of the library license. For example, distribute linked libraries instead of (modified) source code.
+* (When applicable) Add a license to the shared list of acceptable licenses (this may involve an approval process).
+* (When applicable) Adjust the distribution model of the application to avoid violating the terms of the library license. For example, distribute linked libraries instead of (modified) source code.
 * Stop using a library with unacceptable licensing conditions: in practice this requires [Replacing a library](#12-replacing-a-library).
 
 
@@ -257,6 +256,7 @@ Lack of freshness occurs when there is a newer version of a library available, b
 Development teams are responsible for keeping libraries up-to-date to a recent version: this may be part of [How to remediate vulnerabilities](#how-to-remediate-vulnerabilities), to make sure that bug fixes and improvements are incorporated, for compatibility with other libraries, or to ensure that future updates will not be too complicated or require a large effort all at once.
 
 The remedy for lack of freshness is always [Updating a library](#9-updating-a-library), possible exceptions are:
+
 - the newer version has a vulnerability for which a fix is not available (very rare)
 - the newer version is not compatible with other libraries.
 <!-- this actually also overlaps with 'updating a library', but maybe still good to have these 2 sentences here? -->
@@ -324,21 +324,23 @@ A more extensive discussion of selecting (including reviewing) open source libra
 ### 11. When a library does not meet requirements
 
 There are several possible cases where a library does not support the needs and requirements:
-1. _Its Open Source Health has unacceptable risks_. 
-2. _Functional mismatch_: a library is missing features that cannot easily be added on top, or the implementation of the library is based on assumptions or choices that are incompatible with the ones in the application.
-3. _Bug in library implementation_: typically detected after a library has been adopted, so the cost of switching is non-negligible.
-4. _Compatibility break_: a library does not (or no longer) work well together with another library or the application itself, due to changes in the APIs of involved components.
+
+- _Its Open Source Health has unacceptable risks_. 
+- _Functional mismatch_: a library is missing features that cannot easily be added on top, or the implementation of the library is based on assumptions or choices that are incompatible with the ones in the application.
+- _Bug in library implementation_: typically detected after a library has been adopted, so the cost of switching is non-negligible.
+- _Compatibility break_: a library does not (or no longer) work well together with another library or the application itself, due to changes in the APIs of involved components.
 
 The basic rule is that _library implementations should not be modified or customized_: ​One of the main benefits of libraries and frameworks, is that they provide functionality without the duty of maintaining it. After customizing a library implementation, you lose this benefit while being dependent on the changes that the community makes.​
 
 How to address failing requirements:
-1. First, check whether a newer version of the library may solve the issue, then consider updating ([Updating a library](#9-updating-a-library)); you may also wait a bit until a fix is being released, especially when the issue is being worked on.
-2. If the issue is a bug or lacking feature, you can file an issue at the maintainer of the library. 
-3. If the issue is a bug or lacking feature, you can also look at the implementation of the library and develop a fix: 
+
+- First, check whether a newer version of the library may solve the issue, then consider updating ([Updating a library](#9-updating-a-library)); you may also wait a bit until a fix is being released, especially when the issue is being worked on.
+- If the issue is a bug or lacking feature, you can file an issue at the maintainer of the library. 
+- If the issue is a bug or lacking feature, you can also look at the implementation of the library and develop a fix: 
    - You may be able to wrap the relevant library call(s) with extra code that corrects or hides the bug.
    - Alternatively, you can temporarily use the modified library while merging back the bug fix into the library (be aware of the license, and make sure you have clearance from your employer to do so). Once the community has accepted the fix, you can update and remove the local code​.
-4. Consider whether another library that implements similar functionality is available, and the costs of adopting that library are acceptable. Check [Replacing a library](#12-replacing-a-library) for more details.
-5. If no other solution is feasible and a modification is absolutely required (or: the costs of alternative solutions are very high), the source code can be forked and put into a designated area in a version control system. In this case carefully consider the possible legal ramifications, e.g. should you make the modified version open source as well. The modification should be documented so that it can be re-applied whenever a newer version of the library is made available.
+- Consider whether another library that implements similar functionality is available, and the costs of adopting that library are acceptable. Check [Replacing a library](#12-replacing-a-library) for more details.
+- If no other solution is feasible and a modification is absolutely required (or: the costs of alternative solutions are very high), the source code can be forked and put into a designated area in a version control system. In this case carefully consider the possible legal ramifications, e.g. should you make the modified version open source as well. The modification should be documented so that it can be re-applied whenever a newer version of the library is made available.
 
 
 
