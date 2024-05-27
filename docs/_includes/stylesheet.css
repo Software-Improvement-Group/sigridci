@@ -77,7 +77,7 @@ blockquote {
     margin-left: 2px;
 }
 
-aside {
+aside, .attention {
     background-image: url("/images/icon-attention.svg");
     background-color: #EBE6F9;
     background-repeat: no-repeat;
@@ -89,7 +89,7 @@ aside {
     display: block;
 }
 
-aside::before {
+aside::before, .attention::before {
     content: "Attention";
     display: block;
     font-weight: 600;
