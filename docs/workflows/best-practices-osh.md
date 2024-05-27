@@ -113,7 +113,7 @@ Especially when a system or portfolio is new in Sigrid, at the system and portfo
 
 - In case no package manager is used, or not for all libraries (all technologies), it makes a lot of sense to start with the -extended- use of a package manager. This it will make all other improvement steps easier, faster, and less error-prone.
 - The next step is to focus on vulnerabilities, since these threaten your application security in the short term:
-   - Start with a quick threat analysis to prioritize the systems that are most risk-prone: this means the system where attacks would have the most impact, and the highest likelihood of an attack. In particular for systems with [business-criticality](../organization-integration/metadata.html#system-metadata-fields-and-corresponding-allowed-values) that is `CRITICAL` OR `HIGH` and systems containing privacy-sensitive data or transactions, the impact will be high. The likelihood is determined by the attack surface and exposure: so especially systems with a [deployment type](../organization-integration/metadata.html#meaning-of-special-values-for-metadata-fields) that is `PUBLIC_FACING` will have a higher likelihood.
+   - Start with a quick threat analysis to prioritize the systems that are most risk-prone: this means the system where attacks would have the most impact, and the highest likelihood of an attack. In particular for systems with [business-criticality](../organization-integration/metadata.md#system-metadata-fields-and-corresponding-allowed-values) that is `CRITICAL` OR `HIGH` and systems containing privacy-sensitive data or transactions, the impact will be high. The likelihood is determined by the attack surface and exposure: so especially systems with a [deployment type](../organization-integration/metadata.md#meaning-of-special-values-for-metadata-fields) that is `PUBLIC_FACING` will have a higher likelihood.
    - Focus on removing all critical and high risk vulnerabilities first, continue with the remaining vulnerabilities.
 - Consider legal risks due to unacceptable licenses:
    - The highest priority are libraries that are used in an application without the proper rights; for example libraries that do not allow commercial use (if you are a commercial organization). Some of those require paying a license fee; which is the most straightforward means of addressing the issue.
@@ -163,7 +163,7 @@ For timely handling of open source health risks, there are two concerns:
   - Vulnerabilities require frequent scanning: preferably daily, at least every 2 weeks.
   - The other OSH properties are less volatile and urgent, and monthly to quarterly scanning is sufficient for those.
 
-OSH analysis is conducted whenever Sigrid receives an update through [Sigrid CI](../sigridci-integration/development-workflows.html), or in the form of a new snapshot [upload](../organization-integration/upload-instructions.html). Hence, for systems that are inactive, new vulnerabilities in the ecosystem are not visible in Sigrid. Regularly do a forced update (or upload) to ensure your code is scanned again.
+OSH analysis is conducted whenever Sigrid receives an update through [Sigrid CI](../sigridci-integration/development-workflows.md), or in the form of a new snapshot [upload](../organization-integration/upload-instructions.md). Hence, for systems that are inactive, new vulnerabilities in the ecosystem are not visible in Sigrid. Regularly do a forced update (or upload) to ensure your code is scanned again.
 {: .attention }
 
 A good time to triage scan results is during refinement for the next sprint: You need to decide to address the detected risks during the upcoming sprint, or possibly create a backlog item. In some cases, the detected risk is considered a false positive, or acceptable risk that can be ignored. The most common mitigation will be [updating a library](#9-updating-a-library). 
@@ -358,7 +358,7 @@ Whenever choosing a new library or updating to a new version, consider the follo
 3. Is an updated version compatible with the previous version?  ​(release notes should indicate any breaking changes)
 4. Is the code quality (esp. maintainability) of the library acceptable (>3.0 stars)? 
 5. How mature is the version?​ (e.g. an x.0 version tends to be a bit more immature). Are there still -relevant- open issues? Use a stable version unless there is a real reason not to do so. An example might be that a Release Candidate fixes a vulnerability, and you do not want to wait for the stable version to come out.
-6. Is the library actively maintained (also discussed [here](https://docs.sigrid-says.com/reference/quality-model-documents/open-source-health#activity) ) in the Guidance for Producers), preferably by multiple developers?
+6. Is the library actively maintained (also discussed [here](../reference/quality-model-documents/open-source-health.md#activity) ) in the Guidance for Producers), preferably by multiple developers?
 7. Are there enough users of the library? (check for example the number of downloads, or amount of GitHub stars).
 
 ---
