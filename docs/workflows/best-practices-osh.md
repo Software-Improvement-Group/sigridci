@@ -2,17 +2,12 @@
 
 <!-- 
 - TODOs 
-  - consider how to use context/meta-information to refine policies?
+  - consider how to use context/meta-information to refine policies? or is it enough to refer to the objectives section?
   - Check that the benchmark risk categories and the guidance for producers should be consistent with the methodology & guidelines: so same scales etc.
-  - Make sure we are aligned with DPA v4! (can we refer to it?)
-  - and with the guidance for producers
+    - Make sure we are aligned with DPA v4! (can we refer to it?)
+    - and with the guidance for producers
   - we have to explicitly address: what if we did not reach 4 stars -> then look at the underlying measurements
-  - check consistent usage of the term third party library (marco: open-source dependency)
-   - create an overall flow chart? (but not in mermaid..)
-  - comments marijn:
-     - Nog iets: onder het kopje 'When a library does not support requirements' staan redenen om een library te vervangen die allemaal los staan van OSH, maar die ook weer terugkomen on Vervolgens staat onder 'Replacing a library' een aantal redenen om te replacen die wel weer aan OSH vast zitten. Volgens mij is er eigenlijk 1 flow die neerkomt op 'Ik ben niet blij met mijn library vanwege whatever, dan 1) update 1a) pull request of issue aanmaken bij maintainer (noemen we nu nog niet) 2) vervangen 3) (if all else fails) adopteren.
-    - Nog iets: in 'How to improve portfolio and system-level OSH' kunnen we volgens mij op een hoger niveau blijven. Nu beschrijven we daar bepaalde details die ook terugkomen in de 'Handling....' secties.
-  - [Marco]: I feel the text in "Structure and overview" and #### Be equipped for healthy open source usage can be merged. I find the text above that introduces this list very... informal, but at the same time not straightforward to understand.
+  - create an overall flow chart? (but not in mermaid..)
 -->
 
 <!-- > NOTE for internal use: This document is a collection of the knowledge that we have accumulated within SIG on the best practices for achieving Open Source Health. Its purpose within SIG is to have all this knowledge documented in one place, such that we have a shared base as consultants, and also a document that we can share with customers that are in search of concrete advice on how to get things in place for healthy open source usage.  -->
@@ -28,9 +23,9 @@ Where applicable, this document explains how Sigrid can be used to achieve this.
 
 ### Structure and overview
 
-The guidelines and best practices have been structured based on 'jobs to be done': the idea is to look at the actual tasks that stakeholders need to conduct, and provide them with help to do those tasks. Jobs can embed, or refer to, other jobs.
+The guidelines and best practices have been structured based on the actual tasks that stakeholders need to conduct (also called 'jobs to be done'). Jobs can embed, or refer to, other jobs.
 
-These jobs have been grouped in three categories: first some general guidelines for conducting healthy open source usage in development, that help to get started, and may need to be revisited or updated on a regular basis. Secondly the various types of tasks that are needed to ensure continued health of libraries (note that even when application code is not actively maintained for a while, the health of open source libraries may diminish!). And thirdly a set of practical tasks in handling libraries as a developer.
+The jobs have been grouped in three categories: first some general guidelines for conducting healthy open source usage in development, that help to get started, and may need to be revisited or updated on a regular basis. Secondly the various types of tasks that are needed to ensure continued health of libraries (note that even when application code is not actively maintained for a while, the health of open source libraries may diminish!). And thirdly a set of practical tasks in handling libraries as a developer.
 
 
 #### Be equipped for healthy open source usage
@@ -376,7 +371,8 @@ Whenever choosing a new library or updating to a new version, consider the follo
 <!-- check this text by marijn:
 You were using a (deprecated) method that is no longer available. Your IDE will likely make you aware of this.
 A nastier version is that you weren't using the library correctly and the new version is less forgiving but without alarms going off.
-The library needs transitive dependencies that have become incompatible with needs of other libraries -->
+The library needs transitive dependencies that have become incompatible with needs of other libraries. Often -but not always- this 
+ -->
 
 
 <!-- 
@@ -408,81 +404,64 @@ tasks to do repeatedly:
 
 ## Frequently Asked Questions
 
-Q: Is open Source Health the most important software quality concern? 
+**Q:** Is open Source Health the most important software quality concern?  
+**A:** No, not necessarily (depending on your situation), *but* in our opinion OSH is typically the quality aspect that has a really high return on investment: with a relatively low amount of effort and expertise, large steps towards reducing the risk associated with open source usage can be made. The majority of risks can be addressed by consistently updating the libraries in use to their latest stable versions. Also, risks such as vulnerable libraries and licensing risks can be rather 
+{: .faq }
 
-A: No, not necessarily (depending on your situation), *but* in our opinion OSH is typically the quality aspect that has a really high return on investment: with a relatively low amount of effort and expertise, large steps towards reducing the risk associated with open source usage can be made. The majority of risks can be addressed by consistently updating the libraries in use to their latest stable versions. Also, risks such as vulnerable libraries and licensing risks can be rather 
+**Q:** why not adopt a ‘if it ain’t broke, don’t fix it’ strategy for updating libraries? (i.e. do not update unless you *have to*).  
+**A:** We also addressed this in section [9. Updating a library](#9-updating-a-library): Whilst easier in the short term, with this strategy you will end up with a system that depends on outdated and unmaintained libraries, where you cannot use some other libraries since they require a newer version of that library which you cannot upgrade and at some point. You may lose the ability to fix some issues at all.​
+{: .faq }
 
----
 
-Q: why not adopt a ‘if it ain’t broke, don’t fix it’ strategy for updating libraries? (i.e. do not update unless you *have to*).
+**Q:** When a library has a known vulnerability, why do something about it, if you are not even sure that this vulnerability is actually exploitable (e.g. we may not be using the vulnerable method)?  
+**A:** This is our proposed strategy to deal with this uncertainty: in 90% of the cases, it takes less time to update, than to figure out whether you are vulnerable or not. So just do it. The other 10% contains frameworks that are used everywhere, or a major update, or systems that have no test code and a rigid pre-release manual testing setup. In those 10% of the situations, it can be worthwhile to do the investigation into whether the system is actually vulnerable.  
+Also: you can use information about deployment to assess the exploitability of a vulnerability: typically public-facing and connected systems need to be considered more carefully; for internal systems, vulnerabilities are more relevant as a second line of defense against attacks--not unimportant either. See also section [5. Handling Vulnerabilities](#5-handling-vulnerabilities)).
+{: .faq }
 
-A: We also addressed this in section [9. Updating a library](#9-updating-a-library): Whilst easier in the short term, with this strategy you will end up with a system that depends on outdated and unmaintained libraries, where you cannot use some other libraries since they require a newer version of that library which you cannot upgrade and at some point. You may lose the ability to fix some issues at all.​
 
----
+**Q:** How can we update our libraries frequently, given that it takes so much time due to the need for manually re-testing our entire system, to get approval, to wait for the next quarterly release, because we are not using a package manager?  
+**A:** You have bigger problems than outdated libraries. Update the most important vulnerable dependencies, and invest in test automation and your development process.
+{: .faq }
 
-Q: When a library has a known vulnerability, why do something about it, if you are not even sure that this vulnerability is actually exploitable? e.g. we may not be using the vulnerable method.
 
-A: This is our proposed strategy to deal with this uncertainty: in 90% of the cases, it takes less time to update, than to figure out whether you are vulnerable or not. So just do it. The other 10% contains frameworks that are used everywhere, or a major update, or systems that have no test code and a rigid pre-release manual testing setup. In those 10% of the situations, it can be worthwhile to do the investigation into whether the system is actually vulnerable.
+**Q:** Is it not a bad practice to be on the latest version all the time, since these tend to be unstable and contain bugs?  
+**A:** There is some truth in that (although it is not that bad in practice). This is why we do not recommend to have everything green for Freshness, and everything less than 1 month not updated is still green.
+{: .faq }
 
-Also: you can use information about deployment to assess the exploitability of a vulnerability: typically public-facing and connected systems need to be considered more carefully; for internal systems, vulnerabilities are more relevant as a second line of defense against attacks--not unimportant either. See also section [5. Handling Vulnerabilities](#5-handling-vulnerabilities)). 
 
----
-
-Q: Updating is hard because we need to manually re-test our entire system / get approval / wait for the next quarterly release / are not using a package manager
-
-A: You have bigger problems than outdated libraries. Update the most important vulnerable dependencies, and invest in test automation and your development process.
-
----
-
-Q: It is a bad practice to be on the latest version all the time, they tend to be unstable and contain bugs.
-
-A: Agree (although it is not that bad in practice). This is why we do not recommend to have everything green for Freshness, and everything less than 1 month not updated is still green.
-
----
-
-Q: How does Sigrid OSH collect its information?
-
-A: First, the entire codebase is scanned for configuration files of common dependency management systems (e.g., NuGet, Maven, NPM) to find explicitly managed libraries.​
-
-Information about each library is then queried from public sources to determine the version currently used, the date of this version, the number and date of the newest published version, information about its license, and whether it is known to contain security vulnerabilities.​
-
-In addition, the entire codebase is scanned for unmanaged libraries following some heuristics:​
-- JavaScript files are scanned for a version identifier in their name of contents. If found, it is assumed third-party and looked up in public databases to determine freshness, license and vulnerabilities.​
+**Q:** How does Sigrid OSH collect its information?  
+**A:** First, the entire codebase is scanned for configuration files of common dependency management systems (e.g., NuGet, Maven, NPM) to find explicitly managed libraries.​  
+Information about each library is then queried from public sources to determine the version currently used, the date of this version, the number and date of the newest published version, information about its license, and whether it is known to contain security vulnerabilities.​  
+In addition, the entire codebase is scanned for unmanaged libraries following some heuristics:​  
+- JavaScript files are scanned for a version identifier in their name of contents. If found, it is assumed third-party and looked up in public databases to determine freshness, license and vulnerabilities.​  
 - The contents of Windows DLL files and Java JAR files are considered third-party and are scanned for name and version number and then looked up in public databases to determine freshness, license and vulnerabilities.​
+{: .faq }
 
----
-Q: 
 
-A: 
+**Q:** ?  
+**A:** 
+{: .faq }
 
----
-Q: 
 
-A: 
+<!-- **Q:** Why it is a good idea to see every library as a backlog item? [LB: sure?]  
+**A:** This makes developers aware of the risks and effort.
+{: .faq } -->
 
----
-
-Q: Why it is a good idea to see every library as a backlog item? [LB: sure?]
-
-A: Make developers aware of the risks & effort.
 
 ---
 
 <!-- 
 ## Input: List of Best practices
-> TODO: distribute these over the various JTBD?
+> TODO: distribute these over the various JTBD? or keep (also) as a separate checklist??
 
 > The following list comes from the _Library Management Practices_ deck: can these all/mostly be moved to specific JTBDs?
-
-
-- Use tooling to automate managing the updates​ → this is one of the OSH topics
+- Use tooling to automate managing the updates​
   - Integrate tools in the development pipeline​​​
 - Embed library management in the development process​
   - Review frameworks/libraries [updates?] as close as possible at the start of iterations​ → during backlog refinement?
   - If you cannot embed this in development iterations, use a standalone schedule for updates (< once a month)​
   - When using stabilization branches, only update for critical fixes ​
   - Don’t mix updating and adding functionality in the same tickets, so you can roll back updates.​
-- 
 - Consider each library/framework as a backlog item, and make it the responsibility of developers​
   - Avoiding use of multiple versions of the same framework/library​, as they add the same effort as a separate library​​
   - ?? Re-estimating effort and creating visibility in growing technical debt of outdated frameworks/libraries​​ -->
