@@ -60,7 +60,7 @@ ul li::before {
 ol li::before {
     content: '';
     color: #DFC101;
-    padding-right: 8px;
+    padding-right: 16px;
     margin-left: -1em;
 }
 
