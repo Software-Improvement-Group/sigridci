@@ -208,7 +208,7 @@ If no such remediation is available, do a risk assessment which will have one of
 ### 6. Handling license issues 
 
 SIG assesses whether a license is generally considered a risk for use within commercial software. Contact an IT lawyer to discuss license risks specifically for the code analyzed as well as the way it will be used.
-{: .attention }
+{: .warning }
 
 Usually, license risks will appear whenever a library is scanned for the first time; either because the application is scanned for the first time, or the library has just been introduced.
 {: .faq }
