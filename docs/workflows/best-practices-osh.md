@@ -408,6 +408,7 @@ The following chart visualizes how the various tasks are interrelated: often one
 
 <img src="../images/methodology/guidelines-osh-overview.svg" width="700" />
 
+---
 
 ## Frequently Asked Questions
 
@@ -415,7 +416,7 @@ The following chart visualizes how the various tasks are interrelated: often one
 **A:** No, not necessarily (depending on your situation), *but* in our opinion OSH is typically the quality aspect that has a really high return on investment: with a relatively low amount of effort and expertise, large steps towards reducing the risk associated with open source usage can be made. The majority of risks can be addressed by consistently updating the libraries in use to their latest stable versions. Also, risks such as vulnerable libraries and licensing risks can be rather 
 {: .faq }
 
-**Q:** why not adopt a ‘if it ain’t broke, don’t fix it’ strategy for updating libraries? (i.e. do not update unless you *have to*).  
+**Q:** Why not adopt a ‘if it ain’t broke, don’t fix it’ strategy for updating libraries? (i.e. do not update unless you *have to*).  
 **A:** We also addressed this in section [9. Updating a library](#9-updating-a-library): Whilst easier in the short term, with this strategy you will end up with a system that depends on outdated and unmaintained libraries, where you cannot use some other libraries since they require a newer version of that library which you cannot upgrade and at some point. You may lose the ability to fix some issues at all.​
 {: .faq }
 
@@ -444,6 +445,17 @@ In addition, the entire codebase is scanned for unmanaged libraries following so
 (2) The contents of Windows DLL files and Java JAR files are considered third-party and are scanned for name and version number and then looked up in public databases to determine freshness, license and vulnerabilities.​
 {: .faq }
 
+
+**Q:** Can I use Sigrid for libraries that I develop and maintain internally?  
+**A:** No, currently not: Sigrid has no access to your internal package repository, and also it exploits a lot of the information that is provided by open source ecosystems such as Maven, NuGet and NPM.
+{: .faq }
+
+
+**Q:** Can I use Sigrid to assess a library before I decide to incorporate it into my project?  
+**A:** No (and yes); Sigrid only looks for the libraries that are in use in the source code that you pass through `sigridci` or upload: having said that: if you include some libraries explicitly in your project (even before you decide on actually using them), you will see the results next time you trigger a Sigrid scan.
+{: .faq }
+
+
 <!-- 
 **Q:** ?  
 **A:** 
@@ -453,7 +465,6 @@ In addition, the entire codebase is scanned for unmanaged libraries following so
 <!-- **Q:** Why it is a good idea to see every library as a backlog item? [LB: sure?]  
 **A:** This makes developers aware of the risks and effort.
 {: .faq } -->
-
 
 ---
 
