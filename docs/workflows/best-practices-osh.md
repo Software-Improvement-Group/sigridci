@@ -158,14 +158,15 @@ This section describes guidelines, hints and tips on how to maintain healthy use
 
 For timely handling of open source health risks, there are two concerns:
 
-- _Risks that appear due to changes in the code_: these need to be signalled as soon as possible (short feedback loops make it much more efficient to make changes); doing the scanning as part of the CI/CD pipeline using `sigridci` addresses this.
-  - The risks that are detected are best addressed immediately, _before_ merging the new code.
+- _Risks that appear due to changes in the code_: these need to be signalled as soon as possible (short feedback loops make it much more efficient to make changes).
+  - Conducting the scanning as part of the CI/CD pipeline using `sigridci` addresses this.
+  - The risks that are detected at this time are best addressed immediately, _before_ merging the new code.
 - _Risks that appear due to changes in the ecosystem over time_: these require regular scans, even when the application code does not change. For this category:
   - Vulnerabilities require frequent scanning: preferably daily, at least every 2 weeks.
   - The other OSH properties are less volatile and urgent, and monthly to quarterly scanning is sufficient for those.
-
-    OSH analysis is conducted whenever Sigrid receives an update through [Sigrid CI](../sigridci-integration/development-workflows.md), or in the form of a new snapshot [upload](../organization-integration/upload-instructions.md). Hence, for systems that are inactive, new vulnerabilities in the ecosystem are not visible in Sigrid. Regularly do a forced update (or upload) to ensure your code is scanned again.
-    {: .attention}
+  
+  OSH analysis is conducted whenever Sigrid receives an update through [Sigrid CI](../sigridci-integration/development-workflows.md), or in the form of a new snapshot [upload](../organization-integration/upload-instructions.md). Hence, for systems that are inactive, new vulnerabilities in the ecosystem are not visible in Sigrid. Regularly do a forced update (or upload) to ensure your code is scanned again.
+  {: .attention}
 
 A good time to triage scan results is during refinement for the next sprint: You need to decide to address the detected risks during the upcoming sprint, or possibly create a backlog item. In some cases, the detected risk is considered a false positive, or acceptable risk that can be ignored. The most common mitigation will be [updating a library](#9-updating-a-library). 
 
