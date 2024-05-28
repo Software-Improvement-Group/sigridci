@@ -402,6 +402,13 @@ tasks to do repeatedly:
   -->
 
 
+## The workflow between all jobs to be done
+
+The following chart visualizes how the various tasks are interrelated: often one task contains multiple steps, one or more of which have been described separately in another task:
+
+<img src="../images/methodology/guidelines-osh-overview.svg" width="700" />
+
+
 ## Frequently Asked Questions
 
 **Q:** Is open Source Health the most important software quality concern?  
@@ -432,15 +439,15 @@ Also: you can use information about deployment to assess the exploitability of a
 **Q:** How does Sigrid OSH collect its information?  
 **A:** First, the entire codebase is scanned for configuration files of common dependency management systems (e.g., NuGet, Maven, NPM) to find explicitly managed libraries.​  
 Information about each library is then queried from public sources to determine the version currently used, the date of this version, the number and date of the newest published version, information about its license, and whether it is known to contain security vulnerabilities.​  
-In addition, the entire codebase is scanned for unmanaged libraries following some heuristics:​  
-- JavaScript files are scanned for a version identifier in their name of contents. If found, it is assumed third-party and looked up in public databases to determine freshness, license and vulnerabilities.​  
-- The contents of Windows DLL files and Java JAR files are considered third-party and are scanned for name and version number and then looked up in public databases to determine freshness, license and vulnerabilities.​
+In addition, the entire codebase is scanned for unmanaged libraries following some heuristics:​ 
+ (1) JavaScript files are scanned for a version identifier in their name of contents. If found, it is assumed third-party and looked up in public databases to determine freshness, license and vulnerabilities.​
+(2) The contents of Windows DLL files and Java JAR files are considered third-party and are scanned for name and version number and then looked up in public databases to determine freshness, license and vulnerabilities.​
 {: .faq }
 
-
+<!-- 
 **Q:** ?  
 **A:** 
-{: .faq }
+{: .faq } -->
 
 
 <!-- **Q:** Why it is a good idea to see every library as a backlog item? [LB: sure?]  
