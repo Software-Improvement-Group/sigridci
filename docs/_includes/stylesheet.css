@@ -60,7 +60,7 @@ ul li::before {
 ol li::before {
     content: '';
     color: #DFC101;
-    padding-right: 8px;
+    padding-right: 16px;
     margin-left: -1em;
 }
 
@@ -91,6 +91,25 @@ aside, .attention {
 
 aside::before, .attention::before {
     content: "Attention";
+    display: block;
+    font-weight: 600;
+    color: #687483;
+}
+
+.faq {
+    background-image: url("/images/icon-faq.svg");
+    background-color: #DEF2E6;
+    background-repeat: no-repeat;
+    background-position: 12px 22px;
+    background-size: 24px;
+    padding: 20px 20px 20px 50px;
+    margin-top: 30px;
+    margin-bottom: 30px;
+    display: block;
+}
+
+.faq::before {
+    content: "FAQ";
     display: block;
     font-weight: 600;
     color: #687483;

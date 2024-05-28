@@ -212,6 +212,7 @@ SIG assesses whether a license is generally considered a risk for use within com
 {: .attention }
 
 Usually, license risks will appear whenever a library is scanned for the first time; either because the application is scanned for the first time, or the library has just been introduced.
+{: .faq }
 
 
 #### Assess the license risk
