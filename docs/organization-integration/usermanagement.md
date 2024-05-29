@@ -129,40 +129,42 @@ For a full breakdown of tasks able to be performed by each user type, please ref
 | Action | Normal User | Maintainer | Administrator |
 | --- | --- | --- | --- |
 | **Portfolio Overview**
-| View Dashboard | ✔ | ✔ | ✔✔ | 
-| View Systems | ✔ | ✔ | ✔✔|
+| View Dashboard | ✅ | ✅ | ✅✅ |
+| View Systems | ✅ | ✅ | ✅✅ |
 | **Capability Specific Overviews**
-| View Dashboards | ✔ | ✔ | ✔✔ |
-| View Ratings | ✔ | ✔ | ✔✔ |
-| Favorite Systems | ✔ | ✔ | ✔✔ |
+| View Dashboards | ✅ | ✅ | ✅✅ |
+| View Ratings | ✅ | ✅ | ✅✅ |
+| Favorite Systems | ✅ | ✅ | ✅✅ |
 | **Findings and Refactoring Candidates**
-| View Findings | ✔ | ✔ | ✔✔ |
-| Edit Findings | ✔ | ✔ | ✔✔ |
-| View Finding Audit Trails | ✔ | ✔ | ✔✔ |
-| Create Manual Findings |  | ✔ | ✔✔ |
+| View Findings | ✅ | ✅ | ✅✅ |
+| Edit Findings | ✅ | ✅ | ✅✅ |
+| View Finding Audit Trails | ✅ | ✅ | ✅✅ |
+| Create Manual Findings | | ✅ | ✅✅ |
 | **Source Code**
-| View Source Code | ✔ | ✔ | ✔✔ |
-| **Meta-data** 
-| View metadata | ✔ | ✔ | ✔✔ |
-| Configure metadata |  | ✔ | ✔✔ |
+| View Source Code | ✅ | ✅ | ✅✅ |
+| **Meta-data**
+| View metadata | ✅ | ✅ | ✅✅ |
+| Configure metadata | | ✅ | ✅✅ |
 | **Objectives**
-| View objectives | ✔ | ✔ | ✔✔ |
-| Configure system-level objectives |  | ✔ | ✔✔ |
-| Configure portfolio-level objectives |  |  | ✔✔ |
+| View objectives | ✅ | ✅ | ✅✅ |
+| Configure system-level objectives | | ✅ | ✅✅ |
+| Configure portfolio-level objectives | | | ✅✅ |
 | **User Management**
-| View Users | ✔ | ✔ | ✔✔ |
-| Create / Delete Users |  |  | ✔✔ |
-| Edit User Permissions |  | ✔ | ✔✔ |
-| Edit User Details (other than self) |  |  | ✔✔ |
-| View User Status Details |  |  | ✔✔ |
-| Edit User Role |  |  | ✔✔ |
-| Reset User Password / MFA |  |  | ✔✔ |
-| Create / Delete Authorization Groups |  |  | ✔✔ |
-| Edit Authorization Groups |  |  | ✔✔ |
+| View Users | ✅ | ✅ | ✅✅ |
+| Create / Delete Users | | | ✅✅ |
+| Edit User Permissions | | ✅ | ✅✅ |
+| Edit User Details (other than self) | | | ✅✅ |
+| View User Status Details | | | ✅✅ |
+| Edit User Role | | | ✅✅ |
+| Reset User Password / MFA | | | ✅✅ |
+| Create / Delete Authorization Groups | | | ✅✅ |
+| Edit Authorization Group Permissions | | ✅ | ✅✅ |
+| Edit Authorization Group Members | | ✅(1) | ✅✅ |
+| Edit Authorization Group Details | | ✅(1) | ✅✅ |
 
-✔ **Limited Scope:** User is only able to perform this action on systems that are explicitly accessible to the user
-
-✔✔ **Global Scope**: User is able to perform this action across any system in the portfolio
+✅ **Limited Scope:** User is only able to perform this action on systems that are explicitly accessible to the user  
+✅✅ **Global Scope**: User is able to perform this action across any system in the portfolio  
+(1) Only for Groups the Maintainer is a member of
 
 ### System level access
 
