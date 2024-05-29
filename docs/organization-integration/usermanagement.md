@@ -117,7 +117,9 @@ Similarly, while Maintainers enjoy additional admin-level permissions on those s
 - Maintainer users cannot authorize themselves for new systems
 - Maintainer users cannot modify or create portfolio-level objectives
 - Maintainer users cannot change the role for any user, themselves included
-- Maintainer users cannot update access rights or user details for Administrator users, nor are they able to adjust the system access rights of other users for systems they themselves do not have access to
+- Maintainer users cannot grant or revoke the 'access to all systems' permission
+- Maintainer users cannot update access rights for Administrator users, nor are they able to adjust the system access rights of other users for systems they themselves do not have access to
+- Maintainer users cannot update user details or security settings
 - Maintainer users cannot create or delete users or authorization groups
 
 ### Authorized Actions based on User Type
