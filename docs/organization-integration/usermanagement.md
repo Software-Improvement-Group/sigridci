@@ -116,7 +116,7 @@ Maintainer users have the very similar rights as Administrators in performing ad
 Similarly, while Maintainers enjoy additional admin-level permissions on those systems that are accessible to them, there are still limitations on specific actions that are reserved for Administrator users only. This includes the following: 
 - Maintainer users cannot authorize themselves for new systems
 - Maintainer users cannot modify or create portfolio-level objectives
-- Maintainer users cannot grant the Admin role to any user, themselves included
+- Maintainer users cannot change the role for any user, themselves included
 - Maintainer users cannot update access rights or user details for Administrator users, nor are they able to adjust the system access rights of other users for systems they themselves do not have access to
 - Maintainer users cannot create or delete users or authorization groups
 
