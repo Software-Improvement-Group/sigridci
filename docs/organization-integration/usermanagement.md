@@ -127,7 +127,7 @@ Similarly, while Maintainers enjoy additional admin-level permissions on those s
 For a full breakdown of tasks able to be performed by each user type, please refer to the following authorized actions table. *Note:* These actions refer to both manual actions within the Sigrid web interface as well as actions allowed [via the Sigrid API](../integrations/sigrid-api-documentation.md#managing-user-permissions-via-API):
 
 | Action | Normal User | Maintainer | Administrator |
-| --- | --- | --- | --- |
+| :--- | :---: | :---: | :---: |
 | **Portfolio Overview**
 | View Dashboard | ✅ | ✅ | ✅✅ |
 | View Systems | ✅ | ✅ | ✅✅ |
