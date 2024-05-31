@@ -7,10 +7,8 @@
     - Make sure we are aligned with DPA v4! (can we refer to it?)
     - and with the guidance for producers
   - we have to explicitly address: what if we did not reach 4 stars -> then look at the underlying measurements
-  - create an overall flow chart? (but not in mermaid..)
 -->
 
-<!-- > NOTE for internal use: This document is a collection of the knowledge that we have accumulated within SIG on the best practices for achieving Open Source Health. Its purpose within SIG is to have all this knowledge documented in one place, such that we have a shared base as consultants, and also a document that we can share with customers that are in search of concrete advice on how to get things in place for healthy open source usage.  -->
 
 <sig-toc></sig-toc>
 
@@ -205,9 +203,6 @@ If no such remediation is available, do a risk assessment which will have one of
 
 SIG assesses whether a license is generally considered a risk for use within commercial software. Contact an IT lawyer to discuss license risks specifically for the code analyzed as well as the way it will be used.
 {: .warning }
-
-Usually, license risks will appear whenever a library is scanned for the first time; either because the application is scanned for the first time, or the library has just been introduced.
-{: .faq }
 
 
 #### Assess the license risk
@@ -413,7 +408,7 @@ The following chart visualizes how the various tasks are interrelated: often one
 ## Frequently Asked Questions
 
 **Q:** Is open Source Health the most important software quality concern?  
-**A:** No, not necessarily (depending on your situation), *but* in our opinion OSH is typically the quality aspect that has a really high return on investment: with a relatively low amount of effort and expertise, large steps towards reducing the risk associated with open source usage can be made. The majority of risks can be addressed by consistently updating the libraries in use to their latest stable versions. Also, risks such as vulnerable libraries and licensing risks can be rather 
+**A:** No, not necessarily (depending on your situation), *but* in our opinion OSH is typically the quality aspect that has a really high return on investment: with a relatively low amount of effort and expertise, large steps towards reducing the risk associated with open source usage can be made. The majority of risks can be addressed by consistently updating the libraries in use to their latest stable versions. Also, risks such as vulnerable libraries and licensing risks can be rather impactful.
 {: .faq }
 
 **Q:** Why not adopt a ‘if it ain’t broke, don’t fix it’ strategy for updating libraries? (i.e. do not update unless you *have to*).  
@@ -433,7 +428,7 @@ Also: you can use information about deployment to assess the exploitability of a
 
 
 **Q:** Is it not a bad practice to be on the latest version all the time, since these tend to be unstable and contain bugs?  
-**A:** There is some truth in that (although it is not that bad in practice). This is why we do not recommend to have everything green for Freshness, and everything less than 1 month not updated is still green.
+**A:** The general advice is that it makes most sense to update to all security patches and minor revisions: those tend to make small, focused, changes to the code and typically do not introduce new bugs. For major revisions with new features and possbily even changed APIs, doing an update requires more careful consideration (also see [9.Updating a library](#9-updating-a-library) ).
 {: .faq }
 
 
@@ -453,6 +448,8 @@ In addition, the entire codebase is scanned for unmanaged libraries following so
 
 **Q:** Can I use Sigrid to assess a library before I decide to incorporate it into my project?  
 **A:** No (and yes); Sigrid only looks for the libraries that are in use in the source code that you pass through `sigridci` or upload: having said that: if you include some libraries explicitly in your project (even before you decide on actually using them), you will see the results next time you trigger a Sigrid scan.
+
+@@@TODO
 {: .faq }
 
 
@@ -461,10 +458,6 @@ In addition, the entire codebase is scanned for unmanaged libraries following so
 **A:** 
 {: .faq } -->
 
-
-<!-- **Q:** Why it is a good idea to see every library as a backlog item? [LB: sure?]  
-**A:** This makes developers aware of the risks and effort.
-{: .faq } -->
 
 ---
 
