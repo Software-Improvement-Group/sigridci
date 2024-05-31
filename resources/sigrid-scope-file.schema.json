@@ -270,6 +270,10 @@
     "components": {
       "$ref": "#/definitions/component_list"
     },
+    "experimental": {
+      "type": "boolean",
+      "description": "Enable experimental analysis features."
+    },
     "languages": {
       "$ref": "#/definitions/language_list",
       "description": "A list of technologies that should be included as part of the analysis."
