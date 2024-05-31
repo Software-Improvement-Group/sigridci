@@ -19,7 +19,7 @@ Making the shift is not just a matter of 'the business should allow us to work o
 
 The picture below depicts the hybrid model that enables this shift. It aims to strike a middle ground between a top-down model that leaves teams with very little autonomy to address problems as they see fit, and the fully autonomous model where management has very little control even if that would benefit the teams.
 
-<img src="../images/hybrid-model.svg" width="700" />
+<embed src="../images/hybrid-model.pdf" width="700" />
 
 ### Who is in each group?
 
