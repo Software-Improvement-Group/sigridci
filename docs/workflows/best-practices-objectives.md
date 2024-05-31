@@ -32,7 +32,7 @@ As for autonomy, that is not absolute to begin with. Even the most autonomous te
 
 The picture below depicts the hybrid model that we recommend. It aims to strike a middle ground between a top-down model that leaves teams with very little autonomy to address problems as they see fit and the fully autonomous model where management has very little control even if that would benefit the teams.
 
-<img src="../images/hybrid-model.png" width="700" />
+<img src="../images/hybrid-model.svg" width="700" />
 
 ## Using software quality objectives: jobs to be done
 
