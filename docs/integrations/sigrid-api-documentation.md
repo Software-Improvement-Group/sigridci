@@ -12,6 +12,7 @@ In addition to [Sigrid CI](../README.md), Sigrid also provides a more general-pu
 - You need to pass the authentication token to each request in the HTTP header `Authorization: Bearer {SIGRID_CI_TOKEN}`.
 - All end points will return HTTP status 401 if the token is invalid, or if the token is not authorized to access the portfolio and/or system.
 - All end points return JSON and therefore return a Content-Type of `application/json`.
+- Please use lower case when you format your api calls.
 
 The following example shows how to call the Sigrid API using `curl`:
 
@@ -19,7 +20,7 @@ The following example shows how to call the Sigrid API using `curl`:
 curl -H 'Authorization: Bearer {SIGRID_CI_TOKEN}' https://sigrid-says.com/rest/analysis-results/api/v1/maintainability/{customer}
 ```
 
-In the example, `{customer}` refers to your company's Sigrid account name, and `{SIGRID_CI_TOKEN}` refers to your authentication token.
+In the example, `{customer}` refers to your company's Sigrid account name (lower case), and `{SIGRID_CI_TOKEN}` refers to your authentication token.
 
 ### Including deactivated and/or excluded systems
 
@@ -46,14 +47,6 @@ Sigrid's REST API mimics this behavior, as follows:
   in the response.
 
 ## Available end points
-
-* [Maintainability ratings](#maintainability-ratings)
-* [Security and reliability findings](#security-and-reliability-findings)
-* [Vulnerable libraries in Open Source Health](#vulnerable-libraries-in-open-source-health)
-* [Architecture quality ratings](#architecture-quality-ratings)
-* [System metadata](#system-metadata)
-* [System lifecycle management](#system-lifecycle-management)
-* [System and portfolio objectives](#system-objectives)
 
 ### Maintainability ratings
 
@@ -258,7 +251,7 @@ it is simply missing from the `properties` array.
 
 More information on the SBOM format and the various fields is available from the [CycloneDX SBOM specification](https://github.com/CycloneDX/specification).
 
-### Architecture quality ratings
+### Architecture Quality ratings
 
 Arcitecture quality ratings for a given customer are available via two endpoints:
 - `GET https://sigrid-says.com/rest/analysis-results/api/v1/architecture-quality/{customer}`: get architecture quality ratings for all systems of the given customer the current user has access to.
@@ -307,6 +300,13 @@ The response format of the system-level endpoint is as follows:
 
 The customer-level endpoint retuns an array with each element identical to the system-level response.
 
+### Architecture Quality data
+
+For reporting purposes, using the [end point for architecture quality ratings](#architecture-quality-ratings) is usually sufficient. However, some advanced use cases require the full Architecture Quality data, beyond just the ratings.
+
+The end point `GET https://sigrid-says.com/rest/analysis-results/api/v1/architecture-quality/{customer}/{system}/raw` will generate the *full* Architecture Quality analysis results, in JSON format. This end point is intended for system-to-system integration, where one of your own systems needs to process this data without relying on the Sigrid user interface. 
+
+This end point will return the "raw" architecture graph, which is documented in the [Architecture Quality documentation](../reference/aq-json-export-format.md).
 
 ### System metadata
 
@@ -425,7 +425,7 @@ Sigrid allows you to deactivate a given system.
 
 The endpoint that enables such deactivation is:
 
-- `PATCH https://sigrid-says.com/rest/analysis-results/api/v1/systems/{customer}/{system}`: enables setting the deactivation date for a system as the instant when this endpoint was called.
+`PATCH https://sigrid-says.com/rest/analysis-results/api/v1/systems/{customer}/{system}`: enables setting the deactivation date for a system as the instant when this endpoint was called.
 
 The request format is:
 
@@ -435,9 +435,9 @@ The request format is:
 
 where the placeholder, `<deactivate_now>` can assume the following values:
 
-- `{"deactivateNow": false}` : when setting the boolean value `deactivateNow` to false, the system will be viewed by Sigrid as being active, so, setting this value to false effectively marks a system as active and re-activates a previously deactivated system;
+`{"deactivateNow": false}` : when setting the boolean value `deactivateNow` to false, the system will be viewed by Sigrid as being active, so, setting this value to false effectively marks a system as active and re-activates a previously deactivated system;
 
-- `{"deactivateNow": true}` : when this value is true, the deactivation date for the system will be set using `Instant.now()` representing the current instant when the endpoint was called. This effectively deactivates a system from the moment the endpoint was called;
+`{"deactivateNow": true}` : when this value is true, the deactivation date for the system will be set using `Instant.now()` representing the current instant when the endpoint was called. This effectively deactivates a system from the moment the endpoint was called;
 
 The response format on a successful request is, as an example, for SIG's `bch` system:
 
@@ -452,9 +452,9 @@ If the request body is not in the expected format, the returned response status 
 
 ### System and portfolio objectives
 
-Sigrid allows you to define quality objectives for a system, either per system, or as 
-portfolio-wide objectives that apply to all systems that match the conditions of the portfolio 
-objective. Defining quality objectives helps to set some realistic and feasible expectations, 
+Sigrid allows you to define quality objectives: either per system, or as 
+portfolio-wide objectives that apply to all systems that match certain conditions.
+Defining quality objectives helps to set some realistic and feasible expectations, 
 considering both the system's business context and its current technical state. 
 For instance, typically business-critical systems using modern technologies require more ambitious 
 targets than legacy systems.
@@ -462,40 +462,14 @@ targets than legacy systems.
 <img src="../images/sigrid-objectives.png" width="500" />
 
 Once you have defined quality objectives in Sigrid, you can [use these targets in Sigrid CI](../reference/client-script-usage.md#defining-quality-targets). 
-You can also retrieve, edit and delete a system's objectives and corresponding targets via the API:
 
-    GET https://sigrid-says.com/rest/analysis-results/api/v1/objectives/{customer}/{system}/config
+In addition to Sigrid and Sigrid CI, you can also use the API to retrieve objectives.
+
+#### Retrieving portfolio objectives
 
     GET https://sigrid-says.com/rest/analysis-results/api/v1/objectives/{customer}
-
-    PUT https://sigrid-says.com/rest/analysis-results/api/v1/objectives/{customer}/{system}
-
-    DELETE https://sigrid-says.com/rest/analysis-results/api/v1/objectives/{customer}/{system}/{type}
     
-The system-level GET endpoint returns the following response structure:
-
-    {
-      "MAINTAINABILITY": 4.0,
-      "NEW_CODE_QUALITY": 3.5,
-      "OSH_MAX_SEVERITY": "LOW",
-      "TEST_CODE_RATIO": 0.8
-    }
-
-In Sigrid, a system always has at most one objective per type. So in the above example, the 
-objective for the overall maintainability rating is apparently 4.0. The endpoint does not 
-currently indicate _why_ the maintainability target (in this example) is 4.0. There are two 
-possible reasons:
-- A user defined a system-level maintainability target of 4.0 stars for the given system. It 
-  doesn't matter whether there is a portfolio-wide maintainability target that the given system 
-  matches, as system-level objectives always have precedence.
-- There's no system-level maintainability target defined for the given system. However, there is at 
-  least one portfolio-wide objective that sets a maintainability target of 4.0, the given system 
-  matches the condition(s) of that objective, and there's no portfolio-wide maintainability 
-  objective with a target higher than 4.0 with conditions the given system also matches.
-
-In both cases, the endpoint returns `"MAINTAINABILITY": 4.0`.
-
-The portfolio-level endpoint returns a response containing the portfolio-level objectives defined
+This returns a response containing the portfolio-level objectives defined
 for the given portfolio, including their conditions. The response looks like the following:
 
 <details markdown="1">
@@ -531,6 +505,34 @@ com/rest/analysis-results/api/v1/objectives/{customer}`) is as follows:
 
 </details>
 
+#### Retrieving objectives for a system
+
+    GET https://sigrid-says.com/rest/analysis-results/api/v1/objectives/{customer}/{system}/config
+    
+This end point returns the following response structure:
+
+    {
+      "MAINTAINABILITY": 4.0,
+      "NEW_CODE_QUALITY": 3.5,
+      "OSH_MAX_SEVERITY": "LOW",
+      "TEST_CODE_RATIO": 0.8
+    }
+
+Systems always have a single target per objective type. If you define multiple overlapping objectives, 
+precedence rules are applied to determine which objective "wins" and gets to decide the target for
+that system:
+
+- System-level objectives have precedence over portfolio-level objectives.
+- If the metadata of a system matches more than one portfolio objective of the same type, the portfolio objective with the strictest target "wins". 
+
+This particular endpoint returns the target based on these precedence rules. The endpoint does not
+explain *why* that target exists. Use the [objectives status end point](#retrieving-objectives-status)
+to obtain more information on which objectives are applied to a system.
+
+#### Defining and editing system objectives
+
+    PUT https://sigrid-says.com/rest/analysis-results/api/v1/objectives/{customer}/{system}
+    
 The `PUT` endpoint can be used to create a new system-level objective, or edit an existing one. 
 It takes a request body with the following structure:
 
@@ -552,18 +554,13 @@ It takes a request body with the following structure:
 | SECURITY_MAX_SEVERITY    | Highest allowed severity of security findings     | One of: `"NONE"`, `"LOW"`, `"MEDIUM"`, `"HIGH"`, `"CRITICAL"` |
 | RELIABILITY_MAX_SEVERITY | Highest allowed severity of reliability findings  | One of: `"NONE"`, `"LOW"`, `"MEDIUM"`, `"HIGH"`, `"CRITICAL"` | 
 
-The `PUT` endpoint returns the objective created, like so:
+The endpoint returns the objective that was just created or modified.
 
-```json
-{
-  "target": 0.7,
-  "level": "SYSTEM",
-  "type": "TEST_CODE_RATIO",
-  "feature": "MAINTAINABILITY"
-}
-```
+#### Deleting system objectives
 
-The `DELETE` endpoint deletes the _system_ objective of the given type, using the type names 
+    DELETE https://sigrid-says.com/rest/analysis-results/api/v1/objectives/{customer}/{system}/{type}
+    
+This will delete the _system_ objective of the given type, using the type names 
 from the above table. For instance:
 
 ```
@@ -574,11 +571,64 @@ DELETE https://sigrid-says.com/rest/analysis-results/api/v1/objectives/{customer
 This would delete the system-level test code ratio objective, if it exists at the system level, and 
 return 204. In case the objective does not exist at the system level, the endpoint returns 404. 
 
+#### Retrieving objectives status
+
+    GET https://sigrid-says.com/rest/analysis-results/api/v1/objectives-evaluation/{customer}?startDate={start}&endDate={end}
+    
+This will return the current objectives status and delta for all systems in your portfolio, for the specified time period. The `startDate` and `endDate` parameters accept dates in [ISO 8601 format](https://en.wikipedia.org/wiki/ISO_8601), for example 2024-05-17. 
+
+This end point returns the following response:
+
+<details markdown="1">
+  <summary>Example objectives status response</summary>
+
+```json
+{
+  "systems": [
+    "systemName": "my-example-system",
+      "objectives": [
+        {
+          "type": "OSH_MAX_LICENSE_RISK",
+          "feature": "OPEN_SOURCE_HEALTH",
+          "target": "LOW",
+          "targetMetAtStart": "NOT_MET",
+          "targetMetAtEnd": "NOT_MET",
+          "delta": "SIMILAR",
+          "stateAtEnd": "MEDIUM",
+          "level": "PORTFOLIO",
+          "parentId": 16
+        },
+        {
+          "type": "ARCHITECTURE_QUALITY",
+          "feature": "ARCHITECTURE_QUALITY",
+          "target": 4.0,
+          "targetMetAtStart": "NOT_MET",
+          "targetMetAtEnd": "NOT_MET",
+          "delta": "DETERIORATING",
+          "stateAtEnd": 3.68909,
+          "level": "SYSTEM"
+        }
+      ]
+    ]
+  }
+}
+```
+
+</details>
+
+The response contains every system in your portfolio, with each system containing all objectives that apply to that system. The objectives follow the same precedence rules as in Sigrid, so only objectives with conditions that match the metadata of the system are included in the result.
+
+Within each objective, the `parentId` refers to the ID of a portfolio objective, which you can obtain with the [portfolio objectives end point](#retrieving-portfolio-objectives). If the objective does not have a `parentId`, it means it's a system objective.
+
+- Possible values for the `level` field are `PORTFOLIO` or `SYSTEM`.
+- Possible values for the `targetMetAtStart` and `targetMetAtEnd` fields are `MET`, `UNMET`, and `UNKNOWN`.
+- Possible values for the `delta` field are `IMPROVING`, `DETERIORATING`, `SIMILAR`, and `null` (if there is no delta).
+
+For advanced reporting use cases, you can combine the information from this end point with other end points: Combining the objective status with the [portfolio objectives](#retrieving-portfolio-objectives) allows you to replicate Sigrid's objectives dashboard in your report. You can also combine this with [metadata](#system-metadata) to provide additional drill-down information, for example for specific teams or divisions.
+
 ## Managing user permissions via API
 
 In addition to the general usage of the Sigrid API, users also can also perform user management tasks via the API as an alternative to doing these tasks within the web-based user interface of Sigrid itself. This also allows Sigrid administrators to better construct automated processes for managing the access to systems for their users.
-
-### Usage
 
 * The Sigrid UM API base URL is `https://sigrid-says.com/rest/auth/api`.
 * Authentication for the Sigrid API uses the same [authentication tokens](../organization-integration/authentication-tokens.md) that are used by Sigrid CI.
