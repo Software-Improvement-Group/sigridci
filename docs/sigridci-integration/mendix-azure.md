@@ -45,8 +45,8 @@ stages:
               MENDIX_TOKEN: $(MENDIX_TOKEN)
               MENDIX_SOURCE_DIR: $(System.DefaultWorkingDirectory)
               SIGRID_CI_TOKEN: $(SIGRID_CI_TOKEN)
-              SIGRID_CI_CUSTOMER: $(SIGRID_CI_CUSTOMER)
-              SIGRID_CI_SYSTEM: $(SIGRID_CI_SYSTEM)
+              SIGRID_CI_CUSTOMER: <example_customer_name>
+              SIGRID_CI_SYSTEM: <example_system_name>
             continueOnError: true
       - job: SigridPublish
         pool:
@@ -62,8 +62,8 @@ stages:
               MENDIX_TOKEN: $(MENDIX_TOKEN)
               MENDIX_SOURCE_DIR: $(System.DefaultWorkingDirectory)
               SIGRID_CI_TOKEN: $(SIGRID_CI_TOKEN)
-              SIGRID_CI_CUSTOMER: $(SIGRID_CI_CUSTOMER)
-              SIGRID_CI_SYSTEM: $(SIGRID_CI_SYSTEM)
+              SIGRID_CI_CUSTOMER: <example_customer_name>
+              SIGRID_CI_SYSTEM: <example_system_name>
               SIGRID_CI_PUBLISH: 'publishonly'
             continueOnError: true
 ```
