@@ -57,9 +57,17 @@ To be sure, setting objectives for a single system has value. But in most situat
 Typically, divisions or departments are a good starting point (although in large organizations, these might still be quite big). A technology platform (e.g. a low code platform) can be a useful scope because they often exist to accelerate development to decrease the time to market, which is a useful goal to base objectives on. The downside is that they typically support a variety of business processes which makes that less usable as a source of a limited, coherent set of organizational goals.
 
 ### 2. Establish governance structure
-It needs to be clear who gets to decide what. Typically, the decision making involves engineering leaders (e.g. architects, lead developers, etc.). For the day-to-day management, different models are possible. Some organizations prefer a dedicated cross-functional team responsible for defining, reviewing objectives and interacting with engineering teams regularly. Others add this to the existing engineering leadership roles.
+It needs to be clear who gets to decide what. Our [guidelines on organization](best-practices-organization.md) describe the different stakeholder groups that need to be involved. They all need to be involved somehow:
+- Teams need to understand what is expected of them and provide input on the objectives.
+- Engineering leads take the lead in setting technical standards and indicating their organization value.
+- Management provides organization goals and needs to understand the organization value.
+Note that this does not imply that there has to be a one-person-per-group setup. Consider the SIG situation: Formally, our objective-setting is part of our ISMS (information security management system). Our CISO (Chief Information Security Officer) represents management and is responsible for overall outcomes. Our Head of Development owns the software development process and measurements (objectives) as an engineering lead. Our tech leads are approvers of the process document and represent the teams. Other stakeholders (Head of Product, team leads) are consulted but are not part of the formal process.
 
-It is important to raise awareness with all stakeholders that meeting objectives is a serious concern that may have impact on the feature planning. The best practice is to allow teams and product/project owners/managers to come to a balanced priority setting themselves, but an escalation path needs to be provided to resolve conflicts if they arise.
+For the day-to-day management, different models are possible. Some organizations prefer a dedicated cross-functional team responsible for defining, reviewing objectives and interacting with engineering teams regularly. Others add this to the existing engineering leadership roles.
+
+It is important to raise awareness with all stakeholders that meeting objectives is a serious concern that may have impact on the feature planning. The best practice is to allow teams and [product|project] [owners|managers] to come to a balanced priority setting themselves, but an escalation path needs to be provided to resolve conflicts if they arise.
+
+If your organization uses a process framework to structure software development, managing software quality should be embedded in it. See [this section](best-practices-organization.md#embedding-technical-improvements-in-existing-process-frameworks) in our guidelines on organization for examples.
 
 ### 3. Set objectives
 
