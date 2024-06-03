@@ -11,7 +11,7 @@ Another way to arrive here is clicking on the top capability tiles on the *Portf
 Since the portfolio view is a summary of system level findings, please refer to the [system-level view of Open Source Health](system-open-source-health.md). For example, clicking on a system name in the portfolio overview will bring you to the system's details. 
 
 ## 6 different risk areas
-It is important to know how Open Source Health groups its findings. Open Source Health scans for 6 different risk areas. For an elaboration, please [see the relevant paragraph in the page describing system-level view of Open Source Health](system-open-source-health.md#open-source-health-scans-for-6-different-risk-areas). Risks are then classified and colored as <img src="../images/system-security-icon-low1.png" class="inline" /> *low*, <img src="../images/system-security-icon-medium1.png" class="inline" /> *medium*, or <img src="../images/system-security-icon-high1.png" class="inline" /> *high, based on their *CVSS score*. See also [our elaboration on how CVSS works](system-security.md#context-and-meaning-of-cvss-security-metrics-from-asset-to-risk) and on [how risks are visualized in Sigrid](system-security.md#cvss-scores-in-sigrid).
+It is important to know how Open Source Health groups its findings. Open Source Health scans for 6 different risk areas. For an elaboration, please [see the relevant paragraph in the page describing system-level view of Open Source Health](system-open-source-health.md#open-source-health-scans-for-6-different-risk-areas). Risks are then classified and colored as <img src="../images/system-security-icon-low1.png" class="inline" /> *low*, <img src="../images/system-security-icon-medium1.png" class="inline" /> *medium*, <img src="../images/system-security-icon-high1.png" class="inline" /> *high*, or <img src="../images/system-security-icon-critical1.png" class="inline"> *critical* based on their *CVSS score*. See also [our elaboration on how CVSS works](system-security.md#context-and-meaning-of-cvss-security-metrics-from-asset-to-risk) and on [how risks are visualized in Sigrid](system-security.md#cvss-scores-in-sigrid).
 
 ## Portfolio-level Open Source Health overview
 The Open Source Health overview page shows a summary of findings and estimated severity.  
@@ -20,7 +20,7 @@ The Open Source Health overview page shows a summary of findings and estimated s
 
 From left to right, the tiles read as follows:
 * *Systems and libraries*: the totals of systems being scanned and the sum of identified (third party) libraries.
-* *Systems with vulnerability/legal/freshness/.. risk*: the count of systems with at least 1 identified risk, ordered by risk category (e.g. *low*, *medium* or *high*).
+* *Systems with vulnerability/legal/freshness/.. risk*: the count of systems with at least 1 identified risk, ordered by risk category (e.g. *low*, *medium*, *high* or *critical*).
 * *Libraries with vulnerability/legal/freshness/..risk*: the total count of libraries in each risk category, transcending systems. 
 
 The aforementioned 6 categories are present on the bottom of the tiles that show the sum of number of risks.

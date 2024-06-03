@@ -9,11 +9,13 @@ You can reach the Open Source Health information via the top menu if you are in 
 Or you can click a capability on Portfolio *Overview* page, clicking on a system from the Portfolio Open Source Health view. See [the system-level Overview page](system-overview.md#navigating-to-capabilities), [navigating from the portfolio-level Overview page](portfolio-overview.md#navigating-to-capabilities) or [navigating from the portfolio security view](portfolio-open-source-health.md#moving-from-portfolio-level-to-system-level).
 
 ## Navigating the overview page
-The system level overview lists the third party libraries used in this system, categorized per risk area (columns on the right). On top, a trend line is shown counting changes over time. A summary of counts, changes and identified risks are shown in the top four panels. These (change) counts depend on the period that you have chosen in the top right corner. If only 1 snapshot is available, only the latest count will be provided.
+The system level overview lists the third party libraries used in this system, categorized per risk area (columns on the right). 
+On the top left, the tile shows ratings based on the Open Source Health Quality Model, then a trend line is shown counting changes over time. 
+A summary of counts, changes and identified risks are shown in four panels next to the ratings. These (change) counts depend on the period that you have chosen in the top right corner. If only 1 snapshot is available, only the latest count will be provided.
 
 <img src="../images/system-osh-top-bar-and-trendline.png" width="600" />
 
-### Open Source Health scans for 6 different risk areas
+### Open Source Health scans for six different risk areas
 
 *Open Source Health* scans for six different risk areas: 
 
@@ -30,7 +32,17 @@ The system level overview lists the third party libraries used in this system, c
 <img src="../images/system-osh-icon-legal.png" class="inline" />  **Legal licenses:** third-party dependencies may have restricted licenses, that restrict how you can use it or e.g. obliges you to publish certain source code. This should always trigger a check by a legal expert. 
 
 ### Navigating the top tiles in the overview page 
-The default view shows a vulnerability count first:
+The default views shows the Open Source Health Quality Model ratings first:
+
+<img src="../images/system-osh-quality-model-ratings.png" width="300" />
+
+You might notice that the tile does not include Stability, as this metric is not used to the purpose of rating calculations.
+
+Then, a tile shows the total number of dependencies for that system, and the latest scan date:
+
+<img src="../images/system-osh-dependencies-count.png" width="300" />
+
+Then, a vulnerability count:
 
 <img src="../images/system-osh-chart-vulnerability-risk.png" width="300" />
 
