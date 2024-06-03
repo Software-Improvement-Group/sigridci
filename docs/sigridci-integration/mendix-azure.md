@@ -18,23 +18,7 @@ On-boarding is done automatically when you first run Sigrid CI. As long as you h
 
 ## Configuration
 
-**Step 1: Configure both the Sigrid credential and the Mendix PAT to environment variables**
-
-Sigrid CI reads your credentials from 2 environment variables called `SIGRID_CI_TOKEN` and `MENDIX_TOKEN`. 
-To add these to your GitLab CI pipeline, follow these steps:
-
-- Select "Settings" in your GitLab project's menu
-- Select "CI/CD" in the settings menu
-- Locate the section named "Variables"
-- Click the "Add variable" button
-- Add an first environment variable `SIGRID_CI_TOKEN` and use your [Sigrid authentication token](../organization-integration/authentication-tokens.md) as the value.
-- Add an second environment variable `MENDIX_TOKEN` and use the [Mendix user settings](https://user-settings.mendix.com/link/developersettings) to create a PAT with 'mx:modelrepository:repo:read' access only.
-
-<img src="../images/mendix-credentials.png" width="600" />
-
-These instructions describe how to configure a single GitLab project, but you can follow the same steps to configure the entire GitLab group, which will make the environment variables available to all projects within that group.
-
-**Step 2: Create pipeline configuration file for Azure Devops**
+### Step 1: Create pipeline configuration file for Azure Devops**
 
 We will create a pipeline that consists of two jobs:
 
@@ -92,7 +76,7 @@ Commit and push this file to the repository, so that Azure DevOps can use this c
 
 Finally, note that you need to perform this step for every project where you wish to use Sigrid CI. Be aware that you can set a project-specific target quality, you don't necessarily have to use the same target for every project.
 
-### Step 3: Create your Azure DevOps pipeline
+### Step 2: Create your Azure DevOps pipeline
 
 In Azure DevOps, access the section "Pipelines" from the main menu. In this example we assume you are using a YAML file to configure your pipeline:
 
@@ -106,11 +90,13 @@ This will display the contents of the YAML file in the next screen. The final st
 
 <img src="../images/azure-variables.png" width="500" />
 
+Add a second secret `MENDIX_TOKEN` and use the [Mendix user settings](https://user-settings.mendix.com/link/developersettings) to create a PAT with 'mx:modelrepository:repo:read' access only.
+
 From this point, Sigrid CI will run as part of the pipeline. When the pipeline is triggered depends on the configuration: by default it will run after every commit, but you can also trigger it periodically or run it manually.
 
 <img src="../images/azure-build-status.png" width="700" />
 
-# Usage
+## Usage
 
 To obtain feedback on your commit, click on the "Sigrid CI" step in the pipeline results screen shown above. 
 
