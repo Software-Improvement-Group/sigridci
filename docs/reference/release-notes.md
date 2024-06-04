@@ -5,6 +5,7 @@ SIG uses [continuous delivery](https://en.wikipedia.org/wiki/Continuous_delivery
 
 ### June 3, 2024
 
+- **Documentation:** The workflows section now provides [guidelines on how organizations should set themselves up to achieve high-quality software](../workflows/best-practices-organization.md).
 - **Open Source Health:** Open Source Health now uses benchmarked star ratings, similar to Maintainability and Architecture Quality. This makes it easier to interpret whether you are doing well relative to the market. You can find out more on how to use Open Source Health in your organization [here](../workflows/best-practices-osh.md), and more about the Open Source Health star ratings [here](quality-model-documents/open-source-health.md).
 - **User management:** The list of user roles has been extended with the new Maintainer role, which now exists alongside the existing User and Administrator role. You can find out more on user roles [here](../organization-integration/usermanagement.md#authorized-actions-based-on-user-type).
 - **Sigrid CI:** The documentation has been extended for using [Sigrid CI in combination with Mendix QSM on Azure DevOps](../sigridci-integration/mendix-azure.md).
