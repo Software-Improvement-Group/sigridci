@@ -18,10 +18,14 @@ from datetime import datetime, timedelta
 from unittest import TestCase
 
 from sigridci.sigridci.repository_history_exporter import RepositoryHistoryExporter
+from sigridci.sigridci.upload_log import UploadLog
 
 
 class RepositoryHistoryExporterTest(TestCase):
     maxDiff = None
+
+    def setUp(self):
+        UploadLog.clear()
 
     def testExportGitHistory(self):
         tempDir = tempfile.mkdtemp()
@@ -55,3 +59,18 @@ class RepositoryHistoryExporterTest(TestCase):
         expectedEmail = "318f8c6a1732a7a6c60e2200ec56edf41780425d81e5eb30aed6fdc025edccab"
 
         self.assertEqual(result, f"@@@;1234;{expectedName};{expectedEmail};2023-11-29 10:48:32 +0100;a\n")
+
+    def testWarningWhenHistoryContainsSingleEntry(self):
+        tempDir = tempfile.mkdtemp()
+        output = subprocess.run(["git", "clone", "--depth", "1", "https://github.com/BetterCodeHubTraining/cspacman.git", tempDir])
+        output.check_returncode()
+
+        historyExporter = RepositoryHistoryExporter()
+        historyExporter.exportHistory(tempDir)
+
+        expected = [
+            "Including repository history in upload",
+            "Warning: Git history seems to be missing, maybe you're using a shallow clone?"
+        ]
+
+        self.assertEqual(UploadLog.history, expected)
