@@ -36,7 +36,7 @@ The default views shows the Open Source Health Quality Model ratings first:
 
 <img src="../images/system-osh-quality-model-ratings.png" width="300" />
 
-You might notice that the tile does not include Stability, as this metric is not used to the purpose of rating calculations.
+You might notice that the tile does not include Stability. This metric is not used to the purpose of rating calculations, as our analyses show not bringing enough value when assessing the quality of third party open source dependencies.
 
 Then, a tile shows the total number of dependencies for that system, and the latest scan date:
 
