@@ -260,6 +260,10 @@
       "$ref": "#/definitions/file_pattern_list",
       "description": "List of file and directory patterns to manually exclude from the analysis."
     },
+    "experimental": {
+      "type": "boolean",
+      "description": "Enables experimental analysis features."
+    },
     "component_depth": {
       "type": "integer",
       "description": "Directory depth that will be used to define components."
