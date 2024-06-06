@@ -30,11 +30,17 @@ h1 {
 h2 {
     font-size: 22px;
     color: #334E68;
-    margin: 30px 0px 0px 0px;
+    margin: 40px 0px 0px 0px;
 }
 
 h3 {
     font-size: 18px;
+    color: #334E68;
+    margin: 40px 0px 0px 0px;
+}
+
+h4 {
+    font-size: 16px;
     color: #334E68;
     margin: 30px 0px 0px 0px;
 }
@@ -51,6 +57,13 @@ ul li::before {
     margin-left: -1em;
 }
 
+ol li::before {
+    content: '';
+    color: #DFC101;
+    padding-right: 16px;
+    margin-left: -1em;
+}
+
 hr {
     width: 650px;
     color: #B7B7B7;
@@ -64,7 +77,7 @@ blockquote {
     margin-left: 2px;
 }
 
-aside {
+aside, .attention {
     background-image: url("/images/icon-attention.svg");
     background-color: #EBE6F9;
     background-repeat: no-repeat;
@@ -76,8 +89,46 @@ aside {
     display: block;
 }
 
-aside::before {
+aside::before, .attention::before {
     content: "Attention";
+    display: block;
+    font-weight: 600;
+    color: #687483;
+}
+
+.faq {
+    background-image: url("/images/icon-faq.svg");
+    background-color: #DEF2E6;
+    background-repeat: no-repeat;
+    background-position: 12px 22px;
+    background-size: 24px;
+    padding: 20px 20px 20px 50px;
+    margin-top: 30px;
+    margin-bottom: 30px;
+    display: block;
+}
+
+.faq::before {
+    content: "FAQ";
+    display: block;
+    font-weight: 600;
+    color: #687483;
+}
+
+.warning {
+    background-image: url("/images/icon-warning.svg");
+    background-color: #F8EDDE;
+    background-repeat: no-repeat;
+    background-position: 12px 22px;
+    background-size: 24px;
+    padding: 20px 20px 20px 50px;
+    margin-top: 30px;
+    margin-bottom: 30px;
+    display: block;
+}
+
+.warning::before {
+    content: "Warning";
     display: block;
     font-weight: 600;
     color: #687483;

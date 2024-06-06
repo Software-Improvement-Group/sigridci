@@ -2,20 +2,13 @@
 
 <!-- 
 - TODOs 
-  - consider how to use context/meta-information to refine policies?
+  - consider how to use context/meta-information to refine policies? or is it enough to refer to the objectives section?
   - Check that the benchmark risk categories and the guidance for producers should be consistent with the methodology & guidelines: so same scales etc.
-  - Make sure we are aligned with DPA v4! (can we refer to it?)
-  - and with the guidance for producers
+    - Make sure we are aligned with DPA v4! (can we refer to it?)
+    - and with the guidance for producers
   - we have to explicitly address: what if we did not reach 4 stars -> then look at the underlying measurements
-  - check consistent usage of the term third party library (marco: open-source dependency)
-   - create an overall flow chart? (but not in mermaid..)
-  - comments marijn:
-     - Nog iets: onder het kopje 'When a library does not support requirements' staan redenen om een library te vervangen die allemaal los staan van OSH, maar die ook weer terugkomen on Vervolgens staat onder 'Replacing a library' een aantal redenen om te replacen die wel weer aan OSH vast zitten. Volgens mij is er eigenlijk 1 flow die neerkomt op 'Ik ben niet blij met mijn library vanwege whatever, dan 1) update 1a) pull request of issue aanmaken bij maintainer (noemen we nu nog niet) 2) vervangen 3) (if all else fails) adopteren.
-    - Nog iets: in 'How to improve portfolio and system-level OSH' kunnen we volgens mij op een hoger niveau blijven. Nu beschrijven we daar bepaalde details die ook terugkomen in de 'Handling....' secties.
-  - [Marco]: I feel the text in "Structure and overview" and #### Be equipped for healthy open source usage can be merged. I find the text above that introduces this list very... informal, but at the same time not straightforward to understand.
 -->
 
-<!-- > NOTE for internal use: This document is a collection of the knowledge that we have accumulated within SIG on the best practices for achieving Open Source Health. Its purpose within SIG is to have all this knowledge documented in one place, such that we have a shared base as consultants, and also a document that we can share with customers that are in search of concrete advice on how to get things in place for healthy open source usage.  -->
 
 <sig-toc></sig-toc>
 
@@ -27,34 +20,31 @@ Where applicable, this document explains how Sigrid can be used to achieve this.
 
 ### Structure and overview
 
-The guidelines and best practices have been structured based on 'jobs to be done': the idea is to look at the actual tasks that stakeholders need to perform, and provide them with help to do those tasks. Jobs can embed, or refer to, other jobs.
+The guidelines and best practices have been structured based on the actual tasks that stakeholders need to conduct (also called 'jobs to be done'). Jobs can embed, or refer to, other jobs.
 
-These jobs have been grouped in three categories:
-
-1. General guidelines for healthy open source usage in development. They help to get started, and may need to be revisited or updated on a regular basis.
-2. The various tasks that are needed to ensure continued health of libraries (note that even when application code is not actively maintained for a while, the health of open source libraries may diminish!).
-3. A set of practical tasks in handling libraries as a developer.
+The jobs have been grouped in three categories: first some general guidelines for conducting healthy open source usage in development, that help to get started, and may need to be revisited or updated on a regular basis. Secondly the various types of tasks that are needed to ensure continued health of libraries (note that even when application code is not actively maintained for a while, the health of open source libraries may diminish!). And thirdly a set of practical tasks in handling libraries as a developer:
 
 #### Be equipped for healthy open source usage
-1. [Define OSH-related policies](#1-define-osh-related-policies-for-development)
-2. [How to improve portfolio and system-level OSH](#2-how-to-improve-portfolio-and-system-level-osh)
-3. [General guidelines for your application development](#3-general-guidelines-for-your-application-development)
+1) [Define OSH-related policies](#1-define-osh-related-policies-for-development)  
+2) [How to improve portfolio and system-level OSH](#2-how-to-improve-portfolio-and-system-level-osh)  
+3) [General guidelines for your application development](#3-general-guidelines-for-your-application-development)
 
 #### Ensuring your open source stays healthy
-4. [Scan the software for issues](#4-scan-the-software-for-health-issues)
-5. [Handling vulnerabilities](#5-handling-vulnerabilities)
-6. [Handling license issues](#6-handling-license-issues)
-7. [Handling lack of freshness](#7-handling-lack-of-freshness)
-8. [Handling lack of activity](#8-handling-lack-of-activity)
+4) [Scan the software for issues](#4-scan-the-software-for-health-issues)  
+5) [Handling vulnerabilities](#5-handling-vulnerabilities)  
+6) [Handling license issues](#6-handling-license-issues)  
+7) [Handling lack of freshness](#7-handling-lack-of-freshness)  
+8) [Handling lack of activity](#8-handling-lack-of-activity)  
 
 #### Handling libraries
-9. [Updating a library](#9-updating-a-library)
-10.  [Selecting a new library](#10-selecting-a-new-library)
-11.  [When a library does not meet the requirements](#11-when-a-library-does-not-meet-requirements)
+9) [Updating a library](#9-updating-a-library)  
+10) [Selecting a new library](#10-selecting-a-new-library)  
+11) [When a library does not meet the requirements](#11-when-a-library-does-not-meet-requirements)  
+12) [Replacing a library](#12-replacing-a-library)  
+13) [Reviewing a library](#13-reviewing-a-library)  
 
-<aside>
 A word of caution: The guidelines and steps that follow are intended to be helpful in making decisions and taking proper actions; since every application context is unique, these guidelines and steps should never replace logical thinking, taking your unique situation into account!
-</aside>
+{: .attention}
 
 ### About the SIG Open Source Health (OSH) model
 The SIG Open Source Health model is described here in the documentation: [OSH guidance for producers](../reference/quality-model-documents/open-source-health.md).
@@ -73,50 +63,51 @@ This section prescribes a typical way of working for ensuring healthy open sourc
 ### 1. Define OSH related policies for development
 There are a number of policies on how to address open source libraries during development. For most of these policies, minimal requirements should be set for all teams. Individual teams may agree on more stringent rules.
 
-1. _Define the usage of a package manager_: choose the package manager(s) to be used, at least per system, preferably shared across the organization. Depending on the technologies that are used, you may need multiple package managers.
+#### Policy I: Define the usage of a package manager
+Choose the package manager(s) to be used, at least per system, preferably shared across the organization. Depending on the technologies that are used, you may need multiple package managers.
 
-  ---
-  > ⚠️ _The package managers need to be integrated in your CI/CD pipeline._
+The package managers need to be integrated in your CI/CD pipeline.
+{: .attention }
 
-  ---
+#### Policy II: Set the thresholds for library risks
+Set the thresholds for library risks that are (not) acceptable: this is applicable to all types of risks. Set these goals in the [Sigrid objectives](../capabilities/portfolio-objectives.md). 
+  > SIG advises the following objectives: 
+  >  - _No library vulnerabilities_: having vulnerabilities of medium or higher risk is generally not acceptable as a goal, and since there are relatively few low-risk vulnerabilities in practice, a 'clean sweep' of all vulnerabilities is preferred.
+  >  - _No unacceptable licenses_; for a typical context this means no licenses that come with obligations or restrictions for commercial usage (see the [OSH Guidelines for producers](../reference/quality-model-documents/open-source-health.md) for more details.). In Sigrid these are classified as no-risk, and include the MIT, BSD, and Apache licenses.
+  >  - _Ensure overall OSH quality rating is 4.0 stars or more_.  
 
-2. _Set the thresholds for library risks_ that are (not) acceptable: this is applicable to all types of risks. Set these goals in the [Sigrid objectives](../capabilities/portfolio-objectives.md). SIG advises the following objectives: <!-- we would like to make the following statements stand out as directives -->
-   - _No library vulnerabilities_: having vulnerabilities of medium or higher risk is generally not acceptable as a goal, and since there are relatively few low-risk vulnerabilities in practice, a 'clean sweep' of all vulnerabilities is preferred.
+#### Policy III: Define how frequent to check for risks
+Preferably check daily for vulnerabilities and quarterly for other OSH risks. See section [4. Scan the software for health issues](#4-scan-the-software-for-health-issues) for more details.  
 
-   - _No unacceptable licenses_; for a typical context this means no licenses that come with obligations or restrictions for commercial usage (see the [OSH Guidelines for producers](../reference/quality-model-documents/open-source-health.md) for more details.). In Sigrid these are classified as medium or high risk, and include licenses such as AGPL, GPL, CC-BY-NC, etc.
-   - _Ensure overall OSH quality rating is 4.0 stars [^1] or more_ 
+#### Policy IV: Define how fast new vulnerabilities have to be resolved
+This will depend on the criticality. See the section on [Handling vulnerabilities](#5-handling-vulnerabilities) for details.  
 
-[^1]: OSH benchmarked star ratings are a new Sigrid feature that will be released in May 2024
+#### Policy V: Declare which libraries should not be checked
+  - This is useful when a library has properties that cause Sigrid to signal a risk, but that risk is a false positive. 
+  - Create an _ignore-list_. This list requires CISO approval. The ignore-list must be reviewed regularly (a few times per year): define when this review will happen.
+  > **Sigrid How to:** _To achieve this in Sigrid, the library to ignore must be added in the scope file_
 
-3. _Define how frequently to check for risks_ such as vulnerabilities and other risks. We suggest checking with every pull/merge request if possible, but at least daily for vulnerabilities and quarterly for other OSH risks. See section [4. Scan the software for health issues](#4-scan-the-software-for-health-issues) for more details. 
+Do note that if a library is put on the ignore-list since the reported vulnerability is a false positive, that does not necessarily mean that the other types of risk for that library should be ignored as well.
+{: .attention }
 
-4. _Define how fast new vulnerabilities have to be resolved_; this will depend on the criticality. See the section on [Handling vulnerabilities](#5-handling-vulnerabilities) for details.
+#### Policy VI: (Optional) Define a shared permitted-list
+A shared list of libraries that have been reviewed and approved for usage can be useful (and in some organizations required). 
+  - This list can have an advisory role, functioning as a list of libraries that have already been checked, and are likely already in use. It can also have the role of a clearance list, where developers have only permission to use libraries from the permitted-list, and must seek approval for libraries that are not on that list. 
+  - For determining whether to include libraries, see the criteria defined in the section [10. Selecting a new library](#10-selecting-a-new-library).  
 
-5. _Declare which libraries should not be checked_
-   - This is useful when a library has properties that cause Sigrid to signal a risk, but that risk is a false positive. 
-   - Create an _ignore-list_. This list requires CISO approval. The ignore-list must be reviewed regularly (a few times per year): define when this review will happen.
-  
-    > ⚙ **Sigrid How to:** _To achieve this in Sigrid, the library to ignore must be added in the scope file_
-
-     > ⚠️ **Warning:** Do note that if a library is put on the ignore-list because of one false-positive, then all other potential risks that come with that library (now or in the future) will also no longer be reported!
-
-6. Optionally: _Define a shared permitted-list_: it can be useful (and in some organizations required) to have a shared list of libraries that are permitted. 
-  - This list can have an advisory role, functioning as a list of libraries that have already been checked, and are likely already in use. It can also have the role of a clearance list, where developers have only permission to use libraries from the permitted-list, and must seek approval for libraries that are not on that list. An in-house package repository mirror can help enforce this permitted-list.
-  - For determining whether to include libraries, see the criteria defined in the section [10. Selecting a new library](#10-selecting-a-new-library).
 
 
 ### 2. How to improve portfolio and system-level OSH
 Especially when a system or portfolio is new in Sigrid, at the system and portfolio level there can be an abundance of OSH related issues that need to be fixed; this section provides some advice on how to tackle all those jobs incrementally, starting with the most critical and high-ROI topics first; Sigrid is designed specifically to help you focus on the highest priority issues.
 
-1. In case no package manager is used, or it is not used for all libraries or all technologies, start with moving all libraries under control of a package manager. This will make all other improvement steps easier, faster, and less error-prone.
-2. The next step is to focus on vulnerabilities, since these threaten your application security in the short term:
-   - Start with a quick threat analysis to prioritize the systems that are most risk-prone: this means the system where attacks would have the most impact, and the highest likelihood of an attack. In particular for systems with [business-criticality](../organization-integration/metadata.html#system-metadata-fields-and-corresponding-allowed-values) that is `CRITICAL` OR `HIGH` and systems containing privacy-sensitive data or transactions, the impact will be high. The likelihood is determined by the attack surface and exposure: so especially systems with a [deployment type](../organization-integration/metadata.html#meaning-of-special-values-for-metadata-fields) that is `PUBLIC_FACING` will have a higher likelihood.
+- In case no package manager is used, or it is not used for all libraries or all technologies, start with moving all libraries under control of a package manager. This will make all other improvement steps easier, faster, and less error-prone.
+- The next step is to focus on vulnerabilities, since these threaten your application security in the short term:
+   - Start with a quick threat analysis to prioritize the systems that are most risk-prone: this means the system where attacks would have the most impact, and the highest likelihood of an attack. In particular for systems with [business-criticality](../organization-integration/metadata.md#system-metadata-fields-and-corresponding-allowed-values) that is `CRITICAL` OR `HIGH` and systems containing privacy-sensitive data or transactions, the impact will be high. The likelihood is determined by the attack surface and exposure: so especially systems with a [deployment type](../organization-integration/metadata.md#meaning-of-special-values-for-metadata-fields) that is `PUBLIC_FACING` will have a higher likelihood.
    - Focus on removing all critical and high risk vulnerabilities first, continue with the remaining vulnerabilities.
-3. Consider legal risks due to unacceptable licenses:
-   - The highest priority are libraries that are used in an application without the proper permissions. For example libraries that do not allow commercial use (if you are a commercial organization). Some of those require paying a license fee, which is the most straightforward means of addressing the issue.
-   - A next category to consider are the copy-left licenses, which require the application that uses those libraries to be distributed with the same license (and e.g. also made open-source). Depending on your situation, using copyleft licenses carries the risk of not complying with license obligations, leading to consequences such as the obligation to distribute the source code and legal disputes. 
-   - The main way of addressing legal risk due to unacceptable licenses is by replacing the library with another one.
-4. For the other properties: 
+- Consider legal risks due to unacceptable licenses:
+   - The highest priority are libraries that are used in an application without the proper rights; for example libraries that do not allow commercial use (if you are a commercial organization). Some of those require paying a license fee; which is the most straightforward means of addressing the issue.
+   - A next category to consider are the copy-left licenses, which require the application that uses those libraries to be distributed with the same license (and e.g. also made open-source). Depending on your situation, using copyleft licenses carries the risk of not complying with license obligations, leading to consequences such as the obligation to distribute the source code and legal disputes. The main way of addressing legal risk due to unacceptable licenses is by [replacing the library with another one](#12-replacing-a-library).
+- For the other properties: 
    - investigate the risks of heavily outdated and perhaps no longer maintained libraries: look at the product lifecycle, end-of-support date and maintenance activity to verify that there is a real need for [replacing the library](#12-replacing-a-library).
    - Do an impact analysis and plan the needed effort to mitigate the risks. This can be -a series of- [updates](#9-updating-a-library), or complete [replacement of a library](#12-replacing-a-library). 
    -   Open source libraries can be compared in terms of activity on tools like [https://www.openhub.net/](https://www.openhub.net/)
@@ -139,6 +130,7 @@ The following guidelines should be considered as compliance rules for framework 
   LB:  indeed in some package managers you actually do have influence over the versions of indirect dependencies, discuss this. exercising influence over this makes sense for security purposes, but otherwise its impact *should* be encapsulated.
 -->
 
+
 #### Regression tests and maintainability of the application code are key to updating frameworks/libraries
 If it is hard to update a library, chances are the problem lies in your codebase.
 1. _Keep module coupling and component independence low_, to make it easier to change code implementation (such as dealing with new versions of a library) while keeping the same behavior/requirements.
@@ -154,15 +146,15 @@ This section describes guidelines, hints and tips on how to maintain healthy use
 
 For timely handling of open source health risks, there are two concerns:
 
-1. _Risks that appear due to changes in the code_: these need to be signalled as soon as possible (short feedback loops make it much more efficient to make changes); doing the scanning as part of the CI/CD pipeline using `sigridci` addresses this.
-   
-   The risks that are detected are best addressed immediately, _before_ merging the new code.
-
-1. _Risks that appear due to changes in the ecosystem over time_: these require regular scans, even when the application code does not change. For this category:
-   - Vulnerabilities require frequent scanning: preferably daily, at least every 2 weeks.
-   - The other OSH properties are less volatile and urgent, and monthly to quarterly scanning is sufficient for those.
-
-   > ⚠️ **Warning:** OSH analysis is conducted whenever Sigrid receives an update through [Sigrid CI](../sigridci-integration/development-workflows.html), or in the form of a new snapshot [upload](../organization-integration/upload-instructions.html). Hence, for systems that are inactive, new vulnerabilities in the ecosystem are not visible in Sigrid. 
+- _Risks that appear due to changes in the code_: these need to be signalled as soon as possible (short feedback loops make it much more efficient to make changes).
+  - Conducting the scanning as part of the CI/CD pipeline using `sigridci` addresses this.
+  - The risks that are detected at this time are best addressed immediately, _before_ merging the new code.
+- _Risks that appear due to changes in the ecosystem over time_: these require regular scans, even when the application code does not change. For this category:
+  - Vulnerabilities require frequent scanning: preferably daily, at least every 2 weeks.
+  - The other OSH properties are less volatile and urgent, and monthly to quarterly scanning is sufficient for those.
+  
+  OSH analysis is conducted whenever Sigrid receives an update through [Sigrid CI](../sigridci-integration/development-workflows.md), or in the form of a new snapshot [upload](../organization-integration/upload-instructions.md). Hence, for systems that are inactive, new vulnerabilities in the ecosystem are not visible in Sigrid. Regularly do a forced update (or upload) to ensure your code is scanned again.
+  {: .attention}
 
 A good time to triage scan results is during refinement for the next sprint: You need to decide to address the detected risks during the upcoming sprint, or possibly create a backlog item. In some cases, the detected risk is considered a false positive, or acceptable risk that can be ignored. The most common mitigation will be [updating a library](#9-updating-a-library). 
 
@@ -201,9 +193,9 @@ If no such remediation is available, do a risk assessment which will have one of
 
 
 ### 6. Handling license issues 
-> SIG assesses whether a license is generally considered a risk for use within commercial software. Contact an IT lawyer to discuss license risks specific to the system analyzed as well as the way it will be used.
 
-Usually, license risks will appear whenever a library is scanned for the first time; either because the application is scanned for the first time, or the library has just been introduced.
+SIG assesses whether a license is generally considered a risk for use within commercial software. Contact an IT lawyer to discuss license risks specifically for the code analyzed as well as the way it will be used.
+{: .warning }
 
 
 #### Assess license risk
@@ -212,10 +204,10 @@ Usually, license risks will appear whenever a library is scanned for the first t
 - Note that the actual risk of using a library with a certain license depends on the context: 
   - e.g. when developing open-source software, licenses that require you to make your code available as open source are acceptable, where this is not acceptable for closed-source development.
   - It also depends on how you distribute a library:
-    - Distribute the source code of the library, after making changes to it.
-    - As linked libraries, not the actual source code.
-    - Linked libraries are called through the network.
-    - Libraries are used internally only.
+    1. **Distribute modified code**: Distribute the source code of the library, after making changes to it.
+    1. **Distribute linked libraries**: As linked libraries, not the actual source code.
+    1. **Linked libs through network**: As linked libraries that are called through the network.
+    1. **Internal use only**: As libraries that are used internally only.
 
 The following table shows how various types of licenses are (not) suitable for different distribution policies, and explains how these common licenses are mapped to general risk levels. But do note that if your distribution model is clear, and the value listed for the particular license-distribution model is 'ok' in the table, then your actual licensing risk is minimal:
 
@@ -233,9 +225,9 @@ The following table shows how various types of licenses are (not) suitable for d
 #### Possible actions
 Depending on the circumstances, one or more of the following actions can be taken to remediate detected licensing issues
 * Ensure that libraries with commercial licenses are properly registered and paid for. 
-* [When applicable] Add a license to the shared list of acceptable licenses (this may involve an approval process).
-* [When applicable] Adjust the distribution model of the application to avoid violating the terms of the library license. For example, distribute linked libraries instead of (modified) source code.
-* Stop using a library with unacceptable licensing conditions: in practice this means [12. Replacing a library](#12-replacing-a-library).
+* (When applicable) Add a license to the shared list of acceptable licenses (this may involve an approval process).
+* (When applicable) Adjust the distribution model of the application to avoid violating the terms of the library license. For example, distribute linked libraries instead of (modified) source code.
+* Stop using a library with unacceptable licensing conditions: in practice this requires [Replacing a library](#12-replacing-a-library).
 
 
 
@@ -246,8 +238,9 @@ Lack of freshness occurs when there is a newer version of a library available, b
 Development teams are responsible for keeping libraries up-to-date to a recent version: this may be part of [How to remediate vulnerabilities](#how-to-remediate-vulnerabilities), to make sure that bug fixes and improvements are incorporated, for compatibility with other libraries, or to ensure that future updates will not be too complicated or require a large effort all at once.
 
 The remedy for lack of freshness is always [Updating a library](#9-updating-a-library), possible exceptions are:
-- the newer version has a vulnerability for which a fix is not available (very rare)
-- the newer version is not compatible with other libraries.
+
+- The newer version has a vulnerability for which a fix is not available (very rare)
+- The newer version is not compatible with other libraries.
 <!-- this actually also overlaps with 'updating a library', but maybe still good to have these 2 sentences here? -->
 
 
@@ -278,20 +271,26 @@ There can be several reasons for updating a library:
 
 Updating to a newer version will always also improve the freshness rating. Using a package manager, updates may be installed automatically, or require updating the version constraints in the configuration file (sometimes called 'manifest') of the package manager.
 
-The _effort involved in updating_ a library can be estimated based on the release notes, and also [semantic versioning](https://semver.org/): A patch or minor version update should require very little effort, but for major version updates the effort _can_ be substantial.
+
+The _effort involved in updating_ a library can be estimated based on the release notes, and also [semantic versioning](https://semver.org/): here are some rules of thumb w.r.t. the effort needed for updating:
+- a security patch: typically less than 1 hour
+- a minor version update: also typically less than 1 hour
+- a major version update: an average of 1 day; the effort _can_ be substantial, depending on the amount of breaking changes, which are typically described in the release notes.
+
+One important factor is how well the automated test suite for the application (unit tests and/or system tests) will cover all possible cases: a need for manual testing can add substantial time to the above efforts.
+
 
 _Scheduling library updates:_
-- Small library updates can be updated as part of regular maintenance. 
+- Small library updates (security patches and minor version updates) can be updated as part of regular maintenance. 
 - Larger updates (e.g. major versions or frameworks) should be planned explicitly.
 
-
-_Ground rule: never postpone updating_
-- The longer you postpone updating, the bigger the eventual pain. As your system grows and evolves, the costs and risks of upgrading an old library increase. Such an accumulation of maintenance debt may lead to a much larger effort than in the case of smaller, incremental updates.
-- If a new, stable version comes out: don't wait, start testing. If it's really core and really important, already start testing with release candidates.
-- Do _not_ adopt the "If it ain’t broken, don’t fix it" strategy
-  - This strategy implies that you do not update unless you *have to*. You stay with the current version of the third-party library until you notice something wrong in your application, no matter how often the vendor publishes an update. 
-  - Whilst easier in the short term, with this strategy you will end up with a system that depends on outdated and unmaintained libraries, where you cannot use some other libraries since they require a newer version of that library which you cannot upgrade and at some point. You may lose the ability to fix some issues at all.
-- Only when a new version breaks the behavior of the application, postponing may be warranted.
+> _Ground rule: never postpone updating_
+  - The longer you postpone updating, the bigger the eventual pain. As your system grows and evolves, the costs and risks of upgrading an old library increase. Such an accumulation of maintenance debt may lead to a much larger effort than in the case of smaller, incremental updates.
+  - if a new, stable version comes out: don't wait, start testing. If it is really core and really important, already start testing with release candidates.
+  - Do _not_ adopt the "If it ain’t broke, don’t fix it" strategy
+    - This strategy implies that you do not update unless you *have to*. You stay with the current version of the third-party library until you notice something wrong in your application, no matter how often the vendor publishes an update. 
+    - Whilst easier in the short term, with this strategy you will end up with a system that depends on outdated and unmaintained libraries, where you cannot use some other libraries since they require a newer version of that library which you cannot upgrade and at some point. You may lose the ability to fix some issues at all.
+  - Only when a new version breaks the behavior of the application, postponing may be warranted.
 
 
 
@@ -309,14 +308,16 @@ A more extensive discussion of selecting (including reviewing) open source libra
 ### 11. When a library does not meet requirements
 
 There are several possible cases where a library does not support the needs and requirements:
-1. _Its Open Source Health has unacceptable risks_. 
-2. _Functional mismatch_: a library is missing features that cannot easily be added on top, or the implementation of the library is based on assumptions or choices that are incompatible with the ones in the application.
-3. _Bug in library implementation_: typically detected after a library has been adopted, so the cost of switching is non-negligible.
-4. _Compatibility break_: a library does not (or no longer) work well together with another library or the application itself, due to changes in the APIs of involved components.
+
+- _Its Open Source Health has unacceptable risks_. 
+- _Functional mismatch_: a library is missing features that cannot easily be added on top, or the implementation of the library is based on assumptions or choices that are incompatible with the ones in the application.
+- _Bug in library implementation_: typically detected after a library has been adopted, so the cost of switching is non-negligible.
+- _Compatibility break_: a library does not (or no longer) work well together with another library or the application itself, due to changes in the APIs of involved components.
 
 The basic rule is that _library implementations should not be modified or customized_: ​One of the main benefits of libraries and frameworks, is that they provide functionality without the duty of maintaining it. After customizing a library implementation, you lose this benefit while being dependent on the changes that the community makes.​
 
 How to address failing requirements:
+
 1. First, check whether a newer version of the library may solve the issue, then consider updating ([Updating a library](#9-updating-a-library)); you may also wait a bit until a fix has been released, especially when the issue is being worked on.
 2. If the issue is a bug or missing feature, you can file an issue at the maintainer of the library. If you have the time, work with the maintainer and contribute your own fix to the issue you are having.
 3. If the issue is a bug or missing feature, you can also look at the implementation of the library and develop a fix around it: 
@@ -342,13 +343,12 @@ One major concern when replacing a library with a new one is that a new library 
 Whenever choosing a new library or updating to a new version, consider the following review criteria:
 
 1. Are there currently known vulnerabilities?
-2. Is the license acceptable?​ (and/or is the library in the shared permitted-list). See also [6. Handling license issues](#6-handling-license-issues).
-3. Is the library actively maintained? (Recent last update, visible work on Github)
+2. Is the license acceptable? (and/or is the library in the shared permitted-list). See also [6. Handling license issues](#6-handling-license-issues).
+3. Is the library actively maintained? (also discussed [here](../reference/quality-model-documents/open-source-health.md#activity) in the Guidance for Producers), preferably by multiple developers?)
 4. Is the code quality (esp. maintainability) of the library acceptable (>3.0 stars)? 
-5. How mature is the version?​ (e.g. an x.0 version tends to be a bit more immature). Are there still -relevant- open issues? Use a stable version unless there is a real reason not to do so. An example might be that a Release Candidate fixes a vulnerability, and you do not want to wait for the stable version to come out.
+5. How mature is the version? (e.g. an x.0 version tends to be a bit more immature). Are there still -relevant- open issues? Use a stable version unless there is a real reason not to do so. An example might be that a Release Candidate fixes a vulnerability, and you do not want to wait for the stable version to come out.
 6. Are there enough users of the library? (check for example the number of downloads, or amount of GitHub stars).
 7. Is an updated version compatible with the previous version?  (release notes should indicate any breaking changes)
-
 
 <!-- - compatibility breaks
   - Compatibility breaks can be caused by the framework/library no longer supporting the technologies used in the system.
@@ -358,9 +358,10 @@ Whenever choosing a new library or updating to a new version, consider the follo
      - Are there alternatives of the library?
      - Are the technologies used still relevant for the future of the system? -->
 <!-- check this text by marijn:
-You were using a (deprecated) method that's no longer available. Your IDE will likely make you aware of this.
+You were using a (deprecated) method that is no longer available. Your IDE will likely make you aware of this.
 A nastier version is that you weren't using the library correctly and the new version is less forgiving but without alarms going off.
-The library needs transitive dependencies that have become incompatible with needs of other libraries -->
+The library needs transitive dependencies that have become incompatible with needs of other libraries. Often -but not always- this 
+ -->
 
 
 <!-- 
@@ -388,66 +389,85 @@ tasks to do repeatedly:
 - Sprint retrospective: 
   - make sure you have actually addressed the findings you set out to fix in your sprint planning.
   -->
-<!--   
-## Frequently Asked Questions  [ROUGH DRAFT]
 
-Q: why not adopt a ‘if it ain’t broke, don’t fix it’ strategy for updating libraries?
 
-A:
+## The workflow between all jobs to be done
 
----
+The following chart visualizes how the various tasks are interrelated: often one task contains multiple steps, one or more of which have been described separately in another task:
 
-Q: Why it is a good idea to see every library as a backlog item? 
-
-A: Make developers aware of the risks & effort.
+<img src="../images/methodology/guidelines-osh-overview.svg" width="700" />
 
 ---
 
-Q: How does Sigrid OSH collect its information?
+## Frequently Asked Questions
 
-A: First, the entire codebase is scanned for configuration files of common dependency management systems (e.g., NuGet, Maven, NPM) to find explicitly managed libraries.
+**Q:** Is open Source Health the most important software quality concern?  
+**A:** No, not necessarily (depending on your situation), *but* in our opinion OSH is typically the quality aspect that has a really high return on investment: with a relatively low amount of effort and expertise, large steps towards reducing the risk associated with open source usage can be made. The majority of risks can be addressed by consistently updating the libraries in use to their latest stable versions. Also, risks such as vulnerable libraries and licensing risks can be rather impactful.
+{: .faq }
 
-Information about each library is then queried from public sources to determine the version currently used, the date of this version, the number and date of the newest published version, information about its license, and whether it is known to contain security vulnerabilities.
+**Q:** Why not adopt a ‘if it ain’t broke, don’t fix it’ strategy for updating libraries? (i.e. do not update unless you *have to*).  
+**A:** We also addressed this in section [9. Updating a library](#9-updating-a-library): Whilst easier in the short term, with this strategy you will end up with a system that depends on outdated and unmaintained libraries, where you cannot use some other libraries since they require a newer version of that library which you cannot upgrade and at some point. You may lose the ability to fix some issues at all.​
+{: .faq }
 
-In addition, the entire codebase is scanned for unmanaged libraries following some heuristics:
-- JavaScript files are scanned for a version identifier in their name of contents. If found, it is assumed third-party and looked up in public databases to determine freshness, license and vulnerabilities.
-- The contents of Windows DLL files and Java JAR files are considered third-party and are scanned for name and version number and then looked up in public databases to determine freshness, license and vulnerabilities.
+
+**Q:** When a library has a known vulnerability, why do something about it, if you are not even sure that this vulnerability is actually exploitable (e.g. we may not be using the vulnerable method)?  
+**A:** This is our proposed strategy to deal with this uncertainty: in 90% of the cases, it takes less time to update, than to figure out whether you are vulnerable or not. So just do it. The other 10% contains frameworks that are used everywhere, or a major update, or systems that have no test code and a rigid pre-release manual testing setup. In those 10% of the situations, it can be worthwhile to do the investigation into whether the system is actually vulnerable.  
+Also: you can use information about deployment to assess the exploitability of a vulnerability: typically public-facing and connected systems need to be considered more carefully; for internal systems, vulnerabilities are more relevant as a second line of defense against attacks--not unimportant either. See also section [5. Handling Vulnerabilities](#5-handling-vulnerabilities)).
+{: .faq }
+
+
+**Q:** How can we update our libraries frequently, given that it takes so much time due to the need for manually re-testing our entire system, to get approval, to wait for the next quarterly release, because we are not using a package manager?  
+**A:** You have bigger problems than outdated libraries. Update the most important vulnerable dependencies, and invest in test automation and your development process.
+{: .faq }
+
+
+**Q:** Is it not a bad practice to be on the latest version all the time, since these tend to be unstable and contain bugs?  
+**A:** The general advice is that it makes most sense to update to all security patches and minor revisions: those tend to make small, focused, changes to the code and typically do not introduce new bugs. For major revisions with new features and possbily even changed APIs, doing an update requires more careful consideration (also see [9.Updating a library](#9-updating-a-library) ).
+{: .faq }
+
+
+**Q:** How does Sigrid OSH collect its information?  
+**A:** First, the entire codebase is scanned for configuration files of common dependency management systems (e.g., NuGet, Maven, NPM) to find explicitly managed libraries.  
+Information about each library is then queried from public sources to determine the version currently used, the date of this version, the number and date of the newest published version, information about its license, and whether it is known to contain security vulnerabilities.  
+In addition, the entire codebase is scanned for unmanaged libraries following some heuristics: 
+ (1) JavaScript files are scanned for a version identifier in their name of contents. If found, it is assumed third-party and looked up in public databases to determine freshness, license and vulnerabilities.
+(2) The contents of Windows DLL files and Java JAR files are considered third-party and are scanned for name and version number and then looked up in public databases to determine freshness, license and vulnerabilities.
+{: .faq }
+
+
+**Q:** Can I use Sigrid for libraries that I develop and maintain internally?  
+**A:** No, currently not: Sigrid has no access to your internal package repository, and also it exploits a lot of the information that is provided by open source ecosystems such as Maven, NuGet and NPM.
+{: .faq }
+
+
+**Q:** Can I use Sigrid to assess a library before I decide to incorporate it into my project?  
+**A:** No (and yes); Sigrid only looks for the libraries that are in use in the source code that you pass through `sigridci` or upload: having said that: if you include some libraries explicitly in your project (even before you decide on actually using them), you will see the results next time you trigger a Sigrid scan.
+{: .faq }
+
+
+<!-- 
+**Q:** ?  
+**A:** 
+{: .faq } -->
+
 
 ---
-Q: 
-
-A: 
-
----
-Q: 
-
-A: 
-
----
-- Objection: Yes, this is a known vulnerability, but we don't even know whether it is actually exploitable, we may not be using the vulnerable method.
-  - SIG opinion: in 90% of the cases, it takes less time to update, than to figure out whether you are vulnerable or not. So just do it. The other 10% contains frameworks that are used everywhere, or a major update, or systems that have no test code and a rigid pre-release manual testing setup). Those 10% can do the investigation into whether they are actually vulnerable.
-- Objection: Updating is hard because we need to manually re-test our entire system / get approval / wait for the next quarterly release / are not using a package manager
-  - SIG opinion: You have bigger problems than outdated libraries. Update the most important vulnerable dependencies, and invest in test automation and your development process.
-- Objection: It's a bad practice to be on the latest version all the time, they tend to be unstable and contain bugs.
-  - SIG opinion: Agree (although it's not that bad in practice). This is why we do not recommend to have everything green for Freshness, and everything less than 1 month not updated is still green.
-
---- -->
 
 <!-- 
 ## Input: List of Best practices
-> TODO: distribute these over the various JTBD?
+> TODO: distribute these over the various JTBD? or keep (also) as a separate checklist??
+
 
 > The following list comes from the _Library Management Practices_ deck: can these all/mostly be moved to specific JTBDs?
-
-
-- Use tooling to automate managing the updates → this is one of the OSH topics
+- Use tooling to automate managing the updates
   - Integrate tools in the development pipeline
 - Embed library management in the development process
-  - Review frameworks/libraries [updates?] as close as possible at the start of iterations → during backlog refinement?
-  - If you cannot embed this in development iterations, use a standalone schedule for updates (< once a month)
-  - When using stabilization branches, only update for critical fixes 
-  - Don’t mix updating and adding functionality in the same tickets, so you can roll back updates.
-- 
-- Consider each library/framework as a backlog item, and make it the responsibility of developers
-  - Avoiding use of multiple versions of the same framework/library, as they add the same effort as a separate library
-  - ?? Re-estimating effort and creating visibility in growing technical debt of outdated frameworks/libraries -->
+  - Review frameworks/libraries [updates?] as close as possible at the start of iterations​ → during backlog refinement?
+  - If you cannot embed this in development iterations, use a standalone schedule for updates (< once a month)​
+  - When using stabilization branches, only update for critical fixes ​
+  - Don’t mix updating and adding functionality in the same tickets, so you can roll back updates.​
+- Consider each library/framework as a backlog item, and make it the responsibility of developers​
+  - Avoiding use of multiple versions of the same framework/library​, as they add the same effort as a separate library
+  - ?? Re-estimating effort and creating visibility in growing technical debt of outdated frameworks/libraries
+-->
+
