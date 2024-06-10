@@ -33,10 +33,7 @@ class AzurePullRequestReport(Report):
 
         UploadLog.log("Sending feedback to Azure DevOps API")
 
-        url = f"{os.environ['SYSTEM_TEAMFOUNDATIONCOLLECTIONURI']}{os.environ['SYSTEM_TEAMPROJECTID']}/_apis/git/repositories/{os.environ['BUILD_REPOSITORY_NAME']}/pullRequests/{os.environ['SYSTEM_PULLREQUEST_PULLREQUESTID']}/threads?api-version={self.AZURE_API_VERSION}"
-        body = self.buildRequestBody(feedbackFile)
-
-        request = urllib.request.Request(url, json.dumps(body).encode("utf-8"))
+        request = urllib.request.Request(self.buildURL(), self.buildRequestBody(feedbackFile))
         request.add_header("Authorization", f"Bearer {os.environ['SYSTEM_ACCESSTOKEN']}")
         request.add_header("Content-Type", "application/json")
         try:
@@ -49,11 +46,19 @@ class AzurePullRequestReport(Report):
             "SYSTEM_PULLREQUEST_PULLREQUESTID" in os.environ and \
             options.runMode == RunMode.FEEDBACK_ONLY
 
+    def buildURL(self):
+        baseURL = os.environ["SYSTEM_TEAMFOUNDATIONCOLLECTIONURI"]
+        project = os.environ["SYSTEM_TEAMPROJECTID"]
+        repo = os.environ["BUILD_REPOSITORY_NAME"]
+        pr = os.environ["SYSTEM_PULLREQUEST_PULLREQUESTID"]
+        version = self.AZURE_API_VERSION
+        return f"{baseURL}{project}/_apis/git/repositories/{repo}/pullRequests/{pr}/threads?api-version={version}"
+
     def buildRequestBody(self, feedbackFile):
         with open(feedbackFile, mode="r", encoding="utf-8") as f:
             feedback = f.read()
 
-        return {
+        body = {
             "comments": [{
                 "parentCommentId": 0,
                 "content": feedback,
@@ -61,3 +66,5 @@ class AzurePullRequestReport(Report):
             }],
             "status": "active"
         }
+
+        return json.dumps(body).encode("utf-8")
