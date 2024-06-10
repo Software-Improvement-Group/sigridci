@@ -16,6 +16,7 @@ import os
 import sys
 
 from .ascii_art_report import AsciiArtReport
+from .azure_pull_request_report import AzurePullRequestReport
 from .json_report import JsonReport
 from .junit_format_report import JUnitFormatReport
 from .markdown_report import MarkdownReport
@@ -55,6 +56,7 @@ class SigridCiRunner:
             StaticHtmlReport(),
             JUnitFormatReport(),
             JsonReport(),
+            AzurePullRequestReport(),
             PipelineSummaryReport()
         ]
 
