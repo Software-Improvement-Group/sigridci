@@ -24,6 +24,7 @@ class RepositoryHistoryExporter:
     GIT_LOG_FORMAT = "@@@;%H;%an;%ae;%ad;%s"
     CUTOFF_DATE = datetime.now() + timedelta(days=-365)
     LIGHTWEIGHT_HISTORY_EXPORT_FILE = "git.log"
+    COMMIT_PREFIXES = ("@@@", "'@@@")
 
     def exportHistory(self, sourceDir):
         if os.path.exists(f"{sourceDir}/.git"):
@@ -47,15 +48,22 @@ class RepositoryHistoryExporter:
             UploadLog.log("Error while trying to include repository history: " + str(e))
 
     def createHistoryExportFile(self, history, outputFile):
+        entries = 0
+
         with open(outputFile, "w", encoding="utf8") as f:
             for line in history.strip().split("\n"):
                 f.write(self.anonymizeHistoryEntry(line))
+                if line.startswith(self.COMMIT_PREFIXES):
+                    entries += 1
+
+        if entries <= 1:
+            UploadLog.log("Warning: Git history seems to be missing, maybe you're using a shallow clone?")
 
     def anonymizeHistoryEntry(self, gitLog):
         anonymized = ""
 
         for line in gitLog.strip().split("\n"):
-            if line.startswith(("@@@", "'@@@")):
+            if line.startswith(self.COMMIT_PREFIXES):
                 marker, id, name, email, date, message, *rest = line.split(";")
                 name = hashlib.sha256(name.encode("utf8")).hexdigest()
                 email = hashlib.sha256(email.encode("utf8")).hexdigest()

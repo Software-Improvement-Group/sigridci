@@ -47,6 +47,9 @@ stages:
         continueOnError: true
         condition: "ne(variables['Build.SourceBranch'], 'refs/heads/main')"
         steps:
+          - checkout: self
+            fetchDepth: 0
+            clean: true
           - bash: "sigridci.py --customer <example_customer_name> --system <example_system_name> --source ."
             env:
               SIGRID_CI_TOKEN: $(SIGRID_CI_TOKEN)
@@ -58,6 +61,9 @@ stages:
         continueOnError: true
         condition: "eq(variables['Build.SourceBranch'], 'refs/heads/main')"
         steps:
+          - checkout: self
+            fetchDepth: 0
+            clean: true
           - bash: "sigridci.py --customer <example_customer_name> --system <example_system_name> --source . --publishonly"
             env:
               SIGRID_CI_TOKEN: $(SIGRID_CI_TOKEN)
@@ -83,37 +89,43 @@ stages:
         vmImage: 'ubuntu-latest' #https://docs.microsoft.com/en-us/azure/devops/pipelines/agents/hosted?view=azure-devops&tabs=yaml#software
       continueOnError: true
       condition: "ne(variables['Build.SourceBranch'], 'refs/heads/main')"
-      steps:
-      - bash: "git clone https://github.com/Software-Improvement-Group/sigridci.git sigridci"
-        displayName: Clone SigridCI from Github
-      - task: UsePythonVersion@0
-        displayName: Get PythonTools 3.7
-        inputs:
-          versionSpec: '3.7'
-          addToPath: false
-      - bash: "./sigridci/sigridci/sigridci.py --customer <example_customer_name> --system <example_system_name> --source ."
-        env:
-          SIGRID_CI_TOKEN: $(SIGRID_CI_TOKEN)
-          PYTHONIOENCODING: utf8
-        continueOnError: true
+        steps:
+        - checkout: self
+          fetchDepth: 0
+          clean: true
+        - bash: "git clone https://github.com/Software-Improvement-Group/sigridci.git sigridci"
+          displayName: Clone SigridCI from Github
+        - task: UsePythonVersion@0
+          displayName: Get PythonTools
+          inputs:
+            versionSpec: '3.9'
+            addToPath: false
+        - bash: "./sigridci/sigridci/sigridci.py --customer <example_customer_name> --system <example_system_name> --source ."
+          env:
+            SIGRID_CI_TOKEN: $(SIGRID_CI_TOKEN)
+            PYTHONIOENCODING: utf8
+          continueOnError: true
     - job: SigridPublish
       pool:
         vmImage: 'ubuntu-latest'
       continueOnError: true
       condition: "eq(variables['Build.SourceBranch'], 'refs/heads/main')"
       steps:
-      - bash: "git clone https://github.com/Software-Improvement-Group/sigridci.git sigridci"
-        displayName: Clone SigridCI from Github
-      - task: UsePythonVersion@0
-        displayName: Get PythonTools 3.7
-        inputs:
-          versionSpec: '3.7'
-          addToPath: false
-      - bash: "./sigridci/sigridci/sigridci.py --customer <example_customer_name> --system <example_system_name> --source . --publishonly"
-        env:
-          SIGRID_CI_TOKEN: $(SIGRID_CI_TOKEN)
-          PYTHONIOENCODING: utf8
-        continueOnError: true
+        - checkout: self
+          fetchDepth: 0
+          clean: true
+        - bash: "git clone https://github.com/Software-Improvement-Group/sigridci.git sigridci"
+          displayName: Clone SigridCI from Github
+        - task: UsePythonVersion@0
+          displayName: Get PythonTools
+          inputs:
+            versionSpec: '3.9'
+            addToPath: false
+        - bash: "./sigridci/sigridci/sigridci.py --customer <example_customer_name> --system <example_system_name> --source . --publishonly"
+          env:
+            SIGRID_CI_TOKEN: $(SIGRID_CI_TOKEN)
+            PYTHONIOENCODING: utf8
+          continueOnError: true
 ```
 
 Note the name of the branch, which is `main` in the example but might be different for your repository. In general, most older projects will use `master` as their main branch, while more recent projects will use `main`. 

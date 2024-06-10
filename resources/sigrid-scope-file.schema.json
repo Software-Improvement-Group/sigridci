@@ -260,6 +260,10 @@
       "$ref": "#/definitions/file_pattern_list",
       "description": "List of file and directory patterns to manually exclude from the analysis."
     },
+    "experimental": {
+      "type": "boolean",
+      "description": "Enables experimental analysis features."
+    },
     "component_depth": {
       "type": "integer",
       "description": "Directory depth that will be used to define components."
@@ -269,6 +273,10 @@
     },
     "components": {
       "$ref": "#/definitions/component_list"
+    },
+    "experimental": {
+      "type": "boolean",
+      "description": "Enable experimental analysis features."
     },
     "languages": {
       "$ref": "#/definitions/language_list",
@@ -472,7 +480,7 @@
         }
       },
       "additionalProperties": false,
-      "required": ["enabled"]
+      "required": []
     },
 
     "thirdpartyfindings": {
