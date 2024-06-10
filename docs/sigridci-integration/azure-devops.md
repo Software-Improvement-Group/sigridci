@@ -19,11 +19,7 @@ On-boarding is done automatically when you first run Sigrid CI. As long as you h
 
 Sigrid CI can provide feedback as pull request comments. This makes easier to process Sigrid's feedback during your pull request review, as the feedback is more visual and it also reduces the number of clicks you need to read the feedback.
 
-This requires the [PR auto-comment extension](https://marketplace.visualstudio.com/items?itemName=tylermurry.pr-auto-comment) which you can install from the [Azure DevOps Marketplace](https://learn.microsoft.com/en-us/azure/devops/marketplace/install-extension?view=azure-devops&tabs=browser). This extension is available for both the SaaS and on-premise versions of Azure DevOps.
-
-Note Azure DevOps will, by default, not run pipelines for pull requests. You need to enable this manually via "build policies" in your organization or project settings. You can find more information on this in the [Azure DevOps documentation](https://learn.microsoft.com/en-us/azure/devops/repos/git/branch-policies?view=azure-devops&tabs=browser#build-validation). Note that automatically running pipelines for pull requests is a general best practice, so enabling this setting has benefits beyond Sigrid.
-
-Finally, you need to make sure your build user has permissions to post comments in pull request. You can find this in your organization or project settings, in the "security" tab.
+Azure DevOps will, by default, not run pipelines for pull requests. You need to enable this manually via "build policies" in your organization or project settings. You can find more information on this in the [Azure DevOps documentation](https://learn.microsoft.com/en-us/azure/devops/repos/git/branch-policies?view=azure-devops&tabs=browser#build-validation). Note that automatically running pipelines for pull requests is a general best practice, so enabling this setting has benefits beyond Sigrid.
 
 ### Step 2: Create pipeline configuration file
 
