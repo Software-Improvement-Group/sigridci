@@ -36,6 +36,9 @@ class AzurePullRequestReport(Report):
         UploadLog.log(f"URL is {url}")
         body = self.buildRequestBody(feedbackFile)
 
+        print(">>>")
+        print(json.dumps(body).encode("utf-8"))
+
         request = urllib.request.Request(url, json.dumps(body).encode("utf-8"))
         request.add_header("Authorization", f"Bearer {os.environ['SYSTEM_ACCESSTOKEN']}")
         request.add_header("Content-Type", "application/json")
