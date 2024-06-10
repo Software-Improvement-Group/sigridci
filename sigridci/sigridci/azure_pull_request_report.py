@@ -22,6 +22,8 @@ from .upload_log import UploadLog
 
 
 class AzurePullRequestReport(Report):
+    AZURE_API_VERSION = "6.0"
+
     def generate(self, analysisId, feedback, options):
         feedbackFile = f"{options.outputDir}/feedback.md"
 
@@ -30,7 +32,7 @@ class AzurePullRequestReport(Report):
 
         UploadLog.log("Sending feedback to Azure DevOps API")
 
-        url = f"{os.environ['SYSTEM_TEAMFOUNDATIONCOLLECTIONURI']}{os.environ['SYSTEM_TEAMPROJECTID']}/_apis/git/repositories/{os.environ['BUILD_REPOSITORY_NAME']}/pullRequests/{os.environ['$SYSTEM_PULLREQUEST_PULLREQUESTID']}/threads?api-version=6.0"
+        url = f"{os.environ['SYSTEM_TEAMFOUNDATIONCOLLECTIONURI']}{os.environ['SYSTEM_TEAMPROJECTID']}/_apis/git/repositories/{os.environ['BUILD_REPOSITORY_NAME']}/pullRequests/{os.environ['SYSTEM_PULLREQUEST_PULLREQUESTID']}/threads?api-version=${self.AZURE_API_VERSION}"
         UploadLog.log(f"URL is {url}")
         body = self.buildRequestBody(feedbackFile)
 
