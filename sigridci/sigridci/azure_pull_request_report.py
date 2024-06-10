@@ -34,11 +34,7 @@ class AzurePullRequestReport(Report):
         UploadLog.log("Sending feedback to Azure DevOps API")
 
         url = f"{os.environ['SYSTEM_TEAMFOUNDATIONCOLLECTIONURI']}{os.environ['SYSTEM_TEAMPROJECTID']}/_apis/git/repositories/{os.environ['BUILD_REPOSITORY_NAME']}/pullRequests/{os.environ['SYSTEM_PULLREQUEST_PULLREQUESTID']}/threads?api-version={self.AZURE_API_VERSION}"
-        UploadLog.log(f"URL is {url}")
         body = self.buildRequestBody(feedbackFile)
-
-        print(">>>")
-        print(json.dumps(body).encode("utf-8"))
 
         request = urllib.request.Request(url, json.dumps(body).encode("utf-8"))
         request.add_header("Authorization", f"Bearer {os.environ['SYSTEM_ACCESSTOKEN']}")
@@ -46,7 +42,7 @@ class AzurePullRequestReport(Report):
         try:
             urllib.request.urlopen(request)
         except urllib.error.HTTPError as e:
-            UploadLog.log(f"Azure DevOps API error: {e.code} / {e.fp.read()}")
+            UploadLog.log(f"Warning: Azure DevOps API error: {e.code} / {e.fp.read()}")
 
     def isSupported(self, options):
         return "SYSTEM_ACCESSTOKEN" in os.environ and \
