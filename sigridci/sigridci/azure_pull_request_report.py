@@ -14,6 +14,7 @@
 
 import json
 import os
+import urllib.error
 import urllib.request
 
 from .publish_options import RunMode
@@ -42,9 +43,10 @@ class AzurePullRequestReport(Report):
         request = urllib.request.Request(url, json.dumps(body).encode("utf-8"))
         request.add_header("Authorization", f"Bearer {os.environ['SYSTEM_ACCESSTOKEN']}")
         request.add_header("Content-Type", "application/json")
-        response = urllib.request.urlopen(request)
-
-        UploadLog.log(f"Azure DevOps API returned HTTP status {response.status}")
+        try:
+            urllib.request.urlopen(request)
+        except urllib.error.HTTPError as e:
+            UploadLog.log(f"Azure DevOps API error: {e.code} / {e.fp.read()}")
 
     def isSupported(self, options):
         return "SYSTEM_ACCESSTOKEN" in os.environ and \
