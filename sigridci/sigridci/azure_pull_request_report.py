@@ -33,7 +33,7 @@ class AzurePullRequestReport(Report):
 
         UploadLog.log("Sending feedback to Azure DevOps API")
 
-        url = f"{os.environ['SYSTEM_TEAMFOUNDATIONCOLLECTIONURI']}{os.environ['SYSTEM_TEAMPROJECTID']}/_apis/git/repositories/{os.environ['BUILD_REPOSITORY_NAME']}/pullRequests/{os.environ['SYSTEM_PULLREQUEST_PULLREQUESTID']}/threads?api-version=${self.AZURE_API_VERSION}"
+        url = f"{os.environ['SYSTEM_TEAMFOUNDATIONCOLLECTIONURI']}{os.environ['SYSTEM_TEAMPROJECTID']}/_apis/git/repositories/{os.environ['BUILD_REPOSITORY_NAME']}/pullRequests/{os.environ['SYSTEM_PULLREQUEST_PULLREQUESTID']}/threads?api-version={self.AZURE_API_VERSION}"
         UploadLog.log(f"URL is {url}")
         body = self.buildRequestBody(feedbackFile)
 
