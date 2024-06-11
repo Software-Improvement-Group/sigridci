@@ -104,7 +104,7 @@ picture in the previous section.
 | snapshot.date                           | Date/time in ISO 8601 format, corresponding to the version of the code that was analyzed.                       |                       
 | systemElement.id                        | ID based on the system element's fingerprint. System elements will retain the same ID across subsequent scans.  |
 | systemElement.name                      | Full/long name. Not unqiue.                                                                                     |
-| systemElement.shortName                 | Short/display name. Not unique. Optional field, use `name` when not specified                                   |
+| systemElement.shortName [4]             | Short/display name. Not unique. Optional field, use `name` when not specified                                   |
 | systemElement.type                      | See the [list of system element types](#system-element-types) below.                                            |
 | systemElement.measurementValues         | Maps metric names to numerical metric values, for metrics based on source code analysis.                        |
 | systemElement.measurementTimeSeries     | Maps metric names to time series, for metrics based on change history.                                          |
@@ -125,6 +125,7 @@ Notes:
 1. Only available for system elements of type `OBSERVATION`.  
 2. Only available for system elements of type `FILE`.
 3. Only available for system elements of type `GROUPING`.
+4. For components, the `shortName` field is intended to be used as the display name.
 
 ## System element types
 
@@ -144,6 +145,11 @@ The terminology for "system" is somewhat ambiguous. This term is sometimes used 
 and sometimes used to describe the entire product. In the context of this JSON file the root system element simply
 refers to the scope at which the analysis was performed, regardless of whether this describes a single repository or
 a multi-repo system.
+
+Files in the root of a component are grouped into a "virtual component", since this allows for better readability in 
+Architecture Quality compared to depicting every single file individually. These virtual components have 
+`{path}$Files` as their full name, and `Files` as their short name. The same logic is applied to files that exist
+in the root of the component.
 
 ### Dependency types
 
