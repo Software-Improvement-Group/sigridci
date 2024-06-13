@@ -21,6 +21,8 @@ Sigrid CI can provide feedback as pull request comments. This makes easier to pr
 
 Azure DevOps will, by default, not run pipelines for pull requests. You need to enable this manually via "build policies" in your organization or project settings. You can find more information on this in the [Azure DevOps documentation](https://learn.microsoft.com/en-us/azure/devops/repos/git/branch-policies?view=azure-devops&tabs=browser#build-validation). Note that automatically running pipelines for pull requests is a general best practice, so enabling this setting has benefits beyond Sigrid.
 
+To create a pull request comment, the `<repo name> Build Service` user must have the `Contribute to pull requests` permission.  You can find information on how to edit user permissions in the [Azure DevOps documentation](https://learn.microsoft.com/en-us/azure/devops/repos/git/set-git-repository-permissions?view=azure-devops).
+
 ### Step 2: Create pipeline configuration file
 
 We will create a pipeline that consists of two jobs:
@@ -89,7 +91,7 @@ stages:
         vmImage: 'ubuntu-latest' #https://docs.microsoft.com/en-us/azure/devops/pipelines/agents/hosted?view=azure-devops&tabs=yaml#software
       continueOnError: true
       condition: "ne(variables['Build.SourceBranch'], 'refs/heads/main')"
-        steps:
+      steps:
         - checkout: self
           fetchDepth: 0
           clean: true
