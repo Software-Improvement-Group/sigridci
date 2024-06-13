@@ -548,9 +548,9 @@ It takes a request body with the following structure:
 | MAINTAINABILITY          | Overall maintainability rating                    | Decimal number between 0.5 and 5.5, inclusive                 |
 | TEST_CODE_RATIO          | Test code ratio                                   | Positive decimal number, e.g. 0.7 sets a target of 70%        |
 | ARCHITECTURE_QUALITY     | Decimal number between 0.5 and 5.5, inclusive     | Decimal number between 0.5 and 5.5, inclusive                 |
-| OSH_MAX_SEVERITY         | Highest allowed severity of known vulnerabilities | One of: `"NONE"`, `"LOW"`, `"MEDIUM"`, `"HIGH"`               |
-| OSH_MAX_FRESHNESS_RISK   | Highest allowed freshness risk                    | One of: `"NONE"`, `"LOW"`, `"MEDIUM"`, `"HIGH"`               | 
-| OSH_MAX_LICENSE_RISK     | Highest allowed license risk                      | One of: `"NONE"`, `"LOW"`, `"MEDIUM"`, `"HIGH"`               |
+| OSH_MAX_SEVERITY         | Highest allowed severity of known vulnerabilities | One of: `"NONE"`, `"LOW"`, `"MEDIUM"`, `"HIGH"`, `"CRITICAL"` |
+| OSH_MAX_FRESHNESS_RISK   | Highest allowed freshness risk                    | One of: `"NONE"`, `"LOW"`, `"MEDIUM"`, `"HIGH"`, `"CRITICAL"` | 
+| OSH_MAX_LICENSE_RISK     | Highest allowed license risk                      | One of: `"NONE"`, `"LOW"`, `"MEDIUM"`, `"HIGH"`, `"CRITICAL"` |
 | SECURITY_MAX_SEVERITY    | Highest allowed severity of security findings     | One of: `"NONE"`, `"LOW"`, `"MEDIUM"`, `"HIGH"`, `"CRITICAL"` |
 | RELIABILITY_MAX_SEVERITY | Highest allowed severity of reliability findings  | One of: `"NONE"`, `"LOW"`, `"MEDIUM"`, `"HIGH"`, `"CRITICAL"` | 
 
