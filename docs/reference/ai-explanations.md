@@ -27,8 +27,10 @@ Please note that Sigrid's knowledge base is continuously expanding.
 
 ## How does Sigrid generate AI explanations?
 Sigrid AI explanations are based on a unique knowledge base of invaluable sources on each and every technology, collected by SIG in over 20 years of software consultancy. Additionally, best in-class public data sources that are embedded in Sigrid’s explanations are [OWASP](https://owasp.org), [OpenCRE](https://opencre.org), [Common Weakness Enumeration](https://cwe.mitre.org) and [NIST National Vulnerability Database](https://nvd.nist.gov/).
-Documentation from code scanning tools that Sigrid uses for its code analysis are also used to offer the best possible explanation of a finding.
+Documentation from code scanning tools that Sigrid uses for its code analysis is also used to offer the best possible explanation of a finding.
 
+The main reference used is the book published by SIG on writing maintainable software: [Building Maintainable Software, Java Edition
+](https://learning.oreilly.com/library/view/building-maintainable-software/9781491955987/).
 
 ## I have a question or suggestion regarding a specific explanation
 Your feedback is much appreciated. Please [contact our support team](mailto:support@softwareimprovementgroup.com) should you have a question or suggestion for us regarding an AI explanation in Sigrid.
