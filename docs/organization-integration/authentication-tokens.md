@@ -36,7 +36,7 @@ After you've created the token it will be shown in the user settings page.
 
 Sign in to Sigrid and navigate to the user settings page as explained above. The list of tokens contains a "revoke" button that will immediately revoke the token's access to Sigrid.
 
-## Expiriation of a token
+## Expiration of a token
 
 Tokens automatically expire after one year. A month before the expiration date, you as a creator will get multiple notification emails asking you to create a new token.
 
