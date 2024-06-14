@@ -15,14 +15,22 @@ On-boarding is done automatically when you first run Sigrid CI. As long as you h
 
 ## Configuration
 
-### Step 1: Create pipeline configuration file
+### Step 1: Enable pull request comment feedback
+
+Sigrid CI can provide feedback as pull request comments. This makes easier to process Sigrid's feedback during your pull request review, as the feedback is more visual and it also reduces the number of clicks you need to read the feedback.
+
+Azure DevOps will, by default, not run pipelines for pull requests. You need to enable this manually via "build policies" in your organization or project settings. You can find more information on this in the [Azure DevOps documentation](https://learn.microsoft.com/en-us/azure/devops/repos/git/branch-policies?view=azure-devops&tabs=browser#build-validation). Note that automatically running pipelines for pull requests is a general best practice, so enabling this setting has benefits beyond Sigrid.
+
+To create a pull request comment, the `<repo name> Build Service` user must have the `Contribute to pull requests` permission.  You can find information on how to edit user permissions in the [Azure DevOps documentation](https://learn.microsoft.com/en-us/azure/devops/repos/git/set-git-repository-permissions?view=azure-devops).
+
+### Step 2: Create pipeline configuration file
 
 We will create a pipeline that consists of two jobs:
 
 - One job that will publish the main/master branch to [sigrid-says.com](https://sigrid-says.com) after every commit.
 - One job to provide feedback on pull requests, which can be used as input for code reviews.
 
-#### Alternative 1a: Docker-based analysis
+#### Alternative 2a: Docker-based analysis
 
 The recommended approach is to run Sigrid CI using the [Docker image](https://hub.docker.com/r/softwareimprovementgroup/sigridci) published by SIG. Please make sure you use the `azure` tag. In the root of your repository, create a file `azure-devops-pipeline.yaml` and add the following contents:
 
@@ -43,6 +51,8 @@ stages:
           - bash: "sigridci.py --customer <example_customer_name> --system <example_system_name> --source ."
             env:
               SIGRID_CI_TOKEN: $(SIGRID_CI_TOKEN)
+              SYSTEM_ACCESSTOKEN: $(System.AccessToken)
+              PYTHONIOENCODING: utf8
             continueOnError: true
       - job: SigridPublish
         pool:
@@ -57,6 +67,8 @@ stages:
           - bash: "sigridci.py --customer <example_customer_name> --system <example_system_name> --source . --publishonly"
             env:
               SIGRID_CI_TOKEN: $(SIGRID_CI_TOKEN)
+              SYSTEM_ACCESSTOKEN: $(System.AccessToken)
+              PYTHONIOENCODING: utf8
             continueOnError: true
 ```
 
@@ -66,7 +78,7 @@ Commit and push this file to the repository, so that Azure DevOps can use this c
 
 **Security note:** The `softwareimprovementgroup/sigridci:azure` Docker image deliberately runs as root (in other words, we deliberately did not include a `USER` instruction in the Dockerfile that generates this image). Based on [Microsoft's documentation](https://learn.microsoft.com/en-us/azure/devops/pipelines/process/container-phases?view=azure-devops&tabs=yaml#linux-based-containers), we understand that Linux-based Docker images used in Azure DevOps need to run as root (fifth requirement). 
 
-### Alternative 1b: Download Sigrid CI client script
+### Alternative 2b: Download Sigrid CI client script
 
 If you are unable to use Docker, for example because you are using local runners, you can still use Sigrid CI by downloading the Sigrid CI client script directly from GitHub. In the root of your repository, create a file `azure-devops-pipeline.yaml` and add the following contents:
 
@@ -79,7 +91,7 @@ stages:
         vmImage: 'ubuntu-latest' #https://docs.microsoft.com/en-us/azure/devops/pipelines/agents/hosted?view=azure-devops&tabs=yaml#software
       continueOnError: true
       condition: "ne(variables['Build.SourceBranch'], 'refs/heads/main')"
-        steps:
+      steps:
         - checkout: self
           fetchDepth: 0
           clean: true
@@ -93,6 +105,7 @@ stages:
         - bash: "./sigridci/sigridci/sigridci.py --customer <example_customer_name> --system <example_system_name> --source ."
           env:
             SIGRID_CI_TOKEN: $(SIGRID_CI_TOKEN)
+            SYSTEM_ACCESSTOKEN: $(System.AccessToken)
             PYTHONIOENCODING: utf8
           continueOnError: true
     - job: SigridPublish
@@ -114,6 +127,7 @@ stages:
         - bash: "./sigridci/sigridci/sigridci.py --customer <example_customer_name> --system <example_system_name> --source . --publishonly"
           env:
             SIGRID_CI_TOKEN: $(SIGRID_CI_TOKEN)
+            SYSTEM_ACCESSTOKEN: $(System.AccessToken)
             PYTHONIOENCODING: utf8
           continueOnError: true
 ```
@@ -124,13 +138,13 @@ Note the name of the branch, which is `main` in the example but might be differe
 
 Commit and push this file to the repository, so that Azure DevOps can use this configuration file for your pipeline. If you already have an existing pipeline configuration, simply add these steps to it.
 
-### Step 2: Analysis configuration
+### Step 3: Analysis configuration
 
 In both alternatives, the relevant command that starts Sigrid CI is the call to the `sigridci.py` script, which starts the Sigrid CI analysis. The scripts supports a number of arguments that you can use to configure your Sigrid CI run. The scripts and its command line interface are explained in [using the Sigrid CI client script](../reference/client-script-usage.md).
 
 Sigrid will try to automatically detect the technologies you use, the component structure, and files/directories that should be excluded from the analysis. You can override the default configuration by creating a file called `sigrid.yaml` and adding it to the root of your repository. You can read more about the various options for custom configuration in the [configuration file documentation](../reference/analysis-scope-configuration.md).
 
-### Step 3: Create your Azure DevOps pipeline
+### Step 4: Create your Azure DevOps pipeline
 
 In Azure DevOps, access the section "Pipelines" from the main menu. In this example we assume you are using a YAML file to configure your pipeline:
 
@@ -154,21 +168,9 @@ To obtain feedback on your commit, click on the "Sigrid CI" step in the pipeline
 
 <img src="../images/azure-indicator.png" width="300" />
 
-The check will succeed if the code quality meets the specified target, and will fail otherwise. In addition to the simple success/failure indicator, Sigrid CI provides multiple levels of feedback. The first and fastest type of feedback is directly produced in the CI output, as shown in the following screenshot:
+The check will succeed if the code quality meets the specified target, and will fail otherwise. In addition to the simple success/failure indicator, Sigrid CI provides feedback as comments in your pull request:
 
-<img src="../images/azure-feedback.png" width="600" />
-
-The output consists of the following:
-
-- A list of refactoring candidates that were introduced in your merge request. This allows you to understand what quality issues you caused, which in turn allows you to fix them quickly. Note that quality is obviously important, but you are not expected to always fix every single issue. As long as you meet the target, it's fine.
-- An overview of all ratings, compared against the system as a whole. This allows you to check if your changes improved the system, or accidentally made things worse.
-- The final conclusion on whether your changes and merge request meet the quality target.
-
-The end of the textual output provides a link to the Sigrid landing page. You can open this URL in order to use Sigrid for interpreting your analysis results.
-
-<img src="../images/landing-page.png" width="700" />
-
-Whether you should use the text output or the Sigrid page is largely down to personal preference: the text output is faster to acces and more concise, while Sigrid allows you to view results in a more visual and interactive way. 
+<img src="../images/azure-feedback.png" width="400" />
 
 ## Contact and support
 

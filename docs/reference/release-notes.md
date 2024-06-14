@@ -3,6 +3,11 @@ Sigrid release notes
 
 SIG uses [continuous delivery](https://en.wikipedia.org/wiki/Continuous_delivery), meaning that every change to Sigrid or the underlying analysis is released once our development pipeline has completed. On average, we release somewhere between 10 and 20 times per day. This page therefore doesn't list every single change, since that would quickly lead to an excessively long list of small changes. Instead, this page lists Sigrid and analysis changes that we consider noteworthy for the typical Sigrid user.
 
+### June 17, 2024
+
+- **Sigrid CI:** Pull request comments are now also available for Azure DevOps, in addition to GitHub. This makes the Sigrid CI feedback easier to process, since it's more visual and requires less clicks. See the [Sigrid CI instructions for Azure DevOps](../sigridci-integration/azure-devops.md) for how to enable this in your pipeline.
+- **Technology support:** Improved dependency detection for Visual Basic .NET.
+
 ### June 3, 2024
 
 - **Documentation:** The workflows section now provides [guidelines on how organizations should set themselves up to achieve high-quality software](../workflows/best-practices-organization.md).
