@@ -49,9 +49,34 @@ This will also have a negative impact on analysis performance, as the analysis n
 
 Subsystems are intended for a situation where you have different teams working on different repositories, and you want them to publish their changes to Sigrid individually while still having an aggregated/consolidated view in Sigrid itself. This is the default behavior for Sigrid CI, so following this documentation already leads to a situation where every subsystem is published to Sigrid at the appropriate time.
 
-If you find yourself publishing all repositories simultaneously, for example as a scheduled job, you should consider publishing the system as a whole, since there is little added value in using subsystems in such a scenario.
+If you find yourself publishing all repositories simultaneously, for example as a scheduled job, you should publish the system as a whole by combining them on your side before sending them to Sigrid.
 
 Reversely, there is also little added value in publishing subsystems that have not actually changed, since this option allows you to publish every subsystem after every change anyway.
+
+### How can subsystems be removed?
+
+The Sigrid CI script only adds subsystems, they will never disappear by themselves. If you want to remove a subsystem, you can do so via the API.
+
+`https://sigrid-says.com/rest/inboundresults/sig/{customer}/{system}/ci/subsystems:batch-delete/v1`
+
+#### Token
+Note that this endpoint requires a [Sigrid CI Authentication token](../organization-integration/authentication-tokens.md) that is valid for the system you're trying to change.
+
+##### Headers
+    - 'Authorization: Bearer YOUR_TOKEN'
+    - `Content-Type: application/json`
+##### Body
+
+```json
+    {"names": ["path1, path2"]}
+```
+
+#### Example request
+```bash
+curl --header 'Authorization: Bearer YOUR_TOKEN' -X POST https://sigrid-says.com/rest/inboundresults/sig/{customer}/{system}/ci/subsystems:batch-delete/v1 -H 'Content-Type: application/json' --data '{ "names" : ["path1", "path2"] }'
+```
+
+A new analysis will run for your system and the results will be available in the Sigrid UI and API once the analysis is complete.
 
 ## Contact and support
 
