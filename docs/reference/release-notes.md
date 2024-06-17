@@ -5,6 +5,7 @@ SIG uses [continuous delivery](https://en.wikipedia.org/wiki/Continuous_delivery
 
 ### June 17, 2024
 
+- **Code Explorer:** Sigrid now supports process visualization for low-code technologies. This presents the examples and findings in a way that is more familiar to those developers. The [Code Explorer documentation](../capabilities/code-explorer.md#navigating-low-code-technologies) contains screenshots and more information. 
 - **Sigrid CI:** Pull request comments are now also available for Azure DevOps, in addition to GitHub. This makes the Sigrid CI feedback easier to process, since it's more visual and requires less clicks. See the [Sigrid CI instructions for Azure DevOps](../sigridci-integration/azure-devops.md) for how to enable this in your pipeline.
 - **Technology support:** Improved dependency detection for Visual Basic .NET.
 
