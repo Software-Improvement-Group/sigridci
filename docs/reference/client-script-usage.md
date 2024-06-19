@@ -63,6 +63,8 @@ To reduce the likelihood of inconsistencies, keep in mind the following guidelin
 - If you want to publish all repositories simultaneously, (e.g. on a schedule), combine them on your side and send the aggregate as a regular system.
 - If the repositories of the system are very active and sees many merges (which result in parallel publishes) it is safer to use `--publishonly` than `--publish`.
 
+If susbsystems need to be removed from the system this can be done via the [Sigrid API](../integrations/sigrid-api-documentation.md#removing-subsystems)
+
 
 ## What's the difference between `--publish` and `--publishonly`?
 

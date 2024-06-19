@@ -53,31 +53,6 @@ If you find yourself publishing all repositories simultaneously, for example as 
 
 Reversely, there is also little added value in publishing subsystems that have not actually changed, since this option allows you to publish every subsystem after every change anyway.
 
-### How can subsystems be removed?
-
-The Sigrid CI script only adds subsystems, they will never disappear by themselves. If you want to remove a subsystem, you can do so via the API.
-
-`https://sigrid-says.com/rest/inboundresults/sig/{customer}/{system}/ci/subsystems:batch-delete/v1`
-
-#### Token
-Note that this endpoint requires a [Sigrid CI Authentication token](../organization-integration/authentication-tokens.md) that is valid for the system you're trying to change.
-
-##### Headers
-    - 'Authorization: Bearer YOUR_TOKEN'
-    - `Content-Type: application/json`
-##### Body
-
-```json
-    {"names": ["path1, path2"]}
-```
-
-#### Example request
-```bash
-curl --header 'Authorization: Bearer YOUR_TOKEN' -X POST https://sigrid-says.com/rest/inboundresults/sig/{customer}/{system}/ci/subsystems:batch-delete/v1 -H 'Content-Type: application/json' --data '{ "names" : ["path1", "path2"] }'
-```
-
-A new analysis will run for your system and the results will be available in the Sigrid UI and API once the analysis is complete.
-
 ## Contact and support
 
 Feel free to contact [SIG's support department](mailto:support@softwareimprovementgroup.com) for any questions or issues you may have after reading this document, or when using Sigrid or Sigrid CI. Users in Europe can also contact us by phone at +31 20 314 0953.
