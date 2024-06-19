@@ -49,7 +49,7 @@ This will also have a negative impact on analysis performance, as the analysis n
 
 Subsystems are intended for a situation where you have different teams working on different repositories, and you want them to publish their changes to Sigrid individually while still having an aggregated/consolidated view in Sigrid itself. This is the default behavior for Sigrid CI, so following this documentation already leads to a situation where every subsystem is published to Sigrid at the appropriate time.
 
-If you find yourself publishing all repositories simultaneously, for example as a scheduled job, you should consider publishing the system as a whole, since there is little added value in using subsystems in such a scenario.
+If you find yourself publishing all repositories simultaneously, for example as a scheduled job, you should publish the system as a whole by combining them on your side before sending them to Sigrid.
 
 Reversely, there is also little added value in publishing subsystems that have not actually changed, since this option allows you to publish every subsystem after every change anyway.
 
