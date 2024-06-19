@@ -4,8 +4,9 @@ Configuring Sigrid Single Sign-on with OKTA
 This page describes an example of the technical setup for Sigrid customers using OKTA as their Identity Management Provider.
 
 ## Creating an Application for Sigrid SSO
-As OKTA administrator, add a SAML app.
+As OKTA administrator, add a SAML app. 
 
+And for your Okta Home page we advise to create a Bookmark app.  
 ### General SAML Settings
 
 - Single sign-on URL : https://auth.sigrid-says.com/saml2/idpresponse
@@ -29,6 +30,14 @@ As OKTA administrator, add a SAML app.
 ### Saved Saml app
 
 <img src="../images/okta-saml-settings.png" width="800" /><br />
+
+### Bookmark app
+Sigrid only supports service provider initiated flow, so create a bookmark app that only is redirect to customer.sigrid-says.com.
+As Sigrid logo for your bookmark app you can use these logos
+
+<img src="../images/sigrid-logo-black.svg" width="100" />
+<img src="../images/sigrid-logo.png" width="100" />
+
 
 
 # Contact and support

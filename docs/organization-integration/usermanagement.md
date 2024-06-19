@@ -65,10 +65,6 @@ With the following Attributes & Claims:
 
 Then assign groups of users to your Authentication app.
 
-If you need a Sigrid logo for your app you can use this svg or png logo
-
-<img src="../images/sigrid-logo-black.svg" width="100" />
-<img src="../images/sigrid-logo.png" width="100" />
 
 ### Example Active Directory
 
