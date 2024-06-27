@@ -46,13 +46,12 @@ The **User Organization** often has a black-box view of technology: user needs g
 **Management** facilitates all this, ensuring a structure exists in which stakeholder groups meet and can put forward their needs and concerns. They should also keep an eye out for concerns that may fall through the cracks, such as open source license risk, and involve relevant people such as a Head of Legal. They provide the escalation path for all stakeholder groups and remove impediments. 
 
 ### Towards a healthy engineering culture
-
-We consider these key ingredients of a healthy engineering culture:
-- Management and engineering leads remove impediments for teams
-- Management recognizes the need for technical improvements in general and takes proposals into consideration
-- Teams and Engineering shape and quantify technical improvements so they can be taken in consideration
-- Management and engineering leads set (well-motivated) standards for teams but give them autonomy otherwise
-- Teams accept the need for standards
+There is no ISO standard that defines what a healthy engineering culture looks like, but from the perspective of software quality we find that a healthy engineering culture recognizes the importance of high-quality software and is able to strike a balance between feature work and technical improvements that is in line with the goals of the organization. In such a culture, the following can be observed:
+- The User organization and engineering leads remove impediments for teams, with Management providing an escalation path.
+- The User organization recognizes the need for technical improvements in general and takes proposals into consideration.
+- Teams and Engineering leads shape and quantify technical improvements so they can be taken in consideration.
+- Management and engineering leads set (well-motivated) standards for teams but give them autonomy otherwise.
+- Teams accept the need for standards.
 
 This picture shows the interactions and responsibilities of the different groups:
 
