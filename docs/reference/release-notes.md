@@ -3,6 +3,17 @@ Sigrid release notes
 
 SIG uses [continuous delivery](https://en.wikipedia.org/wiki/Continuous_delivery), meaning that every change to Sigrid or the underlying analysis is released once our development pipeline has completed. On average, we release somewhere between 10 and 20 times per day. This page therefore doesn't list every single change, since that would quickly lead to an excessively long list of small changes. Instead, this page lists Sigrid and analysis changes that we consider noteworthy for the typical Sigrid user.
 
+### July 15, 2024
+
+- **Objectives dashboard:** The dashboard now shows progress over time for all objectives. The time period for this comparison can be selected using the calendar in the top-right, in the same way as other trend graphs across Sigrid.
+- **Architecture Quality:** Added the option to pin components to the view. This allows you to create customized views, which is helpful when you want to focus on or emphasize certain components. The [architecture quality documentation](../capabilities/architecture-quality.md#pinning-and-hiding-architecture-components) contains more information on when and how you can use this feature.
+- **Technology support:** Added support for the JDE technology, formerly known as [JD Edwards EnterpriseOne](https://www.oracle.com/nl/applications/jd-edwards-enterpriseone/). Refer to the [technology support list](technology_support.md) for details.
+
+### July 1, 2024
+
+- **Architecture Quality:** You can now hide components in the architecture diagram. This can help to simplify the diagram when working with large and/or complicated architectures.
+- **Sigrid API:** It is now possible to [remove sub-systems](../integrations/sigrid-api-documentation.md#removing-subsystems) using  the API.
+
 ### June 17, 2024
 
 - **Sigrid CI:** Pull request comments are now also available for Azure DevOps, in addition to GitHub. This makes the Sigrid CI feedback easier to process, since it's more visual and requires less clicks. See the [Sigrid CI instructions for Azure DevOps](../sigridci-integration/azure-devops.md) for how to enable this in your pipeline.
