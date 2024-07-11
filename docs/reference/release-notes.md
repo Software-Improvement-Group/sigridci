@@ -7,7 +7,7 @@ SIG uses [continuous delivery](https://en.wikipedia.org/wiki/Continuous_delivery
 
 - **Objectives dashboard:** The dashboard now shows progress over time for all objectives. The time period for this comparison can be selected using the calendar in the top-right, in the same way as other trend graphs across Sigrid.
 - **Architecture Quality:** Added the option to pin components to the view. This allows you to create customized views, which is helpful when you want to focus on or emphasize certain components. The [architecture quality documentation](../capabilities/architecture-quality.md#pinning-and-hiding-architecture-components) contains more information on when and how you can use this feature.
-- **Technology support:** Added support for the JDE technology, formerly known as [JD Edwards EnterpriseOne](https://www.oracle.com/nl/applications/jd-edwards-enterpriseone/). Refer to the [technology support list](technology_support.md) for details.
+- **Technology support:** Added support for the JDE technology, formerly known as [JD Edwards EnterpriseOne](https://www.oracle.com/nl/applications/jd-edwards-enterpriseone/). Refer to the [technology support list](technology-support.md) for details.
 
 ### July 1, 2024
 
