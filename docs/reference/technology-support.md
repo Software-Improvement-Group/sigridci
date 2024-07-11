@@ -395,6 +395,7 @@ This configuration can be managed using the `--convert` [option in Sigrid CI](cl
 | FME                 | `FME`                                                                   |
 | IBM BPM             | `IbmBpm`                                                                |
 | Infinite Blue       | `Infiniteblue`                                                          |
+| JDE                 | `JDE`                                                                   |
 | Linc                | `Linc`                                                                  |
 | Lion                | `Lion`                                                                  |
 | Lion/COBOL          | `LionCobol`                                                             |
