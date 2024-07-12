@@ -28,7 +28,7 @@ You can set Portfolio Objectives by selecting the Objectives tab from the menu b
 
 To define a portfolio objective, you can click on the "Create Portfolio Objective" button. 
 
-<img src="../images/docs/images/create-portfolio-objective-button.png" width="300" />
+<img src="../images/create-portfolio-objective-button.png" width="300" />
 
 Upon clicking the button, a pop-up will appear to guide you during the creation of a portfolio objective.
 
