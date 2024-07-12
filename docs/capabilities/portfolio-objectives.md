@@ -28,7 +28,7 @@ You can set Portfolio Objectives by selecting the Objectives tab from the menu b
 
 To define a portfolio objective, you can click on the "Create Portfolio Objective" button. 
 
-<img src="../images/Create-Portfolio Objective-button .png" width="300" />
+<img src="../images/docs/images/create-portfolio-objective-button.png" width="300" />
 
 Upon clicking the button, a pop-up will appear to guide you during the creation of a portfolio objective.
 
@@ -45,7 +45,7 @@ This final field can be of two distinct types: either a free-text field, in the 
 
 <img src="../images/portfolio-objectives-add-popup-step2.png" width="700" />
 
-- Once you are done with selecting the type of objective you want to define, you can then start applying the objective to a group of systems based on their shared metadata. You can apply objectives based on the system’s technology category, Business criticality, Life cycle phase or deployment type. Being able to set context-specific objectives can help you evaluate your systems realistically. For example, you can set a specific quality objective for a group of systems that are programmed using legacy technologies or a end-of-life. It’s important to prioritise and set higher or lower targets (= different objectives) for certain systems. For example, systems that are public-facing might have stronger security objectives, or systems built with legacy technology might have lower maintainability objectives.
+- Once you are done with selecting the type of objective you want to define, you can then start applying the objective to a group of systems based on their shared metadata. You can apply objectives based on the system’s technology category, Business criticality, Life cycle phase or deployment type. Being able to set context-specific objectives can help you evaluate your systems realistically. For example, you can set a specific quality objective for a group of systems that are programmed using legacy technologies or at end-of-life. It’s important to prioritise and set higher or lower targets (= different objectives) for certain systems. For example, systems that are public-facing might have stronger security objectives, or systems built with legacy technology might have lower maintainability objectives.
   
 - Finally, we have a free-text field called Rationale. This field can be used to add any additional details on why a given objective was set and add extra details regarding the values for ensuring full clarity to all involved stakeholders.
 
