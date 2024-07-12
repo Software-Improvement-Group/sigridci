@@ -2,9 +2,9 @@
 
 ## About Objectives 
 
-**Objectives** are targets that can be set in Sigrid, to compare against system status and quality trends. In this context, objectives are understood as being *non-functional requirements*. They are considered separate from metadata (see [metadata page](../organization-integration/metadata.md)), since *Objectives* do not describe characteristics of systems themselves, but where you want them to be.
+**Objectives** are targets that can be set in Sigrid, to compare against system status and quality trends. In this context, objectives are understood as being *non-functional requirements*. They express mutual expectations and allow groups to hold each other to account. A security lead can refer to them when teams do not upgrade vulnerable dependencies, but a team can do the same towards management to defend a refactoring proposal. This page describes how to go about this.
 
-Objectives can be set per different quality characteristics and levels of detail. Examples are: a range of desired *Maintainability*, desired *New code quality*, minimum *Test code ratio*, or the maximum number of *Medium risk vulnerabilities* in libraries (*Open Source Health*).
+Objectives can be set per different quality characteristics and levels of detail. Examples are: a range of desired *Maintainability*, desired *New code quality*, or the maximum number of *Medium risk vulnerabilities* in libraries (*Open Source Health*).
 
 Our [Guidelines for using Objectives](../workflows/best-practices-objectives.md) provides more background on the thinking behind objectives and how to make them work in your organization. This section focusses on the action needed in Sigrid.
 
@@ -12,7 +12,7 @@ Two types of objectives exist:
 
 **Portfolio Objective**:  A type of objective that targets a group of systems based on similar metadata, aiming to provide an efficient and user-friendly experience that removes the need to set objectives individually for each system and better prioritization. (General rule). 
 
-<img src="../images/portfolio-objectives-main-table.png" width="700" />
+<img src="../images/portfolio-objective-delta.png" width="700" />
 
 **System Objective**: A type of objective specific to an individual system within a portfolio that does not follow the general rule. When an objective is set at the system level, the system no longer follows the objective defined at the portfolio level.
 
@@ -24,7 +24,7 @@ Find out more in the section [how to define system objectives](../capabilities/o
 
 You can set Portfolio Objectives by selecting the Objectives tab from the menu bar.  
 
-<img src="../images/setting-portfolio-objectives.png" width="675" />
+<img src="../images/objective-menu.png" width="675" />
 
 To define a portfolio objective, you can click on the "Create Portfolio Objective" button. 
 
@@ -45,8 +45,8 @@ This final field can be of two distinct types: either a free-text field, in the 
 
 <img src="../images/portfolio-objectives-add-popup-step2.png" width="700" />
 
-- Once you are done with selecting the type of objective you want to define, you can then start applying the objective to a group of systems based on their shared metadata. You can apply objectives based on the system's technology category, Business criticality, Life cycle phase or deployment type.
-Being able to set system-specific objectives can help you evaluate your system realistically, based on the system’s context. For example, you can set a specific quality objective for a system that is programmed using legacy technologies or a system that is end-of-life. It's important to prioritize and set higher or lower targets (= different objectives) for certain systems.  For example, systems that are public-facing might have stronger security objectives, or systems built with legacy technology might have lower maintainability objectives.
+- Once you are done with selecting the type of objective you want to define, you can then start applying the objective to a group of systems based on their shared metadata. You can apply objectives based on the system’s technology category, Business criticality, Life cycle phase or deployment type. Being able to set context-specific objectives can help you evaluate your systems realistically. For example, you can set a specific quality objective for a group of systems that are programmed using legacy technologies or a end-of-life. It’s important to prioritise and set higher or lower targets (= different objectives) for certain systems. For example, systems that are public-facing might have stronger security objectives, or systems built with legacy technology might have lower maintainability objectives.
+  
 - Finally, we have a free-text field called Rationale. This field can be used to add any additional details on why a given objective was set and add extra details regarding the values for ensuring full clarity to all involved stakeholders.
 
 
