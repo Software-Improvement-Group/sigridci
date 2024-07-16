@@ -51,7 +51,7 @@ There is no ISO standard that defines what a healthy engineering culture looks l
 - The User organization recognizes the need for technical improvements in general and takes proposals into consideration.
 - Teams and Engineering leads shape and quantify technical improvements so they can be taken in consideration.
 - Management and engineering leads set (well-motivated) standards for teams but give them autonomy otherwise.
-- Teams accept the need for standards.
+- Teams accept the need for standards and build software accordingly.
 
 This picture shows the interactions and responsibilities of the different groups:
 
