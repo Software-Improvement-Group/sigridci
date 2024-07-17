@@ -4,17 +4,17 @@
 
 ## Introduction
 
-The purpose of this document is to provide concrete and actionable guidelines on how organizations should set themselves up to achieve high-quality software. While a lot of material is available on how to organize software development, most of it focusses on speed and alignment and mentions quality only in passing. Rather than adding yet another process framework, we identify three different stakeholder groups that are present in almost all organizations and describe what they are expected to do and what they should expect from each other in the quest for quality software. Our aim is for this to be complementary to existing process frameworks and we illustrate this for a couple of well-known ones.
+The purpose of this document is to provide concrete and actionable guidelines on how organizations should set themselves up to achieve high-quality software. While a lot of material is available on how to organize software development, most of it focusses on speed and alignment and mentions quality only in passing. Rather than adding yet another process framework, we identify four different stakeholder groups that are present in almost all organizations and describe what they are expected to do and what they should expect from each other in the quest for quality software. Our aim is for this to be complementary to existing process frameworks and we illustrate this for a couple of well-known ones.
 
-## Three stakeholder groups in a hybrid model
+## Four stakeholder groups in a hybrid model
 
 Typically, nobody in an organization is opposed to building quality software. Rather, investing in software quality often loses out to other topics, typically adding features and fixing bugs. The shift that needs to take place is that organization arrive at a way of working that allows for a fair competition to take place between feature work and technical improvements. 
 
-Having consulted with many organizations, we have identified three stakeholder groups that need to be involved to make this shift and achieve high quality software, structurally. These are:
+Having consulted with many organizations, we have identified four stakeholder groups that need to be involved to make this shift and achieve high quality software, structurally. These are:
 - Teams
 - Engineering leads
-- The User Organization
-It is the role of Management to ensure that these stakeholder groups arrive at a way of working that is acceptable to each of them and the organization as a whole.
+- User representatives
+- Management
 
 Making the shift is not just a matter of 'the business should allow us to work on improvements instead of pushing for features'. There is a responsibility from teams and engineering leads to properly shape and quantify the work they think needs to be done so a fair assessment can be made. Also, teams need to accept the need for standards. In areas like security and legal, it is not practical or desirable for individual teams to assume full responsibility for these aspects. 
 
@@ -28,10 +28,10 @@ While our terminology is pretty generic, each organization is different and some
 
 Of these groups, **teams** are typically the easiest to identify, because they exist as such. 
 
-The **User Organization** consists of everyone who is in some way affected by what the software does, ranging from actual users to managers who are responsible for a process supported by the software and, not unimportantly, have to pay for it. Often, this group is referred to as 'the business' but we are not a fan of that term because especially in commercial organizations (often referred to a 'businesses') it suggests a certain hierarchy between the user organization and the technology organization that historically has not been helpful in achieving successful outcomes in general and high-quality software in particular.
+The **User Representatives** consists of everyone who is in some way affected by what the software does, ranging from actual users to managers who are responsible for a process supported by the software and, not unimportantly, have to pay for it. Often, this group is referred to as 'the business' but we are not a fan of that term because especially in commercial organizations (often referred to as 'businesses') it suggests a certain hierarchy between the users and the technology organization that historically has not been helpful in achieving successful outcomes in general and high-quality software in particular.
 Obviously it is not practical or desirable to involve the entire user organization in this process. Often, the user interests are represented by a product owner or project manager. 
 
-**Engineering leads** are typically the hardest one to identify because it is the least established of the three groups and exists in various forms and to varying degrees. Engineering leads are typically involved in (higher-level) solution design, technology choices or security analyses and policies. Job titles may include tech lead, team lead or architect. Engineering leads may exist within teams and organize virtually through Communities of Practice, Guilds or Chapters. In other cases, separate engineering lead roles or teams exist, such as enterprise architects, security specialists or Centers of Excellence. elsewhere in the documentation we refer to engineering leads as architects. 
+**Engineering leads** are typically the hardest one to identify because it is the least established of the groups and exists in various forms and to varying degrees. Engineering leads are typically involved in (higher-level) solution design, technology choices or security analyses and policies. Job titles may include tech lead, team lead or architect. Engineering leads may exist within teams and organize virtually through Communities of Practice, Guilds or Chapters. In other cases, separate engineering lead roles or teams exist, such as enterprise architects, security specialists or Centers of Excellence. Elsewhere in the documentation we refer to engineering leads as architects. 
 
 **Management** are the people whose main interest is that 'the whole thing works'. They facilitate the interaction between the different stakeholder groups and ensure that decisions are made and ties are broken. As such, they are found higher up in the hierarchy and since software quality is typically a technology concern, we primarily see technology managers in this role, like engineering managers, head of software development or sometimes a C-level role like a CTO. 
 
@@ -47,8 +47,8 @@ The **User Organization** often has a black-box view of technology: user needs g
 
 ### Towards a healthy engineering culture
 There is no ISO standard that defines what a healthy engineering culture looks like, but from the perspective of software quality we find that a healthy engineering culture recognizes the importance of high-quality software and is able to strike a balance between feature work and technical improvements that is in line with the goals of the organization. In such a culture, the following can be observed:
-- The User organization and engineering leads remove impediments for teams, with Management providing an escalation path.
-- The User organization recognizes the need for technical improvements in general and takes proposals into consideration.
+- The User representatives and engineering leads remove impediments for teams, with Management providing an escalation path.
+- The User representatives recognize the need for technical improvements in general and takes proposals into consideration.
 - Teams and Engineering leads shape and quantify technical improvements so they can be taken in consideration.
 - Management and engineering leads set (well-motivated) standards for teams but give them autonomy otherwise.
 - Teams accept the need for standards and build software accordingly.
