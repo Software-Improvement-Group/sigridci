@@ -26,7 +26,7 @@ The picture below depicts the hybrid model that enables this shift. It aims to s
 
 While our terminology is pretty generic, each organization is different and some mapping will need to be done to map the different groups to existing roles in an organization.
 
-Of these groups, **teams** are typically the easiest to identify, because they exist as such. 
+Of these groups, **teams** are typically the easiest to identify, because they exist as such. Note that in this model, we assume that operational concerns are covered in the teams (in other words, the teams are devops teams). If not, the operational concerns should be represented by the user representatives, such as a product owner.
 
 The **User Representatives** consists of everyone who is in some way affected by what the software does, ranging from actual users to managers who are responsible for a process supported by the software and, not unimportantly, have to pay for it. Often, this group is referred to as 'the business' but we are not a fan of that term because especially in commercial organizations (often referred to as 'businesses') it suggests a certain hierarchy between the users and the technology organization that historically has not been helpful in achieving successful outcomes in general and high-quality software in particular.
 Obviously it is not practical or desirable to involve the entire user organization in this process. Often, the user interests are represented by a product owner or project manager. 
