@@ -8,7 +8,7 @@ The purpose of this document is to provide concrete and actionable guidelines on
 
 ## Four stakeholder groups in a hybrid model
 
-Typically, nobody in an organization is opposed to building quality software. Rather, investing in software quality often loses out to other topics, typically adding features and fixing bugs. The shift that needs to take place is that organization arrive at a way of working that allows for a fair competition to take place between feature work and technical improvements. 
+Typically, nobody in an organization is opposed to building quality software. Rather, investing in software quality often loses out to other topics, typically adding features and fixing bugs. The shift that needs to take place is that organizations arrive at a way of working that allows for a fair competition to take place between feature work and technical improvements. 
 
 Having consulted with many organizations, we have identified four stakeholder groups that need to be involved to make this shift and achieve high quality software, structurally. These are:
 - Teams
