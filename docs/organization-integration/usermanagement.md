@@ -58,6 +58,7 @@ With the following Attributes & Claims:
 | unique user identifier | emailaddress |
 
 
+Other
 - Signature Algorithm: RSA_SHA256
 - Digest Algorithm: SHA256
 - Assertion Encryption: unencrypted (privacy is provided by using HTTPS)

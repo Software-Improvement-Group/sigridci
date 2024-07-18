@@ -43,9 +43,28 @@ Notes:
 2. System names can only contain lowercase letters, numbers, and hyphens.
 3. Typically, you would use the `--publish` option when committing to the main/master branch, and you would *not* use it for pull requests. See below for more information.  
 4. These files and directories are excluded *on top of* Sigrid's default excludes. By default, Sigrid excludes things like third party libraries (e.g. `/node_modules/` for NPM libraries, build output (e.g. `/target/` for Maven builds), and generated code. 
-5. The `--subsystem` option can be used to map multiple repositories to the same Sigrid system. Refer to the [documentation on mapping repositories to systems](../organization-integration/systems.md) for more information. Please add the `--subsystem` parameter to both the PR as the --publish(only) runs if you use this option.
+5. See the section below for more details and its limitations.
 6. Include can be used to narrow down the upload to specific folders and/or files. In addition, exclude can be used to exclude files and folders from the included folders.
 7. Folders should always be surrounded by '/' characters
+
+
+## Using subsystems to combine repositories
+
+The `--subsystem` option can be used to map multiple repositories to the same Sigrid system.
+Refer to the [documentation on mapping repositories to systems](../organization-integration/systems.md) for more information on when to combine multiple repositories into a single system in Sigrid.
+
+Please add the `--subsystem` parameter to both the PR as the --publish(only) runs if you use this option.
+
+If Sigrid CI runs for multiple subsystems of the same system in parallel the results might be inconsistent.
+For example, you might get feedback on another component because you appear to be making changes.
+This is because a parallel run changed the baseline since the start of your analysis.
+
+To reduce the likelihood of inconsistencies, keep in mind the following guidelines:
+- If you want to publish all repositories simultaneously, (e.g. on a schedule), combine them on your side and send the aggregate as a regular system.
+- If the repositories of the system are very active and sees many merges (which result in parallel publishes) it is safer to use `--publishonly` than `--publish`.
+
+If susbsystems need to be removed from the system this can be done via the [Sigrid API](../integrations/sigrid-api-documentation.md#removing-subsystems)
+
 
 ## What's the difference between `--publish` and `--publishonly`?
 
