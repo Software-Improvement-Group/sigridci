@@ -93,7 +93,7 @@ While Sigrid requires minimal adminstration to gather insights in your software'
 
 ### Types of users
 Sigrid utilizes role-based authorization with three roles assignable to users: 
-- **Normal users:** Default Sigrid users. Can view all details of systems they've been granted access to, as well as view and edit realted findings.
+- **Normal users:** Default Sigrid users. Can view all details of systems they've been granted access to, as well as view and edit related findings.
 - **Administrators:** Power users that have the ability to edit all details of all users within the portfolio, have access to all systems, and can set portfolio wide objectives that affect all systems in a given portfolio.
 - **Maintainers:** These users are localized administrators. Maintainers can perform administrative actions on systems they have explicit access to, but not over the entire portfolio.
 
