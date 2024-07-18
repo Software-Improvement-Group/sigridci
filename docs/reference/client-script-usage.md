@@ -26,7 +26,7 @@ The script takes a limited number of mandatory arguments. However, Sigrid CI's b
 |-------------------|----------|---------------------|-----------------------------------------------------------------------------------------------------------------------------------|
 | `--customer`      | Yes      | examplecustomername | Name of your organization's Sigrid account. Contact SIG support if you're not sure about this. [1]                                |
 | `--system`        | Yes      | examplesystemname   | Name of your system in Sigrid. Contact SIG support if you're not sure about this. [2]                                             |
-| `--subsystem `    | No       | frontend            | Used to map between repository directory structure versus the one known by Sigrid. [5]                                            |
+| `--subsystem `    | No       | frontend             | Used to map between repository directory structure versus the one known by Sigrid. [5]                                            |
 | `--source`        | Yes      | .                   | Path of your project's source code. Use "." for current directory.                                                                |
 | `--publish`       | No       | N/A                 | Automatically publishes analysis results to Sigrid. [1]                                                                           |
 | `--publishonly`   | No       | N/A                 | Publishes analysis results to Sigrid, but *does not* provide feedback in the CI environment itself. [3]                           |
@@ -54,6 +54,8 @@ The `--subsystem` option can be used to map multiple repositories to the same Si
 Refer to the [documentation on mapping repositories to systems](../organization-integration/systems.md) for more information on when to combine multiple repositories into a single system in Sigrid.
 
 Please add the `--subsystem` parameter to both the PR as the --publish(only) runs if you use this option.
+
+When adding a sigrid.yaml to the system, please use --subsystem root to make sure that the sigrid.yaml is published to the correct location on our end: the root of the system. Sigrid.yaml file sthat are published inside a --subsystem like frontend will be ignored.
 
 If Sigrid CI runs for multiple subsystems of the same system in parallel the results might be inconsistent.
 For example, you might get feedback on another component because you appear to be making changes.
