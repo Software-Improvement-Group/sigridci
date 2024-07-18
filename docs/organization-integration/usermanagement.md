@@ -65,7 +65,6 @@ With the following Attributes & Claims:
 
 Then assign groups of users to your Authentication app.
 
-
 ### Example Active Directory
 
 <img src="../images/azure-saml.png" width="800" />
