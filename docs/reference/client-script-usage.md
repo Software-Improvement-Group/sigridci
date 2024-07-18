@@ -26,7 +26,7 @@ The script takes a limited number of mandatory arguments. However, Sigrid CI's b
 |-------------------|----------|---------------------|-----------------------------------------------------------------------------------------------------------------------------------|
 | `--customer`      | Yes      | examplecustomername | Name of your organization's Sigrid account. Contact SIG support if you're not sure about this. [1]                                |
 | `--system`        | Yes      | examplesystemname   | Name of your system in Sigrid. Contact SIG support if you're not sure about this. [2]                                             |
-| `--subsystem `    | No       | frontend             | Used to map between repository directory structure versus the one known by Sigrid. [5]                                            |
+| `--subsystem `    | No       | frontend            | Used to map between repository directory structure versus the one known by Sigrid. [5]                                            |
 | `--source`        | Yes      | .                   | Path of your project's source code. Use "." for current directory.                                                                |
 | `--publish`       | No       | N/A                 | Automatically publishes analysis results to Sigrid. [1]                                                                           |
 | `--publishonly`   | No       | N/A                 | Publishes analysis results to Sigrid, but *does not* provide feedback in the CI environment itself. [3]                           |
