@@ -55,6 +55,8 @@ Refer to the [documentation on mapping repositories to systems](../organization-
 
 Please add the `--subsystem` parameter to both the PR as the --publish(only) runs if you use this option.
 
+When adding a sigrid.yaml to the system that combines repositories, please use --subsystem root to make sure that the sigrid.yaml is published to the correct location on our end: the root of the system. Sigrid.yaml files that are published inside a --subsystem like frontend will be ignored.
+
 If Sigrid CI runs for multiple subsystems of the same system in parallel the results might be inconsistent.
 For example, you might get feedback on another component because you appear to be making changes.
 This is because a parallel run changed the baseline since the start of your analysis.
