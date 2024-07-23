@@ -51,7 +51,7 @@ Create an Enterprise application 'app' in your IdP with the following details:
 With the following 3 Attributes & Claims:
 
 | Your user | Sigrid expects the long url as SAML attribute name |
-| ----------- | ----------|
+| ----------- | ---------- |
 | user email  | http://schemas.xmlsoap.org/ws/2005/05/identity/claims/emailaddress |
 | user last name   | http://schemas.xmlsoap.org/ws/2005/05/identity/claims/name |
 | user first name   | http://schemas.xmlsoap.org/ws/2005/05/identity/claims/given_name |
