@@ -55,7 +55,7 @@ With the following 3 Attributes & Claims:
 | user email  | http://schemas.xmlsoap.org/ws/2005/05/identity/claims/emailaddress |
 | user last name   | http://schemas.xmlsoap.org/ws/2005/05/identity/claims/name |
 | user first name   | http://schemas.xmlsoap.org/ws/2005/05/identity/claims/given_name |
-| if your IdP requires to set an unique user identifier | please choose emailaddress |
+_Note: if your IdP requires to set an unique user identifier, please choose emailaddress_
 
 
 Other
