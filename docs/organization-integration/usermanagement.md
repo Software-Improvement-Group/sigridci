@@ -48,14 +48,14 @@ Create an Enterprise application 'app' in your IdP with the following details:
 - Audience or Identifier (Entity) ID: urn:amazon:cognito:sp:eu-central-1_hwh9zdyCY
 - Reply URL: https://auth.sigrid-says.com/saml2/idpresponse
 
-With the following Attributes & Claims:
+With the following 3 Attributes & Claims:
 
-| Your user | Namespace + SAML attribute name as expected by Sigrid |
+| Your user | Sigrd expects the long url wit Namespace + SAML attribute name |
 | ----------- | ----------|
 | user email  | http://schemas.xmlsoap.org/ws/2005/05/identity/claims/emailaddress |
 | user last name   | http://schemas.xmlsoap.org/ws/2005/05/identity/claims/name |
 | user first name   | http://schemas.xmlsoap.org/ws/2005/05/identity/claims/given_name |
-| unique user identifier | emailaddress |
+| if your IdP requires to set an unique user identifier | please choose emailaddress |
 
 
 Other
