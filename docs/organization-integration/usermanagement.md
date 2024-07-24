@@ -48,14 +48,15 @@ Create an Enterprise application 'app' in your IdP with the following details:
 - Audience or Identifier (Entity) ID: urn:amazon:cognito:sp:eu-central-1_hwh9zdyCY
 - Reply URL: https://auth.sigrid-says.com/saml2/idpresponse
 
-With the following Attributes & Claims:
+With the following 3 Attributes & Claims:
 
-| Your user | Namespace + SAML attribute name as expected by Sigrid |
-| ----------- | ----------|
+| Your user | Sigrid expects the long url as SAML attribute name |
+| ---------- | ---------- |
 | user email  | http://schemas.xmlsoap.org/ws/2005/05/identity/claims/emailaddress |
 | user last name   | http://schemas.xmlsoap.org/ws/2005/05/identity/claims/name |
 | user first name   | http://schemas.xmlsoap.org/ws/2005/05/identity/claims/given_name |
-| unique user identifier | emailaddress |
+
+_Note: if your IdP requires to set an unique user identifier, please choose emailaddress_
 
 
 Other
@@ -93,7 +94,7 @@ While Sigrid requires minimal adminstration to gather insights in your software'
 
 ### Types of users
 Sigrid utilizes role-based authorization with three roles assignable to users: 
-- **Normal users:** Default Sigrid users. Can only view all findings and details of systems they've been granted access to.
+- **Normal users:** Default Sigrid users. Can view all details of systems they've been granted access to, as well as view and edit related findings.
 - **Administrators:** Power users that have the ability to edit all details of all users within the portfolio, have access to all systems, and can set portfolio wide objectives that affect all systems in a given portfolio.
 - **Maintainers:** These users are localized administrators. Maintainers can perform administrative actions on systems they have explicit access to, but not over the entire portfolio.
 
