@@ -71,6 +71,28 @@ Finally, the buttons around the page allow you to manipulate the architecture vi
 - The "reset layout" button resets the architecture visualization to its original state, which can help to restore readability.
 - The zoom buttons are an alternative way to zoom the architecture visualization, in addition to using your trackpad or mouse wheel to zoom.
 
+### Pinning and hiding architecture components
+
+As most software systems are comprised of many parts, each with differing levels of dependencies between them, it can often be overwhelming to view the architecture in its entirety. In fact, it's often the case that risk is localized across only a subset of the overall architecture while the majority of the remaining system elements can be safely ignored. As such, you will often want to target a specific set of components that have relations between each other while removing other components from view to more easily identify and triage these riskful hotspots without having to navigate through a mess of component and dependencies that are "muddying the waters" of your analysis.
+
+Sigrid assists with this localized traige by allowing you to hide components (and their related dependencies) as needed. Alternatively, you can also "pin" components within the visualization to ensure they remain in view whenever you're navigating the architecture. Using these controls together allows you to keep systems elements that have your interest in sight, while hiding away those that are not relevant. 
+
+Hiding and/or pinning of components can be done in multiple ways:
+
+1. When hovering over a component in the architecture canvas, two togglable icons will appear in the bottom left of the component's box: 
+- A Pin icon which ensures the component remains in view regardles of other actions in the canvas.
+- A Hide icon to force the component out of view until it is reshown.
+
+<img src="../images/aq-component-pin-hide.png" width="250" />
+
+2. Component's can also be pinned and hidden (or unpinned and unhidden) from the tree view. Hovering over a component name within the tree view will also cause the pin and hide toggles to appear to the right of the name. 
+
+<img src="../images/aq-tree-view-pin-hide.png" width="250" />
+
+Once the pin or hide icon has been toggled, these icons will remain visible in both the canvas and tree view to help easily identify which components have had their visibility modified and toggle this off as needed by clicking the shown icon again.
+
+<img src="../images/aq-pin-hide-full.png" width="500" />
+
 ### Highlighting undesirable dependencies
 
 You might have noticed that some dependencies are shown in red. These dependencies are considered undesirable, either because they violate a known architectural anti-pattern (for example cyclic dependencies), or because they have been marked as undesirable in [your configuration](../reference/analysis-scope-configuration.md#architecture-quality).
