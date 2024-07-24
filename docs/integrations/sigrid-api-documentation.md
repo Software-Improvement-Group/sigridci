@@ -130,15 +130,13 @@ The parameters `{customer}` and `{system}` refer to your Sigrid account name and
 
 </details>
 
-### Vulnerable libraries in Open Source Health
+### Open Source Health findings and ratings
+A list of all third-party open source dependencies is available using the following endpoints:
+- `GET https://sigrid-says.com/rest/analysis-results/api/v1/osh-findings/{customer}` for your full portfolio of applications;
+- `GET https://sigrid-says.com/rest/analysis-results/api/v1/osh-findings/{customer}/{system}` for a single application.  
 
-A list of all third-party libraries used is available for a given system, or for all systems for a customer, using the following endpoints:
-- `GET https://sigrid-says.com/rest/analysis-results/api/v1/osh-findings/{customer}?vulnerable=<choose one of true or false according to the explanation below>`: get all third-party libraries for all systems the current user has access to for the given customer.
-- `GET https://sigrid-says.com/rest/analysis-results/api/v1/osh-findings/{customer}/{system}?vulnerable=<choose one of true or false according to the explanation below>`: get all third-party libraries for the given system and customer.
-
-The path parameters `{customer}` and `{system}` refer to your Sigrid account name and system ID respectively. The `vulnerable` URL query parameter is optional and defaults to `false`. The meaning is as follows:
-- `?vulnerable=false` or no query parameter: the endpoint returns the full list of third-party libraries detected by Sigrid for the given customer/system(s), including lists of known vulnerabilities per library if any. 
-- `?vulnerable=true`: the endpoint returns only those third-party libraries detected by Sigrid for the given customer/system(s) that have at least one known vulnerability. 
+The endpoints will include [Open Source Health Quality Model](../reference/quality-model-documents/open-source-health.html) ratings where available. 
+The path parameter `{customer}` and `{system}` refer to your Sigrid account name and system ID respectively.
 
 The response format is based on the CycloneDX (version 1.5) format for an [SBOM (software bill of materials)](https://en.wikipedia.org/wiki/Software_bill_of_materials). 
 
@@ -167,6 +165,32 @@ Mimetype: `application/vnd.cyclonedx+json`
             }
         ]
     },
+    "properties" : [
+      {
+        "name" : "sigrid:ratings:system",
+        "value" : "3.89"
+      },
+      {
+        "name" : "sigrid:ratings:vulnerability",
+        "value" : "3.2976190476190474"
+      },
+      {
+        "name" : "sigrid:ratings:licenses",
+        "value" : "5.5"
+      },
+      {
+        "name" : "sigrid:ratings:freshness",
+        "value" : "1.4174311926605505"
+      },
+      {
+        "name" : "sigrid:ratings:management",
+        "value" : "3.189908256880734"
+      },
+      {
+        "name" : "sigrid:ratings:activity",
+        "value" : "1.3944954128440368"
+      }
+    ],
     "components": [
         {
             "group": "",
@@ -210,8 +234,33 @@ Mimetype: `application/vnd.cyclonedx+json`
     ]
 }
 ```
-
 </details>
+
+The `properties` of the root is an array of name/value pairs.
+It contains up to 6 items, as detailed in the table below. Note that the value of 
+a property can never be `null` according to the CycloneDX specification. Consequently, 
+if Sigrid cannot determine the value of a property for whatever reason, it is simply 
+missing from the `properties` array.
+
+| Name                           | Description                                              |
+|--------------------------------|----------------------------------------------------------|
+| `sigrid:ratings:system`        | System Open Source Health Quality model rating           |
+| `sigrid:ratings:vulnerability` | Vulnerability Open Source Health Quality model rating    |
+| `sigrid:ratings:licenses`      | Licenses Open Source Health Quality model rating         |
+| `sigrid:ratings:freshness`     | Freshness Open Source Health Quality model rating        |        
+| `sigrid:ratings:management`    | Management Open Source Health Quality model rating       |
+| `sigrid:ratings:activity`      | Activity Open Source Health Quality model rating         |
+
+
+#### Vulnerable libraries in Open Source Health
+
+Additionally, it is possible to filter only vulnerable/non vulnerable dependencies using the aforementioned endpoint as such:
+- `GET https://sigrid-says.com/rest/analysis-results/api/v1/osh-findings/{customer}?vulnerable=<choose one of true or false according to the explanation below>`: get all third-party libraries for all systems the current user has access to for the given customer.
+- `GET https://sigrid-says.com/rest/analysis-results/api/v1/osh-findings/{customer}/{system}?vulnerable=<choose one of true or false according to the explanation below>`: get all third-party libraries for the given system and customer.
+
+The `vulnerable` URL query parameter is optional and defaults to `false`. The meaning is as follows:
+- `?vulnerable=false` or no query parameter: the endpoint returns the full list of third-party libraries detected by Sigrid for the given customer/system(s), including lists of known vulnerabilities per library if any. 
+- `?vulnerable=true`: the endpoint returns only those third-party libraries detected by Sigrid for the given customer/system(s) that have at least one known vulnerability. 
 
 The endpoint that returns third-party vulnerabilities for all systems for the given customer returns an array of SBOMs, one for each system as follows:
 
@@ -230,16 +279,15 @@ The endpoint that returns third-party vulnerabilities for all systems for the gi
 ```
 
 The `properties` member of elements of the `components` array is an array of name/value pairs. Currently, this array
-may have up to 12 items, as detailed in the table below. Note that the value of a property can never be `null` according
-to the CycloneDX specification. Consequently, if Sigrid cannot determine the value of a property for whatever reason,
-it is simply missing from the `properties` array.
+may have up to 12 items, as detailed in the table below. Similar to above, if Sigrid cannot determine
+the value of a property it will be missing from the array.
 
 | Name                        | Description                                                                      |
 |-----------------------------|----------------------------------------------------------------------------------|
-| `sigrid:risk:vulnerability` | Vulnerability risk (one of `NONE`, `LOW`, `MEDIUM`, `HIGH`)                      |
-| `sigrid:risk:legal`         | Legal (license) risk (one of `NONE`, `LOW`, `MEDIUM`, `HIGH`)                    |
-| `sigrid:risk:freshness`     | Freshness risk (one of `NONE`, `LOW`, `MEDIUM`, `HIGH`)                          |
-| `sigrid:risk:activity`      | Activity risk (one of `NONE`, `LOW`, `MEDIUM`, `HIGH`)                           |        
+| `sigrid:risk:vulnerability` | Vulnerability risk (one of `NONE`, `LOW`, `MEDIUM`, `HIGH`, `CRITICAL`)          |
+| `sigrid:risk:legal`         | Legal (license) risk (one of `NONE`, `LOW`, `MEDIUM`, `HIGH`, `CRITICAL`)        |
+| `sigrid:risk:freshness`     | Freshness risk (one of `NONE`, `LOW`, `MEDIUM`, `HIGH`, `CRITICAL`)              |
+| `sigrid:risk:activity`      | Activity risk (one of `NONE`, `LOW`, `MEDIUM`, `HIGH`, `CRITICAL`)               |        
 | `sigrid:risk:stability`     | Stability risk (one of `NONE`, `LOW`, `MEDIUM`, `HIGH`)                          |
 | `sigrid:risk:management`    | Dependency management risk (one of `NONE`, `LOW`, `MEDIUM`, `HIGH`)              |
 | `sigrid:releaseDate`        | Release date of the detected version (ISO 8601: YYYY-MM-DD)                      |
