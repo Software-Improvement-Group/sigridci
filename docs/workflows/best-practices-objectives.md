@@ -30,13 +30,11 @@ Sometimes, setting quality standards in a top-down way meets with resistance fro
 
 As for autonomy, that is not absolute to begin with. Even the most autonomous teams work within the financial and strategic constraints of their organization. There is no reason such constraints should not exist when it comes to engineering. In many situations, teams will appreciate having explicitly agreed upon quality standards, so they have leverage when discussing the trade-off between quality and e.g. new feature requests.
 
-The picture below depicts the hybrid model that we recommend. It aims to strike a middle ground between a top-down model that leaves teams with very little autonomy to address problems as they see fit and the fully autonomous model where management has very little control even if that would benefit the teams.
-
-<img src="../images/hybrid-model.png" width="700" />
+Our [guidelines on organization](best-practices-organization.md) provide more background on the stakeholder groups involved in building high-quality software and what they should expect from each other.
 
 ## Using software quality objectives: jobs to be done
 
-As stated, the goal of objectives is to decide for each application how good it needs to be and to record the outcome of those decisions in Sigrid. This is easier said than done, not because of the actions to be performed in Sigrid, but because of the organization required. All stakeholders need to be involved and aligned which works differently in each organization. Because of this, the first job two jobs are about making sure that the initial scope (1) is meaningful but not too big to establish a workable governance structure (2). Once this has been done, the objective setting can take place, followed by monitoring and reviewing both the objectives themselves and the governance process established around. The latter may trigger enlarging the scope. This is the list of jobs, the following sections describe them in more detail:
+As stated, the goal of objectives is to decide for each application how good it needs to be and to record the outcome of those decisions in Sigrid. This is easier said than done, not because of the actions to be performed in Sigrid, but because of the organization required. All stakeholders need to be involved and aligned, which works differently in each organization. Because of this, the first two jobs are about making sure that (1) the initial scope is meaningful but not too big to (2) establish a workable governance structure. Once this has been done, the objective setting can take place, followed by monitoring and reviewing both the objectives themselves and the governance process established around. The latter may trigger enlarging the scope. This is the list of jobs, the following sections describe them in more detail:
 
 1. [Identify a scope](#1-identify-a-scope) - a set of applications for which it make sense to set objectives
 1. [Establish Governance Structure](#2-establish-governance-structure) - Set up a governance structure to oversee the objective-setting process.
@@ -54,18 +52,19 @@ To be sure, setting objectives for a single system has value. But in most situat
 - A limited amount of people needs to be involved to make decisions
 - The selected systems support a limited, coherent set of business processes and/or a limited/coherent set of organizational goals.
 
-Typically, divisions or departments are a good starting point (although in large organizations, these might still be quite big). A technology platform (e.g. a low code platform) can be a useful scope because they often exist to accelerate development to decrease the time to market, which is a useful goal to base objectives on. The downside is that they typically support a variety of business processes which makes that less usable as a source of a limited, coherent set of organizational goals.
+Typically, divisions or departments are a good starting point (although in large organizations, these might still be quite big). A technology platform (e.g. a low code platform) can be a useful scope because these platforms often exist to accelerate development to decrease the time to market, which is a useful goal to base objectives on. The downside is that they typically support a variety of business processes which makes that less usable as a source of a limited, coherent set of organizational goals.
 
 ### 2. Establish governance structure
 It needs to be clear who gets to decide what. Our [guidelines on organization](best-practices-organization.md) describe the different stakeholder groups that need to be involved. They all need to be involved somehow:
 - Teams need to understand what is expected of them and provide input on the objectives.
 - Engineering leads take the lead in setting technical standards and indicating their organization value.
-- Management provides organization goals and needs to understand the organization value.
-Note that this does not imply that there has to be a one-person-per-group setup. Consider the SIG situation: Formally, our objective-setting is part of our ISMS (information security management system). Our CISO (Chief Information Security Officer) represents management and is responsible for overall outcomes. Our Head of Development owns the software development process and measurements (objectives) as an engineering lead. Our tech leads are approvers of the process document and represent the teams. Other stakeholders (Head of Product, team leads) are consulted but are not part of the formal process.
+- User representatives provide organization goals needs to understand the organization value of the objectives.
+- Management provides organization goals and constraints not covered by the user representatives.
+Note that this does not imply that there has to be a one-person-per-group setup. Consider the situation at SIG: Formally, our objective-setting is part of our ISMS (information security management system). Our CISO (Chief Information Security Officer) represents management and is responsible for overall outcomes. Our Head of Development owns the software development process and measurements (objectives) as an engineering lead. Our tech leads are approvers of the process document and represent the teams. The user representatives (the product owners) do not participate actively in this process. They expect the teams to meet the objectives and accept the incorporation of technical improvements in sprint planning.
 
-For the day-to-day management, different models are possible. Some organizations prefer a dedicated cross-functional team responsible for defining, reviewing objectives and interacting with engineering teams regularly. Others add this to the existing engineering leadership roles.
+For the day-to-day management, different models are possible. Some organizations prefer a dedicated cross-functional team responsible for defining, reviewing objectives and interacting with engineering teams regularly. Others add this to the existing engineering leadership roles. We recommend to leverage existing structures as much as possible. 
 
-It is important to raise awareness with all stakeholders that meeting objectives is a serious concern that may have impact on the feature planning. The best practice is to allow teams and [product|project] [owners|managers] to come to a balanced priority setting themselves, but an escalation path needs to be provided to resolve conflicts if they arise.
+It is important to raise awareness with all stakeholders that meeting objectives is a serious concern that may have impact on the feature planning. The best practice is to allow teams and [product|project] [owners|managers] to come to a balanced priority setting themselves, but an escalation path needs to be provided to resolve conflicts if they arise. Management has to provide this path.
 
 If your organization uses a process framework to structure software development, managing software quality should be embedded in it. See [this section](best-practices-organization.md#embedding-technical-improvements-in-existing-process-frameworks) in our guidelines on organization for examples.
 
