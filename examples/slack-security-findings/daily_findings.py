@@ -20,7 +20,6 @@ import sys
 from datetime import date, timedelta
 from http.client import RemoteDisconnected
 from json import JSONDecodeError
-from string import Template
 from typing import TypedDict, Callable, Any
 from urllib import request
 from urllib.error import URLError
@@ -45,8 +44,7 @@ class Finding(TypedDict):
 class SigridApiClient:
 
     def __init__(self, customer: str, system: str, token: str):
-        sigrid_api_endpoint = 'https://sigrid-says.com/rest/analysis-results/api/v1/security-findings/$customer/$system'
-        self.sigrid_api = Template(sigrid_api_endpoint).substitute(customer=customer, system=system)
+        self.sigrid_api = f'https://sigrid-says.com/rest/analysis-results/api/v1/security-findings/{customer}/{system}'
         self.token = token
 
     def get_findings(self) -> Any | None:
