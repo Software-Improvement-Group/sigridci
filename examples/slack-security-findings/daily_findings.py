@@ -17,10 +17,11 @@
 import json
 import os
 import sys
+from dataclasses import dataclass
 from datetime import date, timedelta
 from http.client import RemoteDisconnected
 from json import JSONDecodeError
-from typing import TypedDict, Callable, Any
+from typing import Callable, Any
 from urllib import request
 from urllib.error import URLError
 import logging
@@ -29,7 +30,8 @@ from argparse import ArgumentParser
 LOG = logging.getLogger(__name__)
 
 
-class Finding(TypedDict):
+@dataclass
+class Finding:
     href: str
     first_seen_snapshot_date: date
     file_path: str
@@ -112,29 +114,29 @@ class SlackAPI:
 
 
 def filter_finding(finding: Finding) -> bool:
-    return date.today() - finding['first_seen_snapshot_date'] < timedelta(days=8)
+    return date.today() - finding.first_seen_snapshot_date < timedelta(days=8)
 
 
-def process_findings(all_findings: Any, include: Callable[[Finding], bool]) -> list[Finding]:
+def process_findings(findings: Any, include: Callable[[Finding], bool]) -> list[Finding]:
     result = []
-    for raw_finding in all_findings:
-        finding: Finding = {
-            'href': raw_finding['href'],
-            'first_seen_snapshot_date': date.fromisoformat(raw_finding['firstSeenSnapshotDate']),
-            'file_path': raw_finding['filePath'],
-            'start_line': raw_finding['startLine'],
-            'end_line': raw_finding['endLine'],
-            'type': raw_finding['type'],
-            'severity': raw_finding['severity'],
-            'severity_score': raw_finding['severityScore'],
-            'status': raw_finding['status']
-        }
+    for raw_finding in findings:
+        finding = Finding(
+            raw_finding['href'],
+            date.fromisoformat(raw_finding['firstSeenSnapshotDate']),
+            raw_finding['filePath'],
+            raw_finding['startLine'],
+            raw_finding['endLine'],
+            raw_finding['type'],
+            raw_finding['severity'],
+            raw_finding['severityScore'],
+            raw_finding['status']
+        )
         if include(finding):
             result.append(finding)
     if len(result) == 0:
         return result
     else:
-        return sorted(result, key=lambda x: (x['severity_score'], x['first_seen_snapshot_date']), reverse=True)
+        return sorted(result, key=lambda x: (x.severity_score, x.first_seen_snapshot_date), reverse=True)
 
 
 def get_filename(file_path: str | None) -> str:
@@ -157,11 +159,12 @@ def create_message(system: str, findings: list[Finding], num_findings: int) -> s
     else:
         message += '.\n'
     for finding in findings[:5]:
-        message += f'• [*{finding["severity"]}*, {finding["status"]}] <{finding["href"]}|{finding["type"]}> in `{get_filename(finding["file_path"])}`, '
-        if finding["start_line"] != finding["end_line"]:
-            message += f'lines {finding["start_line"]}-{finding["end_line"]}\n'
+        message += f'• [*{finding.severity}*, {finding.status}] <{finding.href}|{finding.type}> '
+        message += f'in `{get_filename(finding.file_path)}`,'
+        if finding.start_line != finding.end_line:
+            message += f'lines {finding.start_line}-{finding.end_line}\n'
         else:
-            message += f'line {finding["start_line"]}\n'
+            message += f'line {finding.start_line}\n'
     if num_findings > len(findings):
         message += f'There are {num_findings - len(findings)} older open findings.'
     return message
