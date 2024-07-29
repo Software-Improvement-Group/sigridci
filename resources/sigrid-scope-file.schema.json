@@ -338,7 +338,8 @@
                 "type": "object",
                 "properties": {
                   "path": {
-                    "type": "string"
+                    "type": "string",
+                    "description": "Excludes all dependencies in paths matching the specified regular expression."
                   }
                 },
                 "required": ["path"]
@@ -347,7 +348,8 @@
                 "type": "object",
                 "properties": {
                   "vulnerability": {
-                    "type": "string"
+                    "type": "string",
+                    "description": "Excludes all vulnerabilities matching the specified identifier (e.g. 'CVE-123')."
                   }
                 },
                 "required": ["vulnerability"]
@@ -356,7 +358,8 @@
                 "type": "object",
                 "properties": {
                   "license": {
-                    "type": "string"
+                    "type": "string",
+                    "description": "Excludes license risks identified in dependencies with the specified name."
                   }
                 },
                 "required": ["license"]
@@ -365,7 +368,8 @@
                 "type": "object",
                 "properties": {
                   "activity": {
-                    "type": "string"
+                    "type": "string",
+                    "description": "Excludes activity risks identified in dependencies with the specified name."
                   }
                 },
                 "required": ["activity"]
