@@ -328,8 +328,51 @@
           "description": "When true, transitive dependencies are also checked and included in the results."
         },
         "exclude": {
-          "$ref": "#/definitions/file_pattern_list",
-          "description": "List of file/directory patterns that should be excluded from the Open Source Health analysis."
+          "type": "array",
+          "items": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "object",
+                "properties": {
+                  "path": {
+                    "type": "string"
+                  }
+                },
+                "required": ["path"]
+              },
+              {
+                "type": "object",
+                "properties": {
+                  "vulnerability": {
+                    "type": "string"
+                  }
+                },
+                "required": ["vulnerability"]
+              },
+              {
+                "type": "object",
+                "properties": {
+                  "license": {
+                    "type": "string"
+                  }
+                },
+                "required": ["license"]
+              },
+              {
+                "type": "object",
+                "properties": {
+                  "activity": {
+                    "type": "string"
+                  }
+                },
+                "required": ["activity"]
+              }
+            ]
+          },
+          "description": "List of paths and/or dependencies that should be ignored for Open Source Health."
         },
         "model": {
           "$ref": "#/definitions/model",
