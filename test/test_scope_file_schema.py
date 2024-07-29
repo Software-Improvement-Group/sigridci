@@ -108,6 +108,7 @@ class ScopeFileSchemaTest(TestCase):
         try:
             parsedScope = yaml.load(scope, Loader=yaml.FullLoader)
             jsonschema.validate(instance=parsedScope, schema=self.schema)
+            self.assertTrue(False, "ValidationError should have been raised")
         except jsonschema.ValidationError as e:
             self.assertTrue("{'something': 'noot'} is not valid under any of the given schemas" in e.message)
         
