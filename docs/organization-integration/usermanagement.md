@@ -31,8 +31,8 @@ With this module, a Sigrid administrator can perform all the basic authenticatio
 
 
 ## 2. Using Single Sign On (SSO) with an Identity Provider (IdP)
-When Sigrid is linked to your organization's SSO Identity Provider, the user provisioning in Sigrid is done automatically upon login.
-Sigrid supports SAML or OpenID Connect protocols via a service-provider initiated authentication flow. By default, new users don't see any systems and analysis results yet.
+When Sigrid is linked to your organization's SSO Identity Provider, the user provisioning in Sigrid is done automatically upon login. By default, new users don't see any systems and analysis results yet.
+Sigrid supports both SAML or OpenID Connect protocols via a service-provider initiated authentication flow.
 
 ### Notes
 - With the service-provider initiated authentication flow, users first navigate to `https://<customer>.sigrid-says.com`. They get redirected to their organization's Identity Provider, login there, and then get redirected back to Sigrid.
