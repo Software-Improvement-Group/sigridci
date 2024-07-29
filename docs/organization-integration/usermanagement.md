@@ -34,7 +34,7 @@ With this module, a Sigrid administrator can perform all the basic authenticatio
 When Sigrid is linked to your SSO, the user provisioning is done by the IdP. Sigrid supports SAML or OpenID Connect protocols via a service-provider initiated authentication flow. 
 
 ### Notes
-- With a service-provider initiated authentication flow, users first navigate to https://<customer>.sigrid-says.com. Then they get redirected to their Identity Provider, login, and get redirected back to Sigrid
+- With a service-provider initiated authentication flow, users first navigate to `https://<customer>.sigrid-says.com`. Then they get redirected to their Identity Provider, login, and get redirected back to Sigrid
 - SSO improves the ease of use for your colleagues because there is no Sigrid password to remember. 
 - SSO improves security because users are created and deleted centrally in your organization.
 - Sigrid follows the password policy of your organization.
