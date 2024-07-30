@@ -12,7 +12,7 @@ At the highest level, this script carries out 3 steps and then finishes:
 ## Usage
 
 The idea is to use this script for instance once per day as a scheduled job. The obvious 
-scheduler would be your CI/CD environment (e.g., Gitlab, Github or Azure DevOps).
+scheduler would be your CI/CD environment (e.g., GitLab, GitHub or Azure DevOps).
 
 Prerequisites:
 - You need an [authentication token](https://docs.sigrid-says.com/organization-integration/authentication-tokens.html)
@@ -28,14 +28,14 @@ variables are set by your CI/CD environment.
 In addition, you need to have the example script available in your CI/CD environment. There are 
 two ways to do so:
 - (A) Download the script as published in this repository on the fly for each job. We'll 
-  illustrate this for Gitlab below. This is the easiest way, but keep in mind that SIG may 
+  illustrate this for GitLab below. This is the easiest way, but keep in mind that SIG may 
   change the script at any moment.
 - (B) Manually download the script once and add it to your own codebase. This allows adapting 
   the script to your needs.
 
-### Example usage: Gitlab
+### Example usage: GitLab
 
-To use the script from Gitlab, proceed as follows. First, [create an environment variable that 
+To use the script from GitLab, proceed as follows. First, [create an environment variable that 
 will hold the Sigrid authentication token]
 (https://docs.sigrid-says.
 com/sigridci-integration/gitlab.html#step-1-configure-sigrid-credentials-to-environment
@@ -60,9 +60,9 @@ post-daily-findings:
     - if: $CI_PIPELINE_SOURCE == "schedule"
 ```
 
-This example pipeline job assumes you're using Gitlab's Docker-based runners. The `script`, 
+This example pipeline job assumes you're using GitLab's Docker-based runners. The `script`, 
 which runs inside the `python:alpine3.20` container, first uses `wget` to download the example 
-script from Github. It then runs it using the Python interpreter provided by the `python:alpine3.
+script from GitHub. It then runs it using the Python interpreter provided by the `python:alpine3.
 20` image. It assumes environment variables `` and `` have been set. 
 
 ## Frequently Asked Questions
