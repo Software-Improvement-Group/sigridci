@@ -79,3 +79,36 @@ class ScopeFileSchemaTest(TestCase):
             jsonschema.validate(instance=parsedScope, schema=self.schema)
         except jsonschema.ValidationError as e:
             self.assertTrue(e.message.endswith("should not be valid under {'required': ['checkmarx']}"))
+
+    def testDependencyCheckerExcludeOptions(self):
+        scope = """
+            languages:
+              - Python
+            dependencychecker:
+              exclude:
+                - "aap"
+                - path: "noot"
+                - vulnerability: "CVE-123"
+                - license: "mies"
+                - activity: "boom"
+            """
+            
+        parsedScope = yaml.load(scope, Loader=yaml.FullLoader)
+        jsonschema.validate(instance=parsedScope, schema=self.schema)
+        
+    def testRejectUnknownDependencyCheckerExcludeOptions(self):
+        scope = """
+            languages:
+              - Python
+            dependencychecker:
+              exclude:
+                - something: "noot"
+            """
+            
+        try:
+            parsedScope = yaml.load(scope, Loader=yaml.FullLoader)
+            jsonschema.validate(instance=parsedScope, schema=self.schema)
+            self.assertTrue(False, "ValidationError should have been raised")
+        except jsonschema.ValidationError as e:
+            self.assertTrue("{'something': 'noot'} is not valid under any of the given schemas" in e.message)
+        
