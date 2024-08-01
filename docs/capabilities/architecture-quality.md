@@ -107,6 +107,24 @@ You can define *groups* and *annotations* in [your configuration](../reference/a
 
 <img src="../images/architecture-grouping.png" width="300" />
 
+### Saving architectural views
+
+It is possible for users to create and save specific views from the architecture explorer for later review or documentation purposes. When creating a new view, all elements currently displayed on within the explorer view are saved in their current state at their current level within the architecture, meaning any components that have been expanded, hidden or pinned will be stored "as is" and able to be quickly retrieved from the saved views panel. This allows for quick access to specific dependencies between components or sub-components of interest and return to an exact view to later review together with your team.
+
+<!-- TODO: Add images of saved view panel and selection -->
+
+In order to create a new saved view, you must open the "Open Saved Views Panel" button on the right side of the canvas explorer, which expands the Saved Views Panel over the existing Details Panel. From here, users can select from one of the existing saved views to render within the explorer canvas, or click the "Save current view" button at the top to save the current architecture configuration rendered in the explorer. 
+
+<!-- TODO: Add image of view creation -->
+
+You will be prompted to give a name to this newly saved view so picking, which upon confirmation will add a new entry to the Saved Views list with the date and time of it's creation. These saved views are then accessible to all users that are authorized to access this system, to allow for easy collaboration.
+
+<!-- TODO: Add image of updated views list and view rendered -->
+
+Important things to note about saved views:
+- A maximum of 10 Views are able to be saved per system
+- Saved Views are tied to the system, not the user - any user with access to the system can select and render and saved view existing for a given system.
+
 ## Frequently asked questions
 
 See [Architecture Quality: frequently asked questions](faq-architecture.md) for more detailed information on operational details regarding Architecture Quality. This includes questions regarding uploading code, technology support, and configuration.
