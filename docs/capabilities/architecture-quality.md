@@ -107,6 +107,32 @@ You can define *groups* and *annotations* in [your configuration](../reference/a
 
 <img src="../images/architecture-grouping.png" width="300" />
 
+### Saving architectural views
+
+It is possible for users to create and save specific views from the architecture explorer for later review or documentation purposes. When creating a new view, all elements currently displayed on within the explorer view are saved in their current state, at their current level within the architecture. 
+
+This means that any components that have been expanded, hidden or pinned will be stored "as displayed" and will be able to be retrieved and re-rendered from the Saved Views panel. Having the ability to save specific configurations of the canvas will allow teams to quickly access the dependencies between components or sub-components of highest interest and share these views across team members to get a more consistent perspective of your system's architecture at any level you deem important.
+
+Accessing saved views is easily done through the architecture explorer, where we've introduced a simple button that toggles a new panel to appear with an inventory of any saved views that exist for a given system.
+
+<img src="../images/aq-saved-views-button.png" width="500" />
+
+In order to create a new saved view, you must first open the "Open Saved Views Panel" button on the right side of the canvas explorer, which expands the Saved Views Panel over the existing Details Panel. From here, users can select from one of the existing saved views to render within the explorer canvas, or click the "Save current view" button at the top to save the current architecture configuration rendered in the explorer. 
+
+<img src="../images/aq-saved-views-panel.png" width="300" />
+
+When clicking on the "Save current view" button, you will be prompted to give a name to the configuration currently displayed in the architecture canvas, so picking a descriptive name other than the default is highly recommended. 
+
+<img src="../images/aq-view-creation.png" width="300" />
+
+Upon saving, a new entry will be added to the Saved Views list with the specified name, date and time of the views creation. This newly created architectureal view along with any additional pre-existing views are accessible to all users that are authorized to access this system.
+
+<img src="../images/aq-updated-saved-views.png" width="300" />
+
+#### Important things to note about saved views:
+- A maximum of 10 Views are able to be saved per system
+- Saved Views are tied to the system, not the user - any user with access to the system can select and render any saved view existing for a given system.
+
 ## Frequently asked questions
 
 See [Architecture Quality: frequently asked questions](faq-architecture.md) for more detailed information on operational details regarding Architecture Quality. This includes questions regarding uploading code, technology support, and configuration.
