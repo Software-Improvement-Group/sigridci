@@ -395,6 +395,7 @@ This configuration can be managed using the `--convert` [option in Sigrid CI](cl
 | FME                 | `FME`                                                                   |
 | IBM BPM             | `IbmBpm`                                                                |
 | Infinite Blue       | `Infiniteblue`                                                          |
+| JDE                 | `JDE`                                                                   |
 | Linc                | `Linc`                                                                  |
 | Lion                | `Lion`                                                                  |
 | Lion/COBOL          | `LionCobol`                                                             |
@@ -430,7 +431,6 @@ In addition to supporting 300+ technologies, Sigrid also supports various open s
 
 | Open source ecosystem | Common technologies    |
 |-----------------------|------------------------|
-| Alpine Linux          | Alpine Linux           |
 | Bower                 | JavaScript             |
 | Cargo                 | Rust                   |
 | CocoaPods             | Swift, Objective-C     |
@@ -444,6 +444,7 @@ In addition to supporting 300+ technologies, Sigrid also supports various open s
 | NuGet                 | C#                     |
 | PuppetForge           | Puppet                 |
 | Poetry                | Python                 |
+| pub.dev               | Dartm Flutter          |
 | PyPi                  | Python                 |
 | RubyGems              | Ruby                   |
 | SBT                   | Scala                  |

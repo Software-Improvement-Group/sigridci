@@ -209,6 +209,22 @@ The `dependencychecker` section supports the following options:
 
 Please Note: dependency exclusions may be necessary in case your system resolves internal dependencies that could expose organization- or system name based on their internal URI. Therefore, as part of the onboarding process, please inform SIG of any such naming conventions that should be filtered. [See also this question in the FAQ on dependency filtering](../capabilities/faq-security.md#does-sig-filter-when-resolving-our-systems-dependencies).
 
+### Exclude Open Source Health risks
+
+In certain situations you can decide to [exclude Open Source Health risks](../capabilities/system-open-source-health.md#excluding-risks). This is done using the `exclude` option, which can be used in multiple different ways:
+
+    dependencychecker:
+      blocklist:
+        - ".*companyname.*"
+      exclude:
+        - ".*/scripts/.*" # Shorthand notation, same as the "path" option below.
+        - path: ".*/tools/.*" # Excludes all libraries found in files matching the specified path.
+        - vulnerability: "CVE-2024-12345" # Excludes all vulnerabilities with the specified identifier.
+        - licence: "iTextSharp" # Excludes license risks for the specified library.
+        - activity: "com.github.tomas-langer:chalk" # Excludes activity risks for the specified library.
+
+Libraries and/or findings that are excluded using this option will not count towards the Open Source Health star rating, and will not be marked as risks in Sigrid.
+
 ## Security
 
 **Note: This requires a [Sigrid license for Software Security](https://www.softwareimprovementgroup.com/solutions/sigrid-software-security/). Without this license, you will not be able to see security results in Sigrid.**
@@ -233,10 +249,13 @@ This `thirdpartyfindings` section in the scope file supports the following optio
 |--------------------------|-----------|-------------------------------------------------------------------------------------|
 | `enabled`                | Yes       | Set to `true` to enable security analysis.                                          |
 | `exclude`                | No        | List of file/directory patterns that should be excluded from the security analysis. |
-| `disabled_analyzers` [1] | No        | Defining a list of disabled specific scanning tools.                                |
-| `enabled_analyzers` [1]  | No        | Defining a list of specific scanning tools to enable (if not enabled by default).   |
+| `disabled_rules`         | No        | List of rule IDs that should be ignored during analysis.                            |
+| `disabled_analyzers`     | No        | List of specific scanning tools that should be ignored during analysis.             |
+| `enabled_analyzers`      | No        | List of specific scanning tools to enable (if not enabled by default).              |
 
-1. You can see the list of enabled analyzers in your Sigrid security overview, if you [group by finding and then by origin](../capabilities/system-security.md#different-possible-grouping-of-security-findings). For the list of all supported analyzers, see [the technology support section](technology-support.md#supported-security-analyzers).
+The `disabled_rules` and `disabled_analyzers` both allow you to customize which security rules are used during the analysis. The `disabled_rules` option allows you to disable individual rules, if you consider them too "noisy" or not applicable for your system. 
+
+The `disabled_analyzers` option is simular, but allows you to disable *all* rules produced by a specific analysis tool. You can see the list of enabled analyzers in your Sigrid security overview, if you [group by finding and then by origin](../capabilities/system-security.md#different-possible-grouping-of-security-findings). For the list of all supported analyzers, see [the technology support section](technology-support.md#supported-security-analyzers).
 
 ## Architecture Quality
 

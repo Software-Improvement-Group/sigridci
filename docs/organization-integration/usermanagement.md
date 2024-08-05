@@ -29,33 +29,36 @@ With this module, a Sigrid administrator can perform all the basic authenticatio
 ### Setup customer side
 - No setup is needed.
 
-## 2. Using Single Sign On (SSO) with an Identity Management Provider (IdP)
-When Sigrid is linked to your SSO the user provisioning is done by the IdP. Sigrid supports SAML or OpenID Connect protocols via a service-provider initiated authentication flow. 
 
+## 2. Using Single Sign On (SSO) with an Identity Provider (IdP)
+When Sigrid is linked to your organization's SSO Identity Provider, the user provisioning in Sigrid is done automatically upon login. By default, new users don't see any systems and analysis results yet.
+Sigrid supports both SAML or OpenID Connect protocols via a service-provider initiated authentication flow.
 
 ### Notes
-- With a service-provider initiated authentication flow, users first goto customer.sigrid-says.com, then they get redirected to their Identity management provider, login, and get redirected back to Sigrid
+- With the service-provider initiated authentication flow, users first navigate to `https://<customer>.sigrid-says.com`. They get redirected to their organization's Identity Provider, login there, and then get redirected back to Sigrid.
 - SSO improves the ease of use for your colleagues because there is no Sigrid password to remember. 
-- Improves security because users are created and deleted centrally in your organisation.
-- Sigrid follows the password policy of your organisation.
+- SSO improves security because users are created and deleted centrally in your organization.
+- Sigrid follows the password policy of your organization.
+- SSO integration with Sigrid is **not allowed** when your Identity Provider allows public, self-service sign-up. In other words, all users in your Identity Provider must be associated directly with your organization.
 
 ### Sigrid administrator tasks
 - Check the last login
-- Do authorization tasks to define who can see what in Sigrid
+- Perform authorization tasks to define who can see what in Sigrid
 
 ### Setup on client side
 Create an Enterprise application 'app' in your IdP with the following details: 
 - Audience or Identifier (Entity) ID: urn:amazon:cognito:sp:eu-central-1_hwh9zdyCY
 - Reply URL: https://auth.sigrid-says.com/saml2/idpresponse
 
-With the following Attributes & Claims:
+With the following 3 Attributes & Claims:
 
-| Your user | Namespace + SAML attribute name as expected by Sigrid |
-| ----------- | ----------|
+| Your user | Sigrid expects the long url as SAML attribute name |
+| ---------- | ---------- |
 | user email  | http://schemas.xmlsoap.org/ws/2005/05/identity/claims/emailaddress |
 | user last name   | http://schemas.xmlsoap.org/ws/2005/05/identity/claims/name |
 | user first name   | http://schemas.xmlsoap.org/ws/2005/05/identity/claims/given_name |
-| unique user identifier | emailaddress |
+
+_Note: if your IdP requires to set an unique user identifier, please choose emailaddress_
 
 
 Other
@@ -93,7 +96,7 @@ While Sigrid requires minimal adminstration to gather insights in your software'
 
 ### Types of users
 Sigrid utilizes role-based authorization with three roles assignable to users: 
-- **Normal users:** Default Sigrid users. Can only view all findings and details of systems they've been granted access to.
+- **Normal users:** Default Sigrid users. Can view all details of systems they've been granted access to, as well as view and edit related findings.
 - **Administrators:** Power users that have the ability to edit all details of all users within the portfolio, have access to all systems, and can set portfolio wide objectives that affect all systems in a given portfolio.
 - **Maintainers:** These users are localized administrators. Maintainers can perform administrative actions on systems they have explicit access to, but not over the entire portfolio.
 

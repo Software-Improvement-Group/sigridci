@@ -71,6 +71,28 @@ Finally, the buttons around the page allow you to manipulate the architecture vi
 - The "reset layout" button resets the architecture visualization to its original state, which can help to restore readability.
 - The zoom buttons are an alternative way to zoom the architecture visualization, in addition to using your trackpad or mouse wheel to zoom.
 
+### Pinning and hiding architecture components
+
+As most software systems are comprised of many parts, each with differing levels of dependencies between them, it can often be overwhelming to view the architecture in its entirety. In fact, it's often the case that risk is localized across only a subset of the overall architecture while the majority of the remaining system elements can be safely ignored. As such, you will often want to target a specific set of components that have relations between each other while removing other components from view to more easily identify and triage these riskful hotspots without having to navigate through a mess of component and dependencies that are "muddying the waters" of your analysis.
+
+Sigrid assists with this localized traige by allowing you to hide components (and their related dependencies) as needed. Alternatively, you can also "pin" components within the visualization to ensure they remain in view whenever you're navigating the architecture. Using these controls together allows you to keep systems elements that have your interest in sight, while hiding away those that are not relevant. 
+
+Hiding and/or pinning of components can be done in multiple ways:
+
+1. When hovering over a component in the architecture canvas, two togglable icons will appear in the bottom left of the component's box: 
+- A Pin icon which ensures the component remains in view regardles of other actions in the canvas.
+- A Hide icon to force the component out of view until it is reshown.
+
+<img src="../images/aq-component-pin-hide.png" width="250" />
+
+2. Component's can also be pinned and hidden (or unpinned and unhidden) from the tree view. Hovering over a component name within the tree view will also cause the pin and hide toggles to appear to the right of the name. 
+
+<img src="../images/aq-tree-view-pin-hide.png" width="250" />
+
+Once the pin or hide icon has been toggled, these icons will remain visible in both the canvas and tree view to help easily identify which components have had their visibility modified and toggle this off as needed by clicking the shown icon again.
+
+<img src="../images/aq-pin-hide-full.png" width="500" />
+
 ### Highlighting undesirable dependencies
 
 You might have noticed that some dependencies are shown in red. These dependencies are considered undesirable, either because they violate a known architectural anti-pattern (for example cyclic dependencies), or because they have been marked as undesirable in [your configuration](../reference/analysis-scope-configuration.md#architecture-quality).
@@ -84,6 +106,32 @@ In some cases, you might want to communicate additional information through Sigr
 You can define *groups* and *annotations* in [your configuration](../reference/analysis-scope-configuration.md#architecture-quality). This information will then be depicted as an overlay on top of the architecture visualization in Sigrid.
 
 <img src="../images/architecture-grouping.png" width="300" />
+
+### Saving architectural views
+
+It is possible for users to create and save specific views from the architecture explorer for later review or documentation purposes. When creating a new view, all elements currently displayed on within the explorer view are saved in their current state, at their current level within the architecture. 
+
+This means that any components that have been expanded, hidden or pinned will be stored "as displayed" and will be able to be retrieved and re-rendered from the Saved Views panel. Having the ability to save specific configurations of the canvas will allow teams to quickly access the dependencies between components or sub-components of highest interest and share these views across team members to get a more consistent perspective of your system's architecture at any level you deem important.
+
+Accessing saved views is easily done through the architecture explorer, where we've introduced a simple button that toggles a new panel to appear with an inventory of any saved views that exist for a given system.
+
+<img src="../images/aq-saved-views-button.png" width="500" />
+
+In order to create a new saved view, you must first open the "Open Saved Views Panel" button on the right side of the canvas explorer, which expands the Saved Views Panel over the existing Details Panel. From here, users can select from one of the existing saved views to render within the explorer canvas, or click the "Save current view" button at the top to save the current architecture configuration rendered in the explorer. 
+
+<img src="../images/aq-saved-views-panel.png" width="300" />
+
+When clicking on the "Save current view" button, you will be prompted to give a name to the configuration currently displayed in the architecture canvas, so picking a descriptive name other than the default is highly recommended. 
+
+<img src="../images/aq-view-creation.png" width="300" />
+
+Upon saving, a new entry will be added to the Saved Views list with the specified name, date and time of the views creation. This newly created architectureal view along with any additional pre-existing views are accessible to all users that are authorized to access this system.
+
+<img src="../images/aq-updated-saved-views.png" width="300" />
+
+#### Important things to note about saved views:
+- A maximum of 10 Views are able to be saved per system
+- Saved Views are tied to the system, not the user - any user with access to the system can select and render any saved view existing for a given system.
 
 ## Frequently asked questions
 
