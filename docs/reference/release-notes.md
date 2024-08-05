@@ -3,6 +3,13 @@ Sigrid release notes
 
 SIG uses [continuous delivery](https://en.wikipedia.org/wiki/Continuous_delivery), meaning that every change to Sigrid or the underlying analysis is released once our development pipeline has completed. On average, we release somewhere between 10 and 20 times per day. This page therefore doesn't list every single change, since that would quickly lead to an excessively long list of small changes. Instead, this page lists Sigrid and analysis changes that we consider noteworthy for the typical Sigrid user.
 
+### August 12, 2024
+
+- **Security:** It is now possible to disable/exclude specific rules in the configuration. Refer to the [security configuration](analysis-scope-configuration.md#third-party-findings) for more information.
+- **Security:** Secure software requires security awareness as part of your organizational culture. Adding links to people's daily workflow can help to keep security top-of-mind. You can use the [Sigrid API](../integrations/sigrid-api-documentation.md) for this. One example of such a workflow is [Slack](https://slack.com), which tends to be used heavily by development teams. We have added an example of [daily Slack alerts based on Sigrid security findings](https://github.com/Software-Improvement-Group/sigridci/tree/main/examples/slack-security-findings), which you can use and/or customize.
+- **Open Source Health:** It is now possible to exclude certain risks from Sigrid's Open Source Health analysis. See the [Open Source Health documentation](../capabilities/system-open-source-health.md#excluding-risks) for *when* to use this options, and the [configuration options](analysis-scope-configuration.md#exclude-open-source-health-risks) for *how* to use these options.
+- **Architecture Quality:** Architecture Quality now supports [saved views](../capabilities/architecture-quality.md#saving-architectural-views), which allows you to create and save specific views from the architecture explorer for later review or documentation purposes.
+
 ### July 15, 2024
 
 - **Objectives dashboard:** The dashboard now shows progress over time for all objectives. The time period for this comparison can be selected using the calendar in the top-right, in the same way as other trend graphs across Sigrid.
