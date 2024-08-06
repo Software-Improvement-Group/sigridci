@@ -37,7 +37,7 @@ class GitLabPullRequestReport(Report):
                 try:
                     request = urllib.request.Request(url, self.buildRequestBody(feedbackFile))
                     request.add_header("Content-Type", "application/json")
-                    request.add_header("PRIVATE-TOKEN", os.environ[""])
+                    request.add_header("PRIVATE-TOKEN", os.environ["CI_JOB_TOKEN"])
                     urllib.request.urlopen(request)
                 except urllib.error.HTTPError as e:
                     UploadLog.log(f"Warning: GitLab API error: {e.code} / {e.fp.read()}")
