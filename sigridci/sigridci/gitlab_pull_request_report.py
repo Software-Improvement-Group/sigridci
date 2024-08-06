@@ -37,13 +37,13 @@ class GitLabPullRequestReport(Report):
                 try:
                     request = urllib.request.Request(url, self.buildRequestBody(feedbackFile))
                     request.add_header("Content-Type", "application/json")
-                    request.add_header("PRIVATE-TOKEN", os.environ["CI_JOB_TOKEN"])
+                    request.add_header("PRIVATE-TOKEN", os.environ["SIGRIDCI_GITLAB_COMMENT_TOKEN"])
                     urllib.request.urlopen(request)
                 except urllib.error.HTTPError as e:
                     UploadLog.log(f"Warning: GitLab API error: {e.code} / {e.fp.read()}")
 
     def isWithinGitLabMergeRequestPipeline(self):
-        return "CI_MERGE_REQUEST_IID" in os.environ and "CI_JOB_TOKEN" in os.environ
+        return "CI_MERGE_REQUEST_IID" in os.environ and "SIGRIDCI_GITLAB_COMMENT_TOKEN" in os.environ
 
     def buildRequestBody(self, feedbackFile):
         with open(feedbackFile, mode="r", encoding="utf-8") as f:
