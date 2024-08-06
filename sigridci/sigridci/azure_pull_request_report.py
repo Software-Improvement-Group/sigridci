@@ -38,6 +38,7 @@ class AzurePullRequestReport(Report):
         request.add_header("Content-Type", "application/json")
         try:
             urllib.request.urlopen(request)
+            UploadLog.log("Published feedback to Azure DevOps")
         except urllib.error.HTTPError as e:
             UploadLog.log(f"Warning: Azure DevOps API error: {e.code} / {e.fp.read()}")
 
