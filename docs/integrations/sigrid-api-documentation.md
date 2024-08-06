@@ -927,7 +927,7 @@ The body of the request is a list of Unix paths that you want to remove from the
 The following example shows a complete `curl` commmand that will remove the two sub-systems:
 
 ```bash
-curl --header 'Authorization: Bearer {SIGRID_PERSONAL_TOKEN}' -X POST https://sigrid-says.com/rest/inboundresults/sig/{customer}/{system}/ci/subsystems:batch-delete/v1 -H 'Content-Type: application/json' --data '{ "names" : ["path1", "path2"] }'
+curl --header 'Authorization: Bearer ${SIGRID_PERSONAL_TOKEN}' -X POST https://sigrid-says.com/rest/inboundresults/sig/{customer}/{system}/ci/subsystems:batch-delete/v1 -H 'Content-Type: application/json' --data '{ "names" : ["path1", "path2"] }'
 ```
 
 A new analysis will run for your system and the results will be available in the Sigrid UI and API once the analysis is complete.
