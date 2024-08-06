@@ -17,6 +17,7 @@ import sys
 
 from .ascii_art_report import AsciiArtReport
 from .azure_pull_request_report import AzurePullRequestReport
+from .gitlab_pull_request_report import GitLabPullRequestReport
 from .json_report import JsonReport
 from .junit_format_report import JUnitFormatReport
 from .markdown_report import MarkdownReport
@@ -57,6 +58,7 @@ class SigridCiRunner:
             JUnitFormatReport(),
             JsonReport(),
             AzurePullRequestReport(),
+            GitLabPullRequestReport(),
             PipelineSummaryReport()
         ]
 

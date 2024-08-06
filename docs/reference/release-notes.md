@@ -9,6 +9,7 @@ SIG uses [continuous delivery](https://en.wikipedia.org/wiki/Continuous_delivery
 - **Security:** Secure software requires security awareness as part of your organizational culture. Adding links to people's daily workflow can help to keep security top-of-mind. You can use the [Sigrid API](../integrations/sigrid-api-documentation.md) for this. One example of such a workflow is [Slack](https://slack.com), which tends to be used heavily by development teams. We have added an example of [daily Slack alerts based on Sigrid security findings](https://github.com/Software-Improvement-Group/sigridci/tree/main/examples/slack-security-findings), which you can use and/or customize.
 - **Open Source Health:** It is now possible to exclude certain risks from Sigrid's Open Source Health analysis. See the [Open Source Health documentation](../capabilities/system-open-source-health.md#excluding-risks) for *when* to use this options, and the [configuration options](analysis-scope-configuration.md#exclude-open-source-health-risks) for *how* to use these options.
 - **Architecture Quality:** Architecture Quality now supports [saved views](../capabilities/architecture-quality.md#saving-architectural-views), which allows you to create and save specific views from the architecture explorer for later review or documentation purposes.
+- **Technology support:** Added support for the [NGRX framework](https://ngrx.io). This support is now part of the existing TypeScript analysis, so no configuration changes are needed.
 
 ### July 15, 2024
 
