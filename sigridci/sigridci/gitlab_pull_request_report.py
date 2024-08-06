@@ -39,6 +39,7 @@ class GitLabPullRequestReport(Report):
                     request.add_header("Content-Type", "application/json")
                     request.add_header("PRIVATE-TOKEN", os.environ["SIGRIDCI_GITLAB_COMMENT_TOKEN"])
                     urllib.request.urlopen(request)
+                    UploadLog.log("Published feedback to GitLab")
                 except urllib.error.HTTPError as e:
                     UploadLog.log(f"Warning: GitLab API error: {e.code} / {e.fp.read()}")
 
