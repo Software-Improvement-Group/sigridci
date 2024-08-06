@@ -10,6 +10,7 @@ SIG uses [continuous delivery](https://en.wikipedia.org/wiki/Continuous_delivery
 - **Open Source Health:** It is now possible to exclude certain risks from Sigrid's Open Source Health analysis. See the [Open Source Health documentation](../capabilities/system-open-source-health.md#excluding-risks) for *when* to use this options, and the [configuration options](analysis-scope-configuration.md#exclude-open-source-health-risks) for *how* to use these options.
 - **Architecture Quality:** Architecture Quality now supports [saved views](../capabilities/architecture-quality.md#saving-architectural-views), which allows you to create and save specific views from the architecture explorer for later review or documentation purposes.
 - **Technology support:** Added support for the [NGRX framework](https://ngrx.io). This support is now part of the existing TypeScript analysis, so no configuration changes are needed.
+- **Sigrid CI:** The Sigrid CI feedback for GitLab has been improved to be more in line with the feedback for GitHub and Azure DevOps, it is now more visual and requires less clicks to access. Refer to the [integration instructions for GitLab](../sigridci-integration/gitlab.md) for how to enable this for your pipeline. 
 
 ### July 15, 2024
 
