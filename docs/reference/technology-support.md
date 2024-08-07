@@ -318,7 +318,7 @@ Notes:
   - Prefer `cpp` if your system contains a combination of C and C++ code.
 2. Use one of `javascript`, `react`, `vuejs`, `sapui5`, but do not use multiple.
   - Prefer `vuejs` if your system contains [Vue.js](https://vuejs.org) components that use the `.vue` file extension.
-  - Prefer `react` if your codebase contains [React](https://reactjs.org) with Javascript and/or [JSX](https://reactjs.org/docs/introducing-jsx.html).
+  - Prefer `react` if your codebase contains [React](https://reactjs.org) and/or [JSX](https://reactjs.org/docs/introducing-jsx.html) with Javascript.
   - Only use `sapui5` if you are using [SAP UI](https://developers.sap.com/topics/ui-development.html).
   - Use `javascript` in all other cases.
 3. Use either `typescript` or `vuets`, but not both.
@@ -334,7 +334,7 @@ Notes:
   - Use `html` for all other types of HTML files or templates.
 8. You can use Sigrid CI for this technology, but you will need to use a special option. See instructions on how to [technology conversion configuration](#technology-conversion-configuration) below.
 9. Sigrid CI is not supported for this technology. You can still use Sigrid, but you will need to use one of the [alternative upload channels](../organization-integration/upload-instructions.md).
-10. `typescript` should also be used for React files with the `.ts` or `.tsx` file extensions.
+10. `typescript` should also be used with React and/or JSX files with Typescript that use the `.ts` or `.tsx` file extensions.
 
 ## AI explanation support
 
