@@ -13,7 +13,7 @@ Integrating Sigrid CI into your pipeline allows you to automatically publish you
 - SIG will create an empty Sigrid and a first user per customer.
 - The first user needs to create a [PAT token](../organization-integration/authentication-tokens.md).
 - Based on your environment the respective Sigrid CI jobs will need to configured with the above token.
-- Please check if your FireWall allows outboud traffic to Sigrid-says.com [link to the FAQ page](../capabilities/faq.md)
+- Please check if your firewall allows outbound traffic to Sigrid-says.com [link to the FAQ page](../capabilities/faq.md)
 
 See the "Sigrid CI" section in the menu for an overview of supported platforms. The documentation also explains how Sigrid CI fits into various [development processes and workflows](../sigridci-integration/development-workflows.md).
 
