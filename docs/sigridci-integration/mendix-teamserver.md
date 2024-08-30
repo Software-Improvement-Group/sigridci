@@ -6,7 +6,8 @@ please note: When the customer is not using the teamserver but they are in a "Br
 
 ---
 ## Default: Onboarding via the dedicated Mendix support app
-Onboarding a new Mendix app into Sigrid is normaly done via the Mendix app [addon.mendix.com](https://addon.mendix.com). By default the mainline will be scanned once a day. The scan will provide both maintainability, OSH and security findings for QSM customers. AQM customers will only see maintainability results. After succesfull onboarding an email is sent to the user requesting the onboarding.
+Onboarding a new Mendix app into Sigrid is easy via the Mendix app [addon.mendix.com](https://addon.mendix.com). After successfull onboarding an email is sent to the user requesting the onboarding. 
+When onboarding a new app the mainline will be selected by default. You can select a different branch to be scanned. In this way you could onboard both the Mainline and a Development branch from the same Mendix app in Sigrid. After the onboarding Sigrid QSM will provide a daily scan for maintainability, OSH and security. AQM customers will only see maintainability results. 
 
 ----------
 

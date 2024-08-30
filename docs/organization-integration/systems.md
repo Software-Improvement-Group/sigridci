@@ -33,7 +33,7 @@ Alternatively, you can also base your Sigrid view on a more functional/business 
 
 <img src="../images/publish-subsystems.png" width="750" />
 
-In this example, the *MyBank front-end* and *MyBank back-end* repositories would be combined into a single system, *myBank*. In this scenario, it is still possible for both repositories to publish their code to Sigrid independently, combining the two repositories happens on the Sigrid side. This behavior can be enabled by using the [subsystem option in the Sigrid CI configuration](../reference/client-script-usage.md). 
+In this example, the *MyBank front-end* and *MyBank back-end* repositories would be combined into a single system, *MyBank*. In this scenario, it is still possible for both repositories to publish their code to Sigrid independently, combining the two repositories happens on the Sigrid side. You might also want to provide yaml configuration files to the root of the *MyBank* system. This behavior can be enabled by using the [subsystem option in the Sigrid CI configuration](../reference/client-script-usage.md). 
 
 This allows you to publish each subsystem as part of their own pipeline, rather than being force to publish all subsystems at the same time. Using subsystems therefore doesn't interrupt the normal workflow for teams working on each subsystem, while still resulting in a shared/combined/aggregated view in Sigrid. Different pipelines may have quite different running times. In case that different pipelines push the source code to Sigrid with a relatively large time difference (i.e. >30 minutes), Sigrid's analysis will use the last known state of the omitted subsystems. Once other repositories do come in, the analysis will be rerun with the latest, updated version.    
 
