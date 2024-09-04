@@ -79,8 +79,8 @@ class MarkdownReportTest(TestCase):
             
             ## Sigrid ratings
             
-            | System property | Baseline on 2022-01-10 | Before changes | New/changed code |
-            |-----------------|---------------------------------------------|----------------|------------------|
+            | System property | System on 2022-01-10 | Before changes | New/changed code |
+            |-----------------|-------------------------------------------|----------------|------------------|
             | Volume | N/A | N/A | N/A |
             | Duplication | 4.0 | N/A | 5.0 |
             | Unit Size | 4.0 | N/A | 2.0 |
@@ -285,8 +285,8 @@ class MarkdownReportTest(TestCase):
             
             ## Sigrid ratings
             
-            | System property | Baseline on 2022-01-10 | Before changes | New/changed code |
-            |-----------------|---------------------------------------------|----------------|------------------|
+            | System property | System on 2022-01-10 | Before changes | New/changed code |
+            |-----------------|-------------------------------------------|----------------|------------------|
             | Volume | N/A | N/A | N/A |
             | Duplication | N/A | N/A | N/A |
             | Unit Size | N/A | N/A | N/A |
@@ -404,8 +404,8 @@ class MarkdownReportTest(TestCase):
             
             ## Sigrid ratings
             
-            | System property | Baseline on N/A | Before changes | New/changed code |
-            |-----------------|---------------------------------------------|----------------|------------------|
+            | System property | System on N/A | Before changes | New/changed code |
+            |-----------------|-------------------------------------------|----------------|------------------|
             | Volume | N/A | N/A | N/A |
             | Duplication | N/A | N/A | N/A |
             | Unit Size | N/A | N/A | N/A |

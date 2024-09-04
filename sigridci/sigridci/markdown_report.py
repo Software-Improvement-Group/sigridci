@@ -86,8 +86,8 @@ class MarkdownReport(Report):
 
     def renderRatingsTable(self, feedback):
         md = ""
-        md += f"| System property | Baseline on {self.formatBaseline(feedback)} | Before changes | New/changed code |\n"
-        md += f"|-----------------|---------------------------------------------|----------------|------------------|\n"
+        md += f"| System property | System on {self.formatBaseline(feedback)} | Before changes | New/changed code |\n"
+        md += f"|-----------------|-------------------------------------------|----------------|------------------|\n"
 
         for metric in self.METRICS:
             fmt = "**" if metric == "MAINTAINABILITY" else ""
