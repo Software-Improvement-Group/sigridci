@@ -44,10 +44,10 @@ class ConclusionReportTest(TestCase):
         expected = """
             ** ⚠️  Your code did not improve towards your Sigrid objective of 3.5 stars **
             
-            -------------------------------------------------------------------------
-            View your analysis results in Sigrid:
-                https://example-sigrid.com/aap/noot/-/sigrid-ci/1234?targetRating=3.5
-            -------------------------------------------------------------------------
+            ---------------------------------------
+            View this system in Sigrid:
+                https://example-sigrid.com/aap/noot
+            ---------------------------------------
         """
                 
         self.assertEqual(buffer.getvalue().strip(), inspect.cleandoc(expected).strip())
@@ -78,10 +78,10 @@ class ConclusionReportTest(TestCase):
         expected = """
             ** 💭️  You did not change any files that are measured by Sigrid **
             
-            -------------------------------------------------------------------------
-            View your analysis results in Sigrid:
-                https://example-sigrid.com/aap/noot/-/sigrid-ci/1234?targetRating=3.5
-            -------------------------------------------------------------------------
+            ---------------------------------------
+            View this system in Sigrid:
+                https://example-sigrid.com/aap/noot
+            ---------------------------------------
         """
 
         self.assertEqual(buffer.getvalue().strip(), inspect.cleandoc(expected).strip())
