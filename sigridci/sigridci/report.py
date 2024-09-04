@@ -61,10 +61,6 @@ class Report:
         system = urllib.parse.quote_plus(options.system.lower())
         return f"{options.sigridURL}/{customer}/{system}"
 
-    def getLandingPage(self, analysisId, options):
-        targetRating = "%.1f" % options.targetRating
-        return self.getSigridUrl(options) + f"/-/sigrid-ci/{analysisId}?targetRating={targetRating}"
-
     def getSummaryText(self, feedback, options):
         status = Objective.determineStatus(feedback, options)
         target = f"{options.targetRating:.1f} stars"

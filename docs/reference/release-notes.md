@@ -3,6 +3,19 @@ Sigrid release notes
 
 SIG uses [continuous delivery](https://en.wikipedia.org/wiki/Continuous_delivery), meaning that every change to Sigrid or the underlying analysis is released once our development pipeline has completed. On average, we release somewhere between 10 and 20 times per day. This page therefore doesn't list every single change, since that would quickly lead to an excessively long list of small changes. Instead, this page lists Sigrid and analysis changes that we consider noteworthy for the typical Sigrid user.
 
+### September 9, 2024
+
+- **Objectives:** The objectives dashboard now includes filter options, which allow you to track objectives status and trend for certain teams, certain business criticiality, etc. This helps you to create custom dashboards or reports for certain sections of your portfolio.
+- **Sigrid CI:** The Sigrid CI feedback now shows both the maintainability of the system as a whole, *and* the maintainability of the files you changed... before you changed them. This makes it easier to see if you managed to improve those files during your changes. This fits with Sigrid CI's goal of incremental improvement: As long as you keep improving your code *towards* your objective, you will get there eventually.
+- **Architecture Quality:** The user interface for Architecture Quality's pinning/hiding components, saved views, and the summary have all been improved. These changes combined make it easier to navugate the architecture view.
+
+### August 26, 2024
+
+- **Maintainability:** The SIG Maintainability Model 2024 has been released. SIG models are recalibrated yearly, to reflect current industry trends and best practices. You can find an overview of the new model version in the updated [Guidance for Producers](https://softwareimprovementgroup.com/wp-content/uploads/SIG-TUViT-Evaluation-Criteria-Trusted-Product-Maintainability-Guidance-for-producers.pdf) document.
+- **Architecture Quality:** SIG's Architecture Quality Model is *also* benchmarked, and is now also recalibrated on a yearly basis. You can find documentation for the new model in the [Guidance for Producers](https://www.softwareimprovementgroup.com/wp-content/uploads/Guidance-for-producers-Architecture-Quality-Model.pdf).
+- **Objectives:** The objectives dashboard now shows both portfolio objectives and system objectives in a single unified view. This makes it easier to track objective compliance across your portfolio, without having to navigate across multiple pages.
+- **Sigrid CI:** The Sigrid CI feedback for GitLab has been improved to be more in line with the feedback for GitHub and Azure DevOps, it is now more visual and requires less clicks to access. Refer to the [integration instructions for GitLab](../sigridci-integration/gitlab.md) for how to enable this for your pipeline.
+
 ### August 12, 2024
 
 - **Security:** It is now possible to disable/exclude specific rules in the configuration. Refer to the [security configuration](analysis-scope-configuration.md#third-party-findings) for more information.
@@ -10,7 +23,6 @@ SIG uses [continuous delivery](https://en.wikipedia.org/wiki/Continuous_delivery
 - **Open Source Health:** It is now possible to exclude certain risks from Sigrid's Open Source Health analysis. See the [Open Source Health documentation](../capabilities/system-open-source-health.md#excluding-risks) for *when* to use this options, and the [configuration options](analysis-scope-configuration.md#exclude-open-source-health-risks) for *how* to use these options.
 - **Architecture Quality:** Architecture Quality now supports [saved views](../capabilities/architecture-quality.md#saving-architectural-views), which allows you to create and save specific views from the architecture explorer for later review or documentation purposes.
 - **Technology support:** Added support for the [NGRX framework](https://ngrx.io). This support is now part of the existing TypeScript analysis, so no configuration changes are needed.
-- **Sigrid CI:** The Sigrid CI feedback for GitLab has been improved to be more in line with the feedback for GitHub and Azure DevOps, it is now more visual and requires less clicks to access. Refer to the [integration instructions for GitLab](../sigridci-integration/gitlab.md) for how to enable this for your pipeline. 
 
 ### July 15, 2024
 

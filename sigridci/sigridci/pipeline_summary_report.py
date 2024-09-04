@@ -46,13 +46,11 @@ class PipelineSummaryReport(Report):
         asciiArt.printColor(f"** {message} **", asciiArt.ANSI_BOLD + color)
 
     def printLandingPage(self, analysisId, options):
-        landingPage = self.getLandingPage(analysisId, options)
-        if analysisId == "":
-            landingPage = self.getSigridUrl(options)
+        landingPage = self.getSigridUrl(options)
 
         print("", file=self.output)
         print("-" * (len(landingPage) + 4), file=self.output)
-        print("View your analysis results in Sigrid:", file=self.output)
+        print("View this system in Sigrid:", file=self.output)
         print(f"    {landingPage}", file=self.output)
         print("-" * (len(landingPage) + 4), file=self.output)
         print("", file=self.output)

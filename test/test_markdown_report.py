@@ -79,22 +79,21 @@ class MarkdownReportTest(TestCase):
             
             ## Sigrid ratings
             
-            | System property | Baseline on 2022-01-10 | New/changed code |
-            |-----------------|---------------------------------------------|------------------|
-            | Volume | (N/A) | N/A |
-            | Duplication | (4.0) | 5.0 |
-            | Unit Size | (4.0) | 2.0 |
-            | Unit Complexity | (N/A) | N/A |
-            | Unit Interfacing | (N/A) | N/A |
-            | Module Coupling | (N/A) | N/A |
-            | Component Independence | (N/A) | N/A |
-            | Component Entanglement | (N/A) | N/A |
-            | **Maintainability** | **(4.0)** | **3.0** |
+            | System property | System on 2022-01-10 | Before changes | New/changed code |
+            |-----------------|-------------------------------------------|----------------|------------------|
+            | Volume | N/A | N/A | N/A |
+            | Duplication | 4.0 | N/A | 5.0 |
+            | Unit Size | 4.0 | N/A | 2.0 |
+            | Unit Complexity | N/A | N/A | N/A |
+            | Unit Interfacing | N/A | N/A | N/A |
+            | Module Coupling | N/A | N/A | N/A |
+            | Component Independence | N/A | N/A | N/A |
+            | Component Entanglement | N/A | N/A | N/A |
+            | **Maintainability** | **4.0** | **2.6** | **3.0** |
             
             ----
             
-            - [**View this system in Sigrid**](https://sigrid-says.com/aap/noot)
-            - [**View this Sigrid CI feedback in Sigrid**](https://sigrid-says.com/aap/noot/-/sigrid-ci/1234?targetRating=3.5)
+            [**View this system in Sigrid**](https://sigrid-says.com/aap/noot)
         """
 
         self.assertEqual(markdown.strip(), inspect.cleandoc(expected).strip())
@@ -245,7 +244,7 @@ class MarkdownReportTest(TestCase):
         feedback = {
             "baseline": "20220110",
             "baselineRatings": {"MAINTAINABILITY": 3.0},
-            "changedCodeBeforeRatings" : {"MAINTAINABILITY" : 3.0},
+            "changedCodeBeforeRatings" : {"MAINTAINABILITY" : 3.1},
             "changedCodeAfterRatings" : {"MAINTAINABILITY" : 4.0},
             "newCodeRatings": {"MAINTAINABILITY": 4.0},
             "overallRatings": {"MAINTAINABILITY": 4.0},
@@ -286,22 +285,21 @@ class MarkdownReportTest(TestCase):
             
             ## Sigrid ratings
             
-            | System property | Baseline on 2022-01-10 | New/changed code |
-            |-----------------|---------------------------------------------|------------------|
-            | Volume | (N/A) | N/A |
-            | Duplication | (N/A) | N/A |
-            | Unit Size | (N/A) | N/A |
-            | Unit Complexity | (N/A) | N/A |
-            | Unit Interfacing | (N/A) | N/A |
-            | Module Coupling | (N/A) | N/A |
-            | Component Independence | (N/A) | N/A |
-            | Component Entanglement | (N/A) | N/A |
-            | **Maintainability** | **(3.0)** | **4.0** |
+            | System property | System on 2022-01-10 | Before changes | New/changed code |
+            |-----------------|-------------------------------------------|----------------|------------------|
+            | Volume | N/A | N/A | N/A |
+            | Duplication | N/A | N/A | N/A |
+            | Unit Size | N/A | N/A | N/A |
+            | Unit Complexity | N/A | N/A | N/A |
+            | Unit Interfacing | N/A | N/A | N/A |
+            | Module Coupling | N/A | N/A | N/A |
+            | Component Independence | N/A | N/A | N/A |
+            | Component Entanglement | N/A | N/A | N/A |
+            | **Maintainability** | **3.0** | **3.1** | **4.0** |
             
             ----
             
-            - [**View this system in Sigrid**](https://sigrid-says.com/aap/noot)
-            - [**View this Sigrid CI feedback in Sigrid**](https://sigrid-says.com/aap/noot/-/sigrid-ci/1234?targetRating=3.5)
+            [**View this system in Sigrid**](https://sigrid-says.com/aap/noot)
         """
 
         self.assertEqual(markdown.strip(), inspect.cleandoc(expected).strip())
@@ -330,8 +328,7 @@ class MarkdownReportTest(TestCase):
             
             ----
             
-            - [**View this system in Sigrid**](https://sigrid-says.com/aap/noot)
-            - [**View this Sigrid CI feedback in Sigrid**](https://sigrid-says.com/aap/noot/-/sigrid-ci/1234?targetRating=3.5)
+            [**View this system in Sigrid**](https://sigrid-says.com/aap/noot)
         """
 
         self.assertEqual(markdown.strip(), inspect.cleandoc(expected).strip())
@@ -365,8 +362,7 @@ class MarkdownReportTest(TestCase):
             
             ----
             
-            - [**View this system in Sigrid**](https://sigrid-says.com/aap/noot)
-            - [**View this Sigrid CI feedback in Sigrid**](https://sigrid-says.com/aap/noot/-/sigrid-ci/1234?targetRating=3.5)
+            [**View this system in Sigrid**](https://sigrid-says.com/aap/noot)
         """
 
         self.assertEqual(markdown.strip(), inspect.cleandoc(expected).strip())
@@ -376,7 +372,7 @@ class MarkdownReportTest(TestCase):
 
         feedback = {
             "baselineRatings": {"MAINTAINABILITY": 3.0},
-            "changedCodeBeforeRatings" : {"MAINTAINABILITY" : 2.8},
+            "changedCodeBeforeRatings" : {"MAINTAINABILITY" : 2.9},
             "newCodeRatings": {"MAINTAINABILITY": 2.8},
             "overallRatings": {"MAINTAINABILITY": 3.0},
             "refactoringCandidates": []
@@ -408,22 +404,21 @@ class MarkdownReportTest(TestCase):
             
             ## Sigrid ratings
             
-            | System property | Baseline on N/A | New/changed code |
-            |-----------------|---------------------------------------------|------------------|
-            | Volume | (N/A) | N/A |
-            | Duplication | (N/A) | N/A |
-            | Unit Size | (N/A) | N/A |
-            | Unit Complexity | (N/A) | N/A |
-            | Unit Interfacing | (N/A) | N/A |
-            | Module Coupling | (N/A) | N/A |
-            | Component Independence | (N/A) | N/A |
-            | Component Entanglement | (N/A) | N/A |
-            | **Maintainability** | **(3.0)** | **2.8** |
+            | System property | System on N/A | Before changes | New/changed code |
+            |-----------------|-------------------------------------------|----------------|------------------|
+            | Volume | N/A | N/A | N/A |
+            | Duplication | N/A | N/A | N/A |
+            | Unit Size | N/A | N/A | N/A |
+            | Unit Complexity | N/A | N/A | N/A |
+            | Unit Interfacing | N/A | N/A | N/A |
+            | Module Coupling | N/A | N/A | N/A |
+            | Component Independence | N/A | N/A | N/A |
+            | Component Entanglement | N/A | N/A | N/A |
+            | **Maintainability** | **3.0** | **2.9** | **2.8** |
             
             ----
             
-            - [**View this system in Sigrid**](https://sigrid-says.com/aap/noot)
-            - [**View this Sigrid CI feedback in Sigrid**](https://sigrid-says.com/aap/noot/-/sigrid-ci/1234?targetRating=3.5)
+            [**View this system in Sigrid**](https://sigrid-says.com/aap/noot)
             
             ----
             
@@ -461,8 +456,7 @@ class MarkdownReportTest(TestCase):
             
             ----
             
-            - [**View this system in Sigrid**](https://sigrid-says.com/aap/noot)
-            - [**View this Sigrid CI feedback in Sigrid**](https://sigrid-says.com/aap/noot/-/sigrid-ci/1234?targetRating=3.5)
+            [**View this system in Sigrid**](https://sigrid-says.com/aap/noot)
         """
 
         self.assertEqual(markdown.strip(), inspect.cleandoc(expected).strip())

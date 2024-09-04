@@ -37,7 +37,6 @@ class MarkdownReport(Report):
     def renderMarkdown(self, analysisId, feedback, options):
         status = Objective.determineStatus(feedback, options)
         sigridLink = self.getSigridUrl(options)
-        landingPage = self.getLandingPage(analysisId, options)
 
         md = "# Sigrid maintainability feedback\n\n"
         md += f"{self.renderSummary(feedback, options)}\n\n"
@@ -49,8 +48,7 @@ class MarkdownReport(Report):
             md += self.renderRatingsTable(feedback)
 
         md += "\n----\n\n"
-        md += f"- [**View this system in Sigrid**]({sigridLink})\n"
-        md += f"- [**View this Sigrid CI feedback in Sigrid**]({landingPage})\n"
+        md += f"[**View this system in Sigrid**]({sigridLink})\n"
         if options.feedbackURL and status != ObjectiveStatus.UNKNOWN:
             md += "\n----\n\n"
             md += "## Did you find this feedback helpful?\n\n"
@@ -88,14 +86,16 @@ class MarkdownReport(Report):
 
     def renderRatingsTable(self, feedback):
         md = ""
-        md += f"| System property | Baseline on {self.formatBaseline(feedback)} | New/changed code |\n"
-        md += f"|-----------------|---------------------------------------------|------------------|\n"
+        md += f"| System property | System on {self.formatBaseline(feedback)} | Before changes | New/changed code |\n"
+        md += f"|-----------------|-------------------------------------------|----------------|------------------|\n"
 
         for metric in self.METRICS:
             fmt = "**" if metric == "MAINTAINABILITY" else ""
-            baseline = "(" + self.formatRating(feedback["baselineRatings"], metric) + ")"
+            metricName = self.formatMetricName(metric)
+            baseline = self.formatRating(feedback["baselineRatings"], metric)
             newCode = self.formatRating(feedback["newCodeRatings"], metric)
-            md += f"| {fmt}{self.formatMetricName(metric)}{fmt} | {fmt}{baseline}{fmt} | {fmt}{newCode}{fmt} |\n"
+            before = self.formatRating(feedback["changedCodeBeforeRatings"], metric)
+            md += f"| {fmt}{metricName}{fmt} | {fmt}{baseline}{fmt} | {fmt}{before}{fmt} | {fmt}{newCode}{fmt} |\n"
 
         return md
 
