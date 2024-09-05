@@ -3,6 +3,11 @@ Sigrid release notes
 
 SIG uses [continuous delivery](https://en.wikipedia.org/wiki/Continuous_delivery), meaning that every change to Sigrid or the underlying analysis is released once our development pipeline has completed. On average, we release somewhere between 10 and 20 times per day. This page therefore doesn't list every single change, since that would quickly lead to an excessively long list of small changes. Instead, this page lists Sigrid and analysis changes that we consider noteworthy for the typical Sigrid user.
 
+### September 23, 2024
+
+- *Scope configuration:* Sigrid now supports automatic component detection, which is based on the SIG knowledge base. Manually defining components is still possible if you want to override the default configuration, or if you're using a project-specific component structure. Refer to the [updated documentation](analysis-scope-configuration.md#defining-components) for an overview of when and how to use the various options.
+- **Sigrid CI:** Validation of [scope configuration files](analysis-scope-configuration.md) has been improved. You will now receive more feedback on configuration errors. If you use Sigrid CI, you will get this feedback immediately, before Sigrid starts the analysis and before your code is even published. This faster feedback loop is helpful to spot and fix configuration errors in a timely fashion.
+
 ### September 9, 2024
 
 - **Objectives:** The objectives dashboard now includes filter options, which allow you to track objectives status and trend for certain teams, certain business criticiality, etc. This helps you to create custom dashboards or reports for certain sections of your portfolio.
