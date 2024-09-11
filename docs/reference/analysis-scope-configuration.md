@@ -20,6 +20,14 @@ The following example shows a typical example of the `sigrid.yaml` configuration
       - name: java
       - name: python
       - name: typescript
+
+The typical `sigrid.yaml` contains at least the following options:
+
+| Option name  | Required? | Description                                                                                    |
+|--------------|-----------|------------------------------------------------------------------------------------------------|
+| `componentization`  | Yes       | see the section below on the various options like component_depth. |
+| `exclude`    | No        | extends the default exclude list with project-specific files and directories that should also be excluded.  |
+| `languages` | Yes        | lists all languages that you want Sigrid to analyze.                |
       
 The various options and sections are explained in more detail in the remainder of this page.
 
