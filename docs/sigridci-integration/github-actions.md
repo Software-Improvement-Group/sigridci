@@ -100,7 +100,7 @@ jobs:
         run: "./sigridci/sigridci/sigridci.py --customer <example_customer_name> --system <example_system_name> --source ."
       - name: "Save Sigrid CI results"
         if: always()
-        uses: actions/upload-artifact@v2
+        uses: actions/upload-artifact@v4
         with:
           path: "sigrid-ci-output/**"
           retention-days: 7
