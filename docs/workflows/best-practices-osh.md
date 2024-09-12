@@ -7,6 +7,7 @@
     - Make sure we are aligned with DPA v4! (can we refer to it?)
     - and with the guidance for producers
   - we have to explicitly address: what if we did not reach 4 stars -> then look at the underlying measurements
+  - checkpoint
 -->
 
 
