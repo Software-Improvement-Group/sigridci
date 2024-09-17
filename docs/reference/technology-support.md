@@ -72,6 +72,7 @@ This page provides an overview of all technologies that can be analyzed by Sigri
 | `coolgencobol`             | CoolGen Cobol                            | Maintainability, Architecture               |
 | `cordysbpm`                | Cordys BPM                               | Maintainability, Architecture               |
 | `cpp`                      | C++                                      | Maintainability, Architecture, Security, AI | (1)                                     |
+| `csharp`                   | C#                                       | Maintainability, Architecture, Security, AI |
 | `csp`                      | CSP                                      | Maintainability, Architecture               |
 | `css`                      | CSS                                      | Maintainability, Architecture               |
 | `cypher`                   | Cypher                                   | Maintainability, Architecture               |

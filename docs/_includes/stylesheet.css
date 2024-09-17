@@ -284,11 +284,11 @@ pre {
     margin-right: auto;
 }
 
-p > code {
+p > code, li > code {
     background-color: #d9e1eb;
     font-family: "Menlo", monospace;
     font-size: 12px;
-    padding: 2px 4px 2px 4px;
+    padding: 4px;
     border-radius: 4px;
 }
 
