@@ -921,7 +921,7 @@ POST https://sigrid-says.com/rest/inboundresults/sig/{customer}/{system}/ci/subs
 The body of the request is a list of Unix paths that you want to remove from the system.
 
 ```json
-    {"names": ["path1, path2"]}
+    {"names": ["path1", "path2"]}
 ```
 
 The following example shows a complete `curl` commmand that will remove the two sub-systems:
