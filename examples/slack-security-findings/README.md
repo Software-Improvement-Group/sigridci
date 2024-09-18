@@ -54,7 +54,7 @@ post-daily-findings:
   stage: report
   image: python:alpine3.20
   script:
-    - wget https://raw.githubusercontent.com/Software-Improvement-Group/sigridci/f70bd4eace0ccbc39c2decce2817deb7724cc931/examples/slack-security-findings/daily_findings.py
+    - wget https://raw.githubusercontent.com/Software-Improvement-Group/sigridci/main/examples/slack-security-findings/daily_findings.py
     - python daily_findings.py --customer sig --system sigrid-backend
   rules:
     - if: $CI_PIPELINE_SOURCE == "schedule"
