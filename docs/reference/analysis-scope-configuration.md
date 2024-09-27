@@ -207,7 +207,7 @@ In certain situations you can decide to [exclude Open Source Health risks](../ca
         - ".*/scripts/.*" # Shorthand notation, same as the "path" option below.
         - path: ".*/tools/.*" # Excludes all libraries found in files matching the specified path.
         - vulnerability: "CVE-2024-12345" # Excludes all vulnerabilities with the specified identifier.
-        - licence: "iTextSharp" # Excludes license risks for the specified library.
+        - license: "iTextSharp" # Excludes license risks for the specified library.
         - activity: "com.github.tomas-langer:chalk" # Excludes activity risks for the specified library.
 
 Libraries and/or findings that are excluded using this option will not count towards the Open Source Health star rating, and will not be marked as risks in Sigrid.
