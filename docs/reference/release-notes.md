@@ -3,9 +3,16 @@ Sigrid release notes
 
 SIG uses [continuous delivery](https://en.wikipedia.org/wiki/Continuous_delivery), meaning that every change to Sigrid or the underlying analysis is released once our development pipeline has completed. On average, we release somewhere between 10 and 20 times per day. This page therefore doesn't list every single change, since that would quickly lead to an excessively long list of small changes. Instead, this page lists Sigrid and analysis changes that we consider noteworthy for the typical Sigrid user.
 
+### October 7, 2024
+
+- **Objectives:** The drill-down page, where you can see objective progress for all systems in your portfolio, now also shows a delta indicator. This is in addition to the overall delta indicator displayed in the portfolio objectives dashboard. This helps you to identify systems where things aren't progressing as expected, or reversely, which systems have improved the most.
+- **Security:** Sigrid now offers the *Sigrid Security for Embedded Systems* license. As the name implies, this focuses specifically on software used in embedded systems. It adds support for additional security standards, and introduces rules to check compliance against those standards. Most of the focus is on C and C++, since those technologies remain the lingua franca for embedded systems.
+- **Open Source Health:** Added support for [NuGet lock files](https://devblogs.microsoft.com/nuget/enable-repeatable-package-restores-using-a-lock-file/). You can [configure Sigrid to show transitive dependencies](https://docs.sigrid-says.com/reference/analysis-scope-configuration.html#open-source-health). If you enable this option, Sigrid will scan your NuGet lock files for those transitive dependencies, and display them in Sigrid alongside your direct dependencies.
+- **Sigrid CI:** Improved validation for the [scope configuration file](analysis-scope-configuration.md). You will now get more and more detailed feedback, and because you get thise feedback *before* you code is ever sent to Sigrid, this leads to a faster feedback loop to detect and fix configuration errors.
+
 ### September 23, 2024
 
-- *Scope configuration:* Sigrid now supports automatic component detection, which is based on the SIG knowledge base. Manually defining components is still possible if you want to override the default configuration, or if you're using a project-specific component structure. Refer to the [updated documentation](analysis-scope-configuration.md#defining-components) for an overview of when and how to use the various options.
+- **Scope configuration:** Sigrid now supports automatic component detection, which is based on the SIG knowledge base. Manually defining components is still possible if you want to override the default configuration, or if you're using a project-specific component structure. Refer to the [updated documentation](analysis-scope-configuration.md#defining-components) for an overview of when and how to use the various options.
 - **Sigrid CI:** Validation of [scope configuration files](analysis-scope-configuration.md) has been improved. You will now receive more feedback on configuration errors. If you use Sigrid CI, you will get this feedback immediately, before Sigrid starts the analysis and before your code is even published. This faster feedback loop is helpful to spot and fix configuration errors in a timely fashion.
 
 ### September 9, 2024
