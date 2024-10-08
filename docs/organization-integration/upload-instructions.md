@@ -80,9 +80,15 @@ If you are uploading from a Unix, Linux or macOS system, then you probably are i
 
 If you are uploading from Windows, you likely need to create a new key. You can, for example, use the [puttygen3](https://www.chiark.greenend.org.uk/~sgtatham/putty/latest.html) application to accomplish this.
 
-### SFTP usage
+### Uploading to portal.sig.eu via scp
 
-Connections to our upload server can be made using an SFTP client, such as [WinSCP](http://winscp.net/eng/index.php) for Windows, or the command line utility sftp for Unix, Linux and macOS, which is part of the [OpenSSH](http://www.openssh.com) suite.
+Connections to our upload server can be made using an SCP client, such as [WinSCP](http://winscp.net/eng/index.php) for Windows, or the command line utility scp for Unix, Linux and macOS, which is part of the [OpenSSH](http://www.openssh.com) suite.
+
+Below an example for the secure copy command, which refers to a private key, the zip file to be uploaded and 'your-upload-account' that you will receive from Sigrid support.
+
+```
+scp -i ~/.ssh/id_rsa system-name-<yyyymmdd>.zip your-upoad-account@portal.sig.eu:
+```
 
 ## Manually uploading source code using the SIG Upload Portal
 
