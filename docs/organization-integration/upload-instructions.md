@@ -87,7 +87,7 @@ Connections to our upload server can be made using an SCP client, such as [WinSC
 Below an example for the secure copy command, which refers to a private key, the zip file to be uploaded and 'your-upload-account' that you will receive from Sigrid support.
 
 ```
-scp -i ~/.ssh/id_rsa system-name-<yyyymmdd>.zip your-upoad-account@portal.sig.eu:
+scp -i ~/.ssh/id_rsa system-name-<yyyymmdd>.zip your-upload-account@portal.sig.eu:
 ```
 
 ## Manually uploading source code using the SIG Upload Portal
