@@ -25,6 +25,14 @@ from .upload_log import UploadLog
 class AzurePullRequestReport(Report):
     AZURE_API_VERSION = "6.0"
 
+    # We want to update the existing comment, to avoid spamming people with new
+    # comments every time they make a commit. We could also use the API to fetch
+    # the existing comments to see if there is one from Sigrid, but we want to
+    # avoid loading people's comments from Sigrid CI. This ID should not cause
+    # any issues in practice, since organically getting to 400+ comments in a
+    # pull request is basically unheard of.
+    FIXED_SIGRID_COMMENT_ID = 451
+
     def generate(self, analysisId, feedback, options):
         feedbackFile = f"{options.outputDir}/feedback.md"
 
@@ -61,6 +69,7 @@ class AzurePullRequestReport(Report):
 
         body = {
             "comments": [{
+                "id": self.FIXED_SIGRID_COMMENT_ID,
                 "parentCommentId": 0,
                 "content": feedback,
                 "commentType": "text"
