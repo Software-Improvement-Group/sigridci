@@ -37,12 +37,13 @@ class AzurePullRequestReport(Report):
             # We want to update the existing comment, to avoid spamming people with new
             # comments every time they make a commit. We have no way to persist this,
             # so we need to check the existing comments.
-            existingCommentId = self.findExistingSigridCommentId()
+            existingId = self.findExistingSigridCommentThreadId()
 
-            if existingSigridCommentId == None:
+            if existingId == None:
                 self.callAzure("POST", self.buildRequestBody(analysisId, feedbackFile))
                 UploadLog.log("Published feedback to Azure DevOps")
             else:
+                self.callAzure("PATCH", self.buildRequestBody(analysisId, feedbackFile), existingId)
                 UploadLog.log("Updated existing feedback in Azure DevOps")
         except urllib.error.HTTPError as e:
             UploadLog.log(f"Warning: Azure DevOps API error: {e.code} / {e.fp.read()}")
@@ -52,27 +53,34 @@ class AzurePullRequestReport(Report):
             "SYSTEM_PULLREQUEST_PULLREQUESTID" in os.environ and \
             options.runMode == RunMode.FEEDBACK_ONLY
 
-    def findExistingSigridCommentId(self):
-        existingComments = json.load(self.callAzure("GET", None))
-        print(existingComments)
-        for comment in existingComments:
-            print(comment["properties"])
+    def findExistingSigridCommentThreadId(self):
+        existingThreads = json.load(self.callAzure("GET", None))
+
+        for thread in existingThreads["value"]:
+            for comment in thread:
+                if comment.startswith("# Sigrid"):
+                    return thread["id"]
+
         return None
 
-    def callAzure(self, method, body):
-        request = urllib.request.Request(self.buildURL(), body)
+    def callAzure(self, method, body, threadId):
+        request = urllib.request.Request(self.buildURL(threadId), body)
         request.method = method
         request.add_header("Authorization", f"Bearer {os.environ['SYSTEM_ACCESSTOKEN']}")
         request.add_header("Content-Type", "application/json")
         return urllib.request.urlopen(request)
 
-    def buildURL(self):
+    def buildURL(self, threadId):
         baseURL = os.environ["SYSTEM_TEAMFOUNDATIONCOLLECTIONURI"]
         project = os.environ["SYSTEM_TEAMPROJECTID"]
         repo = os.environ["BUILD_REPOSITORY_NAME"]
         pr = os.environ["SYSTEM_PULLREQUEST_PULLREQUESTID"]
         version = self.AZURE_API_VERSION
-        return f"{baseURL}{project}/_apis/git/repositories/{repo}/pullRequests/{pr}/threads?api-version={version}"
+
+        if threadId:
+            return f"{baseURL}{project}/_apis/git/repositories/{repo}/pullRequests/{pr}/threads/{threadId}?api-version={version}"
+        else:
+            return f"{baseURL}{project}/_apis/git/repositories/{repo}/pullRequests/{pr}/threads?api-version={version}"
 
     def buildRequestBody(self, analysisId, feedbackFile):
         with open(feedbackFile, mode="r", encoding="utf-8") as f:
@@ -84,10 +92,7 @@ class AzurePullRequestReport(Report):
                 "content": feedback,
                 "commentType": "text"
             }],
-            "status": "active",
-            "properties": {
-                "sigridRunId": analysisId
-            }
+            "status": "active"
         }
 
         return json.dumps(body).encode("utf-8")
