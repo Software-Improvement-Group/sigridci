@@ -25,14 +25,6 @@ from .upload_log import UploadLog
 class AzurePullRequestReport(Report):
     AZURE_API_VERSION = "6.0"
 
-    # We want to update the existing comment, to avoid spamming people with new
-    # comments every time they make a commit. We could also use the API to fetch
-    # the existing comments to see if there is one from Sigrid, but we want to
-    # avoid loading people's comments from Sigrid CI. This ID should not cause
-    # any issues in practice, since organically getting to 400+ comments in a
-    # pull request is basically unheard of.
-    FIXED_SIGRID_COMMENT_ID = 451
-
     def generate(self, analysisId, feedback, options):
         feedbackFile = f"{options.outputDir}/feedback.md"
 
@@ -41,8 +33,17 @@ class AzurePullRequestReport(Report):
 
         try:
             UploadLog.log("Sending feedback to Azure DevOps API")
-            self.callAzure("POST", self.buildRequestBody(analysisId, feedbackFile))
-            UploadLog.log("Published feedback to Azure DevOps")
+
+            # We want to update the existing comment, to avoid spamming people with new
+            # comments every time they make a commit. We have no way to persist this,
+            # so we need to check the existing comments.
+            existingCommentId = self.findExistingSigridCommentId()
+
+            if existingSigridCommentId == None:
+                self.callAzure("POST", self.buildRequestBody(analysisId, feedbackFile))
+                UploadLog.log("Published feedback to Azure DevOps")
+            else:
+                UploadLog.log("Updated existing feedback in Azure DevOps")
         except urllib.error.HTTPError as e:
             UploadLog.log(f"Warning: Azure DevOps API error: {e.code} / {e.fp.read()}")
 
@@ -51,14 +52,18 @@ class AzurePullRequestReport(Report):
             "SYSTEM_PULLREQUEST_PULLREQUESTID" in os.environ and \
             options.runMode == RunMode.FEEDBACK_ONLY
 
-    def callAzure(self, method, body):
+    def findExistingSigridCommentId(self):
+        existingComments = json.load(callAzure("GET", None))
+        for comment in existingComments:
+            print(comment["properties"])
+        return None
+
+def callAzure(self, method, body):
         request = urllib.request.Request(self.buildURL(), body)
         request.method = method
         request.add_header("Authorization", f"Bearer {os.environ['SYSTEM_ACCESSTOKEN']}")
         request.add_header("Content-Type", "application/json")
-
-        with urllib.request.urlopen(request) as response:
-            return response.status
+        return urllib.request.urlopen(request)
 
     def buildURL(self):
         baseURL = os.environ["SYSTEM_TEAMFOUNDATIONCOLLECTIONURI"]
