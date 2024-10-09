@@ -58,7 +58,7 @@ class AzurePullRequestReport(Report):
             print(comment["properties"])
         return None
 
-def callAzure(self, method, body):
+    def callAzure(self, method, body):
         request = urllib.request.Request(self.buildURL(), body)
         request.method = method
         request.add_header("Authorization", f"Bearer {os.environ['SYSTEM_ACCESSTOKEN']}")
