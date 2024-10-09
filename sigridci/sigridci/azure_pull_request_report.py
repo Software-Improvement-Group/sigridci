@@ -54,6 +54,7 @@ class AzurePullRequestReport(Report):
 
     def findExistingSigridCommentId(self):
         existingComments = json.load(self.callAzure("GET", None))
+        print(existingComments)
         for comment in existingComments:
             print(comment["properties"])
         return None
