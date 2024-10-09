@@ -39,13 +39,9 @@ class AzurePullRequestReport(Report):
         if not self.isSupported(options) or not os.path.exists(feedbackFile):
             return
 
-        UploadLog.log("Sending feedback to Azure DevOps API")
-
-        request = urllib.request.Request(self.buildURL(), self.buildRequestBody(feedbackFile))
-        request.add_header("Authorization", f"Bearer {os.environ['SYSTEM_ACCESSTOKEN']}")
-        request.add_header("Content-Type", "application/json")
         try:
-            urllib.request.urlopen(request)
+            UploadLog.log("Sending feedback to Azure DevOps API")
+            self.callAzure("POST", self.buildRequestBody(analysisId, feedbackFile))
             UploadLog.log("Published feedback to Azure DevOps")
         except urllib.error.HTTPError as e:
             UploadLog.log(f"Warning: Azure DevOps API error: {e.code} / {e.fp.read()}")
@@ -55,6 +51,15 @@ class AzurePullRequestReport(Report):
             "SYSTEM_PULLREQUEST_PULLREQUESTID" in os.environ and \
             options.runMode == RunMode.FEEDBACK_ONLY
 
+    def callAzure(self, method, body):
+        request = urllib.request.Request(self.buildURL(), body)
+        request.method = method
+        request.add_header("Authorization", f"Bearer {os.environ['SYSTEM_ACCESSTOKEN']}")
+        request.add_header("Content-Type", "application/json")
+
+        with urllib.request.urlopen(request) as response:
+            return response.status
+
     def buildURL(self):
         baseURL = os.environ["SYSTEM_TEAMFOUNDATIONCOLLECTIONURI"]
         project = os.environ["SYSTEM_TEAMPROJECTID"]
@@ -63,18 +68,20 @@ class AzurePullRequestReport(Report):
         version = self.AZURE_API_VERSION
         return f"{baseURL}{project}/_apis/git/repositories/{repo}/pullRequests/{pr}/threads?api-version={version}"
 
-    def buildRequestBody(self, feedbackFile):
+    def buildRequestBody(self, analysisId, feedbackFile):
         with open(feedbackFile, mode="r", encoding="utf-8") as f:
             feedback = f.read()
 
         body = {
             "comments": [{
-                "id": self.FIXED_SIGRID_COMMENT_ID,
                 "parentCommentId": 0,
                 "content": feedback,
                 "commentType": "text"
             }],
-            "status": "active"
+            "status": "active",
+            "properties": {
+                "sigridRunId": analysisId
+            }
         }
 
         return json.dumps(body).encode("utf-8")
