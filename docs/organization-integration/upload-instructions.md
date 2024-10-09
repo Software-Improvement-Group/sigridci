@@ -82,7 +82,7 @@ If you are uploading from Windows, you likely need to create a new key. You can,
 
 ### Uploading to portal.sig.eu via scp
 
-Connections to our upload server can be made using an SCP client, such as [WinSCP](http://winscp.net/eng/index.php) for Windows, or the command line utility scp for Unix, Linux and macOS, which is part of the [OpenSSH](http://www.openssh.com) suite.
+Connections to our upload server can be made using an SCP client, such as [WinSCP](http://winscp.net/eng/index.php) for Windows, or the command line utility `scp` for Unix, Linux and macOS, which is part of the [OpenSSH](http://www.openssh.com) suite.
 
 Below an example for the secure copy command, which refers to a private key, the zip file to be uploaded and 'your-upload-account' that you will receive from Sigrid support.
 
