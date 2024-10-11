@@ -12,20 +12,23 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-import os
-import sys
-import tempfile
-from contextlib import contextmanager
-from importlib import import_module
+from tempfile import NamedTemporaryFile
 from unittest import TestCase
 
-from sigridci.sigridci.publish_options import PublishOptions, RunMode
+from sigridci.sigridci.azure_pull_request_report import AzurePullRequestReport
+from sigridci.sigridci.objective import ObjectiveStatus
 
 
 class AzurePullRequestReportTest(TestCase):
 
-    def testBuildURL(self):
-        xxx
+    def testCommentIsDependentOnStatus(self):
+        with NamedTemporaryFile() as f:
+            f.write("This is Markdown feedback\n\n...with multiple lines")
 
-    def testBuildRequestBody(self):
-        xxx
+            report = AzurePullRequestReport()
+
+            self.assertEqual("fixed", report.buildRequestBody(f.name, ObjectiveStatus.ACHIEVED)["status"])
+            self.assertEqual("active", report.buildRequestBody(f.name, ObjectiveStatus.IMPROVED)["status"])
+            self.assertEqual("active", report.buildRequestBody(f.name, ObjectiveStatus.UNCHANGED)["status"])
+            self.assertEqual("active", report.buildRequestBody(f.name, ObjectiveStatus.WORSENED)["status"])
+            self.assertEqual("active", report.buildRequestBody(f.name, ObjectiveStatus.UNKNOWN)["status"])

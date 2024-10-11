@@ -17,6 +17,7 @@ import os
 import urllib.error
 import urllib.request
 
+from .objective import Objective, ObjectiveStatus
 from .publish_options import RunMode
 from .report import Report
 from .upload_log import UploadLog
@@ -38,12 +39,13 @@ class AzurePullRequestReport(Report):
             # comments every time they make a commit. We have no way to persist this,
             # so we need to check the existing comments.
             existingId = self.findExistingSigridCommentThreadId()
+            status = Objective.determineStatus(feedback, options)
 
             if existingId == None:
-                self.callAzure("POST", self.buildRequestBody(analysisId, feedbackFile), None)
+                self.callAzure("POST", self.buildRequestBody(feedbackFile, status), None)
                 UploadLog.log("Published feedback to Azure DevOps")
             else:
-                self.callAzure("PATCH", self.buildRequestBody(analysisId, feedbackFile), existingId)
+                self.callAzure("PATCH", self.buildRequestBody(feedbackFile, status), existingId)
                 UploadLog.log("Updated existing feedback in Azure DevOps")
         except urllib.error.HTTPError as e:
             UploadLog.log(f"Warning: Azure DevOps API error: {e.code} / {e.fp.read()}")
@@ -82,9 +84,11 @@ class AzurePullRequestReport(Report):
         else:
             return f"{baseURL}{project}/_apis/git/repositories/{repo}/pullRequests/{pr}/threads?api-version={version}"
 
-    def buildRequestBody(self, analysisId, feedbackFile):
+    def buildRequestBody(self, feedbackFile, status):
         with open(feedbackFile, mode="r", encoding="utf-8") as f:
             feedback = f.read()
+
+        commentStatus = "fixed" if status == ObjectiveStatus.ACHIEVED else "active"
 
         body = {
             "comments": [{
@@ -92,7 +96,7 @@ class AzurePullRequestReport(Report):
                 "content": feedback,
                 "commentType": "text"
             }],
-            "status": "active"
+            "status": commentStatus
         }
 
         return json.dumps(body).encode("utf-8")
