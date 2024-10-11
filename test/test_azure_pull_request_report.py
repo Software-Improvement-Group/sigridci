@@ -27,8 +27,8 @@ class AzurePullRequestReportTest(TestCase):
 
             report = AzurePullRequestReport()
 
-            self.assertEqual("fixed", report.buildRequestBody(f.name, ObjectiveStatus.ACHIEVED)["status"])
-            self.assertEqual("active", report.buildRequestBody(f.name, ObjectiveStatus.IMPROVED)["status"])
+            self.assertEqual("closed", report.buildRequestBody(f.name, ObjectiveStatus.ACHIEVED)["status"])
+            self.assertEqual("closed", report.buildRequestBody(f.name, ObjectiveStatus.IMPROVED)["status"])
             self.assertEqual("active", report.buildRequestBody(f.name, ObjectiveStatus.UNCHANGED)["status"])
             self.assertEqual("active", report.buildRequestBody(f.name, ObjectiveStatus.WORSENED)["status"])
             self.assertEqual("active", report.buildRequestBody(f.name, ObjectiveStatus.UNKNOWN)["status"])
