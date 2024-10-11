@@ -66,7 +66,7 @@ class AzurePullRequestReport(Report):
         return None
 
     def callAzure(self, method, body, threadId):
-        request = urllib.request.Request(self.buildURL(threadId), body)
+        request = urllib.request.Request(self.buildURL(threadId), json.dumps(body).encode("utf-8"))
         request.method = method
         request.add_header("Authorization", f"Bearer {os.environ['SYSTEM_ACCESSTOKEN']}")
         request.add_header("Content-Type", "application/json")
@@ -90,7 +90,7 @@ class AzurePullRequestReport(Report):
 
         commentStatus = "closed" if status in [ObjectiveStatus.ACHIEVED, ObjectiveStatus.IMPROVED] else "active"
 
-        body = {
+        return {
             "comments": [{
                 "parentCommentId": 0,
                 "content": feedback,
@@ -98,5 +98,3 @@ class AzurePullRequestReport(Report):
             }],
             "status": commentStatus
         }
-
-        return json.dumps(body).encode("utf-8")
