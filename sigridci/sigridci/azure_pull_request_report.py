@@ -40,7 +40,7 @@ class AzurePullRequestReport(Report):
             existingId = self.findExistingSigridCommentThreadId()
 
             if existingId == None:
-                self.callAzure("POST", self.buildRequestBody(analysisId, feedbackFile))
+                self.callAzure("POST", self.buildRequestBody(analysisId, feedbackFile), None)
                 UploadLog.log("Published feedback to Azure DevOps")
             else:
                 self.callAzure("PATCH", self.buildRequestBody(analysisId, feedbackFile), existingId)
