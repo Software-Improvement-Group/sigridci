@@ -57,7 +57,7 @@ class AzurePullRequestReport(Report):
         existingThreads = json.load(self.callAzure("GET", None, None))
 
         for thread in existingThreads["value"]:
-            for comment in thread:
+            for comment in thread["comments"]:
                 if comment["content"].startswith("# Sigrid"):
                     return thread["id"]
 
