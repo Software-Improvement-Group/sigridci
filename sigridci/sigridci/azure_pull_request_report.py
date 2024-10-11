@@ -54,7 +54,7 @@ class AzurePullRequestReport(Report):
             options.runMode == RunMode.FEEDBACK_ONLY
 
     def findExistingSigridCommentThreadId(self):
-        existingThreads = json.load(self.callAzure("GET", None))
+        existingThreads = json.load(self.callAzure("GET", None, None))
 
         for thread in existingThreads["value"]:
             for comment in thread:
