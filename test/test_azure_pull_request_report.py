@@ -23,7 +23,7 @@ class AzurePullRequestReportTest(TestCase):
 
     def testCommentIsDependentOnStatus(self):
         with NamedTemporaryFile() as f:
-            f.write("This is Markdown feedback\n\n...with multiple lines")
+            f.write("This is Markdown feedback\n\n...with multiple lines".encode("utf8"))
 
             report = AzurePullRequestReport()
 
