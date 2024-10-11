@@ -163,7 +163,7 @@ If the previous options are still not powerful enough, the last option is to def
           
 As you can see, this allows you to manually define every single component. Each component can include certain directories and/or files, both of which can be specified using regular expressions.
 
-This option is extremely flexible... but it's also extremely maintenance-insensitive. Using this option means you will need to update your Sigrid configuration whenever you make changes to your project structure. We recommend you only use this option if you have extremely specific needs that cannot be addressed by any of the other options.
+This option is extremely flexible... but it's also extremely maintenance intensive. Using this option means you will need to update your Sigrid configuration whenever you make changes to your project structure. We recommend you only use this option if you have extremely specific needs that cannot be addressed by any of the other options.
 {: .warning }
 
 ## Configuring the SIG Maintainability Model version
@@ -207,7 +207,7 @@ In certain situations you can decide to [exclude Open Source Health risks](../ca
         - ".*/scripts/.*" # Shorthand notation, same as the "path" option below.
         - path: ".*/tools/.*" # Excludes all libraries found in files matching the specified path.
         - vulnerability: "CVE-2024-12345" # Excludes all vulnerabilities with the specified identifier.
-        - licence: "iTextSharp" # Excludes license risks for the specified library.
+        - license: "iTextSharp" # Excludes license risks for the specified library.
         - activity: "com.github.tomas-langer:chalk" # Excludes activity risks for the specified library.
 
 Libraries and/or findings that are excluded using this option will not count towards the Open Source Health star rating, and will not be marked as risks in Sigrid.
