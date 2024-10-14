@@ -78,3 +78,20 @@ Introducing sub-components also helps to manage dependencies between the sub-com
 The initial component structure is usually designed at the beginning of the project, often before the first line of code has been written. A common pitfall is to basically retain this initial structure forever, and never revisit it. Over the years, systems tend to evolve, and the original component structure is not necessarily designed to handle those changes. 
 
 A suitable component structure tends to look somewhat like a tree, though it's usually not a "strict" tree due to having shared (sub-)components. Defining 100 top-level components is not particularly helpful for locating functionality, so even very large systems should strive towards a manageable number of top-level components. However, larger systems tend to have more levels of sub-components. Every component has its own internal structure, and as components continue to grow, they tend to spawn additional levels of sub-components to manage their internal structure. 
+
+## Recommended further reading
+
+- **Architecture best practices**
+  - [Clean architecture](https://www.amazon.com/Clean-Architecture-Craftsmans-Software-Structure/dp/0134494164)
+  - [Building evolutionary architectures](https://www.amazon.com/Building-Evolutionary-Architectures-Support-Constant/dp/1491986360)
+  - [Software architecture: The hard parts](https://www.amazon.nl/-/en/Neal-Ford/dp/1492086894)
+- **Specific architecture styles**
+  - [Building microservices](https://www.amazon.com/Building-Microservices-Designing-Fine-Grained-Systems/dp/1491950358)
+  - [Microservice architecture](https://www.amazon.com/Microservice-Architecture-Aligning-Principles-Practices/dp/1491956259)
+- **Architecture evolution**
+  - [Architecture modernization](https://www.amazon.com/Architecture-Modernization-Socio-technical-alignment-structure/dp/1633438155)
+  - [Monolith to microservices](https://www.amazon.com/Monolith-Microservices-Evolutionary-Patterns-Transform/dp/1492047848)
+- **Analyzing architectures**
+  - [Software design X-rays](https://www.amazon.com/Software-Design-X-Rays-Technical-Behavioral-ebook/dp/B07BVRLZ87)
+  - [Software architecture metrics](https://www.amazon.com/Software-Architecture-Metrics-Studies-Improve/dp/1098112237/ref=cm_cr_arp_d_product_top?ie=UTF8)
+  - [Grounded architecture](https://www.amazon.nl/-/en/Željko-Obrenović/dp/B0CCZXQPHS)
