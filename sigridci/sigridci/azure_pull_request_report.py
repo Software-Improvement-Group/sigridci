@@ -48,7 +48,7 @@ class AzurePullRequestReport(Report):
                 self.callAzure("PATCH", self.buildRequestBody(feedbackFile, status), existingId)
                 UploadLog.log("Updated existing feedback in Azure DevOps")
         except urllib.error.HTTPError as e:
-            UploadLog.log(f"Warning: Azure DevOps API error: {e.code} / {e.fp.read()}")
+            UploadLog.log(f"Warning: Azure DevOps API error calling {e.url}: {e.code} ({e.reason}) / {e.fp.read()}")
 
     def isSupported(self, options):
         return "SYSTEM_ACCESSTOKEN" in os.environ and \
