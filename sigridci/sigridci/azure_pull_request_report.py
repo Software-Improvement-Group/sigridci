@@ -43,7 +43,7 @@ class AzurePullRequestReport(Report):
 
             if existingId == None:
                 self.callAzure("POST", self.buildRequestBody(feedbackFile, status), None)
-                UploadLog.log("Published feedback to Azure DevOps")
+                UploadLog.log("Published new feedback to Azure DevOps")
             else:
                 self.callAzure("PATCH", self.buildRequestBody(feedbackFile, status), existingId)
                 UploadLog.log("Updated existing feedback in Azure DevOps")
