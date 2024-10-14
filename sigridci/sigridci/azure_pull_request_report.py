@@ -52,8 +52,7 @@ class AzurePullRequestReport(Report):
         project = os.environ["SYSTEM_TEAMPROJECTID"]
         repo = os.environ["BUILD_REPOSITORY_NAME"]
         pr = os.environ["SYSTEM_PULLREQUEST_PULLREQUESTID"]
-        version = self.AZURE_API_VERSION
-        return f"{baseURL}{project}/_apis/git/repositories/{repo}/pullRequests/{pr}/threads?api-version={version}"
+        return f"{baseURL}{project}/_apis/git/repositories/{repo}/pullRequests/{pr}/threads?api-version={self.AZURE_API_VERSION}"
 
     def buildRequestBody(self, feedbackFile):
         with open(feedbackFile, mode="r", encoding="utf-8") as f:
