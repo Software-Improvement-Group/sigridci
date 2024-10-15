@@ -21,7 +21,7 @@ from dataclasses import dataclass
 from datetime import date, timedelta
 from http.client import RemoteDisconnected
 from json import JSONDecodeError
-from typing import Callable, Any
+from typing import Callable, Any, Union
 from urllib import request
 from urllib.error import URLError
 import logging
@@ -49,7 +49,7 @@ class SigridApiClient:
         self.sigrid_api = f'https://sigrid-says.com/rest/analysis-results/api/v1/security-findings/{customer}/{system}'
         self.token = token
 
-    def get_findings(self) -> Any | None:
+    def get_findings(self) -> Union[Any, None]:
         try:
             req = request.Request(self.sigrid_api)
             req.add_header('Authorization', 'Bearer ' + self.token)
@@ -139,7 +139,7 @@ def process_findings(findings: Any, include: Callable[[Finding], bool]) -> list[
         return sorted(result, key=lambda x: (x.severity_score, x.first_seen_snapshot_date), reverse=True)
 
 
-def get_filename(file_path: str | None) -> str:
+def get_filename(file_path: Union[str, None]) -> str:
     if not file_path:
         return ''
     else:
