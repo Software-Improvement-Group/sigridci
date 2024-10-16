@@ -5,27 +5,29 @@ You can change Sigrid's configuration for your project, to make Sigrid's feedbac
 
 <sig-toc></sig-toc>
 
-## How can you customize your Sigrid configuration?
+## Starting with your Sigrid configuration
 
-By default, Sigrid will try to automatically detect the technologies you use, the component structure, and files/directories that should be excluded from the analysis. However, you can override this standard configuration with your project-specific configuration. To do this, create a file called `sigrid.yaml` and add it to the root of your repository. When you merge changes to `sigrid.yaml`, Sigrid will pick up the new configuration and apply it to subsequent scans.
+You configure Sigrid by creating a file called `sigrid.yaml` in the root of your repository. When you publish your repository to Sigrid, it will pick up the `sigrid.yaml` file. 
 
-<iframe width="560" height="315" src="https://www.youtube.com/embed/Uomc7hUbRTw" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+The `sigrid.yaml` file supports a lot of options to configure and customize Sigrid. And we mean *a lot* of options, as you can see from the length of this page!
 
-The following example shows a typical example of the `sigrid.yaml` configuration file:
+The following example shows a minimal `sigrid.yaml` file that should help you to get started:
 
-    component_depth: 1
-    exclude:
-      - ".*/simulator/.*"
     languages:
-      - name: java
-      - name: python
-      - name: typescript
+      - name: Java
+      - name: TypeScript
+    dependencychecker: 
+      blocklist: ["NONE"]
+    thirdpartyfindings:
+      enabled: true
       
-The various options and sections are explained in more detail in the remainder of this page.
+So what do these options actually do?
 
-## When should you customize the configuration?
+- The `languages` option lists all technologies in your system. You can find the list of supported technology names in [the technology support list](technology-support.md#list-of-supported-technologies). If you're not sure what technologies you repository is using, and you're using a development platform like GitHub or GitLab, you can find this information on your reposotory's dashboard page. 
+- The `dependencychecker` option enables Sigrid's [Open Source Health](../capabilities/portfolio-open-source-health.md) page. If you do not use Open Source Health, you don't need this section. The `blocklist` option is explained [later in this page](#open-source-health).
+- The `thirdpartyfindings` option enables Sigrid's [Security](../capabilities/portfolio-security.md). If you're not using Sigrid Security, you don't need this section.
 
-Whenever you need behavior that is custom for your project. Common examples are to [exclude code](#excluding-files-and-directories), to [include/exclude specific parts of the code or programming languages](#defining-include-and-exclude-patterns), or to [resolve ambiguities](#resolving-pattern-match-ambiguities-that-may-stall-analysis).
+Of course, you can always extend this simple example by adding additional configuration. The remainder of this page describes the various configuration options and how to use them.
 
 ## Editing scope files
 
