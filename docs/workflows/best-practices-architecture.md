@@ -83,9 +83,24 @@ A suitable component structure tends to look somewhat like a tree, though it's u
 
 Since we've established that architectures are bound to change over time, the next question is how we can track this process. This is where Sigrid comes in: [Architecture Quality](../capabilities/architecture-quality.md) enables you to track architecture evolution, in two different ways:
 
-- **Visualizing the as-is architecture** @@@@
+- **Visualizing the as-is architecture.** Keep tracking of architectures is time-consuming, especially for large and fast-evolving systems. Sigrid's interactive architecture visualization can help you to keep track of what the architecture is *currently* like. It also allows you to annotate the architecture, for example by grouping components based on non-technical criteria, or by marking certain dependencies as undesirable. Such annotations can help with communicating certain architecture decisions to the rest of the team. 
+- **Using architecture metrics to identify risks.** Metrics will not dictate what you should do, but they will help you to identify risks. Architecture metrics can be used to evaluate certain trade-offs over time. Some trade-offs might have been entirely reasonable at the time they were made, but might no longer be suitable for the evolving architecture, meaning they should be reconsidered.
 
-@@@@
+### Evolve your architecture incrementally
+
+Addressing technical debt at code level is often done using small, incremental refactorings. Such an approach leads to lower risk, as the scope of changes is smaller. In many organizations, architecture changes do not follow this agile approach and tend to be structured into “projects” where large changes are made over a period of time.
+
+Incremental architecture modernization removes some of the risks associated with architecture changes: small, incremental changes have a smaller scope and, therefore, lead to less stability risk. Moreover, it avoids a situation where architecture modernization is directly competing with functional changes.
+
+Changing the architecture in an incremental way often seems unfeasible. And indeed, you will not be able to solve the problem of thousands of unwanted dependencies between two systems in a single sprint or iteration. But you can divide the overall goal into smaller parts: for example: first investigate dependencies between subcomponents and strive to change those within a sprint.
+
+Sigrid's architecture metrics map directly to architecture modernization techniques that can be applied in this way:
+
+- **Address the coupling between architecture components.** There is a large body of (architecture) design patterns that can be applied to reduce various forms of coupling.
+- **Improve communication centralization.** This requires especially a disciplined approach to group or reduce outgoing calls, as well as a focus on developing APIs that are cleanly separated from the implementation of the component.
+- **Reduce the size of the system.** By cleaning up ‘dead’ or unused code, reducing the scope, improving code reuse within the system or by adopting more standard (library) solutions.
+
+To ensure these architecture improvements remain a point of attention, these aspects also need to be incorporated into the definition of done for each sprint. This allows for architecture to remain a topic of continuous consideration, to avoid architectural decay over time. Defining explicit goals, for example, using Sigrid’s objectives dashboard helps to track incremental progress while keeping the eventual long-term goal in view.
 
 ## Recommended further reading
 
