@@ -14,8 +14,8 @@ The `sigrid.yaml` file supports a lot of options to configure and customize Sigr
 The following example shows a minimal `sigrid.yaml` file that should help you to get started:
 
     languages:
-      - name: Java
       - name: TypeScript
+      - name: JavaScript
     dependencychecker: 
       blocklist: ["NONE"]
     thirdpartyfindings:
@@ -23,7 +23,12 @@ The following example shows a minimal `sigrid.yaml` file that should help you to
       
 So what do these options actually do?
 
-- The `languages` option lists all technologies in your system. You can find the list of supported technology names in [the technology support list](technology-support.md#list-of-supported-technologies). If you're not sure what technologies you repository is using, and you're using a development platform like GitHub or GitLab, you can find this information on your repository's dashboard page. 
+- The `languages` option lists all technologies in your system. You can find the list of supported technology names in [the technology support list](technology-support.md#list-of-supported-technologies).
+
+If you're not sure what technologies you repository is using, and you're using a development platform like GitHub or GitLab, you can find this information on your repository's dashboard page. For example, this GitHub repository would result in the list of technologies used in the example above:
+
+<img src="../images/github-languages-example.png" width="250" />
+
 - The `dependencychecker` option enables Sigrid's [Open Source Health](../capabilities/portfolio-open-source-health.md) page. If you do not use Open Source Health, you don't need this section. The `blocklist` option is explained [later in this page](#open-source-health).
 - The `thirdpartyfindings` option enables Sigrid's [Security](../capabilities/portfolio-security.md). If you're not using Sigrid Security, you don't need this section.
 
