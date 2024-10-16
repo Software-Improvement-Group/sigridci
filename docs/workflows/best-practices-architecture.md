@@ -79,6 +79,14 @@ The initial component structure is usually designed at the beginning of the proj
 
 A suitable component structure tends to look somewhat like a tree, though it's usually not a "strict" tree due to having shared (sub-)components. Defining 100 top-level components is not particularly helpful for locating functionality, so even very large systems should strive towards a manageable number of top-level components. However, larger systems tend to have more levels of sub-components. Every component has its own internal structure, and as components continue to grow, they tend to spawn additional levels of sub-components to manage their internal structure. 
 
+## How does Sigrid help you to track architecture evolution?
+
+Since we've established that architectures are bound to change over time, the next question is how we can track this process. This is where Sigrid comes in: [Architecture Quality](../capabilities/architecture-quality.md) enables you to track architecture evolution, in two different ways:
+
+- **Visualizing the as-is architecture** @@@@
+
+@@@@
+
 ## Recommended further reading
 
 - **Architecture best practices**
