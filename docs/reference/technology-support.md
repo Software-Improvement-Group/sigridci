@@ -421,14 +421,13 @@ These are the supported security analyzers as you may see them in your security 
 
 Note this section only described *third party* security analysis analyzers. The results from these analyzers are then combined with the results from Sigrid's own security ruleset before being displayed.
 
-| Display name           | Technologies                      | Notes                      |
-|------------------------|-----------------------------------|----------------------------|
+| Display name           | Technologies                      | Notes                                                    |
+|------------------------|-----------------------------------|----------------------------------------------------------|
 | Astrée                 | C, C++                            | Requires *Sigrid Security for Embedded Systems* license. |
 | Bandit                 | Python                            |
-| Checkmarx              | (many)                            | Requires *Sigrid Security Checkmarx* license. |
+| Checkmarx              | (many)                            | Requires *Sigrid Security Checkmarx* license.            |
 | ErrorProne.NET         | C#                                |
 | ESLint                 | JavaScript, TypeScript            |
-| Facebook Infer         | Java                              | Disabled by default, can be enabled in configuration. |
 | FB Contrib             | Java                              |
 | FindSecBugs            | Java                              |
 | FlawFinder             | C                                 |
@@ -445,7 +444,7 @@ Note this section only described *third party* security analysis analyzers. The 
 | SonarQube (Java)       | Java                              |
 | SpotBugs               | Java                              |
 | SemGrep                | (many)                            |
-| VMWare CSA             | Java, C#, configuration           | Cloud Suitability Analyzer. |
+| VMWare CSA             | Java, C#, configuration           | Cloud Suitability Analyzer.                              |
 
 ## Supported software quality standards
 
