@@ -88,7 +88,7 @@ Since we've established that architectures are bound to change over time, the ne
 
 ### Evolve your architecture incrementally
 
-Addressing technical debt at code level is often done using small, incremental refactorings. Such an approach leads to lower risk, as the scope of changes is smaller. In many organizations, architecture changes do not follow this agile approach and tend to be structured into “projects” where large changes are made over a period of time.
+Addressing technical debt at code level is often done using small, incremental refactorings. Such an approach leads to lower risk, as the scope of changes is smaller. In many organizations, architecture changes do not follow this agile approach and tend to be structured into "projects" where large changes are made over a period of time.
 
 Incremental architecture modernization removes some of the risks associated with architecture changes: small, incremental changes have a smaller scope and, therefore, lead to less stability risk. Moreover, it avoids a situation where architecture modernization is directly competing with functional changes.
 
