@@ -21,11 +21,11 @@ from dataclasses import dataclass
 from datetime import date, timedelta
 from http.client import RemoteDisconnected
 from json import JSONDecodeError
-from typing import Callable, Any
+from typing import Callable, Any, Union
 from urllib import request
 from urllib.error import URLError
 import logging
-from argparse import ArgumentParser
+from argparse import ArgumentParser, BooleanOptionalAction
 
 LOG = logging.getLogger(__name__)
 
@@ -49,7 +49,7 @@ class SigridApiClient:
         self.sigrid_api = f'https://sigrid-says.com/rest/analysis-results/api/v1/security-findings/{customer}/{system}'
         self.token = token
 
-    def get_findings(self) -> Any | None:
+    def get_findings(self) -> Union[Any, None]:
         try:
             req = request.Request(self.sigrid_api)
             req.add_header('Authorization', 'Bearer ' + self.token)
@@ -139,7 +139,7 @@ def process_findings(findings: Any, include: Callable[[Finding], bool]) -> list[
         return sorted(result, key=lambda x: (x.severity_score, x.first_seen_snapshot_date), reverse=True)
 
 
-def get_filename(file_path: str | None) -> str:
+def get_filename(file_path: Union[str, None]) -> str:
     if not file_path:
         return ''
     else:
@@ -149,9 +149,11 @@ def get_filename(file_path: str | None) -> str:
         return parts[-1]
 
 
-def create_message(system: str, findings: list[Finding], num_findings: int) -> str:
+def create_message(system: str, findings: list[Finding], num_findings: int) -> Union[str, None]:
     if len(findings) == 0:
-        message = f'No new open findings found in {args.system} in the last week! 🎉'
+        if not args.celebrate:
+            return None
+        message = f'No new open findings found in {system} in the last week! 🎉'
     else:
         message = f'{len(findings)} new open findings in _{system}_ during the last week'
     if len(findings) > 5:
@@ -171,14 +173,11 @@ def create_message(system: str, findings: list[Finding], num_findings: int) -> s
 
 
 if __name__ == "__main__":
-    parser = ArgumentParser(description='Gets open security/reliability findings and post them to Slack.')
-    parser.add_argument('--customer', type=str, help="Name of your organization's Sigrid account.")
-    parser.add_argument('--system', type=str, help='Name of your system in Sigrid, letters/digits/hyphens only.')
+    parser = ArgumentParser(description='Gets open security findings and post them to Slack.')
+    parser.add_argument('--customer', type=str, required=True, help="Name of your organization's Sigrid account.")
+    parser.add_argument('--system', type=str, required=True, help='Name of your system in Sigrid, letters/digits/hyphens only.')
+    parser.add_argument('--celebrate', action=BooleanOptionalAction, default=True, help='Controls posting of celebratory message when there are no new open findings.')
     args = parser.parse_args()
-
-    if None in [args.customer, args.system]:
-        parser.print_help()
-        sys.exit(1)
 
     if sys.version_info.major == 2 or sys.version_info.minor < 9:
         print('Sigrid CI requires Python 3.9 or higher')
@@ -200,4 +199,6 @@ if __name__ == "__main__":
     sigrid = SigridApiClient(args.customer, args.system, sigrid_authentication_token)
     all_findings = sigrid.get_findings()
     processed_findings = process_findings(all_findings, filter_finding)
-    slack.post_message(create_message(args.system, processed_findings, len(all_findings)))
+    message = create_message(args.system, processed_findings, len(all_findings))
+    if message:
+        slack.post_message(message)
