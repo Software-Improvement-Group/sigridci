@@ -419,30 +419,32 @@ In addition to supporting 300+ technologies, Sigrid also supports various open s
 
 These are the supported security analyzers as you may see them in your security findings overview. You can use the literal text in the `Display name` below to enable or disable specific analyzers, if deemed necessary. For such configuration, see the [Security/Third Party Findings section section on the system security page](../reference/analysis-scope-configuration.md#third-party-findings).
 
-| Display name           | Technology                       | Note                       |
-|------------------------|----------------------------------|----------------------------|
-| Astree                 | C, C++                           |                            |
-| FlawFinder             | C                                | Semgrep plugin             |
-| ErrorProne.NET         | C#                               |                            |
-| Microsoft Code Quality | C#                               | FxCop                      |
-| MultithreadingAnalyzer | C#                               |                            |
-| Puma Security          | C#                               |                            |
-| SecurityCodeScan       | C#                               |                            |
-| SonarQube (C#)         | C#                               |                            |
-| KICS                   | Docker, Ansible, k8s, etc.       |                            |
-| FB Contrib             | Java                             |                            |
-| Facebook Infer         | Java                             | Disabled by default        |
-| FindSecBugs            | Java                             |                            |
-| Google ErrorProne      | Java                             |                            |
-| SonarQube (Java)       | Java                             |                            |
-| SpotBugs               | Java                             |                            |
-| MobSF                  | Java-Android                     | Semgrep plugin             |
-| SemGrep                | Java,Python,PHP,Ruby,JS,TS, etc. |                            |
-| VMWare CSA             | Java, C#, configurations         | Cloud Suitability Analyzer |
-| ESLint                 | JS,TS                            | Semgrep plugin             |
-| NodeJS Scan            | JS,TS                            | Semgrep plugin             |
-| Gosec                  | Go                               | Semgrep plugin             |
-| Bandit                 | Python                           | Semgrep plugin             |
+Note this section only described *third party* security analysis analyzers. The results from these analyzers are then combined with the results from Sigrid's own security ruleset before being displayed.
+
+| Display name           | Technologies                      | Notes                                                    |
+|------------------------|-----------------------------------|----------------------------------------------------------|
+| Astrée                 | C, C++                            | Requires *Sigrid Security for Embedded Systems* license. |
+| Bandit                 | Python                            |
+| Checkmarx              | (many)                            | Requires *Sigrid Security Checkmarx* license.            |
+| ErrorProne.NET         | C#                                |
+| ESLint                 | JavaScript, TypeScript            |
+| FB Contrib             | Java                              |
+| FindSecBugs            | Java                              |
+| FlawFinder             | C                                 |
+| Google ErrorProne      | Java                              |
+| Gosec                  | Go                                |
+| KICS                   | Docker, Ansible, Kubernetes, etc. |
+| Microsoft Code Quality | C#                                |
+| MobSF                  | Android                           |
+| MultithreadingAnalyzer | C#                                |
+| NodeJS Scan            | JavaScript, TypeScript            |
+| Puma Security          | C#                                |
+| SecurityCodeScan       | C#                                |
+| SonarQube (C#)         | C#                                |
+| SonarQube (Java)       | Java                              |
+| SpotBugs               | Java                              |
+| SemGrep                | (many)                            |
+| VMWare CSA             | Java, C#, configuration           | Cloud Suitability Analyzer.                              |
 
 ## Supported software quality standards
 

@@ -24,7 +24,6 @@ from sigridci.sigridci.publish_options import PublishOptions, RunMode
 
 class GenerateReportsTest(TestCase):
 
-
     def testOutputDirectoryIsConfigurable(self):
         tempDir = tempfile.mkdtemp()
         outputDir = tempfile.mkdtemp()
