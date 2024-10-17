@@ -431,6 +431,7 @@ These are the supported security analyzers as you may see them in your security 
 | SonarQube (C#)         | C#                               |                            |
 | KICS                   | Docker, Ansible, k8s, etc.       |                            |
 | FB Contrib             | Java                             |                            |
+| Facebook Infer         | Java                             | Disabled by default        |
 | FindSecBugs            | Java                             |                            |
 | Google ErrorProne      | Java                             |                            |
 | SonarQube (Java)       | Java                             |                            |
