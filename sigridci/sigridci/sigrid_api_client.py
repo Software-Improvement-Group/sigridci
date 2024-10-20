@@ -47,7 +47,7 @@ class SigridApiClient:
         request = urllib.request.Request(url, body)
         request.add_header("Accept", "application/json")
         request.add_header("Authorization", f"Bearer {self.token}".encode("utf8"))
-        if contentType != None:
+        if contentType is not None:
             request.add_header("Content-Type", contentType)
 
         response = urllib.request.urlopen(request)
@@ -61,34 +61,47 @@ class SigridApiClient:
         else:
             return json.loads(responseBody)
 
-    def retry(self, operation, *, attempts=5, allow404=False, allowEmpty=True):
+    def retry(self, operation, *, attempts=5, allow404=False, allowEmpty=True, server="Sigrid"):
         for attempt in range(attempts):
             try:
                 response = operation()
                 if allowEmpty or response != {}:
                     return response
             except urllib.error.HTTPError as e:
-                if e.code == 401:
-                    UploadLog.log(f"You are not authenticated to Sigrid (HTTP status {e.code} for {e.url}), please check if your token is valid")
-                    sys.exit(1)
-                elif e.code == 403:
-                    UploadLog.log(f"You are not authorized to access Sigrid for this system (HTTP status {e.code} for {e.url})")
-                    sys.exit(1)
-                elif e.code == 410:
-                    if e.reason:
-                        UploadLog.log(f"{e.reason} (HTTP status {e.code} for {e.url})")
-                    else:
-                        UploadLog.log(f"The system no longer exists (HTTP status {e.code} for {e.url})")
-                    sys.exit(1)
-                elif allow404 and e.code == 404:
-                    return False
+                return self.handleError(e, allow404, server)
 
             # These statements are intentionally outside the except-block,
             # since we want to retry for empty response on some end points.
             UploadLog.log("Retrying")
             time.sleep(self.POLL_INTERVAL)
 
-        UploadLog.log(f"Sigrid is currently unavailable, failed after {attempts} attempts")
+        UploadLog.log(f"{server} is currently unavailable, failed after {attempts} attempts")
+        sys.exit(1)
+
+    @staticmethod
+    def handleError(e: urllib.error.HTTPError, allow404, server: str):
+        if e.code == 404 and allow404:
+            return False
+        if e.code == 401:
+            UploadLog.log(f"You are not authenticated to {server} (HTTP status {e.code} for {e.url}), please check if your token is valid")
+        elif e.code == 403:
+            UploadLog.log(f"You are not authorized to access {server} for this system (HTTP status {e.code} for {e.url})")
+        elif e.code == 410:
+            if e.reason:
+                UploadLog.log(f"{e.reason} (HTTP status {e.code} for {e.url})")
+            else:
+                UploadLog.log(f"The system no longer exists (HTTP status {e.code} for {e.url})")
+        else:
+            UploadLog.log(str(e))
+        SigridApiClient.printResponse(e)
+
+    @staticmethod
+    def printResponse(e: urllib.error.HTTPError):
+        UploadLog.log(f"Response headers:\n{str(e.headers)}")
+        if e.fp is not None:
+            UploadLog.log(f"Response body:\n{e.fp.read().decode()}")
+        else:
+            UploadLog.log("No response body")
         sys.exit(1)
 
     def submitUpload(self, systemExists):
@@ -136,7 +149,7 @@ class SigridApiClient:
         return self.retry(lambda: self.callSigridAPI(path, metadataFile.encode("utf8"), "application/yaml"))
 
     def uploadBinaryFile(self, url, upload):
-        self.retry(lambda: self.attemptUpload(url, upload))
+        self.retry(lambda: self.attemptUpload(url, upload), server="object store")
         UploadLog.log(f"Upload successful")
 
     def attemptUpload(self, url, upload):
@@ -167,5 +180,4 @@ class SigridApiClient:
 
     @staticmethod
     def isValidToken(token):
-        return token != None and len(token) >= 64
-
+        return token is not None and len(token) >= 64
