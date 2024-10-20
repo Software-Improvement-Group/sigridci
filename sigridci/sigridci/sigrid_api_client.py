@@ -68,7 +68,9 @@ class SigridApiClient:
                 if allowEmpty or response != {}:
                     return response
             except urllib.error.HTTPError as e:
-                return self.handleError(e, allow404, server)
+                if e.code == 404 and allow404:
+                    return False
+                self.handleError(e, allow404, server)
 
             # These statements are intentionally outside the except-block,
             # since we want to retry for empty response on some end points.
@@ -80,20 +82,23 @@ class SigridApiClient:
 
     @staticmethod
     def handleError(e: urllib.error.HTTPError, allow404, server: str):
-        if e.code == 404 and allow404:
-            return False
         if e.code == 401:
             UploadLog.log(f"You are not authenticated to {server} (HTTP status {e.code} for {e.url}), please check if your token is valid")
+            SigridApiClient.printResponse(e)
+            sys.exit(1)
         elif e.code == 403:
             UploadLog.log(f"You are not authorized to access {server} for this system (HTTP status {e.code} for {e.url})")
+            SigridApiClient.printResponse(e)
+            sys.exit(1)
         elif e.code == 410:
             if e.reason:
                 UploadLog.log(f"{e.reason} (HTTP status {e.code} for {e.url})")
             else:
                 UploadLog.log(f"The system no longer exists (HTTP status {e.code} for {e.url})")
+            sys.exit(1)
         else:
             UploadLog.log(str(e))
-        SigridApiClient.printResponse(e)
+            SigridApiClient.printResponse(e)
 
     @staticmethod
     def printResponse(e: urllib.error.HTTPError):
@@ -102,7 +107,6 @@ class SigridApiClient:
             UploadLog.log(f"Response body:\n{e.fp.read().decode()}")
         else:
             UploadLog.log("No response body")
-        sys.exit(1)
 
     def submitUpload(self, systemExists):
         with TemporaryDirectory() as tempDir:
@@ -149,7 +153,7 @@ class SigridApiClient:
         return self.retry(lambda: self.callSigridAPI(path, metadataFile.encode("utf8"), "application/yaml"))
 
     def uploadBinaryFile(self, url, upload):
-        self.retry(lambda: self.attemptUpload(url, upload), server="object store")
+        self.retry(lambda: self.attemptUpload(url, upload), server="S3")
         UploadLog.log(f"Upload successful")
 
     def attemptUpload(self, url, upload):

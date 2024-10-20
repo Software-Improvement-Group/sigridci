@@ -104,8 +104,7 @@ class SigridApiClientTest(TestCase):
         options = PublishOptions("aap", "noot", runMode=RunMode.PUBLISH_ONLY, sourceDir="/tmp", showUploadContents=True)
         apiClient = SigridApiClient(options)
         error = urllib.request.HTTPError("https://example.com", 404, "No reason", Message(), None)
-        with self.assertRaises(SystemExit):
-            apiClient.handleError(error, False, "Sigrid")
+        apiClient.handleError(error, False, "Sigrid")
 
         self.assertIn("HTTP Error 404: No reason", UploadLog.history)
         self.assertIn("Response headers:\n\n", UploadLog.history)
@@ -116,9 +115,16 @@ class SigridApiClientTest(TestCase):
         options = PublishOptions("aap", "noot", runMode=RunMode.PUBLISH_ONLY, sourceDir="/tmp", showUploadContents=True)
         apiClient = SigridApiClient(options)
         error = urllib.request.HTTPError("https://example.com", 404, "No reason", Message(), None)
-        self.assertEqual(apiClient.handleError(error, True, "Sigrid"), False)
+        apiClient.handleError(error, True, "Sigrid")
 
-        self.assertEqual(["Using token ending in '****oken'"], UploadLog.history)
+        expectedLog = [
+            "Using token ending in '****oken'",
+            "HTTP Error 404: No reason",
+            "Response headers:\n\n",
+            "Response body:\n"
+        ]
+
+        self.assertEqual(expectedLog, UploadLog.history)
 
 class ApiStub(SigridApiClient):
     def __init__(self, options: PublishOptions):
