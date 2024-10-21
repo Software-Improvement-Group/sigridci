@@ -15,7 +15,8 @@
 import os
 import tempfile
 import urllib.error
-from io import StringIO
+from email.message import Message
+from io import BytesIO
 from unittest import TestCase
 
 from sigridci.sigridci.publish_options import PublishOptions, RunMode
@@ -227,7 +228,13 @@ class SigridCiRunnerTest(TestCase):
             "Preparing upload",
             "Sigrid CI analysis ID: 123",
             "Submitting upload",
+            "HTTP Error 500: ",
+            "Response headers:\n\n",
+            "Response body:\n",
             "Retrying",
+            "HTTP Error 500: ",
+            "Response headers:\n\n",
+            "Response body:\n",
             "Retrying",
             "Upload successful",
             "Waiting for analysis results"
@@ -251,12 +258,27 @@ class SigridCiRunnerTest(TestCase):
             "Preparing upload",
             "Sigrid CI analysis ID: 123",
             "Submitting upload",
+            "HTTP Error 500: ",
+            "Response headers:\n\n",
+            "Response body:\n",
             "Retrying",
+            "HTTP Error 500: ",
+            "Response headers:\n\n",
+            "Response body:\n",
             "Retrying",
+            "HTTP Error 500: ",
+            "Response headers:\n\n",
+            "Response body:\n",
             "Retrying",
+            "HTTP Error 500: ",
+            "Response headers:\n\n",
+            "Response body:\n",
             "Retrying",
+            "HTTP Error 500: ",
+            "Response headers:\n\n",
+            "Response body:\n",
             "Retrying",
-            "Sigrid is currently unavailable, failed after 5 attempts"
+            "S3 is currently unavailable, failed after 5 attempts"
         ]
 
         with self.assertRaises(SystemExit):
@@ -275,7 +297,7 @@ class SigridCiRunnerTest(TestCase):
         self.createTempFile(self.tempDir, "sigrid.yaml", "languages:\n- java")
 
         apiClient = MockApiClient(self.options)
-        apiClient.responses["/inboundresults/sig/aap/noot/ci/validate/v1"] = {"valid": True};
+        apiClient.responses["/inboundresults/sig/aap/noot/ci/validate/v1"] = {"valid": True}
 
         runner = SigridCiRunner(self.options, apiClient)
         runner.reports = []
@@ -326,7 +348,7 @@ class SigridCiRunnerTest(TestCase):
         self.createTempFile(self.tempDir, "sigrid.py", "print(123)")
 
         apiClient = MockApiClient(self.options)
-        apiClient.responses["/analysis-results/api/v1/system-metadata/aap/noot"] = {"aap" : 2, "noot" : None};
+        apiClient.responses["/analysis-results/api/v1/system-metadata/aap/noot"] = {"aap" : 2, "noot" : None}
 
         runner = SigridCiRunner(self.options, apiClient)
         runner.reports = []
@@ -578,12 +600,12 @@ class MockApiClient(SigridApiClient):
         self.called.append(path)
     
         if not self.systemExists and path.endswith("/sigridci/aap/noot/v1/ci"):
-            # Mock a HTTP 404.
-            raise urllib.error.HTTPError(path, 404, "", {}, None)
+            # Mock an HTTP 404.
+            raise urllib.error.HTTPError(path, 404, "", Message(), None)
 
         if path.endswith("/sigridci/aap/i-am-not-active/v1/ci"):
-            # Mock a HTTP 410.
-            raise urllib.error.HTTPError(path, 410, "System i-am-not-active has been deactivated", {}, StringIO(""))
+            # Mock an HTTP 410.
+            raise urllib.error.HTTPError(path, 410, "System i-am-not-active has been deactivated", Message(), BytesIO(b""))
 
         defaultResponse = {"ciRunId" : "123", "uploadUrl" : "dummy"}
         return self.responses.get(path, defaultResponse)
@@ -594,5 +616,5 @@ class MockApiClient(SigridApiClient):
             self.called.append("UPLOAD")
             return True
         else:
-            raise urllib.error.HTTPError("/upload", 500, "", {}, None)
+            raise urllib.error.HTTPError("/upload", 500, "", Message(), None)
      
