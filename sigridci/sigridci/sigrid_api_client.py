@@ -70,7 +70,7 @@ class SigridApiClient:
             except urllib.error.HTTPError as e:
                 if e.code == 404 and allow404:
                     return False
-                self.handleError(e, server)
+                SigridApiClient.handleError(e, server)
 
             # These statements are intentionally outside the except-block,
             # since we want to retry for empty response on some end points.
