@@ -7,10 +7,6 @@ We currently have the following examples:
 * [Slack security findings](slack-security-findings/): uses Sigrid's API to get open security findings for a system and posts the result to Slack.
 * [Objectives report](objectives-report/) generates charts based on Sigrid objectives, suitable to include in internal reporting. These charts go beyond what is available in the Sigrid user interface, and have a focus on reporting progress over longer periods of time.
 
-## Contact and support
-
-Feel free to contact [SIG's support team](mailto:support@softwareimprovementgroup.com) if you have any questions related to these examples. Users in Europe can also contact us by phone at +31 20 314 0953.
-
 ## License
 
 Copyright Software Improvement Group
