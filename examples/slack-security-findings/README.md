@@ -118,10 +118,6 @@ little to no experience with Python. We also deliberately kept the entire script
 we're not using anything else than the standard library, so it is easy to run the script (no 
 need to install dependencies or create virtual environments).
 
-## Contact and support
-
-Feel free to contact [SIG's support team](mailto:support@softwareimprovementgroup.com) if you have any questions related to these examples. Users in Europe can also contact us by phone at +31 20 314 0953.
-
 ## License
 
 Copyright Software Improvement Group
