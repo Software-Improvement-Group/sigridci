@@ -41,10 +41,6 @@ The script will create the following charts:
   - Trend chart, for each objective.
   
 That's a lot of charts! The reason is that while every organization has reporting needs, those needs are often somewhat specific to both the organizational structure and the reporting structure. Providing this many visualizations and charts allows people to cherry-pick the charts that are the best fit for their specific situation.
-  
-## Contact and support
-
-Feel free to contact [SIG's support team](mailto:support@softwareimprovementgroup.com) if you have any questions related to these examples. Users in Europe can also contact us by phone at +31 20 314 0953.
 
 ## License
 
