@@ -104,9 +104,15 @@ class SigridApiClient:
 
     @staticmethod
     def printResponse(e: urllib.error.HTTPError):
-        UploadLog.log(f"Response headers:\n{str(e.headers)}")
-        if e.fp is not None:
-            UploadLog.log(f"Response body:\n{e.fp.read().decode()}")
+        headers = dict(e.headers)
+        if headers:
+            UploadLog.log(f"Response headers:\n{headers}")
+        else:
+            UploadLog.log("No response headers")
+
+        body = e.fp.read().decode("utf8") if e.fp else ""
+        if body:
+            UploadLog.log(f"Response body:\n{body}")
         else:
             UploadLog.log("No response body")
 
