@@ -15,6 +15,7 @@ In addition to [Sigrid CI](../README.md), Sigrid also provides a more general-pu
 - All end points return JSON and therefore return a Content-Type of `application/json`.
 - Please use lower case when you format your api calls.
 
+
 The following example shows how to call the Sigrid API using `curl`:
 
 ```
@@ -87,7 +88,7 @@ The top-level `maintainability` and `maintainabilityDate` refer to the *current*
 
 ### Security and reliability findings
 
-Sigrid's REST API provides two endpoints to get security or reliability findings for a system:
+Sigrid's REST API provides two endpoints to get all open security or reliability findings for a system:
 * Security findings: `GET https://sigrid-says.com/rest/analysis-results/api/v1/security-findings/{customer}/{system}`
 * Reliability findings: `GET https://sigrid-says.com/rest/analysis-results/api/v1/reliability-findings/{customer}/{system}`
 
