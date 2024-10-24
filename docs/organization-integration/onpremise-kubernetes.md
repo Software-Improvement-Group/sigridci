@@ -186,7 +186,7 @@ Instead, a bridge needs to be used, such as [Keycloak](https://www.keycloak.org)
 [Dex](https://dexidp.io). The latter is provided by Sigrid's Helm chart as an option.
 
 Note that for on-premise deployments, using SAML is only possible via a bridge such as [Dex]
-(https://dexidp.io). Consequently, [SIG's documentation](https://docs.sigrid-says.com/organization-integration/usermanagement.html#2-using-single-sign-on-sso-with-an-identity-provider-idp) for connecting hosted Sigrid to an IdP 
+(https://dexidp.io). Consequently, [SIG's documentation](usermanagement.md#2-using-single-sign-on-sso-with-an-identity-provider-idp) for connecting hosted Sigrid to an IdP 
 does not apply.
 
 Configuring an identity provider (IdP) is a two-step process:
@@ -320,7 +320,7 @@ However, Sigrid is also available for deployment on a user-provided Kubernetes c
 case, no source code upload is needed, and running an analysis takes a different form, as 
 described in this document.
 
-For the avoidance of doubt, "[Uploading your source code to Sigrid](https://docs.sigrid-says.com/organization-integration/upload-instructions.html)" does
+For the avoidance of doubt, "[Uploading your source code to Sigrid](upload-instructions.md)" does
 not apply to on-premise deployments.
 
 ## Prerequisites
