@@ -1,6 +1,9 @@
 # Sigrid on-premise integration
 
-Most of this documentation refers to the software-as-a-service version of Sigrid, which can be accessed via [sigrid-says.com](https://sigrid-says.com) and is used by the vast majority of Sigrid users. However, SIG also offers an on-premise version of Sigrid. This document covers everything you need to integrate Sigrid on-premise in your environment. It also covers the functional differences between the SaaS version and the on-premise version, though these differences are relatively minor.
+This documentation is specific to the on-premise version of Sigrid. This does *not* apply to the software-as-a-service version of Sigrid, which can be accessed via [sigrid-says.com](https://sigrid-says.com) and is used by the vast majority of Sigrid users
+{: .attention }
+
+This document covers everything you need to integrate Sigrid on-premise in your environment. It also covers the functional differences between the SaaS version and the on-premise version, though these differences are relatively minor.
 
 <sig-toc></sig-toc>
 
@@ -34,7 +37,16 @@ The Docker containers that form Sigrid on-premise are distributed via [DockerHub
 
 As explained above, Sigrid consists of several Docker containers. The container `sigrid-multi-analysis-import` will run directly in your development platform's continuous integration pipelines, all other containers are deployed to your Kubernetes cluster. These steps are explained in more detail in the following sections.
 
-### Updating Sigrid on-premise to a new version
+## Installing and configuring on-premise Sigrid
+
+As shown in the high-level overview, the on-premise version of Sigrid consists of two "blocks": The Sigrid application that is deployed within a Kubernetes cluster, and the Sigrid CI Docker container that is integrated within your development platform. 
+
+Instructions for installing and configuring both parts are provided in the following pages:
+
+- [Sigrid on-premise: Helm Chart configuration](onpremise-kubernetes.md)
+- [Sigrid on-premise: Analysis configuration](onpremise-analysis.md)
+
+## Updating Sigrid on-premise to a new version
 
 SIG releases the Sigrid Docker containers based on a [continuous delivery](https://en.wikipedia.org/wiki/Continuous_delivery) process. This means that changes are immediately released once they have successfully passed through the development process. We advise our clients on the best way to develop and operate their software, so we try to adhere to the same best practices that we recommend our clients. 
 
@@ -44,26 +56,12 @@ Although Sigrid consists of several Docker containers, you will need to update t
 
 This also means SIG does not back-port any changes to older versions: If you want to access new features or bugfixes, you will need to update the Docker containers to the latest version. 
 
-### Updating your environment
+## Updating your environment
 
 In addition to updating Sigrid itself, you will also need to periodicially update your environment in which Sigrid runs. SIG uses the following support policy for infrastructure component versions:
 
 - For Kubernetes, we support the latest 2 major versions. You can track the Kubernetes version history in [this overview](https://kubernetes.io/releases/).
 - For Postgres, we also support the latest 2 major versions. You can track the Postgres version history in [this overview](https://www.postgresql.org/support/versioning/).
-
-## Deploying Sigrid into a Kubernetes cluster
-
-SIG will provide you with a [Helm Chart](https://helm.sh) to configure and install Sigrid on-premise. A Postgres database needs to be set up separately.
-
-## Identity provider integration
-
-Sigrid on-premise integrates with your identity provider through [OpenID Connect](https://openid.net/developers/how-connect-works/). You can either use an identity provider that "natively" supports OpenID Connect, or you can use middleware like [Dex](https://dexidp.io) that allows your identity provider to integrate with other systems. The installation of Dex is an optional feature of the Sigrid Helm chart. Alternatively, [KeyCloak](https://www.keycloak.org) can also be used to connect Sigrid to different identity providers, however this should be installed separately.
-
-Locate the `sigrid-stack.auth-api` section in your Helm Chart's `values.yaml` file. Update the configuration properties so that they refer to your identity provider. 
-
-## Development platform integration
-
-In the on-premise version of Sigrid CI, the analysis runs as part of your continuous integration pipeline. The instructions for Sigrid CI depend on your development platform, and are virtually identical to the "normal" Sigrid CI instructions in this documentation. The key change is that you will need the `sigrid-multi-analysis-import` Docker container instead of the "normal" `sigrid-ci` Docker container.
 
 ## Functional/technical differences in Sigrid on-premise
 
