@@ -104,7 +104,11 @@ class SigridApiClient:
 
     @staticmethod
     def printResponse(e: urllib.error.HTTPError):
-        UploadLog.log(f"Response headers:\n{dict(e.headers)}")
+        headers = dict(e.headers)
+        if headers:
+            UploadLog.log(f"Response headers:\n{headers}")
+        else:
+            UploadLog.log("No response headers")
 
         body = e.fp.read().decode("utf8") if e.fp else ""
         if body:

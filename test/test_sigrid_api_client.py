@@ -82,7 +82,7 @@ class SigridApiClientTest(TestCase):
             apiClient.handleError(error, "Sigrid")
 
         self.assertIn("You are not authenticated to Sigrid (HTTP status 401 for https://example.com), please check if your token is valid", UploadLog.history)
-        self.assertIn("Response headers:\n{}", UploadLog.history)
+        self.assertIn("No response headers", UploadLog.history)
         self.assertIn("No response body", UploadLog.history)
 
     @mock.patch.dict(os.environ, {"SIGRID_CI_TOKEN" : "mytoken\n"})
@@ -111,7 +111,7 @@ class SigridApiClientTest(TestCase):
         expectedLog = [
             "Using token ending in '****oken'",
             "HTTP Error 404: No reason",
-            "Response headers:\n{}",
+            "No response headers",
             "No response body"
         ]
 
