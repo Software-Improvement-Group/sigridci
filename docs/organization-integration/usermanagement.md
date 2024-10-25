@@ -72,8 +72,10 @@ Assign groups of users to your Authentication app.
 
 #### OpenID Connect Configuration
 Create an Enterprise application 'app' in your IdP with the following details:
-- Application Type: `Web`
+- Application Type: Web
 - Sign in Redirect URI: https://auth.sigrid-says.com/oauth2/idpresponse
+
+Attributes & Claims:
 - Scopes: openid profile email (default)
 
 Other Settings:
