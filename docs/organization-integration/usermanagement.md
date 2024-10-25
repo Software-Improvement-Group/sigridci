@@ -46,11 +46,13 @@ Sigrid supports both SAML or OpenID Connect protocols via a service-provider ini
 - Perform authorization tasks to define who can see what in Sigrid
 
 ### Setup on client side
+
+#### SAML Configuration
 Create an Enterprise application 'app' in your IdP with the following details: 
 - Audience or Identifier (Entity) ID: urn:amazon:cognito:sp:eu-central-1_hwh9zdyCY
 - Reply URL: https://auth.sigrid-says.com/saml2/idpresponse
 
-With the following 3 Attributes & Claims:
+Attributes & Claims:
 
 | Your user | Sigrid expects the long url as SAML attribute name |
 | ---------- | ---------- |
@@ -60,32 +62,53 @@ With the following 3 Attributes & Claims:
 
 _Note: if your IdP requires to set an unique user identifier, please choose emailaddress_
 
-
-Other
+Other Settings:
 - Signature Algorithm: RSA_SHA256
 - Digest Algorithm: SHA256
 - Assertion Encryption: unencrypted (privacy is provided by using HTTPS)
 - SAML Single Logout: disabled
 
-Then assign groups of users to your Authentication app.
+Assign groups of users to your Authentication app.
 
-### Example Active Directory
+#### OpenID Connect Configuration
+Create an Enterprise application 'app' in your IdP with the following details:
+- Application Type: Web
+- Sign in Redirect URI: https://auth.sigrid-says.com/oauth2/idpresponse
+
+Attributes & Claims:
+- Scopes: openid profile email (default)
+
+Other Settings:
+- Default
+
+Assign groups of users to your Authentication app.
+
+### Info to provide to SIG
+Please Provide SIG with the following.
+
+#### SAML Configuration
+The 'App federation MetadataURL' of your authentication app.
+The information will include your app's identifier, redirectURL etc.
+
+#### OpenID Connect Configuration
+The Application's `client_id`, a `client_secret` and the issuer.
+How an issuer looks depends on your IdP.
+
+Okta issuer: https://<myOktaOrg>.okta.com
+Azure/EntraID: https://login.microsoftonline.com/<tenant_id>
+
+### Example Azure/EntraID
 
 <img src="../images/azure-saml.png" width="800" />
 
-### Example OneLogin
+### Example SAML OneLogin
 Please see the separate [OneLogin page](usermanagement-example-onelogin.md).
 
-### Example Okta
+### Example SAML Okta
 Please see the separate [OKTA page](usermanagement-example-okta.md).
 
-### Example Google
+### Example SAML Google
 Please see the separate [Google page](usermanagement-example-google.md).
-
-
-### Info to provide to SIG
-Provide SIG with the 'App federation MetadataURL' of your authentication app.
-The information will include your app's identifier, redirectURL etc.
 
 ### Deliverables
 SIG will setup SSO for you. You will have your own customer-specific URL Sigrid.
