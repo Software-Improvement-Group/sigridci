@@ -29,10 +29,6 @@ The aforementioned 6 categories are present on the bottom of the tiles that show
 
 <img src="../images/help-corner-osh.png" class="inline" /> The help button in the tile's upper right corner shows mouseovers for each category that you select.
 
-* *Library freshness*: the distribution of library age, defined as the time difference with the date of the latest (publicly) available version. The mouseover shows the exact counts, as below.
-
-<img src="../images/portfolio-open-source-health-freshness-mouseover.png" width="300" />
-
 In the bottom part of the screen, each system is shown with a summary of its counts: number of libraries and findings per category. For larger portfolios it may be useful to sort these on different characteristics. Its menu, by default set on sorting order by "*Risk*", is as follows:
 
 <img src="../images/portfolio-open-source-health-sorting-risk.png" width="100" /> 
