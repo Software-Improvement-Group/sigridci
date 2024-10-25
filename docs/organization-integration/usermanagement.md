@@ -91,7 +91,7 @@ The 'App federation MetadataURL' of your authentication app.
 The information will include your app's identifier, redirectURL etc.
 
 #### OpenID Connect Configuration
-The Apps' `client_id`, a `client_secret` and the issuer.
+The Application's `client_id`, a `client_secret` and the issuer.
 How an issuer looks depends on your IdP.
 
 Okta issuer: https://<myOktaOrg>.okta.com
