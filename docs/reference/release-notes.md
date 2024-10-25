@@ -3,6 +3,12 @@ Sigrid release notes
 
 SIG uses [continuous delivery](https://en.wikipedia.org/wiki/Continuous_delivery), meaning that every change to Sigrid or the underlying analysis is released once our development pipeline has completed. On average, we release somewhere between 10 and 20 times per day. This page therefore doesn't list every single change, since that would quickly lead to an excessively long list of small changes. Instead, this page lists Sigrid and analysis changes that we consider noteworthy for the typical Sigrid user.
 
+### October 21, 2024
+
+- **Open Source Health:** Removed dependencies are now depicted as "grayed out" in the list of open source dependencies. This helps to avoid confusion, as people might inadvertently think those dependencies are still in use.
+- **Architecture Quality:** Selecting a component now provides an AI-generated summary with Sigrid's architecture findings for that component. You can access the summary using the AI button located at the right-side of the page.
+- **Technology Support:** Improved support for [Gradle/Kotlin](https://gradle.org/kotlin/).
+
 ### October 7, 2024
 
 - **Objectives:** The drill-down page, where you can see objective progress for all systems in your portfolio, now also shows a delta indicator. This is in addition to the overall delta indicator displayed in the portfolio objectives dashboard. This helps you to identify systems where things aren't progressing as expected, or reversely, which systems have improved the most.

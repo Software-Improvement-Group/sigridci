@@ -35,22 +35,6 @@ For technical details on maintainability metrics, see [Maintainability Evaluatio
 
 Below the metrics overview, there is a shortcut to the *Refactoring candidates* [link on this page](system-maintainability.md#refactoring-candidates). This can also be reached by the Maintainability tab. 
 
-### Technical Monitor and Code Explorer
- 
-The *Technical monitor* button above the system rating brings you to an alternative (one might say, "legacy") view of all the maintainability metrics and underlying source code. Its functionality and views will eventually be moved to Sigrid. Generally, its source code-level view is available in Sigrid in the [Code Explorer](system-code-explorer.md). 
-
-<img src="../images/technical-monitor-shortcut.png" width="200" />
-
-Because the views, filters and sorting abilities between the "*Technical monitor*" and "*Code Explorer*" are different, please see [a deserved elaboration on the Technical monitor page](system-technical-monitor.md). 
-
-## Component Dependencies
-The *Component Dependency* view visualizes the dependencies between your application’s main components. The components follow from the system’s configuration.
-
-<img src="../images/system-component-dependencies.png" width="600" />
-
-### Meaning of the dependencies
-The arrows denote call direction within the code; a number on top of an arrow indicates the count of dependencies (that is, >1). Note that only calls will be shown that are identifiable as code dependencies ("static"). This excludes dependencies that may occur in production because of communication to frameworks or resources that are not explicitly defined in the source code. 
-
 ### Visualization options and filters
 Different types of dependency antipatterns can be shown by toggling *Visualize component entanglement*. 
 
@@ -184,6 +168,4 @@ Assuming that this has been your first step into maintainability analysis, you c
     * As an exception, there might be no *Component Entanglement* violations visible while its rating is below 4-star rating. That can be the case if there are no architectural violations to resolve, but when the number of components and their connections are higher than the benchmark. This would be visible in the [Component Dependencies view](#component-dependencies) (but **not** in the *Architecture Quality* view, since they are not directly related). 
     * For *Duplication* and unit metrics, clicking on a *Refactoring candidate* will show the affected code highlighted in context of this one file. 
   * **Code Explorer**: You may reach the *Code Explorer* from a finding in the *Refactoring candidates* list or the detailed file list from the *Delta quality* view. there you can go to the *Code Explorer* to see the unit/file/component in context of the codebase. The Code Explorer is also a good place to start if you suspect specific maintenance hotspots and want to understand the details. [See the *Code Explorer* page](system-code-explorer.md). An advantage of the Code Explorer is that it can also show per file/unit whether it contains other risky constructs, e.g. regarding security. 
-  * **Using the Technical Monitor**: The strength of the *Technical Monitor* (accessible from the maintainability overview page) is making detailed comparisons between snapshots and filtering by technologies [discussed on its own page](system-technical-monitor.md).
-
 
