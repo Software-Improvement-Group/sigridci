@@ -33,7 +33,7 @@ two ways to do so:
 - (B) Manually download the script once and add it to your own codebase. This allows adapting 
   the script to your needs.
 
-### Example usage: GitLab
+### Example: GitLab
 
 To use the script from GitLab, proceed as follows. First, [create an environment variable that 
 will hold the Sigrid authentication token]
@@ -63,7 +63,40 @@ post-daily-findings:
 This example pipeline job assumes you're using GitLab's Docker-based runners. The `script`, 
 which runs inside the `python:alpine3.20` container, first uses `wget` to download the example 
 script from GitHub. It then runs it using the Python interpreter provided by the `python:alpine3.
-20` image. It assumes environment variables `` and `` have been set. 
+20` image. It assumes environment variables `SIGRID_CI_TOKEN` and `` have been set. 
+
+### Example: GitHub
+
+First, create the following [GitHub secrets](https://docs.github.com/en/actions/security-for-github-actions/security-guides/using-secrets-in-github-actions):
+
+- `SIGRID_CI_TOKEN` should be a valid [Sigrid token](https://docs.sigrid-says.com/organization-integration/authentication-tokens.html).
+- `SECURITY_FINDINGS_WEBHOOK` should be a [Slack webhook URL](https://api.slack.com/messaging/webhooks).
+
+Next, create a file in your repository called `.github/workflows/slack-alerts.yml`, with the following contents:
+
+```
+name: "Slack alerts for Sigrid security findings"
+on:
+  schedule:
+    - cron: "0 6 * * 1-5"
+jobs:
+  slackalerts:
+    name: "Send Slack alerts"
+    runs-on: ubuntu-latest
+    steps:
+      - name: "Check out repository"
+        uses: actions/checkout@v4
+      - name: Download Sigrid CI
+        run: "git clone https://github.com/Software-Improvement-Group/sigridci.git sigridci"
+      - run: "sigridci/examples/slack-security-findings/daily_findings.py --customer mycustomer --system mysystem"
+        env:
+          SIGRID_CI_TOKEN: "${{ secrets.SIGRID_CI_TOKEN }}"
+          SECURITY_FINDINGS_WEBHOOK: "${{ secrets.SECURITY_FINDINGS_WEBHOOK }}"
+```
+
+Replace `mycustomer` and `mysystem` with your Sigrid customer account name and Sigrid system name. 
+
+And that's it. This will send the Slack alerts every morning at 6:00 in the morning, on weekdays. You can use the `schedule` option to change when the alerts are sent. GitHub Actions uses `crontab` notation, you can use [this website](https://crontab.guru) to help with the syntax, if needed.
 
 ## Frequently Asked Questions
 
