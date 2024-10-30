@@ -73,7 +73,9 @@ stdout and set exit code.
 - None: run analyses but do not persist analysis results (only show analysis results on stdout and
 set exit code).
 
-In addition, the script is configured with environment variables. The following table lists all 
+### Sigrid CI environment variables
+
+Sigrid CI is configured with environment variables. The following table lists all 
 environment variables with their defaults, if any. All that do not have a default value are
 required. We distinguish two types of environment variables:
 - Shared: these typically have the same value across different CI/CD projects for the same 
@@ -119,6 +121,23 @@ Notes:
   is `us-east-1` unless a different region is configured in MinIO.
 - `TARGET_QUALITY`: overall maintainability rating targeted.
 - `SIGRID_SOURCES_REGISTRATION_ID`: the ID of the OAuth client registration provided in `values.yaml` of Sigrid's Helm chart.
+
+## Manually publishing a system to Sigrid
+
+It is also possible to *manually* start an analysis, and then publish the analysis results to Sigrid. You can use this option when your system doesn't have a pipeline, or when you need to import a system in Sigrid ad-hoc.
+
+We recommend you integrate Sigrid CI into your pipeline. This ensures the results you see in Sigrid are always "live", since the analysis will run after every commit. It also allows for developers to receive Sigrid feedback directly in their pull requests. 
+{: .warning }
+
+You can run the analysis and publish the analysis results using the same Docker container. If you run Sigrid CI ad-hoc, you will still need to provide the [environment variables](#sigrid-ci-environment-variables). Since there are quite some environment variables, it's easiest to use Docker's `--env-file` option for this. This option is explained in the [Docker documentation](https://docs.docker.com/reference/cli/docker/container/run/).
+
+The following example shows how to start an ad-hoc analysis for a system located in a local `/mysystem` directory:
+
+    docker run \
+      --env-file sigrid-ci-config.txt \
+      -v /mysystem:/code \
+      -ti softwareimprovementgroup/sigrid-multi-analysis-import:1.0.20241003 \
+      --publish
 
 ## Contact and support
 
