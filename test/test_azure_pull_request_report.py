@@ -33,7 +33,7 @@ class AzurePullRequestReportTest(TestCase):
             self.assertEqual("closed", report.buildRequestBody(f.name, ObjectiveStatus.IMPROVED)["status"])
             self.assertEqual("active", report.buildRequestBody(f.name, ObjectiveStatus.UNCHANGED)["status"])
             self.assertEqual("active", report.buildRequestBody(f.name, ObjectiveStatus.WORSENED)["status"])
-            self.assertEqual("active", report.buildRequestBody(f.name, ObjectiveStatus.UNKNOWN)["status"])
+            self.assertEqual("closed", report.buildRequestBody(f.name, ObjectiveStatus.UNKNOWN)["status"])
 
     def testPostNewComment(self):
         tempDir = mkdtemp()

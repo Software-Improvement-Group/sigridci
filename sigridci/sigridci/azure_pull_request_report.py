@@ -87,13 +87,17 @@ class AzurePullRequestReport(Report):
         with open(feedbackFile, mode="r", encoding="utf-8") as f:
             feedback = f.read()
 
-        commentStatus = "closed" if status in [ObjectiveStatus.ACHIEVED, ObjectiveStatus.IMPROVED] else "active"
-
         return {
             "comments": [{
                 "parentCommentId": 0,
                 "content": feedback,
                 "commentType": "text"
             }],
-            "status": commentStatus
+            "status": self.getCommentStatus(status)
         }
+
+    def getCommentStatus(self, status):
+        if status in [ObjectiveStatus.ACHIEVED, ObjectiveStatus.IMPROVED, ObjectiveStatus.UNKNOWN]:
+            return "closed"
+        else:
+            return "active"
