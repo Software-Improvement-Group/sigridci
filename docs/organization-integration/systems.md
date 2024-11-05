@@ -5,7 +5,7 @@ Sigrid provides you with an overview of your organization's entire software port
 
 <img src="../images/portfolio-lifecycle-phase-maintainability.png" width="600" />
 
-So what's a "system"? SIG uses the following definition based on the [ISO 25010 standard](https://www.softwareimprovementgroup.com/wp-content/uploads/SIG-TUViT-Evaluation-Criteria-Trusted-Product-Maintainability-Guidance-for-producers.pdf):
+So what is a "system"? SIG uses the following definition based on the [ISO 25010 standard](https://www.softwareimprovementgroup.com/wp-content/uploads/SIG-TUViT-Evaluation-Criteria-Trusted-Product-Maintainability-Guidance-for-producers.pdf):
 
 > The system consists of all software needed to achieve the overall functionality of the product. (...) The system owner, which is the organization that holds property rights and that applies for certification, is responsible for defining the exact system boundary during the scoping phase.
 
