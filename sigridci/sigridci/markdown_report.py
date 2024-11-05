@@ -43,12 +43,12 @@ class MarkdownReport(Report):
 
         md = f"# [Sigrid]({sigridLink}) maintainability feedback\n\n"
         md += f"{self.renderSummary(feedback, options)}\n\n"
-        md += f"Sigrid compared your code against the baseline of {self.formatBaseline(feedback)}.\n\n"
 
         if status != ObjectiveStatus.UNKNOWN:
             if self.isHtmlMarkdownSupported():
                 md += "<details><summary>Show details</summary>\n\n"
 
+            md += f"Sigrid compared your code against the baseline of {self.formatBaseline(feedback)}.\n\n"
             md += self.renderRefactoringCandidates(feedback, sigridLink)
             md += "## ⭐️ Sigrid ratings\n\n"
             md += self.renderRatingsTable(feedback)

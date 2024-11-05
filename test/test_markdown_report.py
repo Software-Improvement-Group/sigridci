@@ -334,8 +334,6 @@ class MarkdownReportTest(TestCase):
             # [Sigrid](https://sigrid-says.com/aap/noot) maintainability feedback
     
             **💭️  You did not change any files that are measured by Sigrid**
-            
-            Sigrid compared your code against the baseline of 2022-01-10.
         """
 
         self.assertEqual(markdown.strip(), inspect.cleandoc(expected).strip())
@@ -363,8 +361,6 @@ class MarkdownReportTest(TestCase):
             # [Sigrid](https://sigrid-says.com/aap/noot) maintainability feedback
 
             **💭️  You did not change any files that are measured by Sigrid**
-            
-            Sigrid compared your code against the baseline of 2022-01-10.
         """
 
         self.assertEqual(markdown.strip(), inspect.cleandoc(expected).strip())
@@ -455,9 +451,9 @@ class MarkdownReportTest(TestCase):
 
             **⚠️  Your code did not improve towards your Sigrid objective of 3.5 stars**
             
-            Sigrid compared your code against the baseline of N/A.
-            
             <details><summary>Show details</summary>
+            
+            Sigrid compared your code against the baseline of N/A.
             
             ## 👍 What went well?
 
@@ -520,8 +516,6 @@ class MarkdownReportTest(TestCase):
             # [Sigrid](https://sigrid-says.com/aap/noot) maintainability feedback
             
             **💭️  You did not change any files that are measured by Sigrid**
-            
-            Sigrid compared your code against the baseline of N/A.
         """
 
         self.assertEqual(markdown.strip(), inspect.cleandoc(expected).strip())
