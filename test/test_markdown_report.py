@@ -268,6 +268,7 @@ class MarkdownReportTest(TestCase):
         }
 
         report = MarkdownReport()
+        report.ALLOW_FANCY_MARKDOWN = False
         markdown = report.renderMarkdown("1234", feedback, self.options)
 
         expected = """
@@ -325,6 +326,7 @@ class MarkdownReportTest(TestCase):
         }
 
         report = MarkdownReport()
+        report.ALLOW_FANCY_MARKDOWN = False
         markdown = report.renderMarkdown("1234", feedback, self.options)
 
         expected = """
@@ -378,6 +380,7 @@ class MarkdownReportTest(TestCase):
         }
 
         report = MarkdownReport()
+        report.ALLOW_FANCY_MARKDOWN = False
         markdown = report.renderMarkdown("1234", feedback, self.options)
 
         expected = """
@@ -444,6 +447,7 @@ class MarkdownReportTest(TestCase):
 
         report = MarkdownReport()
         markdown = report.renderMarkdown("1234", feedback, self.options)
+        report.ALLOW_FANCY_MARKDOWN = True
 
         expected = """
             # [Sigrid](https://sigrid-says.com/aap/noot) maintainability feedback

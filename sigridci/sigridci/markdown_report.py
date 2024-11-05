@@ -21,6 +21,7 @@ from .report import Report
 
 
 class MarkdownReport(Report):
+    ALLOW_FANCY_MARKDOWN = True
     MAX_SHOWN_FINDINGS = 8
 
     RISK_CATEGORY_SYMBOLS = {
@@ -136,4 +137,6 @@ class MarkdownReport(Report):
         return f"{options.feedbackURL}?feature=sigridci.feedback&feedback={feedback}&system={options.getSystemId()}"
 
     def isHtmlMarkdownSupported(self):
+        if not self.ALLOW_FANCY_MARKDOWN:
+            return False
         return Platform.isGitHub() or Platform.isGitLab() or Platform.isAzureDevOps()
