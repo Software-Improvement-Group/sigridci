@@ -45,6 +45,7 @@ class MarkdownReportTest(TestCase):
         }
 
         report = MarkdownReport()
+        report.ALLOW_FANCY_MARKDOWN = False
         markdown = report.renderMarkdown("1234", feedback, self.options)
 
         expected = """
