@@ -144,7 +144,7 @@ If you're using mainstream technologies, we recommend you use Sigrid's automatic
 
 ### Manually define components using base directories
 
-The `component_base_dirs` option allows you to define a list of directories, and all subdirectories *within* those directories will then be used as components. Let's try this on the example project:
+The `component_base_dirs` option allows you to define a list of directories, and all subdirectories *within* those directories will then be used as components. Components should be written literally, **without** regular expression patterns (e.g. `\\s` for an empty space). Starting- and ending forward slashes `/` should be omitted. Let's try this on the example project:
 
     component_base_dirs:
       - "my-component"
