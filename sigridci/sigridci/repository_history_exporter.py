@@ -21,7 +21,7 @@ from .upload_log import UploadLog
 
 
 class RepositoryHistoryExporter:
-    GIT_LOG_FORMAT = "@@@;%H;%an;%ae;%ad;%s"
+    GIT_LOG_FORMAT = "@@@;%H;%an;%ae;%cd;%s"
     CUTOFF_DATE = datetime.now() + timedelta(days=-365)
     LIGHTWEIGHT_HISTORY_EXPORT_FILE = "git.log"
     COMMIT_PREFIXES = ("@@@", "'@@@")
