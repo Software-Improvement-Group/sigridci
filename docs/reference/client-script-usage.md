@@ -24,8 +24,8 @@ The script takes a limited number of mandatory arguments. However, Sigrid CI's b
 
 | Argument          | Required | Example value       | Description                                                                                                                       |
 |-------------------|----------|---------------------|-----------------------------------------------------------------------------------------------------------------------------------|
-| `--customer`      | Yes      | examplecustomername | Name of your organization's Sigrid account. Contact SIG support if you're not sure about this. [1]                                |
-| `--system`        | Yes      | examplesystemname   | Name of your system in Sigrid. Contact SIG support if you're not sure about this. [2]                                             |
+| `--customer`      | Yes      | examplecustomername | Name of your organization's Sigrid account. Contact SIG support if you are not sure about this. [1]                                |
+| `--system`        | Yes      | examplesystemname   | Name of your system in Sigrid. Contact SIG support if you are not sure about this. [2]                                             |
 | `--subsystem `    | No       | frontend            | Used to map between repository directory structure versus the one known by Sigrid. [5]                                            |
 | `--source`        | Yes      | .                   | Path of your project's source code. Use "." for current directory.                                                                |
 | `--publish`       | No       | N/A                 | Automatically publishes analysis results to Sigrid. [1]                                                                           |
@@ -49,13 +49,11 @@ Notes:
 
 
 ## Using subsystems to combine repositories
-
-The `--subsystem` option can be used to map multiple repositories to the same Sigrid system.
 Refer to the [documentation on mapping repositories to systems](../organization-integration/systems.md) for more information on when to combine multiple repositories into a single system in Sigrid.
 
-Please add the `--subsystem` parameter to both the PR as the --publish(only) runs if you use this option.
+The `--subsystem` option can be used to map multiple repositories to the same Sigrid system. The `--subsystem` parameter effectively moves the repository to a directory within the system that you defined as `--system`. An exception to the processing of `--subsystem` is when you add `--subsystem root`. This is reserved for files that you want to end up in the system's root directory. This is especially relevant when you are adding a `sigrid.yaml` file to a system that is combining repositories. Then you would use `--subsystem root` to make sure that the `sigrid.yaml` is published to the root of the system (thus, it is not interpreted as a subsystem called `root`, in which case it would have ended up as a separate directory). `Sigrid.yaml` files that are published inside a `--subsystem`, such as `--subsystem frontend` will be ignored.
 
-When adding a sigrid.yaml to the system that combines repositories, please use --subsystem root to make sure that the sigrid.yaml is published to the correct location on our end: the root of the system. Sigrid.yaml files that are published inside a --subsystem like frontend will be ignored.
+Please add the `--subsystem` parameter to both the PR as the `--publish` or `--publishonly` runs if you use one of these 2 options.
 
 If Sigrid CI runs for multiple subsystems of the same system in parallel the results might be inconsistent.
 For example, you might get feedback on another component because you appear to be making changes.
@@ -68,30 +66,30 @@ To reduce the likelihood of inconsistencies, keep in mind the following guidelin
 If susbsystems need to be removed from the system this can be done via the [Sigrid API](../integrations/sigrid-api-documentation.md#removing-subsystems)
 
 
-## What's the difference between `--publish` and `--publishonly`?
+## What is the difference between `--publish` and `--publishonly`?
 
 Sigrid CI can run in different "modes", depending on your [development process and workflow](../sigridci-integration/development-workflows.md). The following table shows what happens depending on the values of these options:
 
 |                                  | **Publish to Sigrid** | **Do not publish to Sigrid** |
 |----------------------------------|-----------------------|------------------------------|
 | **Feedback on new/changed code** | `--publish`           | (normal)                     |
-| **No feedback**                  | `--publishonly`       | (doesn't make sense)         |
+| **No feedback**                  | `--publishonly`       | (does not make sense)         |
 
 So when to use these options:
 
 - If you want feedback on your new/changed code, *without* publishing your code to Sigrid, run the script without the publish options. This is suitable for a workflow with pull requests, as you can use it to receive feedback on your pull request.
 - If you want to publish your code to Sigrid, *and* you want Sigrid CI to give your feedback on your new/changed code, use the `--publish` option. This is suitable for people who use a workflow without pull requests where everyone is making changes to the main/master branch.
 - If you want to publish your code to Sigrid, but do *not* want feedback on your new/changed code, use the `--publishonly` option.
-  - This is suitable for merge commits to the main/master branch. In that situation, you don't need feedback, since you *already had* your feedback in the pull request and there is no reason to receive the same feedback again when merging your changes. 
+  - This is suitable for merge commits to the main/master branch. In that situation, you do not need feedback, since you *already had* your feedback in the pull request and there is no reason to receive the same feedback again when merging your changes. 
   - Moreover, this publishes your code to Sigrid in a fire-and-forget fashion, which is faster since the script will not wait for the analysis to complete and will immediately exit. This is suitable for the main/master branch scenario described above, but can also be used in other situations where the fire-and-forget behavior is preferred.
 
 ## Defining quality objectives
 
-Sigrid CI compares the quality of the new/changed code against the configured target quality level. The target is always relative to the thousands of other systems in the SIG benchmark. This means you don't need to fix every single minor issue, as long as the overall quality is OK you're still allowed to proceed.
+Sigrid CI compares the quality of the new/changed code against the configured target quality level. The target is always relative to the thousands of other systems in the SIG benchmark. This means you do not need to fix every single minor issue, as long as the overall quality is OK you are still allowed to proceed.
 
 ### Option 1: Use Sigrid's maintainability target for your system (default)
 
-By default, Sigrid CI will use the maintainability target you've defined for your system in Sigrid. This is the same target that's depicted in the "system objectives" list you see in Sigrid. See below:
+By default, Sigrid CI will use the maintainability target you have defined for your system in Sigrid. This is the same target that is depicted in the "system objectives" list you see in Sigrid. See below:
 
 <img src="../images/sigrid-objectives.png" width="500" />
 

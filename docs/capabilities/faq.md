@@ -134,14 +134,14 @@ Your system may be defined/scoped in a different way than simply mapping directo
 
 Yes. You can add the `--showupload` option when calling the [client script](../reference/client-script-usage.md). This will add log output for every file that is included in the upload that is submitted to Sigrid.
 
-### Why do you have both publish and publishonly options, what's the difference?
+### Why do you have both publish and publishonly options, what is the difference?
 
 The [list of Sigrid CI options](../reference/client-script-usage.md) lists two options with similar names and descriptions, `--publish` and `--publishonly`. These options support slightly different scenarios:
 
 - `--publish` publishes your project's source code to Sigrid, *and* provides feedback on your changes within your Continuous Integration environment.
 - `--publishonly` also publishes your code to Sigrid, but it *does not* provide feedback within the Continuous Integration environment.
 
-So which one should you use? That depends on your development process. If you use pull requests, you can use `--publishonly`. In this scenario, you've already received feedback for your pull request, so there is no need to receive the same feedback again when you merge your changes to your main/master branch. If you *don't* use pull requests, or if you're not sure, it's best to use `--publish` since it will give you the most feedback.
+So which one should you use? That depends on your development process. If you use pull requests, you can use `--publishonly`. In this scenario, you've already received feedback for your pull request, so there is no need to receive the same feedback again when you merge your changes to your main/master branch. If you *do not* use pull requests, or if you are not sure, it is best to use `--publish` since it will give you the most feedback.
 
 ## Common problems
 
