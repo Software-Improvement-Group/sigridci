@@ -23,6 +23,7 @@ from .report import Report
 class MarkdownReport(Report):
     ALLOW_FANCY_MARKDOWN = True
     MAX_SHOWN_FINDINGS = 8
+    MAX_OCCURRENCES = 3
 
     RISK_CATEGORY_SYMBOLS = {
         "VERY_HIGH" : "🔴",
@@ -63,8 +64,10 @@ class MarkdownReport(Report):
                 md += f"- 🔹 [These findings are not so important to me]({self.getFeedbackLink(options, 'unimportant')})\n"
 
             if self.isHtmlMarkdownSupported():
-                md += "</details>"
+                md += "</details>\n"
 
+        md += "\n----\n"
+        md += f"[**View this system in Sigrid**]({sigridLink})"
         return md
 
     def renderSummary(self, feedback, options):
@@ -89,7 +92,7 @@ class MarkdownReport(Report):
 
         md += "## 📚 Remaining technical debt\n\n"
         md += f"> **{len(unchanged)}** refactoring candidates didn't get better or worse, but are still present in the code you touched.\n\n"
-        md += f"[**View this system in Sigrid** to explore your technical debt]({sigridLink})\n\n"
+        md += f"[View this system in Sigrid** to explore your technical debt]({sigridLink})\n\n"
         return md
 
     def renderRatingsTable(self, feedback):
@@ -125,13 +128,23 @@ class MarkdownReport(Report):
             symbol = self.RISK_CATEGORY_SYMBOLS[rc["riskCategory"]]
             metricName = self.formatMetricName(rc["metric"])
             metricInfo = f"**{metricName}**<br />({rc['category'].title()})"
-            location = html.escape(rc["subject"]).replace("::", "<br />").replace("\n", "<br />")
+            location = self.formatRefactoringCandidateLocation(rc)
             md += f"| {symbol} | {metricInfo} | {location} |\n"
 
         if len(sortedRefactoringCandidates) > self.MAX_SHOWN_FINDINGS:
             md += f"| ⚫️ | | + {len(sortedRefactoringCandidates) - self.MAX_SHOWN_FINDINGS} more |"
 
         return md + "\n"
+
+    def formatRefactoringCandidateLocation(self, rc):
+        location = rc["subject"]
+
+        if rc.get("occurrences") and len(rc["occurrences"]) > self.MAX_OCCURRENCES:
+            formatOccurrence = lambda occ: f"{occ['filePath']} (line {occ['startLine']}-{occ['endLine']})"
+            occurrences = [formatOccurrence(occ) for occ in rc["occurrences"][0:self.MAX_OCCURRENCES]]
+            location = "\n".join(occurrences) + f"\n+ {len(rc['occurrences']) - self.MAX_OCCURRENCES} occurrences"
+
+        return html.escape(location).replace("::", "<br />").replace("\n", "<br />")
 
     def getFeedbackLink(self, options, feedback):
         return f"{options.feedbackURL}?feature=sigridci.feedback&feedback={feedback}&system={options.getSystemId()}"

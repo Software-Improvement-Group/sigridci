@@ -74,7 +74,7 @@ class MarkdownReportTest(TestCase):
             
             > **1** refactoring candidates didn't get better or worse, but are still present in the code you touched.
             
-            [**View this system in Sigrid** to explore your technical debt](https://sigrid-says.com/aap/noot)
+            [View this system in Sigrid** to explore your technical debt](https://sigrid-says.com/aap/noot)
             
             ## ⭐️ Sigrid ratings
             
@@ -89,6 +89,9 @@ class MarkdownReportTest(TestCase):
             | Component Independence | N/A | N/A | N/A |
             | Component Entanglement | N/A | N/A | N/A |
             | **Maintainability** | **4.0** | **2.6** | **3.0** |
+            
+            ----
+            [**View this system in Sigrid**](https://sigrid-says.com/aap/noot)
         """
 
         self.assertEqual(markdown.strip(), inspect.cleandoc(expected).strip())
@@ -158,6 +161,21 @@ class MarkdownReportTest(TestCase):
             | 🟠 | **Unit Size**<br />(Introduced) | aap-7 |
             | 🟠 | **Unit Size**<br />(Introduced) | aap-8 |
             | ⚫️ | | + 91 more |
+        """
+
+        self.assertEqual(table.strip(), inspect.cleandoc(expected).strip())
+
+    def testLimitDuplicatesWithTooManyOccurrences(self):
+        rc = self.toRefactoringCandidate(f"aap", "introduced", "DUPLICATION", "VERY_HIGH")
+        rc["occurrences"] = [self.toOccurrence(f"aap-{i}", i, i) for i in range(1, 10)]
+
+        report = MarkdownReport()
+        table = report.renderRefactoringCandidatesTable([rc])
+
+        expected = """
+            | Risk | System property | Location |
+            |------|-----------------|----------|
+            | 🔴 | **Duplication**<br />(Introduced) | aap-1 (line 1-1)<br />aap-2 (line 2-2)<br />aap-3 (line 3-3)<br />+ 6 occurrences |
         """
 
         self.assertEqual(table.strip(), inspect.cleandoc(expected).strip())
@@ -296,7 +314,7 @@ class MarkdownReportTest(TestCase):
             
             > **1** refactoring candidates didn't get better or worse, but are still present in the code you touched.
             
-            [**View this system in Sigrid** to explore your technical debt](https://sigrid-says.com/aap/noot)
+            [View this system in Sigrid** to explore your technical debt](https://sigrid-says.com/aap/noot)
             
             ## ⭐️ Sigrid ratings
             
@@ -311,6 +329,9 @@ class MarkdownReportTest(TestCase):
             | Component Independence | N/A | N/A | N/A |
             | Component Entanglement | N/A | N/A | N/A |
             | **Maintainability** | **3.0** | **3.1** | **4.0** |
+            
+            ----
+            [**View this system in Sigrid**](https://sigrid-says.com/aap/noot)
         """
 
         self.assertEqual(markdown.strip(), inspect.cleandoc(expected).strip())
@@ -334,6 +355,10 @@ class MarkdownReportTest(TestCase):
             # [Sigrid](https://sigrid-says.com/aap/noot) maintainability feedback
     
             **💭️  You did not change any files that are measured by Sigrid**
+
+            
+            ----
+            [**View this system in Sigrid**](https://sigrid-says.com/aap/noot)
         """
 
         self.assertEqual(markdown.strip(), inspect.cleandoc(expected).strip())
@@ -361,6 +386,10 @@ class MarkdownReportTest(TestCase):
             # [Sigrid](https://sigrid-says.com/aap/noot) maintainability feedback
 
             **💭️  You did not change any files that are measured by Sigrid**
+
+            
+            ----
+            [**View this system in Sigrid**](https://sigrid-says.com/aap/noot)
         """
 
         self.assertEqual(markdown.strip(), inspect.cleandoc(expected).strip())
@@ -400,7 +429,7 @@ class MarkdownReportTest(TestCase):
             
             > **0** refactoring candidates didn't get better or worse, but are still present in the code you touched.
             
-            [**View this system in Sigrid** to explore your technical debt](https://sigrid-says.com/aap/noot)
+            [View this system in Sigrid** to explore your technical debt](https://sigrid-says.com/aap/noot)
             
             ## ⭐️ Sigrid ratings
             
@@ -426,6 +455,9 @@ class MarkdownReportTest(TestCase):
             - ✅ [Yes, these findings are useful](https://example.com?feature=sigridci.feedback&feedback=useful&system=sig-aap-noot)
             - 🔸 [The findings are false positives](https://example.com?feature=sigridci.feedback&feedback=falsepositive&system=sig-aap-noot)
             - 🔹 [These findings are not so important to me](https://example.com?feature=sigridci.feedback&feedback=unimportant&system=sig-aap-noot)
+            
+            ----
+            [**View this system in Sigrid**](https://sigrid-says.com/aap/noot)
         """
 
         self.assertEqual(markdown.strip(), inspect.cleandoc(expected).strip())
@@ -468,7 +500,7 @@ class MarkdownReportTest(TestCase):
             
             > **0** refactoring candidates didn't get better or worse, but are still present in the code you touched.
             
-            [**View this system in Sigrid** to explore your technical debt](https://sigrid-says.com/aap/noot)
+            [View this system in Sigrid** to explore your technical debt](https://sigrid-says.com/aap/noot)
             
             ## ⭐️ Sigrid ratings
             
@@ -495,6 +527,9 @@ class MarkdownReportTest(TestCase):
             - 🔸 [The findings are false positives](https://example.com?feature=sigridci.feedback&feedback=falsepositive&system=sig-aap-noot)
             - 🔹 [These findings are not so important to me](https://example.com?feature=sigridci.feedback&feedback=unimportant&system=sig-aap-noot)
             </details>
+            
+            ----
+            [**View this system in Sigrid**](https://sigrid-says.com/aap/noot)
         """
 
         self.assertTrue(report.isHtmlMarkdownSupported())
@@ -516,6 +551,10 @@ class MarkdownReportTest(TestCase):
             # [Sigrid](https://sigrid-says.com/aap/noot) maintainability feedback
             
             **💭️  You did not change any files that are measured by Sigrid**
+
+            
+            ----
+            [**View this system in Sigrid**](https://sigrid-says.com/aap/noot)
         """
 
         self.assertEqual(markdown.strip(), inspect.cleandoc(expected).strip())
@@ -526,4 +565,11 @@ class MarkdownReportTest(TestCase):
             "category" : category,
             "metric" : metric,
             "riskCategory" : riskCategory
+        }
+
+    def toOccurrence(self, file, startLine, endLine):
+        return {
+            "filePath" : file,
+            "startLine" : startLine,
+            "endLine" : endLine
         }
