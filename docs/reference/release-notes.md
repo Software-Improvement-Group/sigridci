@@ -3,6 +3,13 @@ Sigrid release notes
 
 SIG uses [continuous delivery](https://en.wikipedia.org/wiki/Continuous_delivery), meaning that every change to Sigrid or the underlying analysis is released once our development pipeline has completed. On average, we release somewhere between 10 and 20 times per day. This page therefore doesn't list every single change, since that would quickly lead to an excessively long list of small changes. Instead, this page lists Sigrid and analysis changes that we consider noteworthy for the typical Sigrid user.
 
+### November 4, 2024
+
+- **Objectives:** The portfolio objectives dashboard now allows you to drag-and-drop objectives to indicate precedence.
+- **Code Explorer:** All files in the system are now shown by the Code Explorer. Previously, only files in scope for the maintainability rating were shown.
+- **Maintainability:** Introduced a new sytem-level maintainability dashboard, that includes several new visualization.
+- **Sigrid CI:** Tweaked pull request feedback to avoid it becoming excessively long when changing files that contain a lot of technical debt.
+
 ### October 21, 2024
 
 - **Open Source Health:** Removed dependencies are now depicted as "grayed out" in the list of open source dependencies. This helps to avoid confusion, as people might inadvertently think those dependencies are still in use.

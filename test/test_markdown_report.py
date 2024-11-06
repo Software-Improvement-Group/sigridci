@@ -13,8 +13,9 @@
 # limitations under the License.
 
 import inspect
+import os
 import tempfile
-from unittest import TestCase
+from unittest import TestCase, mock
 
 from sigridci.sigridci.markdown_report import MarkdownReport
 from sigridci.sigridci.publish_options import PublishOptions, RunMode
@@ -44,10 +45,11 @@ class MarkdownReportTest(TestCase):
         }
 
         report = MarkdownReport()
+        report.ALLOW_FANCY_MARKDOWN = False
         markdown = report.renderMarkdown("1234", feedback, self.options)
 
         expected = """
-            # Sigrid maintainability feedback
+            # [Sigrid](https://sigrid-says.com/aap/noot) maintainability feedback
             
             **↗️  You improved your code's maintainability towards your Sigrid objective of 3.5 stars**
             
@@ -55,12 +57,12 @@ class MarkdownReportTest(TestCase):
             
             ## 👍 What went well?
             
-            You fixed or improved **0** refactoring candidates.
+            > You fixed or improved **0** refactoring candidates.
             
             
             ## 👎 What could be better?
             
-            Unfortunately, **2** refactoring candidates were introduced or got worse.
+            > Unfortunately, **2** refactoring candidates were introduced or got worse.
             
             | Risk | System property | Location |
             |------|-----------------|----------|
@@ -70,14 +72,11 @@ class MarkdownReportTest(TestCase):
             
             ## 📚 Remaining technical debt
             
-            **1** refactoring candidates didn't get better or worse, but are still present in the code you touched.
+            > **1** refactoring candidates didn't get better or worse, but are still present in the code you touched.
             
-            | Risk | System property | Location |
-            |------|-----------------|----------|
-            | 🔴 | **Unit Complexity**<br />(Unchanged) | mies |
+            [View this system in Sigrid** to explore your technical debt](https://sigrid-says.com/aap/noot)
             
-            
-            ## Sigrid ratings
+            ## ⭐️ Sigrid ratings
             
             | System property | System on 2022-01-10 | Before changes | New/changed code |
             |-----------------|-------------------------------------------|----------------|------------------|
@@ -92,7 +91,6 @@ class MarkdownReportTest(TestCase):
             | **Maintainability** | **4.0** | **2.6** | **3.0** |
             
             ----
-            
             [**View this system in Sigrid**](https://sigrid-says.com/aap/noot)
         """
 
@@ -141,6 +139,43 @@ class MarkdownReportTest(TestCase):
             | 🔴 | **Unit Complexity**<br />(Introduced) | mies |
             | 🟠 | **Unit Size**<br />(Introduced) | aap |
             | 🟡 | **Unit Size**<br />(Introduced) | noot |
+        """
+
+        self.assertEqual(table.strip(), inspect.cleandoc(expected).strip())
+
+    def testLimitRefactoringCandidatesTableWhenThereAreTooMany(self):
+        findings = [self.toRefactoringCandidate(f"aap-{i}", "introduced", "UNIT_SIZE", "HIGH") for i in range(1, 100)]
+
+        report = MarkdownReport()
+        table = report.renderRefactoringCandidatesTable(findings)
+
+        expected = """
+            | Risk | System property | Location |
+            |------|-----------------|----------|
+            | 🟠 | **Unit Size**<br />(Introduced) | aap-1 |
+            | 🟠 | **Unit Size**<br />(Introduced) | aap-2 |
+            | 🟠 | **Unit Size**<br />(Introduced) | aap-3 |
+            | 🟠 | **Unit Size**<br />(Introduced) | aap-4 |
+            | 🟠 | **Unit Size**<br />(Introduced) | aap-5 |
+            | 🟠 | **Unit Size**<br />(Introduced) | aap-6 |
+            | 🟠 | **Unit Size**<br />(Introduced) | aap-7 |
+            | 🟠 | **Unit Size**<br />(Introduced) | aap-8 |
+            | ⚫️ | | + 91 more |
+        """
+
+        self.assertEqual(table.strip(), inspect.cleandoc(expected).strip())
+
+    def testLimitDuplicatesWithTooManyOccurrences(self):
+        rc = self.toRefactoringCandidate(f"aap", "introduced", "DUPLICATION", "VERY_HIGH")
+        rc["occurrences"] = [self.toOccurrence(f"aap-{i}", i, i) for i in range(1, 10)]
+
+        report = MarkdownReport()
+        table = report.renderRefactoringCandidatesTable([rc])
+
+        expected = """
+            | Risk | System property | Location |
+            |------|-----------------|----------|
+            | 🔴 | **Duplication**<br />(Introduced) | aap-1 (line 1-1)<br />aap-2 (line 2-2)<br />aap-3 (line 3-3)<br />+ 6 occurrences |
         """
 
         self.assertEqual(table.strip(), inspect.cleandoc(expected).strip())
@@ -252,10 +287,11 @@ class MarkdownReportTest(TestCase):
         }
 
         report = MarkdownReport()
+        report.ALLOW_FANCY_MARKDOWN = False
         markdown = report.renderMarkdown("1234", feedback, self.options)
 
         expected = """
-            # Sigrid maintainability feedback
+            # [Sigrid](https://sigrid-says.com/aap/noot) maintainability feedback
 
             **✅  You wrote maintainable code and achieved your Sigrid objective of 3.5 stars**
             
@@ -263,7 +299,7 @@ class MarkdownReportTest(TestCase):
             
             ## 👍 What went well?
             
-            You fixed or improved **1** refactoring candidates.
+            > You fixed or improved **1** refactoring candidates.
             
             | Risk | System property | Location |
             |------|-----------------|----------|
@@ -272,18 +308,15 @@ class MarkdownReportTest(TestCase):
             
             ## 👎 What could be better?
             
-            You did not introduce any technical debt during your changes, great job!
+            > You did not introduce any technical debt during your changes, great job!
             
             ## 📚 Remaining technical debt
             
-            **1** refactoring candidates didn't get better or worse, but are still present in the code you touched.
+            > **1** refactoring candidates didn't get better or worse, but are still present in the code you touched.
             
-            | Risk | System property | Location |
-            |------|-----------------|----------|
-            | 🔴 | **Unit Complexity**<br />(Unchanged) | mies |
+            [View this system in Sigrid** to explore your technical debt](https://sigrid-says.com/aap/noot)
             
-            
-            ## Sigrid ratings
+            ## ⭐️ Sigrid ratings
             
             | System property | System on 2022-01-10 | Before changes | New/changed code |
             |-----------------|-------------------------------------------|----------------|------------------|
@@ -298,7 +331,6 @@ class MarkdownReportTest(TestCase):
             | **Maintainability** | **3.0** | **3.1** | **4.0** |
             
             ----
-            
             [**View this system in Sigrid**](https://sigrid-says.com/aap/noot)
         """
 
@@ -316,18 +348,16 @@ class MarkdownReportTest(TestCase):
         }
 
         report = MarkdownReport()
+        report.ALLOW_FANCY_MARKDOWN = False
         markdown = report.renderMarkdown("1234", feedback, self.options)
 
         expected = """
-            # Sigrid maintainability feedback
+            # [Sigrid](https://sigrid-says.com/aap/noot) maintainability feedback
     
             **💭️  You did not change any files that are measured by Sigrid**
-            
-            Sigrid compared your code against the baseline of 2022-01-10.
-            
+
             
             ----
-            
             [**View this system in Sigrid**](https://sigrid-says.com/aap/noot)
         """
 
@@ -353,15 +383,12 @@ class MarkdownReportTest(TestCase):
         markdown = report.renderMarkdown("1234", feedback, self.options)
 
         expected = """
-            # Sigrid maintainability feedback
+            # [Sigrid](https://sigrid-says.com/aap/noot) maintainability feedback
 
             **💭️  You did not change any files that are measured by Sigrid**
-            
-            Sigrid compared your code against the baseline of 2022-01-10.
-            
+
             
             ----
-            
             [**View this system in Sigrid**](https://sigrid-says.com/aap/noot)
         """
 
@@ -379,10 +406,11 @@ class MarkdownReportTest(TestCase):
         }
 
         report = MarkdownReport()
+        report.ALLOW_FANCY_MARKDOWN = False
         markdown = report.renderMarkdown("1234", feedback, self.options)
 
         expected = """
-            # Sigrid maintainability feedback
+            # [Sigrid](https://sigrid-says.com/aap/noot) maintainability feedback
 
             **⚠️  Your code did not improve towards your Sigrid objective of 3.5 stars**
             
@@ -390,19 +418,20 @@ class MarkdownReportTest(TestCase):
             
             ## 👍 What went well?
 
-            You fixed or improved **0** refactoring candidates.
+            > You fixed or improved **0** refactoring candidates.
             
             
             ## 👎 What could be better?
             
-            You did not introduce any technical debt during your changes, great job!
+            > You did not introduce any technical debt during your changes, great job!
             
             ## 📚 Remaining technical debt
             
-            **0** refactoring candidates didn't get better or worse, but are still present in the code you touched.
+            > **0** refactoring candidates didn't get better or worse, but are still present in the code you touched.
             
+            [View this system in Sigrid** to explore your technical debt](https://sigrid-says.com/aap/noot)
             
-            ## Sigrid ratings
+            ## ⭐️ Sigrid ratings
             
             | System property | System on N/A | Before changes | New/changed code |
             |-----------------|-------------------------------------------|----------------|------------------|
@@ -418,7 +447,74 @@ class MarkdownReportTest(TestCase):
             
             ----
             
+            ## Did you find this feedback helpful?
+            
+            We would like to know your thoughts to make Sigrid better.
+            Your username will remain confidential throughout the process.
+            
+            - ✅ [Yes, these findings are useful](https://example.com?feature=sigridci.feedback&feedback=useful&system=sig-aap-noot)
+            - 🔸 [The findings are false positives](https://example.com?feature=sigridci.feedback&feedback=falsepositive&system=sig-aap-noot)
+            - 🔹 [These findings are not so important to me](https://example.com?feature=sigridci.feedback&feedback=unimportant&system=sig-aap-noot)
+            
+            ----
             [**View this system in Sigrid**](https://sigrid-says.com/aap/noot)
+        """
+
+        self.assertEqual(markdown.strip(), inspect.cleandoc(expected).strip())
+
+    @mock.patch.dict(os.environ, {"GITLAB_CI" : "aap/noot"})
+    def testUseHtmlMarkdownOnSupportedPlatforms(self):
+        self.options.feedbackURL = "https://example.com"
+
+        feedback = {
+            "baselineRatings": {"MAINTAINABILITY": 3.0},
+            "changedCodeBeforeRatings" : {"MAINTAINABILITY" : 2.9},
+            "newCodeRatings": {"MAINTAINABILITY": 2.8},
+            "overallRatings": {"MAINTAINABILITY": 3.0},
+            "refactoringCandidates": []
+        }
+
+        report = MarkdownReport()
+        markdown = report.renderMarkdown("1234", feedback, self.options)
+        report.ALLOW_FANCY_MARKDOWN = True
+
+        expected = """
+            # [Sigrid](https://sigrid-says.com/aap/noot) maintainability feedback
+
+            **⚠️  Your code did not improve towards your Sigrid objective of 3.5 stars**
+            
+            <details><summary>Show details</summary>
+            
+            Sigrid compared your code against the baseline of N/A.
+            
+            ## 👍 What went well?
+
+            > You fixed or improved **0** refactoring candidates.
+            
+            
+            ## 👎 What could be better?
+            
+            > You did not introduce any technical debt during your changes, great job!
+            
+            ## 📚 Remaining technical debt
+            
+            > **0** refactoring candidates didn't get better or worse, but are still present in the code you touched.
+            
+            [View this system in Sigrid** to explore your technical debt](https://sigrid-says.com/aap/noot)
+            
+            ## ⭐️ Sigrid ratings
+            
+            | System property | System on N/A | Before changes | New/changed code |
+            |-----------------|-------------------------------------------|----------------|------------------|
+            | Volume | N/A | N/A | N/A |
+            | Duplication | N/A | N/A | N/A |
+            | Unit Size | N/A | N/A | N/A |
+            | Unit Complexity | N/A | N/A | N/A |
+            | Unit Interfacing | N/A | N/A | N/A |
+            | Module Coupling | N/A | N/A | N/A |
+            | Component Independence | N/A | N/A | N/A |
+            | Component Entanglement | N/A | N/A | N/A |
+            | **Maintainability** | **3.0** | **2.9** | **2.8** |
             
             ----
             
@@ -430,8 +526,13 @@ class MarkdownReportTest(TestCase):
             - ✅ [Yes, these findings are useful](https://example.com?feature=sigridci.feedback&feedback=useful&system=sig-aap-noot)
             - 🔸 [The findings are false positives](https://example.com?feature=sigridci.feedback&feedback=falsepositive&system=sig-aap-noot)
             - 🔹 [These findings are not so important to me](https://example.com?feature=sigridci.feedback&feedback=unimportant&system=sig-aap-noot)
+            </details>
+            
+            ----
+            [**View this system in Sigrid**](https://sigrid-says.com/aap/noot)
         """
 
+        self.assertTrue(report.isHtmlMarkdownSupported())
         self.assertEqual(markdown.strip(), inspect.cleandoc(expected).strip())
 
     def testDoNotIncludeFeedbackLinksIfNothingHappened(self):
@@ -447,15 +548,12 @@ class MarkdownReportTest(TestCase):
         markdown = report.renderMarkdown("1234", feedback, self.options)
 
         expected = """
-            # Sigrid maintainability feedback
+            # [Sigrid](https://sigrid-says.com/aap/noot) maintainability feedback
             
             **💭️  You did not change any files that are measured by Sigrid**
-            
-            Sigrid compared your code against the baseline of N/A.
-            
+
             
             ----
-            
             [**View this system in Sigrid**](https://sigrid-says.com/aap/noot)
         """
 
@@ -467,4 +565,11 @@ class MarkdownReportTest(TestCase):
             "category" : category,
             "metric" : metric,
             "riskCategory" : riskCategory
+        }
+
+    def toOccurrence(self, file, startLine, endLine):
+        return {
+            "filePath" : file,
+            "startLine" : startLine,
+            "endLine" : endLine
         }
