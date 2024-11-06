@@ -128,7 +128,7 @@ Prefer regular ZIP files, and avoid nested ZIP files. The following example can 
 ```
 git clone https://github.com/LeaVerou/awesomplete.git code
 cd code
-git --no-pager log --date=iso --format='@@@;%H;%an;%ae;%ad;%s' --numstat --no-merges > git.log
+git --no-pager log --date=iso --format='@@@;%H;%an;%ae;%cd;%s' --numstat --no-merges > git.log
 rm -rf .git
 zip -d code code.zip
 ```
