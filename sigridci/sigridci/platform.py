@@ -22,7 +22,7 @@ class Platform:
 
     @staticmethod
     def isGitLab():
-        return "CI_PROJECT_PATH" in os.environ
+        return "GITLAB_CI" in os.environ
 
     @staticmethod
     def isAzureDevOps():

@@ -462,7 +462,7 @@ class MarkdownReportTest(TestCase):
 
         self.assertEqual(markdown.strip(), inspect.cleandoc(expected).strip())
 
-    @mock.patch.dict(os.environ, {"CI_PROJECT_PATH" : "aap/noot"})
+    @mock.patch.dict(os.environ, {"GITLAB_CI" : "aap/noot"})
     def testUseHtmlMarkdownOnSupportedPlatforms(self):
         self.options.feedbackURL = "https://example.com"
 
