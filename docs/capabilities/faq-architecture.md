@@ -48,16 +48,18 @@ they have been squashed.
 
 No, as the shallow clone will only download the code and will *not* download the change history.
 
-### When should I use the history_enabled option?
-
-The scope configuration file has an option called `history_enabled`. You normally don't need to use this option, the
-analysis will automatically detect whether the upload contains the project's change history. However, if the  upload
-*does* contain the change history, but you do *not* want to use the change history in the analysis, you can add the
-configuration option `history_enabled: false`.
-
 ### Can I exclude my repository from the upload to Sigrid altogether?
 
 Yes. Sigrid CI generates a log file called `git.log`, and you can exclude this file from being uploaded. You can use the `--exclude` [option in Sigrid CI](../reference/client-script-usage.md), for example `--exclude git.log`. 
+
+### Troubleshooting issues when manually publishing your repository history
+
+When you use Sigrid CI, your repository history is automatically anonymized and published to Sigrid. But it's also possible to *manually* export your repository history and publish it to Sigrid, as explained [here](../organization-integration/upload-instructions.md#creating-a-zip-file-for-your-system). If you run into a situation where you believe you correctly published your repository to Sigrid, yet you're not seeing the results in Sigrid, you can use the steps below to assist you in troubleshooting the issue:
+
+- Make sure you are pushing a `git.log` file to Sigrid. This file contains your repository history, and should be located in the same directory as the source code for that repository.
+- Open the file and count the commits. Every commit uses a `@@@` prefix to make this easier to count. If you are only exporting a single commit, you might have accidentally published a [shallow clone](https://git-scm.com/docs/git-clone). A shallow clone does not include the Git history.
+- Open the file and make sure it uses the UTF-8 character encoding. 
+- Check the dates for each commit, which you can check in the lines with the `@@@` prefix. By default, Sigrid will only analyze commits from the last year, so any commits older than that will be ignored. You can change [the history period used by Sigrid in the configuration](../reference/analysis-scope-configuration.md#analyzing-your-repository-history), in case you want to use a longer period.
 
 ## Contact and support
 
