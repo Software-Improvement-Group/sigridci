@@ -137,7 +137,13 @@ The only thing you need to change in this example, is replace the URL of the rep
 
 This will clone a Git repository, and then create a ZIP file containing both the source code and the change history. The latter is used for Sigrid's [architecture quality](../capabilities/architecture-quality.md) analysis. We create a log file containing this change history, and afterwards we deleted the `.git` directory to make the ZIP file smaller and faster to upload. 
 
-Please make sure that you use the UTF-8 charset when creating the zip.
+Please make sure that you use the UTF-8 character encoding when creating the ZIP file.
+
+## What if something went wrong?
+
+We recommend using Sigrid CI to publish your source code to Sigrid CI, since this approach is automated and therefore less error prone. If you run into issues while publishing your code it's best to [contact SIG's support team directly](#contact-and-support).
+
+If you manually exported your Git history and it's not being picked up by Sigrid, refer to the [frequently asked questions for manually providing this data](../capabilities/faq-architecture.md#troubleshooting-issues-when-manually-publishing-your-repository-history).
 
 ## Contact and support
 
