@@ -20,7 +20,15 @@ from sigridci.sigrid_api_client import SigridApiClient
 from sigridci.command_line_helper import getFeedbackPublishOptions, parseFeedbackCommandLineArguments
 from sigridci.report.osh_markdown_report import OpenSourceHealthMarkdownReport
 from sigridci.report.osh_code_climate_report import OpenSourceHealthCodeClimateReport
+from sigridci.gitlab_pull_request_report import GitLabPullRequestReport
 from sigridci.upload_log import UploadLog
+
+
+OSH_REPORTS = [
+    OpenSourceHealthMarkdownReport(),
+    GitLabPullRequestReport(),
+    OpenSourceHealthCodeClimateReport()
+]
 
 
 if __name__ == "__main__":
@@ -33,5 +41,5 @@ if __name__ == "__main__":
     with open(args.analysisid, mode="r", encoding="utf-8") as f:
         feedback = json.load(f)
 
-    for report in [OpenSourceHealthMarkdownReport(), OpenSourceHealthCodeClimateReport()]:
+    for report in OSH_REPORTS:
         report.generate(args.analysisid, feedback, options)

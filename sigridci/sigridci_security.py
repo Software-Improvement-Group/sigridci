@@ -20,7 +20,15 @@ from sigridci.sigrid_api_client import SigridApiClient
 from sigridci.command_line_helper import getFeedbackPublishOptions, parseFeedbackCommandLineArguments
 from sigridci.report.security_markdown_report import SecurityMarkdownReport
 from sigridci.report.security_code_climate_report import SecurityCodeClimateReport
+from sigridci.sigridci.gitlab_pull_request_report import GitLabPullRequestReport
 from sigridci.upload_log import UploadLog
+
+
+SECURITY_REPORTS = [
+    SecurityMarkdownReport(),
+    GitLabPullRequestReport(),
+    SecurityCodeClimateReport()
+]
 
 
 if __name__ == "__main__":
@@ -33,5 +41,5 @@ if __name__ == "__main__":
     with open(args.analysisid, mode="r", encoding="utf-8") as f:
         feedback = json.load(f)
 
-    for report in [SecurityMarkdownReport(), SecurityCodeClimateReport()]:
+    for report in SECURITY_REPORTS:
         report.generate(args.analysisid, feedback, options)
