@@ -14,8 +14,9 @@
 
 import os
 
+from sigridci.report import Report
 from .security_markdown_report import SecurityMarkdownReport
-from ..report import Report
+
 
 class OpenSourceHealthMarkdownReport(Report):
 

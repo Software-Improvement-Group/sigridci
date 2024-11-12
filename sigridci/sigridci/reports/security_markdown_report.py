@@ -14,7 +14,8 @@
 
 import os
 
-from ..report import Report
+from sigridci.report import Report
+
 
 class SecurityMarkdownReport(Report):
     SEVERITY_SYMBOLS = {

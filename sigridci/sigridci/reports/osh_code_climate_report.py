@@ -15,7 +15,7 @@
 import json
 import os
 
-from ..report import Report
+from sigridci.report import Report
 
 
 class OpenSourceHealthCodeClimateReport(Report):
