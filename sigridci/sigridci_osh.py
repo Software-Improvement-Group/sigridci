@@ -18,22 +18,9 @@ import json
 
 from sigridci.sigrid_api_client import SigridApiClient
 from sigridci.command_line_helper import getFeedbackPublishOptions, parseFeedbackCommandLineArguments
+from sigridci.report.osh_markdown_report import OpenSourceHealthMarkdownReport
+from sigridci.report.osh_code_climate_report import OpenSourceHealthCodeClimateReport
 from sigridci.upload_log import UploadLog
-
-
-def serializeCodeClimateFindings(analysisResults):
-    for dependency in analysisResults["dependencies"]:
-        for file in dependency["files"]:
-            for vulnerability in dependency["vulnerabilities"]:
-                if vulnerability["severity"] in ["CRITICAL", "HIGH"]:
-                    yield {
-                        "description" : f"{dependency['name']} - {vulnerability['description']}",
-                        "check_name" : "Sigrid Open Source Health",
-                        "fingerprint" : f"{dependency['name']}-{dependency['currentVersion']}-{vulnerability['cve']}",
-                        "location" : {
-                            "path" : file["path"]
-                        }
-                    }
 
 
 if __name__ == "__main__":
@@ -44,8 +31,7 @@ if __name__ == "__main__":
     UploadLog.log(f"Retrieving Sigrid CI Open Source Health feedback for analysis ID {args.analysisid}")
     # TODO load analysis results once end point is available.
     with open(args.analysisid, mode="r", encoding="utf-8") as f:
-        analysisResults = json.load(f)
+        feedback = json.load(f)
 
-    with open(f"{options.outputDir}/osh-feedback.json", mode="w", encoding="utf-8") as f:
-        report = list(serializeCodeClimateFindings(analysisResults))
-        json.dump(report, f, indent=2)
+    for report in [OpenSourceHealthMarkdownReport(), OpenSourceHealthCodeClimateReport()]:
+        report.generate(args.analysisid, feedback, options)

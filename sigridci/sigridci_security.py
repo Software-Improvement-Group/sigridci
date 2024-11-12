@@ -18,24 +18,9 @@ import json
 
 from sigridci.sigrid_api_client import SigridApiClient
 from sigridci.command_line_helper import getFeedbackPublishOptions, parseFeedbackCommandLineArguments
+from sigridci.report.security_markdown_report import SecurityMarkdownReport
+from sigridci.report.security_code_climate_report import SecurityCodeClimateReport
 from sigridci.upload_log import UploadLog
-
-
-def serializeCodeClimateFindings(analysisResults):
-    for run in analysisResults["runs"]:
-        for result in run["results"]:
-            if "tags" in result["properties"] and len(result["properties"]["tags"]) > 0:
-                yield {
-                    "description" : result["message"]["text"],
-                    "check_name" : "Sigrid Security",
-                    "fingerprint" : result["fingerprints"]["sigFingerprint/v1"],
-                    "location" : {
-                        "path" : result["locations"][0]["physicalLocation"]["artifactLocation"]["uri"],
-                        "lines" : {
-                            "begin" : result["locations"][0]["physicalLocation"]["region"]["startLine"]
-                        }
-                    }
-                }
 
 
 if __name__ == "__main__":
@@ -46,8 +31,7 @@ if __name__ == "__main__":
     UploadLog.log(f"Retrieving Sigrid CI Security feedback for analysis ID {args.analysisid}")
     # TODO load analysis results once end point is available.
     with open(args.analysisid, mode="r", encoding="utf-8") as f:
-        analysisResults = json.load(f)
+        feedback = json.load(f)
 
-    with open(f"{options.outputDir}/security-feedback.json", mode="w", encoding="utf-8") as f:
-        report = list(serializeCodeClimateFindings(analysisResults))
-        json.dump(report, f, indent=2)
+    for report in [SecurityMarkdownReport(), SecurityCodeClimateReport()]:
+        report.generate(args.analysisid, feedback, options)
