@@ -16,8 +16,8 @@ import inspect
 from io import StringIO
 from unittest import TestCase
 
-from sigridci.sigridci.pipeline_summary_report import PipelineSummaryReport
 from sigridci.sigridci.publish_options import PublishOptions, RunMode
+from sigridci.sigridci.reports.pipeline_summary_report import PipelineSummaryReport
 
 
 class ConclusionReportTest(TestCase):

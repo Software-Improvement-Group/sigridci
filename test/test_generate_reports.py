@@ -51,13 +51,13 @@ class GenerateReportsTest(TestCase):
 @contextmanager
 def mockModulePath():
     mockModules = [
-        "ascii_art_report",
-        "json_report",
-        "junit_format_report",
-        "markdown_report",
         "publish_options",
-        "pipeline_summary_report",
-        "static_html_report",
+        "reports.ascii_art_report",
+        "reports.json_report",
+        "reports.junit_format_report",
+        "reports.markdown_report",
+        "reports.pipeline_summary_report",
+        "reports.static_html_report",
     ]
 
     try:

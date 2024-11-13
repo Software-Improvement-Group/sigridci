@@ -17,8 +17,8 @@ import os
 import tempfile
 from unittest import TestCase, mock
 
-from sigridci.sigridci.markdown_report import MarkdownReport
 from sigridci.sigridci.publish_options import PublishOptions, RunMode
+from sigridci.sigridci.reports.markdown_report import MarkdownReport
 
 
 class MarkdownReportTest(TestCase):

@@ -14,7 +14,7 @@
 
 import os
 
-from sigridci.report import Report
+from .report import Report
 from .security_markdown_report import SecurityMarkdownReport
 
 

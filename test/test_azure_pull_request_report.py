@@ -16,9 +16,9 @@ import json
 from tempfile import NamedTemporaryFile, mkdtemp
 from unittest import TestCase
 
-from sigridci.sigridci.azure_pull_request_report import AzurePullRequestReport
 from sigridci.sigridci.objective import ObjectiveStatus
 from sigridci.sigridci.publish_options import PublishOptions, RunMode
+from sigridci.sigridci.reports.azure_pull_request_report import AzurePullRequestReport
 
 
 class AzurePullRequestReportTest(TestCase):

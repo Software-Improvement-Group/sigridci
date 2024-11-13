@@ -14,9 +14,9 @@
 
 import sys
 
-from .objective import Objective, ObjectiveStatus
-from .publish_options import RunMode
 from .report import Report
+from ..objective import Objective, ObjectiveStatus
+from ..publish_options import RunMode
 
 
 class AsciiArtReport(Report):

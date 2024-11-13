@@ -15,8 +15,8 @@
 import html
 import os
 
-from .objective import Objective, ObjectiveStatus
 from .report import Report
+from ..objective import Objective, ObjectiveStatus
 
 
 class StaticHtmlReport(Report):

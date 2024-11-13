@@ -18,8 +18,8 @@ import json
 
 from sigridci.sigrid_api_client import SigridApiClient
 from sigridci.command_line_helper import getFeedbackPublishOptions, parseFeedbackCommandLineArguments
-from sigridci.gitlab_pull_request_report import GitLabPullRequestReport
 from sigridci.upload_log import UploadLog
+from sigridci.reports.gitlab_pull_request_report import GitLabPullRequestReport
 from sigridci.reports.security_markdown_report import SecurityMarkdownReport
 from sigridci.reports.security_code_climate_report import SecurityCodeClimateReport
 

@@ -15,9 +15,9 @@
 import html
 import os
 
-from .objective import Objective, ObjectiveStatus
-from .platform import Platform
 from .report import Report
+from ..objective import Objective, ObjectiveStatus
+from ..platform import Platform
 
 
 class MarkdownReport(Report):

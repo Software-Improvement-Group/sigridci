@@ -19,13 +19,13 @@ import os
 import sys
 from argparse import ArgumentParser, SUPPRESS
 
-from sigridci.ascii_art_report import AsciiArtReport
-from sigridci.json_report import JsonReport
-from sigridci.junit_format_report import JUnitFormatReport
-from sigridci.markdown_report import MarkdownReport
 from sigridci.publish_options import PublishOptions, RunMode
-from sigridci.pipeline_summary_report import PipelineSummaryReport
-from sigridci.static_html_report import StaticHtmlReport
+from sigridci.reports.ascii_art_report import AsciiArtReport
+from sigridci.reports.json_report import JsonReport
+from sigridci.reports.junit_format_report import JUnitFormatReport
+from sigridci.reports.markdown_report import MarkdownReport
+from sigridci.reports.pipeline_summary_report import PipelineSummaryReport
+from sigridci.reports.static_html_report import StaticHtmlReport
 
 
 def generateReports(feedbackFile, options):

@@ -15,7 +15,7 @@
 import urllib.parse
 from datetime import datetime
 
-from .objective import Objective, ObjectiveStatus
+from ..objective import Objective, ObjectiveStatus
 
 
 class Report:

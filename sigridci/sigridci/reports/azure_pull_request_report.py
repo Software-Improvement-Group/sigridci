@@ -17,10 +17,10 @@ import os
 import urllib.error
 import urllib.request
 
-from .objective import Objective, ObjectiveStatus
-from .publish_options import RunMode
 from .report import Report
-from .upload_log import UploadLog
+from ..objective import Objective, ObjectiveStatus
+from ..publish_options import RunMode
+from ..upload_log import UploadLog
 
 
 class AzurePullRequestReport(Report):

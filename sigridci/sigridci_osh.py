@@ -18,8 +18,8 @@ import json
 
 from sigridci.sigrid_api_client import SigridApiClient
 from sigridci.command_line_helper import getFeedbackPublishOptions, parseFeedbackCommandLineArguments
-from sigridci.gitlab_pull_request_report import GitLabPullRequestReport
 from sigridci.upload_log import UploadLog
+from sigridci.reports.gitlab_pull_request_report import GitLabPullRequestReport
 from sigridci.reports.osh_markdown_report import OpenSourceHealthMarkdownReport
 from sigridci.reports.osh_code_climate_report import OpenSourceHealthCodeClimateReport
 

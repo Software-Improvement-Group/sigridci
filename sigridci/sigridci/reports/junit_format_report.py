@@ -14,8 +14,8 @@
 
 from xml.dom.minidom import Document
 
-from .objective import Objective, ObjectiveStatus
 from .report import Report
+from ..objective import Objective, ObjectiveStatus
 
 
 class JUnitFormatReport(Report):

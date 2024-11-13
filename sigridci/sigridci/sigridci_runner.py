@@ -15,17 +15,17 @@
 import os
 import sys
 
-from .ascii_art_report import AsciiArtReport
-from .azure_pull_request_report import AzurePullRequestReport
-from .gitlab_pull_request_report import GitLabPullRequestReport
-from .json_report import JsonReport
-from .junit_format_report import JUnitFormatReport
-from .markdown_report import MarkdownReport
-from .pipeline_summary_report import PipelineSummaryReport
 from .publish_options import PublishOptions, RunMode
 from .sigrid_api_client import SigridApiClient
-from .static_html_report import StaticHtmlReport
 from .upload_log import UploadLog
+from .reports.ascii_art_report import AsciiArtReport
+from .reports.azure_pull_request_report import AzurePullRequestReport
+from .reports.gitlab_pull_request_report import GitLabPullRequestReport
+from .reports.json_report import JsonReport
+from .reports.junit_format_report import JUnitFormatReport
+from .reports.markdown_report import MarkdownReport
+from .reports.pipeline_summary_report import PipelineSummaryReport
+from .reports.static_html_report import StaticHtmlReport
 
 
 class SigridCiRunner:
