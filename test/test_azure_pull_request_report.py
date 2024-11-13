@@ -38,7 +38,7 @@ class AzurePullRequestReportTest(TestCase):
     def testPostNewComment(self):
         tempDir = mkdtemp()
         with open(f"{tempDir}/feedback.md", "w") as f:
-            f.write("# Sigrid CI feedback\n\ntest\n")
+            f.write("# # [Sigrid](https://sigrid-says.com) feedback\n\ntest\n")
 
         mockAzureResponse = {
             "value": [
