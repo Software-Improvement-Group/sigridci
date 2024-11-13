@@ -84,8 +84,7 @@ rating. CVSS is the industry de-facto standard for communicating the
 characteristics and severity of vulnerabilities. 
 It is developed and maintained by the NIST.
 
-To score a 4 stars rating for this property, a producer should aim to
-have at most moderate-risk vulnerabilities.
+To score a 4 star rating for this property, a producer should aim to have no vulnerabilities with a severity higher than "moderate". 
 
 ## Dependency Freshness
 
