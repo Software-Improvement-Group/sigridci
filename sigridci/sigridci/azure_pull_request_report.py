@@ -60,7 +60,7 @@ class AzurePullRequestReport(Report):
 
         for thread in existingThreads["value"]:
             for comment in thread["comments"]:
-                if comment["content"].startswith("# Sigrid"):
+                if comment["content"].startswith(("# Sigrid", "# [Sigrid]")):
                     return thread["id"]
 
         return None
