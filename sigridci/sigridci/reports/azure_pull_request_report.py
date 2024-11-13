@@ -29,24 +29,25 @@ class AzurePullRequestReport(Report):
     def generate(self, analysisId, feedback, options):
         feedbackFile = f"{options.outputDir}/feedback.md"
 
-        if not self.isSupported(options) or not os.path.exists(feedbackFile):
+        if not self.isSupported(options):
             return
 
         try:
             UploadLog.log("Sending feedback to Azure DevOps API")
 
-            # We want to update the existing comment, to avoid spamming people with new
-            # comments every time they make a commit. We have no way to persist this,
-            # so we need to check the existing comments.
-            existingId = self.findExistingSigridCommentThreadId()
-            status = Objective.determineStatus(feedback, options)
+            for feedbackFile in self.getAvailableFeedbackFiles(options):
+                # We want to update the existing comment, to avoid spamming people with new
+                # comments every time they make a commit. We have no way to persist this,
+                # so we need to check the existing comments.
+                existingId = self.findExistingSigridCommentThreadId()
+                status = Objective.determineStatus(feedback, options)
 
-            if existingId == None:
-                self.callAzure("POST", self.buildRequestBody(feedbackFile, status), None)
-                UploadLog.log("Published new feedback to Azure DevOps")
-            else:
-                self.callAzure("PATCH", self.buildRequestBody(feedbackFile, status), existingId)
-                UploadLog.log("Updated existing feedback in Azure DevOps")
+                if existingId == None:
+                    self.callAzure("POST", self.buildRequestBody(feedbackFile, status), None)
+                    UploadLog.log("Published new feedback to Azure DevOps")
+                else:
+                    self.callAzure("PATCH", self.buildRequestBody(feedbackFile, status), existingId)
+                    UploadLog.log("Updated existing feedback in Azure DevOps")
         except urllib.error.HTTPError as e:
             UploadLog.log(f"Warning: Azure DevOps API error calling {e.url}: {e.code} ({e.reason}) / {e.fp.read()}")
 

@@ -12,6 +12,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
+import os
 import urllib.parse
 from datetime import datetime
 
@@ -75,3 +76,8 @@ class Report:
             return f"⚠️  Your code did not improve towards your Sigrid objective of {target}"
         else:
             return "💭️  You did not change any files that are measured by Sigrid"
+
+    def getAvailableFeedbackFiles(self, options):
+        fileNames = ["feedback.md", "osh-feedback.md", "security-feedback.md"]
+        files = [f"{options.outputDir}/{fileName}" for fileName in fileNames]
+        return [file for file in files if os.path.exists(file)]

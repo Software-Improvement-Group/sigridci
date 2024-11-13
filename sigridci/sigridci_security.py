@@ -19,15 +19,15 @@ import json
 from sigridci.sigrid_api_client import SigridApiClient
 from sigridci.command_line_helper import getFeedbackPublishOptions, parseFeedbackCommandLineArguments
 from sigridci.upload_log import UploadLog
+from sigridci.reports.azure_pull_request_report import AzurePullRequestReport
 from sigridci.reports.gitlab_pull_request_report import GitLabPullRequestReport
 from sigridci.reports.security_markdown_report import SecurityMarkdownReport
-from sigridci.reports.security_code_climate_report import SecurityCodeClimateReport
 
 
 SECURITY_REPORTS = [
     SecurityMarkdownReport(),
     GitLabPullRequestReport(),
-    SecurityCodeClimateReport()
+    AzurePullRequestReport()
 ]
 
 

@@ -27,7 +27,7 @@ class GitLabPullRequestReport(Report):
         if not self.isWithinGitLabMergeRequestPipeline() or options.runMode != RunMode.FEEDBACK_ONLY:
             return
 
-        for feedbackFile in self.getFeedbackFiles(options):
+        for feedbackFile in self.getAvailableFeedbackFiles(options):
             baseURL = os.environ["CI_API_V4_URL"]
             projectId = os.environ["CI_MERGE_REQUEST_PROJECT_ID"]
             mergeRequestId = os.environ["CI_MERGE_REQUEST_IID"]
@@ -44,11 +44,6 @@ class GitLabPullRequestReport(Report):
 
     def isWithinGitLabMergeRequestPipeline(self):
         return "CI_MERGE_REQUEST_IID" in os.environ and "SIGRIDCI_GITLAB_COMMENT_TOKEN" in os.environ
-
-    def getFeedbackFiles(self, options):
-        fileNames = ["feedback.md", "osh-feedback.md", "security-feedback.md"]
-        files = [f"{options.outputDir}/{fileName}" for fileName in fileNames]
-        return [file for file in files if os.path.exists(file)]
 
     def buildRequestBody(self, feedbackFile):
         with open(feedbackFile, mode="r", encoding="utf-8") as f:
