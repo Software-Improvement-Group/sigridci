@@ -75,8 +75,16 @@ Create an Enterprise application 'app' in your IdP with the following details:
 - Application Type: Web
 - Sign in Redirect URI: https://auth.sigrid-says.com/oauth2/idpresponse
 
-Attributes & Claims:
-- Scopes: openid profile email (default)
+Token Configuration > Optional Claims:
+
+| Claim | Description | Token Type |
+| ---------- | ---------- | ---------- |
+| email  | The addressable email for this user, if the user has one | ID |
+| family_name | Provides the last name, surname, or family name of the user as defined in the user object | ID |
+| given_name | Provides the first or "given" name of the user, as set on the user object | ID |
+
+_Note: For Azure/Entra ID; Please check the box "Turn on the Microsoft Graph email, profile permission (required for claims to appear in token)"_
+
 
 Other Settings:
 - Default
@@ -94,8 +102,8 @@ The information will include your app's identifier, redirectURL etc.
 The Application's `client_id`, `client_secret` and the `issuer`.
 How an issuer looks depends on your IdP.
 
-Okta issuer: https://`<myOktaOrg>`.okta.com  
-Azure/EntraID: https://login.microsoftonline.com/`<tenant_id>`
+Okta: https://`<myOktaOrg>`.okta.com  
+Azure/Entra ID: https://login.microsoftonline.com/`<tenant_id>`/oauth2/v2.0/authorize
 
 ### Example Azure/EntraID
 
