@@ -102,23 +102,26 @@ The information will include your app's identifier, redirectURL etc.
 
 #### OpenID Connect Configuration
 The Application's `client_id`, `client_secret` and the `issuer`.
-How an issuer looks depends on your IdP.
+How the issuer URL looks depends on your IdP.
 
-Okta: https://`<myOktaOrg>`.okta.com  
-Azure/Entra ID: https://login.microsoftonline.com/`<tenant_id>`/oauth2/v2.0/authorize
+| IdP | Issuer URL |
+| ---------- | ---------- |
+| Azure/Entra ID | [https://login.microsoftonline.com/tenant_id/oauth2/v2.0/authorize](https://login.microsoftonline.com/tenant_id/oauth2/v2.0/authorize) |
+| Okta  | [https://myOktaOrg.okta.com](https://myOktaOrg.okta.com)   |
 
-### Example Azure/EntraID
+### SAML Examples
+Please see the separate pages for SAML examples.
 
-<img src="../images/azure-saml.png" width="800" />
+- [SAML Azure/Entra ID](usermanagement-example-saml-entraid.md)
+- [SAML Google](usermanagement-example-saml-google.md)
+- [SAML Okta](usermanagement-example-saml-okta.md)
+- [SAML OneLogin](usermanagement-example-saml-onelogin.md)
 
-### Example SAML OneLogin
-Please see the separate [OneLogin page](usermanagement-example-onelogin.md).
+### OIDC Examples
+Please see the separate pages for OIDC examples.
 
-### Example SAML Okta
-Please see the separate [OKTA page](usermanagement-example-okta.md).
-
-### Example SAML Google
-Please see the separate [Google page](usermanagement-example-google.md).
+- [OIDC Azure/Entra ID](usermanagement-example-oidc-entraid.md)
+- [OIDC Okta](usermanagement-example-oidc-okta.md)
 
 ### Deliverables
 SIG will setup SSO for you. You will have your own customer-specific URL Sigrid.
