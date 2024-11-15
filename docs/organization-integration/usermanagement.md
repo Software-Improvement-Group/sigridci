@@ -86,7 +86,7 @@ Please check your IdP’s documentation to see if the required claim is included
 | family_name | Provides the last name, surname, or family name of the user as defined in the user object | ID |
 | given_name | Provides the first or "given" name of the user, as set on the user object | ID |
 
-_Note: For Azure/Entra ID; Please check the box "Turn on the Microsoft Graph email, profile permission (required for claims to appear in token)"_
+_Note: For Azure/Entra ID, please check the box "Turn on the Microsoft Graph email, profile permission (required for claims to appear in token)"_
 
 Other Settings:
 - Default
