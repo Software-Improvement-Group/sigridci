@@ -75,7 +75,10 @@ Create an Enterprise application 'app' in your IdP with the following details:
 - Application Type: Web
 - Sign in Redirect URI: https://auth.sigrid-says.com/oauth2/idpresponse
 
-Token Configuration > Optional Claims:
+Attributes & Claims:
+
+Okta includes the required claims by default, while Azure/Entra ID does not.
+Please check your IdP’s documentation to see if the required claim is included by default or if it needs to be explicitly added.
 
 | Claim | Description | Token Type |
 | ---------- | ---------- | ---------- |
@@ -84,7 +87,6 @@ Token Configuration > Optional Claims:
 | given_name | Provides the first or "given" name of the user, as set on the user object | ID |
 
 _Note: For Azure/Entra ID; Please check the box "Turn on the Microsoft Graph email, profile permission (required for claims to appear in token)"_
-
 
 Other Settings:
 - Default
