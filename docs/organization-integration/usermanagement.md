@@ -56,9 +56,9 @@ Attributes & Claims:
 
 | Your user | Sigrid expects the long url as SAML attribute name |
 | ---------- | ---------- |
-| user email  | http://schemas.xmlsoap.org/ws/2005/05/identity/claims/emailaddress |
-| user last name   | http://schemas.xmlsoap.org/ws/2005/05/identity/claims/name |
-| user first name   | http://schemas.xmlsoap.org/ws/2005/05/identity/claims/given_name |
+| user email | `http://schemas.xmlsoap.org/ws/2005/05/identity/claims/emailaddress` |
+| user last name | `http://schemas.xmlsoap.org/ws/2005/05/identity/claims/name` |
+| user first name | `http://schemas.xmlsoap.org/ws/2005/05/identity/claims/given_name` |
 
 _Note: if your IdP requires to set an unique user identifier, please choose emailaddress_
 
@@ -106,8 +106,8 @@ How the issuer URL looks depends on your IdP.
 
 | IdP | Issuer URL |
 | ---------- | ---------- |
-| Azure/Entra ID | [https://login.microsoftonline.com/tenant_id/oauth2/v2.0/authorize](https://login.microsoftonline.com/tenant_id/oauth2/v2.0/authorize) |
-| Okta  | [https://myOktaOrg.okta.com](https://myOktaOrg.okta.com)   |
+| Azure/Entra ID | `https://login.microsoftonline.com/<tenant_id>/oauth2/v2.0/authorize` |
+| Okta  | `https://<myOktaOrg>.okta.com` |
 
 ### SAML Examples
 Please see the separate pages for SAML examples.
