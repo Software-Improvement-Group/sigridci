@@ -20,8 +20,7 @@ from ..objective import Objective, ObjectiveStatus
 from ..platform import Platform
 
 
-class MarkdownReport(Report):
-    ALLOW_FANCY_MARKDOWN = True
+class MaintainabilityMarkdownReport(Report):
     MAX_SHOWN_FINDINGS = 8
     MAX_OCCURRENCES = 3
 
@@ -46,7 +45,7 @@ class MarkdownReport(Report):
         md += f"{self.renderSummary(feedback, options)}\n\n"
 
         if status != ObjectiveStatus.UNKNOWN:
-            if self.isHtmlMarkdownSupported():
+            if Platform.isHtmlMarkdownSupported():
                 md += "<details><summary>Show details</summary>\n\n"
 
             md += f"Sigrid compared your code against the baseline of {self.formatBaseline(feedback)}.\n\n"
@@ -63,7 +62,7 @@ class MarkdownReport(Report):
                 md += f"- 🔸 [The findings are false positives]({self.getFeedbackLink(options, 'falsepositive')})\n"
                 md += f"- 🔹 [These findings are not so important to me]({self.getFeedbackLink(options, 'unimportant')})\n"
 
-            if self.isHtmlMarkdownSupported():
+            if Platform.isHtmlMarkdownSupported():
                 md += "</details>\n"
 
         md += "\n----\n"
@@ -148,8 +147,3 @@ class MarkdownReport(Report):
 
     def getFeedbackLink(self, options, feedback):
         return f"{options.feedbackURL}?feature=sigridci.feedback&feedback={feedback}&system={options.getSystemId()}"
-
-    def isHtmlMarkdownSupported(self):
-        if not self.ALLOW_FANCY_MARKDOWN:
-            return False
-        return Platform.isGitHub() or Platform.isGitLab() or Platform.isAzureDevOps()

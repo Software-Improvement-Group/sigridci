@@ -16,19 +16,40 @@ import os
 
 from .report import Report
 from .security_markdown_report import SecurityMarkdownReport
+from ..platform import Platform
 
 
 class OpenSourceHealthMarkdownReport(Report):
 
     def generate(self, analysisId, feedback, options):
         with open(os.path.abspath(f"{options.outputDir}/osh-feedback.md"), "w", encoding="utf-8") as f:
-            f.write(f"# [Sigrid]({self.getSigridUrl(options)}) Open Source Health feedback\n\n")
-            f.write("| Risk | Dependency | Description |\n")
-            f.write("|------|------------|-------------|\n")
+            f.write(self.generateMarkdown(feedback, options))
 
-            for dependency in feedback["dependencies"]:
-                for vulnerability in dependency["vulnerabilities"]:
-                    symbol = SecurityMarkdownReport.SEVERITY_SYMBOLS[vulnerability["severity"]]
-                    name = f"{dependency['name']}@{dependency['currentVersion']}"
-                    description = vulnerability["description"]
-                    f.write(f"| {symbol} | {name} | {description} |\n")
+    def generateMarkdown(self, feedback, options):
+        md = f"# [Sigrid]({self.getSigridUrl(options)}) Open Source Health feedback\n\n"
+
+        if Platform.isHtmlMarkdownSupported():
+            md += "<details><summary>Show findings</summary>\n\n"
+
+        md += f"Sigrid compared your code against the baseline of {self.formatBaseline(feedback)}.\n\n"
+        md += self.generateFindingsTable(feedback)
+
+        if Platform.isHtmlMarkdownSupported():
+            md += "</details>\n\n"
+
+        md += "----\n"
+        md += f"[**View this system in Sigrid**]({self.getSigridUrl(options)}/-/open-source-health)"
+        return md
+
+    def generateFindingsTable(self, feedback):
+        md = "| Risk | Dependency | Description |\n"
+        md += "|------|------------|-------------|\n"
+
+        for dependency in feedback["dependencies"]:
+            for vulnerability in dependency["vulnerabilities"]:
+                symbol = SecurityMarkdownReport.SEVERITY_SYMBOLS[vulnerability["severity"]]
+                name = f"{dependency['name']}@{dependency['currentVersion']}"
+                description = vulnerability["description"]
+                md += f"| {symbol} | {name} | {description} |\n"
+
+        return md

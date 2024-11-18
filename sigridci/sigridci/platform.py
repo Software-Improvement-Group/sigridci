@@ -31,3 +31,9 @@ class Platform:
     @staticmethod
     def isBitBucket():
         return "BITBUCKET_REPO_SLUG" in os.environ
+
+    @staticmethod
+    def isHtmlMarkdownSupported():
+        if os.environ.get("SIGRID_CI_MARKDOWN_HTML") in ("false", "0"):
+            return False
+        return Platform.isGitHub() or Platform.isGitLab() or Platform.isAzureDevOps()

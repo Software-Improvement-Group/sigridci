@@ -55,8 +55,10 @@ def mockModulePath():
         "reports.ascii_art_report",
         "reports.json_report",
         "reports.junit_format_report",
-        "reports.markdown_report",
+        "reports.osh_markdown_report",
+        "reports.maintainability_markdown_report",
         "reports.pipeline_summary_report",
+        "reports.security_markdown_report",
         "reports.static_html_report",
     ]
 

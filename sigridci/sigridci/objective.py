@@ -61,3 +61,14 @@ class Objective:
             return ObjectiveStatus.WORSENED
         else:
             return ObjectiveStatus.UNCHANGED
+
+    @staticmethod
+    def isFindingIncluded(severity, objective):
+        if objective.lower() == "critical":
+            return severity.lower() == "critical"
+        elif objective.lower() == "high":
+            return severity.lower() in ("critical", "high")
+        elif objective.lower() == "medium":
+            return severity.lower() in ("critical", "high", "medium")
+        else:
+            return True

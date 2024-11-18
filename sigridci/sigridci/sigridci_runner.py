@@ -23,7 +23,7 @@ from .reports.azure_pull_request_report import AzurePullRequestReport
 from .reports.gitlab_pull_request_report import GitLabPullRequestReport
 from .reports.json_report import JsonReport
 from .reports.junit_format_report import JUnitFormatReport
-from .reports.markdown_report import MarkdownReport
+from .reports.maintainability_markdown_report import MaintainabilityMarkdownReport
 from .reports.pipeline_summary_report import PipelineSummaryReport
 from .reports.static_html_report import StaticHtmlReport
 
@@ -53,7 +53,7 @@ class SigridCiRunner:
 
         self.reports = [
             AsciiArtReport(),
-            MarkdownReport(),
+            MaintainabilityMarkdownReport(),
             StaticHtmlReport(),
             JUnitFormatReport(),
             JsonReport(),

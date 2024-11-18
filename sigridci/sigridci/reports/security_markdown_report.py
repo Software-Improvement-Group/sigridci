@@ -15,6 +15,7 @@
 import os
 
 from .report import Report
+from ..platform import Platform
 
 
 class SecurityMarkdownReport(Report):
@@ -27,16 +28,36 @@ class SecurityMarkdownReport(Report):
 
     def generate(self, analysisId, feedback, options):
         with open(os.path.abspath(f"{options.outputDir}/security-feedback.md"), "w", encoding="utf-8") as f:
-            f.write(f"# [Sigrid]({self.getSigridUrl(options)}) Security feedback\n\n")
-            f.write("| Risk | File | Finding |\n")
-            f.write("|------|------|---------|\n")
+            f.write(self.generateMarkdown(feedback, options))
 
-            for finding in self.getRelevantFindings(feedback):
-                symbol = "⚫️"
-                file = finding["locations"][0]["physicalLocation"]["artifactLocation"]["uri"]
-                line = finding["locations"][0]["physicalLocation"]["region"]["startLine"]
-                description = finding["message"]["text"]
-                f.write(f"| {symbol} | {file}:{line} | {description} |\n")
+    def generateMarkdown(self, feedback, options):
+        md = f"# [Sigrid]({self.getSigridUrl(options)}) Security feedback\n\n"
+
+        if Platform.isHtmlMarkdownSupported():
+            md += "<details><summary>Show findings</summary>\n\n"
+
+        md += f"Sigrid compared your code against the baseline of {self.formatBaseline(feedback)}.\n\n"
+        md += self.generateFindingsTable(feedback)
+
+        if Platform.isHtmlMarkdownSupported():
+            md += "</details>\n\n"
+
+        md += "----\n"
+        md += f"[**View this system in Sigrid**]({self.getSigridUrl(options)}/-/security)"
+        return md
+
+    def generateFindingsTable(self, feedback):
+        md = "| Risk | File | Finding |\n"
+        md += "|------|------|---------|\n"
+
+        for finding in self.getRelevantFindings(feedback):
+            symbol = "⚪️"
+            file = finding["locations"][0]["physicalLocation"]["artifactLocation"]["uri"]
+            line = finding["locations"][0]["physicalLocation"]["region"]["startLine"]
+            description = finding["message"]["text"]
+            md += f"| {symbol} | {file}:{line} | {description} |\n"
+
+        return md
 
     def getRelevantFindings(self, feedback):
         for run in feedback["runs"]:

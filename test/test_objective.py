@@ -80,6 +80,22 @@ class ObjectiveTest(TestCase):
         status = Objective.determineStatus(feedback, self.options)
         self.assertEqual(status, ObjectiveStatus.UNKNOWN)
 
+    def testFindingBasedObjectives(self):
+        self.assertTrue(Objective.isFindingIncluded("critical", "critical"))
+        self.assertFalse(Objective.isFindingIncluded("high", "critical"))
+        self.assertFalse(Objective.isFindingIncluded("medium", "critical"))
+        self.assertFalse(Objective.isFindingIncluded("low", "critical"))
+
+        self.assertTrue(Objective.isFindingIncluded("critical", "high"))
+        self.assertTrue(Objective.isFindingIncluded("high", "high"))
+        self.assertFalse(Objective.isFindingIncluded("medium", "high"))
+        self.assertFalse(Objective.isFindingIncluded("low", "high"))
+
+        self.assertTrue(Objective.isFindingIncluded("critical", "medium"))
+        self.assertTrue(Objective.isFindingIncluded("high", "medium"))
+        self.assertTrue(Objective.isFindingIncluded("medium", "medium"))
+        self.assertFalse(Objective.isFindingIncluded("low", "medium"))
+
     def mockFeedback(self, baseline, changedBefore, changedAfter, newAndChanged):
         return {
             "baselineRatings" : {
