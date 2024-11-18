@@ -12,13 +12,21 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
+import os
 from tempfile import mkdtemp
-from unittest import TestCase
+from unittest import TestCase, mock
 
 from sigridci.sigridci.gitlab_pull_request_report import GitLabPullRequestReport
 from sigridci.sigridci.markdown_report import MarkdownReport
 from sigridci.sigridci.publish_options import PublishOptions, RunMode
 from sigridci.sigridci.upload_log import UploadLog
+
+
+MOCK_GITLAB_ENV = {
+    "CI_API_V4_URL" : "https://example.com",
+    "CI_MERGE_REQUEST_PROJECT_ID" : "1234",
+    "CI_MERGE_REQUEST_IID" : "5678"
+}
 
 
 class GitLabPullRequestReportTest(TestCase):
@@ -45,17 +53,21 @@ class GitLabPullRequestReportTest(TestCase):
             markdownReport = MarkdownReport()
             f.write(markdownReport.renderMarkdown("1234", self.feedback, self.options))
 
+    @mock.patch.dict(os.environ, MOCK_GITLAB_ENV)
     def testPostNewComment(self):
         gitlab = MockGitLab(None)
         gitlab.generate("1234", self.feedback, self.options)
 
         self.assertEqual(["Published feedback to GitLab"], UploadLog.history)
+        self.assertEqual(["POST https://example.com/projects/1234/merge_requests/5678/notes"], gitlab.called)
 
+    @mock.patch.dict(os.environ, MOCK_GITLAB_ENV)
     def testUpdateExistingComment(self):
         gitlab = MockGitLab("1")
         gitlab.generate("1234", self.feedback, self.options)
 
         self.assertEqual(["Updated existing GitLab feedback"], UploadLog.history)
+        self.assertEqual(["PUT https://example.com/projects/1234/merge_requests/5678/notes/1"], gitlab.called)
 
 
 class MockGitLab(GitLabPullRequestReport):
@@ -63,11 +75,10 @@ class MockGitLab(GitLabPullRequestReport):
     def __init__(self, existingCommentId):
         super().__init__()
         self.existingCommentId = existingCommentId
-
-    def buildPostCommentURL(self, existingCommentId):
-        return str(existingCommentId)
+        self.called = []
 
     def callAPI(self, method, url, body):
+        self.called.append(f"{method} {url}")
         return self
 
     def isWithinGitLabMergeRequestPipeline(self):
