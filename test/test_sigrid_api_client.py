@@ -17,6 +17,7 @@ import os
 import urllib.request
 from email.message import Message
 from unittest import TestCase, mock
+from urllib.error import URLError
 
 from sigridci.sigridci.publish_options import PublishOptions, RunMode
 from sigridci.sigridci.sigrid_api_client import SigridApiClient
@@ -117,11 +118,44 @@ class SigridApiClientTest(TestCase):
 
         self.assertEqual(expectedLog, UploadLog.history)
 
+    @mock.patch.dict(os.environ, {"SIGRID_CI_TOKEN" : "mytoken\n"})
+    def testErrorHandlerWith404(self):
+        options = PublishOptions("aap", "noot", runMode=RunMode.PUBLISH_ONLY, sourceDir="/tmp", showUploadContents=True)
+        apiClient = ApiStub(options, TimeoutError())
+        with self.assertRaises(SystemExit):
+            apiClient.retry(lambda: apiClient.callSigridAPI("/test"), attempts=1)
+
+        expectedLog = [
+            "Using token ending in '****oken'",
+            "Sigrid did not respond within the timeout period",
+            "Sigrid is currently unavailable, failed after 1 attempts"
+        ]
+
+        self.assertEqual(expectedLog, UploadLog.history)
+
+    @mock.patch.dict(os.environ, {"SIGRID_CI_TOKEN" : "mytoken\n"})
+    def testErrorHandlerWith404(self):
+        options = PublishOptions("aap", "noot", runMode=RunMode.PUBLISH_ONLY, sourceDir="/tmp", showUploadContents=True)
+        apiClient = ApiStub(options, URLError("test reason"))
+        with self.assertRaises(SystemExit):
+            apiClient.retry(lambda: apiClient.callSigridAPI("/test"), attempts=1)
+
+        expectedLog = [
+            "Using token ending in '****oken'",
+            "Error contacting Sigrid: <urlopen error test reason> (URLError)",
+            "Sigrid is currently unavailable, failed after 1 attempts"
+        ]
+
+        self.assertEqual(expectedLog, UploadLog.history)
+
 
 class ApiStub(SigridApiClient):
-    def __init__(self, options: PublishOptions):
+    def __init__(self, options: PublishOptions, exception: Exception = None):
         super().__init__(options)
+        self.exception = exception
         self.called = []
 
     def callSigridAPI(self, path, body=None, contentType=None):
         self.called.append(path)
+        if self.exception:
+            raise self.exception

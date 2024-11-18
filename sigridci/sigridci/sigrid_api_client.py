@@ -12,6 +12,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
+import http.client
 import json
 import os
 import sys
@@ -71,11 +72,16 @@ class SigridApiClient:
                 if e.code == 404 and allow404:
                     return False
                 SigridApiClient.handleError(e, server)
+            except TimeoutError:
+                UploadLog.log(f"{server} did not respond within the timeout period")
+            except (urllib.error.URLError, http.client.HTTPException) as e:
+                UploadLog.log(f"Error contacting {server}: {str(e)} ({type(e).__name__})")
 
             # These statements are intentionally outside the except-block,
             # since we want to retry for empty response on some end points.
-            UploadLog.log("Retrying")
-            time.sleep(self.POLL_INTERVAL)
+            if attempt != attempts - 1:
+                UploadLog.log("Retrying")
+                time.sleep(self.POLL_INTERVAL)
 
         UploadLog.log(f"{server} is currently unavailable, failed after {attempts} attempts")
         sys.exit(1)
