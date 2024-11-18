@@ -27,7 +27,7 @@ from .upload_log import UploadLog
 
 class SigridApiClient:
     API_VERSION = "v1"
-    POLL_INTERVAL = 1
+    POLL_INTERVAL = 30
     POLL_ATTEMPTS = 60
 
     def __init__(self, options: PublishOptions):
