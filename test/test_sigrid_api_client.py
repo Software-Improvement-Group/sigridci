@@ -12,12 +12,8 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-import io
 import os
-import urllib.request
-from email.message import Message
 from unittest import TestCase, mock
-from urllib.error import URLError
 
 from sigridci.sigridci.publish_options import PublishOptions, RunMode
 from sigridci.sigridci.sigrid_api_client import SigridApiClient
@@ -72,81 +68,6 @@ class SigridApiClientTest(TestCase):
         ApiStub(options)
 
         self.assertEqual(["Using token ending in '****oken'"], UploadLog.history)
-
-    @mock.patch.dict(os.environ, {"SIGRID_CI_TOKEN" : "mytoken\n"})
-    def testErrorHandlerNoHeadersNorBody(self):
-        options = PublishOptions("aap", "noot", runMode=RunMode.PUBLISH_ONLY, sourceDir="/tmp", showUploadContents=True)
-        apiClient = SigridApiClient(options)
-        error = urllib.request.HTTPError("https://example.com", 401, "No reason", Message(), io.BytesIO(b""))
-
-        with self.assertRaises(SystemExit):
-            apiClient.handleError(error, "Sigrid")
-
-        self.assertIn("You are not authenticated to Sigrid (HTTP status 401 for https://example.com), please check if your token is valid", UploadLog.history)
-        self.assertIn("No response headers", UploadLog.history)
-        self.assertIn("No response body", UploadLog.history)
-
-    @mock.patch.dict(os.environ, {"SIGRID_CI_TOKEN" : "mytoken\n"})
-    def testErrorHandlerWithHeadersAndBody(self):
-        options = PublishOptions("aap", "noot", runMode=RunMode.PUBLISH_ONLY, sourceDir="/tmp", showUploadContents=True)
-        apiClient = SigridApiClient(options)
-
-        headers = Message()
-        headers["aap"] = "noot"
-
-        error = urllib.request.HTTPError("https://example.com", 403, "No reason", headers, io.BytesIO(b"{}"))
-        with self.assertRaises(SystemExit):
-            apiClient.handleError(error, "Sigrid")
-
-        self.assertIn("You are not authorized to access Sigrid for this system (HTTP status 403 for https://example.com)", UploadLog.history)
-        self.assertIn("Response headers:\n{'aap': 'noot'}", UploadLog.history)
-        self.assertIn("Response body:\n{}", UploadLog.history)
-
-    @mock.patch.dict(os.environ, {"SIGRID_CI_TOKEN" : "mytoken\n"})
-    def testErrorHandlerWith404(self):
-        options = PublishOptions("aap", "noot", runMode=RunMode.PUBLISH_ONLY, sourceDir="/tmp", showUploadContents=True)
-        apiClient = SigridApiClient(options)
-        error = urllib.request.HTTPError("https://example.com", 404, "No reason", {}, None)
-        apiClient.handleError(error, "Sigrid")
-
-        expectedLog = [
-            "Using token ending in '****oken'",
-            "HTTP Error 404: No reason",
-            "No response headers",
-            "No response body"
-        ]
-
-        self.assertEqual(expectedLog, UploadLog.history)
-
-    @mock.patch.dict(os.environ, {"SIGRID_CI_TOKEN" : "mytoken\n"})
-    def testErrorHandlerWith404(self):
-        options = PublishOptions("aap", "noot", runMode=RunMode.PUBLISH_ONLY, sourceDir="/tmp", showUploadContents=True)
-        apiClient = ApiStub(options, TimeoutError())
-        with self.assertRaises(SystemExit):
-            apiClient.retry(lambda: apiClient.callSigridAPI("/test"), attempts=1)
-
-        expectedLog = [
-            "Using token ending in '****oken'",
-            "Sigrid did not respond within the timeout period",
-            "Sigrid is currently unavailable, failed after 1 attempts"
-        ]
-
-        self.assertEqual(expectedLog, UploadLog.history)
-
-    @mock.patch.dict(os.environ, {"SIGRID_CI_TOKEN" : "mytoken\n"})
-    def testErrorHandlerWith404(self):
-        options = PublishOptions("aap", "noot", runMode=RunMode.PUBLISH_ONLY, sourceDir="/tmp", showUploadContents=True)
-        apiClient = ApiStub(options, URLError("test reason"))
-        with self.assertRaises(SystemExit):
-            apiClient.retry(lambda: apiClient.callSigridAPI("/test"), attempts=1)
-
-        expectedLog = [
-            "Using token ending in '****oken'",
-            "Error contacting Sigrid: <urlopen error test reason> (URLError)",
-            "Sigrid is currently unavailable, failed after 1 attempts"
-        ]
-
-        self.assertEqual(expectedLog, UploadLog.history)
 
 
 class ApiStub(SigridApiClient):

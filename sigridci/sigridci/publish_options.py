@@ -30,7 +30,7 @@ class PublishOptions:
     customer: str
     system: str
     runMode: RunMode
-    sourceDir: str
+    sourceDir: str = "."
     subsystem: str = ""
     excludePatterns: List[str] = field(default_factory=lambda: [])
     includePatterns: List[str] = field(default_factory=lambda: [])
