@@ -16,6 +16,7 @@ import io
 import urllib.request
 from email.message import Message
 from unittest import TestCase
+from urllib.error import URLError
 
 from sigridci.sigridci.api_caller import ApiCaller
 from sigridci.sigridci.upload_log import UploadLog
@@ -62,4 +63,36 @@ class ApiCallerTest(TestCase):
         ]
 
         self.assertEqual(expectedLog, UploadLog.history)
+
+    def testErrorHandlerWithTimeout(self):
+        api = ApiCaller("Test", 1)
+
+        with self.assertRaises(SystemExit):
+            api.retryRequest(lambda: self.raiseTimeoutError(), attempts=1)
+
+        expected = [
+            "Test did not respond within the timeout period",
+            "Test is currently unavailable, failed after 1 attempts"
+        ]
+
+        self.assertEqual(expected, UploadLog.history)
+
+    def testErrorHandlerWithUrlError(self):
+        api = ApiCaller("Test", 1)
+
+        with self.assertRaises(SystemExit):
+            api.retryRequest(lambda: self.raiseUrlError(), attempts=1)
+
+        expected = [
+            "Error contacting Test: <urlopen error some reason> (URLError)",
+            "Test is currently unavailable, failed after 1 attempts"
+        ]
+
+        self.assertEqual(expected, UploadLog.history)
+
+    def raiseTimeoutError(self):
+        raise TimeoutError()
+
+    def raiseUrlError(self):
+        raise URLError("some reason")
 
