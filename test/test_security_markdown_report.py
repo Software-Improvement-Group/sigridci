@@ -26,7 +26,7 @@ class SecurityMarkdownReportTest(TestCase):
     def setUp(self):
         self.options = PublishOptions("aap", "noot", RunMode.FEEDBACK_ONLY, sourceDir="/tmp")
 
-        with open(os.path.dirname(__file__) + "/testdata/security.sarif", encoding="utf-8", mode="r") as f:
+        with open(os.path.dirname(__file__) + "/testdata/security.json", encoding="utf-8", mode="r") as f:
             self.feedback = f
 
     @mock.patch.dict(os.environ, {"SIGRID_CI_MARKDOWN_HTML" : "false"})
