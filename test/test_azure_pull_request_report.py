@@ -19,6 +19,7 @@ from unittest import TestCase
 from sigridci.sigridci.objective import ObjectiveStatus
 from sigridci.sigridci.publish_options import PublishOptions, RunMode
 from sigridci.sigridci.reports.azure_pull_request_report import AzurePullRequestReport
+from sigridci.sigridci.reports.maintainability_markdown_report import MaintainabilityMarkdownReport
 
 
 class AzurePullRequestReportTest(TestCase):
@@ -36,9 +37,24 @@ class AzurePullRequestReportTest(TestCase):
             self.assertEqual("closed", report.buildRequestBody(f.name, ObjectiveStatus.UNKNOWN)["status"])
 
     def testPostNewComment(self):
+        feedback = {
+            "baseline": "20220110",
+            "baselineRatings": {"DUPLICATION": 4.0, "UNIT_SIZE": 4.0, "MAINTAINABILITY": 4.0},
+            "changedCodeBeforeRatings" : {"MAINTAINABILITY" : 2.6},
+            "changedCodeAfterRatings" : {"MAINTAINABILITY" : 2.8},
+            "newCodeRatings": {"DUPLICATION": 5.0, "UNIT_SIZE": 2.0, "MAINTAINABILITY": 3.0},
+            "overallRatings": {"DUPLICATION": 4.5, "UNIT_SIZE": 3.0, "MAINTAINABILITY": 3.4},
+            "refactoringCandidates": []
+        }
+
         tempDir = mkdtemp()
+        options = PublishOptions("aap", "noot", RunMode.FEEDBACK_ONLY, sourceDir=".", targetRating=3.5)
+
         with open(f"{tempDir}/feedback.md", "w") as f:
-            f.write("# Sigrid CI feedback\n\ntest\n")
+            # Use the *actual* Markdown report so we're sure we can handle
+            # any layout changes.
+            markdownReport = MaintainabilityMarkdownReport()
+            f.write(markdownReport.renderMarkdown("1234", feedback, options))
 
         mockAzureResponse = {
             "value": [

@@ -1,7 +1,7 @@
 Analysis scope configuration
 ============================
 
-You can change Sigrid's configuration for your project, to make Sigrid's feedback as useful and actionable as possible. We call this configuration "the scope".
+You can change Sigrid's configuration for your project, to make Sigrid's feedback as useful and actionable as possible. We call this configuration "the scope", and customizing the configuration for your system is sometimes referred to as "scoping".
 
 <sig-toc></sig-toc>
 

@@ -277,7 +277,6 @@ class SigridCiRunnerTest(TestCase):
             "HTTP Error 500: ",
             "No response headers",
             "No response body",
-            "Retrying",
             "S3 is currently unavailable, failed after 5 attempts"
         ]
 
