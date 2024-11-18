@@ -1,18 +1,18 @@
-Configuring Sigrid Single Sign-on with OKTA
+Configuring Sigrid Single Sign-On with Okta via SAML
 ===============================================
 
-This page describes an example of the technical setup for Sigrid customers using OKTA as their Identity Management Provider.
+This page provides a SAML integration example for Sigrid customers using Okta as their Identity Management Provider.
 
 ## Creating an Application for Sigrid SSO
-As OKTA administrator, add a SAML app that will be used by Sigrid.
+As an Okta administrator, create a new app integration using the SAML sign-in method.
 
 And for your users we advise to create a [Bookmark app](https://support.okta.com/help/s/article/create-a-bookmark-app?language=en_US) on the Okta homepage.
 
 
 ### General SAML Settings
-
 - Single sign-on URL : https://auth.sigrid-says.com/saml2/idpresponse
 - Audience URI : urn:amazon:cognito:sp:eu-central-1_hwh9zdyCY
+- Login initiated by App Only
 
 ### Attribute statements
 
@@ -25,13 +25,11 @@ And for your users we advise to create a [Bookmark app](https://support.okta.com
 | http://schemas.xmlsoap.org/ws/2005/05/identity/claims/given_name   | user.firstName  |
 
 
-
-
-<img src="../images/okta-attribute-statements.png" width="800" /><br />
+<img src="../images/okta-attribute-statements.png" width="600" /><br />
 
 ### Saved Saml app
 
-<img src="../images/okta-saml-settings.png" width="800" /><br />
+<img src="../images/okta-saml-settings.png" width="600" /><br />
 
 ### Bookmark app
 Sigrid only supports service provider initiated flow, so create a Bookmark app that only is redirect to customer.sigrid-says.com.

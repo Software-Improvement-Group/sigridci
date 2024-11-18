@@ -1,7 +1,7 @@
-Configuring Sigrid Single Sign-on with Google
+Configuring Sigrid Single Sign-On with Google via SAML
 ===============================================
 
-This page describes the technical setup for Sigrid customers using Google as their Identity Management Provider.
+This page provides a SAML integration example for Sigrid customers using Google as their Identity Management Provider.
 
 ## Creating a Service Provider
 
@@ -18,7 +18,7 @@ Login to the Google admin console and add a serviceprovider called 'Sigrid'.
 - select EMAIL as name-ID
 - Name-ID contains basic information > Primary email
 
-<img src="../images/google-saml-1.png" width="800" /><br />
+<img src="../images/google-saml-1.png" width="600" /><br />
 
 ### Share the metadata
 
