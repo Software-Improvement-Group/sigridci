@@ -11,6 +11,9 @@ for Helm. The current page describes how to deploy Sigrid on-premise in terms of
 configuration options in `values.yaml`. It is based on the `example-values.yaml` file available 
 in the Helm chart, which provides examples of typical configuration values.
 
+We strongly recommend to use the `example-values.yaml` file next to this documentation page, as 
+the `example-values.yaml` file provides additional, important details.
+
 Sigrid's Helm chart is distributed via a private Docker Hub registry, together with the Docker 
 images that make up Sigrid, as described below. 
 
@@ -99,11 +102,21 @@ to a nginx deployment which routes traffic to the correct APIs. The configuratio
 can be found at `nginx.ingress` where any needed annotations can be added, or the 
 `IngressClass` can be set.
 
+While technically, TLS can be disabled in the Helm chart, in practice it is required for any 
+host except `localhost`. The reason is that Sigrid uses OAuth2 / OpenID Connect; the respective 
+standards state that TLS is mandatory for all hosts except `localhost`. OAuth2/OpenID Connect 
+compliant products typically follow this requirement. As a concrete example, several IdPs refuse 
+to register callback URLs that do not start with `https` unless the host is `localhost` or `127.
+0.0.1`.
+
 ## (C) PostgreSQL
 
 Analysis results are stored in a PostgreSQL database server (or cluster in PostgreSQL terms), and
 consequently, PostgreSQL is a non-optional dependency of Sigrid. Typically, deployments use a
 PostgreSQL instance outside the Kubernetes cluster and consequently not managed by Helm. 
+
+For Postgres, we support the latest 2 major versions. You can track the Postgres version 
+history in [this overview](https://www.postgresql.org/support/versioning/).
 
 This page assumes that a properly initialized PostgreSQL server is available and reachable from 
 the Kubernetes cluster. In the Helm chart configuration, a number of mandatory settings need to be 
@@ -151,14 +164,14 @@ auth-api:
   config:
     datasource:
       data:
-        url: "some.host/sigridauthdb"
+        url: "jdbc:postgresql://some.host/sigridauthdb"
         username: "webapp-user"
         password: "S3cr3t"
 ```
 
 The above configuration results in the Helm chart rendering a Kubernetes secret containing the
-URL, username and password. Obviously, a `values.yaml` should not contain a cleartext password, 
-typically setting the password interactively using the Helm CLI is preferred 
+JDBC connection string, username and password. Obviously, a `values.yaml` should not contain a 
+cleartext password, typically setting the password interactively using the Helm CLI is preferred 
 `helm install <name> <chart> --set auth-api.config.datasource.data.password="S3cr3t"`).
 
 The other option is to create a Kubernetes secret elsewhere and reference it. Suppose the name of
@@ -171,6 +184,10 @@ auth-api:
       create: false
       secretName: postgresql-sigridauthdb
 ```
+
+The secret created elsewhere needs to use the same keys as the secret that the Helm chart would 
+create (in the above example: keys `url`, `username` and `password`). The `example-values.yaml` 
+and Helm chart `values.yaml` contain the details for each secret.
 
 ## (D) Identity provider
 
