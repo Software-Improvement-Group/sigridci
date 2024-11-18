@@ -17,6 +17,7 @@ import os
 import urllib.error
 import urllib.request
 
+from .api_caller import ApiCaller
 from .publish_options import RunMode
 from .report import Report
 from .upload_log import UploadLog
@@ -29,18 +30,15 @@ class GitLabPullRequestReport(Report):
 
         if self.isWithinGitLabMergeRequestPipeline():
             if options.runMode == RunMode.FEEDBACK_ONLY and os.path.exists(feedbackFile):
-                try:
-                    existingCommentId = self.findExistingCommentId()
-                    body = self.buildRequestBody(feedbackFile)
+                existingCommentId = self.findExistingCommentId()
+                body = self.buildRequestBody(feedbackFile)
 
-                    if existingCommentId is None:
-                        self.callAPI("POST", self.buildPostCommentURL(None), body)
-                        UploadLog.log("Published feedback to GitLab")
-                    else:
-                        self.callAPI("PUT", self.buildPostCommentURL(existingCommentId), body)
-                        UploadLog.log("Updated existing GitLab feedback")
-                except urllib.error.HTTPError as e:
-                    UploadLog.log(f"Warning: GitLab API error: {e.code} / {e.fp.read()}")
+                if existingCommentId is None:
+                    self.callAPI("POST", self.buildPostCommentURL(None), body)
+                    UploadLog.log("Published feedback to GitLab")
+                else:
+                    self.callAPI("PUT", self.buildPostCommentURL(existingCommentId), body)
+                    UploadLog.log("Updated existing GitLab feedback")
 
     def isWithinGitLabMergeRequestPipeline(self):
         return "CI_MERGE_REQUEST_IID" in os.environ and "SIGRIDCI_GITLAB_COMMENT_TOKEN" in os.environ
@@ -49,7 +47,9 @@ class GitLabPullRequestReport(Report):
         request = urllib.request.Request(url, body, method=method)
         request.add_header("Content-Type", "application/json")
         request.add_header("PRIVATE-TOKEN", os.environ["SIGRIDCI_GITLAB_COMMENT_TOKEN"])
-        return urllib.request.urlopen(request)
+
+        api = ApiCaller("GitLab", pollInterval=5)
+        return api.retryRequest(lambda: urllib.request.urlopen(request))
 
     def buildPostCommentURL(self, existingCommentId):
         baseURL = os.environ["CI_API_V4_URL"]

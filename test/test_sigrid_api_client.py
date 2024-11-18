@@ -74,52 +74,7 @@ class SigridApiClientTest(TestCase):
         self.assertEqual(["Using token ending in '****oken'"], UploadLog.history)
 
     @mock.patch.dict(os.environ, {"SIGRID_CI_TOKEN" : "mytoken\n"})
-    def testErrorHandlerNoHeadersNorBody(self):
-        options = PublishOptions("aap", "noot", runMode=RunMode.PUBLISH_ONLY, sourceDir="/tmp", showUploadContents=True)
-        apiClient = SigridApiClient(options)
-        error = urllib.request.HTTPError("https://example.com", 401, "No reason", Message(), io.BytesIO(b""))
-
-        with self.assertRaises(SystemExit):
-            apiClient.handleError(error, "Sigrid")
-
-        self.assertIn("You are not authenticated to Sigrid (HTTP status 401 for https://example.com), please check if your token is valid", UploadLog.history)
-        self.assertIn("No response headers", UploadLog.history)
-        self.assertIn("No response body", UploadLog.history)
-
-    @mock.patch.dict(os.environ, {"SIGRID_CI_TOKEN" : "mytoken\n"})
-    def testErrorHandlerWithHeadersAndBody(self):
-        options = PublishOptions("aap", "noot", runMode=RunMode.PUBLISH_ONLY, sourceDir="/tmp", showUploadContents=True)
-        apiClient = SigridApiClient(options)
-
-        headers = Message()
-        headers["aap"] = "noot"
-
-        error = urllib.request.HTTPError("https://example.com", 403, "No reason", headers, io.BytesIO(b"{}"))
-        with self.assertRaises(SystemExit):
-            apiClient.handleError(error, "Sigrid")
-
-        self.assertIn("You are not authorized to access Sigrid for this system (HTTP status 403 for https://example.com)", UploadLog.history)
-        self.assertIn("Response headers:\n{'aap': 'noot'}", UploadLog.history)
-        self.assertIn("Response body:\n{}", UploadLog.history)
-
-    @mock.patch.dict(os.environ, {"SIGRID_CI_TOKEN" : "mytoken\n"})
-    def testErrorHandlerWith404(self):
-        options = PublishOptions("aap", "noot", runMode=RunMode.PUBLISH_ONLY, sourceDir="/tmp", showUploadContents=True)
-        apiClient = SigridApiClient(options)
-        error = urllib.request.HTTPError("https://example.com", 404, "No reason", {}, None)
-        apiClient.handleError(error, "Sigrid")
-
-        expectedLog = [
-            "Using token ending in '****oken'",
-            "HTTP Error 404: No reason",
-            "No response headers",
-            "No response body"
-        ]
-
-        self.assertEqual(expectedLog, UploadLog.history)
-
-    @mock.patch.dict(os.environ, {"SIGRID_CI_TOKEN" : "mytoken\n"})
-    def testErrorHandlerWith404(self):
+    def testErrorHandlerWithTimeout(self):
         options = PublishOptions("aap", "noot", runMode=RunMode.PUBLISH_ONLY, sourceDir="/tmp", showUploadContents=True)
         apiClient = ApiStub(options, TimeoutError())
         with self.assertRaises(SystemExit):

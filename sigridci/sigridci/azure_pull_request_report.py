@@ -17,6 +17,7 @@ import os
 import urllib.error
 import urllib.request
 
+from .api_caller import ApiCaller
 from .objective import Objective, ObjectiveStatus
 from .publish_options import RunMode
 from .report import Report
@@ -32,23 +33,20 @@ class AzurePullRequestReport(Report):
         if not self.isSupported(options) or not os.path.exists(feedbackFile):
             return
 
-        try:
-            UploadLog.log("Sending feedback to Azure DevOps API")
+        UploadLog.log("Sending feedback to Azure DevOps API")
 
-            # We want to update the existing comment, to avoid spamming people with new
-            # comments every time they make a commit. We have no way to persist this,
-            # so we need to check the existing comments.
-            existingId = self.findExistingSigridCommentThreadId()
-            status = Objective.determineStatus(feedback, options)
+        # We want to update the existing comment, to avoid spamming people with new
+        # comments every time they make a commit. We have no way to persist this,
+        # so we need to check the existing comments.
+        existingId = self.findExistingSigridCommentThreadId()
+        status = Objective.determineStatus(feedback, options)
 
-            if existingId == None:
-                self.callAzure("POST", self.buildRequestBody(feedbackFile, status), None)
-                UploadLog.log("Published new feedback to Azure DevOps")
-            else:
-                self.callAzure("PATCH", self.buildRequestBody(feedbackFile, status), existingId)
-                UploadLog.log("Updated existing feedback in Azure DevOps")
-        except urllib.error.HTTPError as e:
-            UploadLog.log(f"Warning: Azure DevOps API error calling {e.url}: {e.code} ({e.reason}) / {e.fp.read()}")
+        if existingId == None:
+            self.callAzure("POST", self.buildRequestBody(feedbackFile, status), None)
+            UploadLog.log("Published new feedback to Azure DevOps")
+        else:
+            self.callAzure("PATCH", self.buildRequestBody(feedbackFile, status), existingId)
+            UploadLog.log("Updated existing feedback in Azure DevOps")
 
     def isSupported(self, options):
         return "SYSTEM_ACCESSTOKEN" in os.environ and \
@@ -70,7 +68,9 @@ class AzurePullRequestReport(Report):
         request.method = method
         request.add_header("Authorization", f"Bearer {os.environ['SYSTEM_ACCESSTOKEN']}")
         request.add_header("Content-Type", "application/json")
-        return urllib.request.urlopen(request)
+
+        api = ApiCaller("Azure DevOps", pollInterval=5)
+        return api.retryRequest(lambda: urllib.request.urlopen(request))
 
     def buildURL(self, threadId):
         baseURL = os.environ["SYSTEM_TEAMFOUNDATIONCOLLECTIONURI"]
