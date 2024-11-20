@@ -22,7 +22,7 @@ Configure SAML in the Single Sign-on section.
 | http://schemas.xmlsoap.org/ws/2005/05/identity/claims/given_name   | user.givenname  |
 
 
-### Saved Saml app
+### Saved SAML app
 
 <img src="../images/azure-saml.png" width="600" /><br />
 
