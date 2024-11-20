@@ -32,7 +32,7 @@ And for your users we advise to create a [Bookmark app](https://support.okta.com
 <img src="../images/okta-saml-settings.png" width="600" /><br />
 
 ### Bookmark app
-Sigrid only supports service provider initiated flow, so create a Bookmark app that only is redirect to customer.sigrid-says.com.
+Sigrid only supports service provider initiated flow, so create a Bookmark app that only redirects to https://<customer>.sigrid-says.com.
 As Sigrid logo for your bookmark app you can use these logos
 
 <img src="../images/sigrid-logo-black.svg" width="100" />
