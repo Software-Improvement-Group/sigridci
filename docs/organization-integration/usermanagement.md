@@ -126,7 +126,7 @@ Please see the separate pages for OIDC examples.
 - [OIDC Okta](usermanagement-example-oidc-okta.md)
 
 ### Deliverables
-SIG will setup SSO for you. You will have your own customer-specific URL Sigrid.
+SIG will set up Single Sign-On (SSO) for you, providing you with a unique, customer-specific URL for Sigrid.
 https://customername.sigrid-says.com
 
 # Authorization in Sigrid
