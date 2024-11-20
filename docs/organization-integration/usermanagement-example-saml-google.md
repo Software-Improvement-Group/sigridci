@@ -10,20 +10,21 @@ Login to the Google admin console and add a serviceprovider called 'Sigrid'.
 ### Configuration steps
 
 - Login as Google Admin
-- select Apps in the menu
-- select Web and Mobile apps
-- create service provider
-- add ACS-URL: https://auth.sigrid-says.com/saml2/idpresponse
-- add Entitity-ID: urn:amazon:cognito:sp:eu-central-1_hwh9zdyCY
-- select EMAIL as name-ID
+- Select Apps in the menu
+- Select Web and Mobile apps
+- Create service provider
+- Add ACS-URL: https://auth.sigrid-says.com/saml2/idpresponse
+- Add Entitity-ID: urn:amazon:cognito:sp:eu-central-1_hwh9zdyCY
+- Select EMAIL as name-ID
 - Name-ID contains basic information > Primary email
 
 <img src="../images/google-saml-1.png" width="600" /><br />
+<img src="../images/google-saml-2.png" width="600" /><br />
 
 ### Share the metadata
 
-- download the Metadata
-- send the metatadata.xml file to [Support](mailto:support@softwareimprovementgroup.com)
+- Download the Metadata
+- Send the metatadata.xml file to [Support](mailto:support@softwareimprovementgroup.com)
 
 
 # Contact and support
