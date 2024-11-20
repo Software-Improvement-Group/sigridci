@@ -277,7 +277,7 @@ This page provides an overview of all technologies that can be analyzed by Sigri
 | `tibcobw6`                 | TIBCO BW6                                | Maintainability, Architecture               |
 | `tripleforms`              | TriplEforms                              | Maintainability                             |
 | `trs`                      | TRS                                      | Maintainability                             | (8)                                     |
-| `tsql`                     | T-SQL                                    | Maintainability, Architecture, AI           |
+| `tsql`                     | T-SQL (Microsoft SQL Server, MS SQL))    | Maintainability, Architecture, AI           |
 | `turtle`                   | Turtle                                   | Maintainability                             |
 | `typescript`               | TypeScript (includes React/TypeScript)   | Maintainability, Architecture, Security, AI | (3) (10)                                |
 | `uil`                      | UIL (Motif)                              | Maintainability, Architecture               |
