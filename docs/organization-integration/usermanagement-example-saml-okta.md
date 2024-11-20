@@ -27,7 +27,7 @@ And for your users we advise to create a [Bookmark app](https://support.okta.com
 
 <img src="../images/okta-attribute-statements.png" width="600" /><br />
 
-### Saved Saml app
+### Saved SAML app
 
 <img src="../images/okta-saml-settings.png" width="600" /><br />
 
