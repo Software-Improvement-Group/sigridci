@@ -15,20 +15,17 @@
 # limitations under the License.
 
 import os
-import json
 import re
 import sys
 from argparse import ArgumentParser
-from collections import defaultdict
-from colors import color
-from dataclasses import dataclass
 from datetime import datetime
-from dateutil.relativedelta import relativedelta
-from pygal import Bar, HorizontalStackedBar, Line, Radar, StackedBar
-from pygal.style import Style
-from objectives import Group, ObjectivesCalculator, Period, Status, SystemFilter, OBJECTIVE_TYPES
-from sigrid_api_client import SigridApiClient
 
+from dateutil.relativedelta import relativedelta
+from pygal import HorizontalStackedBar, Line, Radar, StackedBar
+from pygal.style import Style
+
+from objectives import Group, ObjectivesCalculator, Status, SystemFilter, OBJECTIVE_TYPES
+from sigrid_api_client import SigridApiClient
 
 TODAY = datetime.now()
 LAST_YEAR = TODAY + relativedelta(years=-1)
