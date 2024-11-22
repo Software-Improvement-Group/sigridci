@@ -42,5 +42,9 @@ if __name__ == "__main__":
     request.add_header("Authorization", f"Bearer {os.environ['SIGRID_CI_TOKEN']}".encode("utf8"))
 
     with urllib.request.urlopen(request) as response:
+        if response.status == 204 or response.status >= 400:
+            print(f"Sigrid cannot find analysis results for this system (HTTP status {response.status})")
+            sys.exit(1)
+
         results = json.load(response)
         print(results["metadata"]["scopeFile"])
