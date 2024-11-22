@@ -4,6 +4,10 @@ Script that uses the Sigrid API to retrieve and dump the Sigrid [scope configura
 It is recommended to store the scope configuration file in your repository, named `sigrid.yaml`, and have it under version control. 
 However, you can use this example to retrieve the scope file in scenarios where it is not possible to store the scope configuration file in the repository, but you still want to retrieve it.
 
+**Note:** This script is intended to be used to retrieve the scope configuration file for the results currently in Sigrid.
+It is *not* suitable for "live" editing. If you want a fast feedback loop, we recommend you use the [Visual Studio Code and JetBrains support for editing scope configuration files](https://docs.sigrid-says.com/reference/analysis-scope-configuration.html#editing-scope-files).
+Also, if you use Sigrid CI, validating the scope file is part of the standard flow.
+
 ## Prerequisites
 
 You will need the following to use this script.
