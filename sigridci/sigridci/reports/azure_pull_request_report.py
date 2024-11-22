@@ -27,26 +27,28 @@ from ..upload_log import UploadLog
 class AzurePullRequestReport(Report):
     AZURE_API_VERSION = "6.0"
 
-    def generate(self, analysisId, feedback, options):
-        feedbackFile = f"{options.outputDir}/feedback.md"
+    def __init__(self, feedbackFiles):
+        self.feedbackFiles = [file for file in feedbackFiles if os.path.exists(file)]
 
-        if not self.isSupported(options) or not os.path.exists(feedbackFile):
+    def generate(self, analysisId, feedback, options):
+        if not self.isSupported(options):
             return
 
-        UploadLog.log("Sending feedback to Azure DevOps API")
+        for feedbackFile in self.feedbackFiles:
+            UploadLog.log("Sending feedback to Azure DevOps API")
 
-        # We want to update the existing comment, to avoid spamming people with new
-        # comments every time they make a commit. We have no way to persist this,
-        # so we need to check the existing comments.
-        existingId = self.findExistingSigridCommentThreadId()
-        status = Objective.determineStatus(feedback, options)
+            # We want to update the existing comment, to avoid spamming people with new
+            # comments every time they make a commit. We have no way to persist this,
+            # so we need to check the existing comments.
+            existingId = self.findExistingSigridCommentThreadId()
+            status = Objective.determineStatus(feedback, options)
 
-        if existingId == None:
-            self.callAzure("POST", self.buildRequestBody(feedbackFile, status), None)
-            UploadLog.log("Published new feedback to Azure DevOps")
-        else:
-            self.callAzure("PATCH", self.buildRequestBody(feedbackFile, status), existingId)
-            UploadLog.log("Updated existing feedback in Azure DevOps")
+            if existingId == None:
+                self.callAzure("POST", self.buildRequestBody(feedbackFile, status), None)
+                UploadLog.log("Published new feedback to Azure DevOps")
+            else:
+                self.callAzure("PATCH", self.buildRequestBody(feedbackFile, status), existingId)
+                UploadLog.log("Updated existing feedback in Azure DevOps")
 
     def isSupported(self, options):
         return "SYSTEM_ACCESSTOKEN" in os.environ and \

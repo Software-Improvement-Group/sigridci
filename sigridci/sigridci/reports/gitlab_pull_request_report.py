@@ -24,11 +24,12 @@ from ..upload_log import UploadLog
 
 
 class GitLabPullRequestReport(Report):
-    def generate(self, analysisId, feedback, options):
-        feedbackFile = f"{options.outputDir}/feedback.md"
+    def __init__(self, feedbackFiles):
+        self.feedbackFiles = [file for file in feedbackFiles if os.path.exists(file)]
 
-        if self.isWithinGitLabMergeRequestPipeline():
-            if options.runMode == RunMode.FEEDBACK_ONLY and os.path.exists(feedbackFile):
+    def generate(self, analysisId, feedback, options):
+        if self.isWithinGitLabMergeRequestPipeline() and options.runMode == RunMode.FEEDBACK_ONLY:
+            for feedbackFile in self.feedbackFiles:
                 existingCommentId = self.findExistingCommentId()
                 body = self.buildRequestBody(feedbackFile)
 
