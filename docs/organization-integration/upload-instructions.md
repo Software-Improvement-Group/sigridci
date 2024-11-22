@@ -130,7 +130,7 @@ git clone https://github.com/LeaVerou/awesomplete.git code
 cd code
 git --no-pager log --date=iso --format='@@@;%H;%an;%ae;%cd;%s' --numstat --no-merges > git.log
 rm -rf .git
-zip -d code code.zip
+zip -r code.zip .
 ```
 
 The only thing you need to change in this example, is replace the URL of the repository with your own system's URL. 
