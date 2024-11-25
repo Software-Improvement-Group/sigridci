@@ -4,8 +4,9 @@ This directory contains example scripts that use [Sigrid's REST API](https://doc
 
 We currently have the following examples:
 
-* [Slack security findings](slack-security-findings/): uses Sigrid's API to get open security findings for a system and posts the result to Slack.
+* [Slack security findings](slack-security-findings/) uses Sigrid's API to get open security findings for a system and posts the result to Slack.
 * [Objectives report](objectives-report/) generates charts based on Sigrid objectives, suitable to include in internal reporting. These charts go beyond what is available in the Sigrid user interface, and have a focus on reporting progress over longer periods of time.
+* [Get scope file](get-scope-file/) uses the Sigrid API to retrieve the latest [scope configuration file](https://docs.sigrid-says.com/reference/analysis-scope-configuration.html) that was used by Sigrid.
 
 ## License
 
