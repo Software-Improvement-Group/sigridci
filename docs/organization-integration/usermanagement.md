@@ -56,9 +56,9 @@ Attributes & Claims:
 
 | Your user | Sigrid expects the long url as SAML attribute name |
 | ---------- | ---------- |
-| user email  | http://schemas.xmlsoap.org/ws/2005/05/identity/claims/emailaddress |
-| user last name   | http://schemas.xmlsoap.org/ws/2005/05/identity/claims/name |
-| user first name   | http://schemas.xmlsoap.org/ws/2005/05/identity/claims/given_name |
+| user email | `http://schemas.xmlsoap.org/ws/2005/05/identity/claims/emailaddress` |
+| user last name | `http://schemas.xmlsoap.org/ws/2005/05/identity/claims/name` |
+| user first name | `http://schemas.xmlsoap.org/ws/2005/05/identity/claims/given_name` |
 
 _Note: if your IdP requires to set an unique user identifier, please choose emailaddress_
 
@@ -76,7 +76,19 @@ Create an Enterprise application 'app' in your IdP with the following details:
 - Sign in Redirect URI: https://auth.sigrid-says.com/oauth2/idpresponse
 
 Attributes & Claims:
-- Scopes: openid profile email (default)
+- Okta includes the required claims by default, while Azure/Entra ID does not.
+Please check your IdP’s documentation to see if the required claim is included by default or if it needs to be explicitly added.
+
+| Claim | Description | Token Type |
+| ---------- | ---------- | ---------- |
+| email  | The addressable email for this user, if the user has one | ID |
+| family_name | Provides the last name, surname, or family name of the user as defined in the user object | ID |
+| given_name | Provides the first or "given" name of the user, as set on the user object | ID |
+
+_Note: For Azure/Entra ID, please check the box "Turn on the Microsoft Graph email, profile permission (required for claims to appear in token)"_
+
+Certificates & Secrets:
+- Generate a secret
 
 Other Settings:
 - Default
@@ -92,26 +104,29 @@ The information will include your app's identifier, redirectURL etc.
 
 #### OpenID Connect Configuration
 The Application's `client_id`, `client_secret` and the `issuer`.
-How an issuer looks depends on your IdP.
+How the issuer URL looks depends on your IdP.
 
-Okta issuer: https://`<myOktaOrg>`.okta.com  
-Azure/EntraID: https://login.microsoftonline.com/`<tenant_id>`
+| IdP | Issuer URL |
+| ---------- | ---------- |
+| Azure/Entra ID | `https://login.microsoftonline.com/<tenant_id>/oauth2/v2.0/authorize` |
+| Okta  | `https://<myOktaOrg>.okta.com` |
 
-### Example Azure/EntraID
+### SAML Examples
+Please see the separate pages for SAML examples.
 
-<img src="../images/azure-saml.png" width="800" />
+- [SAML Azure/Entra ID](usermanagement-example-saml-entraid.md)
+- [SAML Google](usermanagement-example-saml-google.md)
+- [SAML Okta](usermanagement-example-saml-okta.md)
+- [SAML OneLogin](usermanagement-example-saml-onelogin.md)
 
-### Example SAML OneLogin
-Please see the separate [OneLogin page](usermanagement-example-onelogin.md).
+### OIDC Examples
+Please see the separate pages for OIDC examples.
 
-### Example SAML Okta
-Please see the separate [OKTA page](usermanagement-example-okta.md).
-
-### Example SAML Google
-Please see the separate [Google page](usermanagement-example-google.md).
+- [OIDC Azure/Entra ID](usermanagement-example-oidc-entraid.md)
+- [OIDC Okta](usermanagement-example-oidc-okta.md)
 
 ### Deliverables
-SIG will setup SSO for you. You will have your own customer-specific URL Sigrid.
+SIG will set up Single Sign-On (SSO) for you, providing you with a unique, customer-specific URL for Sigrid.
 https://customername.sigrid-says.com
 
 # Authorization in Sigrid
