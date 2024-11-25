@@ -19,7 +19,7 @@ You will need the following to use this script.
 
 Once all prerequisites are in place, you can use the script:
 
-    ./get_sigrid_scope_file.py --customer mycustomername --system mysystemname
+    ./get_sigrid_scope_file.py --customer <mycustomername> --system <mysystemname>
 
 This will then output the Sigrid scope configuration file to `stdout`. 
 
