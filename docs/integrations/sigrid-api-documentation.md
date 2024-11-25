@@ -74,7 +74,17 @@ The parameter `{customer}` refers to your Sigrid account name.
             "allRatings": [
                 {
                     "maintainability": 4.96,
-                    "maintainabilityDate": "2022-02-06"
+                    "maintainabilityDate": "2022-02-06",
+                    "componentIndependence": 2.922191130049036,
+                    "componentEntanglement": 3.185432066401412,
+                    "duplication": 3.8219019076088467,
+                    "moduleCoupling": 3.7576658516974955,
+                    "testCodeRatio": 1.3420540223995314,
+                    "unitComplexity": 4.611590984421209,
+                    "unitInterfacing": 2.139146638028358,
+                    "unitSize": 3.9657948540316688,
+                    "volumeInPersonMonths": 91.54868594563312,
+                    "volumeInLoc": 68305
                 }
             ]
         }
