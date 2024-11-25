@@ -274,7 +274,7 @@ The `architecture` section of the scope file supports the following options:
 | `exclude`                  | No       | See [Excluding files and directories for Architecture Quality](#excluding-files-and-directories-for-architecture-quality). |
 | `custom_components`        | No       | See [Components in Maintainability versus components in Architecture Quality](#components-in-maintainability-versus-components-in-architecture-quality). |
 | `add_dependencies`         | No       | See [Manually specifying architecture dependencies](#manually-specifying-architecture-dependencies). |
-| `remove_dependencies`      | No       | See [Manually specifying architecture dependencies](#manually-specifying-architecture-dependencies). |
+| `remove_dependencies`      | No       | See [Manually specifying architecture dependencies](#manually-removing-architecture-dependencies). |
 | `undesirable_dependencies` | No       | See [Highlighting undesirable dependencies](#highlighting-undesirable-dependencies). |
 | `add_system_elements`                      | No       | See [Manually specifying architecture elements](#manually-specifying-architecture-elements). |
 | `grouping`                 | No       | See [Grouping and annotating components in Architecture Quality](#grouping-and-annotating-components-in-architecture-quality). |
@@ -306,6 +306,19 @@ This example will change the default period of 12 months, and instead analyze on
 
     architecture:
       history_start: "2023-01-01"
+
+### Manually removing architecture dependencies
+
+Sigrid's dependency detection is based on statis analysis and heuristics. This means that, unfortunately, Sigrid will occasionally detect depenencies that aren't really there. It is possible to override the analysis and remove these dependencies in the configuration:
+
+    architecture:
+      remove_dependencies:
+        - source: "frontend"
+          target: "backend"
+
+This will remove all dependencies from the component called "frontend" to the component called "backend". This works for both dependencies between top-level components and dependencies between sub-components. Also, the `source` and `target` options support regular expressions, so you can easily remove all dependencies matching a certain pattern.
+
+When dependencies are removed, they are removed across Sigrid: They will no longer show in the architecture view, they will no longer show in the the Code Explorer, and they will no longer counts towards the ratings.
       
 ### Manually specifying architecture dependencies
 
@@ -318,16 +331,7 @@ Although Sigrid supports hundreds of technologies, there is always the possibili
           type: code_call
             
 The names for the `source` and `target` fields are the same you see in Sigrid's user interface. The `type` field indicates the type of dependency that should be added, for example a code call versus an interface call. The list of supported dependency types can be found in the [Architecture Quality documentation](aq-json-export-format.md).
-
-You can use the same mechanism to remove false positives from the automatic dependency detection:
-
-    architecture:
-      remove_dependencies:
-        - source: frontend
-          target: backend
-          
-The `source` and `target` options support regular expressions, so this allows you to remove all dependencies matching a certain pattern.
-          
+        
 ### Excluding files and directories for Architecture Quality
 
 The `architecture` section in the configuration has its own `exclude` option, which can be used to exclude certain files and directories from the Architecture Quality analysis.
