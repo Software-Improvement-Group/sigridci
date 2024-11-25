@@ -55,6 +55,7 @@ Sigrid's REST API mimics this behavior, as follows:
 Maintainability ratings for a given customer are available via three endpoints:
 - `GET https://sigrid-says.com/rest/analysis-results/api/v1/maintainability/{customer}`: system-level maintainability ratings for all systems of the given customer the current user has access to.
 - `GET https://sigrid-says.com/rest/analysis-results/api/v1/maintainability/{customer}/{system}`: system-level maintainability ratings for the given system of the given customer.
+- `GET https://sigrid-says.com/rest/analysis-results/api/v1/maintainability/{customer}/{system}?technologyStats=true`: adds per-technology information in addition to the overall system information.
 - `GET https://sigrid-says.com/rest/analysis-results/api/v1/maintainability/{customer}/{system}/components`: component-level maintainability ratings for the given system of the given customer.
 
 The parameter `{customer}` refers to your Sigrid account name. 
