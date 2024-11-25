@@ -17,6 +17,7 @@
 import json
 import os
 import sys
+import urllib.error
 import urllib.request
 from argparse import ArgumentParser, SUPPRESS
 
@@ -41,10 +42,14 @@ if __name__ == "__main__":
     request.add_header("Accept", "application/json")
     request.add_header("Authorization", f"Bearer {os.environ['SIGRID_CI_TOKEN']}".encode("utf8"))
 
-    with urllib.request.urlopen(request) as response:
-        if response.status == 204 or response.status >= 400:
-            print(f"Sigrid cannot find analysis results for this system (HTTP status {response.status})")
-            sys.exit(1)
+    try:
+        with urllib.request.urlopen(request) as response:
+            if response.status == 204:
+                print(f"Sigrid cannot find analysis results for this system (HTTP status {response.status})")
+                sys.exit(1)
 
-        results = json.load(response)
-        print(results["metadata"]["scopeFile"])
+            results = json.load(response)
+            print(results["metadata"]["scopeFile"])
+    except urllib.error.HTTPError as e:
+        print(f"Failed to retrieve analysis results from Sigrid (HTTP status {e.code})")
+        sys.exit(1)
