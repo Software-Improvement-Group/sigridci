@@ -8,7 +8,9 @@ SIG uses [continuous delivery](https://en.wikipedia.org/wiki/Continuous_delivery
 - **Maintainability dashboard:** Test code volume (in person years) is now available as a metric across Sigrid.
 - **Code Explorer:** It is now possible to export the list of findings. This is helpful when you want to further process findings outside Sigrid.
 - **Code Explorer:** You now have the option to use either the directory structure or the component structure for the tree map in the center of the Code Explorer. This is mainly for power users that want to change views to get different insights when analyzing results.
+- **Sigrid API:** The maintainability end points now also return the volume of the system, in both person years and in lines of code.
 - **Sigrid API:** Added an [example script](https://github.com/Software-Improvement-Group/sigridci/tree/main/examples/get-scope-file) that shows how to extract the [scope configuration file](analysis-scope-configuration.md) using the API.
+- **Configuration:** The [configuration option to remove dependencies](analysis-scope-configuration.md#manually-removing-architecture-dependencies) now works universally across Sigrid. This option already existed before, but it was limited to the architecture view. The option has now been extended to that it works everywhere.
 
 ### November 4, 2024
 
