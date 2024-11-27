@@ -116,15 +116,27 @@ Analysis results are stored in a PostgreSQL database server (or cluster in Postg
 consequently, PostgreSQL is a non-optional dependency of Sigrid. Typically, deployments use a
 PostgreSQL instance outside the Kubernetes cluster and consequently not managed by Helm. 
 
-For Postgres, we support the latest 2 major versions. You can track the Postgres version 
-history in [this overview](https://www.postgresql.org/support/versioning/).
+For PostgreSQL, we support the latest 2 major versions. You can track the Postgres version 
+history in [this overview](https://www.postgresql.org/support/versioning/). While Sigrid is 
+known to work on managed PostgreSQL (to be specific: on Amazon Web Services RDS), SIG only tests 
+the Helm chart and this documentation against self-managed PostgreSQL.
 
-This page assumes that a properly initialized PostgreSQL server is available and reachable from 
-the Kubernetes cluster. In the Helm chart configuration, a number of mandatory settings need to be 
-provided:
+It is the responsibility of the on-premise customer to initialize and manage PostgreSQL. The 
+Helm chart (and this page) assumes that a properly initialized PostgreSQL server is available 
+and reachable from the Kubernetes cluster. In the Helm chart configuration, a number of mandatory 
+settings need to be provided:
 - The endpoint at which the PostgreSQL server is reachable. By default, Sigrid connects at 
   the standard port for PostgreSQL (5432).
 - Passwords for various PostgreSQL users: `webapp_user`, `db_mgmt_user`, and `import_user`.
+
+The Helm charts provides SQL scripts to initialize the database. It is the responsibility of the 
+on-premise customer to run these scripts (using `psql`). They are NOT executed by the Helm chart.
+In case of managed PostgreSQL, these scripts might need to be adapted to take care of specifics 
+of the managed PostgreSQL provider. The scripts are in the `sigrid-stack/files` directory, which 
+can be obtained by pulling the Helm chart. The relevant files are `sigriddb-init` and `authdb-init`. 
+
+IMPORTANT: When running the init scripts, take care to first replace the password placeholders with 
+real passwords.
 
 In PostgreSQL, users and roles are global at the PostgreSQL cluster (a.k.a. instance/server) 
 level. The initialization script creates the following users and roles:
@@ -140,11 +152,6 @@ In addition, when first importing a system, Sigrid creates a role called `PARTNE
 where `PARTNER` and `CUSTOMER` are placeholders for the configured partner and customer role. In 
 case any of these users or roles already exists in the cluster, the initialization script or 
 the first import fails.
-
-Database users are created together with an initial database schema by initialization scripts 
-provided by the Helm chart. The relevant files are `sigriddb-init` and `authdb-init`, and 
-optionally `metricsuser-init`. They are present in the `sigrid-stack/files` directory of the 
-Helm chart.
 
 ### Kubernetes secrets
 
