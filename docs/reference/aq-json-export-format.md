@@ -90,35 +90,35 @@ picture in the previous section.
 
 **Note:** The documentation covers all supported fields. The actual JSON output might include additional fields that are not listed below. Any fields not covered by this documentation should be considered experimental.
 
-| Field                                   | Description                                                                                                     |
-|-----------------------------------------|-----------------------------------------------------------------------------------------------------------------|
-| partner                                 | Used as part of the system ID (partner/customer/system).                                                        |
-| customer                                | Used as part of the system ID (partner/customer/system).                                                        |
-| system                                  | Used as part of the system ID (partner/customer/system).                                                        |
-| metadata.scopeFile                      | The textual contents of the YAML scope configuration file.                                                      |
-| metadata.analysisDate                   | The analysis date/time in ISO 8601. Note this date could be different from the snapshot that was analyzed.      |
-| metadata.modelVersion                   | Architecture Quality Model version used for the analysis.                                                       |
-| metadata.historyStartDate               | Used for repository history analysis in ISO 8601, absent if history is not available.                           |
-| metadata.historyEndDate                 | Used for repository history analysis in ISO 8601, absent if history is not available.                           |
-| metadata.historyCommitCount             | Number of commits used for the repository history analysis, absent if history is not available.                 |
-| snapshot.date                           | Date/time in ISO 8601 format, corresponding to the version of the code that was analyzed.                       |                       
-| systemElement.id                        | ID based on the system element's fingerprint. System elements will retain the same ID across subsequent scans.  |
-| systemElement.name                      | Full/long name. Not unqiue.                                                                                     |
-| systemElement.shortName [4]             | Short/display name. Not unique. Optional field, use `name` when not specified                                   |
-| systemElement.type                      | See the [list of system element types](#system-element-types) below.                                            |
-| systemElement.measurementValues         | Maps metric names to numerical metric values, for metrics based on source code analysis.                        |
-| systemElement.measurementTimeSeries     | Maps metric names to time series, for metrics based on change history.                                          |
-| systemElement.observationType           | See the list of [architecture observations](#architecture-observations) below. Optional field. [1]              |
-| systemElement.technology                | Indicates this is a technology-specific system element. Optional field. [2]                                     |
-| systemElement.annotation                | Text description that provides information for system elements. Optional field, defined in configuration. [3]   |
-| dependency.sourceElementId              | Refers to one of the entries in `systemElements`.                                                               |
-| dependency.targetElementId              | Refers to one of the entries in `systemElements`.                                                               |
-| dependency.type                         | See the [list of dependency types](#dependency-types) below.                                                    |
-| dependency.description                  | Textual description of the dependency sub-type. Unlike `type`, this is purely a text label and *not* an enum.   |
-| dependency.count                        | Describes the number of dependencies. Optional, assume 1 when not specified.                                    |
-| dependency.undesirable                  | Dependency is considered undesirable as specified in the scope file. Optional field, defaults to false.         |
-| technology.name                         | Technology display name, for example "C++".                                                                     |
-| technology.contextName                  | Technology ID, for example "cpp".                                                                               |
+| Field                                   | Description                                                                                                    |
+|-----------------------------------------|----------------------------------------------------------------------------------------------------------------|
+| partner                                 | Used as part of the system ID (partner/customer/system).                                                       |
+| customer                                | Used as part of the system ID (partner/customer/system).                                                       |
+| system                                  | Used as part of the system ID (partner/customer/system).                                                       |
+| metadata.scopeFile                      | The textual contents of the YAML scope configuration file.                                                     |
+| metadata.analysisDate                   | The analysis date/time in ISO 8601. Note this date could be different from the snapshot that was analyzed.     |
+| metadata.modelVersion                   | Architecture Quality Model version used for the analysis.                                                      |
+| metadata.historyStartDate               | Used for repository history analysis in ISO 8601, absent if history is not available.                          |
+| metadata.historyEndDate                 | Used for repository history analysis in ISO 8601, absent if history is not available.                          |
+| metadata.historyCommitCount             | Number of commits used for the repository history analysis, absent if history is not available.                |
+| snapshot.date                           | Date/time in ISO 8601 format, corresponding to the version of the code that was analyzed.                      |                       
+| systemElement.id                        | ID based on the system element's fingerprint. System elements will retain the same ID across subsequent scans. |
+| systemElement.name                      | Full/long name. Not unqiue.                                                                                    |
+| systemElement.shortName [4]             | Short/display name. Not unique. Optional field, use `name` when not specified                                  |
+| systemElement.type                      | See the [list of system element types](#system-element-types) below.                                           |
+| systemElement.measurementValues         | Maps metric names to numerical metric values, for metrics based on source code analysis.                       |
+| systemElement.measurementTimeSeries     | Maps metric names to time series, for metrics based on change history.                                         |
+| systemElement.observationType           | See the list of [architecture observations](#architecture-observations) below. Optional field. [1]             |
+| systemElement.technology                | Indicates this is a technology-specific system element. Optional field. [2]                                    |
+| systemElement.annotation                | Text description that provides information for system elements. Optional field, defined in configuration. [3]  |
+| dependency.sourceElementId              | Refers to one of the entries in `systemElements`.                                                              |
+| dependency.targetElementId              | Refers to one of the entries in `systemElements`.                                                              |
+| dependency.type                         | See the [list of dependency types](#dependency-types) below.                                                   |
+| dependency.description                  | Optional field. Text description of that the dependency is.                                                    |
+| dependency.count                        | Describes the number of dependencies. Optional, assume 1 when not specified.                                   |
+| dependency.undesirable                  | Dependency is considered undesirable as specified in the scope file. Optional field, defaults to false.        |
+| technology.name                         | Technology display name, for example "C++".                                                                    |
+| technology.contextName                  | Technology ID, for example "cpp".                                                                              |
 
 Notes:
 

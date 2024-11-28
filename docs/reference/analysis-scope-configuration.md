@@ -401,6 +401,13 @@ In such a situation, you can use [Sigrid CI](client-script-usage.md) to manage t
 - Publishing with `--system mybank --subsystem mybank-backend` will publish the code for the subsystem "mybank-backend" within the system "mybank".
 - Publishing with `--system mybank --subsystem mybank-frontend` will publish the code for the subsystem "mybank-frontend" within the system "mybank".
 - Publishing with `--system mybank --subsystem root` allows you to publish code to the root of the system "mybank", i.e. files that are not bound to a specific system. This includes the configuration file `sigrid.yaml`, so this can be used to update `sigrid.yaml` programmatically.
+
+## Managing the scope configuration file separate from your repository
+
+We recommend you add `sigrid.yaml` to your repository, so that it is automatically in sync with the source code and part of versions control. However, is it possible to retrieve and/or update the scope configuration file *without* making the `sigrid.yaml` file part of your repository.
+
+- If you want to *retrieve* the scope configuration file used by Sigrid, you can use the [Sigrid API](../integrations/sigrid-api-documentation.md). You can also use the [example code on GitHub](https://github.com/Software-Improvement-Group/sigridci/tree/main/examples/get-scope-file) for this.
+- If you want to *update* the scope configuration file, independently of your source code, you can still use [Sigrid CI](client-script-usage.md). You can also use the [example code on GitHub](https://github.com/Software-Improvement-Group/sigridci/tree/main/examples/get-scope-file) for this.
           
 ## Sigrid metadata
 

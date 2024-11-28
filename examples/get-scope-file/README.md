@@ -1,11 +1,8 @@
-# Get Sigrid scope configuration file
+# Managing the Sigrid scope configuration file separate from your repository
 
-Script that uses the Sigrid API to retrieve and dump the Sigrid [scope configuration file](https://docs.sigrid-says.com/reference/analysis-scope-configuration.html) for a system. 
-It is recommended to store the scope configuration file in your repository, named `sigrid.yaml`, and have it under version control. 
-However, you can use this example to retrieve the scope file in scenarios where it is not possible to store the scope configuration file in the repository, but you still want to retrieve it.
-
-**Note:** This script is intended for retrieving the scope configuration file for the analysis results *currently* in Sigrid.
-This script is *not* suitable for "live" editing. If you want a fast feedback loop while editing scope files, we recommend you use the [Visual Studio Code and JetBrains support for editing scope configuration files](https://docs.sigrid-says.com/reference/analysis-scope-configuration.html#editing-scope-files).
+Script that uses the Sigrid API to retrieve and dump the Sigrid [scope configuration file](https://docs.sigrid-says.com/reference/analysis-scope-configuration.html) for a system.
+We recommend you add `sigrid.yaml` to your repository, so that it is automatically in sync with the source code and part of versions control.
+However, is it possible to retrieve and/or update the scope configuration file *without* making the `sigrid.yaml` file part of your repository.
 
 ## Prerequisites
 
@@ -15,13 +12,37 @@ You will need the following to use this script.
 - You will need a valid [API token](https://docs.sigrid-says.com/organization-integration/authentication-tokens.html) to access the [Sigrid REST API](https://docs.sigrid-says.com/integrations/sigrid-api-documentation.html).
 - Your API token should be available to the script as the environment variable `SIGRID_CI_TOKEN`.
 
-## Usage
+## Retrieving your current Sigrid scope configuration file 
 
 Once all prerequisites are in place, you can use the script:
 
     ./get_sigrid_scope_file.py --customer <mycustomername> --system <mysystemname>
 
-This will then output the Sigrid scope configuration file to `stdout`. 
+This will then output the Sigrid scope configuration file to `stdout`.
+
+**Note:** This script is intended for retrieving the scope configuration file for the analysis results *currently* in Sigrid.
+This script is *not* suitable for "live" editing. If you want a fast feedback loop while editing scope files, we recommend you use the [Visual Studio Code and JetBrains support for editing scope configuration files](https://docs.sigrid-says.com/reference/analysis-scope-configuration.html#editing-scope-files).
+
+## Updating your scope configuration file
+
+You can use [Sigrid CI](https://docs.sigrid-says.com/reference/client-script-usage.html) to update your scope configuration file.
+First, create a directory that contains your `sigrid.yaml` configuration file (it is a Sigrid convention to creat a separate directory for each system, since the file is always called `sigrid.yaml`).
+Once all prerequisites are in place, you can use following command:
+
+    git clone https://github.com/Software-Improvement-Group/sigridci.git sigridci-client
+
+    ./sigridci-client/sigridci/sigridci.py \
+      --customer <mycustomername> \
+      --system <mysystemname> \
+      --source <dir> \
+      --subsystem scopefile \
+      --publishonly
+
+Where `<dir>` is the directory containing your `sigrid.yaml` file. Running this command will do the following:
+
+- Validate your scope configuration file, and report errors when validation fails.
+- Publish your scope configuration file to Sigrid *without* publishing source code.
+- Trigger a new analysis of your system.
 
 ## License
 
