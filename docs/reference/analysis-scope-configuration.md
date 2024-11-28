@@ -390,6 +390,10 @@ You can define architecture groups and annotations, and these annotations are th
         
 The contents of the `include` option refer to the component names you see in Architecture Quality. You can either use the exact component names, or you can use regular expressions. For example, using `target: backend.*` will match all components that have a name starting with "backend". Note you are matching the component name, not the files *within* the component.
 
+## Enabling experimental analysis features
+
+If you add `experimental: true` to your scope file, you opt in for enabling experimental analysis features before they become generally available. The exact list of which features are considered "experimental" is constantly in flux, and is therefore not explicitly included in this documentation. You can enable this option if you prefer to use new features immediately. 
+
 ## Configuring multi-repo systems
 
 Sigrid allows you to create ["multi-repo systems"](../sigridci-integration/development-workflows.md#combining-multiple-repositories-into-a-single-Sigrid-system) that are the combination of multiple repositories in your development environment. In this situation, each individual repository within the system is referred to as a "subsystem". Such a view is more high-level than looking at individual repositories, and is sometimes a better fit if you want to align on Sigrid findings with stakeholders from outside the development organization.
