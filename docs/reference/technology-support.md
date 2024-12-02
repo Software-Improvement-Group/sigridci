@@ -313,7 +313,7 @@ This page provides an overview of all technologies that can be analyzed by Sigri
 | `xul`                      | XUL                                      | Maintainability                             |
 | `yaml`                     | YAML                                     | Maintainability, Architecture               | [(5)](#notes)     |
 
-####Notes
+#### Notes
 
 1. Use either `c` or `cpp`, but not both.
   - Prefer `cpp` if your system contains a combination of C and C++ code.
