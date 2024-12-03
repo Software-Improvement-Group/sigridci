@@ -925,7 +925,7 @@ Successful response format of this request would look like the following, with t
 
 ## Removing subsystems
 
-The Sigrid CI script only adds subsystems, they will never disappear by themselves. If you want to remove a subsystem, users with the role administrator can do so via the API.
+The Sigrid CI script only adds subsystems, they will never disappear by themselves. If you want to remove a subsystem, users with the administrator or maintainer role can do so via the API.
 
 ```
 POST https://sigrid-says.com/rest/inboundresults/sig/{customer}/{system}/ci/subsystems:batch-delete/v1
