@@ -31,8 +31,6 @@ def checkEnvironment():
 
 
 def parseFeedbackCommandLineArguments(capability):
-    checkEnvironment()
-
     parser = ArgumentParser(description=f"Produces Sigrid {capability} feedback for the specified analysis.")
     parser.add_argument("--partner", type=str, default="sig", help=SUPPRESS)
     parser.add_argument("--customer", type=str, help="Name of your organization's Sigrid account.")
@@ -40,9 +38,10 @@ def parseFeedbackCommandLineArguments(capability):
     parser.add_argument("--out", type=str, default="sigrid-ci-output", help="Output directory for Sigrid CI feedback.")
     parser.add_argument("--sigridurl", type=str, default="https://sigrid-says.com", help=SUPPRESS)
     parser.add_argument("--analysisid", type=str, help="Sigrid CI analysis ID.")
+    parser.add_argument("--analysisresults", type=str, help="Analysis results JSON file.")
     args = parser.parse_args()
 
-    if None in [args.customer, args.system, args.analysisid]:
+    if None in [args.customer, args.system] or (args.analysisid is None and args.analysisresults is None):
         parser.print_help()
         sys.exit(1)
 

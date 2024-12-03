@@ -51,7 +51,7 @@ class MarkdownReportTest(TestCase):
         expected = """
             # [Sigrid](https://sigrid-says.com/aap/noot) maintainability feedback
             
-            **↗️  You improved your code's maintainability towards your Sigrid objective of 3.5 stars**
+            **↗️  You improved your code's maintainability towards your objective of 3.5 stars**
             
             Sigrid compared your code against the baseline of 2022-01-10.
             
@@ -210,7 +210,7 @@ class MarkdownReportTest(TestCase):
 
         report = MaintainabilityMarkdownReport()
         summary = report.renderSummary(feedback, self.options)
-        expected = "**✅  You wrote maintainable code and achieved your Sigrid objective of 3.5 stars**"
+        expected = "**✅  You wrote maintainable code and achieved your objective of 3.5 stars**"
 
         self.assertEqual(summary, expected)
 
@@ -225,7 +225,7 @@ class MarkdownReportTest(TestCase):
 
         report = MaintainabilityMarkdownReport()
         summary = report.renderSummary(feedback, self.options)
-        expected = "**↗️  You improved your code's maintainability towards your Sigrid objective of 3.5 stars**"
+        expected = "**↗️  You improved your code's maintainability towards your objective of 3.5 stars**"
 
         self.assertEqual(summary, expected)
 
@@ -239,7 +239,7 @@ class MarkdownReportTest(TestCase):
 
         report = MaintainabilityMarkdownReport()
         summary = report.renderSummary(feedback, self.options)
-        expected = "**⚠️  Your code did not improve towards your Sigrid objective of 3.5 stars**"
+        expected = "**⚠️  Your code did not improve towards your objective of 3.5 stars**"
 
         self.assertEqual(summary, expected)
 
@@ -253,7 +253,7 @@ class MarkdownReportTest(TestCase):
 
         report = MaintainabilityMarkdownReport()
         summary = report.renderSummary(feedback, self.options)
-        expected = "**✅  You wrote maintainable code and achieved your Sigrid objective of 3.5 stars**"
+        expected = "**✅  You wrote maintainable code and achieved your objective of 3.5 stars**"
 
         self.assertEqual(summary, expected)
 
@@ -293,7 +293,7 @@ class MarkdownReportTest(TestCase):
         expected = """
             # [Sigrid](https://sigrid-says.com/aap/noot) maintainability feedback
 
-            **✅  You wrote maintainable code and achieved your Sigrid objective of 3.5 stars**
+            **✅  You wrote maintainable code and achieved your objective of 3.5 stars**
             
             Sigrid compared your code against the baseline of 2022-01-10.
             
@@ -412,7 +412,7 @@ class MarkdownReportTest(TestCase):
         expected = """
             # [Sigrid](https://sigrid-says.com/aap/noot) maintainability feedback
 
-            **⚠️  Your code did not improve towards your Sigrid objective of 3.5 stars**
+            **⚠️  Your code did not improve towards your objective of 3.5 stars**
             
             Sigrid compared your code against the baseline of N/A.
             
@@ -480,7 +480,7 @@ class MarkdownReportTest(TestCase):
         expected = """
             # [Sigrid](https://sigrid-says.com/aap/noot) maintainability feedback
 
-            **⚠️  Your code did not improve towards your Sigrid objective of 3.5 stars**
+            **⚠️  Your code did not improve towards your objective of 3.5 stars**
             
             <details><summary>Show details</summary>
             

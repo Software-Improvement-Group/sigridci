@@ -13,6 +13,7 @@
 # limitations under the License.
 
 import inspect
+import json
 import os
 from unittest import TestCase, mock
 
@@ -27,26 +28,46 @@ class SecurityMarkdownReportTest(TestCase):
         self.options = PublishOptions("aap", "noot", RunMode.FEEDBACK_ONLY, sourceDir="/tmp")
 
         with open(os.path.dirname(__file__) + "/testdata/security.json", encoding="utf-8", mode="r") as f:
-            self.feedback = f
+            self.feedback = json.load(f)
 
     @mock.patch.dict(os.environ, {"SIGRID_CI_MARKDOWN_HTML" : "false"})
     def testCreateTableFromFindings(self):
         report = SecurityMarkdownReport()
-        markdown = report.generateMarkdown(self.feedback, self.options)
+        markdown = report.renderMarkdown("1234", self.feedback, self.options)
 
         expected = """
-            aaa
+            # [Sigrid](https://sigrid-says.com/aap/noot/-/security) Security feedback
+            
+            **⚠️  You did not meet your objective of having no critical security findings**
+            
+            | Risk | File | Finding |
+            |------|------|---------|
+            | ⚪️ | Security.java:33 | Weak Hash algorithm used |
+            
+            ----
+            
+            [**View this system in Sigrid**](https://sigrid-says.com/aap/noot/-/security)
         """
 
         self.assertEqual(markdown.strip(), inspect.cleandoc(expected).strip())
 
     @mock.patch.dict(os.environ, {"SIGRID_CI_MARKDOWN_HTML" : "false"})
     def testSpecialMessageWhenYouMeetObjective(self):
+        with open(os.path.dirname(__file__) + "/testdata/security-nofindings.json", encoding="utf-8", mode="r") as f:
+            noResults = json.load(f)
+
         report = SecurityMarkdownReport()
-        markdown = report.generateMarkdown(self.feedback, self.options)
+        markdown = report.renderMarkdown("1234", noResults, self.options)
 
         expected = """
-            aaa
+            # [Sigrid](https://sigrid-says.com/aap/noot/-/security) Security feedback
+            
+            **✅  You achieved your objective of having no critical security findings**
+            
+            
+            ----
+            
+            [**View this system in Sigrid**](https://sigrid-says.com/aap/noot/-/security)
         """
 
         self.assertEqual(markdown.strip(), inspect.cleandoc(expected).strip())

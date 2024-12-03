@@ -15,12 +15,12 @@
 import html
 import os
 
-from .report import Report
+from .report import Report, MarkdownRenderer
 from ..objective import Objective, ObjectiveStatus
 from ..platform import Platform
 
 
-class MaintainabilityMarkdownReport(Report):
+class MaintainabilityMarkdownReport(Report, MarkdownRenderer):
     MAX_SHOWN_FINDINGS = 8
     MAX_OCCURRENCES = 3
 

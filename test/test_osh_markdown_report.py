@@ -13,6 +13,7 @@
 # limitations under the License.
 
 import inspect
+import json
 import os
 from unittest import TestCase, mock
 
@@ -27,15 +28,26 @@ class OpenSourceHealthMarkdownReportTest(TestCase):
         self.feedback = self.options = PublishOptions("aap", "noot", RunMode.FEEDBACK_ONLY, sourceDir="/tmp")
 
         with open(os.path.dirname(__file__) + "/testdata/osh.json", encoding="utf-8", mode="r") as f:
-            self.feedback = f
+            self.feedback = json.load(f)
 
     @mock.patch.dict(os.environ, {"SIGRID_CI_MARKDOWN_HTML" : "false"})
     def testIncludeFindingsBasedOnObjectives(self):
         report = OpenSourceHealthMarkdownReport()
-        markdown = report.generateMarkdown(self.feedback, self.options)
+        report.objective = "CRITICAL"
+        markdown = report.renderMarkdown("1234", self.feedback, self.options)
 
         expected = """
-            aaa
+            # [Sigrid](https://sigrid-says.com/aap/noot/-/open-source-health) Open Source Health feedback
+            
+            **⚠️  You did not meet your objective of having no critical open source vulnerabilities**
+            
+            | Risk | Dependency | Description |
+            |------|------------|-------------|
+            | 🟣 | requirejs@2.3.2 | This is a test. |
+            
+            ----
+            
+            [**View this system in Sigrid**](https://sigrid-says.com/aap/noot/-/open-source-health)
         """
 
         self.assertEqual(markdown.strip(), inspect.cleandoc(expected).strip())
@@ -43,10 +55,22 @@ class OpenSourceHealthMarkdownReportTest(TestCase):
     @mock.patch.dict(os.environ, {"SIGRID_CI_MARKDOWN_HTML" : "false"})
     def testSortFindingsBasedOnSeverity(self):
         report = OpenSourceHealthMarkdownReport()
-        markdown = report.generateMarkdown(self.feedback, self.options)
+        report.objective = "HIGH"
+        markdown = report.renderMarkdown("1234", self.feedback, self.options)
 
         expected = """
-            aaa
+            # [Sigrid](https://sigrid-says.com/aap/noot/-/open-source-health) Open Source Health feedback
+            
+            **⚠️  You did not meet your objective of having no high open source vulnerabilities**
+            
+            | Risk | Dependency | Description |
+            |------|------------|-------------|
+            | 🟣 | requirejs@2.3.2 | This is a test. |
+            | 🔴 | node-fetch@1.6.3 | Another test. |
+            
+            ----
+            
+            [**View this system in Sigrid**](https://sigrid-says.com/aap/noot/-/open-source-health)
         """
 
         self.assertEqual(markdown.strip(), inspect.cleandoc(expected).strip())
@@ -54,10 +78,18 @@ class OpenSourceHealthMarkdownReportTest(TestCase):
     @mock.patch.dict(os.environ, {"SIGRID_CI_MARKDOWN_HTML" : "false"})
     def testSpecialMessageWhenYouMeetObjective(self):
         report = OpenSourceHealthMarkdownReport()
-        markdown = report.generateMarkdown(self.feedback, self.options)
+        feedback = {"dependencies": []}
+        markdown = report.renderMarkdown("1234", feedback, self.options)
 
         expected = """
-            aaa
+            # [Sigrid](https://sigrid-says.com/aap/noot/-/open-source-health) Open Source Health feedback
+            
+            **✅  You achieved your objective of having no critical open source vulnerabilities**
+            
+            
+            ----
+            
+            [**View this system in Sigrid**](https://sigrid-says.com/aap/noot/-/open-source-health)
         """
 
         self.assertEqual(markdown.strip(), inspect.cleandoc(expected).strip())

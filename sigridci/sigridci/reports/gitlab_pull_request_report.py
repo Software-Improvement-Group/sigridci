@@ -17,31 +17,33 @@ import os
 import urllib.error
 import urllib.request
 
-from .report import Report
+from .report import Report, MarkdownRenderer
 from ..api_caller import ApiCaller
 from ..publish_options import RunMode
 from ..upload_log import UploadLog
 
 
 class GitLabPullRequestReport(Report):
-    def __init__(self, feedbackFiles):
-        self.feedbackFiles = [file for file in feedbackFiles if os.path.exists(file)]
+
+    def __init__(self, markdownRenderer: MarkdownRenderer):
+        self.markdownRenderer = markdownRenderer
 
     def generate(self, analysisId, feedback, options):
-        if self.isWithinGitLabMergeRequestPipeline() and options.runMode == RunMode.FEEDBACK_ONLY:
-            for feedbackFile in self.feedbackFiles:
-                existingCommentId = self.findExistingCommentId()
-                body = self.buildRequestBody(feedbackFile)
+        if self.isWithinGitLabMergeRequestPipeline(options):
+            existingCommentId = self.findExistingCommentId()
+            body = self.buildRequestBody(self.markdownRenderer.renderMarkdown(analysisId, feedback, options))
 
-                if existingCommentId is None:
-                    self.callAPI("POST", self.buildPostCommentURL(None), body)
-                    UploadLog.log("Published feedback to GitLab")
-                else:
-                    self.callAPI("PUT", self.buildPostCommentURL(existingCommentId), body)
-                    UploadLog.log("Updated existing GitLab feedback")
+            if existingCommentId is None:
+                self.callAPI("POST", self.buildPostCommentURL(None), body)
+                UploadLog.log("Published feedback to GitLab")
+            else:
+                self.callAPI("PUT", self.buildPostCommentURL(existingCommentId), body)
+                UploadLog.log("Updated existing GitLab feedback")
 
-    def isWithinGitLabMergeRequestPipeline(self):
-        return "CI_MERGE_REQUEST_IID" in os.environ and "SIGRIDCI_GITLAB_COMMENT_TOKEN" in os.environ
+    def isWithinGitLabMergeRequestPipeline(self, options):
+        return "CI_MERGE_REQUEST_IID" in os.environ and \
+            "SIGRIDCI_GITLAB_COMMENT_TOKEN" in os.environ and \
+            options.runMode == RunMode.FEEDBACK_ONLY
 
     def callAPI(self, method, url, body):
         request = urllib.request.Request(url, body, method=method)
@@ -62,11 +64,8 @@ class GitLabPullRequestReport(Report):
         return url
 
 
-    def buildRequestBody(self, feedbackFile):
-        with open(feedbackFile, mode="r", encoding="utf-8") as f:
-            feedback = f.read()
-
-        body = {"body" : feedback}
+    def buildRequestBody(self, markdown):
+        body = {"body" : markdown}
         return json.dumps(body).encode("utf-8")
 
     def findExistingCommentId(self):

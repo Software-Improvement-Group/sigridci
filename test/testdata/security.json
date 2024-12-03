@@ -4,21 +4,38 @@
     {
       "tool": {
         "driver": {
-          "name": "MobSF",
-          "rules": [
+          "name": "MobSF"
+        }
+      },
+      "results": [
+        {
+          "ruleId": "mobsfscan.crypto.weak_hash",
+          "message": {
+            "text": "Weak Hash algorithm used"
+          },
+          "locations": [
             {
-              "id": "mobsfscan.crypto.weak_key_size",
-              "name": "Semgrep Finding: app.semgrep-rulesets.mobsfscan.crypto.weak_key_size",
-              "fullDescription": {
-                "text": "This is a test."
-              },
-              "properties": {
-                "tags": ["CWE-326"]
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "Security.java",
+                  "uriBaseId": "%SRCROOT%"
+                },
+                "region": {
+                  "startLine": 33
+                }
               }
             }
-          ]
+          ],
+          "fingerprints": {
+            "sigFingerprint/v1": "0fe24dfe0b8c90ae48620e02865b9a3b399b49ea4ef5e020d83e9507d614ebcb"
+          },
+          "properties": {
+            "tags": ["CWE-327"],
+            "category": "Other",
+            "status": "UNKNOWN"
+          }
         }
-      }
+      ]
     }
   ]
 }

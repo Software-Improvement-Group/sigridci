@@ -57,8 +57,8 @@ class SigridCiRunner:
             StaticHtmlReport(),
             JUnitFormatReport(),
             JsonReport(),
-            AzurePullRequestReport(),
-            GitLabPullRequestReport(),
+            AzurePullRequestReport(MaintainabilityMarkdownReport()),
+            GitLabPullRequestReport(MaintainabilityMarkdownReport()),
             PipelineSummaryReport()
         ]
 

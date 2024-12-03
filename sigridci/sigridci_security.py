@@ -17,7 +17,7 @@
 import json
 
 from sigridci.sigrid_api_client import SigridApiClient
-from sigridci.command_line_helper import getFeedbackPublishOptions, parseFeedbackCommandLineArguments
+from sigridci.command_line_helper import getFeedbackPublishOptions, parseFeedbackCommandLineArguments, checkEnvironment
 from sigridci.upload_log import UploadLog
 from sigridci.reports.azure_pull_request_report import AzurePullRequestReport
 from sigridci.reports.gitlab_pull_request_report import GitLabPullRequestReport
@@ -26,20 +26,28 @@ from sigridci.reports.security_markdown_report import SecurityMarkdownReport
 
 SECURITY_REPORTS = [
     SecurityMarkdownReport(),
-    GitLabPullRequestReport(),
-    AzurePullRequestReport()
+    GitLabPullRequestReport(SecurityMarkdownReport()),
+    AzurePullRequestReport(SecurityMarkdownReport())
 ]
 
 
+def retrieveFeedback(apiClient, options):
+    if args.analysisresults:
+        with open(args.analysisresults, mode="r", encoding="utf-8") as f:
+            return json.load(f)
+    else:
+        UploadLog.log(f"Retrieving Sigrid CI Security feedback for analysis ID {args.analysisId}")
+        raise Exception("Retrieving Security feedback from the Sigrid API is not yet supported")
+
+
 if __name__ == "__main__":
+    checkEnvironment()
     args = parseFeedbackCommandLineArguments("Security")
     options = getFeedbackPublishOptions(args)
     apiClient = SigridApiClient(options)
-
-    UploadLog.log(f"Retrieving Sigrid CI Security feedback for analysis ID {args.analysisid}")
-    # TODO load analysis results once end point is available.
-    with open(args.analysisid, mode="r", encoding="utf-8") as f:
-        feedback = json.load(f)
+    feedback = retrieveFeedback(apiClient, options)
+    objective = apiClient.fetchObjectives().get("SECURITY_MAX_SEVERITY", "CRITICAL")
 
     for report in SECURITY_REPORTS:
+        report.objective = objective
         report.generate(args.analysisid, feedback, options)

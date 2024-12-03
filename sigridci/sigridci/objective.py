@@ -63,12 +63,16 @@ class Objective:
             return ObjectiveStatus.UNCHANGED
 
     @staticmethod
+    def meetsFindingObjective(findingSeverities, objective):
+        return sum(1 for severity in findingSeverities if Objective.isFindingIncluded(severity, objective)) == 0
+
+    @staticmethod
     def isFindingIncluded(severity, objective):
-        if objective.lower() == "critical":
-            return severity.lower() == "critical"
-        elif objective.lower() == "high":
-            return severity.lower() in ("critical", "high")
-        elif objective.lower() == "medium":
-            return severity.lower() in ("critical", "high", "medium")
+        if objective == "CRITICAL":
+            return severity in ("CRITICAL", "UNKNOWN")
+        elif objective == "HIGH":
+            return severity in ("CRITICAL", "HIGH", "UNKNOWN")
+        elif objective == "MEDIUM":
+            return severity in ("CRITICAL", "HIGH", "MEDIUM", "UNKNOWN")
         else:
             return True

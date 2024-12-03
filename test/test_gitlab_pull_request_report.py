@@ -16,9 +16,9 @@ import os
 from tempfile import mkdtemp
 from unittest import TestCase, mock
 
-from sigridci.sigridci.gitlab_pull_request_report import GitLabPullRequestReport
-from sigridci.sigridci.markdown_report import MarkdownReport
 from sigridci.sigridci.publish_options import PublishOptions, RunMode
+from sigridci.sigridci.reports.gitlab_pull_request_report import GitLabPullRequestReport
+from sigridci.sigridci.reports.maintainability_markdown_report import MaintainabilityMarkdownReport
 from sigridci.sigridci.upload_log import UploadLog
 
 
@@ -33,7 +33,6 @@ class GitLabPullRequestReportTest(TestCase):
 
     def setUp(self):
         UploadLog.clear()
-
         self.tempDir = mkdtemp()
         self.options = PublishOptions("aap", "noot", RunMode.FEEDBACK_ONLY, targetRating=3.5, outputDir=self.tempDir)
 
@@ -46,12 +45,6 @@ class GitLabPullRequestReportTest(TestCase):
             "overallRatings": {"DUPLICATION": 4.5, "UNIT_SIZE": 3.0, "MAINTAINABILITY": 3.4},
             "refactoringCandidates": []
         }
-
-        with open(f"{self.tempDir}/feedback.md", "w") as f:
-            # Use the *actual* Markdown report so we're sure we can handle
-            # any layout changes.
-            markdownReport = MarkdownReport()
-            f.write(markdownReport.renderMarkdown("1234", self.feedback, self.options))
 
     @mock.patch.dict(os.environ, MOCK_GITLAB_ENV)
     def testPostNewComment(self):
@@ -73,7 +66,7 @@ class GitLabPullRequestReportTest(TestCase):
 class MockGitLab(GitLabPullRequestReport):
 
     def __init__(self, existingCommentId):
-        super().__init__()
+        super().__init__(MaintainabilityMarkdownReport())
         self.existingCommentId = existingCommentId
         self.called = []
 
@@ -81,7 +74,7 @@ class MockGitLab(GitLabPullRequestReport):
         self.called.append(f"{method} {url}")
         return self
 
-    def isWithinGitLabMergeRequestPipeline(self):
+    def isWithinGitLabMergeRequestPipeline(self, options):
         return True
 
     def findExistingCommentId(self):

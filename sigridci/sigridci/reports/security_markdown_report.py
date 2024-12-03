@@ -14,44 +14,48 @@
 
 import os
 
-from .report import Report
-from ..platform import Platform
+from .report import Report, MarkdownRenderer
+from ..objective import Objective
 
 
-class SecurityMarkdownReport(Report):
+class SecurityMarkdownReport(Report, MarkdownRenderer):
     SEVERITY_SYMBOLS = {
         "CRITICAL" : "🟣",
         "HIGH" : "🔴",
         "MEDIUM" : "🟠",
-        "LOW" : "🟡"
+        "LOW" : "🟡",
+        "UNKNOWN" : "⚪️"
     }
+
+    def __init__(self):
+        self.objective = "CRITICAL"
 
     def generate(self, analysisId, feedback, options):
         with open(os.path.abspath(f"{options.outputDir}/security-feedback.md"), "w", encoding="utf-8") as f:
-            f.write(self.generateMarkdown(feedback, options))
+            f.write(self.renderMarkdown(analysisId, feedback, options))
 
-    def generateMarkdown(self, feedback, options):
-        md = f"# [Sigrid]({self.getSigridUrl(options)}) Security feedback\n\n"
+    def renderMarkdown(self, analysisId, feedback, options):
+        findings = list(self.getRelevantFindings(feedback))
+        summary = self.getSummary(findings)
+        details = self.generateFindingsTable(findings)
+        sigridLink = f"{self.getSigridUrl(options)}/-/security"
+        return self.renderMarkdownTemplate("Security", summary, details, sigridLink)
 
-        if Platform.isHtmlMarkdownSupported():
-            md += "<details><summary>Show findings</summary>\n\n"
+    def getSummary(self, findings):
+        if len(findings) == 0:
+            return f"✅  You achieved your objective of having no {self.objective.lower()} security findings"
+        else:
+            return f"⚠️  You did not meet your objective of having no {self.objective.lower()} security findings"
 
-        md += f"Sigrid compared your code against the baseline of {self.formatBaseline(feedback)}.\n\n"
-        md += self.generateFindingsTable(feedback)
+    def generateFindingsTable(self, findings):
+        if len(findings) == 0:
+            return ""
 
-        if Platform.isHtmlMarkdownSupported():
-            md += "</details>\n\n"
-
-        md += "----\n"
-        md += f"[**View this system in Sigrid**]({self.getSigridUrl(options)}/-/security)"
-        return md
-
-    def generateFindingsTable(self, feedback):
         md = "| Risk | File | Finding |\n"
         md += "|------|------|---------|\n"
 
-        for finding in self.getRelevantFindings(feedback):
-            symbol = "⚪️"
+        for finding in findings:
+            symbol = self.SEVERITY_SYMBOLS[self.getFindingSeverity(finding)]
             file = finding["locations"][0]["physicalLocation"]["artifactLocation"]["uri"]
             line = finding["locations"][0]["physicalLocation"]["region"]["startLine"]
             description = finding["message"]["text"]
@@ -62,5 +66,11 @@ class SecurityMarkdownReport(Report):
     def getRelevantFindings(self, feedback):
         for run in feedback["runs"]:
             for result in run["results"]:
-                if "tags" in result["properties"] and len(result["properties"]["tags"]) > 0:
-                    yield result
+                tags = result.get("properties", {}).get("tags", [])
+                severity = self.getFindingSeverity(result)
+                if len(tags) > 0:
+                    if Objective.isFindingIncluded(severity, self.objective):
+                        yield result
+
+    def getFindingSeverity(self, result):
+        return result.get("properties", {}).get("severity", "UNKNOWN")

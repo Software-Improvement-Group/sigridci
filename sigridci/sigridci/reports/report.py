@@ -12,11 +12,12 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-import os
 import urllib.parse
 from datetime import datetime
 
 from ..objective import Objective, ObjectiveStatus
+from ..platform import Platform
+from ..publish_options import PublishOptions
 
 
 class Report:
@@ -64,15 +65,34 @@ class Report:
 
     def getSummaryText(self, feedback, options):
         status = Objective.determineStatus(feedback, options)
-        target = f"{options.targetRating:.1f} stars"
+        targetRating = PublishOptions.DEFAULT_TARGET if isinstance(options.targetRating, str) else options.targetRating
+        targetText = f"{targetRating:.1f} stars"
 
         if status == ObjectiveStatus.ACHIEVED:
-            return f"✅  You wrote maintainable code and achieved your Sigrid objective of {target}"
+            return f"✅  You wrote maintainable code and achieved your objective of {targetText}"
         elif status == ObjectiveStatus.IMPROVED:
-            return f"↗️  You improved your code's maintainability towards your Sigrid objective of {target}"
+            return f"↗️  You improved your code's maintainability towards your objective of {targetText}"
         elif status == ObjectiveStatus.UNCHANGED:
-            return f"⏸️️  Your rating did not change and is still below your objective of {target}"
+            return f"⏸️️  Your rating did not change and is still below your objective of {targetText}"
         elif status == ObjectiveStatus.WORSENED:
-            return f"⚠️  Your code did not improve towards your Sigrid objective of {target}"
+            return f"⚠️  Your code did not improve towards your objective of {targetText}"
         else:
             return "💭️  You did not change any files that are measured by Sigrid"
+
+
+class MarkdownRenderer:
+    def renderMarkdown(self, analysisId, feedback, options):
+        return ""
+
+    def renderMarkdownTemplate(self, capability, summary, details, sigridLink):
+        md = f"# [Sigrid]({sigridLink}) {capability} feedback\n\n"
+        md += f"**{summary}**\n\n"
+        if len(details) > 0:
+            if Platform.isHtmlMarkdownSupported():
+                md += "<details><summary>Show details</summary>\n\n"
+            md += details
+            if Platform.isHtmlMarkdownSupported():
+                md += "</details>\n"
+        md += "\n----\n\n"
+        md += f"[**View this system in Sigrid**]({sigridLink})"
+        return md
