@@ -307,7 +307,7 @@ auth-api:
     unattendedWorkflowTokens:
       create: true
       data:
-        issuer-uri: "https://example.com"
+        issuer-uri: "https://my-sigrid.example.com/rest/auth"
         private-key: |
           -----BEGIN PRIVATE KEY-----
           MIIEvg ...
