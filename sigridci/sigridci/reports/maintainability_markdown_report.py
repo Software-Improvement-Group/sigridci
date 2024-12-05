@@ -18,6 +18,7 @@ import os
 from .report import Report, MarkdownRenderer
 from ..objective import Objective, ObjectiveStatus
 from ..platform import Platform
+from ..publish_options import PublishOptions
 
 
 class MaintainabilityMarkdownReport(Report, MarkdownRenderer):
@@ -71,6 +72,22 @@ class MaintainabilityMarkdownReport(Report, MarkdownRenderer):
 
     def renderSummary(self, feedback, options):
         return f"**{self.getSummaryText(feedback, options)}**"
+
+    def getSummaryText(self, feedback, options):
+        status = Objective.determineStatus(feedback, options)
+        targetRating = PublishOptions.DEFAULT_TARGET if isinstance(options.targetRating, str) else options.targetRating
+        targetText = f"{targetRating:.1f} stars"
+
+        if status == ObjectiveStatus.ACHIEVED:
+            return f"✅  You wrote maintainable code and achieved your objective of {targetText}"
+        elif status == ObjectiveStatus.IMPROVED:
+            return f"↗️  You improved your code's maintainability towards your objective of {targetText}"
+        elif status == ObjectiveStatus.UNCHANGED:
+            return f"⏸️️  Your rating did not change and is still below your objective of {targetText}"
+        elif status == ObjectiveStatus.WORSENED:
+            return f"⚠️  Your code did not improve towards your objective of {targetText}"
+        else:
+            return "💭️  You did not change any files that are measured by Sigrid"
 
     def renderRefactoringCandidates(self, feedback, sigridLink):
         good = self.filterRefactoringCandidates(feedback, ["improved"])
