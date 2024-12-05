@@ -82,7 +82,7 @@ class Report:
 
 class MarkdownRenderer:
     def renderMarkdown(self, analysisId, feedback, options):
-        return ""
+        raise NotImplementedError()
 
     def renderMarkdownTemplate(self, capability, summary, details, sigridLink):
         md = f"# [Sigrid]({sigridLink}) {capability} feedback\n\n"
@@ -96,3 +96,9 @@ class MarkdownRenderer:
         md += "\n----\n\n"
         md += f"[**View this system in Sigrid**]({sigridLink})"
         return md
+
+    def getMarkdownFile(self, options):
+        raise NotImplementedError()
+
+    def getObjectiveSuccess(self, feedback, options):
+        raise NotImplementedError()

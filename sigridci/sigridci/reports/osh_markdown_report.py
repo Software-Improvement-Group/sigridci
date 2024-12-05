@@ -25,21 +25,21 @@ class OpenSourceHealthMarkdownReport(Report, MarkdownRenderer):
         self.objective = "CRITICAL"
 
     def generate(self, analysisId, feedback, options):
-        with open(os.path.abspath(f"{options.outputDir}/osh-feedback.md"), "w", encoding="utf-8") as f:
+        with open(self.getMarkdownFile(options), "w", encoding="utf-8") as f:
             f.write(self.renderMarkdown(analysisId, feedback, options))
 
     def renderMarkdown(self, analysisId, feedback, options):
         includedVulnerabilities = list(self.getIncludedVulnerabilities(feedback))
         includedVulnerabilities.sort(key=lambda entry: entry[1]["severity"])
 
-        summary = self.getSummary(includedVulnerabilities)
+        summary = self.getSummary(self.isObjectiveSuccess(feedback, options))
         details = self.generateFindingsTable(includedVulnerabilities)
         sigridLink = f"{self.getSigridUrl(options)}/-/open-source-health"
         return self.renderMarkdownTemplate("Open Source Health", summary, details, sigridLink)
 
-    def getSummary(self, includedVulnerabilities):
+    def getSummary(self, objectiveSuccess):
         objectiveDisplayName = f"{self.objective.lower()} open source vulnerabilities"
-        if len(includedVulnerabilities) == 0:
+        if objectiveSuccess:
             return f"✅  You achieved your objective of having no {objectiveDisplayName}"
         else:
             return f"⚠️  You did not meet your objective of having no {objectiveDisplayName}"
@@ -64,3 +64,10 @@ class OpenSourceHealthMarkdownReport(Report, MarkdownRenderer):
             for vulnerability in dependency["vulnerabilities"]:
                 if Objective.isFindingIncluded(vulnerability["severity"], self.objective):
                     yield (dependency, vulnerability)
+
+    def getMarkdownFile(self, options):
+        return os.path.abspath(f"{options.outputDir}/osh-feedback.md")
+
+    def isObjectiveSuccess(self, feedback, options):
+        includedVulnerabilities = list(self.getIncludedVulnerabilities(feedback))
+        return len(includedVulnerabilities) == 0

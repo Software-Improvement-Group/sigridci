@@ -33,7 +33,7 @@ class MaintainabilityMarkdownReport(Report, MarkdownRenderer):
     }
 
     def generate(self, analysisId, feedback, options):
-        with open(os.path.abspath(f"{options.outputDir}/feedback.md"), "w", encoding="utf-8") as f:
+        with open(self.getMarkdownFile(options), "w", encoding="utf-8") as f:
             markdown = self.renderMarkdown(analysisId, feedback, options)
             f.write(markdown)
 
@@ -147,3 +147,10 @@ class MaintainabilityMarkdownReport(Report, MarkdownRenderer):
 
     def getFeedbackLink(self, options, feedback):
         return f"{options.feedbackURL}?feature=sigridci.feedback&feedback={feedback}&system={options.getSystemId()}"
+
+    def getMarkdownFile(self, options):
+        return os.path.abspath(f"{options.outputDir}/feedback.md")
+
+    def isObjectiveSuccess(self, feedback, options):
+        status = Objective.determineStatus(feedback, options)
+        return status != ObjectiveStatus.WORSENED

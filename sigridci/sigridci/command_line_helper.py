@@ -37,11 +37,10 @@ def parseFeedbackCommandLineArguments(capability):
     parser.add_argument("--system", type=str, help="Name of your system in Sigrid, letters/digits/hyphens only.")
     parser.add_argument("--out", type=str, default="sigrid-ci-output", help="Output directory for Sigrid CI feedback.")
     parser.add_argument("--sigridurl", type=str, default="https://sigrid-says.com", help=SUPPRESS)
-    parser.add_argument("--analysisid", type=str, help="Sigrid CI analysis ID.")
-    parser.add_argument("--analysisresults", type=str, help="Analysis results JSON file.")
+    parser.add_argument("--analysisresults", type=str, help="Generates reports based on analysis results JSON file.")
     args = parser.parse_args()
 
-    if None in [args.customer, args.system] or (args.analysisid is None and args.analysisresults is None):
+    if None in [args.customer, args.system, args.analysisresults]:
         parser.print_help()
         sys.exit(1)
 

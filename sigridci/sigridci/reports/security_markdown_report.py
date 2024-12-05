@@ -31,18 +31,18 @@ class SecurityMarkdownReport(Report, MarkdownRenderer):
         self.objective = "CRITICAL"
 
     def generate(self, analysisId, feedback, options):
-        with open(os.path.abspath(f"{options.outputDir}/security-feedback.md"), "w", encoding="utf-8") as f:
+        with open(self.getMarkdownFile(options), "w", encoding="utf-8") as f:
             f.write(self.renderMarkdown(analysisId, feedback, options))
 
     def renderMarkdown(self, analysisId, feedback, options):
         findings = list(self.getRelevantFindings(feedback))
-        summary = self.getSummary(findings)
+        summary = self.getSummary(self.isObjectiveSuccess(feedback, options))
         details = self.generateFindingsTable(findings)
         sigridLink = f"{self.getSigridUrl(options)}/-/security"
         return self.renderMarkdownTemplate("Security", summary, details, sigridLink)
 
-    def getSummary(self, findings):
-        if len(findings) == 0:
+    def getSummary(self, objectiveSuccess):
+        if objectiveSuccess:
             return f"✅  You achieved your objective of having no {self.objective.lower()} security findings"
         else:
             return f"⚠️  You did not meet your objective of having no {self.objective.lower()} security findings"
@@ -74,3 +74,10 @@ class SecurityMarkdownReport(Report, MarkdownRenderer):
 
     def getFindingSeverity(self, result):
         return result.get("properties", {}).get("severity", "UNKNOWN")
+
+    def getMarkdownFile(self, options):
+        return os.path.abspath(f"{options.outputDir}/security-feedback.md")
+
+    def isObjectiveSuccess(self, feedback, options):
+        findings = list(self.getRelevantFindings(feedback))
+        return len(findings) == 0

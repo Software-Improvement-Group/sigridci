@@ -17,26 +17,27 @@
 import json
 
 from sigridci.command_line_helper import getFeedbackPublishOptions, parseFeedbackCommandLineArguments, checkEnvironment
+from sigridci.publish_options import PublishOptions
 from sigridci.reports.azure_pull_request_report import AzurePullRequestReport
 from sigridci.reports.gitlab_pull_request_report import GitLabPullRequestReport
-from sigridci.reports.security_markdown_report import SecurityMarkdownReport
+from sigridci.reports.maintainability_markdown_report import MaintainabilityMarkdownReport
 from sigridci.sigrid_api_client import SigridApiClient
 from sigridci.sigridci_runner import SigridCiRunner
 
 
 if __name__ == "__main__":
     checkEnvironment()
-    args = parseFeedbackCommandLineArguments("Security")
+    args = parseFeedbackCommandLineArguments("Maintainability")
     options = getFeedbackPublishOptions(args)
 
     apiClient = SigridApiClient(options)
-    objective = apiClient.fetchObjectives().get("SECURITY_MAX_SEVERITY", "CRITICAL")
+    objective = apiClient.fetchObjectives().get("MAINTAINABILITY", PublishOptions.DEFAULT_TARGET)
 
     with open(args.analysisresults, mode="r", encoding="utf-8") as f:
         analysisId = "local"
         feedback = json.load(f)
 
-    markdownReport = SecurityMarkdownReport()
+    markdownReport = MaintainabilityMarkdownReport()
     additionalReports = [GitLabPullRequestReport(markdownReport), AzurePullRequestReport(markdownReport)]
 
     runner = SigridCiRunner(options, apiClient)

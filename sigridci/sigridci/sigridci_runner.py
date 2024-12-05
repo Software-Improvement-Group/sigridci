@@ -29,8 +29,6 @@ from .reports.static_html_report import StaticHtmlReport
 
 
 class SigridCiRunner:
-    DEFAULT_OBJECTIVE = 3.5
-
     METADATA_FIELDS = [
         "displayName",
         "divisionName",
@@ -142,6 +140,14 @@ class SigridCiRunner:
 
     def loadSigridTarget(self):
         objectives = self.apiClient.fetchObjectives()
-        targetRating = objectives.get("MAINTAINABILITY", self.DEFAULT_OBJECTIVE)
+        targetRating = objectives.get("MAINTAINABILITY", PublishOptions.DEFAULT_TARGET)
         UploadLog.log("Using Sigrid for target rating (%.1f stars)" % targetRating)
         return targetRating
+
+    def provideFeedbackOnly(self, analysisId, feedback, markdownReport, additionalReports):
+        for report in [markdownReport] + additionalReports:
+            report.generate(analysisId, feedback, self.options)
+
+        print(f"Sigrid CI feedback is available from {markdownReport.getMarkdownFile(self.options)}")
+        print(f"View this system in Sigrid: {markdownReport.getSigridUrl(self.options)}")
+        sys.exit(0 if markdownReport.isObjectiveSuccess(feedback, self.options) else 1)
