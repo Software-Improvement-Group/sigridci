@@ -27,10 +27,11 @@ Sigrid requires:
 - (C) Access to two PostgreSQL databases (which would typically be hosted on the same PostgreSQL 
   cluster).
 - (D) Access to an OpenID Connect identity provider.
-- (E) Access to an S3-compatible object store (e.g., Amazon's own S3 or [MinIO](https://min.io)).
+- (E) Provide an RSA keypair for signing of unattended workflow tokens.
+- (F) Access to an S3-compatible object store (e.g., Amazon's own S3 or [MinIO](https://min.io)).
 
 Optional dependencies:
-- (F) OAuth connection to one or more source code repositories (can be GitLab, GitHub, Azure 
+- (G) OAuth connection to one or more source code repositories (can be GitLab, GitHub, Azure 
   DevOps, or a combination).
 
 ## (A) Docker image registry
@@ -115,15 +116,27 @@ Analysis results are stored in a PostgreSQL database server (or cluster in Postg
 consequently, PostgreSQL is a non-optional dependency of Sigrid. Typically, deployments use a
 PostgreSQL instance outside the Kubernetes cluster and consequently not managed by Helm. 
 
-For Postgres, we support the latest 2 major versions. You can track the Postgres version 
-history in [this overview](https://www.postgresql.org/support/versioning/).
+For PostgreSQL, we support the latest 2 major versions. You can track the Postgres version 
+history in [this overview](https://www.postgresql.org/support/versioning/). While Sigrid is 
+known to work on managed PostgreSQL (to be specific: on Amazon Web Services RDS), SIG only tests 
+the Helm chart and this documentation against self-managed PostgreSQL.
 
-This page assumes that a properly initialized PostgreSQL server is available and reachable from 
-the Kubernetes cluster. In the Helm chart configuration, a number of mandatory settings need to be 
-provided:
+It is the responsibility of the on-premise customer to initialize and manage PostgreSQL. The 
+Helm chart (and this page) assumes that a properly initialized PostgreSQL server is available 
+and reachable from the Kubernetes cluster. In the Helm chart configuration, a number of mandatory 
+settings need to be provided:
 - The endpoint at which the PostgreSQL server is reachable. By default, Sigrid connects at 
   the standard port for PostgreSQL (5432).
 - Passwords for various PostgreSQL users: `webapp_user`, `db_mgmt_user`, and `import_user`.
+
+The Helm charts provides SQL scripts to initialize the database. It is the responsibility of the 
+on-premise customer to run these scripts (using `psql`). They are NOT executed by the Helm chart.
+In case of managed PostgreSQL, these scripts might need to be adapted to take care of specifics 
+of the managed PostgreSQL provider. The scripts are in the `sigrid-stack/files` directory, which 
+can be obtained by pulling the Helm chart. The relevant files are `sigriddb-init` and `authdb-init`. 
+
+IMPORTANT: When running the init scripts, take care to first replace the password placeholders with 
+real passwords.
 
 In PostgreSQL, users and roles are global at the PostgreSQL cluster (a.k.a. instance/server) 
 level. The initialization script creates the following users and roles:
@@ -139,11 +152,6 @@ In addition, when first importing a system, Sigrid creates a role called `PARTNE
 where `PARTNER` and `CUSTOMER` are placeholders for the configured partner and customer role. In 
 case any of these users or roles already exists in the cluster, the initialization script or 
 the first import fails.
-
-Database users are created together with an initial database schema by initialization scripts 
-provided by the Helm chart. The relevant files are `sigriddb-init` and `authdb-init`, and 
-optionally `metricsuser-init`. They are present in the `sigrid-stack/files` directory of the 
-Helm chart.
 
 ### Kubernetes secrets
 
@@ -268,14 +276,59 @@ Notes:
    the name of that secret here using `secretName`.
 4. The client ID and secret provided by your IdP need to be pasted here.
 
+## (E) Provide an RSA keypair for signing of unattended workflow tokens.
 
-## (E) Access to an S3-compatible object store
+Sigrid provides a [public API](../integrations/sigrid-api-documentation.md) that allows access 
+to Sigrid from scripts. This API is protected by personal access tokens that logged-in users can 
+create in Sigrid's user interface. These tokens are called "unattended workflow tokens" (UWTs) 
+in Sigrid.
+
+UWTs are JSON web tokens and hence need to be signed. This means a keypair needs to be 
+configured that Sigrid uses to sign UWTs. The steps are as follows:
+1. Create a 2048-bit RSA keypair, for instance using OpenSSL. The key needs to be in PEM format 
+   (this format is easy to recognize: it is an ASCII file starting with `-----BEGIN PRIVATE 
+   KEY-----`). When using OpenSSL, the command is `openssl genrsa -out uwt_signing_key.pem 2048`.
+2. Create a Kubernetes secret to hold this key. This secret needs to be an opaque secret with 
+   two properties: `issuer-uri` (typically: `https://your-sigrid-domain`) and `private-key` (which 
+   holds the keypair in PEM format created in step 1). 
+
+As with all secrets in Sigrid's Helm chart, there are two ways to create this secret: create the 
+secret yourself and reference it in your `values.yaml`, or let the Helm chart create it.
+
+If you create the secret yourself, say with name `uwt-secret`, the configuration in your `values.
+yaml` is:
+
+```yaml
+auth-api:
+  config:
+    unattendedWorkflowTokens:
+      create: false
+      secretName: "uwt-secret"
+```
+
+If you choose to let the Helm chart create the secret, the configuration in your `values.yaml` is:
+
+```yaml
+auth-api:
+  config:
+    unattendedWorkflowTokens:
+      create: true
+      data:
+        issuer-uri: "https://my-sigrid.example.com/rest/auth"
+        private-key: |
+          -----BEGIN PRIVATE KEY-----
+          MIIEvg ...
+          (many lines omitted from the keypair created in step 1)  
+          -----END PRIVATE KEY-----
+```
+
+## (F) Access to an S3-compatible object store
 
 Access to an S3-compatible object store is mandatory for Sigrid, but only for the pipeline jobs 
 that analyze systems and upload results to Sigrid. Hence, no S3 configuration is needed in the 
 Helm chart.
 
-## (F) Optional: connection to source code repositories
+## (G) Optional: connection to source code repositories
 
 In on-premise deployments, source code analyzed by Sigrid is never copied over (uploaded) to 
 Sigrid. Consequently, to view source code fragments in Sigrid's UI, Sigrid needs to be able to 
