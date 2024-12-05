@@ -27,8 +27,8 @@ class SecurityMarkdownReport(Report, MarkdownRenderer):
         "UNKNOWN" : "⚪️"
     }
 
-    def __init__(self):
-        self.objective = "CRITICAL"
+    def __init__(self, objective = "CRITICAL"):
+        self.objective = objective
 
     def generate(self, analysisId, feedback, options):
         with open(self.getMarkdownFile(options), "w", encoding="utf-8") as f:

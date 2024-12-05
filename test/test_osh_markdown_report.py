@@ -32,8 +32,7 @@ class OpenSourceHealthMarkdownReportTest(TestCase):
 
     @mock.patch.dict(os.environ, {"SIGRID_CI_MARKDOWN_HTML" : "false"})
     def testIncludeFindingsBasedOnObjectives(self):
-        report = OpenSourceHealthMarkdownReport()
-        report.objective = "CRITICAL"
+        report = OpenSourceHealthMarkdownReport("CRITICAL")
         markdown = report.renderMarkdown("1234", self.feedback, self.options)
 
         expected = """
@@ -54,8 +53,7 @@ class OpenSourceHealthMarkdownReportTest(TestCase):
 
     @mock.patch.dict(os.environ, {"SIGRID_CI_MARKDOWN_HTML" : "false"})
     def testSortFindingsBasedOnSeverity(self):
-        report = OpenSourceHealthMarkdownReport()
-        report.objective = "HIGH"
+        report = OpenSourceHealthMarkdownReport("HIGH")
         markdown = report.renderMarkdown("1234", self.feedback, self.options)
 
         expected = """

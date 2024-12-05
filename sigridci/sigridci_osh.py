@@ -36,7 +36,7 @@ if __name__ == "__main__":
         analysisId = "local"
         feedback = json.load(f)
 
-    markdownReport = OpenSourceHealthMarkdownReport()
+    markdownReport = OpenSourceHealthMarkdownReport(objective)
     additionalReports = [GitLabPullRequestReport(markdownReport), AzurePullRequestReport(markdownReport)]
 
     runner = SigridCiRunner(options, apiClient)
