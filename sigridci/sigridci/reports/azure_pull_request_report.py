@@ -17,24 +17,26 @@ import os
 import urllib.error
 import urllib.request
 
-from .api_caller import ApiCaller
-from .objective import Objective, ObjectiveStatus
-from .publish_options import RunMode
-from .report import Report
-from .upload_log import UploadLog
+from .report import Report, MarkdownRenderer
+from ..api_caller import ApiCaller
+from ..objective import Objective, ObjectiveStatus
+from ..publish_options import RunMode
+from ..upload_log import UploadLog
 
 
 class AzurePullRequestReport(Report):
     AZURE_API_VERSION = "6.0"
 
-    def generate(self, analysisId, feedback, options):
-        feedbackFile = f"{options.outputDir}/feedback.md"
+    def __init__(self, markdownRenderer: MarkdownRenderer):
+        self.markdownRenderer = markdownRenderer
 
-        if not self.isSupported(options) or not os.path.exists(feedbackFile):
+    def generate(self, analysisId, feedback, options):
+        if not self.isSupported(options):
             return
 
         UploadLog.log("Sending feedback to Azure DevOps API")
 
+        markdown = self.markdownRenderer.renderMarkdown(analysisId, feedback, options)
         # We want to update the existing comment, to avoid spamming people with new
         # comments every time they make a commit. We have no way to persist this,
         # so we need to check the existing comments.
@@ -42,11 +44,11 @@ class AzurePullRequestReport(Report):
         status = Objective.determineStatus(feedback, options)
 
         if existingId == None:
-            self.callAzure("POST", self.buildRequestBody(feedbackFile, status), None)
-            UploadLog.log("Published new feedback to Azure DevOps")
+            self.callAzure("POST", self.buildRequestBody(markdown, status), None)
+            UploadLog.log(f"Published new {self.markdownRenderer.getCapability()} feedback to Azure DevOps")
         else:
-            self.callAzure("PATCH", self.buildRequestBody(feedbackFile, status), existingId)
-            UploadLog.log("Updated existing feedback in Azure DevOps")
+            self.callAzure("PATCH", self.buildRequestBody(markdown, status), existingId)
+            UploadLog.log(f"Updated existing {self.markdownRenderer.getCapability()} feedback in Azure DevOps")
 
     def isSupported(self, options):
         return "SYSTEM_ACCESSTOKEN" in os.environ and \
@@ -58,10 +60,14 @@ class AzurePullRequestReport(Report):
 
         for thread in existingThreads["value"]:
             for comment in thread["comments"]:
-                if comment["content"].startswith(("# Sigrid", "# [Sigrid]")):
+                if self.isExistingComment(comment):
                     return thread["id"]
 
         return None
+
+    def isExistingComment(self, comment):
+        header = f"{self.markdownRenderer.getCapability()} feedback".lower()
+        return comment["content"].startswith(("# Sigrid", "# [Sigrid]")) and header in comment["content"].lower()
 
     def callAzure(self, method, body, threadId):
         request = urllib.request.Request(self.buildURL(threadId), json.dumps(body).encode("utf-8"))
@@ -83,14 +89,11 @@ class AzurePullRequestReport(Report):
         else:
             return f"{baseURL}{project}/_apis/git/repositories/{repo}/pullRequests/{pr}/threads?api-version={self.AZURE_API_VERSION}"
 
-    def buildRequestBody(self, feedbackFile, status):
-        with open(feedbackFile, mode="r", encoding="utf-8") as f:
-            feedback = f.read()
-
+    def buildRequestBody(self, markdown, status):
         return {
             "comments": [{
                 "parentCommentId": 0,
-                "content": feedback,
+                "content": markdown,
                 "commentType": "text"
             }],
             "status": self.getCommentStatus(status)

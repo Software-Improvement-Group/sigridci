@@ -23,5 +23,5 @@ class StaticHtmlReportTest(TestCase):
         self.options = PublishOptions("aap", "noot", RunMode.FEEDBACK_ONLY, "/tmp", targetRating=3.5)
 
     def testFeedbackTemplateOnlyContainsAsciiCharacters(self):
-        with open("sigridci/sigridci/sigridci-feedback-template.html", mode="r", encoding="ascii") as f:
+        with open("sigridci/sigridci/reports/sigridci-feedback-template.html", mode="r", encoding="ascii") as f:
             f.read()

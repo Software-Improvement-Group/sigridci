@@ -16,8 +16,8 @@ import inspect
 import tempfile
 from unittest import TestCase
 
-from sigridci.sigridci.json_report import JsonReport
 from sigridci.sigridci.publish_options import PublishOptions, RunMode
+from sigridci.sigridci.reports.json_report import JsonReport
 
 
 class JsonReportTest(TestCase):

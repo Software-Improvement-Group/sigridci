@@ -61,3 +61,19 @@ class Objective:
             return ObjectiveStatus.WORSENED
         else:
             return ObjectiveStatus.UNCHANGED
+
+    @staticmethod
+    def meetsFindingObjective(findingSeverities, objective):
+        matches = [severity for severity in findingSeverities if Objective.isFindingIncluded(severity, objective)]
+        return len(matches) == 0
+
+    @staticmethod
+    def isFindingIncluded(severity, objective):
+        if objective == "CRITICAL":
+            return severity in ("CRITICAL", "UNKNOWN")
+        elif objective == "HIGH":
+            return severity in ("CRITICAL", "HIGH", "UNKNOWN")
+        elif objective == "MEDIUM":
+            return severity in ("CRITICAL", "HIGH", "MEDIUM", "UNKNOWN")
+        else:
+            return True

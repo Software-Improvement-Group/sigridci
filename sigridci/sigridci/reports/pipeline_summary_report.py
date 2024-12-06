@@ -15,9 +15,10 @@
 import sys
 
 from .ascii_art_report import AsciiArtReport
-from .objective import Objective, ObjectiveStatus
-from .publish_options import RunMode
+from .maintainability_markdown_report import MaintainabilityMarkdownReport
 from .report import Report
+from ..objective import Objective, ObjectiveStatus
+from ..publish_options import RunMode
 
 
 class PipelineSummaryReport(Report):
@@ -39,10 +40,12 @@ class PipelineSummaryReport(Report):
             sys.exit(1)
 
     def printConclusionMessage(self, feedback, options, status):
-        message = self.getSummaryText(feedback, options)
+        # Use the same summary text as what we use in the Markdown report.
+        markdownReport = MaintainabilityMarkdownReport()
+        message = markdownReport.getSummaryText(feedback, options)
 
         asciiArt = AsciiArtReport(self.output, self.ansiColors)
-        color = asciiArt.ANSI_YELLOW if status == ObjectiveStatus.WORSENED else asciiArt.ANSI_GREEN
+        color = asciiArt.ANSI_GREEN if markdownReport.isObjectiveSuccess(feedback, options) else asciiArt.ANSI_YELLOW
         asciiArt.printColor(f"** {message} **", asciiArt.ANSI_BOLD + color)
 
     def printLandingPage(self, analysisId, options):
