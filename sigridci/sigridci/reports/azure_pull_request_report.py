@@ -45,10 +45,10 @@ class AzurePullRequestReport(Report):
 
         if existingId == None:
             self.callAzure("POST", self.buildRequestBody(markdown, status), None)
-            UploadLog.log("Published new feedback to Azure DevOps")
+            UploadLog.log(f"Published new {self.markdownRenderer.getCapability()} feedback to Azure DevOps")
         else:
             self.callAzure("PATCH", self.buildRequestBody(markdown, status), existingId)
-            UploadLog.log("Updated existing feedback in Azure DevOps")
+            UploadLog.log(f"Updated existing {self.markdownRenderer.getCapability()} feedback in Azure DevOps")
 
     def isSupported(self, options):
         return "SYSTEM_ACCESSTOKEN" in os.environ and \
@@ -60,10 +60,14 @@ class AzurePullRequestReport(Report):
 
         for thread in existingThreads["value"]:
             for comment in thread["comments"]:
-                if comment["content"].startswith(("# Sigrid", "# [Sigrid]")):
+                if self.isExistingComment(comment):
                     return thread["id"]
 
         return None
+
+    def isExistingComment(self, comment):
+        header = f"{self.markdownRenderer.getCapability()} feedback".lower()
+        return comment["content"].startswith(("# Sigrid", "# [Sigrid]")) and header in comment["content"].lower()
 
     def callAzure(self, method, body, threadId):
         request = urllib.request.Request(self.buildURL(threadId), json.dumps(body).encode("utf-8"))

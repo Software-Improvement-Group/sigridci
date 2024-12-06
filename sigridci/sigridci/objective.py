@@ -64,7 +64,8 @@ class Objective:
 
     @staticmethod
     def meetsFindingObjective(findingSeverities, objective):
-        return sum(1 for severity in findingSeverities if Objective.isFindingIncluded(severity, objective)) == 0
+        matches = [severity for severity in findingSeverities if Objective.isFindingIncluded(severity, objective)]
+        return len(matches) == 0
 
     @staticmethod
     def isFindingIncluded(severity, objective):

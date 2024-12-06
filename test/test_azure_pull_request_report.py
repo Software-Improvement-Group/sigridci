@@ -70,7 +70,7 @@ class AzurePullRequestReportTest(TestCase):
                     "comments": [
                         {
                             "id": 2,
-                            "content": "# Sigrid CI says"
+                            "content": "# Sigrid Maintainability feedback"
                         }
                     ]
                 }

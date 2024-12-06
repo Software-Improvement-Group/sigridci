@@ -35,10 +35,10 @@ class GitLabPullRequestReport(Report):
 
             if existingCommentId is None:
                 self.callAPI("POST", self.buildPostCommentURL(None), body)
-                UploadLog.log("Published feedback to GitLab")
+                UploadLog.log(f"Published {self.markdownRenderer.getCapability()} feedback to GitLab")
             else:
                 self.callAPI("PUT", self.buildPostCommentURL(existingCommentId), body)
-                UploadLog.log("Updated existing GitLab feedback")
+                UploadLog.log(f"Updated existing GitLab {self.markdownRenderer.getCapability()} feedback")
 
     def isWithinGitLabMergeRequestPipeline(self, options):
         return "CI_MERGE_REQUEST_IID" in os.environ and \
@@ -76,5 +76,9 @@ class GitLabPullRequestReport(Report):
 
         with self.callAPI("GET", url, None) as f:
             for comment in json.load(f):
-                if comment["body"].startswith(("# Sigrid", "# [Sigrid]")):
+                if self.isExistingComment(comment):
                     return comment["id"]
+
+    def isExistingComment(self, comment):
+        header = f"{self.markdownRenderer.getCapability()} feedback"
+        return comment["body"].startswith(("# Sigrid", "# [Sigrid]")) and header.lower() in comment["body"].lower()
