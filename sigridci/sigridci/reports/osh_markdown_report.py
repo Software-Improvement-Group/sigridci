@@ -32,14 +32,13 @@ class OpenSourceHealthMarkdownReport(Report, MarkdownRenderer):
         includedVulnerabilities = list(self.getIncludedVulnerabilities(feedback))
         includedVulnerabilities.sort(key=lambda entry: entry[1]["severity"])
 
-        summary = self.getSummary(self.isObjectiveSuccess(feedback, options))
         details = self.generateFindingsTable(includedVulnerabilities)
         sigridLink = f"{self.getSigridUrl(options)}/-/open-source-health"
-        return self.renderMarkdownTemplate("Open Source Health", summary, details, sigridLink)
+        return self.renderMarkdownTemplate(feedback, options, details, sigridLink)
 
-    def getSummary(self, objectiveSuccess):
+    def getSummary(self, feedback, options):
         objectiveDisplayName = f"{self.objective.lower()} open source vulnerabilities"
-        if objectiveSuccess:
+        if self.isObjectiveSuccess(feedback, options):
             return f"✅  You achieved your objective of having no {objectiveDisplayName}"
         else:
             return f"⚠️  You did not meet your objective of having no {objectiveDisplayName}"
@@ -64,6 +63,9 @@ class OpenSourceHealthMarkdownReport(Report, MarkdownRenderer):
             for vulnerability in dependency["vulnerabilities"]:
                 if Objective.isFindingIncluded(vulnerability["severity"], self.objective):
                     yield (dependency, vulnerability)
+
+    def getCapability(self):
+        return "Open Source Health"
 
     def getMarkdownFile(self, options):
         return os.path.abspath(f"{options.outputDir}/osh-feedback.md")

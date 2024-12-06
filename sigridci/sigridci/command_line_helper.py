@@ -51,7 +51,7 @@ def parseFeedbackCommandLineArguments(capability):
 
 
 def getFeedbackPublishOptions(args):
-    return PublishOptions(
+    options = PublishOptions(
         partner=args.partner,
         customer=args.customer,
         system=args.system,
@@ -59,3 +59,9 @@ def getFeedbackPublishOptions(args):
         outputDir=args.out,
         sigridURL=args.sigridurl
     )
+
+    # Don't include the feedback links when running in local/on-premise mode.
+    if args.analysisresults:
+        options.feedbackURL = ""
+
+    return options

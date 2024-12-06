@@ -14,6 +14,7 @@
 
 import urllib.parse
 from datetime import datetime
+from mailcap import getcaps
 
 from ..platform import Platform
 
@@ -66,21 +67,44 @@ class MarkdownRenderer:
     def renderMarkdown(self, analysisId, feedback, options):
         raise NotImplementedError()
 
-    def renderMarkdownTemplate(self, capability, summary, details, sigridLink):
-        md = f"# [Sigrid]({sigridLink}) {capability} feedback\n\n"
-        md += f"**{summary}**\n\n"
+    def renderMarkdownTemplate(self, feedback, options, details, sigridLink):
+        md = f"# [Sigrid]({sigridLink}) {self.getCapability()} feedback\n\n"
+        md += f"**{self.getSummary(feedback, options)}**\n\n"
         if len(details) > 0:
             if Platform.isHtmlMarkdownSupported():
                 md += "<details><summary>Show details</summary>\n\n"
             md += details
+            md += self.renderReactionSection(options)
             if Platform.isHtmlMarkdownSupported():
                 md += "</details>\n"
         md += "\n----\n\n"
         md += f"[**View this system in Sigrid**]({sigridLink})"
         return md
 
+    def renderReactionSection(self, options):
+        if not options.feedbackURL:
+            return ""
+
+        md = "\n### 💬 Did you find this feedback helpful?\n\n"
+        md += "We would like to know your thoughts to make Sigrid better.\n"
+        md += "Your username will remain confidential throughout the process.\n\n"
+        md += f"- ✅ [Yes, these findings are useful]({self.getReactionLink(options, 'useful')})\n"
+        md += f"- 🔸 [The findings are false positives]({self.getReactionLink(options, 'falsepositive')})\n"
+        md += f"- 🔹 [These findings are not important to me]({self.getReactionLink(options, 'unimportant')})\n"
+        return md
+
+    def getReactionLink(self, options, reaction):
+        featureId = "sigridci." + self.getCapability().lower().replace(" ", "")
+        return f"{options.feedbackURL}?feature={featureId}&feedback={reaction}&system={options.getSystemId()}"
+
+    def getSummary(self, feedback, options):
+        raise NotImplementedError()
+
+    def getCapability(self):
+        raise NotImplementedError()
+
     def getMarkdownFile(self, options):
         raise NotImplementedError()
 
-    def getObjectiveSuccess(self, feedback, options):
+    def isObjectiveSuccess(self, feedback, options):
         raise NotImplementedError()

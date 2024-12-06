@@ -48,21 +48,11 @@ class MaintainabilityMarkdownReport(Report, MarkdownRenderer):
         if status != ObjectiveStatus.UNKNOWN:
             if Platform.isHtmlMarkdownSupported():
                 md += "<details><summary>Show details</summary>\n\n"
-
             md += f"Sigrid compared your code against the baseline of {self.formatBaseline(feedback)}.\n\n"
             md += self.renderRefactoringCandidates(feedback, sigridLink)
             md += "## ⭐️ Sigrid ratings\n\n"
             md += self.renderRatingsTable(feedback)
-
-            if options.feedbackURL:
-                md += "\n----\n\n"
-                md += "## Did you find this feedback helpful?\n\n"
-                md += "We would like to know your thoughts to make Sigrid better.\n"
-                md += "Your username will remain confidential throughout the process.\n\n"
-                md += f"- ✅ [Yes, these findings are useful]({self.getFeedbackLink(options, 'useful')})\n"
-                md += f"- 🔸 [The findings are false positives]({self.getFeedbackLink(options, 'falsepositive')})\n"
-                md += f"- 🔹 [These findings are not so important to me]({self.getFeedbackLink(options, 'unimportant')})\n"
-
+            md += self.renderReactionSection(options)
             if Platform.isHtmlMarkdownSupported():
                 md += "</details>\n"
 
@@ -162,8 +152,8 @@ class MaintainabilityMarkdownReport(Report, MarkdownRenderer):
 
         return html.escape(location).replace("::", "<br />").replace("\n", "<br />")
 
-    def getFeedbackLink(self, options, feedback):
-        return f"{options.feedbackURL}?feature=sigridci.feedback&feedback={feedback}&system={options.getSystemId()}"
+    def getCapability(self):
+        return "Maintainability"
 
     def getMarkdownFile(self, options):
         return os.path.abspath(f"{options.outputDir}/feedback.md")

@@ -445,16 +445,14 @@ class MarkdownReportTest(TestCase):
             | Component Entanglement | N/A | N/A | N/A |
             | **Maintainability** | **3.0** | **2.9** | **2.8** |
             
-            ----
-            
-            ## Did you find this feedback helpful?
+            ### 💬 Did you find this feedback helpful?
             
             We would like to know your thoughts to make Sigrid better.
             Your username will remain confidential throughout the process.
             
-            - ✅ [Yes, these findings are useful](https://example.com?feature=sigridci.feedback&feedback=useful&system=sig-aap-noot)
-            - 🔸 [The findings are false positives](https://example.com?feature=sigridci.feedback&feedback=falsepositive&system=sig-aap-noot)
-            - 🔹 [These findings are not so important to me](https://example.com?feature=sigridci.feedback&feedback=unimportant&system=sig-aap-noot)
+            - ✅ [Yes, these findings are useful](https://example.com?feature=sigridci.maintainability&feedback=useful&system=sig-aap-noot)
+            - 🔸 [The findings are false positives](https://example.com?feature=sigridci.maintainability&feedback=falsepositive&system=sig-aap-noot)
+            - 🔹 [These findings are not important to me](https://example.com?feature=sigridci.maintainability&feedback=unimportant&system=sig-aap-noot)
             
             ----
             [**View this system in Sigrid**](https://sigrid-says.com/aap/noot)
@@ -515,16 +513,14 @@ class MarkdownReportTest(TestCase):
             | Component Entanglement | N/A | N/A | N/A |
             | **Maintainability** | **3.0** | **2.9** | **2.8** |
             
-            ----
-            
-            ## Did you find this feedback helpful?
+            ### 💬 Did you find this feedback helpful?
             
             We would like to know your thoughts to make Sigrid better.
             Your username will remain confidential throughout the process.
             
-            - ✅ [Yes, these findings are useful](https://example.com?feature=sigridci.feedback&feedback=useful&system=sig-aap-noot)
-            - 🔸 [The findings are false positives](https://example.com?feature=sigridci.feedback&feedback=falsepositive&system=sig-aap-noot)
-            - 🔹 [These findings are not so important to me](https://example.com?feature=sigridci.feedback&feedback=unimportant&system=sig-aap-noot)
+            - ✅ [Yes, these findings are useful](https://example.com?feature=sigridci.maintainability&feedback=useful&system=sig-aap-noot)
+            - 🔸 [The findings are false positives](https://example.com?feature=sigridci.maintainability&feedback=falsepositive&system=sig-aap-noot)
+            - 🔹 [These findings are not important to me](https://example.com?feature=sigridci.maintainability&feedback=unimportant&system=sig-aap-noot)
             </details>
             
             ----

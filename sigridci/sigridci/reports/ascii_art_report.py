@@ -15,7 +15,6 @@
 import sys
 
 from .report import Report
-from ..objective import Objective, ObjectiveStatus
 from ..publish_options import RunMode
 
 
