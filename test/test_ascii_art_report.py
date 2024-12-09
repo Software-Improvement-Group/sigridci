@@ -16,8 +16,8 @@ import inspect
 from io import StringIO
 from unittest import TestCase
 
-from sigridci.sigridci.ascii_art_report import AsciiArtReport
 from sigridci.sigridci.publish_options import PublishOptions, RunMode
+from sigridci.sigridci.reports.ascii_art_report import AsciiArtReport
 
 
 class AsciiArtReportTest(TestCase):

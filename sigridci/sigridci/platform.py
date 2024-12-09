@@ -13,6 +13,7 @@
 # limitations under the License.
 
 import os
+import sys
 
 
 class Platform:
@@ -31,3 +32,24 @@ class Platform:
     @staticmethod
     def isBitBucket():
         return "BITBUCKET_REPO_SLUG" in os.environ
+
+    @staticmethod
+    def isHtmlMarkdownSupported():
+        if os.environ.get("SIGRID_CI_MARKDOWN_HTML") in ("false", "0"):
+            return False
+        return Platform.isGitHub() or Platform.isGitLab() or Platform.isAzureDevOps()
+
+    @staticmethod
+    def checkEnvironment():
+        if sys.version_info.major == 2 or sys.version_info.minor < 7:
+            print("Sigrid CI requires Python 3.7 or higher")
+            sys.exit(1)
+
+        token = os.environ.get("SIGRID_CI_TOKEN", None)
+        if not Platform.isValidToken(token):
+            print("Missing or incomplete environment variable SIGRID_CI_TOKEN")
+            sys.exit(1)
+
+    @staticmethod
+    def isValidToken(token):
+        return token is not None and len(token) >= 64

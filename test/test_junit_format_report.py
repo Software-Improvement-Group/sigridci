@@ -14,8 +14,8 @@
 
 from unittest import TestCase
 
-from sigridci.sigridci.junit_format_report import JUnitFormatReport
 from sigridci.sigridci.publish_options import PublishOptions, RunMode
+from sigridci.sigridci.reports.junit_format_report import JUnitFormatReport
 
 
 class JUnitReportTest(TestCase):

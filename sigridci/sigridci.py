@@ -20,6 +20,7 @@ from argparse import ArgumentParser, SUPPRESS
 
 from sigridci.publish_options import PublishOptions, RunMode
 from sigridci.sigrid_api_client import SigridApiClient
+from sigridci.platform import Platform
 from sigridci.sigridci_runner import SigridCiRunner
 from sigridci.upload_log import UploadLog
 
@@ -86,18 +87,11 @@ if __name__ == "__main__":
         parser.print_help()
         sys.exit(1)
 
-    if sys.version_info.major == 2 or sys.version_info.minor < 7:
-        print("Sigrid CI requires Python 3.7 or higher")
-        sys.exit(1)
-
-    if not SigridApiClient.isValidToken(os.environ.get("SIGRID_CI_TOKEN", None)):
-        print("Missing or incomplete environment variable SIGRID_CI_TOKEN")
-        sys.exit(1)
-
     if not os.path.exists(args.source):
         print(f"Source code directory not found: {args.source}")
         sys.exit(1)
 
+    Platform.checkEnvironment()
     options = parsePublishOptions(args)
     apiClient = SigridApiClient(options)
 
