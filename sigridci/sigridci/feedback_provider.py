@@ -41,6 +41,7 @@ class FeedbackProvider:
 
     def prepareMarkdownReport(self, capability, objectives):
         if capability == Capability.MAINTAINABILITY:
+            self.options.targetRating = objectives.get("MAINTAINABILITY", PublishOptions.DEFAULT_TARGET)
             return MaintainabilityMarkdownReport()
         elif capability == Capability.OPEN_SOURCE_HEALTH:
             objective = objectives.get("OSH_MAX_SEVERITY", PublishOptions.DEFAULT_FINDINGS_OBJECTIVE)
