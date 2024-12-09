@@ -71,3 +71,35 @@ class SecurityMarkdownReportTest(TestCase):
         """
 
         self.assertEqual(markdown.strip(), inspect.cleandoc(expected).strip())
+
+    @mock.patch.dict(os.environ, {"SIGRID_CI_MARKDOWN_HTML" : "false"})
+    def testLimitFindingsIfThereAreTooMany(self):
+        with open(os.path.dirname(__file__) + "/testdata/security-manyfindings.json", encoding="utf-8", mode="r") as f:
+            manyResults = json.load(f)
+
+        report = SecurityMarkdownReport()
+        markdown = report.renderMarkdown("1234", manyResults, self.options)
+
+        expected = """
+            # [Sigrid](https://sigrid-says.com/aap/noot/-/security) Security feedback
+            
+            **⚠️  You did not meet your objective of having no critical security findings**
+            
+            | Risk | File | Finding |
+            |------|------|---------|
+            | ⚪️ | Security.java:33 | Weak Hash algorithm used |
+            | ⚪️ | Security.java:33 | Weak Hash algorithm used |
+            | ⚪️ | Security.java:33 | Weak Hash algorithm used |
+            | ⚪️ | Security.java:33 | Weak Hash algorithm used |
+            | ⚪️ | Security.java:33 | Weak Hash algorithm used |
+            | ⚪️ | Security.java:33 | Weak Hash algorithm used |
+            | ⚪️ | Security.java:33 | Weak Hash algorithm used |
+            | ⚪️ | Security.java:33 | Weak Hash algorithm used |
+            | | ... and 3 more findings | |
+            
+            ----
+            
+            [**View this system in Sigrid**](https://sigrid-says.com/aap/noot/-/security)
+        """
+
+        self.assertEqual(markdown.strip(), inspect.cleandoc(expected).strip())

@@ -20,6 +20,7 @@ from ..objective import Objective
 
 
 class OpenSourceHealthMarkdownReport(Report, MarkdownRenderer):
+    MAX_FINDINGS = SecurityMarkdownReport.MAX_FINDINGS
 
     def __init__(self, objective = "CRITICAL"):
         self.objective = objective
@@ -50,11 +51,14 @@ class OpenSourceHealthMarkdownReport(Report, MarkdownRenderer):
         md = "| Risk | Dependency | Description |\n"
         md += "|------|------------|-------------|\n"
 
-        for dependency, vulnerability in includedVulnerabilities:
+        for dependency, vulnerability in includedVulnerabilities[0:self.MAX_FINDINGS]:
             symbol = SecurityMarkdownReport.SEVERITY_SYMBOLS[vulnerability["severity"]]
             name = f"{dependency['name']}@{dependency['currentVersion']}"
             description = vulnerability["description"]
             md += f"| {symbol} | {name} | {description} |\n"
+
+        if len(includedVulnerabilities) > self.MAX_FINDINGS:
+            md += f"| | ... and {len(includedVulnerabilities) - self.MAX_FINDINGS} more vulnerabilities | |\n"
 
         return md
 

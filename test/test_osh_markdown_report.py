@@ -91,3 +91,35 @@ class OpenSourceHealthMarkdownReportTest(TestCase):
         """
 
         self.assertEqual(markdown.strip(), inspect.cleandoc(expected).strip())
+
+    @mock.patch.dict(os.environ, {"SIGRID_CI_MARKDOWN_HTML" : "false"})
+    def testLimitFeedbackWhenTooManyVulnerabilities(self):
+        with open(os.path.dirname(__file__) + "/testdata/osh-manyfindings.json", encoding="utf-8", mode="r") as f:
+            manyFindings = json.load(f)
+
+        report = OpenSourceHealthMarkdownReport("HIGH")
+        markdown = report.renderMarkdown("1234", manyFindings, self.options)
+
+        expected = """
+            # [Sigrid](https://sigrid-says.com/aap/noot/-/open-source-health) Open Source Health feedback
+            
+            **⚠️  You did not meet your objective of having no high open source vulnerabilities**
+            
+            | Risk | Dependency | Description |
+            |------|------------|-------------|
+            | 🟣 | requirejs@2.3.2 | This is a test. |
+            | 🟣 | requirejs-2@2.3.2 | This is a test. |
+            | 🟣 | requirejs-3@2.3.2 | This is a test. |
+            | 🟣 | requirejs-4@2.3.2 | This is a test. |
+            | 🟣 | requirejs-5@2.3.2 | This is a test. |
+            | 🟣 | requirejs-6@2.3.2 | This is a test. |
+            | 🟣 | requirejs-7@2.3.2 | This is a test. |
+            | 🟣 | requirejs-8@2.3.2 | This is a test. |
+            | | ... and 2 more vulnerabilities | |
+            
+            ----
+            
+            [**View this system in Sigrid**](https://sigrid-says.com/aap/noot/-/open-source-health)
+        """
+
+        self.assertEqual(markdown.strip(), inspect.cleandoc(expected).strip())

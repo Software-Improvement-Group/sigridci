@@ -1,0 +1,174 @@
+{
+  "dependencies": [
+    {
+      "type": "Npm",
+      "name": "node-fetch",
+      "currentVersion": "1.6.3",
+      "licenseShort": "MIT",
+      "licenseFull": "MIT",
+      "vulnerabilities": [
+        {
+          "cve": "CVE-2022-0235",
+          "cvss": "8.8",
+          "description": "Another test.",
+          "fixedVersionInformation": "2.6.7, 3.1.1",
+          "severity": "HIGH",
+          "title": "Improper Handling of Alternate Encoding"
+        }
+      ]
+    },
+    {
+      "type": "Npm",
+      "name": "requirejs",
+      "currentVersion": "2.3.2",
+      "licenseShort": "MIT",
+      "licenseFull": "MIT",
+      "vulnerabilities": [
+        {
+          "cve": "CVE-2024-38999",
+          "cvss": "10.0",
+          "description": "This is a test.",
+          "fixedVersionInformation": "2.3.7",
+          "severity": "CRITICAL",
+          "title": "Prototype Pollution"
+        }
+      ]
+    },
+    {
+      "type": "Npm",
+      "name": "requirejs-2",
+      "currentVersion": "2.3.2",
+      "licenseShort": "MIT",
+      "licenseFull": "MIT",
+      "vulnerabilities": [
+        {
+          "cve": "CVE-2024-38999",
+          "cvss": "10.0",
+          "description": "This is a test.",
+          "fixedVersionInformation": "2.3.7",
+          "severity": "CRITICAL",
+          "title": "Prototype Pollution"
+        }
+      ]
+    },
+    {
+      "type": "Npm",
+      "name": "requirejs-3",
+      "currentVersion": "2.3.2",
+      "licenseShort": "MIT",
+      "licenseFull": "MIT",
+      "vulnerabilities": [
+        {
+          "cve": "CVE-2024-38999",
+          "cvss": "10.0",
+          "description": "This is a test.",
+          "fixedVersionInformation": "2.3.7",
+          "severity": "CRITICAL",
+          "title": "Prototype Pollution"
+        }
+      ]
+    },
+    {
+      "type": "Npm",
+      "name": "requirejs-4",
+      "currentVersion": "2.3.2",
+      "licenseShort": "MIT",
+      "licenseFull": "MIT",
+      "vulnerabilities": [
+        {
+          "cve": "CVE-2024-38999",
+          "cvss": "10.0",
+          "description": "This is a test.",
+          "fixedVersionInformation": "2.3.7",
+          "severity": "CRITICAL",
+          "title": "Prototype Pollution"
+        }
+      ]
+    },
+    {
+      "type": "Npm",
+      "name": "requirejs-5",
+      "currentVersion": "2.3.2",
+      "licenseShort": "MIT",
+      "licenseFull": "MIT",
+      "vulnerabilities": [
+        {
+          "cve": "CVE-2024-38999",
+          "cvss": "10.0",
+          "description": "This is a test.",
+          "fixedVersionInformation": "2.3.7",
+          "severity": "CRITICAL",
+          "title": "Prototype Pollution"
+        }
+      ]
+    },
+    {
+      "type": "Npm",
+      "name": "requirejs-6",
+      "currentVersion": "2.3.2",
+      "licenseShort": "MIT",
+      "licenseFull": "MIT",
+      "vulnerabilities": [
+        {
+          "cve": "CVE-2024-38999",
+          "cvss": "10.0",
+          "description": "This is a test.",
+          "fixedVersionInformation": "2.3.7",
+          "severity": "CRITICAL",
+          "title": "Prototype Pollution"
+        }
+      ]
+    },
+    {
+      "type": "Npm",
+      "name": "requirejs-7",
+      "currentVersion": "2.3.2",
+      "licenseShort": "MIT",
+      "licenseFull": "MIT",
+      "vulnerabilities": [
+        {
+          "cve": "CVE-2024-38999",
+          "cvss": "10.0",
+          "description": "This is a test.",
+          "fixedVersionInformation": "2.3.7",
+          "severity": "CRITICAL",
+          "title": "Prototype Pollution"
+        }
+      ]
+    },
+    {
+      "type": "Npm",
+      "name": "requirejs-8",
+      "currentVersion": "2.3.2",
+      "licenseShort": "MIT",
+      "licenseFull": "MIT",
+      "vulnerabilities": [
+        {
+          "cve": "CVE-2024-38999",
+          "cvss": "10.0",
+          "description": "This is a test.",
+          "fixedVersionInformation": "2.3.7",
+          "severity": "CRITICAL",
+          "title": "Prototype Pollution"
+        }
+      ]
+    },
+    {
+      "type": "Npm",
+      "name": "requirejs-9",
+      "currentVersion": "2.3.2",
+      "licenseShort": "MIT",
+      "licenseFull": "MIT",
+      "vulnerabilities": [
+        {
+          "cve": "CVE-2024-38999",
+          "cvss": "10.0",
+          "description": "This is a test.",
+          "fixedVersionInformation": "2.3.7",
+          "severity": "CRITICAL",
+          "title": "Prototype Pollution"
+        }
+      ]
+    }
+  ]
+}

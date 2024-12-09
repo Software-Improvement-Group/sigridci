@@ -19,6 +19,7 @@ from ..objective import Objective
 
 
 class SecurityMarkdownReport(Report, MarkdownRenderer):
+    MAX_FINDINGS = 8
     SEVERITY_SYMBOLS = {
         "CRITICAL" : "🟣",
         "HIGH" : "🔴",
@@ -53,12 +54,15 @@ class SecurityMarkdownReport(Report, MarkdownRenderer):
         md = "| Risk | File | Finding |\n"
         md += "|------|------|---------|\n"
 
-        for finding in findings:
+        for finding in findings[0:self.MAX_FINDINGS]:
             symbol = self.SEVERITY_SYMBOLS[self.getFindingSeverity(finding)]
             file = finding["locations"][0]["physicalLocation"]["artifactLocation"]["uri"]
             line = finding["locations"][0]["physicalLocation"]["region"]["startLine"]
             description = finding["message"]["text"]
             md += f"| {symbol} | {file}:{line} | {description} |\n"
+
+        if len(findings) > self.MAX_FINDINGS:
+            md += f"| | ... and {len(findings) - self.MAX_FINDINGS} more findings | |\n"
 
         return md
 
