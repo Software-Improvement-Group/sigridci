@@ -46,6 +46,10 @@ class Platform:
             sys.exit(1)
 
         token = os.environ.get("SIGRID_CI_TOKEN", None)
-        if token is None or len(token) < 64:
+        if not Platform.isValidToken(token):
             print("Missing or incomplete environment variable SIGRID_CI_TOKEN")
             sys.exit(1)
+
+    @staticmethod
+    def isValidToken(token):
+        return token is not None and len(token) >= 64
