@@ -20,5 +20,6 @@ RUN set -eux; \
 COPY --link sigridci /sigridci
 
 ENV PATH /sigridci:$PATH
+RUN cp /sigridci/gitconfig-add-safe-directory $HOME/.gitconfig
 
 CMD [ "/sigridci/sigridci.py" ]
