@@ -18,9 +18,9 @@ import os
 import sys
 from argparse import ArgumentParser, SUPPRESS
 
-from sigridci.command_line_helper import checkEnvironment
 from sigridci.publish_options import PublishOptions, RunMode
 from sigridci.sigrid_api_client import SigridApiClient
+from sigridci.platform import Platform
 from sigridci.sigridci_runner import SigridCiRunner
 from sigridci.upload_log import UploadLog
 
@@ -91,7 +91,7 @@ if __name__ == "__main__":
         print(f"Source code directory not found: {args.source}")
         sys.exit(1)
 
-    checkEnvironment()
+    Platform.checkEnvironment()
     options = parsePublishOptions(args)
     apiClient = SigridApiClient(options)
 

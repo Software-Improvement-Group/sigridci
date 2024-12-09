@@ -13,6 +13,7 @@
 # limitations under the License.
 
 import os
+import sys
 
 
 class Platform:
@@ -37,3 +38,14 @@ class Platform:
         if os.environ.get("SIGRID_CI_MARKDOWN_HTML") in ("false", "0"):
             return False
         return Platform.isGitHub() or Platform.isGitLab() or Platform.isAzureDevOps()
+
+    @staticmethod
+    def checkEnvironment():
+        if sys.version_info.major == 2 or sys.version_info.minor < 7:
+            print("Sigrid CI requires Python 3.7 or higher")
+            sys.exit(1)
+
+        token = os.environ.get("SIGRID_CI_TOKEN", None)
+        if token is None or len(token) < 64:
+            print("Missing or incomplete environment variable SIGRID_CI_TOKEN")
+            sys.exit(1)
