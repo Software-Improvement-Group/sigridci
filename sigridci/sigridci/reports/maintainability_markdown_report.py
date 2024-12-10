@@ -71,11 +71,11 @@ class MaintainabilityMarkdownReport(Report, MarkdownRenderer):
         if status == ObjectiveStatus.ACHIEVED:
             return f"✅  You wrote maintainable code and achieved your objective of {targetText}"
         elif status == ObjectiveStatus.IMPROVED:
-            return f"↗️  You improved your code's maintainability towards your objective of {targetText}"
+            return f"↗️  You improved the maintainability of the code towards your objective of {targetText}"
         elif status == ObjectiveStatus.UNCHANGED:
-            return f"⏸️️  Your rating did not change and is still below your objective of {targetText}"
+            return f"⏸️️  Your maintainability remains unchanged and is still below your objective of {targetText}"
         elif status == ObjectiveStatus.WORSENED:
-            return f"⚠️  Your code did not improve towards your objective of {targetText}"
+            return f"⚠️  Your code did not improve maintainability towards your objective of {targetText}"
         else:
             return "💭️  You did not change any files that are measured by Sigrid"
 
