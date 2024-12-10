@@ -20,5 +20,6 @@ COPY --link sigridci /sigridci
 ENV PATH /sigridci:$PATH
 
 USER sigridci
+RUN git config --global --add safe.directory '*'
 
 CMD [ "/sigridci/sigridci.py" ]
