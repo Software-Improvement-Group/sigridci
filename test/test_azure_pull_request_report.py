@@ -16,10 +16,10 @@ import json
 from tempfile import NamedTemporaryFile, mkdtemp
 from unittest import TestCase
 
-from sigridci.sigridci.azure_pull_request_report import AzurePullRequestReport
-from sigridci.sigridci.markdown_report import MarkdownReport
 from sigridci.sigridci.objective import ObjectiveStatus
 from sigridci.sigridci.publish_options import PublishOptions, RunMode
+from sigridci.sigridci.reports.azure_pull_request_report import AzurePullRequestReport
+from sigridci.sigridci.reports.maintainability_markdown_report import MaintainabilityMarkdownReport
 
 
 class AzurePullRequestReportTest(TestCase):
@@ -28,7 +28,7 @@ class AzurePullRequestReportTest(TestCase):
         with NamedTemporaryFile() as f:
             f.write("This is Markdown feedback\n\n...with multiple lines".encode("utf8"))
 
-            report = AzurePullRequestReport()
+            report = AzurePullRequestReport(f)
 
             self.assertEqual("closed", report.buildRequestBody(f.name, ObjectiveStatus.ACHIEVED)["status"])
             self.assertEqual("closed", report.buildRequestBody(f.name, ObjectiveStatus.IMPROVED)["status"])
@@ -37,24 +37,7 @@ class AzurePullRequestReportTest(TestCase):
             self.assertEqual("closed", report.buildRequestBody(f.name, ObjectiveStatus.UNKNOWN)["status"])
 
     def testPostNewComment(self):
-        feedback = {
-            "baseline": "20220110",
-            "baselineRatings": {"DUPLICATION": 4.0, "UNIT_SIZE": 4.0, "MAINTAINABILITY": 4.0},
-            "changedCodeBeforeRatings" : {"MAINTAINABILITY" : 2.6},
-            "changedCodeAfterRatings" : {"MAINTAINABILITY" : 2.8},
-            "newCodeRatings": {"DUPLICATION": 5.0, "UNIT_SIZE": 2.0, "MAINTAINABILITY": 3.0},
-            "overallRatings": {"DUPLICATION": 4.5, "UNIT_SIZE": 3.0, "MAINTAINABILITY": 3.4},
-            "refactoringCandidates": []
-        }
-
         tempDir = mkdtemp()
-        options = PublishOptions("aap", "noot", RunMode.FEEDBACK_ONLY, sourceDir=".", targetRating=3.5)
-
-        with open(f"{tempDir}/feedback.md", "w") as f:
-            # Use the *actual* Markdown report so we're sure we can handle
-            # any layout changes.
-            markdownReport = MarkdownReport()
-            f.write(markdownReport.renderMarkdown("1234", feedback, options))
 
         mockAzureResponse = {
             "value": [
@@ -79,8 +62,6 @@ class AzurePullRequestReportTest(TestCase):
 
     def testUpdateExistingComment(self):
         tempDir = mkdtemp()
-        with open(f"{tempDir}/feedback.md", "w") as f:
-            f.write("# Sigrid CI feedback\n\ntest\n")
 
         mockAzureResponse = {
             "value": [
@@ -89,7 +70,7 @@ class AzurePullRequestReportTest(TestCase):
                     "comments": [
                         {
                             "id": 2,
-                            "content": "# Sigrid CI says"
+                            "content": "# Sigrid Maintainability feedback"
                         }
                     ]
                 }
@@ -107,7 +88,7 @@ class AzurePullRequestReportTest(TestCase):
 class MockAzure(AzurePullRequestReport):
 
     def __init__(self, response):
-        super().__init__()
+        super().__init__(MaintainabilityMarkdownReport())
         self.response = response
         self.calledEndPoints = []
 

@@ -15,13 +15,13 @@
 import html
 import os
 
-from .objective import Objective, ObjectiveStatus
-from .platform import Platform
-from .report import Report
+from .report import Report, MarkdownRenderer
+from ..objective import Objective, ObjectiveStatus
+from ..platform import Platform
+from ..publish_options import PublishOptions
 
 
-class MarkdownReport(Report):
-    ALLOW_FANCY_MARKDOWN = True
+class MaintainabilityMarkdownReport(Report, MarkdownRenderer):
     MAX_SHOWN_FINDINGS = 8
     MAX_OCCURRENCES = 3
 
@@ -34,7 +34,7 @@ class MarkdownReport(Report):
     }
 
     def generate(self, analysisId, feedback, options):
-        with open(os.path.abspath(f"{options.outputDir}/feedback.md"), "w", encoding="utf-8") as f:
+        with open(self.getMarkdownFile(options), "w", encoding="utf-8") as f:
             markdown = self.renderMarkdown(analysisId, feedback, options)
             f.write(markdown)
 
@@ -46,24 +46,14 @@ class MarkdownReport(Report):
         md += f"{self.renderSummary(feedback, options)}\n\n"
 
         if status != ObjectiveStatus.UNKNOWN:
-            if self.isHtmlMarkdownSupported():
+            if Platform.isHtmlMarkdownSupported():
                 md += "<details><summary>Show details</summary>\n\n"
-
             md += f"Sigrid compared your code against the baseline of {self.formatBaseline(feedback)}.\n\n"
             md += self.renderRefactoringCandidates(feedback, sigridLink)
             md += "## ⭐️ Sigrid ratings\n\n"
             md += self.renderRatingsTable(feedback)
-
-            if options.feedbackURL:
-                md += "\n----\n\n"
-                md += "## Did you find this feedback helpful?\n\n"
-                md += "We would like to know your thoughts to make Sigrid better.\n"
-                md += "Your username will remain confidential throughout the process.\n\n"
-                md += f"- ✅ [Yes, these findings are useful]({self.getFeedbackLink(options, 'useful')})\n"
-                md += f"- 🔸 [The findings are false positives]({self.getFeedbackLink(options, 'falsepositive')})\n"
-                md += f"- 🔹 [These findings are not so important to me]({self.getFeedbackLink(options, 'unimportant')})\n"
-
-            if self.isHtmlMarkdownSupported():
+            md += self.renderReactionSection(options)
+            if Platform.isHtmlMarkdownSupported():
                 md += "</details>\n"
 
         md += "\n----\n"
@@ -72,6 +62,22 @@ class MarkdownReport(Report):
 
     def renderSummary(self, feedback, options):
         return f"**{self.getSummaryText(feedback, options)}**"
+
+    def getSummaryText(self, feedback, options):
+        status = Objective.determineStatus(feedback, options)
+        targetRating = PublishOptions.DEFAULT_TARGET if isinstance(options.targetRating, str) else options.targetRating
+        targetText = f"{targetRating:.1f} stars"
+
+        if status == ObjectiveStatus.ACHIEVED:
+            return f"✅  You wrote maintainable code and achieved your objective of {targetText}"
+        elif status == ObjectiveStatus.IMPROVED:
+            return f"↗️  You improved the maintainability of the code towards your objective of {targetText}"
+        elif status == ObjectiveStatus.UNCHANGED:
+            return f"⏸️️  Your maintainability remains unchanged and is still below your objective of {targetText}"
+        elif status == ObjectiveStatus.WORSENED:
+            return f"⚠️  Your code did not improve maintainability towards your objective of {targetText}"
+        else:
+            return "💭️  You did not change any files that are measured by Sigrid"
 
     def renderRefactoringCandidates(self, feedback, sigridLink):
         good = self.filterRefactoringCandidates(feedback, ["improved"])
@@ -146,10 +152,12 @@ class MarkdownReport(Report):
 
         return html.escape(location).replace("::", "<br />").replace("\n", "<br />")
 
-    def getFeedbackLink(self, options, feedback):
-        return f"{options.feedbackURL}?feature=sigridci.feedback&feedback={feedback}&system={options.getSystemId()}"
+    def getCapability(self):
+        return "Maintainability"
 
-    def isHtmlMarkdownSupported(self):
-        if not self.ALLOW_FANCY_MARKDOWN:
-            return False
-        return Platform.isGitHub() or Platform.isGitLab() or Platform.isAzureDevOps()
+    def getMarkdownFile(self, options):
+        return os.path.abspath(f"{options.outputDir}/feedback.md")
+
+    def isObjectiveSuccess(self, feedback, options):
+        status = Objective.determineStatus(feedback, options)
+        return status != ObjectiveStatus.WORSENED

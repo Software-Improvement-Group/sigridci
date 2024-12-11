@@ -80,6 +80,35 @@ class ObjectiveTest(TestCase):
         status = Objective.determineStatus(feedback, self.options)
         self.assertEqual(status, ObjectiveStatus.UNKNOWN)
 
+    def testIsFindingIncluded(self):
+        self.assertTrue(Objective.isFindingIncluded("CRITICAL", "CRITICAL"))
+        self.assertFalse(Objective.isFindingIncluded("HIGH", "CRITICAL"))
+        self.assertFalse(Objective.isFindingIncluded("MEDIUM", "CRITICAL"))
+        self.assertFalse(Objective.isFindingIncluded("LOW", "CRITICAL"))
+
+        self.assertTrue(Objective.isFindingIncluded("CRITICAL", "HIGH"))
+        self.assertTrue(Objective.isFindingIncluded("HIGH", "HIGH"))
+        self.assertFalse(Objective.isFindingIncluded("MEDIUM", "HIGH"))
+        self.assertFalse(Objective.isFindingIncluded("LOW", "HIGH"))
+
+        self.assertTrue(Objective.isFindingIncluded("CRITICAL", "MEDIUM"))
+        self.assertTrue(Objective.isFindingIncluded("HIGH", "MEDIUM"))
+        self.assertTrue(Objective.isFindingIncluded("MEDIUM", "MEDIUM"))
+        self.assertFalse(Objective.isFindingIncluded("LOW", "MEDIUM"))
+
+    def testMeetsFindingObjective(self):
+        self.assertTrue(Objective.meetsFindingObjective([], "CRITICAL"))
+        self.assertTrue(Objective.meetsFindingObjective(["HIGH"], "CRITICAL"))
+
+        self.assertFalse(Objective.meetsFindingObjective(["CRITICAL"], "CRITICAL"))
+        self.assertFalse(Objective.meetsFindingObjective(["HIGH", "CRITICAL"], "CRITICAL"))
+
+        self.assertTrue(Objective.meetsFindingObjective([], "HIGH"))
+        self.assertTrue(Objective.meetsFindingObjective(["MEDIUM"], "HIGH"))
+
+        self.assertFalse(Objective.meetsFindingObjective(["HIGH"], "HIGH"))
+        self.assertFalse(Objective.meetsFindingObjective(["CRITICAL"], "HIGH"))
+
     def mockFeedback(self, baseline, changedBefore, changedAfter, newAndChanged):
         return {
             "baselineRatings" : {

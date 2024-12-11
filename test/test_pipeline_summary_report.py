@@ -16,8 +16,8 @@ import inspect
 from io import StringIO
 from unittest import TestCase
 
-from sigridci.sigridci.pipeline_summary_report import PipelineSummaryReport
 from sigridci.sigridci.publish_options import PublishOptions, RunMode
+from sigridci.sigridci.reports.pipeline_summary_report import PipelineSummaryReport
 
 
 class ConclusionReportTest(TestCase):
@@ -42,7 +42,7 @@ class ConclusionReportTest(TestCase):
         report.generate("1234", feedback, self.options)
         
         expected = """
-            ** ⚠️  Your code did not improve towards your Sigrid objective of 3.5 stars **
+            ** ⚠️  Your code did not improve maintainability towards your objective of 3.5 stars **
             
             ---------------------------------------
             View this system in Sigrid:

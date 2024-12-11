@@ -17,8 +17,8 @@ import os
 import tempfile
 from unittest import TestCase, mock
 
-from sigridci.sigridci.markdown_report import MarkdownReport
 from sigridci.sigridci.publish_options import PublishOptions, RunMode
+from sigridci.sigridci.reports.maintainability_markdown_report import MaintainabilityMarkdownReport
 
 
 class MarkdownReportTest(TestCase):
@@ -27,6 +27,7 @@ class MarkdownReportTest(TestCase):
     def setUp(self):
         self.options = PublishOptions("aap", "noot", RunMode.FEEDBACK_ONLY, "/tmp", targetRating=3.5, feedbackURL="")
 
+    @mock.patch.dict(os.environ, {"SIGRID_CI_MARKDOWN_HTML" : "false"})
     def testMarkdown(self):
         refactoringCandidates = [
             self.toRefactoringCandidate("aap", "introduced", "UNIT_SIZE", "HIGH"),
@@ -44,14 +45,13 @@ class MarkdownReportTest(TestCase):
             "refactoringCandidates": refactoringCandidates
         }
 
-        report = MarkdownReport()
-        report.ALLOW_FANCY_MARKDOWN = False
+        report = MaintainabilityMarkdownReport()
         markdown = report.renderMarkdown("1234", feedback, self.options)
 
         expected = """
             # [Sigrid](https://sigrid-says.com/aap/noot) maintainability feedback
             
-            **↗️  You improved your code's maintainability towards your Sigrid objective of 3.5 stars**
+            **↗️  You improved the maintainability of the code towards your objective of 3.5 stars**
             
             Sigrid compared your code against the baseline of 2022-01-10.
             
@@ -115,7 +115,7 @@ class MarkdownReportTest(TestCase):
             "refactoringCandidates": refactoringCandidates
         }
 
-        report = MarkdownReport()
+        report = MaintainabilityMarkdownReport()
         report.generate("1234", feedback, self.options)
         markdown = report.renderMarkdown("1234", feedback, self.options)
 
@@ -130,7 +130,7 @@ class MarkdownReportTest(TestCase):
             self.toRefactoringCandidate("mies", "introduced", "UNIT_COMPLEXITY", "VERY_HIGH")
         ]
 
-        report = MarkdownReport()
+        report = MaintainabilityMarkdownReport()
         table = report.renderRefactoringCandidatesTable(refactoringCandidates)
 
         expected = """
@@ -146,7 +146,7 @@ class MarkdownReportTest(TestCase):
     def testLimitRefactoringCandidatesTableWhenThereAreTooMany(self):
         findings = [self.toRefactoringCandidate(f"aap-{i}", "introduced", "UNIT_SIZE", "HIGH") for i in range(1, 100)]
 
-        report = MarkdownReport()
+        report = MaintainabilityMarkdownReport()
         table = report.renderRefactoringCandidatesTable(findings)
 
         expected = """
@@ -169,7 +169,7 @@ class MarkdownReportTest(TestCase):
         rc = self.toRefactoringCandidate(f"aap", "introduced", "DUPLICATION", "VERY_HIGH")
         rc["occurrences"] = [self.toOccurrence(f"aap-{i}", i, i) for i in range(1, 10)]
 
-        report = MarkdownReport()
+        report = MaintainabilityMarkdownReport()
         table = report.renderRefactoringCandidatesTable([rc])
 
         expected = """
@@ -181,7 +181,7 @@ class MarkdownReportTest(TestCase):
         self.assertEqual(table.strip(), inspect.cleandoc(expected).strip())
 
     def testNoRefactoringCanidatesTableWhenNoRefactoringCandidates(self):
-        report = MarkdownReport()
+        report = MaintainabilityMarkdownReport()
         table = report.renderRefactoringCandidatesTable([])
 
         self.assertEqual(table, "")
@@ -194,7 +194,7 @@ class MarkdownReportTest(TestCase):
             "overallRatings": {"MAINTAINABILITY": 4.0}
         }
 
-        report = MarkdownReport()
+        report = MaintainabilityMarkdownReport()
         summary = report.renderSummary(feedback, self.options)
         expected = "**💭️  You did not change any files that are measured by Sigrid**"
 
@@ -208,9 +208,9 @@ class MarkdownReportTest(TestCase):
             "overallRatings": {"MAINTAINABILITY": 4.1}
         }
 
-        report = MarkdownReport()
+        report = MaintainabilityMarkdownReport()
         summary = report.renderSummary(feedback, self.options)
-        expected = "**✅  You wrote maintainable code and achieved your Sigrid objective of 3.5 stars**"
+        expected = "**✅  You wrote maintainable code and achieved your objective of 3.5 stars**"
 
         self.assertEqual(summary, expected)
 
@@ -223,9 +223,9 @@ class MarkdownReportTest(TestCase):
             "overallRatings": {"MAINTAINABILITY": 3.1}
         }
 
-        report = MarkdownReport()
+        report = MaintainabilityMarkdownReport()
         summary = report.renderSummary(feedback, self.options)
-        expected = "**↗️  You improved your code's maintainability towards your Sigrid objective of 3.5 stars**"
+        expected = "**↗️  You improved the maintainability of the code towards your objective of 3.5 stars**"
 
         self.assertEqual(summary, expected)
 
@@ -237,9 +237,9 @@ class MarkdownReportTest(TestCase):
             "overallRatings": {"MAINTAINABILITY": 3.0}
         }
 
-        report = MarkdownReport()
+        report = MaintainabilityMarkdownReport()
         summary = report.renderSummary(feedback, self.options)
-        expected = "**⚠️  Your code did not improve towards your Sigrid objective of 3.5 stars**"
+        expected = "**⚠️  Your code did not improve maintainability towards your objective of 3.5 stars**"
 
         self.assertEqual(summary, expected)
 
@@ -251,9 +251,9 @@ class MarkdownReportTest(TestCase):
             "overallRatings": {"MAINTAINABILITY": 3.9}
         }
 
-        report = MarkdownReport()
+        report = MaintainabilityMarkdownReport()
         summary = report.renderSummary(feedback, self.options)
-        expected = "**✅  You wrote maintainable code and achieved your Sigrid objective of 3.5 stars**"
+        expected = "**✅  You wrote maintainable code and achieved your objective of 3.5 stars**"
 
         self.assertEqual(summary, expected)
 
@@ -264,12 +264,13 @@ class MarkdownReportTest(TestCase):
             "overallRatings": {"MAINTAINABILITY": 3.0}
         }
 
-        report = MarkdownReport()
+        report = MaintainabilityMarkdownReport()
         summary = report.renderSummary(feedback, self.options)
-        expected = "**⏸️️  Your rating did not change and is still below your objective of 3.5 stars**"
+        expected = "**⏸️️  Your maintainability remains unchanged and is still below your objective of 3.5 stars**"
 
         self.assertEqual(summary, expected)
 
+    @mock.patch.dict(os.environ, {"SIGRID_CI_MARKDOWN_HTML" : "false"})
     def testWordsOfEncouragementWhenNoBadRefactoringCandidates(self):
         refactoringCandidates = [
             self.toRefactoringCandidate("aap", "improved", "UNIT_SIZE", "HIGH"),
@@ -286,14 +287,13 @@ class MarkdownReportTest(TestCase):
             "refactoringCandidates": refactoringCandidates
         }
 
-        report = MarkdownReport()
-        report.ALLOW_FANCY_MARKDOWN = False
+        report = MaintainabilityMarkdownReport()
         markdown = report.renderMarkdown("1234", feedback, self.options)
 
         expected = """
             # [Sigrid](https://sigrid-says.com/aap/noot) maintainability feedback
 
-            **✅  You wrote maintainable code and achieved your Sigrid objective of 3.5 stars**
+            **✅  You wrote maintainable code and achieved your objective of 3.5 stars**
             
             Sigrid compared your code against the baseline of 2022-01-10.
             
@@ -347,8 +347,7 @@ class MarkdownReportTest(TestCase):
             "refactoringCandidates": []
         }
 
-        report = MarkdownReport()
-        report.ALLOW_FANCY_MARKDOWN = False
+        report = MaintainabilityMarkdownReport()
         markdown = report.renderMarkdown("1234", feedback, self.options)
 
         expected = """
@@ -363,6 +362,7 @@ class MarkdownReportTest(TestCase):
 
         self.assertEqual(markdown.strip(), inspect.cleandoc(expected).strip())
 
+    @mock.patch.dict(os.environ, {"SIGRID_CI_MARKDOWN_HTML" : "false"})
     def testDoNotShowAnyRefactoringCandidatesIfTheBaselineIsUnknown(self):
         refactoringCandidates = [
             self.toRefactoringCandidate("aap", "introduced", "UNIT_SIZE", "HIGH"),
@@ -379,7 +379,7 @@ class MarkdownReportTest(TestCase):
             "refactoringCandidates": refactoringCandidates
         }
 
-        report = MarkdownReport()
+        report = MaintainabilityMarkdownReport()
         markdown = report.renderMarkdown("1234", feedback, self.options)
 
         expected = """
@@ -394,6 +394,7 @@ class MarkdownReportTest(TestCase):
 
         self.assertEqual(markdown.strip(), inspect.cleandoc(expected).strip())
 
+    @mock.patch.dict(os.environ, {"SIGRID_CI_MARKDOWN_HTML" : "false"})
     def testIncludeFeedbackLinks(self):
         self.options.feedbackURL = "https://example.com"
 
@@ -405,14 +406,13 @@ class MarkdownReportTest(TestCase):
             "refactoringCandidates": []
         }
 
-        report = MarkdownReport()
-        report.ALLOW_FANCY_MARKDOWN = False
+        report = MaintainabilityMarkdownReport()
         markdown = report.renderMarkdown("1234", feedback, self.options)
 
         expected = """
             # [Sigrid](https://sigrid-says.com/aap/noot) maintainability feedback
 
-            **⚠️  Your code did not improve towards your Sigrid objective of 3.5 stars**
+            **⚠️  Your code did not improve maintainability towards your objective of 3.5 stars**
             
             Sigrid compared your code against the baseline of N/A.
             
@@ -445,16 +445,14 @@ class MarkdownReportTest(TestCase):
             | Component Entanglement | N/A | N/A | N/A |
             | **Maintainability** | **3.0** | **2.9** | **2.8** |
             
-            ----
-            
-            ## Did you find this feedback helpful?
+            ### 💬 Did you find this feedback helpful?
             
             We would like to know your thoughts to make Sigrid better.
             Your username will remain confidential throughout the process.
             
-            - ✅ [Yes, these findings are useful](https://example.com?feature=sigridci.feedback&feedback=useful&system=sig-aap-noot)
-            - 🔸 [The findings are false positives](https://example.com?feature=sigridci.feedback&feedback=falsepositive&system=sig-aap-noot)
-            - 🔹 [These findings are not so important to me](https://example.com?feature=sigridci.feedback&feedback=unimportant&system=sig-aap-noot)
+            - ✅ [Yes, these findings are useful](https://example.com?feature=sigridci.maintainability&feedback=useful&system=sig-aap-noot)
+            - 🔸 [The findings are false positives](https://example.com?feature=sigridci.maintainability&feedback=falsepositive&system=sig-aap-noot)
+            - 🔹 [These findings are not important to me](https://example.com?feature=sigridci.maintainability&feedback=unimportant&system=sig-aap-noot)
             
             ----
             [**View this system in Sigrid**](https://sigrid-says.com/aap/noot)
@@ -474,14 +472,13 @@ class MarkdownReportTest(TestCase):
             "refactoringCandidates": []
         }
 
-        report = MarkdownReport()
+        report = MaintainabilityMarkdownReport()
         markdown = report.renderMarkdown("1234", feedback, self.options)
-        report.ALLOW_FANCY_MARKDOWN = True
 
         expected = """
             # [Sigrid](https://sigrid-says.com/aap/noot) maintainability feedback
 
-            **⚠️  Your code did not improve towards your Sigrid objective of 3.5 stars**
+            **⚠️  Your code did not improve maintainability towards your objective of 3.5 stars**
             
             <details><summary>Show details</summary>
             
@@ -516,25 +513,23 @@ class MarkdownReportTest(TestCase):
             | Component Entanglement | N/A | N/A | N/A |
             | **Maintainability** | **3.0** | **2.9** | **2.8** |
             
-            ----
-            
-            ## Did you find this feedback helpful?
+            ### 💬 Did you find this feedback helpful?
             
             We would like to know your thoughts to make Sigrid better.
             Your username will remain confidential throughout the process.
             
-            - ✅ [Yes, these findings are useful](https://example.com?feature=sigridci.feedback&feedback=useful&system=sig-aap-noot)
-            - 🔸 [The findings are false positives](https://example.com?feature=sigridci.feedback&feedback=falsepositive&system=sig-aap-noot)
-            - 🔹 [These findings are not so important to me](https://example.com?feature=sigridci.feedback&feedback=unimportant&system=sig-aap-noot)
+            - ✅ [Yes, these findings are useful](https://example.com?feature=sigridci.maintainability&feedback=useful&system=sig-aap-noot)
+            - 🔸 [The findings are false positives](https://example.com?feature=sigridci.maintainability&feedback=falsepositive&system=sig-aap-noot)
+            - 🔹 [These findings are not important to me](https://example.com?feature=sigridci.maintainability&feedback=unimportant&system=sig-aap-noot)
             </details>
             
             ----
             [**View this system in Sigrid**](https://sigrid-says.com/aap/noot)
         """
 
-        self.assertTrue(report.isHtmlMarkdownSupported())
         self.assertEqual(markdown.strip(), inspect.cleandoc(expected).strip())
 
+    @mock.patch.dict(os.environ, {"SIGRID_CI_MARKDOWN_HTML" : "false"})
     def testDoNotIncludeFeedbackLinksIfNothingHappened(self):
         feedback = {
             "baselineRatings": {},
@@ -544,7 +539,7 @@ class MarkdownReportTest(TestCase):
             "refactoringCandidates": []
         }
 
-        report = MarkdownReport()
+        report = MaintainabilityMarkdownReport()
         markdown = report.renderMarkdown("1234", feedback, self.options)
 
         expected = """
