@@ -14,11 +14,11 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
+import os
 import sys
 from argparse import ArgumentParser, SUPPRESS
 
 from sigridci.feedback_provider import Capability, FeedbackProvider
-from sigridci.platform import Platform
 from sigridci.publish_options import PublishOptions, RunMode
 from sigridci.sigrid_api_client import SigridApiClient
 
@@ -40,9 +40,14 @@ def parseFeedbackOptions(args):
     return options
 
 
-if __name__ == "__main__":
-    Platform.checkEnvironment()
+def determineObjectives(options):
+    if not os.environ.get("SIGRID_CI_TOKEN"):
+        return {}
+    apiClient = SigridApiClient(options)
+    return apiClient.fetchObjectives()
 
+
+if __name__ == "__main__":
     parser = ArgumentParser(description="Provides Sigrid CI feedback for the specified analysis.")
     parser.add_argument("--partner", type=str, default="sig", help=SUPPRESS)
     parser.add_argument("--customer", type=str, help="Name of your organization's Sigrid account.")
@@ -58,8 +63,7 @@ if __name__ == "__main__":
         sys.exit(1)
 
     options = parseFeedbackOptions(args)
-    apiClient = SigridApiClient(options)
-    objectives = apiClient.fetchObjectives()
+    objectives = determineObjectives(options)
 
     feedbackProvider = FeedbackProvider(args.capability, options, objectives)
     feedbackProvider.loadLocalAnalysisResults(args.analysisresults)
