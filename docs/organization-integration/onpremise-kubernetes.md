@@ -338,7 +338,7 @@ In the Helm chart, two things need to be configured:
 A secret for accessing the object store can be configured in the usual way:
 
 ```yaml
-auth-api:
+inbound-api:
   config:
     importJob:
       objectStoreSecret:
@@ -351,12 +351,12 @@ auth-api:
           AWS_SESSION_TOKEN: ""
 ```
 
-As usual, the Helm chart creates the secret if you set `auth-api.config.importJob.
+As usual, the Helm chart creates the secret if you set `inbound-api.config.importJob.
 objectStoreSecret.create` to true. Alternatively, you can provide the secret yourself, in which 
 case the configuration is like so:
 
 ```yaml
-auth-api:
+inbound-api:
   config:
     importJob:
       objectStoreSecret:
@@ -379,7 +379,7 @@ These jobs are created from a template that is configurable in the Helm chart, u
 following configuration:
 
 ```yaml
-auth-api:
+inbound-api:
   config:
     importJob:
       serviceAccount:
