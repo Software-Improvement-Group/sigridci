@@ -3,6 +3,16 @@ Sigrid release notes
 
 SIG uses [continuous delivery](https://en.wikipedia.org/wiki/Continuous_delivery), meaning that every change to Sigrid or the underlying analysis is released once our development pipeline has completed. On average, we release somewhere between 10 and 20 times per day. This page therefore doesn't list every single change, since that would quickly lead to an excessively long list of small changes. Instead, this page lists Sigrid and analysis changes that we consider noteworthy for the typical Sigrid user.
 
+### December 16, 2024
+
+- **Delta Quality:** The details list for new/changed/deleted code now includes a volume indicator. This allows you to identofy which files were changed the most during that time period.
+- **System maintainability dashboard**: The risk profile charts now have a legend that explains what the red/orange/yellow/green risk categories mean, making both the charts and the dashboard in general easier to interpret.
+- **System maintainability dashboard**: The "churn" (new/changed/deleted code) is now consistent between the maintainability dashboard and the Delta Quality page. Previously, these two pages used slightly different definitions of new code, which was inconsistent and confusing.
+- **Refactoring candidates:** Duplication refactoring candidates now show both the total amount of *duplicated* code, and the amount of *redundant code*. The latter indicates the number of copies, i.e. is the duplicated across 2 files or across 100 files. This information can assist in prioritization when deciding which of these issues to fix first.
+- **Refactoring candidates:**Duplication refactoring candidates now include a component filterm allowing you to focus on duplicates in specific components.
+- **Technology support:** A beta version of the new Mendix microflow/nanoflow is now available. Sigrid will now visualize microflows/nanoflows in a more graphical way, which is more familiar to Mendix developers. The [Code Explorer documentation](../capabilities/system-code-explorer.md#navigating-low-code-technologies) contains screenshots and more information. Contact SIG if you want to be involved in beta-testing this new analysis before it becomes generally available.
+- **Technology support:** Added support for the [Svelte framework](https://svelte.dev). See the [technology support documentation](technology-support.md#technology-conversion-configuration) for instructions on how you can publush your Svelte project to Sigrid.
+
 ### December 2, 2024
 
 - **New/Changed Code Quality:** The detail page now includes a search field, so you can more easily locate specific files.
@@ -78,7 +88,6 @@ SIG uses [continuous delivery](https://en.wikipedia.org/wiki/Continuous_delivery
 
 ### June 17, 2024
 
-- **Code Explorer:** Sigrid now supports process visualization for low-code technologies. This presents the examples and findings in a way that is more familiar to those developers. The [Code Explorer documentation](../capabilities/code-explorer.md#navigating-low-code-technologies) contains screenshots and more information. 
 - **Sigrid CI:** Pull request comments are now also available for Azure DevOps, in addition to GitHub. This makes the Sigrid CI feedback easier to process, since it's more visual and requires less clicks. See the [Sigrid CI instructions for Azure DevOps](../sigridci-integration/azure-devops.md) for how to enable this in your pipeline.
 - **Technology support:** Improved dependency detection for Visual Basic .NET.
 
