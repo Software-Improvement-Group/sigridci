@@ -35,7 +35,7 @@ inputs:
   includehistory:
     description: "When enabled, includes the repository history in the upload (true/false). Required for architecture quality analysis."
     required: false
-    default: false
+    default: true
   showupload:
     description: "Outputs the list of files included in the upload to Sigrid, for troubleshooting (true/false)."
     required: false
