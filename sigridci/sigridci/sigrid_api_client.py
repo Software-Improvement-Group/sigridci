@@ -14,7 +14,6 @@
 
 import json
 import os
-import urllib.error
 import urllib.parse
 import urllib.request
 from tempfile import TemporaryDirectory
