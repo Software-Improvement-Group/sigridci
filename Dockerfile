@@ -7,4 +7,4 @@ COPY sigridci /sigridci
 COPY entrypoint.sh /usr/local/bin/entrypoint.sh
 RUN git config --global --add safe.directory '*'
 
-ENTRYPOINT ["entrypoint.sh"]
+ENTRYPOINT ["/usr/local/bin/entrypoint.sh"]
