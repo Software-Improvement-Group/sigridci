@@ -9,3 +9,4 @@ jobs:
         uses: actions/checkout@v4
       - run: "pip3 install -r test/requirements.txt --user"
       - run: "python3 -m unittest"
+      - run: "importchecker sigridci"
