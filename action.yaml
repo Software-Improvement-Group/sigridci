@@ -96,7 +96,10 @@ runs:
   using: "docker"
   image: "docker://softwareimprovementgroup/sigridci:latest"
   args:
-    - "whoami"
+    - "git"
+    - "config"
+    - "--global"
+    - "--list"
 
   env:
     displayname: ${{ inputs.displayname }}
