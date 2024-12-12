@@ -94,7 +94,7 @@ inputs:
 
 runs:
   using: "docker"
-  image: "softwareimprovementgroup/sigridci:latest"
+  image: "docker://softwareimprovementgroup/sigridci:latest"
   args:
     - "--customer"
     - ${{ inputs.customer }}
