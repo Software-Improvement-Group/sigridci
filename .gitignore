@@ -5,6 +5,7 @@ sigrid-ci-output/
 .idea/
 *.iml
 .vscode
+.vscode/
 docs/_site/
 docs/.jekyll-cache/
 .venv
