@@ -10,7 +10,7 @@ jobs:
         with:
           fetch-depth: 0
       - name: Sigrid CI
-        uses: Software-Improvement-Group/sigridci@main
+        uses: Software-Improvement-Group/sigridci@add_scheduled_job
         with:
           customer: sig
           system: sigridci-client
