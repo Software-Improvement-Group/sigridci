@@ -1,4 +1,4 @@
-name: Sigrid pull request feedback
+name: Sigrid CI scheduled
 on: [pull_request]
 
 jobs:
