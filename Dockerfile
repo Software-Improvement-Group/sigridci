@@ -5,6 +5,6 @@ RUN apk --no-cache -U upgrade && \
 
 COPY sigridci /sigridci
 COPY entrypoint.sh /usr/local/bin/entrypoint.sh
-RUN git config --global --add safe.directory '*'
+RUN git config --system --add safe.directory '*'
 
 ENTRYPOINT ["/usr/local/bin/entrypoint.sh"]
