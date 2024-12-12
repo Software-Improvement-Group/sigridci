@@ -30,7 +30,7 @@ class PublishOptions:
     customer: str
     system: str
     runMode: RunMode
-    sourceDir: str
+    sourceDir: str = "."
     subsystem: str = ""
     excludePatterns: List[str] = field(default_factory=lambda: [])
     includePatterns: List[str] = field(default_factory=lambda: [])
@@ -45,6 +45,8 @@ class PublishOptions:
 
     SYSTEM_NAME_PATTERN = re.compile("^[a-z0-9]+(-[a-z0-9]+)*$", re.IGNORECASE)
     SYSTEM_NAME_LENGTH = range(2, 65)
+    DEFAULT_TARGET = 3.5
+    DEFAULT_FINDINGS_OBJECTIVE = "CRITICAL"
 
     def getSystemId(self):
         return f"{self.partner}-{self.customer}-{self.system}"

@@ -3,6 +3,79 @@ Sigrid release notes
 
 SIG uses [continuous delivery](https://en.wikipedia.org/wiki/Continuous_delivery), meaning that every change to Sigrid or the underlying analysis is released once our development pipeline has completed. On average, we release somewhere between 10 and 20 times per day. This page therefore doesn't list every single change, since that would quickly lead to an excessively long list of small changes. Instead, this page lists Sigrid and analysis changes that we consider noteworthy for the typical Sigrid user.
 
+### December 2, 2024
+
+- **New/Changed Code Quality:** The detail page now includes a search field, so you can more easily locate specific files.
+- **Refactoring Candidates:** The refactoring candidates page for Component Entanglement now provides additional details on the number of findings in each category.
+- **Code Explorer:** The tree map in the Code Explorer can now toggle between per-directory and per-component. This gives power users more detailed analysis features to work with.
+- **Sigrid API:** Added an [example script](https://github.com/Software-Improvement-Group/sigridci/tree/main/examples/get-scope-file) that shows how to extract the [scope configuration file](analysis-scope-configuration.md) using the API.
+- **Configuration:** The [configuration option to remove dependencies](analysis-scope-configuration.md#manually-removing-architecture-dependencies) now works universally across Sigrid. This option already existed before, but it was limited to the architecture view. The option has now been extended to that it works everywhere.
+
+### November 18, 2024
+
+- **Maintainability dashboard:** Test code volume (in person years) is now available as a metric across Sigrid.
+- **Code Explorer:** It is now possible to export the list of findings. This is helpful when you want to further process findings outside Sigrid.
+- **Code Explorer:** You now have the option to use either the directory structure or the component structure for the tree map in the center of the Code Explorer. This is mainly for power users that want to change views to get different insights when analyzing results.
+- **Sigrid API:** The maintainability end points now also return the volume of the system, in both person years and in lines of code.
+
+### November 4, 2024
+
+- **Objectives:** The portfolio objectives dashboard now allows you to drag-and-drop objectives to indicate precedence.
+- **Code Explorer:** All files in the system are now shown by the Code Explorer. Previously, only files in scope for the maintainability rating were shown.
+- **Maintainability:** Introduced a new sytem-level maintainability dashboard, that includes several new visualization.
+- **Sigrid CI:** Tweaked pull request feedback to avoid it becoming excessively long when changing files that contain a lot of technical debt.
+
+### October 21, 2024
+
+- **Open Source Health:** Removed dependencies are now depicted as "grayed out" in the list of open source dependencies. This helps to avoid confusion, as people might inadvertently think those dependencies are still in use.
+- **Architecture Quality:** Selecting a component now provides an AI-generated summary with Sigrid's architecture findings for that component. You can access the summary using the AI button located at the right-side of the page.
+- **Technology Support:** Improved support for [Gradle/Kotlin](https://gradle.org/kotlin/).
+
+### October 7, 2024
+
+- **Objectives:** The drill-down page, where you can see objective progress for all systems in your portfolio, now also shows a delta indicator. This is in addition to the overall delta indicator displayed in the portfolio objectives dashboard. This helps you to identify systems where things aren't progressing as expected, or reversely, which systems have improved the most.
+- **Security:** Sigrid now offers the *Sigrid Security for Embedded Systems* license. As the name implies, this focuses specifically on software used in embedded systems. It adds support for additional security standards, and introduces rules to check compliance against those standards. Most of the focus is on C and C++, since those technologies remain the lingua franca for embedded systems.
+- **Open Source Health:** Added support for [NuGet lock files](https://devblogs.microsoft.com/nuget/enable-repeatable-package-restores-using-a-lock-file/). You can [configure Sigrid to show transitive dependencies](analysis-scope-configuration.md#open-source-health). If you enable this option, Sigrid will scan your NuGet lock files for those transitive dependencies, and display them in Sigrid alongside your direct dependencies.
+- **Sigrid CI:** Improved validation for the [scope configuration file](analysis-scope-configuration.md). You will now get more and more detailed feedback, and because you get thise feedback *before* you code is ever sent to Sigrid, this leads to a faster feedback loop to detect and fix configuration errors.
+- **Configuration:** You can now change your organization's display name using the "metadata" in the menu. This option is only available to Sigrid administrators.
+
+### September 23, 2024
+
+- **Scope configuration:** Sigrid now supports automatic component detection, which is based on the SIG knowledge base. Manually defining components is still possible if you want to override the default configuration, or if you're using a project-specific component structure. Refer to the [updated documentation](analysis-scope-configuration.md#defining-components) for an overview of when and how to use the various options.
+- **Sigrid CI:** Validation of [scope configuration files](analysis-scope-configuration.md) has been improved. You will now receive more feedback on configuration errors. If you use Sigrid CI, you will get this feedback immediately, before Sigrid starts the analysis and before your code is even published. This faster feedback loop is helpful to spot and fix configuration errors in a timely fashion.
+
+### September 9, 2024
+
+- **Objectives:** The objectives dashboard now includes filter options, which allow you to track objectives status and trend for certain teams, certain business criticiality, etc. This helps you to create custom dashboards or reports for certain sections of your portfolio.
+- **Sigrid CI:** The Sigrid CI feedback now shows both the maintainability of the system as a whole, *and* the maintainability of the files you changed... before you changed them. This makes it easier to see if you managed to improve those files during your changes. This fits with Sigrid CI's goal of incremental improvement: As long as you keep improving your code *towards* your objective, you will get there eventually.
+- **Architecture Quality:** The user interface for Architecture Quality's pinning/hiding components, saved views, and the summary have all been improved. These changes combined make it easier to navugate the architecture view.
+
+### August 26, 2024
+
+- **Maintainability:** The SIG Maintainability Model 2024 has been released. SIG models are recalibrated yearly, to reflect current industry trends and best practices. You can find an overview of the new model version in the updated [Guidance for Producers](https://softwareimprovementgroup.com/wp-content/uploads/SIG-TUViT-Evaluation-Criteria-Trusted-Product-Maintainability-Guidance-for-producers.pdf) document.
+- **Architecture Quality:** SIG's Architecture Quality Model is *also* benchmarked, and is now also recalibrated on a yearly basis. You can find documentation for the new model in the [Guidance for Producers](https://www.softwareimprovementgroup.com/wp-content/uploads/Guidance-for-producers-Architecture-Quality-Model.pdf).
+- **Objectives:** The objectives dashboard now shows both portfolio objectives and system objectives in a single unified view. This makes it easier to track objective compliance across your portfolio, without having to navigate across multiple pages.
+- **Sigrid CI:** The Sigrid CI feedback for GitLab has been improved to be more in line with the feedback for GitHub and Azure DevOps, it is now more visual and requires less clicks to access. Refer to the [integration instructions for GitLab](../sigridci-integration/gitlab.md) for how to enable this for your pipeline.
+
+### August 12, 2024
+
+- **Security:** It is now possible to disable/exclude specific rules in the configuration. Refer to the [security configuration](analysis-scope-configuration.md#third-party-findings) for more information.
+- **Security:** Secure software requires security awareness as part of your organizational culture. Adding links to people's daily workflow can help to keep security top-of-mind. You can use the [Sigrid API](../integrations/sigrid-api-documentation.md) for this. One example of such a workflow is [Slack](https://slack.com), which tends to be used heavily by development teams. We have added an example of [daily Slack alerts based on Sigrid security findings](https://github.com/Software-Improvement-Group/sigridci/tree/main/examples/slack-security-findings), which you can use and/or customize.
+- **Open Source Health:** It is now possible to exclude certain risks from Sigrid's Open Source Health analysis. See the [Open Source Health documentation](../capabilities/system-open-source-health.md#excluding-risks) for *when* to use this options, and the [configuration options](analysis-scope-configuration.md#exclude-open-source-health-risks) for *how* to use these options.
+- **Architecture Quality:** Architecture Quality now supports [saved views](../capabilities/architecture-quality.md#saving-architectural-views), which allows you to create and save specific views from the architecture explorer for later review or documentation purposes.
+- **Technology support:** Added support for the [NGRX framework](https://ngrx.io). This support is now part of the existing TypeScript analysis, so no configuration changes are needed.
+
+### July 15, 2024
+
+- **Objectives dashboard:** The dashboard now shows progress over time for all objectives. The time period for this comparison can be selected using the calendar in the top-right, in the same way as other trend graphs across Sigrid.
+- **Architecture Quality:** Added the option to pin components to the view. This allows you to create customized views, which is helpful when you want to focus on or emphasize certain components. The [architecture quality documentation](../capabilities/architecture-quality.md#pinning-and-hiding-architecture-components) contains more information on when and how you can use this feature.
+- **Technology support:** Added support for the JDE technology, formerly known as [JD Edwards EnterpriseOne](https://www.oracle.com/nl/applications/jd-edwards-enterpriseone/). Refer to the [technology support list](technology-support.md) for details.
+
+### July 1, 2024
+
+- **Architecture Quality:** You can now hide components in the architecture diagram. This can help to simplify the diagram when working with large and/or complicated architectures.
+- **Sigrid API:** It is now possible to [remove sub-systems](../integrations/sigrid-api-documentation.md#removing-subsystems) using  the API.
+
 ### June 17, 2024
 
 - **Code Explorer:** Sigrid now supports process visualization for low-code technologies. This presents the examples and findings in a way that is more familiar to those developers. The [Code Explorer documentation](../capabilities/code-explorer.md#navigating-low-code-technologies) contains screenshots and more information. 

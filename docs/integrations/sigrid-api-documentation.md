@@ -10,9 +10,11 @@ In addition to [Sigrid CI](../README.md), Sigrid also provides a more general-pu
 - The Sigrid API base URL is `https://sigrid-says.com/rest/analysis-results/api/v1`. 
 - Authentication for the Sigrid API uses the same [authentication tokens](../organization-integration/authentication-tokens.md) that are used by Sigrid CI. Your token's permissions are based on your user account, so the token can access the same systems that you can. 
 - You need to pass the authentication token to each request in the HTTP header `Authorization: Bearer {SIGRID_CI_TOKEN}`.
+- All requests to Sigrid are rate-limited: at present **5000 per 5 minutes, per source IP address** are allowed. Requests that bring the total request count of the last 5 minutes over this limit will not be handled and get an HTTP 429 response.
 - All end points will return HTTP status 401 if the token is invalid, or if the token is not authorized to access the portfolio and/or system.
 - All end points return JSON and therefore return a Content-Type of `application/json`.
 - Please use lower case when you format your api calls.
+
 
 The following example shows how to call the Sigrid API using `curl`:
 
@@ -53,6 +55,7 @@ Sigrid's REST API mimics this behavior, as follows:
 Maintainability ratings for a given customer are available via three endpoints:
 - `GET https://sigrid-says.com/rest/analysis-results/api/v1/maintainability/{customer}`: system-level maintainability ratings for all systems of the given customer the current user has access to.
 - `GET https://sigrid-says.com/rest/analysis-results/api/v1/maintainability/{customer}/{system}`: system-level maintainability ratings for the given system of the given customer.
+- `GET https://sigrid-says.com/rest/analysis-results/api/v1/maintainability/{customer}/{system}?technologyStats=true`: adds per-technology information in addition to the overall system information.
 - `GET https://sigrid-says.com/rest/analysis-results/api/v1/maintainability/{customer}/{system}/components`: component-level maintainability ratings for the given system of the given customer.
 
 The parameter `{customer}` refers to your Sigrid account name. 
@@ -72,7 +75,17 @@ The parameter `{customer}` refers to your Sigrid account name.
             "allRatings": [
                 {
                     "maintainability": 4.96,
-                    "maintainabilityDate": "2022-02-06"
+                    "maintainabilityDate": "2022-02-06",
+                    "componentIndependence": 2.922191130049036,
+                    "componentEntanglement": 3.185432066401412,
+                    "duplication": 3.8219019076088467,
+                    "moduleCoupling": 3.7576658516974955,
+                    "testCodeRatio": 1.3420540223995314,
+                    "unitComplexity": 4.611590984421209,
+                    "unitInterfacing": 2.139146638028358,
+                    "unitSize": 3.9657948540316688,
+                    "volumeInPersonMonths": 91.54868594563312,
+                    "volumeInLoc": 68305
                 }
             ]
         }
@@ -86,7 +99,7 @@ The top-level `maintainability` and `maintainabilityDate` refer to the *current*
 
 ### Security and reliability findings
 
-Sigrid's REST API provides two endpoints to get security or reliability findings for a system:
+Sigrid's REST API provides two endpoints to get all open security or reliability findings for a system:
 * Security findings: `GET https://sigrid-says.com/rest/analysis-results/api/v1/security-findings/{customer}/{system}`
 * Reliability findings: `GET https://sigrid-says.com/rest/analysis-results/api/v1/reliability-findings/{customer}/{system}`
 
@@ -130,15 +143,13 @@ The parameters `{customer}` and `{system}` refer to your Sigrid account name and
 
 </details>
 
-### Vulnerable libraries in Open Source Health
+### Open Source Health findings and ratings
+A list of all third-party open source dependencies is available using the following endpoints:
+- `GET https://sigrid-says.com/rest/analysis-results/api/v1/osh-findings/{customer}` for your full portfolio of applications;
+- `GET https://sigrid-says.com/rest/analysis-results/api/v1/osh-findings/{customer}/{system}` for a single application.  
 
-A list of all third-party libraries used is available for a given system, or for all systems for a customer, using the following endpoints:
-- `GET https://sigrid-says.com/rest/analysis-results/api/v1/osh-findings/{customer}?vulnerable=<choose one of true or false according to the explanation below>`: get all third-party libraries for all systems the current user has access to for the given customer.
-- `GET https://sigrid-says.com/rest/analysis-results/api/v1/osh-findings/{customer}/{system}?vulnerable=<choose one of true or false according to the explanation below>`: get all third-party libraries for the given system and customer.
-
-The path parameters `{customer}` and `{system}` refer to your Sigrid account name and system ID respectively. The `vulnerable` URL query parameter is optional and defaults to `false`. The meaning is as follows:
-- `?vulnerable=false` or no query parameter: the endpoint returns the full list of third-party libraries detected by Sigrid for the given customer/system(s), including lists of known vulnerabilities per library if any. 
-- `?vulnerable=true`: the endpoint returns only those third-party libraries detected by Sigrid for the given customer/system(s) that have at least one known vulnerability. 
+The endpoints will include [Open Source Health Quality Model](../reference/quality-model-documents/open-source-health.html) ratings where available. 
+The path parameter `{customer}` and `{system}` refer to your Sigrid account name and system ID respectively.
 
 The response format is based on the CycloneDX (version 1.5) format for an [SBOM (software bill of materials)](https://en.wikipedia.org/wiki/Software_bill_of_materials). 
 
@@ -167,6 +178,32 @@ Mimetype: `application/vnd.cyclonedx+json`
             }
         ]
     },
+    "properties" : [
+      {
+        "name" : "sigrid:ratings:system",
+        "value" : "3.89"
+      },
+      {
+        "name" : "sigrid:ratings:vulnerability",
+        "value" : "3.2976190476190474"
+      },
+      {
+        "name" : "sigrid:ratings:licenses",
+        "value" : "5.5"
+      },
+      {
+        "name" : "sigrid:ratings:freshness",
+        "value" : "1.4174311926605505"
+      },
+      {
+        "name" : "sigrid:ratings:management",
+        "value" : "3.189908256880734"
+      },
+      {
+        "name" : "sigrid:ratings:activity",
+        "value" : "1.3944954128440368"
+      }
+    ],
     "components": [
         {
             "group": "",
@@ -210,8 +247,33 @@ Mimetype: `application/vnd.cyclonedx+json`
     ]
 }
 ```
-
 </details>
+
+The `properties` of the root is an array of name/value pairs.
+It contains up to 6 items, as detailed in the table below. Note that the value of 
+a property can never be `null` according to the CycloneDX specification. Consequently, 
+if Sigrid cannot determine the value of a property for whatever reason, it is simply 
+missing from the `properties` array.
+
+| Name                           | Description                                              |
+|--------------------------------|----------------------------------------------------------|
+| `sigrid:ratings:system`        | System Open Source Health Quality model rating           |
+| `sigrid:ratings:vulnerability` | Vulnerability Open Source Health Quality model rating    |
+| `sigrid:ratings:licenses`      | Licenses Open Source Health Quality model rating         |
+| `sigrid:ratings:freshness`     | Freshness Open Source Health Quality model rating        |        
+| `sigrid:ratings:management`    | Management Open Source Health Quality model rating       |
+| `sigrid:ratings:activity`      | Activity Open Source Health Quality model rating         |
+
+
+#### Vulnerable libraries in Open Source Health
+
+Additionally, it is possible to filter only vulnerable/non vulnerable dependencies using the aforementioned endpoint as such:
+- `GET https://sigrid-says.com/rest/analysis-results/api/v1/osh-findings/{customer}?vulnerable=<choose one of true or false according to the explanation below>`: get all third-party libraries for all systems the current user has access to for the given customer.
+- `GET https://sigrid-says.com/rest/analysis-results/api/v1/osh-findings/{customer}/{system}?vulnerable=<choose one of true or false according to the explanation below>`: get all third-party libraries for the given system and customer.
+
+The `vulnerable` URL query parameter is optional and defaults to `false`. The meaning is as follows:
+- `?vulnerable=false` or no query parameter: the endpoint returns the full list of third-party libraries detected by Sigrid for the given customer/system(s), including lists of known vulnerabilities per library if any. 
+- `?vulnerable=true`: the endpoint returns only those third-party libraries detected by Sigrid for the given customer/system(s) that have at least one known vulnerability. 
 
 The endpoint that returns third-party vulnerabilities for all systems for the given customer returns an array of SBOMs, one for each system as follows:
 
@@ -230,16 +292,15 @@ The endpoint that returns third-party vulnerabilities for all systems for the gi
 ```
 
 The `properties` member of elements of the `components` array is an array of name/value pairs. Currently, this array
-may have up to 12 items, as detailed in the table below. Note that the value of a property can never be `null` according
-to the CycloneDX specification. Consequently, if Sigrid cannot determine the value of a property for whatever reason,
-it is simply missing from the `properties` array.
+may have up to 12 items, as detailed in the table below. Similar to above, if Sigrid cannot determine
+the value of a property it will be missing from the array.
 
 | Name                        | Description                                                                      |
 |-----------------------------|----------------------------------------------------------------------------------|
-| `sigrid:risk:vulnerability` | Vulnerability risk (one of `NONE`, `LOW`, `MEDIUM`, `HIGH`)                      |
-| `sigrid:risk:legal`         | Legal (license) risk (one of `NONE`, `LOW`, `MEDIUM`, `HIGH`)                    |
-| `sigrid:risk:freshness`     | Freshness risk (one of `NONE`, `LOW`, `MEDIUM`, `HIGH`)                          |
-| `sigrid:risk:activity`      | Activity risk (one of `NONE`, `LOW`, `MEDIUM`, `HIGH`)                           |        
+| `sigrid:risk:vulnerability` | Vulnerability risk (one of `NONE`, `LOW`, `MEDIUM`, `HIGH`, `CRITICAL`)          |
+| `sigrid:risk:legal`         | Legal (license) risk (one of `NONE`, `LOW`, `MEDIUM`, `HIGH`, `CRITICAL`)        |
+| `sigrid:risk:freshness`     | Freshness risk (one of `NONE`, `LOW`, `MEDIUM`, `HIGH`, `CRITICAL`)              |
+| `sigrid:risk:activity`      | Activity risk (one of `NONE`, `LOW`, `MEDIUM`, `HIGH`, `CRITICAL`)               |        
 | `sigrid:risk:stability`     | Stability risk (one of `NONE`, `LOW`, `MEDIUM`, `HIGH`)                          |
 | `sigrid:risk:management`    | Dependency management risk (one of `NONE`, `LOW`, `MEDIUM`, `HIGH`)              |
 | `sigrid:releaseDate`        | Release date of the detected version (ISO 8601: YYYY-MM-DD)                      |
@@ -861,6 +922,28 @@ Successful response format of this request would look like the following, with t
 	"updatedByUser": "3fa85f64-5717-4562-b3fc-2c963f66afa6"	
 }
 ```
+
+## Removing subsystems
+
+The Sigrid CI script only adds subsystems, they will never disappear by themselves. If you want to remove a subsystem, users with the administrator or maintainer role can do so via the API.
+
+```
+POST https://sigrid-says.com/rest/inboundresults/sig/{customer}/{system}/ci/subsystems:batch-delete/v1
+```
+
+The body of the request is a list of Unix paths that you want to remove from the system.
+
+```json
+    {"names": ["path1", "path2"]}
+```
+
+The following example shows a complete `curl` commmand that will remove the two sub-systems:
+
+```bash
+curl --header 'Authorization: Bearer ${SIGRID_PERSONAL_TOKEN}' -X POST https://sigrid-says.com/rest/inboundresults/sig/{customer}/{system}/ci/subsystems:batch-delete/v1 -H 'Content-Type: application/json' --data '{ "names" : ["path1", "path2"] }'
+```
+
+A new analysis will run for your system and the results will be available in the Sigrid UI and API once the analysis is complete.
 
 ## Contact and support
 

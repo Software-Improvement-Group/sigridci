@@ -7,3 +7,4 @@ sigrid-ci-output/
 .vscode
 docs/_site/
 docs/.jekyll-cache/
+.venv

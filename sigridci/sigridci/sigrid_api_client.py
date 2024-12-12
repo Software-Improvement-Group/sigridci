@@ -14,13 +14,12 @@
 
 import json
 import os
-import sys
-import time
 import urllib.error
 import urllib.parse
 import urllib.request
 from tempfile import TemporaryDirectory
 
+from .api_caller import ApiCaller
 from .publish_options import PublishOptions, RunMode
 from .system_upload_packer import SystemUploadPacker
 from .upload_log import UploadLog
@@ -47,7 +46,7 @@ class SigridApiClient:
         request = urllib.request.Request(url, body)
         request.add_header("Accept", "application/json")
         request.add_header("Authorization", f"Bearer {self.token}".encode("utf8"))
-        if contentType != None:
+        if contentType is not None:
             request.add_header("Content-Type", contentType)
 
         response = urllib.request.urlopen(request)
@@ -62,34 +61,8 @@ class SigridApiClient:
             return json.loads(responseBody)
 
     def retry(self, operation, *, attempts=5, allow404=False, allowEmpty=True):
-        for attempt in range(attempts):
-            try:
-                response = operation()
-                if allowEmpty or response != {}:
-                    return response
-            except urllib.error.HTTPError as e:
-                if e.code == 401:
-                    UploadLog.log(f"You are not authenticated to Sigrid (HTTP status {e.code} for {e.url}), please check if your token is valid")
-                    sys.exit(1)
-                elif e.code == 403:
-                    UploadLog.log(f"You are not authorized to access Sigrid for this system (HTTP status {e.code} for {e.url})")
-                    sys.exit(1)
-                elif e.code == 410:
-                    if e.reason:
-                        UploadLog.log(f"{e.reason} (HTTP status {e.code} for {e.url})")
-                    else:
-                        UploadLog.log(f"The system no longer exists (HTTP status {e.code} for {e.url})")
-                    sys.exit(1)
-                elif allow404 and e.code == 404:
-                    return False
-
-            # These statements are intentionally outside the except-block,
-            # since we want to retry for empty response on some end points.
-            UploadLog.log("Retrying")
-            time.sleep(self.POLL_INTERVAL)
-
-        UploadLog.log(f"Sigrid is currently unavailable, failed after {attempts} attempts")
-        sys.exit(1)
+        api = ApiCaller("Sigrid", self.POLL_INTERVAL)
+        return api.retryRequest(operation, attempts=attempts, allow404=allow404, allowEmpty=allowEmpty)
 
     def submitUpload(self, systemExists):
         with TemporaryDirectory() as tempDir:
@@ -136,7 +109,8 @@ class SigridApiClient:
         return self.retry(lambda: self.callSigridAPI(path, metadataFile.encode("utf8"), "application/yaml"))
 
     def uploadBinaryFile(self, url, upload):
-        self.retry(lambda: self.attemptUpload(url, upload))
+        api = ApiCaller("S3", self.POLL_INTERVAL)
+        api.retryRequest(lambda: self.attemptUpload(url, upload))
         UploadLog.log(f"Upload successful")
 
     def attemptUpload(self, url, upload):
@@ -164,8 +138,3 @@ class SigridApiClient:
     def fetchObjectives(self):
         path = f"/analysis-results/api/{self.API_VERSION}/objectives/{self.urlCustomerName}/{self.urlSystemName}/config"
         return self.retry(lambda: self.callSigridAPI(path))
-
-    @staticmethod
-    def isValidToken(token):
-        return token != None and len(token) >= 64
-

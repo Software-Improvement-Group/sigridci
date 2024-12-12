@@ -1,31 +1,38 @@
-Changing the analysis scope configuration
-=========================================
+Analysis scope configuration
+============================
 
-You can change Sigrid's configuration for your project, to make Sigrid's feedback as useful and actionable as possible. We call this configuration "the scope".
+You can change Sigrid's configuration for your project, to make Sigrid's feedback as useful and actionable as possible. We call this configuration "the scope", and customizing the configuration for your system is sometimes referred to as "scoping".
 
 <sig-toc></sig-toc>
 
-## How can you customize your Sigrid configuration?
+## Starting with your Sigrid configuration
 
-By default, Sigrid will try to automatically detect the technologies you use, the component structure, and files/directories that should be excluded from the analysis. However, you can override this standard configuration with your project-specific configuration. To do this, create a file called `sigrid.yaml` and add it to the root of your repository. When you merge changes to `sigrid.yaml`, Sigrid will pick up the new configuration and apply it to subsequent scans.
+You configure Sigrid by creating a file called `sigrid.yaml` in the root of your repository. When you publish your repository to Sigrid, it will pick up the `sigrid.yaml` file. 
 
-<iframe width="560" height="315" src="https://www.youtube.com/embed/Uomc7hUbRTw" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+The `sigrid.yaml` file supports a lot of options to configure and customize Sigrid. And we mean *a lot* of options, as you can see from the length of this page!
 
-The following example shows a typical example of the `sigrid.yaml` configuration file:
+The following example shows a minimal `sigrid.yaml` file that should help you to get started:
 
-    component_depth: 1
-    exclude:
-      - ".*/simulator/.*"
     languages:
-      - name: java
-      - name: python
-      - name: typescript
+      - name: TypeScript
+      - name: JavaScript
+    dependencychecker: 
+      blocklist: ["NONE"]
+    thirdpartyfindings:
+      enabled: true
       
-The various options and sections are explained in more detail in the remainder of this page.
+So what do these options actually do?
 
-## When should you customize the configuration?
+- The `languages` option lists all technologies in your system. You can find the list of supported technology names in [the technology support list](technology-support.md#list-of-supported-technologies).
 
-Whenever you need behavior that is custom for your project. Common examples are to [exclude code](#excluding-files-and-directories), to [include/exclude specific parts of the code or programming languages](#defining-include-and-exclude-patterns), or to [resolve ambiguities](#resolving-pattern-match-ambiguities-that-may-stall-analysis).
+If you're not sure what technologies you repository is using, and you're using a development platform like GitHub or GitLab, you can find this information on your repository's dashboard page. For example, this GitHub repository would result in the list of technologies used in the example above:
+
+<img src="../images/github-languages-example.png" width="250" />
+
+- The `dependencychecker` option enables Sigrid's [Open Source Health](../capabilities/portfolio-open-source-health.md) page. If you do not use Open Source Health, you don't need this section. The `blocklist` option is explained [later in this page](#open-source-health).
+- The `thirdpartyfindings` option enables Sigrid's [Security](../capabilities/portfolio-security.md). If you're not using Sigrid Security, you don't need this section.
+
+Of course, you can always extend this simple example by adding additional configuration. The remainder of this page describes the various configuration options and how to use them.
 
 ## Editing scope files
 
@@ -84,17 +91,7 @@ As a convention, all `include` and `exclude` patterns always start with `.*/`. I
 - Since the commonly used `.*` is greedy, with deep directory structures it may happen that your search term appears in other places than you want, e.g. deeper level directories. Being as specific as possible helps you catch the right folders and files. Commonly, you might be looking for specific file names, while those same search terms should not appear in directory names. For example, you may search for files with *Build* in the name, but avoiding */Build/* directories, since those may contain generated or compiled code. To find filenames specifically, or whenever you want to avoid a deeper level directory, a useful pattern is `[^/]*` or `[^/]+`. This pattern consumes characters as long as it does not find a `/`. When used as `/[^/]*[.]java` it will ensure to catch a filename ending with `.java`. You could also have defined a character set that excludes the folder separator *"/"* with a set like `.*/[\\w-][.]java`, but this is prone to omissions.  
 - Abide by the developer wisdom that solving a problem with a regular expression leads you to have 2 problems. Regular expressions are powerful and may even be fun, but try to match your needs with the simplest possible pattern. Matching "positive" patterns, including the `exclude` option, is far easier than trying with e.g. negative lookaheads `(?!..)`, because catching a full file path is difficult with its non-capturing behavior. There are cases where patterns may work such as `((?![unwanted string]).)+`, but these cases are hard to get right and debug. Also, negative lookbehinds (`?<!`) are not recommended ([rather use an `exclude` pattern as above](#defining-include-and-exclude-patterns)), because they require a known character length and position. 
 
-### Scoping YAML indentation rules
-
-The configuration is sensitive to indentation.
-
-- System-wide elements are on the first column, like `exclude:` (the `exclude:` in the top of the configuration which defines a system-wide exclusion), `components:`, `languages:`.
-- Their direct elements start on the first column after a "`- `", e.g. the `- name:` of a component, 
-- Indented with 2 spaces `include:` and `exclude:` of a component, **if** no context has been defined (being: `production:`, `generated:`, or `test:`). The pattern definitions of an `include:` or `exclude:` start with "`- `" at the same level. 
-  - If such a code context **is** defined, then their respective `include:` and `exclude:` tags are indented 2 spaces below that.
-- For `architecture:`, `dependencychecker:` and `thirdpartyfindings:`, all underlying elements are indented 2 spaces. 
-
-## Technology support
+## Defining technologies
 
 The `languages` section lists all languages that you want Sigrid to analyze:
 
@@ -106,7 +103,7 @@ The `languages` section lists all languages that you want Sigrid to analyze:
 
 Refer to the [list of supported technologies](technology-support.md) for an overview of all supported technologies and the names that can be used.
 
-## Overriding automatic technology and test code detection
+### Overriding automatic technology and test code detection
 
 When you add a technology to your scope file, Sigrid will try to locate the corresponding files based on file and directory name conventions. This includes automatic detection of test code. For example, Java-based projects typically use `src/main/java` for production code and `src/test/java` for test code.
 
@@ -121,63 +118,60 @@ This automatic detection is usually sufficient for the majority of projects. How
 
 This example will classify all Java code in the `our-smoke-tests` directory as test code.
 
+If you choose to manually override the technology detection, be aware that every file must match a single technology. Defining overlapping patterns, where multiple technologies "claim" the same file, will result in an error.
+{: .warning }
+
 ## Defining components
 
-Component detection is based on the project's directory structure. What "components" mean depends on the technology. In Java, components are usually based on Maven modules. In C, components are often simply the project's top-level directories.
+By default, Sigrid will automatically detect your system's component structure based on SIG's knowledge base. Those components and sub-components will then be used across Sigrid.
 
-Components can be defined in several ways, which are explained below.
+In some cases, you might want to customize the component structure. For example, you might be using a project-specific component structure, or you might be using technologies for which the component structure is not yet part of SIG's knowledge base. In these situations, you can manually define your components in the `sigrid.yaml` file.
 
-### Option 1: Defining components based on directory depth
+There are multiple options for defining your components manually. We will use a simple test project to explain how each option works.
 
-The simple option is to simply base the components on directory depth. The following example will use the project's top-level directories as components.
+<img src="../images/component-directory-tree-example.png" width="250" />
 
-    component_depth: 1
-    
-### Option 2: Defining components based on base directories
+### Automatic component detection
 
-In some projects, using directory depth will not accurately reflect the actual component structure. The more advanced options allows you to define components explicitly:
+You don't have to do anything or add configuration to make Sigrid use automatic component detection. This is what Sigrid does out-of-the-box. In other words: Automatic component detection will be used by default. 
+
+If you're using mainstream technologies, we recommend you use Sigrid's automatic component detection so that you don't need to manually configure everything. Also, it will ensure your Sigrid component structure remains up-to-date, even when your project changes over time. In contrast, if you configure your components manually, you will also need to update the configuration whenever your component structure changes.
+{: .attention }
+
+### Manually define components using directory depth
+
+`component_depth: <number>` will turn all directories at the specified depth into components. In the example,  `component_depth: 1` would result in two components: `my-component` and `other-component`. The `node_modules` directory will *not* turn into a component, as this directory contains [NPM libraries](https://www.npmjs.com) and is therefore automatically excluded by Sigrid. In general, Sigrid will automatically exclude files that are not relevant, so you only need to define components for "your" code.
+
+### Manually define components using base directories
+
+The `component_base_dirs` option allows you to define a list of directories, and all subdirectories *within* those directories will then be used as components. Components should be written literally, **without** regular expression patterns (e.g. `\\s` for an empty space). Starting- and ending forward slashes `/` should be omitted. Let's try this on the example project:
 
     component_base_dirs:
-      - "modules"
-      - "modules/specific"
-      - "" # This "empty string" includes the `root` directory, as it appears in the upload folder structure, as a separate component. While this is like setting `"component_depth: 1"`, in this way you are able to split only some folders into separate components (in this case, `"modules"` and `"modules/specific"`) 
-
+      - "my-component"
+      - ""
       
-### Option 3: Defining components manually
+This will give you 3 components: `my-sub-component-a`, `my-sub-component-b`, and `other-component`. As you can see, this option is more powerful than `directory_depth` and allows you to create more advanced component structures like the asymmetrical structure in the example. The example also shows the downside: It's more complicated.
 
-In some cases the components really do not match the directory structure, and the only way to define components is by manually listing what should go where. In the example below, regular expressions are used to define what files and directories belong to each component. The syntax is identical to the patterns used in the `exclude` section. These `include` and `exclude` patterns work as explained in the [patterns section](#defining-include-and-exclude-patterns).
+### Manually define components by listing file and directory patterns
 
-    components:
-      - name: "Back-end"
-        include:
-          - ".*[.]java"
-      - name: "Log"
-        include:
-          - ".*/cs/findbugs/log/.*"
-           
-In general you should try to avoid defining components in this way: not because it is not possible, but because it is hard to maintain. This might work perfectly well for your system's *current* codebase, but what is going to happen when someone moves a file or adds a directory? This type of component configuration will require constant maintenance.
-
-Note regarding test code mapping per component:
-In case that test code resides in the same directory tree as the base directories (i.e. deeper in the tree than production code) ***and*** they are correctly identified as test code (either by default detection or manually under `languages:`), test code will be mapped correctly to its corresponding component. Either way this implies a test code naming convention that is applied consistently. Which you would expect anyway. Note that on a higher level, the `production:` and `test:` filtering will split any code that ends up in scope between production and test. For this reason, you do not need to, and cannot, define production and test code within a component. 
-
-For example, imagine that you have defined components manually and test code follows a pattern where the component name is suffixed with `-Test` or `-Tests` as the last word in the folder name, a pattern could be configured like so:
+If the previous options are still not powerful enough, the last option is to define a completely custom component structure:
 
     components:
-      - name: "Back-end"
+      - name: North
         include:
-          # Instead of defining production code with a cut-off directory of .*/backend/specific-component/.*[.]java,
-          # you could include test code in this way, if the naming convention is indeed followed consistently and
-          # an example directory would be /backend/specific-component-integration-tests/. 
-          - ".*/backend/specific-component[^/]*-[Tt]ests?/.*[.]java" 
+          - ".*/my-sub-component-a/.*"
+          - ".*/my-sub-component-b/.*"
+        exclude:
+          - ".*/b[.]py"
+      - name: South
+        include:
+          - ".*/other-component/.*"
+          - ".*/b[.]py"
+          
+As you can see, this allows you to manually define every single component. Each component can include certain directories and/or files, both of which can be specified using regular expressions.
 
-### Resolving pattern match ambiguities that may stall analysis
-
-An analysis may fail if pattern matches are ambiguous. Examples:
-
-- Language-level: files could be matched under different technologies that "compete" for the the same file extensions, like `.js` for JavaScript frameworks or `.xml` for any (visual) technology that exports its logic or flows as XML. You can resolve this by defining explicit `include` and `exclude` file extension or folder structure patterns.
-- Files may be matched in multiple components at the same time, in case that you have manually defined different components as described above in [the usage of include and exclude patterns](#defining-include-and-exclude-patterns). This may occur in code bases with many repeating folder path patterns. Patterns that may be transparent to you as developers because they are defined in another (IDE) configuration. Then e.g. `/integration/service/` or `/app/service/integration` could be deliberately different things, but defining 2 components based on `/integration/.*` and `/service/.*` would then not work. The easiest solution may be to extend the paths to make them more specific. If this proves too difficult or ambiguous, a list of `include` and `exclude` patterns should help you out. We know, this may require some trial and error.     
-- Files could be matched in multiple "contexts" at the same time. Contexts being `production`, `generated` or `test`. If there is a conflict between 2 contexts, the `exclude:` pattern takes precedence over the `include:` pattern [as described in the paragraph on defining `include` and `exclude` patterns](#defining-include-and-exclude-patterns). Due to this rule, code may appear in another context as you expect in case pattern matches overlap. In case there is ambiguity among all three contexts, then the analysis will fail.  
-- Files that are expected by the scoping file's language or component definition but are not matched anywhere, appear in a `Remainder` component. Code within this component will be analyzed, but it is one that you want to resolve, since it not an actual component that developers will recognize, and it will make architectural metrics less accurate.
+This option is extremely flexible... but it's also extremely maintenance intensive. Using this option means you will need to update your Sigrid configuration whenever you make changes to your project structure. We recommend you only use this option if you have extremely specific needs that cannot be addressed by any of the other options.
+{: .warning }
 
 ## Configuring the SIG Maintainability Model version
 
@@ -209,6 +203,22 @@ The `dependencychecker` section supports the following options:
 
 Please Note: dependency exclusions may be necessary in case your system resolves internal dependencies that could expose organization- or system name based on their internal URI. Therefore, as part of the onboarding process, please inform SIG of any such naming conventions that should be filtered. [See also this question in the FAQ on dependency filtering](../capabilities/faq-security.md#does-sig-filter-when-resolving-our-systems-dependencies).
 
+### Exclude Open Source Health risks
+
+In certain situations you can decide to [exclude Open Source Health risks](../capabilities/system-open-source-health.md#excluding-risks). This is done using the `exclude` option, which can be used in multiple different ways:
+
+    dependencychecker:
+      blocklist:
+        - ".*companyname.*"
+      exclude:
+        - ".*/scripts/.*" # Shorthand notation, same as the "path" option below.
+        - path: ".*/tools/.*" # Excludes all libraries found in files matching the specified path.
+        - vulnerability: "CVE-2024-12345" # Excludes all vulnerabilities with the specified identifier.
+        - license: "iTextSharp" # Excludes license risks for the specified library.
+        - activity: "com.github.tomas-langer:chalk" # Excludes activity risks for the specified library.
+
+Libraries and/or findings that are excluded using this option will not count towards the Open Source Health star rating, and will not be marked as risks in Sigrid.
+
 ## Security
 
 **Note: This requires a [Sigrid license for Software Security](https://www.softwareimprovementgroup.com/solutions/sigrid-software-security/). Without this license, you will not be able to see security results in Sigrid.**
@@ -233,10 +243,19 @@ This `thirdpartyfindings` section in the scope file supports the following optio
 |--------------------------|-----------|-------------------------------------------------------------------------------------|
 | `enabled`                | Yes       | Set to `true` to enable security analysis.                                          |
 | `exclude`                | No        | List of file/directory patterns that should be excluded from the security analysis. |
-| `disabled_analyzers` [1] | No        | Defining a list of disabled specific scanning tools.                                |
-| `enabled_analyzers` [1]  | No        | Defining a list of specific scanning tools to enable (if not enabled by default).   |
+| `disabled_rules`         | No        | List of rule IDs that should be ignored during analysis.                            |
+| `disabled_analyzers`     | No        | List of specific scanning tools that should be ignored during analysis.             |
+| `enabled_analyzers`      | No        | List of specific scanning tools to enable (if not enabled by default).              |
 
-1. You can see the list of enabled analyzers in your Sigrid security overview, if you [group by finding and then by origin](../capabilities/system-security.md#different-possible-grouping-of-security-findings). For the list of all supported analyzers, see [the technology support section](technology-support.md#supported-security-analyzers).
+### Excluding security rules
+
+The `disabled_rules` and `disabled_analyzers` both allow you to customize which security rules are used during the analysis. The `disabled_rules` option allows you to disable individual rules, if you consider them too "noisy" or not applicable for your system. 
+
+If you want to exclude a certain rule and add it to the `disabled_rules` list, you can find the corresponding rule ID in Sigrid's finding page:
+
+<img src="../images/security-rule-id.png" width="200" />
+
+The `disabled_analyzers` option is simular, but allows you to disable *all* rules produced by a specific analysis tool. You can see the list of enabled analyzers in your Sigrid security overview, if you [group by finding and then by origin](../capabilities/system-security.md#different-possible-grouping-of-security-findings). For the list of all supported analyzers, see [the technology support section](technology-support.md#supported-security-analyzers).
 
 ## Architecture Quality
 
@@ -255,7 +274,7 @@ The `architecture` section of the scope file supports the following options:
 | `exclude`                  | No       | See [Excluding files and directories for Architecture Quality](#excluding-files-and-directories-for-architecture-quality). |
 | `custom_components`        | No       | See [Components in Maintainability versus components in Architecture Quality](#components-in-maintainability-versus-components-in-architecture-quality). |
 | `add_dependencies`         | No       | See [Manually specifying architecture dependencies](#manually-specifying-architecture-dependencies). |
-| `remove_dependencies`      | No       | See [Manually specifying architecture dependencies](#manually-specifying-architecture-dependencies). |
+| `remove_dependencies`      | No       | See [Manually specifying architecture dependencies](#manually-removing-architecture-dependencies). |
 | `undesirable_dependencies` | No       | See [Highlighting undesirable dependencies](#highlighting-undesirable-dependencies). |
 | `add_system_elements`                      | No       | See [Manually specifying architecture elements](#manually-specifying-architecture-elements). |
 | `grouping`                 | No       | See [Grouping and annotating components in Architecture Quality](#grouping-and-annotating-components-in-architecture-quality). |
@@ -265,20 +284,14 @@ The `architecture` section of the scope file supports the following options:
 
 ### Components in Maintainability versus components in Architecture Quality
 
-Sigrid combines different capabilities, and those different capabilities might necessitate their own view on your system. In Sigrid's *Maintainability* pages, you get a simple breakdown into one level of components. Because you only get a single level, you need to define these components manually as explained in the [defining components](#defining-components) section.
+By default, Sigrid will automatically detect your system's component structure. This applies to all Sigrid capabilities, so the automatically detected component structure will also be used for Architecture Quality. 
 
-Out of the box, Sigrid's *Architecture Quality* provides a different componentization, which allows for more detail: components can have sub-components, those can *also* have sub-components, and so on. Having multiple levels of sub-components is necessary to make Architecture Quality useful. In many cases, there is general consensus on the top-level architecture. It's the internal architecture within sub-components where things get interesting. Generally, those internal architectures are the responsibility of a team, and therefore less known to people outside of the team (and in many cases it's even not fully transparent to the team itself). Moreover, incrementally improving the top-level architecture is very hard. Focusing on architecture improvement/modernization is easier when starting with a component's internal architecture, as there are less people involved and it's therefore more realistic to realize improvements within a sprint. 
-
-The fact that Architecture Quality relies on these sub-components also explains the second difference with the components you see in the maintainability page: For Architecture Quality, components and sub-components are detected automatically. This is required to make them useful and practical: defining components manually just isn't practical if your system has 50 microservices, each with their own internal architecture. Configuring such a system manually would be a huge amount of work. And you would need to update the configuration every time you add a microservice or change its internal architecture!
-
-The obvious downside of this approach is that it leads to different views in Sigrid's Maintainability and Architecture Quality pages. However, having [multiple architecture views](https://en.wikipedia.org/wiki/4%2B1_architectural_view_model) is fairly mainstream, hence we adopted this approach by Sigrid.
-
-However, if it is essential for you to have the same componentization for both Maintainability and Architecture Quality, or if you really want to define your Architecture Quality view manually, it is possible to override the standard behavior in the configuration:
+However, it is possible to [manually override the component structure](#defining-components). If you do this, the manually defined components *only* apply to the Maintainability capability, and are not automatically picked up by the Architecture Quality capability. If you *also* want to override the component structure for Architecture Quality, you will need to explicitly add the following option:
 
     architecture:
       custom_components: true
       
-This will disable the automatic component detection for Architecture Quality, and will instead use the [components you defined manually](#defining-components).
+As explained in the section on [defining components](#defining-components), we recommend you use the automatic component detection.
       
 ### Analyzing your repository history
       
@@ -293,6 +306,19 @@ This example will change the default period of 12 months, and instead analyze on
 
     architecture:
       history_start: "2023-01-01"
+
+### Manually removing architecture dependencies
+
+Sigrid's dependency detection is based on statis analysis and heuristics. This means that, unfortunately, Sigrid will occasionally detect depenencies that aren't really there. It is possible to override the analysis and remove these dependencies in the configuration:
+
+    architecture:
+      remove_dependencies:
+        - source: "frontend"
+          target: "backend"
+
+This will remove all dependencies from the component called "frontend" to the component called "backend". This works for both dependencies between top-level components and dependencies between sub-components. Also, the `source` and `target` options support regular expressions, so you can easily remove all dependencies matching a certain pattern.
+
+When dependencies are removed, they are removed across Sigrid: They will no longer show in the architecture view, they will no longer show in the the Code Explorer, and they will no longer counts towards the ratings.
       
 ### Manually specifying architecture dependencies
 
@@ -305,16 +331,7 @@ Although Sigrid supports hundreds of technologies, there is always the possibili
           type: code_call
             
 The names for the `source` and `target` fields are the same you see in Sigrid's user interface. The `type` field indicates the type of dependency that should be added, for example a code call versus an interface call. The list of supported dependency types can be found in the [Architecture Quality documentation](aq-json-export-format.md).
-
-You can use the same mechanism to remove false positives from the automatic dependency detection:
-
-    architecture:
-      remove_dependencies:
-        - source: frontend
-          target: backend
-          
-The `source` and `target` options support regular expressions, so this allows you to remove all dependencies matching a certain pattern.
-          
+        
 ### Excluding files and directories for Architecture Quality
 
 The `architecture` section in the configuration has its own `exclude` option, which can be used to exclude certain files and directories from the Architecture Quality analysis.
@@ -373,6 +390,10 @@ You can define architecture groups and annotations, and these annotations are th
         
 The contents of the `include` option refer to the component names you see in Architecture Quality. You can either use the exact component names, or you can use regular expressions. For example, using `target: backend.*` will match all components that have a name starting with "backend". Note you are matching the component name, not the files *within* the component.
 
+## Enabling experimental analysis features
+
+If you add `experimental: true` to your scope file, you opt in for enabling experimental analysis features before they become generally available. The exact list of which features are considered "experimental" is constantly in flux, and is therefore not explicitly included in this documentation. You can enable this option if you prefer to use new features immediately. 
+
 ## Configuring multi-repo systems
 
 Sigrid allows you to create ["multi-repo systems"](../sigridci-integration/development-workflows.md#combining-multiple-repositories-into-a-single-Sigrid-system) that are the combination of multiple repositories in your development environment. In this situation, each individual repository within the system is referred to as a "subsystem". Such a view is more high-level than looking at individual repositories, and is sometimes a better fit if you want to align on Sigrid findings with stakeholders from outside the development organization.
@@ -384,6 +405,13 @@ In such a situation, you can use [Sigrid CI](client-script-usage.md) to manage t
 - Publishing with `--system mybank --subsystem mybank-backend` will publish the code for the subsystem "mybank-backend" within the system "mybank".
 - Publishing with `--system mybank --subsystem mybank-frontend` will publish the code for the subsystem "mybank-frontend" within the system "mybank".
 - Publishing with `--system mybank --subsystem root` allows you to publish code to the root of the system "mybank", i.e. files that are not bound to a specific system. This includes the configuration file `sigrid.yaml`, so this can be used to update `sigrid.yaml` programmatically.
+
+## Managing the scope configuration file separate from your repository
+
+We recommend you add `sigrid.yaml` to your repository, so that it is automatically in sync with the source code and part of versions control. However, is it possible to retrieve and/or update the scope configuration file *without* making the `sigrid.yaml` file part of your repository.
+
+- If you want to *retrieve* the scope configuration file used by Sigrid, you can use the [Sigrid API](../integrations/sigrid-api-documentation.md). You can also use the [example code on GitHub](https://github.com/Software-Improvement-Group/sigridci/tree/main/examples/get-scope-file) for this.
+- If you want to *update* the scope configuration file, independently of your source code, you can still use [Sigrid CI](client-script-usage.md). You can also use the [example code on GitHub](https://github.com/Software-Improvement-Group/sigridci/tree/main/examples/get-scope-file) for this.
           
 ## Sigrid metadata
 

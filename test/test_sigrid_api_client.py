@@ -25,12 +25,6 @@ class SigridApiClientTest(TestCase):
     def tearDown(self):
         UploadLog.clear()
 
-    def testIsValidToken(self):
-        self.assertFalse(SigridApiClient.isValidToken(None))
-        self.assertFalse(SigridApiClient.isValidToken(""))
-        self.assertFalse(SigridApiClient.isValidToken("$"))
-        self.assertTrue(SigridApiClient.isValidToken("zeiYh/WYQ==" * 10))
-
     @mock.patch.dict(os.environ, {"SIGRID_CI_TOKEN" : "mytoken\n"})
     def testStripTrailingWhitespaxceFromToken(self):
         options = PublishOptions("aap", "noot", runMode=RunMode.PUBLISH_ONLY, sourceDir="/tmp")
@@ -71,9 +65,12 @@ class SigridApiClientTest(TestCase):
 
 
 class ApiStub(SigridApiClient):
-    def __init__(self, options: PublishOptions):
+    def __init__(self, options: PublishOptions, exception: Exception = None):
         super().__init__(options)
+        self.exception = exception
         self.called = []
 
     def callSigridAPI(self, path, body=None, contentType=None):
         self.called.append(path)
+        if self.exception:
+            raise self.exception

@@ -1,5 +1,6 @@
 # System-level Open Source Health (OSH)
-Sigrid runs a comprehensive analysis of open source software that is used in the source code. These are known here as *third party libraries*. 
+
+Sigrid scans your system for third-party libraries managed by supported package managers. In addition, Sigrid performs a best-effort scan to detect unmanaged ("raw") dependencies, such as JavaScript files, Java JARs and .Net DLLs that appear to be from third parties. The results of scanning these open source libraries are then shown in Sigrid's Open Source Health page.
 
 ## Reaching the OSH page
 You can reach the Open Source Health information via the top menu if you are in System view already:
@@ -72,3 +73,11 @@ Internal dependencies can be filtered manually, such that they will not be resol
 
 ## Attacking the findings list
 Since there is a plausible possibility that open source vulnerabilities are actually exploitable problems, this is the place to start as a security fix backlog. Of course, context matters. And not every update is of equal difficulty. See [the prioritization section on the security page](system-security.md#filtering-results-for-false-positives-starting-with-open-source-vulnerabilities) for more considerations.
+
+## Excluding risks
+
+In general, we recommend you address Open Source Health risks by [updating your libraries as often and as fast as possible](../workflows/best-practices-osh.md#handling-your-libraries). 
+
+However, there are situations in which it is impossible address a risk, and the only remaining option is to simply accept it. For example, some vulnerabilities are disputed. In that situation, "fixing" the risk is not possible, as there is no library version that removes the (disputed) vulnerability. Depicting those risks can lead to misinterpretation, as people looking at Sigrid without context have no way of knowing this vulnerability isn't as serious as it first seems. 
+
+You can therefore exclude certain risks in the [Open Source Health configuration options](../reference/analysis-scope-configuration.md#exclude-open-source-health-risks). This includes situations where you want to exclude a certain finding for a library (e.g. license risk) while still wanting Sigrid to scan the library for other types of risk.

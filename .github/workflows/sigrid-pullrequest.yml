@@ -7,7 +7,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: "Check out repository"
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
       - name: "Special case: We use Sigrid CI on itself, so if we want its own code to be analyzed we need a copy"
         run: "cp -r sigridci/sigridci src && cp sigridci/*.py src"
       - name: "Run Sigrid CI" 
@@ -16,7 +16,7 @@ jobs:
         run: "./sigridci/sigridci.py --customer sig --system sigridci-client --source ."
       - name: "Save Sigrid CI results"
         if: always()
-        uses: actions/upload-artifact@v2
+        uses: actions/upload-artifact@v4
         with:
           path: "sigrid-ci-output/**"
           retention-days: 7
@@ -33,7 +33,7 @@ jobs:
     if: github.repository_owner == 'Software-Improvement-Group'
     steps:
       - name: "Check out repository"
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
       - name: "Special case: We use Sigrid CI on itself, so if we want its own code to be analyzed we need a copy"
         run: "cp -r sigridci/sigridci src && cp sigridci/*.py src"
       - name: "Run Sigrid CI in Docker"

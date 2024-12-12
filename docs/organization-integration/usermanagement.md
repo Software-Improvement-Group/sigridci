@@ -29,63 +29,104 @@ With this module, a Sigrid administrator can perform all the basic authenticatio
 ### Setup customer side
 - No setup is needed.
 
-## 2. Using Single Sign On (SSO) with an Identity Management Provider (IdP)
-When Sigrid is linked to your SSO the user provisioning is done by the IdP. Sigrid supports SAML or OpenID Connect protocols via a service-provider initiated authentication flow. 
 
+## 2. Using Single Sign On (SSO) with an Identity Provider (IdP)
+When Sigrid is linked to your organization's SSO Identity Provider, the user provisioning in Sigrid is done automatically upon login. By default, new users don't see any systems and analysis results yet.
+Sigrid supports both SAML or OpenID Connect protocols via a service-provider initiated authentication flow.
 
 ### Notes
-- With a service-provider initiated authentication flow, users first goto customer.sigrid-says.com, then they get redirected to their Identity management provider, login, and get redirected back to Sigrid
+- With the service-provider initiated authentication flow, users first navigate to `https://<customer>.sigrid-says.com`. They get redirected to their organization's Identity Provider, login there, and then get redirected back to Sigrid.
 - SSO improves the ease of use for your colleagues because there is no Sigrid password to remember. 
-- Improves security because users are created and deleted centrally in your organisation.
-- Sigrid follows the password policy of your organisation.
+- SSO improves security because users are created and deleted centrally in your organization.
+- Sigrid follows the password policy of your organization.
+- SSO integration with Sigrid is **not allowed** when your Identity Provider allows public, self-service sign-up. In other words, all users in your Identity Provider must be associated directly with your organization.
 
 ### Sigrid administrator tasks
 - Check the last login
-- Do authorization tasks to define who can see what in Sigrid
+- Perform authorization tasks to define who can see what in Sigrid
 
 ### Setup on client side
+
+#### SAML Configuration
 Create an Enterprise application 'app' in your IdP with the following details: 
 - Audience or Identifier (Entity) ID: urn:amazon:cognito:sp:eu-central-1_hwh9zdyCY
 - Reply URL: https://auth.sigrid-says.com/saml2/idpresponse
 
-With the following Attributes & Claims:
+Attributes & Claims:
 
-| Your user | Namespace + SAML attribute name as expected by Sigrid |
-| ----------- | ----------|
-| user email  | http://schemas.xmlsoap.org/ws/2005/05/identity/claims/emailaddress |
-| user last name   | http://schemas.xmlsoap.org/ws/2005/05/identity/claims/name |
-| user first name   | http://schemas.xmlsoap.org/ws/2005/05/identity/claims/given_name |
-| unique user identifier | emailaddress |
+| Your user | Sigrid expects the long url as SAML attribute name |
+| ---------- | ---------- |
+| user email | `http://schemas.xmlsoap.org/ws/2005/05/identity/claims/emailaddress` |
+| user last name | `http://schemas.xmlsoap.org/ws/2005/05/identity/claims/name` |
+| user first name | `http://schemas.xmlsoap.org/ws/2005/05/identity/claims/given_name` |
 
+_Note: if your IdP requires to set an unique user identifier, please choose emailaddress_
 
-Other
+Other Settings:
 - Signature Algorithm: RSA_SHA256
 - Digest Algorithm: SHA256
 - Assertion Encryption: unencrypted (privacy is provided by using HTTPS)
 - SAML Single Logout: disabled
 
-Then assign groups of users to your Authentication app.
+Assign groups of users to your Authentication app.
 
-### Example Active Directory
+#### OpenID Connect Configuration
+Create an Enterprise application 'app' in your IdP with the following details:
+- Application Type: Web
+- Sign in Redirect URI: https://auth.sigrid-says.com/oauth2/idpresponse
 
-<img src="../images/azure-saml.png" width="800" />
+Attributes & Claims:
+- Okta includes the required claims by default, while Azure/Entra ID does not.
+Please check your IdP’s documentation to see if the required claim is included by default or if it needs to be explicitly added.
 
-### Example OneLogin
-Please see the separate [OneLogin page](usermanagement-example-onelogin.md).
+| Claim | Description | Token Type |
+| ---------- | ---------- | ---------- |
+| email  | The addressable email for this user, if the user has one | ID |
+| family_name | Provides the last name, surname, or family name of the user as defined in the user object | ID |
+| given_name | Provides the first or "given" name of the user, as set on the user object | ID |
 
-### Example Okta
-Please see the separate [OKTA page](usermanagement-example-okta.md).
+_Note: For Azure/Entra ID, please check the box "Turn on the Microsoft Graph email, profile permission (required for claims to appear in token)"_
 
-### Example Google
-Please see the separate [Google page](usermanagement-example-google.md).
+Certificates & Secrets:
+- Generate a secret
 
+Other Settings:
+- Default
+
+Assign groups of users to your Authentication app.
 
 ### Info to provide to SIG
-Provide SIG with the 'App federation MetadataURL' of your authentication app.
+Please Provide SIG with the following.
+
+#### SAML Configuration
+The 'App federation MetadataURL' of your authentication app.
 The information will include your app's identifier, redirectURL etc.
 
+#### OpenID Connect Configuration
+The Application's `client_id`, `client_secret` and the `issuer`.
+How the issuer URL looks depends on your IdP.
+
+| IdP | Issuer URL |
+| ---------- | ---------- |
+| Azure/Entra ID | `https://login.microsoftonline.com/<tenant_id>/oauth2/v2.0/authorize` |
+| Okta  | `https://<myOktaOrg>.okta.com` |
+
+### SAML Examples
+Please see the separate pages for SAML examples.
+
+- [SAML Azure/Entra ID](usermanagement-example-saml-entraid.md)
+- [SAML Google](usermanagement-example-saml-google.md)
+- [SAML Okta](usermanagement-example-saml-okta.md)
+- [SAML OneLogin](usermanagement-example-saml-onelogin.md)
+
+### OIDC Examples
+Please see the separate pages for OIDC examples.
+
+- [OIDC Azure/Entra ID](usermanagement-example-oidc-entraid.md)
+- [OIDC Okta](usermanagement-example-oidc-okta.md)
+
 ### Deliverables
-SIG will setup SSO for you. You will have your own customer-specific URL Sigrid.
+SIG will set up Single Sign-On (SSO) for you, providing you with a unique, customer-specific URL for Sigrid.
 https://customername.sigrid-says.com
 
 # Authorization in Sigrid
@@ -93,7 +134,7 @@ While Sigrid requires minimal adminstration to gather insights in your software'
 
 ### Types of users
 Sigrid utilizes role-based authorization with three roles assignable to users: 
-- **Normal users:** Default Sigrid users. Can only view all findings and details of systems they've been granted access to.
+- **Normal users:** Default Sigrid users. Can view all details of systems they've been granted access to, as well as view and edit related findings.
 - **Administrators:** Power users that have the ability to edit all details of all users within the portfolio, have access to all systems, and can set portfolio wide objectives that affect all systems in a given portfolio.
 - **Maintainers:** These users are localized administrators. Maintainers can perform administrative actions on systems they have explicit access to, but not over the entire portfolio.
 

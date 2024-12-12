@@ -13,6 +13,7 @@ Integrating Sigrid CI into your pipeline allows you to automatically publish you
 - SIG will create an empty Sigrid and a first user per customer.
 - The first user needs to create a [PAT token](../organization-integration/authentication-tokens.md).
 - Based on your environment the respective Sigrid CI jobs will need to configured with the above token.
+- Please check if your firewall allows outbound traffic to Sigrid-says.com [link to the FAQ page](../capabilities/faq.md)
 
 See the "Sigrid CI" section in the menu for an overview of supported platforms. The documentation also explains how Sigrid CI fits into various [development processes and workflows](../sigridci-integration/development-workflows.md).
 
@@ -79,9 +80,15 @@ If you are uploading from a Unix, Linux or macOS system, then you probably are i
 
 If you are uploading from Windows, you likely need to create a new key. You can, for example, use the [puttygen3](https://www.chiark.greenend.org.uk/~sgtatham/putty/latest.html) application to accomplish this.
 
-### SFTP usage
+### Uploading to portal.sig.eu via scp
 
-Connections to our upload server can be made using an SFTP client, such as [WinSCP](http://winscp.net/eng/index.php) for Windows, or the command line utility sftp for Unix, Linux and macOS, which is part of the [OpenSSH](http://www.openssh.com) suite.
+Connections to our upload server can be made using an SCP client, such as [WinSCP](http://winscp.net/eng/index.php) for Windows, or the command line utility `scp` for Unix, Linux and macOS, which is part of the [OpenSSH](http://www.openssh.com) suite.
+
+Below an example for the secure copy command, which refers to a private key, the zip file to be uploaded and 'your-upload-account' that you will receive from Sigrid support.
+
+```
+scp -i ~/.ssh/id_rsa system-name-<yyyymmdd>.zip your-upload-account@portal.sig.eu:
+```
 
 ## Manually uploading source code using the SIG Upload Portal
 
@@ -121,14 +128,22 @@ Prefer regular ZIP files, and avoid nested ZIP files. The following example can 
 ```
 git clone https://github.com/LeaVerou/awesomplete.git code
 cd code
-git --no-pager log --date=iso --format='@@@;%H;%an;%ae;%ad;%s' --numstat --no-merges > git.log
+git --no-pager log --date=iso --format='@@@;%H;%an;%ae;%cd;%s' --numstat --no-merges > git.log
 rm -rf .git
-zip -d code code.zip
+zip -r code.zip .
 ```
 
 The only thing you need to change in this example, is replace the URL of the repository with your own system's URL. 
 
 This will clone a Git repository, and then create a ZIP file containing both the source code and the change history. The latter is used for Sigrid's [architecture quality](../capabilities/architecture-quality.md) analysis. We create a log file containing this change history, and afterwards we deleted the `.git` directory to make the ZIP file smaller and faster to upload. 
+
+Please make sure that you use the UTF-8 character encoding when creating the ZIP file.
+
+## What if something went wrong?
+
+We recommend using Sigrid CI to publish your source code to Sigrid CI, since this approach is automated and therefore less error prone. If you run into issues while publishing your code it's best to [contact SIG's support team directly](#contact-and-support).
+
+If you manually exported your Git history and it's not being picked up by Sigrid, refer to the [frequently asked questions for manually providing this data](../capabilities/faq-architecture.md#troubleshooting-issues-when-manually-publishing-your-repository-history).
 
 ## Contact and support
 

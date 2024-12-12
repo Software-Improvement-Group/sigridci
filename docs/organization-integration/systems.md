@@ -5,7 +5,7 @@ Sigrid provides you with an overview of your organization's entire software port
 
 <img src="../images/portfolio-lifecycle-phase-maintainability.png" width="600" />
 
-So what's a "system"? SIG uses the following definition based on the [ISO 25010 standard](https://www.softwareimprovementgroup.com/wp-content/uploads/SIG-TUViT-Evaluation-Criteria-Trusted-Product-Maintainability-Guidance-for-producers.pdf):
+So what is a "system"? SIG uses the following definition based on the [ISO 25010 standard](https://www.softwareimprovementgroup.com/wp-content/uploads/SIG-TUViT-Evaluation-Criteria-Trusted-Product-Maintainability-Guidance-for-producers.pdf):
 
 > The system consists of all software needed to achieve the overall functionality of the product. (...) The system owner, which is the organization that holds property rights and that applies for certification, is responsible for defining the exact system boundary during the scoping phase.
 
@@ -33,7 +33,7 @@ Alternatively, you can also base your Sigrid view on a more functional/business 
 
 <img src="../images/publish-subsystems.png" width="750" />
 
-In this example, the *MyBank front-end* and *MyBank back-end* repositories would be combined into a single system, *myBank*. In this scenario, it is still possible for both repositories to publish their code to Sigrid independently, combining the two repositories happens on the Sigrid side. This behavior can be enabled by using the [subsystem option in the Sigrid CI configuration](../reference/client-script-usage.md). 
+In this example, the *MyBank front-end* and *MyBank back-end* repositories would be combined into a single system, *MyBank*. In this scenario, it is still possible for both repositories to publish their code to Sigrid independently, combining the two repositories happens on the Sigrid side. You might also want to provide yaml configuration files to the root of the *MyBank* system. This behavior can be enabled by using the [subsystem option in the Sigrid CI configuration](../reference/client-script-usage.md). 
 
 This allows you to publish each subsystem as part of their own pipeline, rather than being force to publish all subsystems at the same time. Using subsystems therefore doesn't interrupt the normal workflow for teams working on each subsystem, while still resulting in a shared/combined/aggregated view in Sigrid. Different pipelines may have quite different running times. In case that different pipelines push the source code to Sigrid with a relatively large time difference (i.e. >30 minutes), Sigrid's analysis will use the last known state of the omitted subsystems. Once other repositories do come in, the analysis will be rerun with the latest, updated version.    
 
@@ -49,7 +49,7 @@ This will also have a negative impact on analysis performance, as the analysis n
 
 Subsystems are intended for a situation where you have different teams working on different repositories, and you want them to publish their changes to Sigrid individually while still having an aggregated/consolidated view in Sigrid itself. This is the default behavior for Sigrid CI, so following this documentation already leads to a situation where every subsystem is published to Sigrid at the appropriate time.
 
-If you find yourself publishing all repositories simultaneously, for example as a scheduled job, you should consider publishing the system as a whole, since there is little added value in using subsystems in such a scenario.
+If you find yourself publishing all repositories simultaneously, for example as a scheduled job, you should publish the system as a whole by combining them on your side before sending them to Sigrid.
 
 Reversely, there is also little added value in publishing subsystems that have not actually changed, since this option allows you to publish every subsystem after every change anyway.
 

@@ -9,7 +9,7 @@ Integrating Sigrid CI with GitLab
 
 ## On-boarding your system to Sigrid
 
-On-boarding a system is done automatically when you first run Sigrid CI for that system. As long as you have a valid token, and that token is authorized to on-board systems, you will receive the message *system has been on-boarded to Sigrid*. Subsequent runs will then be visible in both your CI environment and [sigrid-says.com](https://sigrid-says.com). 
+On-boarding a system is done automatically when you first run Sigrid CI for that system. As long as you have a valid token, you will receive the message *system has been on-boarded to Sigrid*. Subsequent runs will then be visible in both your CI environment and [sigrid-says.com](https://sigrid-says.com). 
 
 ## Configuration
 
@@ -26,6 +26,22 @@ Sigrid CI reads your Sigrid account credentials from an environment variable cal
 <img src="../images/gitlab-env.png" width="400" />
 
 These instructions describe how to configure a single GitLab project, but you can follow the same steps to configure the entire GitLab group, which will make the environment variables available to all projects within that group.
+
+Next, create a token that is allowed to post merge request comments. Sigrid CI will use this token to share feedback directly within your merge request.
+
+- Access your GitLab settings.
+- Select the Access Token menu.
+- Create a new token that has permission to access the API. Sigrid CI needs permission to use the API in order to post comments.
+
+<img src="../images/gitlab-api-token.png" width="700" />
+
+You now need to make this API token available to your pipeline. You can either do this in your project settings if you only want to provide access to a single project, or in the group settings if you want to use the same token for all projects and repositories in that group.
+
+<img src="../images/gitlab-api-token-in-pipeline.png" width="300" />
+
+In your project and/or group settings, navigate to "CI/CD settings" and then pick "variables". Next, add a variable called `SIGRIDCI_GITLAB_COMMENT_TOKEN`, and use the value from the previous step. Once you've added the token as a variable, it will automatically be picked up by Sigrid CI.
+
+*Note: We realize it's a bit cumbersome having to create the token and add it to a variable. There is a [GitLab feature request](https://gitlab.com/gitlab-org/gitlab/-/issues/464591) that would allow integrations like Sigrid CI to post comments without needing their own special token. Once this is implemented in a future version of GitLab, Sigrid CI will be updated to no longer require manual creation of this token.* 
 
 ### Step 2: Add Sigrid CI to your project's CI pipeline
 
@@ -65,7 +81,7 @@ sigridci:
     expire_in: 1 week
     when: always
   rules:
-    - if: $CI_MERGE_REQUEST_ID
+    - if: $CI_PIPELINE_SOURCE == "merge_request_event"
     
 sigridpublish:
   stage: report
@@ -110,8 +126,8 @@ sigridci:
       junit: "sigrid-ci-output/sigridci-junit-format-report.xml"
     expire_in: 1 week
     when: always
-  except:
-    - master
+  rules:
+    - if: $CI_PIPELINE_SOURCE == "merge_request_event"
     
 sigridpublish:
   stage: report
@@ -124,8 +140,8 @@ sigridpublish:
       - "sigrid-ci-output/*"
     expire_in: 1 week
     when: always
-  only:
-    - master
+  rules:
+    - if: $CI_COMMIT_BRANCH == $CI_DEFAULT_BRANCH
 ```
 
 **Security note:** This example downloads the Sigrid CI client scripts directly from GitHub. That might be acceptable for some projects, and is in fact increasingly common. However, some projects might not allow this as part of their security policy. In those cases, you can simply download the `sigridci` directory in this repository, and make it available to your runners (either by placing the scripts in a known location, or packaging them into a Docker container). 
@@ -140,23 +156,17 @@ Once you have configured the integration, Sigrid CI will show up as a new step i
 
 <img src="../images/ci-pipeline.png" width="300" />
 
-Sigrid CI provides multiple levels of feedback. The first and fastest type of feedback is directly produced in the CI output, as shown in the following screenshot:
+If you've followed these instructions, you will receive feedback from Sigrid on your merge request:
 
-<img src="../images/feedback-ci-environment.png" width="600" />
+<img src="../images/gitlab-merge-request-feedback.png" width="750" />
 
-The output consists of the following:
+The feedback consists of the following:
 
 - A list of refactoring candidates that were introduced in your merge request. This allows you to understand what quality issues you caused, which in turn allows you to fix them quickly. Note that quality is obviously important, but you are not expected to always fix every single issue. As long as you meet the target, it's fine.
 - An overview of all ratings, compared against the system as a whole. This allows you to check if your changes improved the system, or accidentally made things worse.
 - The final conclusion on whether your changes and merge request meet the quality target.
 
-The end of the textual output provides a link to the Sigrid landing page. You can open this URL in order to use Sigrid for interpreting your analysis results.
-
-<img src="../images/landing-page.png" width="700" />
-
-Whether you should use the text output or the Sigrid page is largely down to personal preference: the text output is faster to acces and more concise, while Sigrid allows you to view results in a more visual and interactive way. 
-
-Finally, Sigrid CI output is also included in GitLab's CI/CD pipeline page, which contains a *Tests* tab. The *View details* button will show the same list of refactoring candidates that is shown in the aforementioned textual output and HTML report.
+Sigrid CI output is *also* included in GitLab's CI/CD pipeline page, which contains a *Tests* tab. The *View details* button will show the same list of refactoring candidates that is shown in the aforementioned textual output and HTML report.
 
 ## Contact and support
 
