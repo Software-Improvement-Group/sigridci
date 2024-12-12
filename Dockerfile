@@ -4,6 +4,6 @@ RUN apk --no-cache -U upgrade && \
     apk --no-cache add git
 
 COPY sigridci /sigridci
-RUN git config --global --add safe.directory '*'
+RUN git config --system --add safe.directory '*'
 
 ENTRYPOINT ["/sigridci/sigridci.py"]
