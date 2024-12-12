@@ -16,8 +16,6 @@ import http.client
 import sys
 import time
 import urllib.error
-import urllib.parse
-import urllib.request
 
 from .upload_log import UploadLog
 

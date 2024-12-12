@@ -2,5 +2,6 @@
 # certain user environments, but it's fine if we use dependencies in tests.
 
 beautifulsoup4==4.12.2
+importchecker==3.0
 jsonschema==4.18.4
 pyyaml==6.0.1
