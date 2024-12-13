@@ -94,8 +94,9 @@ inputs:
 
 runs:
   using: "docker"
-  image: "Dockerfile"
+  image: "docker://software-improvement-group/sigridci:latest"
   args:
+    - "/sigridci/sigridci.py"
     - "--customer"
     - ${{ inputs.customer }}
     - "--system"
