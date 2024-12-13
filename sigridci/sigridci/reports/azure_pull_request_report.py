@@ -14,7 +14,6 @@
 
 import json
 import os
-import urllib.error
 import urllib.request
 
 from .report import Report, MarkdownRenderer

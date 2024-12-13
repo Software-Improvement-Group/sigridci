@@ -46,7 +46,7 @@ class Finding:
 class SigridApiClient:
 
     def __init__(self, customer: str, system: str, token: str):
-        self.sigrid_api = f'https://sigrid-says.com/rest/analysis-results/api/v1/security-findings/{customer}/{system}'
+        self.sigrid_api = f'https://sigrid-says.com/rest/analysis-results/api/v1/security-findings/{customer.lower()}/{system.lower()}'
         self.token = token
 
     def get_findings(self) -> Union[Any, None]:

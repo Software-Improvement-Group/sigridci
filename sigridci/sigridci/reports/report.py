@@ -14,7 +14,6 @@
 
 import urllib.parse
 from datetime import datetime
-from mailcap import getcaps
 
 from ..platform import Platform
 
