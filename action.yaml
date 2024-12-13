@@ -35,7 +35,7 @@ inputs:
   includehistory:
     description: "When enabled, includes the repository history in the upload (true/false). Required for architecture quality analysis."
     required: false
-    default: true
+    default: false
   showupload:
     description: "Outputs the list of files included in the upload to Sigrid, for troubleshooting (true/false)."
     required: false
@@ -94,9 +94,8 @@ inputs:
 
 runs:
   using: "docker"
-  image: "docker://softwareimprovementgroup/sigridci:latest"
+  image: "Dockerfile"
   args:
-    - "/sigridci/sigridci.py"
     - "--customer"
     - ${{ inputs.customer }}
     - "--system"
