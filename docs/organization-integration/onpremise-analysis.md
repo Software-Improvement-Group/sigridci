@@ -54,7 +54,6 @@ sigrid-publish:
     AWS_ACCESS_KEY_ID: "some-id"
     AWS_SECRET_ACCESS_KEY: "also-secret"
     AWS_REGION: "us-east-1"
-    TARGET_QUALITY: 3.5
     SIGRID_SOURCES_REGISTRATION_ID: "gitlab-onprem"
   script:
     - "run-analyzers --publish"
@@ -121,7 +120,6 @@ Notes:
 - `AWS_SECRET_ACCESS_KEY`: the key whose ID is `AWS_ACCESS_KEY_ID`.
 - `AWS_REGION`: the region in which the bucket with name `S3_BUCKET` is located. For MinIO, this 
   is `us-east-1` unless a different region is configured in MinIO.
-- `TARGET_QUALITY`: overall maintainability rating targeted.
 - `SIGRID_SOURCES_REGISTRATION_ID`: the ID of the OAuth client registration provided in `values.yaml` of Sigrid's Helm chart.
 
 ## Manually publishing a system to Sigrid
