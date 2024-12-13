@@ -324,9 +324,100 @@ auth-api:
 
 ## (F) Access to an S3-compatible object store
 
-Access to an S3-compatible object store is mandatory for Sigrid, but only for the pipeline jobs 
-that analyze systems and upload results to Sigrid. Hence, no S3 configuration is needed in the 
-Helm chart.
+Sigrid uses an S3-compatible object store to transfer analysis results from CI/CD jobs to Sigrid.
+Hence, access to an S3-compabible object store is mandatory. This might be Amazon's S3, or a 
+compatible store such as [MinIO](https://min.io). Providing (access to) an object store is the 
+responsibility of the on-premise customer; no object store is provided by the Helm chart.
+
+In the Helm chart, two things need to be configured:
+- (E.1) A secret to allow access to the object store.
+- (E.2) Configuration for the Kubernetes jobs that import analysis results.
+
+### (E.1) Secret to allow access to the object store
+
+A secret for accessing the object store can be configured in the usual way:
+
+```yaml
+inbound-api:
+  config:
+    importJob:
+      objectStoreSecret:
+        create: true
+        data:
+          # Default region for MinIO:
+          AWS_REGION: "eu-east-1"
+          AWS_ACCESS_KEY_ID: ""
+          AWS_SECRET_ACCESS_KEY: ""
+          AWS_SESSION_TOKEN: ""
+```
+
+As usual, the Helm chart creates the secret if you set `inbound-api.config.importJob.
+objectStoreSecret.create` to true. Alternatively, you can provide the secret yourself, in which 
+case the configuration is like so:
+
+```yaml
+inbound-api:
+  config:
+    importJob:
+      objectStoreSecret:
+        create: false
+        secretName: "example name"
+```
+
+Note that this secret is not mandatory. In case Kubernetes already has access to the object 
+store (for instance, because the service account used has access), no secret is needed at all.
+
+### (E.2) Configuration for the Kubernetes jobs that import analysis results.
+
+Sigrid creates [Kubernetes jobs](https://kubernetes.io/docs/concepts/workloads/controllers/job/) 
+that import analysis results. These jobs read analysis results from the object store and store them 
+in Sigrid's database. Several configuration parameters need to be provided. These jobs are 
+created dynamically at runtime, by Sigrid itself (not by the Helm chart), whenever it receives a 
+trigger from a CI/CD pipeline.
+
+These jobs are created from a template that is configurable in the Helm chart, using the 
+following configuration:
+
+```yaml
+inbound-api:
+  config:
+    importJob:
+      serviceAccount:
+        # -- Specifies whether a service account for import jobs should be created
+        create: true
+        # -- Annotations to add to the service account
+        annotations: {}
+        # -- The name of the service account to use.
+        # If not set and create is true, a name is generated using the fullname template
+        name: ""
+      namespace: ""
+      jobAnnotations: {}
+      podAnnotations: {}
+      retries: 3
+      autoRemoveEnabled: true
+      autoRemoveInterval: "60s"
+      maxDuration: "3h"
+      postgresSecret:
+        create: true
+        data:
+          url: ""
+          username: ""
+          password: ""
+```
+
+With this configuration, whenever triggered, Sigrid tries 3 times to create a and successfully 
+run an import job. Successful runs are automatically removed from the cluster 
+(`autoRemoveEnabled: true`) after 60 seconds (`autoRemoveInterval: "60s"`). A job can run for at 
+most 3 hours (`maxDuration: "3h"`). If needed, you can set annotations on the job resource, the 
+pod resource for this job, or both. Finally, the Helm chart can create a service account 
+(`serviceAccount.create: true`), or use an existing one (`serviceAccount.create: false`), in 
+which case the name needs to be provided (`serviceAccount.name: "some name"`).
+
+Last but not least, the import jobs need access to database `sigriddb`, with user `import_user`. 
+The secret to hold credentials can either be created by the Helm chart (`postgresSecret.create: 
+true`) or be provided externally (`postgresSecret.create: false` and `postgresSecret.secretName: 
+"some name"`). Either way, it needs to be an opaque secret with entries `url`, `username`, and 
+`password`.
 
 ## (G) Optional: connection to source code repositories
 
