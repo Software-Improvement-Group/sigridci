@@ -47,7 +47,6 @@ sigrid-publish:
     AWS_ACCESS_KEY_ID: some-id
     AWS_SECRET_ACCESS_KEY: also-secret
     AWS_REGION: us-east-1
-    TARGET_QUALITY: 3.5
     SIGRID_SOURCES_REGISTRATION_ID: gitlab-onprem
   script:
     - ./all-the-things.sh --publish
@@ -96,7 +95,6 @@ required. We distinguish two types of environment variables:
 | AWS_ACCESS_KEY_ID              | Yes     |           |
 | AWS_SECRET_ACCESS_KEY          | Yes     |           |
 | AWS_REGION                     | Yes     | us-east-1 |
-| TARGET_QUALITY                 | No      | 3.5       |
 | SIGRID_SOURCES_REGISTRATION_ID | Yes     |           |
 
 Notes:
@@ -119,7 +117,6 @@ Notes:
 - `AWS_SECRET_ACCESS_KEY`: the key whose ID is `AWS_ACCESS_KEY_ID`.
 - `AWS_REGION`: the region in which the bucket with name `S3_BUCKET` is located. For MinIO, this 
   is `us-east-1` unless a different region is configured in MinIO.
-- `TARGET_QUALITY`: overall maintainability rating targeted.
 - `SIGRID_SOURCES_REGISTRATION_ID`: the ID of the OAuth client registration provided in `values.yaml` of Sigrid's Helm chart.
 
 ## Manually publishing a system to Sigrid
