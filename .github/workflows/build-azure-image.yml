@@ -1,10 +1,10 @@
-name: build-hub-image
+name: build-azure-image
 
 on:
   push:
 
 jobs:
-  docker-hub:
+  docker-azure:
     runs-on: ubuntu-latest
     steps:
       -
@@ -16,6 +16,6 @@ jobs:
         uses: docker/build-push-action@v6
         with:
           context: .
-          file: Dockerfile.hub
+          file: Dockerfile.Azure
           push: false
 
