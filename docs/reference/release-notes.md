@@ -5,13 +5,13 @@ SIG uses [continuous delivery](https://en.wikipedia.org/wiki/Continuous_delivery
 
 ### December 16, 2024
 
-- **Delta Quality:** The details list for new/changed/deleted code now includes a volume indicator. This allows you to identofy which files were changed the most during that time period.
+- **Delta Quality:** The details list for new/changed/deleted code now includes a volume indicator. This allows you to identify which files were changed the most during that time period.
 - **System maintainability dashboard**: The risk profile charts now have a legend that explains what the red/orange/yellow/green risk categories mean, making both the charts and the dashboard in general easier to interpret.
 - **System maintainability dashboard**: The "churn" (new/changed/deleted code) is now consistent between the maintainability dashboard and the Delta Quality page. Previously, these two pages used slightly different definitions of new code, which was inconsistent and confusing.
 - **Refactoring candidates:** Duplication refactoring candidates now show both the total amount of *duplicated* code, and the amount of *redundant code*. The latter indicates the number of copies, i.e. is the duplicated across 2 files or across 100 files. This information can assist in prioritization when deciding which of these issues to fix first.
-- **Refactoring candidates:**Duplication refactoring candidates now include a component filterm allowing you to focus on duplicates in specific components.
+- **Refactoring candidates:**Duplication refactoring candidates now include a component filter, allowing you to focus on duplicates in specific components.
 - **Technology support:** A beta version of the new Mendix microflow/nanoflow is now available. Sigrid will now visualize microflows/nanoflows in a more graphical way, which is more familiar to Mendix developers. The [Code Explorer documentation](../capabilities/system-code-explorer.md#navigating-low-code-technologies) contains screenshots and more information. Contact SIG if you want to be involved in beta-testing this new analysis before it becomes generally available.
-- **Technology support:** Added support for the [Svelte framework](https://svelte.dev). See the [technology support documentation](technology-support.md#technology-conversion-configuration) for instructions on how you can publush your Svelte project to Sigrid.
+- **Technology support:** Added support for the [Svelte framework](https://svelte.dev). See the [technology support documentation](technology-support.md#technology-conversion-configuration) for instructions on how you can publish your Svelte project to Sigrid.
 
 ### December 2, 2024
 
