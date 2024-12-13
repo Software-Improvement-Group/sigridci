@@ -11,15 +11,15 @@ LABEL org.opencontainers.image.source="https://github.com/Software-Improvement-G
 LABEL org.opencontainers.image.documentation="https://github.com/Software-Improvement-Group/sigridci/tree/main/docs"
 LABEL org.opencontainers.image.revision="${REVISION}"
 
-RUN set -eux; \
-	apt-get update; \
-	apt-get upgrade -y; \
-	apt-get install -y --no-install-recommends git; \
-	rm -rf /var/lib/apt/lists/*
+RUN set -eux && \
+	apt-get update && \
+	apt-get upgrade -y && \
+	apt-get install -y --no-install-recommends git && \
+	rm -rf /var/lib/apt/lists/* && \
+	git config --system --add safe.directory '*'
 
 COPY --link sigridci /sigridci
 
 ENV PATH /sigridci:$PATH
-RUN git config --system --add safe.directory '*'
 
 CMD [ "/sigridci/sigridci.py" ]
