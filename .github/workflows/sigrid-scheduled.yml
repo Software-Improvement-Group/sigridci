@@ -10,7 +10,7 @@ jobs:
         with:
           fetch-depth: 0
       - name: Sigrid CI
-        uses: Software-Improvement-Group/sigridci@main
+        uses: "docker://softwareimprovementgroup/sigrid-ci:latest"
         with:
           customer: sig
           system: sigridci-client
