@@ -152,6 +152,7 @@ This page provides an overview of all technologies that can be analyzed by Sigri
 | `matlab`                   | Matlab                                   | Maintainability, Architecture               |
 | `mediationflows`           | Mediation Flows                          | Maintainability, Architecture               |
 | `mendix`                   | Mendix                                   | Maintainability, Architecture, Security     | [(9)](#notes)     |
+| `mendixflow`               | Mendix microflows/nanoflows *(Beta)*     | Maintainability, Architecture, Security     | [(11)](#notes)    |
 | `messagebuilder`           | MessageBuilder                           | Maintainability, Architecture               |
 | `mpsbehavior`              | MPS Behavior                             | Maintainability                             | [(8)](#notes)     |
 | `mpsclass`                 | MPS Class                                | Maintainability                             | [(8)](#notes)     |
@@ -336,6 +337,7 @@ This page provides an overview of all technologies that can be analyzed by Sigri
 8. You can use Sigrid CI for this technology, but you will need to use a special option. See instructions on how to [technology conversion configuration](#technology-conversion-configuration) below.
 9. Sigrid CI is not supported for this technology. You can still use Sigrid, but you will need to use one of the [alternative upload channels](../organization-integration/upload-instructions.md).
 10. `typescript` should also be used with React and/or JSX files with Typescript that use the `.ts` or `.tsx` file extensions.
+11. Technology support is currently in beta, and not yet generally available. Contact SIG if you want to participate in this beta program.
 
 ## Technology conversion configuration
 
@@ -380,6 +382,7 @@ This configuration can be managed using the `--convert` [option in Sigrid CI](cl
 | SAS Flows           | `Sasflows`                                                              |
 | ServiceNow          | `ServiceNow`                                                            |
 | Siebel              | `SiebelProject` or `SiebelRepository` (contact SIG support for details) |
+| Svelte              | `Svelte`                                                                |
 | Uniface             | `Ssduniface` or `Unifacexml` (contact SIG support for details)          |
 | Tandem              | `Tandem`                                                                |
 | TRS                 | `Trs`                                                                   |

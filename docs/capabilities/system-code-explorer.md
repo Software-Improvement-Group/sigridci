@@ -38,7 +38,11 @@ Clicking on one of the finding characteristics again (e.g. *Duplication*) will b
 
 If desired, you can fold code blocks - based on curly brackets *{* and *}* - by clicking the downwards pointing triangle.
 
-<img src="../images/system-code-explorer-file-focus-line-fold-code.png" width="100" />
+### Navigating low-code technologies
+
+When your system is implemented using low-code technologies, the traditional concept of "source code" doesn't really apply. In those situations, Sigrid will show a process visualization that should look more familiar to developers working on the code. You can use the icons in the top-right to toggle between the visual representation and the text-based representation.
+
+<img src="../images/code-explorer-low-code.png" width="400" />
 
 ### Assisting in planning with issue tracker text 
 Findings that you wish to solve later on can be exported as text with static links for your issue tracker.
