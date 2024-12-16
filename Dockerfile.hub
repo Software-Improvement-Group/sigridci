@@ -13,13 +13,13 @@ LABEL org.opencontainers.image.revision="${REVISION}"
 
 RUN apk --no-cache -U upgrade && \
     apk --no-cache add git && \ 
-    adduser -S sigridci
+    adduser -S sigridci && \
+    git config --system --add safe.directory '*'
 
 COPY --link sigridci /sigridci
 
 ENV PATH /sigridci:$PATH
 
 USER sigridci
-RUN git config --system --add safe.directory '*'
 
 CMD [ "/sigridci/sigridci.py" ]
