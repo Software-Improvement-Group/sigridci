@@ -23,6 +23,10 @@ from sigridci.publish_options import PublishOptions, RunMode
 from sigridci.sigrid_api_client import SigridApiClient
 
 
+OBJECTIVE_SUCCESS_EXIT_CODE = 0
+OBJECTIVE_FAILED_EXIT_CODE = 115
+
+
 def parseFeedbackOptions(args):
     options = PublishOptions(
         partner=args.partner,
@@ -69,4 +73,4 @@ if __name__ == "__main__":
     feedbackProvider.loadLocalAnalysisResults(args.analysisresults)
     success = feedbackProvider.generateReports()
 
-    sys.exit(0 if success else 1)
+    sys.exit(OBJECTIVE_SUCCESS_EXIT_CODE if success else OBJECTIVE_FAILED_EXIT_CODE)
