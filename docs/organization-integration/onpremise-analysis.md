@@ -1,8 +1,6 @@
 # Sigrid on-premise: Analysis configuration
 
-This documentation is specific to the on-premise version of Sigrid. This does *not* apply to 
-the software-as-a-service version of Sigrid, which can be accessed via [sigrid-says.com](https://sigrid-says.com) and 
-is used by the vast majority of Sigrid users
+This documentation covers on-premise Sigrid. It is not applicable for cloud-based Sigrid.
 {: .attention }
 
 <sig-toc></sig-toc>
@@ -24,6 +22,7 @@ official Amazon S3 SDK, it supports all authentication methods that Amazon provi
 in a CI/CD environment, the AWS S3 SDK uses [environment variables](https://docs.aws.amazon.
 com/cli/latest/userguide/cli-configure-envvars.html) 
 to hold an access key. Consequently, typically the following environment variables need to be set:
+
 - `AWS_ACCESS_KEY_ID`
 - `AWS_SECRET_ACCESS_KEY`
 - `AWS_DEFAULT_REGION`

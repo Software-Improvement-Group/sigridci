@@ -1,6 +1,6 @@
 # Sigrid on-premise: Helm Chart configuration
 
-This documentation is specific to the on-premise version of Sigrid. This does *not* apply to the software-as-a-service version of Sigrid, which can be accessed via [sigrid-says.com](https://sigrid-says.com) and is used by the vast majority of Sigrid users
+This documentation covers on-premise Sigrid. It is not applicable for cloud-based Sigrid.
 {: .attention }
 
 This documentation describes how to configure on-premise Sigrid, so you can deploy it into a user-provided Kubernetes cluster 

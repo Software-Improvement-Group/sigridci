@@ -1,6 +1,9 @@
 Integrating Sigrid CI into your continuous integration pipeline
 ===============================================================
 
+This documentation covers cloud-based Sigrid. For on-premise Sigrid, refer to the section about [on-premise analysis configuration](../organization-integration/onpremise-analysis.md).
+{: .attention }
+
 This guide explains how to integrate Sigrid into your continuous integration pipeline. Make sure you have also read the [general Sigrid CI documentation](../README.md) before starting this guide. This document describes a generic integration, but the aforementioned page also contains some specific instructions for integrating Sigrid CI with commonly used development platforms.
 
 ## Prerequisites

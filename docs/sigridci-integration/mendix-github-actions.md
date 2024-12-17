@@ -3,6 +3,9 @@ Integrating Sigrid CI with Mendix QSM on a GitHub server
 
 Please note: `QSM` is the brand name used by Mendix, in this manual we will use `Sigrid`.
 
+This documentation covers cloud-based Sigrid. For on-premise Sigrid, refer to the section about [on-premise analysis configuration](../organization-integration/onpremise-analysis.md).
+{: .attention }
+
 ## Prerequisites
 
 - You are not using the default Mendix teamserver, but you are using your own Git server for version control of your projects.
