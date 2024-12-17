@@ -1,6 +1,9 @@
 Integrating Sigrid CI into your Jenkins pipeline
 ================================================
 
+This documentation covers cloud-based Sigrid. On-premise Sigrid does not support Jenkins, supported platforms are listed in the section about [on-premise analysis configuration](../organization-integration/onpremise-analysis.md).
+{: .attention }
+
 ## Prerequisites
 
 - You have a [Sigrid](https://sigrid-says.com) user account. 

@@ -1,6 +1,9 @@
 Integrating Sigrid CI with GitLab
 =================================
 
+This documentation covers cloud-based Sigrid. For on-premise Sigrid, refer to the section about [on-premise analysis configuration](../organization-integration/onpremise-analysis.md).
+{: .attention }
+
 ## Prerequisites
 
 - You have a [Sigrid](https://sigrid-says.com) user account. 

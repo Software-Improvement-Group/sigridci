@@ -2,6 +2,9 @@
 
 There are multiple ways to upload your source code. The best and recommended way is to integrate Sigrid into your development environment using Sigrid CI. However, SIG also supports alternative upload channels for situations where Sigrid CI cannot be used.
 
+This documentation covers cloud-based Sigrid. On-premise Sigrid requires integration with your development platform, which is explained in the section about [on-premise analysis configuration](../organization-integration/onpremise-analysis.md).
+{: .attention }
+
 <sig-toc></sig-toc>
 
 ## Sigrid CI: Pipeline integration

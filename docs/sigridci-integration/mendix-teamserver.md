@@ -1,5 +1,8 @@
 # QSM for Mendix customers using the Teamserver
 
+This documentation covers cloud-based Sigrid. For on-premise Sigrid, refer to the section about [on-premise analysis configuration](../organization-integration/onpremise-analysis.md).
+{: .attention }
+
 This document describes onboarding of Mendix apps to Sigrid for customers that are using the central Mendix Teamserver.
 
 please note: When the customer is not using the teamserver but they are in a "Bring Your Own Git" scenario then the below does not apply. Then please refer to [Mendix for GitHub](mendix-github-actions.md) or [Mendix for Gitlab](mendix-gitlab.md)

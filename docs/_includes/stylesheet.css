@@ -87,6 +87,7 @@ aside, .attention {
     margin-top: 30px;
     margin-bottom: 30px;
     display: block;
+    box-shadow: 1px 1px 3px #687483;
 }
 
 aside::before, .attention::before {
@@ -106,6 +107,7 @@ aside::before, .attention::before {
     margin-top: 30px;
     margin-bottom: 30px;
     display: block;
+    box-shadow: 1px 1px 3px #687483;
 }
 
 .faq::before {
@@ -125,6 +127,7 @@ aside::before, .attention::before {
     margin-top: 30px;
     margin-bottom: 30px;
     display: block;
+    box-shadow: 1px 1px 3px #687483;
 }
 
 .warning::before {
@@ -318,7 +321,7 @@ td, th {
 
 sig-toc {
     display: block;
-    width: 800px;
+    width: 600px;
     box-shadow: 1px 1px 3px #687483;
     background-color: #eceef1;
     padding: 16px;
