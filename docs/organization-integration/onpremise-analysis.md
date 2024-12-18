@@ -7,6 +7,8 @@ This documentation covers on-premise Sigrid. It is not applicable for cloud-base
 
 ## Prerequisites
 
+Your development platform will need access to the [Sigrid on-premise Docker containers](onpremise-integration.md#obtaining-sigrid-on-premise).
+
 Each system to be analyzed needs an analysis configuration in the form of a file called `sigrid.
 yaml` in the root directory of the system. Typically, this configuration is maintained by the 
 developers responsible for the system and consequently is not discussed here. Developers are 
@@ -138,7 +140,7 @@ The following example shows how to start an ad-hoc analysis for a system located
       -ti softwareimprovementgroup/sigrid-multi-analyzer:1.0.20241206 \
       --publish
       
-This requires you to have access to the [Sigrid on-premise Docker containers](https://docs.sigrid-says.com/organization-integration/onpremise-integration.html#obtaining-sigrid-on-premise).
+This requires you to have access to the [Sigrid on-premise Docker containers](onpremise-integration.md#obtaining-sigrid-on-premise).
       
 The version tag (`1.0.20241206`) should match your version of Sigrid on-premise. 
 
