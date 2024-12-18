@@ -138,6 +138,8 @@ The following example shows how to start an ad-hoc analysis for a system located
       -ti softwareimprovementgroup/sigrid-multi-analyzer:1.0.20241206 \
       --publish
       
+This requires you to have access to the [Sigrid on-premise Docker containers](https://docs.sigrid-says.com/organization-integration/onpremise-integration.html#obtaining-sigrid-on-premise).
+      
 The version tag (`1.0.20241206`) should match your version of Sigrid on-premise. 
 
 ## Contact and support
