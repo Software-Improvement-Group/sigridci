@@ -20,7 +20,7 @@ On-boarding is done automatically when you first run Sigrid CI. As long as you h
 Sigrid CI reads your Sigrid account credentials from an environment variable called `SIGRID_CI_TOKEN`. You can make this environment variable available to GitHub Actions by creating "secrets" in your GitHub repository:
 
 - Open your project settings in GitHub
-- Select "Secrets" in the menu on the left
+- Select "Secrets and variables" in the menu on the left
 - Select "Actions" in the sub-menu that appears below "Secrets"
 - Use the "New repository secret" button
 - Create a secret named `SIGRID_CI_TOKEN` and use your [Sigrid authentication token](../organization-integration/authentication-tokens.md) as value
@@ -39,7 +39,7 @@ The organization-level secret.
 
 ### Step 2: Configure GitHub Actions
 
-Depending on your organization's GitHub permissions, you might need to allow GitHub Actions to post comments on your pull requests. Sigrid CI will use these comments to give you feedback directly in your pull request, so that you can read the feedback without the need for further clicks. This setting is located in your GitHub settings, under "Actions / General".
+Depending on your organization's GitHub permissions, you might need to allow GitHub Actions to post comments on your pull requests. Sigrid CI will use these comments to give you feedback directly in your pull request, so that you can read the feedback without the need for further clicks. This setting is located in your GitHub repository settings, under "Actions / General".
 
 <img src="../images/github-actions-permissions.png" width="600" />
 
