@@ -3,6 +3,11 @@ Sigrid release notes
 
 SIG uses [continuous delivery](https://en.wikipedia.org/wiki/Continuous_delivery), meaning that every change to Sigrid or the underlying analysis is released once our development pipeline has completed. On average, we release somewhere between 10 and 20 times per day. This page therefore doesn't list every single change, since that would quickly lead to an excessively long list of small changes. Instead, this page lists Sigrid and analysis changes that we consider noteworthy for the typical Sigrid user.
 
+### December 23, 2024
+
+- Happy holidays from everyone at SIG! If you check the user icon in Sigrid's menu bar, you might find something appropriate for the season.
+- **Sigrid CI:** You can now define [proxy settings for Sigrid CI](client-script-usage.md). 
+
 ### December 16, 2024
 
 - **Delta Quality:** The details list for new/changed/deleted code now includes a volume indicator. This allows you to identify which files were changed the most during that time period.
