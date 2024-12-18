@@ -136,7 +136,7 @@ rm -rf .git
 zip -r your-project.zip .
 ```
 
-The only thing you need to change in this example, is replace the URL of the repository with your own system's URL. 
+The only thing you need to change in this example, is to replace the URL of the repository with your own system's URL. 
 
 This will clone a Git repository, and then create a ZIP file containing both the source code and the change history. The latter is used for Sigrid's [architecture quality](../capabilities/architecture-quality.md) analysis. We create a log file containing this change history, and afterwards we deleted the `.git` directory to make the ZIP file smaller and faster to upload. 
 

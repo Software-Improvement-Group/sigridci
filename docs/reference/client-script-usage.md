@@ -47,8 +47,8 @@ Notes:
 6. Include can be used to narrow down the upload to specific folders and/or files. In addition, exclude can be used to exclude files and folders from the included folders.
 7. Folders should always be surrounded by '/' characters
 
-
 ## Using subsystems to combine repositories
+
 Refer to the [documentation on mapping repositories to systems](../organization-integration/systems.md) for more information on when to combine multiple repositories into a single system in Sigrid.
 
 The `--subsystem` option can be used to map multiple repositories to the same Sigrid system. The `--subsystem` parameter effectively moves the repository to a directory within the system that you defined as `--system`. An exception to the processing of `--subsystem` is when you add `--subsystem root`. This is reserved for files that you want to end up in the system's root directory. This is especially relevant when you are adding a `sigrid.yaml` file to a system that is combining repositories. Then you would use `--subsystem root` to make sure that the `sigrid.yaml` is published to the root of the system (thus, it is not interpreted as a subsystem called `root`, in which case it would have ended up as a separate directory). `Sigrid.yaml` files that are published inside a `--subsystem`, such as `--subsystem frontend` will be ignored.
@@ -65,7 +65,6 @@ To reduce the likelihood of inconsistencies, keep in mind the following guidelin
 
 If susbsystems need to be removed from the system this can be done via the [Sigrid API](../integrations/sigrid-api-documentation.md#removing-subsystems)
 
-
 ## What is the difference between `--publish` and `--publishonly`?
 
 Sigrid CI can run in different "modes", depending on your [development process and workflow](../sigridci-integration/development-workflows.md). The following table shows what happens depending on the values of these options:
@@ -73,7 +72,7 @@ Sigrid CI can run in different "modes", depending on your [development process a
 |                                  | **Publish to Sigrid** | **Do not publish to Sigrid** |
 |----------------------------------|-----------------------|------------------------------|
 | **Feedback on new/changed code** | `--publish`           | (normal)                     |
-| **No feedback**                  | `--publishonly`       | (does not make sense)         |
+| **No feedback**                  | `--publishonly`       | (does not make sense)        |
 
 So when to use these options:
 
@@ -97,9 +96,15 @@ By default, Sigrid CI will use the maintainability target you have defined for y
 
 ### Option 2: Use a maintainability target in Sigrid CI that is different from the target in Sigrid
 
-Using the `--targetquality` parameter allows you to override the maintainability target defined in Sigrid. For example, `--targetquality 4.0` will require pull requests to be 4.0 stars even if the system-level maintainability target defined in Sigrid is 3.5 stars. You would normally use the same target in both, but in some situations, you might want to be more strict or more lenient for pull requests. 
+Using the `--targetquality` parameter allows you to override the maintainability target defined in Sigrid. For example, `--targetquality 4.0` will require pull requests to be 4.0 stars even if the system-level maintainability target defined in Sigrid is 3.5 stars. You would normally use the same target in both, but in some situations, you might want to be more strict or more lenient for pull requests.
 
-### Additional information on configuring Sigrid CI
+## Connecting to Sigrid using a proxy
+
+If your environment requires a proxy to connect to the internet, you can configure Sigrid CI to use this proxy.
+You define an environment variable `SIGRID_CI_PROXY_URL`, which will then be picked up by Sigrid CI. 
+The value of this environment variable should be the complete proxy URL, so including the protocol, and also including user information if required. 
+
+## Additional information on configuring Sigrid CI
 
 You can find more details on how to configure Sigrid CI [here](../sigridci-integration/github-actions.md).
 

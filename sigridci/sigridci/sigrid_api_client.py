@@ -39,6 +39,14 @@ class SigridApiClient:
 
         UploadLog.log(f"Using token ending in '****{self.token[-4:]}'")
 
+        if os.environ.get("SIGRID_CI_PROXY_URL"):
+            proxyHandler = urllib.request.ProxyHandler({
+                "http": os.environ["SIGRID_CI_PROXY_URL"],
+                "https": os.environ["SIGRID_CI_PROXY_URL"],
+            })
+            proxyOpener = urllib.request.build_opener(proxyHandler)
+            urllib.request.install_opener(proxyOpener)
+
     def callSigridAPI(self, path, body=None, contentType=None):
         delimiter = "" if path.startswith("/") else "/"
         url = f"{self.baseURL}/rest{delimiter}{path}"
