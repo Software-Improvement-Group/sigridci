@@ -136,7 +136,7 @@ The following example shows how to start an ad-hoc analysis for a system located
 
     docker run \
       --env-file sigrid-ci-config.txt \
-      -v /mysystem:/code \
+      -v /mysystem:/tmp/sources \
       -ti softwareimprovementgroup/sigrid-multi-analyzer:1.0.20241206 \
       --publish
       
