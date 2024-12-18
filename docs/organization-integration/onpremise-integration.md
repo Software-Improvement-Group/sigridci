@@ -49,7 +49,7 @@ The Docker containers that form Sigrid on-premise are distributed via [DockerHub
 
 <img src="../images/onpremise-dockerhub.png" width="500" /> 
 
-As explained above, Sigrid consists of several Docker containers. The container `sigrid-multi-analysis-import` will run directly in your development platform's continuous integration pipelines, all other containers are deployed to your Kubernetes cluster. These steps are explained in more detail in the following sections.
+As explained above, Sigrid consists of several Docker containers. The container `sigrid-multi-analyzer` runs directly in your development platform's continuous integration pipelines, all other containers are deployed to your Kubernetes cluster. These steps are explained in more detail in the following sections.
 
 ## Installing and configuring on-premise Sigrid
 

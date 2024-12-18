@@ -70,15 +70,17 @@ sigrid-api:
 
 Sigrid on-premise needs access to the following images published on [SIG's private Docker Hub]
 (https://hub.docker.com/u/softwareimprovementgroup):
-- `softwareimprovementgroup/sigrid-frontend`
-- `softwareimprovementgroup/auth-api`
-- `softwareimprovementgroup/auth-api-db-migration`
-- `softwareimprovementgroup/sigrid-api`
-- `softwareimprovementgroup/sigrid-api-db-migration`
-- `softwareimprovementgroup/quality-model-service`
-- `softwareimprovementgroup/survey-service`
-- `softwareimprovementgroup/sigrid-multi-analysis-import`
+
 - `softwareimprovementgroup/ai-explanation-service`
+- `softwareimprovementgroup/auth-api-db-migration`
+- `softwareimprovementgroup/auth-api`
+- `softwareimprovementgroup/quality-model-service`
+- `softwareimprovementgroup/sigrid-api-db-migration`
+- `softwareimprovementgroup/sigrid-api`
+- `softwareimprovementgroup/sigrid-frontend`
+- `softwareimprovementgroup/sigrid-multi-analyzer`
+- `softwareimprovementgroup/sigrid-multi-importer`
+- `softwareimprovementgroup/survey-service`
 
 For the avoidance of doubt: the AI Explanation Service (last image in the list) does NOT contact 
 any LLM by default. It just serves pre-computed explanations.
