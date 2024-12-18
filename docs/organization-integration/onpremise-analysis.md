@@ -135,8 +135,10 @@ The following example shows how to start an ad-hoc analysis for a system located
     docker run \
       --env-file sigrid-ci-config.txt \
       -v /mysystem:/code \
-      -ti softwareimprovementgroup/sigrid-multi-analysis:1.0.20241206 \
+      -ti softwareimprovementgroup/sigrid-multi-analyzer:1.0.20241206 \
       --publish
+      
+The version tag (`1.0.20241206`) should match your version of Sigrid on-premise. 
 
 ## Contact and support
 
