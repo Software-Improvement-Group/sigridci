@@ -6,7 +6,8 @@ SIG uses [continuous delivery](https://en.wikipedia.org/wiki/Continuous_delivery
 ### December 23, 2024
 
 - Happy holidays from everyone at SIG! If you check the user icon in Sigrid's menu bar, you might find something appropriate for the season.
-- **Sigrid CI:** You can now define [proxy settings for Sigrid CI](client-script-usage.md). 
+- **Sigrid CI:** You can now define [proxy settings for Sigrid CI](client-script-usage.md).
+- **Technology support:** Added support for the [Styled Components](https://styled-components.com) framework. 
 
 ### December 16, 2024
 
