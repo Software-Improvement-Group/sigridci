@@ -123,6 +123,62 @@ Notes:
   is `us-east-1` unless a different region is configured in MinIO.
 - `SIGRID_SOURCES_REGISTRATION_ID`: the ID of the OAuth client registration provided in `values.yaml` of Sigrid's Helm chart.
 
+## Getting import job status and logs
+
+When running an analysis in an on-premise deployment of Sigrid, from time to time it might be needed to inspect the status and/or logs of Kubernetes jobs started by Sigrid. There are three endpoints available for this purpose:
+
+- `GET https://sigrid.your-domain.com/rest/inboundresults/imports/{partner}/{customer}/{system}`: returns an array of import jobs for the given system.
+- `GET https://sigrid.your-domain.com/rest/inboundresults/imports/{partner}/{customer}/{system}/{job}`: returns the status of the given job ID.
+- `GET https://sigrid.your-domain.com/rest/inboundresults/imports/{partner}/{customer}/{system}/{job}/logs`: returns the job logs of the given job ID.
+
+These endpoints are part of [Sigrid's external API](../integrations/sigrid-api-documentation.md), and consequently are called in the same way, using an [authentication tokens](../organization-integration/authentication-tokens.md) as bearer token.  
+
+Assuming your token is stored in an environment variable called `SIGRID_CI_TOKEN`, the endpoint can be invoked using [`curl`](https://curl.se/) on Linux or MacOS like so:
+
+```shell
+curl -H "Authorization: Bearer $SIGRID_CI_TOKEN" https://sigrid-onprem.k8s.sig.eu/rest/inboundresults/imports/{partner}/{customer}/{system}
+```
+
+where `{partner}`, `{customer}` and `{system}` are placeholders.
+
+Or the equivalent for PowerShell:
+
+```powershell
+Invoke-RestMethod -Headers @{"Authorization" = "Bearer $Env:SIGRID_CI_TOKEN"} -Uri "https://sigrid-onprem.k8s.sig.eu/rest/inboundresults/imports/{partner}/{customer}/{system}" | Format-Table
+```
+
+The `GET /rest/inboundresults/imports/{partner}/{customer}/{system}` endpoint returns an array of job statuses for the given system: 
+
+<details markdown="1">
+  <summary>Example response</summary>
+
+```json
+[
+  {
+    "metadata": {
+      "name": "SOME-NAME",
+      "status": "Completed",
+      "creationTime": "2025-01-02T13:45:00Z",
+      "startTime": "2025-01-02T13:47:00Z"
+    },
+    "completed": 1,
+    "running": 0,
+    "ready": 1,
+    "failed": 0,
+    "conditions": [
+      { ... }
+    ],
+    "pods": [
+      { ... }
+    ]
+  }
+]
+```
+
+The `name` property of the `metadata` object is the name of the job that can be used to retrieve job logs with the `GET /rest/inboundresults/imports/{partner}/{customer}/{system}/{job}/logs` endpoint. The endpoints discussed in this section are thin wrappers around the [equivalent endpoints of the Kubernetes API](https://kubernetes.io/docs/reference/kubernetes-api/workload-resources/job-v1/#JobStatus), see the Kubernetes documentation for a detailed discussion of the response properties. 
+
+</details>
+
 ## Manually publishing a system to Sigrid
 
 It is also possible to *manually* start an analysis, and then publish the analysis results to Sigrid. You can use this option when your system doesn't have a pipeline, or when you need to import a system in Sigrid ad-hoc.
