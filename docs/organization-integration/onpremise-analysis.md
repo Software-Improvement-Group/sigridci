@@ -136,7 +136,7 @@ These endpoints are part of [Sigrid's external API](../integrations/sigrid-api-d
 Assuming your token is stored in an environment variable called `SIGRID_CI_TOKEN`, the endpoint can be invoked using [`curl`](https://curl.se/) on Linux or MacOS like so:
 
 ```shell
-curl -H "Authorization: Bearer $SIGRID_CI_TOKEN" https://sigrid-onprem.k8s.sig.eu/rest/inboundresults/imports/{partner}/{customer}/{system}
+curl -H "Authorization: Bearer $SIGRID_CI_TOKEN" https://sigrid.your-domain.com/rest/inboundresults/imports/{partner}/{customer}/{system}
 ```
 
 where `{partner}`, `{customer}` and `{system}` are placeholders.
