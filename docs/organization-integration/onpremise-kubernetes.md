@@ -362,7 +362,7 @@ inbound-api:
         secretName: "example name"
 ```
 
-Note. that this secret is not mandatory. In case authentication is already provided through other means (e.g. 
+Note that this secret is not mandatory. In case authentication is already provided through other means (e.g. 
 Pod/Workload Identity, IAM roles for service accounts, etc.), no secret is needed at all.
 
 ### (E.2) Configuration for the Kubernetes analysis results import jobs.
@@ -427,7 +427,7 @@ Sigrid offers three ways to configure resource requests/limits:
 2. **System resources**: Resource requests/limits set only for jobs of a matching system.
 3. **Dynamic resources**: Resource requests/limits set through the API when triggering an analysis results import. 
 
-Method 1 and method 2 can be configured by admins using the chart:
+Method 1 and method 2 can be configured by admins using the Helm chart when installing or upgrading Sigrid:
 ```yaml
 inbound-api:
   config:
