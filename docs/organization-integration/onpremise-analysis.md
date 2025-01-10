@@ -129,7 +129,7 @@ When running an analysis in an on-premise deployment of Sigrid, from time to tim
 
 - `GET https://sigrid.your-domain.com/rest/inboundresults/imports/{partner}/{customer}/{system}`: returns an array of import jobs for the given system.
 - `GET https://sigrid.your-domain.com/rest/inboundresults/imports/{partner}/{customer}/{system}/{job}`: returns the status of the given job ID.
-- `GET https://sigrid.your-domain.com/rest/inboundresults/imports/{partner}/{customer}/{system}/{job}/logs`: returns the job logs of the given job ID.
+- `GET https://sigrid.your-domain.com/rest/inboundresults/imports/{partner}/{customer}/{system}/{job}/logs`: returns the job logs of the given job ID (with Content-Type `text/plain`).
 
 These endpoints are part of [Sigrid's external API](../integrations/sigrid-api-documentation.md), and consequently are called in the same way, using an [authentication tokens](../organization-integration/authentication-tokens.md) as bearer token.  
 
@@ -147,7 +147,7 @@ Or the equivalent for PowerShell:
 Invoke-RestMethod -Headers @{"Authorization" = "Bearer $Env:SIGRID_CI_TOKEN"} -Uri "https://sigrid-onprem.k8s.sig.eu/rest/inboundresults/imports/{partner}/{customer}/{system}" | Format-Table
 ```
 
-The `GET /rest/inboundresults/imports/{partner}/{customer}/{system}` endpoint returns an array of job statuses for the given system: 
+The `GET /rest/inboundresults/imports/{partner}/{customer}/{system}` endpoint returns an array of job statuses for the given system, as JSON: 
 
 <details markdown="1">
   <summary>Example response</summary>
@@ -167,19 +167,46 @@ The `GET /rest/inboundresults/imports/{partner}/{customer}/{system}` endpoint re
     "failed": 0,
     "conditions": [
       { ... }
-    ],
-    "pods": [
-      { ... }
     ]
   }
 ]
 ```
 
-</details>
-
-The `name` property of the `metadata` object is the name of the job that can be used to retrieve job logs with the `GET /rest/inboundresults/imports/{partner}/{customer}/{system}/{job}/logs` endpoint. The endpoints discussed in this section are thin wrappers around the [equivalent endpoints of the Kubernetes API](https://kubernetes.io/docs/reference/kubernetes-api/workload-resources/job-v1/#JobStatus), see the Kubernetes documentation for a detailed discussion of the response properties. 
+The `name` property of the `metadata` object is the name of the job that can be used to retrieve job details and logs with the `GET /rest/inboundresults/imports/{partner}/{customer}/{system}/{job}` endpoint and `GET /rest/inboundresults/imports/{partner}/{customer}/{system}/{job}/logs` endpoint. The endpoints discussed in this section are thin wrappers around the [equivalent endpoints of the Kubernetes API](https://kubernetes.io/docs/reference/kubernetes-api/workload-resources/job-v1/#JobStatus), see the Kubernetes documentation for a detailed discussion of the response properties. 
 
 </details>
+
+The `GET /rest/inboundresults/imports/{partner}/{customer}/{system}/{job}` endpoint returns a job status object for the given job name, as JSON: 
+
+<details markdown="1">
+  <summary>Example response</summary>
+
+```json
+
+{
+  "metadata": {
+    "name": "SOME-NAME",
+    "status": "Completed",
+    "creationTime": "2025-01-02T13:45:00Z",
+    "startTime": "2025-01-02T13:47:00Z"
+  },
+  "completed": 1,
+  "running": 0,
+  "ready": 1,
+  "failed": 0,
+  "conditions": [
+    { ... }
+  ],
+  "pods": [
+    { ... }
+  ]
+}
+```
+
+The endpoints discussed in this section are thin wrappers around the [equivalent endpoints of the Kubernetes API](https://kubernetes.io/docs/reference/kubernetes-api/workload-resources/job-v1/#JobStatus), see the Kubernetes documentation for a detailed discussion of the response properties. 
+
+</details>
+
 
 ## Manually publishing a system to Sigrid
 
