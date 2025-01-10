@@ -344,11 +344,9 @@ inbound-api:
       objectStoreSecret:
         create: true
         data:
-          # Default region for MinIO:
           AWS_REGION: "eu-east-1"
           AWS_ACCESS_KEY_ID: ""
           AWS_SECRET_ACCESS_KEY: ""
-          AWS_SESSION_TOKEN: ""
 ```
 
 As usual, the Helm chart creates the secret if you set `inbound-api.config.importJob.
@@ -364,10 +362,10 @@ inbound-api:
         secretName: "example name"
 ```
 
-Note that this secret is not mandatory. In case Kubernetes already has access to the object 
-store (for instance, because the service account used has access), no secret is needed at all.
+Note that this secret is not mandatory. In case authentication is already provided through other means (e.g. 
+Pod/Workload Identity, IAM roles for service accounts, etc.), no secret is needed at all.
 
-### (E.2) Configuration for the Kubernetes jobs that import analysis results.
+### (E.2) Configuration for the Kubernetes analysis results import jobs.
 
 Sigrid creates [Kubernetes jobs](https://kubernetes.io/docs/concepts/workloads/controllers/job/) 
 that import analysis results. These jobs read analysis results from the object store and store them 
@@ -390,7 +388,6 @@ inbound-api:
         # -- The name of the service account to use.
         # If not set and create is true, a name is generated using the fullname template
         name: ""
-      namespace: ""
       jobAnnotations: {}
       podAnnotations: {}
       retries: 3
@@ -418,6 +415,64 @@ The secret to hold credentials can either be created by the Helm chart (`postgre
 true`) or be provided externally (`postgresSecret.create: false` and `postgresSecret.secretName: 
 "some name"`). Either way, it needs to be an opaque secret with entries `url`, `username`, and 
 `password`.
+
+#### (E.2.1) Optional: Configuring resource allocation for analysis results import jobs
+
+The kubernetes jobs that Sigrid creates have no default resource (cpu/memory) requests/limits. To ensure the healthy 
+operating of import jobs we recommend to set default resource requests/limit and create overrides on a per-system basis
+as needed.
+
+Sigrid offers three ways to configure resource requests/limits:
+1. **Default resources**: Default resource requests/limits set on all jobs.
+2. **System resources**: Resource requests/limits set only for jobs of a matching system.
+3. **Dynamic resources**: Resource requests/limits set through the API when triggering an analysis results import. 
+
+Method 1 and method 2 can be configured by admins using the Helm chart when installing or upgrading Sigrid:
+```yaml
+inbound-api:
+  config:
+    importJob:
+      # -- Default resources allocated to import jobs
+      defaultResources:
+        requests:
+          cpu: 500m
+          memory: 5Gi
+        limits:
+          memory: 5Gi
+      # -- Per system overrides for resource allocation.
+      systemResources:
+        company-system: # Format {customer}-{system name}
+          requests:
+            cpu: 1000m
+            memory: 10Gi
+          limits:
+            memory: 10Gi
+        company-system-2:
+          requests:
+            cpu: 1000m
+            memory: 15Gi
+          limits:
+            memory: 15Gi
+```
+Sigrid performs a merge overwrite on resources which means that system specific resource requests/limits 
+are merged with the defaults and overwrite any already present cpu/memory requests/limits.
+
+Method 3 reduces the need for an admin to set system specific overwrites but must be explicitly enabled. To prevent
+runaway resource consumption a maximum amount of cpu/memory that is requested through the API can be configured.
+```yaml
+inbound-api:
+  config:
+    importJob:
+      # -- When set to true allows resource allocation overrides to be sent through the API. This feature allows users to
+      # dynamically specify resource allocation instead of needing admins to update systemResources/defaultResources.
+      allowResourceOverride: true
+      # -- Maximum resource quantities that are allowed to be set through the API.
+      maxResourceOverride:
+        cpu: 1000m
+        memory: 10Gi
+```
+In the above example no more than `1000m` cpu and `10Gi` memory may be dynamically allocated using the API. The values 
+are used for both cpu/memory requests and cpu/memory limits.
 
 ## (G) Optional: connection to source code repositories
 
