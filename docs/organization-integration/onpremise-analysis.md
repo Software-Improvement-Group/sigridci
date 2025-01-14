@@ -175,6 +175,7 @@ The `GET /rest/inboundresults/imports/{partner}/{customer}/{system}` endpoint re
     ]
   }
 ]
+```
 
 The `name` property of the `metadata` object is the name of the job that can be used to retrieve job details and logs with the `GET /rest/inboundresults/imports/{partner}/{customer}/{system}/{job}` endpoint and `GET /rest/inboundresults/imports/{partner}/{customer}/{system}/{job}/logs` endpoint. The endpoints discussed in this section are thin wrappers around the [equivalent endpoints of the Kubernetes API](https://kubernetes.io/docs/reference/kubernetes-api/workload-resources/job-v1/#JobStatus), see the Kubernetes documentation for a detailed discussion of the response properties. 
 
