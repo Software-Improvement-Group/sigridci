@@ -82,6 +82,11 @@ Since we know that spec.js files are meant to be test files, what you probably w
 
 As a convention, all `include` and `exclude` patterns always start with `.*/`. It is tempting to always define patterns relative to the root of the codebase, but it is important to realize that what is considered the "root" is flexible in Sigrid. Depending on how you [map your repositories to systems](../organization-integration/systems.md), the root of your repository might not match the root of the Sigrid system that contains your repository. Starting all patterns `.*/` will avoid confusion in such situations.
 
+### Files ending up in Remainder while YAML pattern seems correct? Please check for non-printing characters in the YAML file
+In some cases, non-printing characters (such as zero-width space characters) end up in YAML files after editing. They are troublesome because they are processed literally by Sigrid. Therefore, a pattern that you have defined might not match in Sigrid, while there does not seem to be a visible problem. This is because not all editors allow you to see non-printing characters, e.g. Gitlab does not (currently). 
+
+However, Sigrid's `Code explorer` [(see its help page)](../capabilities/system-code-explorer.md) will actually print this as a space character. Also, depending on the markup setting of your editor, a zero-width space character may be visible e.g. as `U+200B` or ​`<0x200b>`, depending on encoding settings. 
+
 ### Other common tips and caveats when using regular expressions to define patterns
 
 - The full file path must always be matched instead of (part of) a filename. This generally requires some wildcards.
