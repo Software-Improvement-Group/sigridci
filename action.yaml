@@ -114,6 +114,8 @@ runs:
     - ${{ inputs.include }}
     - "--subsystem"
     - ${{ inputs.subsystem }}
+    - "--convert"
+    - ${{ inputs.convert }}
   env:
     displayname: ${{ inputs.displayname }}
     divisionname: ${{ inputs.divisionname }}
