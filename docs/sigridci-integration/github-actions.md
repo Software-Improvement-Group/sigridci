@@ -37,26 +37,20 @@ This example explained how to add secrets for a single repository. However, if y
 
 The organization-level secret.
 
-### Step 2: Configure GitHub Actions
-
-Depending on your organization's GitHub permissions, you might need to allow GitHub Actions to post comments on your pull requests. Sigrid CI will use these comments to give you feedback directly in your pull request, so that you can read the feedback without the need for further clicks. This setting is located in your GitHub repository settings, under "Actions / General".
-
-<img src="../images/github-actions-permissions.png" width="600" />
-
-### Step 3: Create a GitHub Actions workflow for Sigrid CI
+### Step 2: Create a GitHub Actions workflow for Sigrid CI
 
 Sigrid CI consists of a number of Python-based client scripts, that interact with Sigrid in order to analyze your project's source code and provide feedback based on the results. These client scripts need to be available to the CI environment, in order to call the scripts *from* the CI pipeline. You can configure your GitHub Actions to both download the Sigrid CI client scripts and then run Sigrid CI. 
 
 We will create two GitHub Action workflows: the first will publish the main/master branch to [sigrid-says.com](https://sigrid-says.com) after every commit. 
 
-#### Alternative 3a: Download Sigrid CI client script
+#### Alternative 2a: Download Sigrid CI client script
 
 The simplest way to run Sigrid CI is to download client script directly from GitHub. If a direct GitHub connection is not possible, for example for security reasons, you can also download the `sigridci` directory in this repository and make it available to your runners (either by placing the scripts in a known location, or packaging them into a Docker container). 
 
 First, create `.github/workflows/sigrid-publish.yml` to publish snapshots of your project to Sigrid after every commit to the main/master branch:
 
 {% raw %}
-```
+```yaml
 name: sigrid-publish
 on:
   push:
@@ -83,7 +77,7 @@ jobs:
 Next, create `.github/workflows/sigrid-pullrequest.yml` to receive feedback on your pull requests:
 
 {% raw %}
-```
+```yaml
 name: sigrid-pullrequest
 on: [pull_request]
 
@@ -117,14 +111,14 @@ jobs:
 ```
 {% endraw %}
 
-#### Alternative 3b: GitHub Marketplace
+#### Alternative 2b: GitHub Marketplace
 
 It is also possible to run Sigrid CI using the [GitHub Marketplace action](https://github.com/marketplace/actions/sigrid-ci) published by SIG.
 
 To use the Marketplace action, create a file `.github/workflows/sigrid-publish.yml` in your repository and give it the following contents:
 
 {% raw %}
-```
+```yaml
 name: Publish to Sigrid
 on:
   push:
@@ -155,13 +149,15 @@ Note the name of the branch, which is `main` in the example but might be differe
 Next, we create a separate workflow for the pull request integration. This will compare the contents of the pull request against the main/master branch from the previous step. In your GitHub repository, create a file `.github/workflows/sigrid-pullrequest.yml` and give it the following contents:
 
 {% raw %}
-```
+```yaml
 name: Sigrid pull request feedback
 on: [pull_request]
 
 jobs:
   sigridci:
     runs-on: ubuntu-latest
+    permissions:
+      pull-requests: write
     steps:
       - name: Check out repository
         uses: actions/checkout@v4
@@ -191,7 +187,7 @@ SIGRID_CI_TOKEN: "${{ secrets.SIGRID_CI_ORG_TOKEN }}"
 ```
 {% endraw %}
 
-### Step 4: Analysis configuration
+### Step 3: Analysis configuration
 
 The relevant command that starts Sigrid CI is the call to the `sigridci.py` script, which starts the Sigrid CI analysis. The scripts supports a number of arguments that you can use to configure your Sigrid CI run. The scripts and its command line interface are explained in [using the Sigrid CI client script](../reference/client-script-usage.md).
 
