@@ -3,6 +3,17 @@ Sigrid release notes
 
 SIG uses [continuous delivery](https://en.wikipedia.org/wiki/Continuous_delivery), meaning that every change to Sigrid or the underlying analysis is released once our development pipeline has completed. On average, we release somewhere between 10 and 20 times per day. This page therefore doesn't list every single change, since that would quickly lead to an excessively long list of small changes. Instead, this page lists Sigrid and analysis changes that we consider noteworthy for the typical Sigrid user.
 
+### January 13, 2025
+
+- **Maintainability - System Overview:** We have updated the churn metrics in the system overview to reflect the number of files that have been added/changed/removed rather than raw Lines of Code to ensure consistency with the churn information shown in Delta Quality.
+- **Maintainability - System Overview:** The Risk Profile bar chart option now includes percentage counts for each risk category when hovering over a bar. These percentage counts are also included in the .CSV export when viewing Risk Profiles.
+- **Delta Quality - Files list:** It is now possible to filter the added/changed/removed files lists based on the utilized technology and/or system component that the file resides. This allows the file table for each context to be truncated for a specific scope to assist in analysis and triage of specific areas of the code base that have undergone churn.
+- **Delta Quality - Files List:** We have fixed an issue where sorting on column headers did not work properly for the Removed Code files table.
+- **Code Explorer:** Findings are now sortable via the column headers in the findings table. User can now sort by either descending/ascending values when clicking on a column header.
+- **Refactoring Candidates:** We have added a dedicated count for the number of occurrences a code clone is found across the system for all Duplication Refactoring Candidates. Occurence count can be found within the finding details for a specific refactoring candidate. This change also adds a new sortable column for Duplication Refactoring Candidates in Code Explorer.
+- **Objectives Overview:** Sigrid now provides better explanations for the various objective types and how they can relate to business goals.
+- **Objectives - Capability Pages:** Objective Overviews are now available on the portfolio overview for OSH and Security. These tables present a count of which systems within your portfolio have their capability specific objectives met / not met / not set, as well as the count of systems that have yet to be scanned and their objective status is unable to be determined.
+
 ### December 23, 2024
 
 - Happy holidays from everyone at SIG! If you check the user icon in Sigrid's menu bar, you might find something appropriate for the season.
