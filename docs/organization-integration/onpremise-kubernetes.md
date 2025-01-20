@@ -276,6 +276,22 @@ Notes:
    the name of that secret here using `secretName`.
 4. The client ID and secret provided by your IdP need to be pasted here.
 
+#### Step 3: Bootstrap a Sigrid Admin
+
+Sigrid limits which users have access to which systems. To be able to configure user permissions you will need a user 
+that has the admin role. You can configure the first admin user by configuring the Helm chart:
+```yaml
+global:
+  onPremise:
+    administrators: 
+      - "email@customer.com" 
+```
+Upon login the user with the matching email account will be granted the admin role. Once you have a user with the admin
+role you will be able to use the Sigrid-UI to give grant other accounts the admin permission as well.
+
+Please note that removing email addresses from this list does **NOT** remove the admin role. Use the standard user
+management functionality of Sigrid to add/remove admin accounts after the initial setting up of Sigrid.
+
 ## (E) Provide an RSA keypair for signing of unattended workflow tokens.
 
 Sigrid provides a [public API](../integrations/sigrid-api-documentation.md) that allows access 
