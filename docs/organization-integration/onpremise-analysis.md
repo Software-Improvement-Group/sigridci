@@ -270,6 +270,21 @@ This requires you to have access to the [Sigrid on-premise Docker containers](on
       
 The version tag (`1.0.20250123`) should match your version of Sigrid on-premise. 
 
+### Optional: connection to source code repositories
+To set up the Helm charts, please follow the instructions provided [here](https://docs.sigrid-says.com/organization-integration/onpremise-kubernetes.html#g-optional-connection-to-source-code-repositories).
+
+For manual system publishing, you need to supply additional environment variables beyond those mentioned [here](https://docs.sigrid-says.com/organization-integration/onpremise-analysis.html#sigrid-ci-environment-variables).
+
+Please provide the following environment variables:
+
+- **`SOURCES_API_BASE_URL`** (required): The entry point for the API of the source code repository.  
+  Example: `https://gitlab.example.com/api/v4/`
+  
+- **`SOURCES_PROJECT_SLUG`** (required): The project slug needed to create the endpoint URL that SigridAPI queries.  
+  Example: `https://gitlab.example.com/team/application`
+  
+- **`SOURCES_REF`** (optional): The branch name for the source view (defaults to 'main' if not provided).
+
 ## Contact and support
 
 Feel free to contact [SIG's support department](mailto:support@softwareimprovementgroup.com) for any questions or issues you may have after reading this document, or when using Sigrid or Sigrid CI. Users in Europe can also contact us by phone at +31 20 314 0953.
