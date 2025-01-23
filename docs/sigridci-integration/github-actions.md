@@ -84,6 +84,8 @@ on: [pull_request]
 jobs:
   sigridci:
     runs-on: ubuntu-latest
+    permissions:
+      pull-requests: write
     steps:
       - name: Check out repository
         uses: actions/checkout@v4
