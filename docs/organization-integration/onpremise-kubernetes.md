@@ -82,7 +82,7 @@ Sigrid on-premise needs access to the following images published on [SIG's priva
 - `softwareimprovementgroup/sigrid-multi-importer`
 - `softwareimprovementgroup/survey-service`
 
-In addition, if your deployment is completely air-gapped, please ensure these public images are also published to your internal Docker registry.
+In addition, if your deployment is completely air-gapped, please ensure these public images are also published to your internal container registry.
 - `nginxinc/nginx-unprivileged`
 - `redis:7.2.4-alpine`
 - `haproxy:2.9.4-alpine`
