@@ -279,12 +279,10 @@ Please provide the following environment variables:
 
 - **`SOURCES_API_BASE_URL`** (required):  
   Description: The entry point for the API of the source code repository.  
-  Example: `https://github.example.com/api/v3`
-  
+  Example: `https://github.example.com/api/v3` 
 - **`SOURCES_PROJECT_SLUG`** (required):  
   Description: The project slug identifies your project within your CI/CD environment. It typically appears in URLs displayed in your browser, representing the part that follows the server address.   
   Example: `Software-Improvement-Group/sigridci`
-  
 - **`SOURCES_REF`** (optional):  
   Description: The branch name for the source view (defaults to 'main' if not provided).  
   Example: `patch_20250123`
