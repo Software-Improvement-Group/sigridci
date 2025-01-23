@@ -271,9 +271,9 @@ This requires you to have access to the [Sigrid on-premise Docker containers](on
 The version tag (`1.0.20250123`) should match your version of Sigrid on-premise. 
 
 ### Optional: connection to source code repositories
-To set up the Helm charts, please follow the instructions provided [here](https://docs.sigrid-says.com/organization-integration/onpremise-kubernetes.html#g-optional-connection-to-source-code-repositories).
+To set up the Helm charts, please follow the instructions provided [here](onpremise-kubernetes.md#g-optional-connection-to-source-code-repositories).
 
-For manual system publishing, you need to supply additional environment variables beyond those mentioned [here](https://docs.sigrid-says.com/organization-integration/onpremise-analysis.html#sigrid-ci-environment-variables).
+For manual system publishing, you need to supply additional environment variables beyond those mentioned [here](onpremise-analysis.md#sigrid-ci-environment-variables).
 
 Please provide the following environment variables:
 
