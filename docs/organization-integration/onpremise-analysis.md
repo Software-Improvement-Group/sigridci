@@ -41,7 +41,7 @@ The following GitLab job illustrates how to run an analysis:
 sigrid-publish:
   image:
     # Pulls from the private part of SIG's registry at Docker Hub; you may need to log in first, or replace this with the image name as cached in your internal registry:
-    name: "softwareimprovementgroup/sigrid-multi-analyzer:1.0.20241206"
+    name: "softwareimprovementgroup/sigrid-multi-analyzer:1.0.20250123"
   variables:
     # These are all environment variables. For defaults, see the table below.
     # Note that typically, all environment variables marked as "shared" in the table
@@ -60,7 +60,7 @@ sigrid-publish:
     - "run-analyzers --publish"
 ```
 
-Note that the image name contains an explicit Docker image tag (`1.0.20241206` in this example). 
+Note that the image name contains an explicit Docker image tag (`1.0.20250123` in this example). 
 It is important that the tag matches the tags used in Sigrid's Helm chart: all components of 
 Sigrid must always use the same version. SIG recommends using an environment-wide variable 
 instead of hardcoding the tag.
@@ -263,12 +263,31 @@ The following example shows how to start an ad-hoc analysis for a system located
     docker run \
       --env-file sigrid-ci-config.txt \
       -v /mysystem:/tmp/sources \
-      -ti softwareimprovementgroup/sigrid-multi-analyzer:1.0.20241206 \
+      -ti softwareimprovementgroup/sigrid-multi-analyzer:1.0.20250123 \
       --publish
       
 This requires you to have access to the [Sigrid on-premise Docker containers](onpremise-integration.md#obtaining-sigrid-on-premise).
       
-The version tag (`1.0.20241206`) should match your version of Sigrid on-premise. 
+The version tag (`1.0.20250123`) should match your version of Sigrid on-premise. 
+
+### Optional: connection to source code repositories
+To set up the Helm charts, please follow the instructions provided [here](onpremise-kubernetes.md#g-optional-connection-to-source-code-repositories).
+
+For manual system publishing, you need to supply additional environment variables beyond those mentioned [here](onpremise-analysis.md#sigrid-ci-environment-variables).
+
+Please provide the following environment variables:
+
+- **`SOURCES_API_BASE_URL`** (required):  
+  Description: The entry point for the API of the source code repository.  
+  Example: `https://github.example.com/api/v3`
+  
+- **`SOURCES_PROJECT_SLUG`** (required):  
+  Description: The project slug identifies your project within your CI/CD environment. It typically appears in URLs displayed in your browser, representing the part that follows the server address.   
+  Example: `Software-Improvement-Group/sigridci`
+  
+- **`SOURCES_REF`** (optional):  
+  Description: The branch name for the source view (defaults to 'main' if not provided).  
+  Example: `patch_20250123`
 
 ## Contact and support
 
