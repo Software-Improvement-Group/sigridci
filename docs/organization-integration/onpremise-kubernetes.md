@@ -351,10 +351,10 @@ compatible store such as [MinIO](https://min.io). Providing (access to) an objec
 responsibility of the on-premise customer; no object store is provided by the Helm chart.
 
 In the Helm chart, two things need to be configured:
-- (E.1) A secret to allow access to the object store.
-- (E.2) Configuration for the Kubernetes jobs that import analysis results.
+- (F.1) A secret to allow access to the object store.
+- (F.2) Configuration for the Kubernetes jobs that import analysis results.
 
-### (E.1) Secret to allow access to the object store
+### (F.1) Secret to allow access to the object store
 
 A secret for accessing the object store can be configured in the usual way:
 
@@ -386,7 +386,7 @@ inbound-api:
 Note that this secret is not mandatory. In case authentication is already provided through other means (e.g. 
 Pod/Workload Identity, IAM roles for service accounts, etc.), no secret is needed at all.
 
-### (E.2) Configuration for the Kubernetes analysis results import jobs.
+### (F.2) Configuration for the Kubernetes analysis results import jobs.
 
 Sigrid creates [Kubernetes jobs](https://kubernetes.io/docs/concepts/workloads/controllers/job/) 
 that import analysis results. These jobs read analysis results from the object store and store them 
@@ -437,7 +437,7 @@ true`) or be provided externally (`postgresSecret.create: false` and `postgresSe
 "some name"`). Either way, it needs to be an opaque secret with entries `url`, `username`, and 
 `password`.
 
-#### (E.2.1) Optional: Configuring resource allocation for analysis results import jobs
+#### (F.2.1) Optional: Configuring resource allocation for analysis results import jobs
 
 The kubernetes jobs that Sigrid creates have no default resource (cpu/memory) requests/limits. To ensure the healthy 
 operating of import jobs we recommend to set default resource requests/limit and create overrides on a per-system basis
