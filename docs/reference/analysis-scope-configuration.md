@@ -52,7 +52,9 @@ Sigrid will exclude common patterns by default. For example, directories like `b
 
 It is possible to extend this list with project-specific files and directories that should also be excluded. The `exclude` section in the YAML file contains a list of regular expressions for paths to ignore. For example, `.*[.]out[.]js` will exclude all files with a name ending in `.out.js` from the analysis. Adding `.*/simulator/.*` will exclude everything in a path that contains the directory `/simulator/`.
 
-Note that it is not necessary to exclude files and directories that would not be analyzed anyway. 
+Note that it is not necessary to exclude files and directories that would not be analyzed anyway.
+
+Also note that you need to specify excludes for maintainability, components, languages, thirdpartyfindings and dependencychecker ***independently***. In other words: excludes for maintainability do not apply to other models.
 
 Patterns are defined using regular expressions, as explained in the next section.
 
