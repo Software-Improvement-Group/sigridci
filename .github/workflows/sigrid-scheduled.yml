@@ -1,5 +1,7 @@
 name: Sigrid CI scheduled
-on: [pull_request]
+on:
+    schedule:
+      - cron: '0 1 * * *'
 
 jobs:
   sigridci:
@@ -14,11 +16,6 @@ jobs:
         with:
           customer: sig
           system: sigridci-client
+          publishonly: true
         env:
           SIGRID_CI_TOKEN: "${{ secrets.SIGRID_CI_TOKEN }}"
-      - name: "Sigrid pull request feedback"
-        uses: mshick/add-pr-comment@v2
-        if: always()
-        with:
-          message-id: sigrid
-          message-path: sigrid-ci-output/feedback.md
