@@ -106,13 +106,13 @@ The 'App federation MetadataURL' of your authentication app.
 The information will include your app's identifier, redirectURL etc.
 
 ##### OpenID Connect Configuration
-The Application's `client_id`, `client_secret` and the `issuer`.
+The Application's `client_id`, `client_secret` and the `well-known URI`.
 How the issuer URL looks depends on your IdP.
 
-| IdP | Example issuer |
+| IdP | Example well-known URI |
 | ---------- | ---------- |
-| Azure/Entra ID | `https://login.microsoftonline.com/<tenant_id>/v2.0` |
-| Okta  | `https://<myOktaOrg>.okta.com` |
+| Azure/Entra ID | `https://login.microsoftonline.com/<tenant_id>/v2.0/.well-known/openid-configuration` |
+| Okta  | `https://<myOktaOrg>.okta.com.well-known/openid-configuration` |
 
 ### SAML Examples
 Please see the separate pages for SAML examples.
