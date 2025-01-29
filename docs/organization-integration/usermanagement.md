@@ -111,7 +111,7 @@ How the issuer URL looks depends on your IdP.
 
 | IdP | Issuer URL |
 | ---------- | ---------- |
-| Azure/Entra ID | `https://login.microsoftonline.com/<tenant_id>/oauth2/v2.0/authorize` |
+| Azure/Entra ID | `https://login.microsoftonline.com/<tenant_id>/v2.0` |
 | Okta  | `https://<myOktaOrg>.okta.com` |
 
 ### SAML Examples
