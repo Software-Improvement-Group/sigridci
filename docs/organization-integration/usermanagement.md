@@ -112,7 +112,7 @@ How the issuer URL looks depends on your IdP.
 | IdP | Example well-known URI |
 | ---------- | ---------- |
 | Azure/Entra ID | `https://login.microsoftonline.com/<tenant_id>/v2.0/.well-known/openid-configuration` |
-| Okta  | `https://<myOktaOrg>.okta.com.well-known/openid-configuration` |
+| Okta  | `https://<myOktaOrg>.okta.com/.well-known/openid-configuration` |
 
 ### SAML Examples
 Please see the separate pages for SAML examples.
