@@ -105,9 +105,14 @@ Please Provide SIG with the following.
 The 'App federation MetadataURL' of your authentication app.
 The information will include your app's identifier, redirectURL etc.
 
+| IdP | App federation MetadataURL |
+| ---------- | ---------- |
+| Azure/Entra ID | `https://login.microsoftonline.com/<tenant_id>/federationmetadata/2007-06/federationmetadata.xml` |
+| Okta  | `https://<myOktaOrg>.okta.com/app/<client_id>/sso/saml/metadata` |
+
 ##### OpenID Connect Configuration
 The Application's `client_id`, `client_secret` and the `well-known URI`.
-How the issuer URL looks depends on your IdP.
+The information in the well-known URI will include your app's issuer, authorization_endpoint etc.
 
 | IdP | Example well-known URI |
 | ---------- | ---------- |
