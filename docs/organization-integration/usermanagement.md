@@ -101,17 +101,17 @@ Assign groups of users to your Authentication app.
 ### Info to provide to SIG
 Please Provide SIG with the following.
 
-#### SAML Configuration
+##### SAML Configuration
 The 'App federation MetadataURL' of your authentication app.
 The information will include your app's identifier, redirectURL etc.
 
-#### OpenID Connect Configuration
+##### OpenID Connect Configuration
 The Application's `client_id`, `client_secret` and the `issuer`.
 How the issuer URL looks depends on your IdP.
 
-| IdP | Issuer URL |
+| IdP | Example issuer |
 | ---------- | ---------- |
-| Azure/Entra ID | `https://login.microsoftonline.com/<tenant_id>/oauth2/v2.0/authorize` |
+| Azure/Entra ID | `https://login.microsoftonline.com/<tenant_id>/v2.0` |
 | Okta  | `https://<myOktaOrg>.okta.com` |
 
 ### SAML Examples
