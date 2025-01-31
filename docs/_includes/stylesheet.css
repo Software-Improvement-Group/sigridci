@@ -62,7 +62,7 @@ ol li::before {
     color: #DFC101;
     padding-right: 16px;
     margin-left: -1em;
-    display: block;
+    position: absolute;
 }
 
 hr {
