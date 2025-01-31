@@ -13,7 +13,7 @@ Four stakeholder groups need to be involved in the development process to achiev
 - User representatives represent the user community, also referred to as ‘the business’. 
 - Management is accountable for making sure the software meets its business goal.  
 
-<img src="../images/manager-workflow-dashboard.png" width="800" align="left" />
+<img src="../images/manager-workflow-dashboard.png" width="800"/>
 
 Sigrid helps all stakeholders involved in the software development process to oversee, prioritize, and improve software portfolio in a cost-effective way. Managers can use functionalities related to setting and tracking objectives, monitoring software quality, managing technical debt, and ensuring alignment with business goals.  
 
