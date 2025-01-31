@@ -21,32 +21,29 @@ Sigrid helps all stakeholders involved in the software development process to ov
 
 The core of the managers’ workflow comes down to the following three steps: 
 
-<ol>
+1. **Assess the current Software Health**
 
-<li> Assess the current Software Health 
+   Utilize Sigrid's [portfolio-level overview](../capabilities/portfolio-overview.md) to assess your software's current health. The teams should examine key metrics such as maintainability, and security risks. Next step is to identify areas of concern that need immediate attention. 
 
-   Utilize Sigrid's [portfolio-level overview](../capabilities/portfolio-overview.md) to assess your software’s current health. The teams should examine key metrics such as maintainability, and security risks. Next step is to identify areas of concern that need immediate attention. 
+   Based on the insights gained, prioritize actions that need to be taken. Focus on high-urgency issues such as security vulnerabilities and technical debt and ensure that these actions are integrated into the team's backlog and aligned with sprint planning.
 
-   Based on the insights gained, prioritize actions that need to be taken. Focus on high-urgency issues such as security vulnerabilities and technical debt and ensure that these actions are integrated into the team's backlog and aligned with sprint planning. </li>
-
-<li> Set quality objectives and continuously measure them 
+2. **Set quality objectives and continuously measure them**
 
    Quality objective are non-functional goals that are linked to explicit quality targets. In the Sigrid platform those could be shared with all stakeholders via the [Portfolio Objectives page](../capabilities/portfolio-objectives.md). These objectives should be aligned with your business goals to ensure that technical efforts support overall business strategies (check the Objective eLearning in our Academy). The benchmark results can help you and your team to set realistic and achievable targets. This is better done when teams are involved in this process. 
 
    It is a good practice to regularly review trends in software quality over time using Sigrid's trend analysis features. Pay particular attention to areas showing signs of degradation or those that have not been updated for a while. Use these insights to anticipate potential issues before they become critical. This process can be guarded by the software governance framework.  
 
-   Engage with the development teams, and technical leads to foster communication between all involved stakeholders to ensure mutual understanding and collaboration. </li>
+   Engage with the development teams, and technical leads to foster communication between all involved stakeholders to ensure mutual understanding and collaboration.
 
-<li> 
-   
-   Facilitate an effective software governance framework ([See the Best Practices page on how to organize for quality software](../workflows/best-practices-organization.md)).
+3. **Facilitate an effective software governance framework**
+
+   [See the Best Practices page on how to organize for quality software](../workflows/best-practices-organization.md)
    
    Engage with Development Teams to foster communication between management and development teams to ensure mutual understanding and collaboration. Use Sigrid to provide constructive feedback during sprint reviews and planning sessions. Encourage teams to include quality objectives in their definition of done. 
 
    Track progress towards set objectives and adjust as needed based on changes in business priorities or Sofware conditions.  
 
-   Report and communicate insights regularly. The nature of reports on software quality aspects differs per organization. However, communication should be done with all stakeholders. Using Sigrid’s reporting features can help as a tool here to maintain transparency and accountability. </li>
-</ol>
+   Report and communicate insights regularly. The nature of reports on software quality aspects differs per organization. However, communication should be done with all stakeholders. Using Sigrid's reporting features can help as a tool here to maintain transparency and accountability.
 
 ## Best practices for software portfolio managers 
 
