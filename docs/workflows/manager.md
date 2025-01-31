@@ -6,16 +6,16 @@ The technical quality of software relies on many aspects, such as development pr
 
 Stakeholders involved in the software development process: 
 
-Four stakeholder groups need to be involved in the development process to achieve high quality software, structurally: 
+Four stakeholder groups need to be involved in the development process to achieve high-quality software, structurally: 
 
 - Teams develop, maintain and often operate the software. 
 - Engineering leads manage cross-team technical concerns such as architecture and security. 
 - User representatives represent the user community, also referred to as ‘the business’. 
-- Management is accountable for making sure the software meets its business goal.  
+- Management is accountable for making sure the software meets its business goal. 
 
-<img src="../images/manager-workflow-dashboard.png" width="800" align="left" />
+<img src="../images/manager-workflow-dashboard.png" width="800"/>
 
-Sigrid helps all stakeholders involved in the software development process to oversee, prioritize, and improve software portfolio in a cost-effective way. Managers can use functionalities related to setting and tracking objectives, monitoring software quality, managing technical debt, and ensuring alignment with business goals.  
+Sigrid helps all stakeholders involved in the software development process to oversee, prioritize, and improve their software portfolio in a wat that is cost-effective. Managers can use functionalities related to setting and tracking objectives, monitoring software quality, managing technical debt, and ensuring alignment with business goals.  
 
 ## Manage your software quality using Sigrid 
 
@@ -23,13 +23,13 @@ The core of the managers’ workflow comes down to the following three steps:
 
 1. Assess the current Software Health 
 
-   Utilize Sigrid's [portfolio-level overview](../capabilities/portfolio-overview.md) to assess your software’s current health. The teams should examine key metrics such as maintainability, and security risks. Next step is to identify areas of concern that need immediate attention. 
+   Utilize Sigrid's [portfolio-level overview](../capabilities/portfolio-overview.md) to assess your software’s current health. The teams should examine key metrics such as maintainability, and security risks. The next step is to identify areas of concern that need immediate attention. 
 
    Based on the insights gained, prioritize actions that need to be taken. Focus on high-urgency issues such as security vulnerabilities and technical debt and ensure that these actions are integrated into the team's backlog and aligned with sprint planning. 
 
 2. Set quality objectives and continuously measure them 
 
-   Quality objective are non-functional goals that are linked to explicit quality targets. In the Sigrid platform those could be shared with all stakeholders via the [Portfolio Objectives page](../capabilities/portfolio-objectives.md). These objectives should be aligned with your business goals to ensure that technical efforts support overall business strategies (check the Objective eLearning in our Academy). The benchmark results can help you and your team to set realistic and achievable targets. This is better done when teams are involved in this process. 
+   Quality objectives are non-functional goals that are linked to explicit quality targets. In the Sigrid platform, those could be shared with all stakeholders via the [Portfolio Objectives page](../capabilities/portfolio-objectives.md). These objectives should be aligned with your business goals to ensure that technical efforts support overall business strategies (check the Objective eLearning in our Academy). The benchmark results can help you and your team to set realistic and achievable targets. This is better done when teams are involved in this process. 
 
    It is a good practice to regularly review trends in software quality over time using Sigrid's trend analysis features. Pay particular attention to areas showing signs of degradation or those that have not been updated for a while. Use these insights to anticipate potential issues before they become critical. This process can be guarded by the software governance framework.  
 
@@ -40,7 +40,7 @@ The core of the managers’ workflow comes down to the following three steps:
    
    Engage with Development Teams to foster communication between management and development teams to ensure mutual understanding and collaboration. Use Sigrid to provide constructive feedback during sprint reviews and planning sessions. Encourage teams to include quality objectives in their definition of done. 
 
-   Track progress towards set objectives and adjust as needed based on changes in business priorities or Sofware conditions.  
+   Track progress towards set objectives and adjust as needed based on changes in business priorities or Software conditions.  
 
    Report and communicate insights regularly. The nature of reports on software quality aspects differs per organization. However, communication should be done with all stakeholders. Using Sigrid’s reporting features can help as a tool here to maintain transparency and accountability. 
 
