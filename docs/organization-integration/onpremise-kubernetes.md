@@ -365,14 +365,15 @@ inbound-api:
       objectStoreSecret:
         create: true
         data:
+          AWS_ENDPOINT_URL: "https://minio.my-company.com"
+          AWS_FORCE_PATH_STYLE: true  # Do not use bucket-specific hostnames
           AWS_REGION: "eu-east-1"
           AWS_ACCESS_KEY_ID: ""
           AWS_SECRET_ACCESS_KEY: ""
 ```
 
-As usual, the Helm chart creates the secret if you set `inbound-api.config.importJob.
-objectStoreSecret.create` to true. Alternatively, you can provide the secret yourself, in which 
-case the configuration is like so:
+As usual, the Helm chart creates the secret if you set `inbound-api.config.importJob.objectStoreSecret.create`
+to true. Alternatively, you can provide the secret yourself, in which case the configuration should look like:
 
 ```yaml
 inbound-api:

@@ -9,8 +9,8 @@ This documentation covers on-premise Sigrid. It is not applicable for cloud-base
 
 Your development platform will need access to the [Sigrid on-premise Docker containers](onpremise-integration.md#obtaining-sigrid-on-premise).
 
-Each system to be analyzed needs an analysis configuration in the form of a file called `sigrid.
-yaml` in the root directory of the system. Typically, this configuration is maintained by the 
+Each system to be analyzed needs an analysis configuration in the form of a file called `sigrid.yaml`
+in the root directory of the system. Typically, this configuration is maintained by the
 developers responsible for the system and consequently is not discussed here. Developers are 
 referred to the [analysis configuration reference](../reference/analysis-scope-configuration.md).
 
@@ -27,7 +27,11 @@ to hold an access key. Consequently, typically the following environment variabl
 
 - `AWS_ACCESS_KEY_ID`
 - `AWS_SECRET_ACCESS_KEY`
-- `AWS_DEFAULT_REGION`
+- `AWS_REGION`
+
+When using a private S3-compatible object store, the following may be needed as well: 
+- `AWS_ENDPOINT_URL`
+- `AWS_FORCE_PATH_STYLE`
 
 ## Configuring pipeline jobs
 
@@ -50,8 +54,8 @@ sigrid-publish:
     SYSTEM: "$CI_PROJECT_NAME"
     SIGRID_URL: "https://sigrid.my-company.com"
     SIGRID_CI_TOKEN: "secret"
-    S3_ENDPOINT: "https://minio.my-company.com"
     BUCKET: "some-bucket"
+    AWS_ENDPOINT_URL: "https://minio.my-company.com"
     AWS_ACCESS_KEY_ID: "some-id"
     AWS_SECRET_ACCESS_KEY: "also-secret"
     AWS_REGION: "us-east-1"
@@ -90,18 +94,18 @@ required. We distinguish two types of environment variables:
   environment (often called "secrets").
 - Non-shared: these typically differ across projects.
 
-| Variable                    | Shared? | Default   |
-|-----------------------------|---------|-----------|
-| CUSTOMER                    | Yes     |           |
-| SYSTEM                      | No      |           |
-| SIGRID_URL                  | Yes     |           |
-| SIGRID_CI_TOKEN             | Yes     |           |
-| S3_ENDPOINT_URL             | Yes     | (AWS)     |
-| BUCKET                      | Yes     |           |
-| AWS_ACCESS_KEY_ID           | Yes     |           |
-| AWS_SECRET_ACCESS_KEY       | Yes     |           |
-| AWS_REGION                  | Yes     | us-east-1 |
-| TARGET_QUALITY              | No      | 3.5       |
+| Variable                       | Shared? | Default   |
+|--------------------------------|---------|-----------|
+| CUSTOMER                       | Yes     |           |
+| SYSTEM                         | No      |           |
+| SIGRID_URL                     | Yes     |           |
+| SIGRID_CI_TOKEN                | Yes     |           |
+| BUCKET                         | Yes     |           |
+| AWS_ENDPOINT_URL               | Yes     | (AWS)     |
+| AWS_REGION                     | Yes     | us-east-1 |
+| AWS_ACCESS_KEY_ID              | Yes     |           |
+| AWS_SECRET_ACCESS_KEY          | Yes     |           |
+| TARGET_QUALITY                 | No      | 3.5       |
 | SIGRID_SOURCES_REGISTRATION_ID | Yes     | (auto)    |
 
 Notes:
@@ -113,14 +117,14 @@ Notes:
 - `SIGRID_URL`: (sub-)domain where this Sigrid on-premise deployment is hosted, e.g. 
   `https://sigrid.mycompany.com`.
 - `SIGRID_CI_TOKEN`: a personal access token created in Sigrid's UI.
-- `S3_ENDPOINT`: URL at which an S3-compatible object store can be reached. Defaults to Amazon AWS 
-  S3 endpoints.
 - `BUCKET`: name of the bucket in which analysis results are stored.
+- `AWS_ENDPOINT_URL`: URL at which an S3-compatible object store can be reached. Defaults to Amazon AWS 
+  S3 endpoints.
+- `AWS_REGION`: the region in which the bucket with name `S3_BUCKET` is located. For MinIO, this 
+  is `us-east-1` unless a different region is configured in MinIO.
 - `AWS_ACCESS_KEY_ID`: ID of the access key to authenticate to the S3-compatible object store. 
   This key should give access to the bucket named by `S3_BUCKET`.
 - `AWS_SECRET_ACCESS_KEY`: the key whose ID is `AWS_ACCESS_KEY_ID`.
-- `AWS_REGION`: the region in which the bucket with name `S3_BUCKET` is located. For MinIO, this 
-  is `us-east-1` unless a different region is configured in MinIO.
 - `SIGRID_SOURCES_REGISTRATION_ID`: the ID of the OAuth client registration provided in `values.yaml` of Sigrid's Helm chart.
 
 ## Getting import job status and logs
