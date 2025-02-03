@@ -9,9 +9,9 @@ This documentation covers on-premise Sigrid. It is not applicable for cloud-base
 
 Your development platform will need access to the [Sigrid on-premise Docker containers](onpremise-integration.md#obtaining-sigrid-on-premise).
 
-Each system to be analyzed needs an analysis configuration in the form of a file called `sigrid.yaml`
-in the root directory of the system. Typically, this configuration is maintained by the
-developers responsible for the system and consequently is not discussed here. Developers are 
+Each system to be analyzed needs an analysis configuration in the form of a file called
+`sigrid.yaml` in the root directory of the system. Typically, this configuration is maintained by
+the developers responsible for the system and consequently is not discussed here. Developers are
 referred to the [analysis configuration reference](../reference/analysis-scope-configuration.md).
 
 Sigrid's analyses require access to an S3-compatible object store. This can be Amazon's 
@@ -28,10 +28,7 @@ to hold an access key. Consequently, typically the following environment variabl
 - `AWS_ACCESS_KEY_ID`
 - `AWS_SECRET_ACCESS_KEY`
 - `AWS_REGION`
-
-When using a private S3-compatible object store, the following may be needed as well: 
-- `AWS_ENDPOINT_URL`
-- `AWS_FORCE_PATH_STYLE`
+- `AWS_ENDPOINT_URL` (when using a private S3-compatible object store)
 
 ## Configuring pipeline jobs
 

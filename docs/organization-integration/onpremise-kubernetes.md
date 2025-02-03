@@ -366,7 +366,7 @@ inbound-api:
         create: true
         data:
           AWS_ENDPOINT_URL: "https://minio.my-company.com"
-          AWS_FORCE_PATH_STYLE: true  # Do not use bucket-specific hostnames
+          AWS_FORCE_PATH_STYLE: true  # Use path-style access to prevent bucket-specific hostnames
           AWS_REGION: "eu-east-1"
           AWS_ACCESS_KEY_ID: ""
           AWS_SECRET_ACCESS_KEY: ""
