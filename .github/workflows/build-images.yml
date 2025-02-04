@@ -20,7 +20,7 @@ jobs:
       docker-file: Dockerfile.Azure
       image-name: softwareimprovementgroup/sigridci:azure
 
-  docker-actions:
+  docker-actions-test-build:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
