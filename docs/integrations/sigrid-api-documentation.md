@@ -42,11 +42,11 @@ Sigrid's REST API mimics this behavior, as follows:
   their responses.
 * Deactivated systems can be included in the response by adding a boolean query parameter 
   `hideDeactivatedSystems` and set it to `false`, `no`, or `0`. For instance, `GET 
-  /api/v1/maintainability/{customer}&hideDeactivatedSystems=false` includes deactivated systems 
+  /api/v1/maintainability/{customer}?hideDeactivatedSystems=false` includes deactivated systems 
   in the response.
 * Excluded systems can be included in the response by adding a boolean query parameter
   `hideExcludedSystems` and set it to `false`, `no`, or `0`. For instance, `GET
-  /api/v1/maintainability/{customer}&hideExcludedSystems=false` includes development-only systems
+  /api/v1/maintainability/{customer}?hideExcludedSystems=false` includes development-only systems
   in the response.
 
 ## Available end points
