@@ -23,7 +23,7 @@ The following example shows a minimal `sigrid.yaml` file that should help you to
       
 So what do these options actually do?
 
-- The `languages` option lists all technologies in your system. You can find the list of supported technology names in [the technology support list](technology-support.md#list-of-supported-technologies).
+- The `languages` option lists all technologies in your system. You can find the list of supported technology names in the first column of [the technology support list](technology-support.md#list-of-supported-technologies).
 
 If you're not sure what technologies you repository is using, and you're using a development platform like GitHub or GitLab, you can find this information on your repository's dashboard page. For example, this GitHub repository would result in the list of technologies used in the example above:
 
@@ -52,7 +52,9 @@ Sigrid will exclude common patterns by default. For example, directories like `b
 
 It is possible to extend this list with project-specific files and directories that should also be excluded. The `exclude` section in the YAML file contains a list of regular expressions for paths to ignore. For example, `.*[.]out[.]js` will exclude all files with a name ending in `.out.js` from the analysis. Adding `.*/simulator/.*` will exclude everything in a path that contains the directory `/simulator/`.
 
-Note that it is not necessary to exclude files and directories that would not be analyzed anyway. 
+Note that it is not necessary to exclude files and directories that would not be analyzed anyway.
+
+Also note that you need to specify excludes for maintainability, components, languages, thirdpartyfindings and dependencychecker ***independently***. In other words: excludes for maintainability do not apply to other models.
 
 Patterns are defined using regular expressions, as explained in the next section.
 
@@ -106,7 +108,7 @@ The `languages` section lists all languages that you want Sigrid to analyze:
       - name: Python
       - name: Typescript
 
-Refer to the [list of supported technologies](technology-support.md) for an overview of all supported technologies and the names that can be used.
+Refer to the first column in the [list of supported technologies](technology-support.md) for an overview of all supported technologies and the names that can be used.
 
 ### Overriding automatic technology and test code detection
 
