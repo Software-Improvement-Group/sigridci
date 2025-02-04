@@ -24,10 +24,11 @@ jobs:
 
   docker-azure:
     uses: ./.github/workflows/build-image-template.yml
+    secrets:
+      dockerhub-token: ${{ secrets.DOCKERHUB_TOKEN }}
     with:
       docker-file: Dockerfile.Azure
       image-name: softwareimprovementgroup/sigridci:azure
-      dockerhub-token: ${{ secrets.DOCKERHUB_TOKEN }}
 
   docker-actions:
     runs-on: ubuntu-latest
