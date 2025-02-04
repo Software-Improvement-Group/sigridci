@@ -102,7 +102,6 @@ required. We distinguish two types of environment variables:
 | AWS_REGION                     | Yes     | us-east-1 |
 | AWS_ACCESS_KEY_ID              | Yes     |           |
 | AWS_SECRET_ACCESS_KEY          | Yes     |           |
-| TARGET_QUALITY                 | No      | 3.5       |
 | SIGRID_SOURCES_REGISTRATION_ID | Yes     | (auto)    |
 
 Notes:
