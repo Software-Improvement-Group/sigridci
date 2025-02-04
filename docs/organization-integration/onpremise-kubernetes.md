@@ -82,6 +82,11 @@ Sigrid on-premise needs access to the following images published on [SIG's priva
 - `softwareimprovementgroup/sigrid-multi-importer`
 - `softwareimprovementgroup/survey-service`
 
+In addition, if your deployment is completely air-gapped, please ensure these public images are also published to your internal container registry.
+- `nginxinc/nginx-unprivileged`
+- `redis:7.2.4-alpine`
+- `haproxy:2.9.4-alpine`
+
 For the avoidance of doubt: the AI Explanation Service (last image in the list) does NOT contact 
 any LLM by default. It just serves pre-computed explanations.
 
@@ -276,6 +281,22 @@ Notes:
    the name of that secret here using `secretName`.
 4. The client ID and secret provided by your IdP need to be pasted here.
 
+#### Step 3: Bootstrap a Sigrid Admin
+
+Sigrid limits which users have access to which systems. To be able to configure user permissions you will need a user 
+that has the admin role. You can configure the first admin user by configuring the Helm chart:
+```yaml
+global:
+  onPremise:
+    administrators: 
+      - "email@customer.com" 
+```
+Upon login the user with the matching email account will be granted the admin role. Once you have a user with the admin
+role you will be able to use the Sigrid-UI to give grant other accounts the admin permission as well.
+
+Please note that removing email addresses from this list does **NOT** remove the admin role. Use the standard user
+management functionality of Sigrid to add/remove admin accounts after the initial setting up of Sigrid.
+
 ## (E) Provide an RSA keypair for signing of unattended workflow tokens.
 
 Sigrid provides a [public API](../integrations/sigrid-api-documentation.md) that allows access 
@@ -330,10 +351,10 @@ compatible store such as [MinIO](https://min.io). Providing (access to) an objec
 responsibility of the on-premise customer; no object store is provided by the Helm chart.
 
 In the Helm chart, two things need to be configured:
-- (E.1) A secret to allow access to the object store.
-- (E.2) Configuration for the Kubernetes jobs that import analysis results.
+- (F.1) A secret to allow access to the object store.
+- (F.2) Configuration for the Kubernetes jobs that import analysis results.
 
-### (E.1) Secret to allow access to the object store
+### (F.1) Secret to allow access to the object store
 
 A secret for accessing the object store can be configured in the usual way:
 
@@ -365,7 +386,7 @@ inbound-api:
 Note that this secret is not mandatory. In case authentication is already provided through other means (e.g. 
 Pod/Workload Identity, IAM roles for service accounts, etc.), no secret is needed at all.
 
-### (E.2) Configuration for the Kubernetes analysis results import jobs.
+### (F.2) Configuration for the Kubernetes analysis results import jobs.
 
 Sigrid creates [Kubernetes jobs](https://kubernetes.io/docs/concepts/workloads/controllers/job/) 
 that import analysis results. These jobs read analysis results from the object store and store them 
@@ -416,7 +437,7 @@ true`) or be provided externally (`postgresSecret.create: false` and `postgresSe
 "some name"`). Either way, it needs to be an opaque secret with entries `url`, `username`, and 
 `password`.
 
-#### (E.2.1) Optional: Configuring resource allocation for analysis results import jobs
+#### (F.2.1) Optional: Configuring resource allocation for analysis results import jobs
 
 The kubernetes jobs that Sigrid creates have no default resource (cpu/memory) requests/limits. To ensure the healthy 
 operating of import jobs we recommend to set default resource requests/limit and create overrides on a per-system basis

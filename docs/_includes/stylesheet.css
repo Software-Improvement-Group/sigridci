@@ -55,6 +55,7 @@ ul li::before {
     color: #DFC101;
     padding-right: 8px;
     margin-left: -1em;
+    position: absolute;
 }
 
 ol li::before {
@@ -62,6 +63,7 @@ ol li::before {
     color: #DFC101;
     padding-right: 16px;
     margin-left: -1em;
+    position: absolute;
 }
 
 hr {
