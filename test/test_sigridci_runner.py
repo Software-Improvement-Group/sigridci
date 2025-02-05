@@ -357,6 +357,20 @@ class SigridCiRunnerTest(TestCase):
             # is invalid. If there is no system exit, this test will fail.
             runner.run()
 
+    def testEmptyMetadataFileIsNotValid(self):
+        self.createTempFile(self.tempDir, "sigrid-metadata.yaml", "")
+
+        apiClient = MockApiClient(self.options)
+        apiClient.responses["/analysis-results/sigridci/aap/validate"] = {"valid" : False, "notes" : ["test"]}
+
+        runner = SigridCiRunner(self.options, apiClient)
+        runner.reports = []
+
+        with self.assertRaises(SystemExit):
+            # This should cause a system exit because an empty metadata file
+            # is invalid. If there is no system exit, this test will fail.
+            runner.run()
+
     def testDumpAvailableMetadataToOutput(self):
         self.createTempFile(self.tempDir, "sigrid.py", "print(123)")
 
