@@ -102,7 +102,7 @@ Assign groups of users to your Authentication app.
 Please Provide SIG with the following.
 
 ##### SAML Configuration
-The 'App federation MetadataURL' of your authentication app.
+The `App federation MetadataURL` of your authentication app.
 The information will include your app's identifier, redirectURL etc.
 
 | IdP | App federation MetadataURL |

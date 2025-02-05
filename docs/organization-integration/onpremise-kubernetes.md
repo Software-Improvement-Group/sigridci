@@ -519,12 +519,12 @@ sigrid-api:
       secret: true
       data:
         provider:
-          gitlab-onprem-provider:
+          gitlab-onprem:
             issuer-uri: https://gitlab.your-domain.com              <-- Note 1
             base-url: https://gitlab.your-domain.com                <-- Note 2
             type: gitlab                                            <-- Note 3
         registration:
-          gitlab-onprem-registration:
+          gitlab-onprem:
             client-id: SOME_ID                                      <-- Note 4
             client-secret: SOME_SECRET
             client-authentication-method: client_secret_post
@@ -532,7 +532,7 @@ sigrid-api:
             scope:
               - read_repository
             redirect-uri: https://sigrid.yourdomain.com/rest/analysis-results/repositories/login/oauth/code/gitlab-onprem
-            provider: gitlab-onprem-provider                        <-- Note 5
+            provider: gitlab-onprem                                 <-- Note 5
 ```
 
 Notes:
@@ -542,9 +542,9 @@ Notes:
    equal to the issuer URI.
 3. Must be `gitlab`, `github`, or `azure-devops`.
 4. The client ID and secret are determined by the code repository, typically when creating the 
-   registration. See for instance [the relevant GitLab documentation](https://docs.gitlab.com/ee/integration/oauth_provider.html).
-5. Sigrid is registered as an OAuth2 client at the provider configured above with name 
-   `gitlab-onprem`. 
+   registration. See for instance [the relevant GitLab documentation](https://docs.gitlab.com/ee/integration/oauth_provider.html#view-all-authorized-applications.html).
+5. Scope should provide **at minimum** read rights to projects and source code. See for instance [the available GitLab scopes](https://docs.gitlab.com/ee/integration/oauth_provider.html#view-all-authorized-applications.html).  
+   The specific scope depends on the repository type. For example: GitLab: `read_repository`, GitHub: `repo`, Azure DevOps: `vso.code`.
 
 ## Contact and support
 
