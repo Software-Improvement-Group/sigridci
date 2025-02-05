@@ -57,7 +57,7 @@ Both alternatives configure two additional build steps:
 
 The relevant command that starts Sigrid CI is the call to the `sigridci.py` script, which starts the Sigrid CI analysis. The scripts supports a number of arguments that you can use to configure your Sigrid CI run. The scripts and its command line interface are explained in [using the Sigrid CI client script](../reference/client-script-usage.md).
 
-Note that you need to perform this step for every project where you wish to use Sigrid CI. Be aware that you can set a project-specific target quality, you don't necessarily have to use the same target for every project.
+Note that you need to perform this step for every project where you wish to use Sigrid CI.
 
 #### Alternative 2a: Use SIG's public Docker image
 

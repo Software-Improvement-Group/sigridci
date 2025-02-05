@@ -77,7 +77,7 @@ Note the name of the branch, which is `main` in the example but might be differe
 
 Commit and push this file to the repository, so that Azure DevOps can use this configuration file for your pipeline. If you already have an existing pipeline configuration, simply add these steps to it.
 
-Finally, note that you need to perform this step for every project where you wish to use Sigrid CI. Be aware that you can set a project-specific target quality, you don't necessarily have to use the same target for every project.
+Finally, note that you need to perform this step for every project where you wish to use Sigrid CI.
 
 ### Step 2: Create your Azure DevOps pipeline
 
