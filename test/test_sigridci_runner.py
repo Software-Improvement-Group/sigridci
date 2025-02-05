@@ -343,6 +343,20 @@ class SigridCiRunnerTest(TestCase):
 
         self.assertEqual(UploadLog.history, expectedLog)
 
+    def testEmptyScopeFileIsNotValid(self):
+        self.createTempFile(self.tempDir, "sigrid.yaml", "")
+
+        apiClient = MockApiClient(self.options)
+        apiClient.responses["/inboundresults/sig/aap/noot/ci/validate/v1"] = {"valid" : False, "notes" : ["test"]}
+
+        runner = SigridCiRunner(self.options, apiClient)
+        runner.reports = []
+
+        with self.assertRaises(SystemExit):
+            # This should cause a system exit because an empty scope file
+            # is invalid. If there is no system exit, this test will fail.
+            runner.run()
+
     def testDumpAvailableMetadataToOutput(self):
         self.createTempFile(self.tempDir, "sigrid.py", "print(123)")
 

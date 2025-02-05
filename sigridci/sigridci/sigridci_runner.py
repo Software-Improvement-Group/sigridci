@@ -95,11 +95,11 @@ class SigridCiRunner:
 
     def validateConfigurationFiles(self):
         scope = self.options.readScopeFile()
-        if scope:
+        if scope is not None:
             self.validateConfiguration(lambda: self.apiClient.validateScopeFile(scope), "scope configuration file")
 
         metadataFile = self.options.readMetadataFile()
-        if metadataFile:
+        if metadataFile is not None:
             self.validateConfiguration(lambda: self.apiClient.validateMetadata(metadataFile), "Sigrid metadata file")
 
     def validateConfiguration(self, validationCall, configurationName):
