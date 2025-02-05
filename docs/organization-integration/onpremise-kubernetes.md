@@ -545,8 +545,6 @@ Notes:
    registration. See for instance [the relevant GitLab documentation](https://docs.gitlab.com/ee/integration/oauth_provider.html#view-all-authorized-applications.html).
 5. Scope should provide **at minimum** read rights to projects and source code. See for instance [the available GitLab scopes](https://docs.gitlab.com/ee/integration/oauth_provider.html#view-all-authorized-applications.html).  
    The specific scope depends on the repository type. For example: GitLab: `read_repository`, GitHub: `repo`, Azure DevOps: `vso.code`.
-6. Sigrid is registered as an OAuth2 client at the provider configured above with name 
-   `gitlab-onprem`.
 
 ## Contact and support
 
