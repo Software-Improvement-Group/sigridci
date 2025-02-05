@@ -100,7 +100,6 @@ jobs:
       MENDIX_TOKEN: "${{ secrets.MENDIX_TOKEN }}"
       SIGRID_CI_CUSTOMER: '<example_customer_name>'
       SIGRID_CI_SYSTEM: '<example_system_name>'
-      SIGRID_CI_TARGET_QUALITY: '3.5'
       SIGRID_CI_TOKEN: "${{ secrets.SIGRID_CI_TOKEN }}"
     steps:
       - name: Check out repository
@@ -119,7 +118,7 @@ MENDIX_TOKEN: "${{ secrets.MENDIX_ORG_TOKEN }}"
 ```
 {% endraw %}
 
-Finally, note that you need to perform this step for every project where you wish to use Sigrid CI. Be aware that you can set a project-specific target quality, you don't necessarily have to use the same target for every project.
+Finally, note that you need to perform this step for every project where you wish to use Sigrid CI.
 
 The output consists of the following:
 

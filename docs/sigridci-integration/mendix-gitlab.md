@@ -56,7 +56,6 @@ stages:
 variables:
   SIGRID_CI_CUSTOMER: '<example_customer_name>'
   SIGRID_CI_SYSTEM: '<example_system_name>'
-  SIGRID_CI_TARGET_QUALITY: '3.5'
 
 sigridci:
   image: 
@@ -97,7 +96,7 @@ sigridpublish:
 
 Note the name of the branch, which is `main` in the example but might be different for your repository. In general, most older projects will use `master` as their main branch, while more recent projects will use `main`. 
 
-Finally, note that you need to perform this step for every project where you wish to use Sigrid CI. Be aware that you can set a project-specific target quality, you don't necessarily have to use the same target for every project.
+Finally, note that you need to perform this step for every project where you wish to use Sigrid CI.
 
 The output consists of the following:
 
