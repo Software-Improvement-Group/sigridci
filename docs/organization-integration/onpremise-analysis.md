@@ -42,7 +42,7 @@ The following GitLab job illustrates how to run an analysis:
 sigrid-publish:
   image:
     # Pulls from the private part of SIG's registry at Docker Hub; you may need to log in first, or replace this with the image name as cached in your internal registry:
-    name: "softwareimprovementgroup/sigrid-multi-analyzer:1.0.20250123"
+    name: "softwareimprovementgroup/sigrid-multi-analyzer:$SIGRID_VERSION"
   variables:
     # These are all environment variables. For defaults, see the table below.
     # Note that typically, all environment variables marked as "shared" in the table
@@ -61,7 +61,7 @@ sigrid-publish:
     - "run-analyzers --publish"
 ```
 
-Note that the image name contains an explicit Docker image tag (`1.0.20250123` in this example). 
+Note that the image name contains an reference to the Docker image tag (`$SIGRID_VERSION` in this example). 
 It is important that the tag matches the tags used in Sigrid's Helm chart: all components of 
 Sigrid must always use the same version. SIG recommends using an environment-wide variable 
 instead of hardcoding the tag.
@@ -263,12 +263,12 @@ The following example shows how to start an ad-hoc analysis for a system located
     docker run \
       --env-file sigrid-ci-config.txt \
       -v /mysystem:/tmp/sources \
-      -ti softwareimprovementgroup/sigrid-multi-analyzer:1.0.20250123 \
+      -ti softwareimprovementgroup/sigrid-multi-analyzer:$SIGRID_VERSION \
       --publish
       
 This requires you to have access to the [Sigrid on-premise Docker containers](onpremise-integration.md#obtaining-sigrid-on-premise).
       
-The version tag (`1.0.20250123`) should match your version of Sigrid on-premise. 
+The version tag (`$SIGRID_VERSION`) should match your version of Sigrid on-premise. 
 
 ### Optional: connection to source code repositories
 To set up the Helm charts, please follow the instructions provided [here](onpremise-kubernetes.md#g-optional-connection-to-source-code-repositories).
