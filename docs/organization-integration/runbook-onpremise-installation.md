@@ -7,6 +7,11 @@ This documentation provides guidance on how to begin configuring on-premise Sigr
 
 <sig-toc></sig-toc>
 
+## Prerequisites
+
+- You should have already read the other Sigrid On-Premise documentation
+- You have access to Software Improvement Group DockerHub
+
 ## Start
 
 ## Contact and support

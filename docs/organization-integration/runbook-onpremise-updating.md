@@ -7,6 +7,12 @@ This documentation provides guidance on how to keep on-premise Sigrid up-to-date
 
 <sig-toc></sig-toc>
 
+## Prerequisites
+
+- You should have already read the other Sigrid On-Premise documentation
+- You have a running Sigrid Deployment
+- You have access to Software Improvement Group DockerHub
+
 ## Update Frequency
 
 We update container images daily for immediate improvements. The Helm chart is updated less frequently, only when new features or significant changes are released. This ensures you get rapid updates while maintaining chart stability.
