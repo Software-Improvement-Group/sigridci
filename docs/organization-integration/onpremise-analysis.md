@@ -97,6 +97,7 @@ required. We distinguish two types of environment variables:
 | SYSTEM                         | No      |           |
 | SIGRID_URL                     | Yes     |           |
 | SIGRID_CI_TOKEN                | Yes     |           |
+| SIGRID_VERSION                 | Yes     |           |
 | BUCKET                         | Yes     |           |
 | AWS_ENDPOINT_URL               | Yes     | (AWS)     |
 | AWS_REGION                     | Yes     | us-east-1 |
