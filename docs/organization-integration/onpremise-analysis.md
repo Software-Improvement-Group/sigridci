@@ -61,7 +61,7 @@ sigrid-publish:
     - "run-analyzers --publish"
 ```
 
-Note that the image name contains an reference to the Docker image tag (`$SIGRID_VERSION` in this example). 
+Note that the image name contains a reference to the Docker image tag (`$SIGRID_VERSION` in this example). 
 It is important that the tag matches the tags used in Sigrid's Helm chart: all components of 
 Sigrid must always use the same version. SIG recommends using an environment-wide variable 
 instead of hardcoding the tag.
