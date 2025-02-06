@@ -1,9 +1,9 @@
-# Sigrid on-premise integration
+# Sigrid On-Premise integration
 
 This documentation covers on-premise Sigrid. It is not applicable for cloud-based Sigrid.
 {: .attention }
 
-This document covers everything you need to integrate Sigrid on-premise in your environment. It also covers the functional differences between the SaaS version and the on-premise version, though these differences are relatively minor.
+This document covers everything you need to integrate Sigrid On-Premise in your environment. It also covers the functional differences between the SaaS version and the on-premise version, though these differences are relatively minor.
 
 <sig-toc></sig-toc>
 
@@ -16,7 +16,7 @@ From a deployment perspective, on-premise Sigrid consists of two "parts":
 
 <img src="../images/onpremise-overview.png" width="600" />
 
-- Sigrid on-premise is based on [Docker containers](https://en.wikipedia.org/wiki/Docker_%28software%29). There are two types of containers:
+- Sigrid On-Premise is based on [Docker containers](https://en.wikipedia.org/wiki/Docker_%28software%29). There are two types of containers:
   - Application containers that should be deployed permanently in a [Kubernetes](https://en.wikipedia.org/wiki/Kubernetes) cluster, based on a [Helm chart](https://helm.sh) that is provided by SIG.
   - Analysis containers that run from a build pipeline within your development platform. These analysis containers may also be started on Kubernetes, but that is not a requirement. Supported development platforms are listed in [development platform integration](#development-platform-integration).
 - SIG provides the necessary images through a container registry. The section [obtaining Sigrid on-premise](#obtaining-sigrid-on-premise) contains more information on how you can obtain and update these Docker containers.
@@ -24,7 +24,7 @@ From a deployment perspective, on-premise Sigrid consists of two "parts":
 - Analyses are triggered from a build pipeline. The analysis results are then imported into a Postgres database, so they can be viewed in Sigrid.
 - Large files are stored in an [S3-compatible object store](https://aws.amazon.com/s3/).
 
-Some Sigrid on-premise features are *optional*:
+Some Sigrid On-Premise features are *optional*:
 
 - The Open Source Health feature requires outbound internet access. Sigrid needs to connect to external sources to check for the latest vulnerability data for open source libraries. If you do not allow outbound internet access, the Open Source Health feature is not available. The rest of Sigrid is unaffected.
 - When viewing detailed analysis results, Sigrid displays relevant source code files within Sigrid. For this to work, a web-accessible code storage needs to be available. This integrates with Sigrid via [OAuth](https://oauth.net/2/). For this to work, the identity provider used for Sigrid authentication and for the code storage needs to be the same. For viewing source code within Sigrid, you need to provide a development platform that is integrated with the same identity provider as Sigrid itself. The view source functionality is optional, without this integration the rest of Sigrid is unaffected.
@@ -45,7 +45,7 @@ Some Sigrid on-premise features are *optional*:
 
 ## Obtaining Sigrid on-premise
 
-The Docker containers that form Sigrid on-premise are distributed via [DockerHub](https://hub.docker.com). You will receive an account that allows you to access the container registry. 
+The Docker containers that form Sigrid On-Premise are distributed via [DockerHub](https://hub.docker.com). You will receive an account that allows you to access the container registry. 
 
 <img src="../images/onpremise-dockerhub.png" width="500" /> 
 
@@ -60,7 +60,7 @@ Instructions for installing and configuring both parts are provided in the follo
 - [Sigrid on-premise: Helm Chart configuration](onpremise-kubernetes.md)
 - [Sigrid on-premise: Analysis configuration](onpremise-analysis.md)
 
-## Updating Sigrid on-premise to a new version
+## Updating Sigrid On-Premise to a new version
 
 SIG releases the Sigrid Docker containers based on a [continuous delivery](https://en.wikipedia.org/wiki/Continuous_delivery) process. This means that changes are immediately released once they have successfully passed through the development process. We advise our clients on the best way to develop and operate their software, so we try to adhere to the same best practices that we recommend our clients. 
 
