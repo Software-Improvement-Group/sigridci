@@ -162,8 +162,8 @@ No further context required.
 The secrets provided below are configured to allow the Sigrid API to communicate with downstream APIs. If these secrets are modified, please ensure that they are updated across all three services, as they are associated with a single user.
 
 ```
-config: secret: data: username: “example”
-config: secret: data: password: “example” 
+config: secret: data: username: "example"
+config: secret: data: password: "example" 
 ```
 
 #### config.redis:
