@@ -178,21 +178,37 @@ redis: data: sentinel-password: "example-password"
 If you want to use the use a self-provided redis server, also adjust host: ""
 
 ## Install helm chart
-...
+We assume that your Kubernetes cluster is ready and that you have created a namespace. There are several ways to install a Helm chart. One common method is as follows: `helm upgrade --install <deployment-name> <helm-chart-path> -n <namespace> --values <values-file-path>`
+
+For example, to install the Sigrid deployment, you can use: `helm upgrade --install sigrid-onprem ./sigrid-stack -n sigrid --values ./sigrid-stack/custom-values.yaml`
 
 ## Check your Deployment
-...
+In the unlikely event that the custom values file is filled in correctly the very first time, then proceed to “Setup a test analysis pipeline”
+
+- Monitor your deployment to see if any pods or services have problems starting
+- If so, please tail the logs and see what’s going on.
+- Remedy the error by adjusting the custom values file.
+
+If you’re using command line to install the helm chart you can repeat the command from earlier.
+
+Once your deployment is running the ‘administrator’ provided in your custom-values should be able to login to Sigrid.
+
+You can now start inviting more people to Sigrid if so desired.
 
 ## Setup a test analysis pipeline
 
 ### Create a Sigrid Token
-...
+
+- Login to Sigrid.
+- Under User Settings, create a Sigrid Token.
 
 ### Setup your project
 ...
 
 ### Verify a succesful analysis
-...
+
+- Monitor any importer pods on your deployment, once it’s finished the analysis and import to Sigrid is done.
+- Login to Sigrid and verify you can now see a system.
 
 ## Contact and support
 
