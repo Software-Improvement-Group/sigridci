@@ -14,8 +14,8 @@ The following runbooks provides guidance on how to configuring and keep on-premi
 
 ## Runbooks
 
-- [Runbook: Sigrid On-Premise Installation](../runbook-onpremise-installation.md)
-- [Runbook: Sigrid On-Premise Updating](../runbook-onpremise-updating.md)
+- [Runbook: Sigrid On-Premise Installation](runbook-onpremise-installation.md)
+- [Runbook: Sigrid On-Premise Updating](runbook-onpremise-updating.md)
 
 ## Contact and support
 
