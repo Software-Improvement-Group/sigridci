@@ -33,7 +33,6 @@ class SigridCiRunnerTest(TestCase):
 
         UploadLog.clear()
 
-        os.environ["SIGRID_CI_ACCOUNT"] = "dummy"
         os.environ["SIGRID_CI_TOKEN"] = "dummy"
         os.environ["externalid"] = ""
         os.environ["divisionname"] = ""
