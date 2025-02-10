@@ -417,8 +417,8 @@ In such a situation, you can use [Sigrid CI](client-script-usage.md) to manage t
 
 We recommend you add `sigrid.yaml` to your repository, so that it is automatically in sync with the source code and part of versions control. However, is it possible to retrieve and/or update the scope configuration file *without* making the `sigrid.yaml` file part of your repository.
 
-- If you want to *retrieve* the scope configuration file used by Sigrid, you can use the [Sigrid API](../integrations/sigrid-api-documentation.md). You can also use the [example code on GitHub](https://github.com/Software-Improvement-Group/sigridci/tree/main/examples/get-scope-file) for this.
-- If you want to *update* the scope configuration file, independently of your source code, you can still use [Sigrid CI](client-script-usage.md). You can also use the [example code on GitHub](https://github.com/Software-Improvement-Group/sigridci/tree/main/examples/get-scope-file) for this.
+- If you want to *retrieve* the scope configuration file used by Sigrid, you can use the [Sigrid API](../integrations/sigrid-api-documentation.md). You can also use the [example code on GitHub](https://github.com/Software-Improvement-Group/sigrid-integrations/tree/main/get-scope-file) for this.
+- If you want to *update* the scope configuration file, independently of your source code, you can still use [Sigrid CI](client-script-usage.md). You can also use the [example code on GitHub](https://github.com/Software-Improvement-Group/sigrid-integrations/tree/main/get-scope-file) for this.
           
 ## Sigrid metadata
 
