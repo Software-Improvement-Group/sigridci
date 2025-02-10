@@ -203,7 +203,59 @@ You can now start inviting more people to Sigrid if so desired.
 - Under User Settings, create a Sigrid Token.
 
 ### Setup your project
-...
+
+- Login to e.g. GitLab.
+- Setup org, group or project secrets depending on your use-case.
+  - `CUSTOMER: "company_name"`
+  - `SIGRID_CI_TOKEN: "Sigrid Token"BUCKET: "some-bucket"`   
+  The name of the bucket you've created.
+  - `SIGRID_VERSION: "should match ImageTag from helm global"`
+  - `AWS_ENDPOINT_URL: "https://minio.my-company.com"`  
+  URL to your Object Store.
+  - `AWS_ACCESS_KEY_ID: "some-id"`  
+  The name of the Object Store user.
+  - `AWS_SECRET_ACCESS_KEY: "also-secret"`  
+  The password/secret to connect to Object Store user.
+  - `AWS_REGION: "us-east-1"`  
+  Override if you're using another region in your Object Store.
+  - `SIGRID_SOURCES_REGISTRATION_ID: "gitlab-onprem"`  
+  The name of your source code repository as configured in the helm chart.
+- Browse to your test project.
+  - For efficient Sigrid setup, use a minimal test project in the CI pipeline. This allows for quicker iterations. Once configured correctly, you can analyze any project size.
+- Create a test-branch.
+- Create a scope.
+  - Create sigrid.yaml in the root of your test project.
+  - Example:  
+    ```
+    languages:
+      - name: TypeScript
+      - name: JavaScript
+    ```
+- Create a pipeline.
+  - Example: Where all secrets except SYSTEM can be omitted if already stored as secrets in your e.g. GitLab. Also override image name if you're pulling from your own container registry.
+    ```
+    sigrid-publish:
+      image:
+        # Pulls from the private part of SIG's registry at DockerHub; you may need to log in first, or replace this with the image name as cached in your internal registry:
+        name: "softwareimprovementgroup/sigrid-multi-analyzer:$SIGRID_VERSION"
+      variables:
+        # These are all environment variables. For defaults, see the table below.
+        # Note that typically, all environment variables marked as "shared" in the table
+        # below would be set globally in the CI/CD environment:
+        CUSTOMER: "company_name"
+        SYSTEM: "$CI_PROJECT_NAME"
+        SIGRID_URL: "https://sigrid.my-company.com"
+        SIGRID_CI_TOKEN: "secret"
+        BUCKET: "some-bucket"
+        AWS_ENDPOINT_URL: "https://minio.my-company.com"
+        AWS_ACCESS_KEY_ID: "some-id"
+        AWS_SECRET_ACCESS_KEY: "also-secret"
+        AWS_REGION: "us-east-1"
+        SIGRID_SOURCES_REGISTRATION_ID: "gitlab-onprem"
+      script:
+        - "run-analyzers --publish"
+    ```
+- Commit changes to your test project.
 
 ### Verify a succesful analysis
 
