@@ -3,6 +3,11 @@ Sigrid release notes
 
 SIG uses [continuous delivery](https://en.wikipedia.org/wiki/Continuous_delivery), meaning that every change to Sigrid or the underlying analysis is released once our development pipeline has completed. On average, we release somewhere between 10 and 20 times per day. This page therefore doesn't list every single change, since that would quickly lead to an excessively long list of small changes. Instead, this page lists Sigrid and analysis changes that we consider noteworthy for the typical Sigrid user.
 
+### February 10, 2025
+
+- **Integrations:** All Sigrid integrations can now be found in the [Sigrid Integrations repository on GitHub](https://github.com/Software-Improvement-Group/sigrid-integrations).
+- **Refactoring candidates:** You will now receive additional refactoring candidates for the Component Entanglement metric. This helps to get more guidance on how to improve this metric.
+
 ### January 13, 2025
 
 - **Maintainability - System Overview:** We have updated the churn metrics in the system overview to reflect the number of files that have been added/changed/removed rather than raw Lines of Code to ensure consistency with the churn information shown in Delta Quality.
