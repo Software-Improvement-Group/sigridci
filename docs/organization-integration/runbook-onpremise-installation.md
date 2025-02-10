@@ -123,7 +123,7 @@ Note that this initial admin user will have full access to the entire portfolio.
 ```
 imagePullSecrets:
 ```
-This only needs to be provided if your internal container registry requires authentication or if you’re pulling SIG containers from DockerHub directly. 
+This only needs to be provided if your internal container registry requires authentication or if you're pulling SIG containers from DockerHub directly. 
 
 #### nginx:
 
@@ -186,12 +186,12 @@ For example, to install the Sigrid deployment, you can use: `helm upgrade --inst
 In the unlikely event that the custom values file is filled in correctly the very first time, then proceed to "Setup a test analysis pipeline"
 
 - Monitor your deployment to see if any pods or services have problems starting
-- If so, please tail the logs and see what’s going on.
+- If so, please tail the logs and see what's going on.
 - Remedy the error by adjusting the custom values file.
 
-If you’re using command line to install the helm chart you can repeat the command from earlier.
+If you're using command line to install the helm chart you can repeat the command from earlier.
 
-Once your deployment is running the ‘administrator’ provided in your custom-values should be able to login to Sigrid.
+Once your deployment is running the 'administrator' provided in your custom-values should be able to login to Sigrid.
 
 You can now start inviting more people to Sigrid if so desired.
 
@@ -207,7 +207,7 @@ You can now start inviting more people to Sigrid if so desired.
 
 ### Verify a succesful analysis
 
-- Monitor any importer pods on your deployment, once it’s finished the analysis and import to Sigrid is done.
+- Monitor any importer pods on your deployment, once it's finished the analysis and import to Sigrid is done.
 - Login to Sigrid and verify you can now see a system.
 
 ## Contact and support
