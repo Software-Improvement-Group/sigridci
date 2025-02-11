@@ -41,18 +41,21 @@ class Platform:
 
     @staticmethod
     def createPullRequestFileURL(file, line=0):
-        if Platform.hasEnv("GITHUB_SERVER_URL", "GITHUB_REPOSITORY", "GITHUB_HEAD_REF"):
-            server = os.environ["GITHUB_SERVER_URL"]
-            repo = os.environ["GITHUB_REPOSITORY"]
-            branch = os.environ["GITHUB_HEAD_REF"]
-            return f"{server}/{repo}/blob/{branch}/{file}#L{line}"
-
+        # GitLab
         if Platform.hasEnv("CI_SERVER_URL", "CI_PROJECT_PATH", "CI_COMMIT_REF_NAME"):
             server = os.environ["CI_SERVER_URL"]
             project = os.environ["CI_PROJECT_PATH"]
             branch = os.environ["CI_COMMIT_REF_NAME"]
             return f"{server}/{project}/-/blob/{branch}/{file}#L{line}"
 
+        # GitHub
+        if Platform.hasEnv("GITHUB_SERVER_URL", "GITHUB_REPOSITORY", "GITHUB_HEAD_REF"):
+            server = os.environ["GITHUB_SERVER_URL"]
+            repo = os.environ["GITHUB_REPOSITORY"]
+            branch = os.environ["GITHUB_HEAD_REF"]
+            return f"{server}/{repo}/blob/{branch}/{file}#L{line}"
+
+        # Azure DevOps
         if Platform.hasEnv("SYSTEM_PULLREQUEST_SOURCEREPOSITORYURI", "SYSTEM_PULLREQUEST_SOURCEBRANCH"):
             repo = os.environ["SYSTEM_PULLREQUEST_SOURCEREPOSITORYURI"]
             branch = os.environ["SYSTEM_PULLREQUEST_SOURCEBRANCH"].split("/")[-1]
