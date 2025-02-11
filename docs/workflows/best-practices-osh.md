@@ -1,4 +1,4 @@
-# Guidelines for healthy use of Open Source
+# for healthy use of Open Source
 
 <!-- 
 - TODOs 
