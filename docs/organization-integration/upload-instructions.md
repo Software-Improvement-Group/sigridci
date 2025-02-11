@@ -126,7 +126,7 @@ The usage of the portal is straightforward:
 
 If you use Sigrid CI, this ZIP file is created automatically and you can skip this section. If you are using SFTP or manual uploads, you will need to create the ZIP file yourself using these guidelines.
 
-Prefer regular ZIP files, and avoid nested ZIP files. The following example can be used to create a ZIP file on the command line:
+Prefer regular ZIP files, and avoid nested ZIP files. The following example can be used to create a ZIP file on the command line using Linux, MacOS, or WSL:
 
 ```
 git clone https://github.com/LeaVerou/awesomplete.git code
@@ -136,7 +136,18 @@ rm -rf .git
 zip -r your-project.zip .
 ```
 
-The only thing you need to change in this example, is to replace the URL of the repository with your own system's URL. 
+The following example can be used with Windows PowerShell to create a ZIP file:
+
+```
+git clone https://github.com/LeaVerou/awesomplete.git code
+cd code
+git --no-pager log --date=iso --format='@@@;%H;%an;%ae;%cd;%s' --numstat --no-merges | Out-File -FilePath git.log -Encoding 'utf8'
+Remove-Item -Recurse -Force .git
+cd ..
+Compress-Archive -Path code\* -DestinationPath .\your-project.zip
+```
+
+The only thing you need to change in these examples is to replace the URL of the repository with your own system's URL. 
 
 This will clone a Git repository, and then create a ZIP file containing both the source code and the change history. The latter is used for Sigrid's [architecture quality](../capabilities/architecture-quality.md) analysis. We create a log file containing this change history, and afterwards we deleted the `.git` directory to make the ZIP file smaller and faster to upload. 
 
