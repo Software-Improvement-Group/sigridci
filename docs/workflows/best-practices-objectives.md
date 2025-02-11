@@ -1,4 +1,4 @@
-# Guidelines for using Objectives
+# for using Objectives
 
 <sig-toc></sig-toc>
 
