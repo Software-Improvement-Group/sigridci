@@ -46,6 +46,7 @@ class MarkdownReportTest(TestCase):
         }
 
         report = MaintainabilityMarkdownReport()
+        report.decorateLinks = False
         markdown = report.renderMarkdown("1234", feedback, self.options)
 
         expected = """
@@ -116,6 +117,7 @@ class MarkdownReportTest(TestCase):
         }
 
         report = MaintainabilityMarkdownReport()
+        report.decorateLinks = False
         report.generate("1234", feedback, self.options)
         markdown = report.renderMarkdown("1234", feedback, self.options)
 
@@ -131,6 +133,7 @@ class MarkdownReportTest(TestCase):
         ]
 
         report = MaintainabilityMarkdownReport()
+        report.decorateLinks = False
         table = report.renderRefactoringCandidatesTable(refactoringCandidates)
 
         expected = """
@@ -147,6 +150,7 @@ class MarkdownReportTest(TestCase):
         findings = [self.toRefactoringCandidate(f"aap-{i}", "introduced", "UNIT_SIZE", "HIGH") for i in range(1, 100)]
 
         report = MaintainabilityMarkdownReport()
+        report.decorateLinks = False
         table = report.renderRefactoringCandidatesTable(findings)
 
         expected = """
@@ -170,18 +174,20 @@ class MarkdownReportTest(TestCase):
         rc["occurrences"] = [self.toOccurrence(f"aap-{i}", i, i) for i in range(1, 10)]
 
         report = MaintainabilityMarkdownReport()
+        report.decorateLinks = False
         table = report.renderRefactoringCandidatesTable([rc])
 
         expected = """
             | Risk | System property | Location |
             |------|-----------------|----------|
-            | 🔴 | **Duplication**<br />(Introduced) | aap-1 (line 1-1)<br />aap-2 (line 2-2)<br />aap-3 (line 3-3)<br />+ 6 occurrences |
+            | 🔴 | **Duplication**<br />(Introduced) | aap-1 line 1-1<br />aap-2 line 2-2<br />aap-3 line 3-3<br />+ 6 occurrences |
         """
 
         self.assertEqual(table.strip(), inspect.cleandoc(expected).strip())
 
     def testNoRefactoringCanidatesTableWhenNoRefactoringCandidates(self):
         report = MaintainabilityMarkdownReport()
+        report.decorateLinks = False
         table = report.renderRefactoringCandidatesTable([])
 
         self.assertEqual(table, "")
@@ -195,6 +201,7 @@ class MarkdownReportTest(TestCase):
         }
 
         report = MaintainabilityMarkdownReport()
+        report.decorateLinks = False
         summary = report.renderSummary(feedback, self.options)
         expected = "**💭️  You did not change any files that are measured by Sigrid**"
 
@@ -209,6 +216,7 @@ class MarkdownReportTest(TestCase):
         }
 
         report = MaintainabilityMarkdownReport()
+        report.decorateLinks = False
         summary = report.renderSummary(feedback, self.options)
         expected = "**✅  You wrote maintainable code and achieved your objective of 3.5 stars**"
 
@@ -224,6 +232,7 @@ class MarkdownReportTest(TestCase):
         }
 
         report = MaintainabilityMarkdownReport()
+        report.decorateLinks = False
         summary = report.renderSummary(feedback, self.options)
         expected = "**↗️  You improved the maintainability of the code towards your objective of 3.5 stars**"
 
@@ -238,6 +247,7 @@ class MarkdownReportTest(TestCase):
         }
 
         report = MaintainabilityMarkdownReport()
+        report.decorateLinks = False
         summary = report.renderSummary(feedback, self.options)
         expected = "**⚠️  Your code did not improve maintainability towards your objective of 3.5 stars**"
 
@@ -252,6 +262,7 @@ class MarkdownReportTest(TestCase):
         }
 
         report = MaintainabilityMarkdownReport()
+        report.decorateLinks = False
         summary = report.renderSummary(feedback, self.options)
         expected = "**✅  You wrote maintainable code and achieved your objective of 3.5 stars**"
 
@@ -265,6 +276,7 @@ class MarkdownReportTest(TestCase):
         }
 
         report = MaintainabilityMarkdownReport()
+        report.decorateLinks = False
         summary = report.renderSummary(feedback, self.options)
         expected = "**⏸️️  Your maintainability remains unchanged and is still below your objective of 3.5 stars**"
 
@@ -288,6 +300,7 @@ class MarkdownReportTest(TestCase):
         }
 
         report = MaintainabilityMarkdownReport()
+        report.decorateLinks = False
         markdown = report.renderMarkdown("1234", feedback, self.options)
 
         expected = """
@@ -348,6 +361,7 @@ class MarkdownReportTest(TestCase):
         }
 
         report = MaintainabilityMarkdownReport()
+        report.decorateLinks = False
         markdown = report.renderMarkdown("1234", feedback, self.options)
 
         expected = """
@@ -380,6 +394,7 @@ class MarkdownReportTest(TestCase):
         }
 
         report = MaintainabilityMarkdownReport()
+        report.decorateLinks = False
         markdown = report.renderMarkdown("1234", feedback, self.options)
 
         expected = """
@@ -407,6 +422,7 @@ class MarkdownReportTest(TestCase):
         }
 
         report = MaintainabilityMarkdownReport()
+        report.decorateLinks = False
         markdown = report.renderMarkdown("1234", feedback, self.options)
 
         expected = """
@@ -553,6 +569,46 @@ class MarkdownReportTest(TestCase):
         """
 
         self.assertEqual(markdown.strip(), inspect.cleandoc(expected).strip())
+
+    @mock.patch.dict(os.environ, {
+        "CI_SERVER_URL" : "https://example.com",
+        "CI_PROJECT_PATH" : "aap/noot",
+        "CI_COMMIT_REF_NAME" : "mybranch"
+    })
+    def testMakeLinksForDuplicationOccurrences(self):
+        rc = self.toRefactoringCandidate(f"aap", "introduced", "DUPLICATION", "VERY_HIGH")
+        rc["occurrences"] = [self.toOccurrence(f"aap-{i}", i, i) for i in range(1, 3)]
+
+        report = MaintainabilityMarkdownReport()
+        table = report.renderRefactoringCandidatesTable([rc])
+
+        expected = """
+            | Risk | System property | Location |
+            |------|-----------------|----------|
+            | 🔴 | **Duplication**<br />(Introduced) | [aap-1 line 1-1](https://example.com/aap/noot/-/blob/mybranch/aap-1#L1)<br />[aap-2 line 2-2](https://example.com/aap/noot/-/blob/mybranch/aap-2#L2) |
+        """
+
+        self.assertEqual(table.strip(), inspect.cleandoc(expected).strip())
+
+    @mock.patch.dict(os.environ, {
+        "CI_SERVER_URL" : "https://example.com",
+        "CI_PROJECT_PATH" : "aap/noot",
+        "CI_COMMIT_REF_NAME" : "mybranch"
+    })
+    def testMakeLinksForUnitMetrics(self):
+        rc = self.toRefactoringCandidate(f"aap.py::noot", "introduced", "UNIT_SIZE", "VERY_HIGH")
+        rc["occurrences"] = [self.toOccurrence(f"aap.py", 0, 0)]
+
+        report = MaintainabilityMarkdownReport()
+        table = report.renderRefactoringCandidatesTable([rc])
+
+        expected = """
+            | Risk | System property | Location |
+            |------|-----------------|----------|
+            | 🔴 | **Unit Size**<br />(Introduced) | [aap.py<br />noot](https://example.com/aap/noot/-/blob/mybranch/aap.py#L0) |
+        """
+
+        self.assertEqual(table.strip(), inspect.cleandoc(expected).strip())
 
     def toRefactoringCandidate(self, subject, category, metric, riskCategory):
         return {
