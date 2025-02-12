@@ -98,7 +98,7 @@ class MaintainabilityMarkdownReport(Report, MarkdownRenderer):
 
         md += "## 📚 Remaining technical debt\n\n"
         md += f"> **{len(unchanged)}** refactoring candidates didn't get better or worse, but are still present in the code you touched.\n\n"
-        md += f"[View this system in Sigrid** to explore your technical debt]({sigridLink})\n\n"
+        md += f"[View this system in Sigrid to explore your technical debt]({sigridLink})\n\n"
         return md
 
     def renderRatingsTable(self, feedback):

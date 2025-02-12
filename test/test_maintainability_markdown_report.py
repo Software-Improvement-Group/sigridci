@@ -75,7 +75,7 @@ class MarkdownReportTest(TestCase):
             
             > **1** refactoring candidates didn't get better or worse, but are still present in the code you touched.
             
-            [View this system in Sigrid** to explore your technical debt](https://sigrid-says.com/aap/noot)
+            [View this system in Sigrid to explore your technical debt](https://sigrid-says.com/aap/noot)
             
             ## ⭐️ Sigrid ratings
             
@@ -327,7 +327,7 @@ class MarkdownReportTest(TestCase):
             
             > **1** refactoring candidates didn't get better or worse, but are still present in the code you touched.
             
-            [View this system in Sigrid** to explore your technical debt](https://sigrid-says.com/aap/noot)
+            [View this system in Sigrid to explore your technical debt](https://sigrid-says.com/aap/noot)
             
             ## ⭐️ Sigrid ratings
             
@@ -445,7 +445,7 @@ class MarkdownReportTest(TestCase):
             
             > **0** refactoring candidates didn't get better or worse, but are still present in the code you touched.
             
-            [View this system in Sigrid** to explore your technical debt](https://sigrid-says.com/aap/noot)
+            [View this system in Sigrid to explore your technical debt](https://sigrid-says.com/aap/noot)
             
             ## ⭐️ Sigrid ratings
             
@@ -513,7 +513,7 @@ class MarkdownReportTest(TestCase):
             
             > **0** refactoring candidates didn't get better or worse, but are still present in the code you touched.
             
-            [View this system in Sigrid** to explore your technical debt](https://sigrid-says.com/aap/noot)
+            [View this system in Sigrid to explore your technical debt](https://sigrid-says.com/aap/noot)
             
             ## ⭐️ Sigrid ratings
             
