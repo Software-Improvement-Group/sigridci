@@ -23,6 +23,7 @@ class OpenSourceHealthMarkdownReport(Report, MarkdownRenderer):
     MAX_FINDINGS = SecurityMarkdownReport.MAX_FINDINGS
 
     def __init__(self, objective = "CRITICAL"):
+        super().__init__()
         self.objective = objective
 
     def generate(self, analysisId, feedback, options):

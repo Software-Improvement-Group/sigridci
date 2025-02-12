@@ -98,7 +98,7 @@ class MaintainabilityMarkdownReport(Report, MarkdownRenderer):
 
         md += "## 📚 Remaining technical debt\n\n"
         md += f"> **{len(unchanged)}** refactoring candidates didn't get better or worse, but are still present in the code you touched.\n\n"
-        md += f"[View this system in Sigrid** to explore your technical debt]({sigridLink})\n\n"
+        md += f"[View this system in Sigrid to explore your technical debt]({sigridLink})\n\n"
         return md
 
     def renderRatingsTable(self, feedback):
@@ -143,14 +143,19 @@ class MaintainabilityMarkdownReport(Report, MarkdownRenderer):
         return md + "\n"
 
     def formatRefactoringCandidateLocation(self, rc):
-        location = rc["subject"]
+        label = html.escape(rc["subject"]).replace("::", "<br />")
+        if not rc.get("occurrences"):
+            return label
+        occurrences = rc["occurrences"][0:self.MAX_OCCURRENCES]
+        md = "<br />".join(self.formatRefactoringCandidateOccurrence(label, rc, occ) for occ in occurrences)
+        if len(rc["occurrences"]) > self.MAX_OCCURRENCES:
+            md += f"<br />+ {len(rc['occurrences']) - self.MAX_OCCURRENCES} occurrences"
+        return md
 
-        if rc.get("occurrences") and len(rc["occurrences"]) > self.MAX_OCCURRENCES:
-            formatOccurrence = lambda occ: f"{occ['filePath']} (line {occ['startLine']}-{occ['endLine']})"
-            occurrences = [formatOccurrence(occ) for occ in rc["occurrences"][0:self.MAX_OCCURRENCES]]
-            location = "\n".join(occurrences) + f"\n+ {len(rc['occurrences']) - self.MAX_OCCURRENCES} occurrences"
-
-        return html.escape(location).replace("::", "<br />").replace("\n", "<br />")
+    def formatRefactoringCandidateOccurrence(self, label, rc, occurrence):
+        if rc["metric"] == "DUPLICATION":
+            label = f"{occurrence['filePath']} line {occurrence['startLine']}-{occurrence['endLine']}"
+        return self.decorateLink(label, occurrence["filePath"], occurrence.get("startLine", 0))
 
     def getCapability(self):
         return "Maintainability"

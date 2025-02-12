@@ -30,7 +30,12 @@ class SecurityMarkdownReportTest(TestCase):
         with open(os.path.dirname(__file__) + "/testdata/security.json", encoding="utf-8", mode="r") as f:
             self.feedback = json.load(f)
 
-    @mock.patch.dict(os.environ, {"SIGRID_CI_MARKDOWN_HTML" : "false"})
+    @mock.patch.dict(os.environ, {
+        "SIGRID_CI_MARKDOWN_HTML" : "false",
+        "CI_SERVER_URL" : "https://example.com",
+        "CI_PROJECT_PATH" : "aap/noot",
+        "CI_COMMIT_REF_NAME" : "mybranch",
+    })
     def testCreateTableFromFindings(self):
         report = SecurityMarkdownReport()
         markdown = report.renderMarkdown("1234", self.feedback, self.options)
@@ -42,7 +47,7 @@ class SecurityMarkdownReportTest(TestCase):
             
             | Risk | File | Finding |
             |------|------|---------|
-            | ⚪️ | Security.java:33 | Weak Hash algorithm used |
+            | ⚪️ | [Security.java:33](https://example.com/aap/noot/-/blob/mybranch/Security.java#L33) | Weak Hash algorithm used |
             
             ----
             
@@ -57,6 +62,7 @@ class SecurityMarkdownReportTest(TestCase):
             noResults = json.load(f)
 
         report = SecurityMarkdownReport()
+        report.decorateLinks = False
         markdown = report.renderMarkdown("1234", noResults, self.options)
 
         expected = """
@@ -78,6 +84,7 @@ class SecurityMarkdownReportTest(TestCase):
             manyResults = json.load(f)
 
         report = SecurityMarkdownReport()
+        report.decorateLinks = False
         markdown = report.renderMarkdown("1234", manyResults, self.options)
 
         expected = """

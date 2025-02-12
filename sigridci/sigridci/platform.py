@@ -40,6 +40,30 @@ class Platform:
         return Platform.isGitHub() or Platform.isGitLab() or Platform.isAzureDevOps()
 
     @staticmethod
+    def createPullRequestFileURL(file, line=0):
+        # GitLab
+        if Platform.hasEnv("CI_SERVER_URL", "CI_PROJECT_PATH", "CI_COMMIT_REF_NAME"):
+            server = os.environ["CI_SERVER_URL"]
+            project = os.environ["CI_PROJECT_PATH"]
+            branch = os.environ["CI_COMMIT_REF_NAME"]
+            return f"{server}/{project}/-/blob/{branch}/{file}#L{line}"
+
+        # GitHub
+        if Platform.hasEnv("GITHUB_SERVER_URL", "GITHUB_REPOSITORY", "GITHUB_HEAD_REF"):
+            server = os.environ["GITHUB_SERVER_URL"]
+            repo = os.environ["GITHUB_REPOSITORY"]
+            branch = os.environ["GITHUB_HEAD_REF"]
+            return f"{server}/{repo}/blob/{branch}/{file}#L{line}"
+
+        # Azure DevOps
+        if Platform.hasEnv("SYSTEM_PULLREQUEST_SOURCEREPOSITORYURI", "SYSTEM_PULLREQUEST_SOURCEBRANCH"):
+            repo = os.environ["SYSTEM_PULLREQUEST_SOURCEREPOSITORYURI"]
+            branch = os.environ["SYSTEM_PULLREQUEST_SOURCEBRANCH"].split("/")[-1]
+            return f"{repo}?path={file}&version=GB{branch}&line={line}"
+
+        return None
+
+    @staticmethod
     def checkEnvironment():
         if sys.version_info.major == 2 or sys.version_info.minor < 7:
             print("Sigrid CI requires Python 3.7 or higher")
@@ -49,6 +73,10 @@ class Platform:
         if not Platform.isValidToken(token):
             print("Missing or incomplete environment variable SIGRID_CI_TOKEN")
             sys.exit(1)
+
+    @staticmethod
+    def hasEnv(*names):
+        return all(os.environ.get(name) for name in names)
 
     @staticmethod
     def isValidToken(token):
