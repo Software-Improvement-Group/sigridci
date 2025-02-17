@@ -26,7 +26,7 @@ The preferred method to upload source code is Sigrid CI, but SIG also offers SFT
 
 The upload server for SFTP uploads is **portal.sig.eu**. To make sure your uploaded files are secure, you will not receive full shell access to our upload server. Your account is jailed, such that other users of the upload server don't know its existence and cannot access it. Files uploaded to your account will be removed from your account after (at most) 3 days and removed from our backup after (at most) 6 weeks. The backup is encrypted using AES256. The disk your account resides on is encrypted using AES256 as well.
 
-The default folder you connect to is referred to as your home folder. You are free to create new folders in your home folder, but please be aware they will be removed after 3 days, just like uploaded files.
+The default folder you connect to is referred to as your home folder. You are free to create new files in your home folder, please be aware that we will keep the files for the last 4 upload dates.
 
 The requirements below must be fulfilled to ensure uploaded files can be processed automatically and correctly:
 
