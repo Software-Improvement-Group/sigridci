@@ -364,6 +364,7 @@ This configuration can be managed using the `--convert` [option in Sigrid CI](cl
 | Linc                | `Linc`                                                                  |
 | Lion                | `Lion`                                                                  |
 | Lion/COBOL          | `LionCobol`                                                             |
+| MicroFocus COBOL    | `MicroFocusCobol`                                                       |
 | MPS                 | `MPSLanguage`                                                           |
 | Nabsic              | `Nabsic`                                                                |
 | NetIQ IDM           | `NetIQIDM`                                                              |

@@ -20,16 +20,16 @@
 
 html, body {
     background-color: #ffffff;
-    color: var(--sig-paragraph-gray);
     margin: 0px;
     padding: 0px;
     height: 100%;
 }
 
-body, td, th {
+body, td, th, input[type=text] {
     font-family: "Noir Pro";
     font-size: 16px;
     line-height: 1.4;
+    color: var(--sig-paragraph-gray);
 }
 
 a {
@@ -111,7 +111,7 @@ ol li::before {
     top: 0;
 }
 
-.topBar .sigridLogo {
+.topBar .sigridLogo, .topBar .sigridLogo img {
     height: 24px;
 }
 
@@ -127,7 +127,7 @@ ol li::before {
     margin-left: auto;
 }
 
-.topBar a {
+.topBar .links a {
     border: 1px solid transparent;
     color: white;
     border-radius: 8px;
@@ -135,11 +135,11 @@ ol li::before {
     margin-left: 16px;
 }
 
-.topBar a:hover {
+.topBar .links a:hover {
     border: 1px solid var(--sig-white);
 }
 
-.topBar a:last-child {
+.topBar .links a:last-child {
     background-color: var(--sig-yellow);
     border: 1px solid var(--sig-yellow);
     color: var(--sig-dark-blue);
@@ -234,7 +234,7 @@ summary {
 }
 
 .container nav {
-    flex: 0 0 300px;
+    flex: 0 0 330px;
     background-color: var(--sig-light);
     border-right: 1px solid var(--sig-medium-gray);
 }
@@ -282,7 +282,7 @@ summary {
 
 .container nav .toc a.page {
     padding-left: 40px;
-    font-size: 12px;
+    font-size: 14px;
     color: var(--sig-text-gray);
     border-left: 4px solid transparent;
 }
@@ -296,9 +296,10 @@ summary {
     display: block;
 }
 
-.container nav .toc a:hover, nav .sigridLink:hover, .container nav .toc .category:hover, .toc .currentPage {
+.container nav .toc a:hover, .container nav .toc .currentPage, .container nav .toc .category:hover {
     background-color: var(--sig-highlight-gray);
     margin-right: -16px;
+    background-image: none;
 }
 
 .toc .currentPage {
@@ -428,7 +429,7 @@ sig-toc .h4 {
     border-radius: 8px;
     border: 1px solid var(--sig-medium-gray);
     margin-left: 24px;
-    padding: 6px 4px 6px 32px;
+    padding: 6px 4px 2px 32px;
     color: var(--sig-medium-gray);
 }
 
@@ -457,7 +458,7 @@ sig-toc .h4 {
     background-color: #FFFFFF;
     padding: 4px 8px 4px 8px;
     border-top: 1px solid #E0E3E7;
-    font-size: 12px;
+    font-size: 14px;
     width: 500px;
     color: var(--sig-blue);
     cursor: pointer;
