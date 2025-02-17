@@ -17,8 +17,8 @@ function getSectionHeaderURL(sectionHeader) {
 }
 
 function makeTableOfContents(toc, sectionHeaders) {
-    const title = document.createElement("strong");
-    title.innerText = "Table of contents";
+    const title = document.createElement("h4");
+    title.innerText = "On this page";
     toc.appendChild(title);
 
     const list = document.createElement("ul");
