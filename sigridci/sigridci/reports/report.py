@@ -63,6 +63,9 @@ class Report:
 
 
 class MarkdownRenderer:
+    def __init__(self):
+        self.decorateLinks = True
+
     def renderMarkdown(self, analysisId, feedback, options):
         raise NotImplementedError()
 
@@ -107,3 +110,9 @@ class MarkdownRenderer:
 
     def isObjectiveSuccess(self, feedback, options):
         raise NotImplementedError()
+
+    def decorateLink(self, label, file, line=0):
+        link = Platform.createPullRequestFileURL(file, line)
+        if not link or not self.decorateLinks:
+            return label
+        return f"[{label}]({link})"

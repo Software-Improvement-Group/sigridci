@@ -29,6 +29,7 @@ class SecurityMarkdownReport(Report, MarkdownRenderer):
     }
 
     def __init__(self, objective = "CRITICAL"):
+        super().__init__()
         self.objective = objective
 
     def generate(self, analysisId, feedback, options):
@@ -58,8 +59,9 @@ class SecurityMarkdownReport(Report, MarkdownRenderer):
             symbol = self.SEVERITY_SYMBOLS[self.getFindingSeverity(finding)]
             file = finding["locations"][0]["physicalLocation"]["artifactLocation"]["uri"]
             line = finding["locations"][0]["physicalLocation"]["region"]["startLine"]
+            link = self.decorateLink(f"{file}:{line}", file, line)
             description = finding["message"]["text"]
-            md += f"| {symbol} | {file}:{line} | {description} |\n"
+            md += f"| {symbol} | {link} | {description} |\n"
 
         if len(findings) > self.MAX_FINDINGS:
             md += f"| | ... and {len(findings) - self.MAX_FINDINGS} more findings | |\n"
