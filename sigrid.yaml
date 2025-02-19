@@ -1,4 +1,3 @@
-default_excludes: false
 languages:
   - name: "Python"
 thirdpartyfindings:

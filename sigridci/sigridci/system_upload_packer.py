@@ -36,6 +36,7 @@ class SystemUploadPacker:
         "build/",
         "dist/",
         "node_modules/",
+        "sigridci/",
         "sigrid-ci-output/",
         "sigridci/Dockerfile",
         "target/",
