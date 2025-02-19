@@ -109,6 +109,8 @@ ol li::before {
     position: sticky;
     z-index: 2;
     top: 0;
+    overflow-x: auto;
+    overflow-y: hidden;
 }
 
 .topBar .sigridLogo, .topBar .sigridLogo img {
@@ -125,6 +127,7 @@ ol li::before {
 
 .topBar .links {
     margin-left: auto;
+    text-wrap: nowrap;
 }
 
 .topBar .links a {
@@ -308,8 +311,8 @@ summary {
 
 article {
     flex: 1 1 auto;
-    padding: 50px 0px 30px 0px;
-    max-width: 900px;
+    padding: 50px 20px 30px;
+    max-width: 940px;
     margin-left: auto;
     margin-right: auto;
 }
