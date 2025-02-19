@@ -38,7 +38,6 @@ class SystemUploadPacker:
         "node_modules/",
         "sigridci/",
         "sigrid-ci-output/",
-        "sigridci/Dockerfile",
         "target/",
         ".angular/",
         ".git/",
