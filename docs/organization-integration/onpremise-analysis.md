@@ -7,7 +7,7 @@ This documentation covers on-premise Sigrid. It is not applicable for cloud-base
 
 ## Prerequisites
 
-Your development platform will need access to the [Sigrid on-premise Docker containers](onpremise-integration.md#obtaining-sigrid-on-premise).
+Your development platform will need access to the [Sigrid On-Premise Docker containers](onpremise-integration.md#obtaining-sigrid-on-premise).
 
 Each system to be analyzed needs an analysis configuration in the form of a file called
 `sigrid.yaml` in the root directory of the system. Typically, this configuration is maintained by
@@ -111,7 +111,7 @@ Notes:
 - `SYSTEM`: the name of this system (a lowercase string matching `[a-z][a-z0-9-]`). The default is 
   the project name of the current CI/CD project (e.g., the pre-configured `$CI_PROJECT_NAME` 
   variable in GitLab).
-- `SIGRID_URL`: (sub-)domain where this Sigrid on-premise deployment is hosted, e.g. 
+- `SIGRID_URL`: (sub-)domain where this Sigrid On-Premise deployment is hosted, e.g. 
   `https://sigrid.mycompany.com`.
 - `SIGRID_CI_TOKEN`: a personal access token created in Sigrid's UI.
 - `BUCKET`: name of the bucket in which analysis results are stored.
@@ -267,7 +267,7 @@ The following example shows how to start an ad-hoc analysis for a system located
       -ti softwareimprovementgroup/sigrid-multi-analyzer:$SIGRID_VERSION \
       --publish
       
-This requires you to have access to the [Sigrid on-premise Docker containers](onpremise-integration.md#obtaining-sigrid-on-premise).
+This requires you to have access to the [Sigrid On-Premise Docker containers](onpremise-integration.md#obtaining-sigrid-on-premise).
       
 The version tag (`$SIGRID_VERSION`) should match your version of Sigrid on-premise. 
 
