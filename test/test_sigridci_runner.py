@@ -356,6 +356,30 @@ class SigridCiRunnerTest(TestCase):
             # is invalid. If there is no system exit, this test will fail.
             runner.run()
 
+    def testCannotUseScopeFileInCombinationWithSubsystem(self):
+        self.createTempFile(self.tempDir, "sigrid.yaml", "default_excludes: true")
+
+        self.options.subsystem = "aap"
+
+        apiClient = MockApiClient(self.options)
+        apiClient.responses["/inboundresults/sig/aap/noot/ci/validate/v1"] = {"valid" : True}
+
+        runner = SigridCiRunner(self.options, apiClient)
+        runner.reports = []
+
+        with self.assertRaises(SystemExit):
+            runner.run()
+
+        expectedLog = [
+            "Using token ending in '****ummy'",
+            "Found system in Sigrid",
+            "--------------------------------------------------------------------------------",
+            "You cannot provide a scope configuration file for a subsystem.",
+            "--------------------------------------------------------------------------------"
+        ]
+
+        self.assertEqual(UploadLog.history, expectedLog)
+
     def testEmptyMetadataFileIsNotValid(self):
         self.createTempFile(self.tempDir, "sigrid-metadata.yaml", "")
 
