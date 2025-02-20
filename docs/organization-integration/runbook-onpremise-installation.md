@@ -109,13 +109,13 @@ imageTag: "1.0.20250109"
 Provide the tag of the containers you want to use.
 It is important that the tag matches the tags used in Sigrid's Helm chart: all components of Sigrid must always use the same version.
 ```
-onPremise: customer: "company"
+onPremise.customer: "company"
 ```
 Provide a technical shortname for your company/team.
 This will eventually be displayed in the address bar of Sigrid like so `https://YOUR-SIGRID_DOMAIN.COM/company`. 
 At a later stage, it needs to be provided as a "CUSTOMER" environment variable to the analysis job in your CI pipeline. 
 ```
-onPremise: administrators: - admin@company.com
+onPremise.administrators: - admin@company.com
 ```
 Provide an email address to bootstrap the very first user in Sigrid.
 The email address should match the user's email in the connected IdP.
@@ -130,18 +130,18 @@ This only needs to be provided if your internal container registry requires auth
 If your deployment is air-gapped, adjust the values below.
 
 ```
-image: registry: ""
-image: repository: ""nginxinc/nginx-unprivileged""
+image.registry: ""
+image.repository: ""nginxinc/nginx-unprivileged""
 ```
  Provide full URL to your registry and container image.
 ```
-image: tag: "mainline-alpine"
+image.tag: "mainline-alpine"
 ```
 Provide the tag you used to push this image to your registry. 
 
 #### auth-api:
 
-These values can be retrieved using the GUI or .well-known endpoint of your IdP.
+These values can be retrieved using the GUI or .well-known endpoint of your Identity Provider.
 
 ```
 config.oauth2.resourceServer.data.issuer-uri: "https://my-idp.example.com" 
@@ -157,13 +157,13 @@ inbound-api:
 
 No further context required.
 
-### *-service: 
+### *-service:
 
 The secrets provided below are configured to allow the Sigrid API to communicate with downstream APIs. If these secrets are modified, please ensure that they are updated across all three services, as they are associated with a single user.
 
 ```
-config: secret: data: username: "example"
-config: secret: data: password: "example" 
+config.secret.data.username: "example"
+config.secret.data.password: "example" 
 ```
 
 #### config.redis:
@@ -172,8 +172,8 @@ The secrets provided below are configured to allow Sigrid to communicate with Re
 They will work as is but can be modified.
 
 ```
-redis: data: password: "example-password" 
-redis: data: sentinel-password: "example-password" 
+redis.data.password: "example-password" 
+redis.data.sentinel-password: "example-password" 
 ```
 If you want to use the use a self-provided redis server, also adjust `host: ""`
 
