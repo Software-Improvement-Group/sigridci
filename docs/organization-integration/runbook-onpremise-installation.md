@@ -58,7 +58,7 @@ This documentation provides guidance on how to begin configuring on-premise Sigr
 
 ### (C) Prepare PostgreSQL
 
-1. In the helm chart directory, there are two initialization scripts.
+1. In the helm chart directory `sigrid-stack/files`, there are two initialization scripts called `sigriddb-init` and `authdb-init`.
 2. Using `psql`, run the two database initialization scripts that are found in sigrid-stack/files in the exact following order:
 - sigriddb-init
 - authdb-init
