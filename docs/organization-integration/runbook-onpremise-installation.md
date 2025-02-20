@@ -70,7 +70,7 @@ This documentation provides guidance on how to begin configuring on-premise Sigr
 When an OIDC compatible Identity Provider is available:
 1. Create an OIDC integration in your Identity Provider.
 2. Provide redirect URI (also called "login callback URL"). This is always `https://YOUR-SIGRID_DOMAIN.COM/rest/auth/login/oauth2/code/sigridmfa`, where `YOUR_SIGRID_DOMAIN.COM` is a placeholder for your (sub)domain on which the deployment of Sigrid will be hosted.
-3. Sigrid requires three attribute claims: email, first name, and last name. Please add any missing claims manually if not provided by your Identity Provider.
+3. Sigrid requires three attribute claims: email, family_name, and given_name. Please add any missing claims manually if not provided by your Identity Provider.
 4. Create a secret and store it securely in Kubernetes.
 
 ### (E) Prepare an RSA keypair for the signing of UWT tokens
