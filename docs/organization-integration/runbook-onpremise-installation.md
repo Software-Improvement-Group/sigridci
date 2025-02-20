@@ -225,6 +225,7 @@ You can now start inviting more people to Sigrid if so desired.
 - Create a test-branch.
 - Create a scope.
   - Create sigrid.yaml in the root of your test project.
+  - Scope documentation can be found [here](https://docs.sigrid-says.com/reference/analysis-scope-configuration.html)
   - Example:  
     ```
     languages:
