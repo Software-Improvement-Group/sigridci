@@ -105,7 +105,7 @@ Your copy of example-values.yaml however is enough to get a complete Sigrid depl
 
 #### global:
 ```
-ImageTag: "1.0.20250109"
+imageTag: "1.0.20250109"
 ```
 Provide the tag of the containers you want to use.
 It is important that the tag matches the tags used in Sigrid's Helm chart: all components of Sigrid must always use the same version.
