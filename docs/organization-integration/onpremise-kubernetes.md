@@ -308,7 +308,7 @@ UWTs are JSON web tokens and hence need to be signed. This means a keypair needs
 configured that Sigrid uses to sign UWTs. The steps are as follows:
 1. Create a 2048-bit RSA keypair, for instance using OpenSSL. The key needs to be in PEM format 
    (this format is easy to recognize: it is an ASCII file starting with `-----BEGIN PRIVATE 
-   KEY-----`). When using OpenSSL, the command is `openssl genrsa -out uwt_signing_key.pem 2048`.
+   KEY-----`). When using OpenSSL, the command is `openssl genpkey -out uwt_signing_key.pem -algorithm RSA -pkeyopt rsa_keygen_bits:2048`.
 2. Create a Kubernetes secret to hold this key. This secret needs to be an opaque secret with 
    two properties: `issuer-uri` (typically: `https://your-sigrid-domain`) and `private-key` (which 
    holds the keypair in PEM format created in step 1). 
