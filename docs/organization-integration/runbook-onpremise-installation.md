@@ -223,9 +223,9 @@ You can now start inviting more people to Sigrid if so desired.
 - Browse to your test project.
   - For efficient Sigrid setup, use a minimal test project in the CI pipeline. This allows for quicker iterations. Once configured correctly, you can analyze any project size.
 - Create a test-branch.
-- Create a scope.
+- Create an analysis scope.
   - Create sigrid.yaml in the root of your test project.
-  - Scope documentation can be found [here](https://docs.sigrid-says.com/reference/analysis-scope-configuration.html)
+  - Comprehensive documentation can found here: [Analysis-scope-configuration](../reference/analysis-scope-configuration.md)
   - Example:  
     ```
     languages:
