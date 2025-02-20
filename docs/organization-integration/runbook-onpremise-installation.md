@@ -176,7 +176,7 @@ They will work as is but can be modified.
 redis: data: password: "example-password" 
 redis: data: sentinel-password: "example-password" 
 ```
-If you want to use the use a self-provided redis server, also adjust host: ""
+If you want to use the use a self-provided redis server, also adjust `host: ""`
 
 ## Install helm chart
 We assume that your Kubernetes cluster is ready and that you have created a namespace. There are several ways to install a Helm chart. One common method is as follows: `helm upgrade --install <deployment-name> <helm-chart-path> -n <namespace> --values <values-file-path>`
