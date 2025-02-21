@@ -183,7 +183,6 @@ We assume that your Kubernetes cluster is ready and that you have created a name
 For example, to install the Sigrid deployment, you can use: `helm upgrade --install sigrid-onprem ./sigrid-stack -n sigrid --values ./sigrid-stack/custom-values.yaml`
 
 ## Check your Deployment
-In the unlikely event that the custom values file is filled in correctly the very first time, then proceed to "Setup a test analysis pipeline"
 
 - Monitor your deployment to see if any pods or services have problems starting
 - If so, please tail the logs and see what's going on.
