@@ -18,7 +18,7 @@ This documentation offers useful context on how to keep on-premise Sigrid up-to-
 We update container images daily for immediate improvements. The Helm chart is updated less frequently, only when new features or significant changes are released. This ensures you get rapid updates while maintaining chart stability.
 
 - Sigrid Docker containers: Monthly at minimum, ideally with each release.
-- Sigrid Helm chart: Quarterly, or whenever a new version is available.
+- Sigrid Helm chart: Quarterly, preferred bi-weekly, ideally whenever a new version is available.
 
 ## Update Instructions
 
