@@ -380,6 +380,20 @@ class SigridCiRunnerTest(TestCase):
 
         self.assertEqual(UploadLog.history, expectedLog)
 
+    def testCanUseScopeFileForReservedRootSubsystemName(self):
+        self.createTempFile(self.tempDir, "sigrid.yaml", "default_excludes: true")
+
+        self.options.subsystem = "root"
+
+        apiClient = MockApiClient(self.options)
+        apiClient.responses["/inboundresults/sig/aap/noot/ci/validate/v1"] = {"valid" : True}
+
+        runner = SigridCiRunner(self.options, apiClient)
+        runner.reports = []
+        runner.run()
+
+        self.assertNotIn("You cannot provide a scope configuration file for a subsystem.", UploadLog.history)
+
     def testEmptyMetadataFileIsNotValid(self):
         self.createTempFile(self.tempDir, "sigrid-metadata.yaml", "")
 
