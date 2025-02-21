@@ -153,7 +153,7 @@ config.oauth2.provider.sigridmfa.issuer-uri: "https://my-idp.example.com"
 
 No further context required.
 
-inbound-api:
+#### inbound-api:
 
 No further context required.
 
