@@ -22,7 +22,6 @@ html, body {
     background-color: #ffffff;
     margin: 0px;
     padding: 0px;
-    height: 100%;
 }
 
 body, td, th, input[type=text] {
@@ -161,17 +160,20 @@ blockquote {
     margin-left: 2px;
 }
 
+aside, .attention, .warning, .faq {
+    max-width: 750px;
+    padding: 12px 20px 12px 50px;
+    margin: 16px auto 16px auto;
+    display: block;
+    border-radius: 8px;
+}
+
 aside, .attention {
     background-image: url("/images/icon-attention.svg");
     background-color: #eff5fa;
     background-repeat: no-repeat;
     background-position: 12px 12px;
     background-size: 24px;
-    padding: 12px 20px 12px 50px;
-    margin-top: 30px;
-    margin-bottom: 30px;
-    display: block;
-    border-radius: 8px;
     border: 1px solid #b2dafb;
     color: #1296f3;
 }
@@ -189,11 +191,6 @@ aside::before, .attention::before {
     background-repeat: no-repeat;
     background-position: 12px 14px;
     background-size: 24px;
-    padding: 12px 20px 12px 50px;
-    margin-top: 30px;
-    margin-bottom: 30px;
-    display: block;
-    border-radius: 8px;
     border: 1px solid #e7adff;
     color: #b501e4;
 }
@@ -211,11 +208,6 @@ aside::before, .attention::before {
     background-repeat: no-repeat;
     background-position: 12px 13px;
     background-size: 24px;
-    padding: 12px 20px 12px 50px;
-    margin-top: 30px;
-    margin-bottom: 30px;
-    display: block;
-    border-radius: 8px;
     border: 1px solid #fdd3d3;
     color: #df4949;
 }
@@ -379,6 +371,7 @@ thead tr {
 th {
     color: #ffffff;
     text-align: left;
+    font-weight: 400;
 }
 
 td, th {
