@@ -3,7 +3,7 @@
 This documentation covers on-premise Sigrid. It is not applicable for cloud-based Sigrid.
 {: .attention }
 
-This documentation provides guidance on how to keep on-premise Sigrid up-to-date, serving as a helpful starting point.
+This documentation offers useful context on how to keep on-premise Sigrid up-to-date, making it an excellent starting point for ongoing maintenance.
 
 <sig-toc></sig-toc>
 

@@ -3,7 +3,7 @@
 This documentation covers on-premise Sigrid. It is not applicable for cloud-based Sigrid.
 {: .attention }
 
-This documentation provides guidance on how to begin configuring on-premise Sigrid, serving as a helpful starting point.
+This documentation offers useful context on how to start configuring on-premise Sigrid, making it an excellent starting point for those unsure where to begin.
 
 <sig-toc></sig-toc>
 

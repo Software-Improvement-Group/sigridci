@@ -3,7 +3,7 @@
 This documentation covers on-premise Sigrid. It is not applicable for cloud-based Sigrid.
 {: .attention }
 
-The following runbooks provides guidance on how to configuring and keep on-premise Sigrid up-to-date, serving as a helpful starting point.
+The following runbooks offer simplified steps and useful context for configuring and maintaining your on-premise Sigrid, providing an excellent starting point if you're unsure where to begin.
 
 <sig-toc></sig-toc>
 
