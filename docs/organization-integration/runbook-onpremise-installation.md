@@ -204,7 +204,8 @@ You can now start inviting more people to Sigrid if so desired.
 ### Setup your project
 
 - Login to e.g. GitLab.
-- Setup org, group or project secrets depending on your use-case.
+- Preferably, set up project secrets based on your use case.  
+*You can also set them up at the organization or group level, but ensure you are not unintentionally overriding any default project variables in the process.*
   - `CUSTOMER: "company_name"`
   - `SIGRID_CI_TOKEN: "Sigrid Token"BUCKET: "some-bucket"`   
   The name of the bucket you've created.
