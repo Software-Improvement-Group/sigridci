@@ -29,7 +29,7 @@ You can find more information on how to set up this development process integrat
 ## Sigrid REST API
 
 In addition to the [Sigrid user interface at sigrid-says.com](https://sigrid-says.com), you can also consume Sigrid's data via the Sigrid REST API. 
-You can find more information on how to use this API in the [Sigrid documentation](https://docs.sigrid-says.com/reference/sigrid-api-documentation.html). 
+You can find more information on how to use this API in the [Sigrid documentation](https://docs.sigrid-says.com/integrations/sigrid-api-documentation.html). 
 
 ## Contact and support
 

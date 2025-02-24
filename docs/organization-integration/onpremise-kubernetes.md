@@ -7,7 +7,7 @@ This documentation describes how to configure on-premise Sigrid, so you can depl
 using a [Helm](https://helm.sh) chart provided by SIG. 
 
 To use this Helm chart, it needs to be configured by providing your own `values.yaml`, as is typical 
-for Helm. The current page describes how to deploy Sigrid on-premise in terms of the available 
+for Helm. The current page describes how to deploy Sigrid On-Premise in terms of the available 
 configuration options in `values.yaml`. It is based on the `example-values.yaml` file available 
 in the Helm chart, which provides examples of typical configuration values.
 
@@ -55,7 +55,7 @@ The Helm chart gives precedence to the values for registry and repository set sp
 component and falls back to the global `imageRegistry` if needed. Keep in mind that some 
 sub-charts behave in a different way, or do not honor `imageRegistry` at all. 
 
-For air-gapped Sigrid on-premise deployments, images are typically pulled regularly to an 
+For air-gapped Sigrid On-Premise deployments, images are typically pulled regularly to an 
 internal image registry first; the (air-gapped) Kubernetes cluster then pulls from this registry.
 In this case, it is best to point the global `imageRegistry` setting to the internal image registry.
 It is, however, always possible to set the registry per component of Sigrid by using one or more 
@@ -68,7 +68,7 @@ sigrid-api:
     tag: "some-tag"
 ```
 
-Sigrid on-premise needs access to the following images published on [SIG's private Docker Hub]
+Sigrid On-Premise needs access to the following images published on [SIG's private Docker Hub]
 (https://hub.docker.com/u/softwareimprovementgroup):
 
 - `softwareimprovementgroup/ai-explanation-service`
@@ -308,7 +308,7 @@ UWTs are JSON web tokens and hence need to be signed. This means a keypair needs
 configured that Sigrid uses to sign UWTs. The steps are as follows:
 1. Create a 2048-bit RSA keypair, for instance using OpenSSL. The key needs to be in PEM format 
    (this format is easy to recognize: it is an ASCII file starting with `-----BEGIN PRIVATE 
-   KEY-----`). When using OpenSSL, the command is `openssl genrsa -out uwt_signing_key.pem 2048`.
+   KEY-----`). When using OpenSSL, the command is `openssl genpkey -out uwt_signing_key.pem -algorithm RSA -pkeyopt rsa_keygen_bits:2048`.
 2. Create a Kubernetes secret to hold this key. This secret needs to be an opaque secret with 
    two properties: `issuer-uri` (typically: `https://your-sigrid-domain`) and `private-key` (which 
    holds the keypair in PEM format created in step 1). 
