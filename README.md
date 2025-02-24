@@ -1,8 +1,8 @@
-<img src="docs/images/sigrid-logo-black.svg" width="200" align="center" />
+<img src="docs/images/sigrid-logo-black.svg" width="150" align="center" />
 
 # Sigrid | Software Assurance Platform
 
-[Sigrid](https://www.softwareimprovementgroup.com/solutions/sigrid-software-assurance-platform/) helps you to improve your software by measuring your system's code quality, and then compares the results against a benchmark of 15,000 industry systems to give you concrete advice on areas where you can improve.
+[Sigrid](https://www.softwareimprovementgroup.com/solutions/sigrid-software-assurance-platform/) helps you to improve your software by measuring your system's code quality, and then compares the results against a benchmark of 10,000 industry systems to give you concrete advice on areas where you can improve.
 
 <img src="docs/images/overall-portfolio-dashboard.png" width="700" align="center" />
 
@@ -12,7 +12,7 @@ Sigrid performs code quality checks that have been designed by the [Software Imp
 
 This repository hosts the Sigrid documentation, which you can access via [docs.sigrid-says.com](https://docs.sigrid-says.com). 
 
-<img src="docs/images/documentation-screenshot.png" width="700" align="center" />
+<img src="docs/images/documentation-screenshot.png" width="600" align="center" />
 
 We encourage collaboration, so you are welcome to use GitHib features like issues or pull requests if you want to request additions or changes to the documentation.
 

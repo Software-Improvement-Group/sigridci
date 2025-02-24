@@ -5,8 +5,8 @@
         <title>Sigrid documentation</title>
         <meta name="viewport" content="initial-scale=1.0, width=device-width, user-scalable=no">
         <link rel="shortcut icon" type="image/x-icon" href="/images/favicon.png" />
-        <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,400;0,700;1,400&display=swap" />
         <style>
+            {% include sigfonts.css %}
             {% include stylesheet.css %}
         </style>
         
@@ -15,13 +15,35 @@
     </head>
     
     <body>
+        <div class="topBar">
+            <a href="/" class="sigridLogo">
+                <img src="/images/sigrid-logo-white.svg" />
+            </a>
+            <span class="separator"></span>
+            Documentation
+            <div class="links">
+                <a href="https://academy.sigrid-says.com" target="_blank">SIG Academy</a>
+                <a href="https://community.sigrid-says.com/s/about-sphere" target="_blank">Sphere Community</a>
+                <a href="mailto:support@softwareimprovementgroup.com" target="_blank">Contact support</a>
+                <a href="https://softwareimprovementgroup.com" target="_blank">Sigrid website</a>
+                <a href="https://github.com/Software-Improvement-Group/sigridci" target="_blank">Contribute to docs</a>
+                <a href="https://sigrid-says.com" target="_blank">Sign in</a>
+            </div>
+        </div>
+
         <div class="container">
             {% include menu.html %}
             <article>
                 {{ content }}
+
+                <div class="footer">
+                    <a href="https://www.softwareimprovementgroup.com/wp-content/uploads/SIG_SigridTermsOfUseConfidentiality.pdf" target="_blank">Terms of use</a>
+                    <a href="https://www.softwareimprovementgroup.com/wp-content/uploads/SIG_Sigrid_Privacy_Statement.pdf" target="_blank">Privacy statement</a>
+                    <a href="https://softwareimprovementgroup.com" target="_blank">&copy; 2025 Software Improvement Group</a>
+                </div>
             </article>
         </div>
-        
+
         <script>
             {% include accordion-menu.js %}
             {% include section-links.js %}
