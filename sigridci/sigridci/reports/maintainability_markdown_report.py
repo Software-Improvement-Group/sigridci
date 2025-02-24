@@ -49,7 +49,7 @@ class MaintainabilityMarkdownReport(Report, MarkdownRenderer):
             if Platform.isHtmlMarkdownSupported():
                 md += "<details><summary>Show details</summary>\n\n"
             md += f"Sigrid compared your code against the baseline of {self.formatBaseline(feedback)}.\n\n"
-            md += self.renderRefactoringCandidates(feedback, sigridLink)
+            md += self.renderRefactoringCandidates(feedback, options)
             md += "## ⭐️ Sigrid ratings\n\n"
             md += self.renderRatingsTable(feedback)
             md += self.renderReactionSection(options)
@@ -79,7 +79,7 @@ class MaintainabilityMarkdownReport(Report, MarkdownRenderer):
         else:
             return "💭️  You did not change any files that are measured by Sigrid"
 
-    def renderRefactoringCandidates(self, feedback, sigridLink):
+    def renderRefactoringCandidates(self, feedback, options):
         good = self.filterRefactoringCandidates(feedback, ["improved"])
         bad = self.filterRefactoringCandidates(feedback, ["introduced", "worsened"])
         unchanged = self.filterRefactoringCandidates(feedback, ["unchanged"])
@@ -87,18 +87,18 @@ class MaintainabilityMarkdownReport(Report, MarkdownRenderer):
         md = ""
         md += "## 👍 What went well?\n\n"
         md += f"> You fixed or improved **{len(good)}** refactoring candidates.\n\n"
-        md += self.renderRefactoringCandidatesTable(good) + "\n"
+        md += self.renderRefactoringCandidatesTable(good, options) + "\n"
 
         md += "## 👎 What could be better?\n\n"
         if len(bad) > 0:
             md += f"> Unfortunately, **{len(bad)}** refactoring candidates were introduced or got worse.\n\n"
-            md += self.renderRefactoringCandidatesTable(bad) + "\n"
+            md += self.renderRefactoringCandidatesTable(bad, options) + "\n"
         else:
             md += "> You did not introduce any technical debt during your changes, great job!\n\n"
 
         md += "## 📚 Remaining technical debt\n\n"
         md += f"> **{len(unchanged)}** refactoring candidates didn't get better or worse, but are still present in the code you touched.\n\n"
-        md += f"[View this system in Sigrid to explore your technical debt]({sigridLink})\n\n"
+        md += f"[View this system in Sigrid to explore your technical debt]({self.getSigridUrl(options)})\n\n"
         return md
 
     def renderRatingsTable(self, feedback):
@@ -119,7 +119,7 @@ class MaintainabilityMarkdownReport(Report, MarkdownRenderer):
     def filterRefactoringCandidates(self, feedback, categories):
         return [rc for rc in feedback["refactoringCandidates"] if rc["category"] in categories]
 
-    def renderRefactoringCandidatesTable(self, refactoringCandidates):
+    def renderRefactoringCandidatesTable(self, refactoringCandidates, options):
         if len(refactoringCandidates) == 0:
             return ""
 
@@ -134,7 +134,7 @@ class MaintainabilityMarkdownReport(Report, MarkdownRenderer):
             symbol = self.RISK_CATEGORY_SYMBOLS[rc["riskCategory"]]
             metricName = self.formatMetricName(rc["metric"])
             metricInfo = f"**{metricName}**<br />({rc['category'].title()})"
-            location = self.formatRefactoringCandidateLocation(rc)
+            location = self.formatRefactoringCandidateLocation(rc, options)
             md += f"| {symbol} | {metricInfo} | {location} |\n"
 
         if len(sortedRefactoringCandidates) > self.MAX_SHOWN_FINDINGS:
@@ -142,20 +142,20 @@ class MaintainabilityMarkdownReport(Report, MarkdownRenderer):
 
         return md + "\n"
 
-    def formatRefactoringCandidateLocation(self, rc):
+    def formatRefactoringCandidateLocation(self, rc, options):
         label = html.escape(rc["subject"]).replace("::", "<br />")
         if not rc.get("occurrences"):
             return label
         occurrences = rc["occurrences"][0:self.MAX_OCCURRENCES]
-        md = "<br />".join(self.formatRefactoringCandidateOccurrence(label, rc, occ) for occ in occurrences)
+        md = "<br />".join(self.formatRefactoringCandidateOccurrence(options, label, rc, occ) for occ in occurrences)
         if len(rc["occurrences"]) > self.MAX_OCCURRENCES:
             md += f"<br />+ {len(rc['occurrences']) - self.MAX_OCCURRENCES} occurrences"
         return md
 
-    def formatRefactoringCandidateOccurrence(self, label, rc, occurrence):
+    def formatRefactoringCandidateOccurrence(self, options, label, rc, occurrence):
         if rc["metric"] == "DUPLICATION":
             label = f"{occurrence['filePath']} line {occurrence['startLine']}-{occurrence['endLine']}"
-        return self.decorateLink(label, occurrence["filePath"], occurrence.get("startLine", 0))
+        return self.decorateLink(options, label, occurrence["filePath"], occurrence.get("startLine", 0))
 
     def getCapability(self):
         return "Maintainability"

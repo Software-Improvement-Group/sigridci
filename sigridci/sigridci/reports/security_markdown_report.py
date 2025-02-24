@@ -38,7 +38,7 @@ class SecurityMarkdownReport(Report, MarkdownRenderer):
 
     def renderMarkdown(self, analysisId, feedback, options):
         findings = list(self.getRelevantFindings(feedback))
-        details = self.generateFindingsTable(findings)
+        details = self.generateFindingsTable(findings, options)
         sigridLink = f"{self.getSigridUrl(options)}/-/security"
         return self.renderMarkdownTemplate(feedback, options, details, sigridLink)
 
@@ -48,7 +48,7 @@ class SecurityMarkdownReport(Report, MarkdownRenderer):
         else:
             return f"⚠️  You did not meet your objective of having no {self.objective.lower()} security findings"
 
-    def generateFindingsTable(self, findings):
+    def generateFindingsTable(self, findings, options):
         if len(findings) == 0:
             return ""
 
@@ -59,7 +59,7 @@ class SecurityMarkdownReport(Report, MarkdownRenderer):
             symbol = self.SEVERITY_SYMBOLS[self.getFindingSeverity(finding)]
             file = finding["locations"][0]["physicalLocation"]["artifactLocation"]["uri"]
             line = finding["locations"][0]["physicalLocation"]["region"]["startLine"]
-            link = self.decorateLink(f"{file}:{line}", file, line)
+            link = self.decorateLink(options, f"{file}:{line}", file, line)
             description = finding["message"]["text"]
             md += f"| {symbol} | {link} | {description} |\n"
 
