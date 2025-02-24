@@ -415,6 +415,7 @@ In addition to supporting 300+ technologies, Sigrid also supports various open s
 | PyPi                  | Python                 |
 | RubyGems              | Ruby                   |
 | SBT                   | Scala                  |
+| SwiftPM               | Swift                  |
 | Unmanaged JAR files   | Java                   |
 | Unmanaged DLL files   | C#                     |
 | Unmanaged JS files    | JavaScript             |
@@ -452,16 +453,16 @@ Note this section only described *third party* security analysis analyzers. The 
 
 ## Supported software quality standards
 
-| Software quality standard | Relevant for capabilities |
-|---------------------------|---------------------------|
-| [ISO 25010](https://iso25000.com/index.php/en/iso-25000-standards/iso-25010) | Maintainability, Architecture, Security, Reliability |
-| [SIG Security Model](https://softwareimprovementgroup.com/wp-content/uploads/SIG-Evaluation-Criteria-Security.pdf) | Security |
-| [OWASP Top 10](https://owasp.org/www-project-top-ten/) | Security |
-| [ISO 5055](https://www.iso.org/standard/80623.html) | Security, Reliability |
-| [CWE Top 25](https://cwe.mitre.org/top25/) | Security |
-| [PCI DSS 4.0](https://blog.pcisecuritystandards.org/pci-dss-v4-0-resource-hub) | Security |
-| [OWASP ASVS 4.0](https://owasp.org/www-pdf-archive/OWASP_Application_Security_Verification_Standard_4.0-en.pdf) | Security |
-| [OWASP Low-code/No-code Top 10](https://owasp.org/www-project-top-10-low-code-no-code-security-risks/) | Security |
+| Software quality standard                                                                                          | Relevant for capabilities                            |
+|--------------------------------------------------------------------------------------------------------------------|------------------------------------------------------|
+| [ISO 25010](https://iso25000.com/index.php/en/iso-25000-standards/iso-25010)                                       | Maintainability, Architecture, Security, Reliability |
+| [SIG Security Model](https://softwareimprovementgroup.com/wp-content/uploads/SIG-Evaluation-Criteria-Security.pdf) | Security                                             |
+| [OWASP Top 10](https://owasp.org/www-project-top-ten/)                                                             | Security                                             |
+| [ISO 5055](https://www.iso.org/standard/80623.html)                                                                | Security, Reliability                                |
+| [CWE Top 25](https://cwe.mitre.org/top25/)                                                                         | Security                                             |
+| [PCI DSS 4.0](https://blog.pcisecuritystandards.org/pci-dss-v4-0-resource-hub)                                     | Security                                             |
+| [OWASP ASVS 4.0](https://owasp.org/www-pdf-archive/OWASP_Application_Security_Verification_Standard_4.0-en.pdf)    | Security                                             |
+| [OWASP Low-code/No-code Top 10](https://owasp.org/www-project-top-10-low-code-no-code-security-risks/)             | Security                                             |
 
 ## Requesting additional technology support
 

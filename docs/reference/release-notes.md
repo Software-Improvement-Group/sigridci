@@ -6,6 +6,7 @@ SIG uses [continuous delivery](https://en.wikipedia.org/wiki/Continuous_delivery
 ### February 24, 2025
 
 - **Sigrid CI:** The feedback in Sigrid CI will now directly link to the corresponding files in your development platform. This allows you to quickly go back-and-forth between Sigrid feedback and the actual code changes. This feature is supported on GitHub, GitLab, and Azure DevOps.
+- **Technology support:** Added support for [SwiftPM](https://www.swift.org/documentation/package-manager/). You will now be able to see your SwiftPM dependencies in Sigrid's Open Source Health page, including freshness and license information. Vulnerability information is not yet available, as there is no "official" central registry that publishes vulnerability data for SwiftPM. 
 - **Documentation:** You might have noticed this documentation looks a bit different to what you're used to. The documentation now uses SIG's new brand identity, which you'll also see appear across Sigrid later in 2025.
 
 ### February 10, 2025

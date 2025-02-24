@@ -96,6 +96,9 @@ class SigridCiRunner:
     def validateConfigurationFiles(self):
         scope = self.options.readScopeFile()
         if scope is not None:
+            if self.options.subsystem not in (None, "", "root", "scopefile"):
+                UploadLog.log("Warning: You cannot provide a scope configuration file for a subsystem, it will be ignored.")
+
             self.validateConfiguration(lambda: self.apiClient.validateScopeFile(scope), "scope configuration file")
 
         metadataFile = self.options.readMetadataFile()
