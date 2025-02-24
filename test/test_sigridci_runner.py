@@ -366,19 +366,10 @@ class SigridCiRunnerTest(TestCase):
 
         runner = SigridCiRunner(self.options, apiClient)
         runner.reports = []
+        runner.run()
 
-        with self.assertRaises(SystemExit):
-            runner.run()
-
-        expectedLog = [
-            "Using token ending in '****ummy'",
-            "Found system in Sigrid",
-            "--------------------------------------------------------------------------------",
-            "You cannot provide a scope configuration file for a subsystem.",
-            "--------------------------------------------------------------------------------"
-        ]
-
-        self.assertEqual(UploadLog.history, expectedLog)
+        self.assertIn("Warning: You cannot provide a scope configuration file for a subsystem, it will be ignored.",
+            UploadLog.history)
 
     def testCanUseScopeFileForReservedRootSubsystemName(self):
         self.createTempFile(self.tempDir, "sigrid.yaml", "default_excludes: true")
@@ -392,7 +383,8 @@ class SigridCiRunnerTest(TestCase):
         runner.reports = []
         runner.run()
 
-        self.assertNotIn("You cannot provide a scope configuration file for a subsystem.", UploadLog.history)
+        self.assertNotIn("Warning: You cannot provide a scope configuration file for a subsystem, it will be ignored.",
+            UploadLog.history)
 
     def testEmptyMetadataFileIsNotValid(self):
         self.createTempFile(self.tempDir, "sigrid-metadata.yaml", "")
