@@ -18,6 +18,10 @@
     --sig-border-gray: #dfdfdf;
 }
 
+html {
+    scroll-padding-top: 70px;
+}
+
 html, body {
     background-color: #ffffff;
     margin: 0px;
