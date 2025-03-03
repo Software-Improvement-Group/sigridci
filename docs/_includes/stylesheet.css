@@ -236,6 +236,10 @@ summary {
     flex: 0 0 330px;
     background-color: var(--sig-light);
     border-right: 1px solid var(--sig-medium-gray);
+    max-height: 100vh;
+    overflow-y: auto;
+    position: sticky;
+    top: 48px;
 }
 
 .container nav img.logo {
