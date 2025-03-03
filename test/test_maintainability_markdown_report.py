@@ -134,7 +134,7 @@ class MarkdownReportTest(TestCase):
 
         report = MaintainabilityMarkdownReport()
         report.decorateLinks = False
-        table = report.renderRefactoringCandidatesTable(refactoringCandidates)
+        table = report.renderRefactoringCandidatesTable(refactoringCandidates, self.options)
 
         expected = """
             | Risk | System property | Location |
@@ -151,7 +151,7 @@ class MarkdownReportTest(TestCase):
 
         report = MaintainabilityMarkdownReport()
         report.decorateLinks = False
-        table = report.renderRefactoringCandidatesTable(findings)
+        table = report.renderRefactoringCandidatesTable(findings, self.options)
 
         expected = """
             | Risk | System property | Location |
@@ -175,7 +175,7 @@ class MarkdownReportTest(TestCase):
 
         report = MaintainabilityMarkdownReport()
         report.decorateLinks = False
-        table = report.renderRefactoringCandidatesTable([rc])
+        table = report.renderRefactoringCandidatesTable([rc], self.options)
 
         expected = """
             | Risk | System property | Location |
@@ -188,7 +188,7 @@ class MarkdownReportTest(TestCase):
     def testNoRefactoringCanidatesTableWhenNoRefactoringCandidates(self):
         report = MaintainabilityMarkdownReport()
         report.decorateLinks = False
-        table = report.renderRefactoringCandidatesTable([])
+        table = report.renderRefactoringCandidatesTable([], self.options)
 
         self.assertEqual(table, "")
 
@@ -580,7 +580,7 @@ class MarkdownReportTest(TestCase):
         rc["occurrences"] = [self.toOccurrence(f"aap-{i}", i, i) for i in range(1, 3)]
 
         report = MaintainabilityMarkdownReport()
-        table = report.renderRefactoringCandidatesTable([rc])
+        table = report.renderRefactoringCandidatesTable([rc], self.options)
 
         expected = """
             | Risk | System property | Location |
@@ -600,12 +600,34 @@ class MarkdownReportTest(TestCase):
         rc["occurrences"] = [self.toOccurrence(f"aap.py", 0, 0)]
 
         report = MaintainabilityMarkdownReport()
-        table = report.renderRefactoringCandidatesTable([rc])
+        table = report.renderRefactoringCandidatesTable([rc], self.options)
 
         expected = """
             | Risk | System property | Location |
             |------|-----------------|----------|
             | 🔴 | **Unit Size**<br />(Introduced) | [aap.py<br />noot](https://example.com/aap/noot/-/blob/mybranch/aap.py#L0) |
+        """
+
+        self.assertEqual(table.strip(), inspect.cleandoc(expected).strip())
+
+    @mock.patch.dict(os.environ, {
+        "CI_SERVER_URL" : "https://example.com",
+        "CI_PROJECT_PATH" : "aap/noot",
+        "CI_COMMIT_REF_NAME" : "mybranch"
+    })
+    def testNormalizeLinksForSubsystems(self):
+        rc = self.toRefactoringCandidate(f"jan/aap.py::noot", "introduced", "UNIT_SIZE", "VERY_HIGH")
+        rc["occurrences"] = [self.toOccurrence(f"jan/aap.py", 0, 0)]
+
+        self.options.subsystem = "jan"
+
+        report = MaintainabilityMarkdownReport()
+        table = report.renderRefactoringCandidatesTable([rc], self.options)
+
+        expected = """
+            | Risk | System property | Location |
+            |------|-----------------|----------|
+            | 🔴 | **Unit Size**<br />(Introduced) | [jan/aap.py<br />noot](https://example.com/aap/noot/-/blob/mybranch/aap.py#L0) |
         """
 
         self.assertEqual(table.strip(), inspect.cleandoc(expected).strip())
