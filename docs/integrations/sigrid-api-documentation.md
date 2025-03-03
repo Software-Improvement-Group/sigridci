@@ -177,34 +177,34 @@ Mimetype: `application/vnd.cyclonedx+json`
                     }
                 ]
             }
+        ],
+        "properties" : [
+          {
+            "name" : "sigrid:ratings:system",
+            "value" : "3.89"
+          },
+          {
+            "name" : "sigrid:ratings:vulnerability",
+            "value" : "3.2976190476190474"
+          },
+          {
+            "name" : "sigrid:ratings:licenses",
+            "value" : "5.5"
+          },
+          {
+            "name" : "sigrid:ratings:freshness",
+            "value" : "1.4174311926605505"
+          },
+          {
+            "name" : "sigrid:ratings:management",
+            "value" : "3.189908256880734"
+          },
+          {
+            "name" : "sigrid:ratings:activity",
+            "value" : "1.3944954128440368"
+          }
         ]
     },
-    "properties" : [
-      {
-        "name" : "sigrid:ratings:system",
-        "value" : "3.89"
-      },
-      {
-        "name" : "sigrid:ratings:vulnerability",
-        "value" : "3.2976190476190474"
-      },
-      {
-        "name" : "sigrid:ratings:licenses",
-        "value" : "5.5"
-      },
-      {
-        "name" : "sigrid:ratings:freshness",
-        "value" : "1.4174311926605505"
-      },
-      {
-        "name" : "sigrid:ratings:management",
-        "value" : "3.189908256880734"
-      },
-      {
-        "name" : "sigrid:ratings:activity",
-        "value" : "1.3944954128440368"
-      }
-    ],
     "components": [
         {
             "group": "",
