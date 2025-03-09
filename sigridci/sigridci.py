@@ -98,7 +98,7 @@ if __name__ == "__main__":
     if not options.isValidSystemName():
         maxNameLength = PublishOptions.SYSTEM_NAME_LENGTH.stop - (len(args.customer) + 1)
         print(f"Invalid system name, system name should match '{PublishOptions.SYSTEM_NAME_PATTERN.pattern}' "
-              f"and be {PublishOptions.SYSTEM_NAME_LENGTH.start} to {maxNameLength} characters long (inclusive).")
+              f", not completely numeric, and be {PublishOptions.SYSTEM_NAME_LENGTH.start} to {maxNameLength} characters long (inclusive).")
         sys.exit(1)
 
     UploadLog.log("Starting Sigrid CI")
