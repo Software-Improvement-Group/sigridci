@@ -111,7 +111,9 @@ class MarkdownRenderer:
     def isObjectiveSuccess(self, feedback, options):
         raise NotImplementedError()
 
-    def decorateLink(self, label, file, line=0):
+    def decorateLink(self, options, label, file, line=0):
+        if options.subsystem and file.startswith(f"{options.subsystem}/"):
+            file = file[len(options.subsystem) + 1:]
         link = Platform.createPullRequestFileURL(file, line)
         if not link or not self.decorateLinks:
             return label
