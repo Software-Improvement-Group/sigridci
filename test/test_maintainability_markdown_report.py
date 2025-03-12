@@ -616,10 +616,10 @@ class MarkdownReportTest(TestCase):
         "CI_COMMIT_REF_NAME" : "mybranch"
     })
     def testNormalizeLinksForSubsystems(self):
-        rc = self.toRefactoringCandidate(f"jan/aap.py::noot", "introduced", "UNIT_SIZE", "VERY_HIGH")
-        rc["occurrences"] = [self.toOccurrence(f"jan/aap.py", 0, 0)]
+        rc = self.toRefactoringCandidate(f"boom/aap.py::noot", "introduced", "UNIT_SIZE", "VERY_HIGH")
+        rc["occurrences"] = [self.toOccurrence(f"boom/aap.py", 0, 0)]
 
-        self.options.subsystem = "jan"
+        self.options.subsystem = "boom"
 
         report = MaintainabilityMarkdownReport()
         table = report.renderRefactoringCandidatesTable([rc], self.options)
@@ -627,7 +627,7 @@ class MarkdownReportTest(TestCase):
         expected = """
             | Risk | System property | Location |
             |------|-----------------|----------|
-            | 🔴 | **Unit Size**<br />(Introduced) | [jan/aap.py<br />noot](https://example.com/aap/noot/-/blob/mybranch/aap.py#L0) |
+            | 🔴 | **Unit Size**<br />(Introduced) | [boom/aap.py<br />noot](https://example.com/aap/noot/-/blob/mybranch/aap.py#L0) |
         """
 
         self.assertEqual(table.strip(), inspect.cleandoc(expected).strip())
