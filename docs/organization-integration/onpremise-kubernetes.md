@@ -508,6 +508,7 @@ configure the code repository as an OAuth2 provider:
 - For GitLab, see ["Configure GitLab as an OAuth 2.0 authentication identity provider"](https://docs.gitlab.com/ee/integration/oauth_provider.html).
 - For GitHub, see ["Creating an OAuth app"](https://docs.github.com/en/apps/oauth-apps/building-oauth-apps/creating-an-oauth-app).
 - For Azure DevOps, the modern way is via Microsoft Entra, see ["Quickstart: Register an application with the Microsoft identity platform"](https://learn.microsoft.com/en-us/entra/identity-platform/quickstart-register-app?tabs=certificate).
+  - For viewing source code fragements, only the cloud version of Azure DevOps is supported.
 
 The newly created client registration can then be configured in the Helm chart like so:
 

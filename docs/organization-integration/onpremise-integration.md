@@ -34,12 +34,13 @@ Some Sigrid On-Premise features are *optional*:
 - Your infrastructure needs to support running applications on Kubernetes.
 - You need to allow outbound connections to pull the latest Sigrid container images from DockerHub.
   - You are prepared to update Sigrid regularly, at minimum monthly.
-- You need to support and manage a Postgres database service. 
+- You need to support and manage a Postgres database service.
   - You are prepared to update Postgres regularly, based on the version policy in this documentation.
 - You need to have a continuous integration pipeline in one of the following platforms, since Sigrid will integrate with this pipeline: GitHub, GitLab, Azure DevOps.
+  - For CI/CD integration, both cloud and server versions of Azure DevOps are supported.
 - You need to have an identity provider supporting one of the following protocols, since Sigrid will integrate with this for authentication: OpenID Connect, SAML, LDAP.
-- You need to have a web-accessible source code repository available in order to view source code in Sigrid. The following platforms are known to work: GitHub, GitLab, Azure DevOps.
-- You have read this documentation, and your support/platform team has the required technology knowledge (Kubernetes, Docker, Postgres, GitHub/GitLab/Azure Devops, OpenID Connect) to integrate Sigrid into your environment.
+- You need to have a web-accessible source code repository available in order to view source code in Sigrid. The following platforms are known to work: GitHub, GitLab, Azure DevOps (Cloud version only).
+- You have read this documentation, and your support/platform team has the required technology knowledge (Kubernetes, Docker, Postgres, GitHub/GitLab/Azure DevOps, OpenID Connect) to integrate Sigrid into your environment.
 - You allow remote desktop or screen sharing or similar functionality for troubleshooting.
 - (Required for Open Source Health feature) You allow outbound internet traffic.
 
