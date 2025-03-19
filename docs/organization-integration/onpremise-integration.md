@@ -86,7 +86,7 @@ In addition to updating Sigrid itself, you will also need to periodicially updat
 - Scheduling: The on-premise Sigrid distribution does not support scheduling. It is assumed that analyses are performed through your continuous integration pipeline.
 - View Source Feature: The "view source" feature will display the *current* state of the file in your development platform, which may differ from the version of the file that was analyzed by Sigrid.
 - Technology Support Differences:
-  - Mendix: Set the variable `CONVERT` to `mendix` in your CI pipeline job, and use `Mendixflow` for defining the scope.
+  - Mendix: Set the variable `CONVERT` to `mendix` in your CI pipeline job, and use `Mendixflow` as language when defining the scope.
   - Outsystems: This technology is not supported.
 - Unavailable Features:
   - Open Source Health
