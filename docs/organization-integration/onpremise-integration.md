@@ -89,7 +89,7 @@ In addition to updating Sigrid itself, you will also need to periodicially updat
   - Mendix: Set the variable `CONVERT` to `mendix` in your CI pipeline job, and use `Mendixflow` as language when defining the scope.
   - Outsystems: This technology is not supported.
 - Unavailable Features:
-  - Open Source Health
+  - Open Source Health - currently work-in-progress
   - Security: Results for the following tools cannot be generated:
     - Checkmarx
     - Astrée
