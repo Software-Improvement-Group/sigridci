@@ -275,31 +275,19 @@ Architecture Quality is available by default. However, you can still use the var
 
 The `architecture` section of the scope file supports the following options:
 
-| Option                     | Required | Description                                                                              |
-|----------------------------|----------|------------------------------------------------------------------------------------------|
-| `model`                    | No       | SIG Architecture Quality Model that should be used for the analysis, defaults to latest. |
-| `exclude`                  | No       | See [Excluding files and directories for Architecture Quality](#excluding-files-and-directories-for-architecture-quality). |
-| `custom_components`        | No       | See [Components in Maintainability versus components in Architecture Quality](#components-in-maintainability-versus-components-in-architecture-quality). |
-| `add_dependencies`         | No       | See [Manually specifying architecture dependencies](#manually-specifying-architecture-dependencies). |
-| `remove_dependencies`      | No       | See [Manually specifying architecture dependencies](#manually-removing-architecture-dependencies). |
-| `undesirable_dependencies` | No       | See [Highlighting undesirable dependencies](#highlighting-undesirable-dependencies). |
-| `add_system_elements`                      | No       | See [Manually specifying architecture elements](#manually-specifying-architecture-elements). |
+| Option                     | Required | Description                                                                                                                    |
+|----------------------------|----------|--------------------------------------------------------------------------------------------------------------------------------|
+| `model`                    | No       | SIG Architecture Quality Model that should be used for the analysis, defaults to latest.                                       |
+| `exclude`                  | No       | See [Excluding files and directories for Architecture Quality](#excluding-files-and-directories-for-architecture-quality).     |
+| `add_dependencies`         | No       | See [Manually specifying architecture dependencies](#manually-specifying-architecture-dependencies).                           |
+| `remove_dependencies`      | No       | See [Manually specifying architecture dependencies](#manually-removing-architecture-dependencies).                             |
+| `undesirable_dependencies` | No       | See [Highlighting undesirable dependencies](#highlighting-undesirable-dependencies).                                           |
+| `add_system_elements`      | No       | See [Manually specifying architecture elements](#manually-specifying-architecture-elements).                                   |
 | `grouping`                 | No       | See [Grouping and annotating components in Architecture Quality](#grouping-and-annotating-components-in-architecture-quality). |
-| `history_period_months`    | No       | See [Analyzing your repository history](#analyzing-your-repository-history). |
-| `history_start`            | No       | See [Analyzing your repository history](#analyzing-your-repository-history). |
-| `history_end`              | No       | See [Analyzing your repository history](#analyzing-your-repository-history). |
+| `history_period_months`    | No       | See [Analyzing your repository history](#analyzing-your-repository-history).                                                   |
+| `history_start`            | No       | See [Analyzing your repository history](#analyzing-your-repository-history).                                                   |
+| `history_end`              | No       | See [Analyzing your repository history](#analyzing-your-repository-history).                                                   |
 
-### Components in Maintainability versus components in Architecture Quality
-
-By default, Sigrid will automatically detect your system's component structure. This applies to all Sigrid capabilities, so the automatically detected component structure will also be used for Architecture Quality. 
-
-However, it is possible to [manually override the component structure](#defining-components). If you do this, the manually defined components *only* apply to the Maintainability capability, and are not automatically picked up by the Architecture Quality capability. If you *also* want to override the component structure for Architecture Quality, you will need to explicitly add the following option:
-
-    architecture:
-      custom_components: true
-      
-As explained in the section on [defining components](#defining-components), we recommend you use the automatic component detection.
-      
 ### Analyzing your repository history
       
 Architecture Quality analyzes both your source code and the repository history. See the [frequently asked questions for architecture quality](../capabilities/faq-architecture.md) for more information on how the repository history is analyzed.
