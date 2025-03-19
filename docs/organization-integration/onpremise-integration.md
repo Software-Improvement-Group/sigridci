@@ -87,10 +87,10 @@ In addition to updating Sigrid itself, you will also need to periodicially updat
 - View Source Feature: The "view source" feature will display the *current* state of the file in your development platform, which may differ from the version of the file that was analyzed by Sigrid.
 - Technology Support Differences:
   - Mendix: Set the variable `CONVERT` to `mendix` in your CI pipeline job, and use `Mendixflow` for defining the scope.
-  - Outsystems: Not available.
+  - Outsystems: This technology is not supported.
 - Unavailable Features:
   - Open Source Health
-  - Security
+  - Security: Results for the following tools cannot be generated:
     - Checkmarx
     - Astree
   - Green Code
