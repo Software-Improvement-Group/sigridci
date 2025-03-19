@@ -78,23 +78,23 @@ In addition to updating Sigrid itself, you will also need to periodicially updat
 - For Kubernetes, we support the latest 2 major versions. You can track the Kubernetes version history in [this overview](https://kubernetes.io/releases/).
 - For Postgres, we also support the latest 2 major versions. You can track the Postgres version history in [this overview](https://www.postgresql.org/support/versioning/).
 
-## Functional/technical differences in Sigrid on-premise
+## Functional/Technical Differences in Sigrid On-Premise
 
-- The on-premise Sigrid distribution is single tenant. You cannot create your own "tenants", all systems and analyses will end up in your portfolio. That said, you can still use Sigrid's user management to define which people should have access to which systems.
-- You are required to use the [development platform integration](#development-platform-integration) to publish your source code to Sigrid. SFTP uploads and manual uploads are not supported.
-- [Multi-repo systems](systems.md#sigrid-view-is-based-on-business-applications) are not supported. You are responsible for publishing source code from your development platform to Sigrid.
-- The on-premise Sigrid distribution does not support scheduling. It is assumed that analyses are performed from your continuous integration pipeline.
-- The "view source" feature will show the *current* state of the file in your development platform, which might be different from the version of the file that was analyzed by Sigrid.
-- Some technology support differences:
-  - Mendix: Use `CONVERT: mendix` in the CI SMA pipeline job, Use `Mendixflow` for scoping
-  - Outsystems: Not available
-- Features that are not available:
+- Single Tenant Architecture: The on-premise Sigrid distribution is single tenant, meaning you cannot create your own "tenants." All systems and analyses will be consolidated into your portfolio. However, you can still utilize Sigrid's user management to define access permissions for different users to various systems.
+- Source Code Publishing: You are required to use the [development platform integration](#development-platform-integration) to publish your source code to Sigrid. SFTP uploads and manual uploads are not supported.
+- Multi-Repo Systems: [Multi-repo systems](systems.md#sigrid-view-is-based-on-business-applications) are not supported. You are responsible for publishing source code from your development platform to Sigrid.
+- Scheduling: The on-premise Sigrid distribution does not support scheduling. It is assumed that analyses are performed through your continuous integration pipeline.
+- View Source Feature: The "view source" feature will display the *current* state of the file in your development platform, which may differ from the version of the file that was analyzed by Sigrid.
+- Technology Support Differences:
+  - Mendix: Use `CONVERT: mendix` in your pipeline job, and use `Mendixflow` for scoping.
+  - Outsystems: Not available.
+- Unavailable Features:
   - Open Source Health
   - Security
     - Checkmarx
     - Astree
-  - Green IT (Performance)
-  - AI Explanation (interactive)
+  - Green Code
+  - Interactive AI Explanations
 
 ## Contact and support
 
