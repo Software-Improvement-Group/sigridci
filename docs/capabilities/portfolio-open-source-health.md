@@ -35,7 +35,7 @@ In the bottom part of the screen, each system is shown with a summary of its cou
 
 Sorting can also be done per columns (here, "*Vulnerability*" as an example). The top right bottom for exporting the data as a spreadsheet may be useful for further analysis. 
 
-<img src="../images/portfolio-open-source-health-sorting-columns-vulnerability-focus.png" width="600" /> 
+<img src="../images/portfolio-open-source-health-sorting-columns-vulnerability-focus.png" width="400" /> 
 
 ## Filtering internal dependencies
 Internal dependencies can be filtered manually, such that they will not be resolved with the Open Source Health APIs that Sigrid uses.

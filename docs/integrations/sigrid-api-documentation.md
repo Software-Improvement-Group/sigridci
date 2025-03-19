@@ -31,11 +31,11 @@ In Sigrid's web-based user interface, several portfolio (customer) level dashboa
 hides deactivated systems and excluded systems. The filter panel on the right hand side provides 
 two toggles to override this behavior:
 
-<img src="../images/dashboard-toggles.png" width="202" />
+<img src="../images/dashboard-toggles.png" width="150" />
 
 A system can be deactivated, or excluded from dashboards, in the metadata settings page:
 
-<img src="../images/metadata-deactivate.png" width="843" />
+<img src="../images/metadata-deactivate.png" width="400" />
 
 Sigrid's REST API mimics this behavior, as follows:
 * All portfolio-level endpoints by default do not include deactivated nor excluded systems in 
@@ -688,6 +688,28 @@ Within each objective, the `parentId` refers to the ID of a portfolio objective,
 
 For advanced reporting use cases, you can combine the information from this end point with other end points: Combining the objective status with the [portfolio objectives](#retrieving-portfolio-objectives) allows you to replicate Sigrid's objectives dashboard in your report. You can also combine this with [metadata](#system-metadata) to provide additional drill-down information, for example for specific teams or divisions.
 
+### Removing subsystems
+
+The Sigrid CI script only adds subsystems, they will never disappear by themselves. If you want to remove a subsystem, users with the administrator or maintainer role can do so via the API.
+
+```
+POST https://sigrid-says.com/rest/inboundresults/sig/{customer}/{system}/ci/subsystems:batch-delete/v1
+```
+
+The body of the request is a list of Unix paths that you want to remove from the system.
+
+```json
+    {"names": ["path1", "path2"]}
+```
+
+The following example shows a complete `curl` commmand that will remove the two sub-systems:
+
+```bash
+curl --header 'Authorization: Bearer ${SIGRID_PERSONAL_TOKEN}' -X POST https://sigrid-says.com/rest/inboundresults/sig/{customer}/{system}/ci/subsystems:batch-delete/v1 -H 'Content-Type: application/json' --data '{ "names" : ["path1", "path2"] }'
+```
+
+A new analysis will run for your system and the results will be available in the Sigrid UI and API once the analysis is complete.
+
 ## Managing user permissions via API
 
 In addition to the general usage of the Sigrid API, users also can also perform user management tasks via the API as an alternative to doing these tasks within the web-based user interface of Sigrid itself. This also allows Sigrid administrators to better construct automated processes for managing the access to systems for their users.
@@ -923,28 +945,6 @@ Successful response format of this request would look like the following, with t
 	"updatedByUser": "3fa85f64-5717-4562-b3fc-2c963f66afa6"	
 }
 ```
-
-## Removing subsystems
-
-The Sigrid CI script only adds subsystems, they will never disappear by themselves. If you want to remove a subsystem, users with the administrator or maintainer role can do so via the API.
-
-```
-POST https://sigrid-says.com/rest/inboundresults/sig/{customer}/{system}/ci/subsystems:batch-delete/v1
-```
-
-The body of the request is a list of Unix paths that you want to remove from the system.
-
-```json
-    {"names": ["path1", "path2"]}
-```
-
-The following example shows a complete `curl` commmand that will remove the two sub-systems:
-
-```bash
-curl --header 'Authorization: Bearer ${SIGRID_PERSONAL_TOKEN}' -X POST https://sigrid-says.com/rest/inboundresults/sig/{customer}/{system}/ci/subsystems:batch-delete/v1 -H 'Content-Type: application/json' --data '{ "names" : ["path1", "path2"] }'
-```
-
-A new analysis will run for your system and the results will be available in the Sigrid UI and API once the analysis is complete.
 
 ## Contact and support
 

@@ -392,7 +392,7 @@ sig-toc {
     display: block;
     width: 600px;
     border-left: 2px solid #b3cbff;
-    padding: 16px;
+    padding: 0px 16px 0px 16px;
     font-size: 12px;
 }
 

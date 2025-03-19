@@ -61,7 +61,7 @@ Note that the snapshots dates in the top-right corner always imply a period, but
 ## Portfolio view menus
 You can create different views by system characteristics. The characteristics under **Grouping** and **Area** will change the ordering and size of the systems within the treemap. **Color** and **Annotation** will add extra information on top, as a color scheme or annotation. A complete menu of viewing options is shown below.
 
-<img src="../images/portfolio-menus-treemap.png" width="600" />
+<img src="../images/portfolio-menus-treemap.png" width="300" />
 
 Here, "*Maintainability change*" is chosen as the meaning of the color scheme. The relative changes are colored as white (neutral) up to green (improving) and red (deteriorating), based on the period selected above (in this example, Year-To-Date/YTD). This can be useful as trend analysis, comparing to expectations. Generally, you would expect public-facing systems to be more actively maintained because outside users tend to come up with new requests, bug reports, and requirements for e.g. stability. As a simplification, you would expect actively maintained systems to not (or very little) deteriorate in code quality. Switching between views of "*Maintainability change*" in different grouping will give you an idea of the balance between expected- and actual trends.  
 
