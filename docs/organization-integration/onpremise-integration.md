@@ -92,7 +92,7 @@ In addition to updating Sigrid itself, you will also need to periodicially updat
   - Open Source Health
   - Security: Results for the following tools cannot be generated:
     - Checkmarx
-    - Astree
+    - Astrée
   - Green Code
   - Interactive AI Explanations
 
