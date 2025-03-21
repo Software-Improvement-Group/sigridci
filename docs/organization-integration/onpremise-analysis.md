@@ -81,29 +81,35 @@ stdout and set exit code.
 - None: run analyses but do not persist analysis results (only show analysis results on stdout and
 set exit code).
 
-### Sigrid CI environment variables
+### Sigrid-Multi-Analyzer environment variables
 
-Sigrid CI is configured with environment variables. The following table lists all 
-environment variables with their defaults, if any. All that do not have a default value are
-required. We distinguish two types of environment variables:
-- Shared: these typically have the same value across different CI/CD projects for the same 
-  Sigrid deployment. SIG recommends to configure these as variables managed by the CI/CD 
-  environment (often called "secrets").
+Sigrid-Multi-Analyzer is configured with environment variables. The following table lists all 
+environment variables with their defaults, if any. When provided with a default, you can override 
+them, but you're not required to do so unless needed in your situation. All variables are required 
+except `SIGRID_CA_CERT` and `AWS_CA_BUNDLE`, which are only required when using custom certificates 
+for Sigrid and S3 bucket storage.
+
+We distinguish two types of environment variables:
+- Shared: these typically have the same value across different CI/CD projects for the same Sigrid 
+  deployment. SIG recommends configuring these as variables managed by the CI/CD environment (often 
+  called "secrets").
 - Non-shared: these typically differ across projects.
 
-| Variable                       | Shared? | Default   |
-|--------------------------------|---------|-----------|
-| CUSTOMER                       | Yes     |           |
-| SYSTEM                         | No      |           |
-| SIGRID_URL                     | Yes     |           |
-| SIGRID_CI_TOKEN                | Yes     |           |
-| SIGRID_VERSION                 | Yes     |           |
-| BUCKET                         | Yes     |           |
-| AWS_ENDPOINT_URL               | Yes     | (AWS)     |
-| AWS_REGION                     | Yes     | us-east-1 |
-| AWS_ACCESS_KEY_ID              | Yes     |           |
-| AWS_SECRET_ACCESS_KEY          | Yes     |           |
-| SIGRID_SOURCES_REGISTRATION_ID | Yes     | (auto)    |
+| Variable                       | Required | Shared? | Default   |
+|--------------------------------|----------|---------|-----------|
+| CUSTOMER                       | Yes      | Yes     |           |
+| SYSTEM                         | Yes      | No      |           |
+| SIGRID_CA_CERT                 | No       | Yes     |           |
+| SIGRID_URL                     | Yes      | Yes     |           |
+| SIGRID_CI_TOKEN                | Yes      | Yes     |           |
+| SIGRID_VERSION                 | Yes      | Yes     |           |
+| BUCKET                         | Yes      | Yes     |           |
+| AWS_ENDPOINT_URL               | Yes      | Yes     | (AWS)     |
+| AWS_REGION                     | Yes      | Yes     | us-east-1 |
+| AWS_ACCESS_KEY_ID              | Yes      | Yes     |           |
+| AWS_SECRET_ACCESS_KEY          | Yes      | Yes     |           |
+| AWS_CA_BUNDLE                  | No       | Yes     |           |
+| SIGRID_SOURCES_REGISTRATION_ID | Yes      | Yes     | (auto)    |
 
 Notes:
 - `CUSTOMER`: this is the name of the Sigrid tenant as set in Sigrid's Helm chart when Sigrid was
@@ -111,6 +117,7 @@ Notes:
 - `SYSTEM`: the name of this system (a lowercase string matching `[a-z][a-z0-9-]`). The default is 
   the project name of the current CI/CD project (e.g., the pre-configured `$CI_PROJECT_NAME` 
   variable in GitLab).
+- `SIGRID_CA_CERT`: Path to Sigrid's certificate `my_sigrid_cert.pem`.
 - `SIGRID_URL`: (sub-)domain where this Sigrid On-Premise deployment is hosted, e.g. 
   `https://sigrid.mycompany.com`.
 - `SIGRID_CI_TOKEN`: a personal access token created in Sigrid's UI.
@@ -122,7 +129,27 @@ Notes:
 - `AWS_ACCESS_KEY_ID`: ID of the access key to authenticate to the S3-compatible object store. 
   This key should give access to the bucket named by `S3_BUCKET`.
 - `AWS_SECRET_ACCESS_KEY`: the key whose ID is `AWS_ACCESS_KEY_ID`.
+- `AWS_CA_BUNDLE`: Path to your S3 Bucket's certificate `my_s3bucket_cert.pem`.
 - `SIGRID_SOURCES_REGISTRATION_ID`: the ID of the OAuth client registration provided in `values.yaml` of Sigrid's Helm chart.
+
+#### Using Custom Certificates in Your Pipeline
+
+To use custom certificates in your pipeline, copy them directly into the desired path, define them as string variables, or use CI/CD project variables, then pass their paths to the analyzer image. For example:
+
+```yaml
+sigrid-publish:
+  image:
+    name: "softwareimprovementgroup/sigrid-multi-analyzer:$SIGRID_VERSION"
+  variables:
+    SYSTEM: "$CI_PROJECT_NAME"
+    SIGRID_CA_CERT: "my_sigrid_cert.pem"
+    AWS_CA_BUNDLE: "my_s3bucket_cert.pem"
+  script:
+    - echo $MYSIGRID_CERT > $SIGRID_CA_CERT
+    - echo $MY_S3_CERT > $AWS_CA_BUNDLE
+    - "run-analyzers --publish"
+```
+
 
 ## Getting import job status and logs
 
