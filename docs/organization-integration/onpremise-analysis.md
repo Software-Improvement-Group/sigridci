@@ -129,7 +129,7 @@ Notes:
 - `AWS_ACCESS_KEY_ID`: ID of the access key to authenticate to the S3-compatible object store. 
   This key should give access to the bucket named by `S3_BUCKET`.
 - `AWS_SECRET_ACCESS_KEY`: the key whose ID is `AWS_ACCESS_KEY_ID`.
-- `AWS_CA_BUNDLE`: Path to your S3 Bucket's customCertificate `my_s3bucket_cert.pem`.
+- `AWS_CA_BUNDLE`: Path to your S3 Bucket's certificate `my_s3bucket_cert.pem`.
 - `SIGRID_SOURCES_REGISTRATION_ID`: the ID of the OAuth client registration provided in `values.yaml` of Sigrid's Helm chart.
 
 #### Using Custom Certificates in Your Pipeline
