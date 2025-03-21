@@ -521,7 +521,7 @@ inbound-api:
       objectStoreCertificate:
         # -- If the object-storage (S3) requires a custom certificate configure the custom certificates section. Then
         # set key to the filename of the specific S3 certificate.
-        key: ""
+        key: my-object-store-cert.pem
 ```
 Taking this as an example where my-object-store-cert.pem is the cert used for the object store:
 ```yaml
