@@ -146,7 +146,7 @@ sigrid-publish:
     AWS_CA_BUNDLE: "my_s3bucket_cert.pem"
   script:
     - echo $MYSIGRID_CERT > $SIGRID_CA_CERT
-    - echo $MYAWS_CERT > $AWS_CA_BUNDLE
+    - echo $MY_S3_CERT > $AWS_CA_BUNDLE
     - "run-analyzers --publish"
 ```
 
