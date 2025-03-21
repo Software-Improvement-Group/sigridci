@@ -132,6 +132,25 @@ Notes:
 - `AWS_CA_BUNDLE`: Path to your S3 Bucket's customCertificate `my_s3bucket_cert.pem`.
 - `SIGRID_SOURCES_REGISTRATION_ID`: the ID of the OAuth client registration provided in `values.yaml` of Sigrid's Helm chart.
 
+#### Using Custom Certificates in Your Pipeline
+
+To use custom certificates in your pipeline, copy them directly into the desired path, define them as string variables, or use CI/CD project variables, then pass their paths to the analyzer image. For example:
+
+```yaml
+sigrid-publish:
+  image:
+    name: "softwareimprovementgroup/sigrid-multi-analyzer:$SIGRID_VERSION"
+  variables:
+    SYSTEM: "$CI_PROJECT_NAME"
+    SIGRID_CA_CERT: "my_sigrid_cert.pem"
+    AWS_CA_BUNDLE: "my_s3bucket_cert.pem"
+  script:
+    - echo $MYSIGRID_CERT > $SIGRID_CA_CERT
+    - echo $MYAWS_CERT > $AWS_CA_BUNDLE
+    - "run-analyzers --publish"
+```
+
+
 ## Getting import job status and logs
 
 When running an analysis in an on-premise deployment of Sigrid, from time to time it might be needed to inspect the status and/or logs of Kubernetes jobs started by Sigrid. There are three endpoints available for this purpose:
