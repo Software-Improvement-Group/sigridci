@@ -117,7 +117,7 @@ Notes:
 - `SYSTEM`: the name of this system (a lowercase string matching `[a-z][a-z0-9-]`). The default is 
   the project name of the current CI/CD project (e.g., the pre-configured `$CI_PROJECT_NAME` 
   variable in GitLab).
-- `SIGRID_CA_CERT`: Path to Sigrid's customCertificate `my_sigrid_cert.pem`.
+- `SIGRID_CA_CERT`: Path to Sigrid's certificate `my_sigrid_cert.pem`.
 - `SIGRID_URL`: (sub-)domain where this Sigrid On-Premise deployment is hosted, e.g. 
   `https://sigrid.mycompany.com`.
 - `SIGRID_CI_TOKEN`: a personal access token created in Sigrid's UI.
