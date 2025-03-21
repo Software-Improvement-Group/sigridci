@@ -298,7 +298,7 @@ Please note that removing email addresses from this list does **NOT** remove the
 management functionality of Sigrid to add/remove admin accounts after the initial setting up of Sigrid.
 
 ### (D.4) Optional: Configure Custom Certificates
-To enable secure communication between services using Sigrid, you may need to add custom certificates. These certificates should be defined in the following three components: `auth-api`, `sigrid-api`, and `inbound-api`. You can configure this using the `customCertificates` option in the Helm chart.
+To enable secure communication between services using Sigrid, you may need to add custom certificates. These certificates can be defined in the following three components: `auth-api`, `sigrid-api`, and `inbound-api`. You can configure this using the `customCertificates` option in the Helm chart.
 ```yaml
   customCertificates:
     enabled: true
@@ -513,14 +513,26 @@ In the above example no more than `1000m` cpu and `10Gi` memory may be dynamical
 are used for both cpu/memory requests and cpu/memory limits.
 
 ### (F.3) Optional: Configure Custom Certificates
-If you're using custom certificates, the `inbound-api` will likely need one to connect to the S3-compatible storage. It is probably easiest to define all certificates once and then reuse the created configMap.
+When using a self-signed certificate for the S3-compatible storage we also have to tell inbound-api which cert specifically should be used for S3 so that it can also share it with the importer jobs it starts.
 ```yaml
 inbound-api:
-  customCertificates: 
-    enabled: true
-    certificates: 
-      create: false    <--- inbound-api can reuse the configMap created in auth-api or sigrid-api
-      name: my-sigrid-certificates
+  config:
+    importJob:
+      objectStoreCertificate:
+        # -- If the object-storage (S3) requires a custom certificate configure the custom certificates section. Then
+        # set key to the filename of the specific S3 certificate.
+        key: ""
+```
+Taking this as an example where my-object-store-cert.pem is the cert used for the object store:
+```yaml
+  customCertificates:
+    certificates:
+      data:
+        my-object-store-cert.pem: |
+          -----BEGIN CERTIFICATE-----
+          MIIDdzCCAl+gAwIBAgIEbF5VOTANBgkqhkiG9w0BAQsFADBvMQswCQYDVQQGEwJV
+          ...
+          -----END CERTIFICATE-----
 ```
 
 ## (G) Optional: connection to source code repositories
