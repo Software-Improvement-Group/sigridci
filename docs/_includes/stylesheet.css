@@ -333,10 +333,10 @@ article .sectionLink {
     cursor: pointer;
     display: inline-block;
     margin-left: 8px;
-    width: 24px;
-    height: 24px;
+    width: 16px;
+    height: 16px;
     background-image: url("/images/link.svg");
-    background-size: 24px 24px;
+    background-size: 16px 16px;
     vertical-align: middle;
 }
 
@@ -392,7 +392,7 @@ sig-toc {
     display: block;
     width: 600px;
     border-left: 2px solid #b3cbff;
-    padding: 16px;
+    padding: 0px 16px 0px 16px;
     font-size: 12px;
 }
 
