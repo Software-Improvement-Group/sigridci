@@ -80,7 +80,7 @@ class MaintainabilityMarkdownReport(Report, MarkdownRenderer):
             return "💭️  You did not change any files that are measured by Sigrid"
 
     def renderRefactoringCandidates(self, feedback, options):
-        good = self.filterRefactoringCandidates(feedback, ["improved"])
+        good = self.filterRefactoringCandidates(feedback, ["fixed", "improved"])
         bad = self.filterRefactoringCandidates(feedback, ["introduced", "worsened"])
         unchanged = self.filterRefactoringCandidates(feedback, ["unchanged"])
 

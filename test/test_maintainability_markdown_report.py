@@ -146,6 +146,42 @@ class MarkdownReportTest(TestCase):
 
         self.assertEqual(table.strip(), inspect.cleandoc(expected).strip())
 
+    def testShowFixedRefactoringCandidatesInWhatWentWellSection(self):
+        feedback = {
+            "refactoringCandidates" : [
+                self.toRefactoringCandidate("aap", "improved", "UNIT_SIZE", "HIGH"),
+                self.toRefactoringCandidate("noot", "fixed", "UNIT_SIZE", "VERY_HIGH")
+            ]
+        }
+
+        report = MaintainabilityMarkdownReport()
+        report.decorateLinks = False
+        markdown = report.renderRefactoringCandidates(feedback, self.options)
+
+        expected = """
+            ## 👍 What went well?
+    
+            > You fixed or improved **2** refactoring candidates.
+            
+            | Risk | System property | Location |
+            |------|-----------------|----------|
+            | 🔴 | **Unit Size**<br />(Fixed) | noot |
+            | 🟠 | **Unit Size**<br />(Improved) | aap |
+            
+            
+            ## 👎 What could be better?
+            
+            > You did not introduce any technical debt during your changes, great job!
+            
+            ## 📚 Remaining technical debt
+            
+            > **0** refactoring candidates didn't get better or worse, but are still present in the code you touched.
+            
+            [View this system in Sigrid to explore your technical debt](https://sigrid-says.com/aap/noot)
+        """
+
+        self.assertEqual(markdown.strip(), inspect.cleandoc(expected).strip())
+
     def testLimitRefactoringCandidatesTableWhenThereAreTooMany(self):
         findings = [self.toRefactoringCandidate(f"aap-{i}", "introduced", "UNIT_SIZE", "HIGH") for i in range(1, 100)]
 
