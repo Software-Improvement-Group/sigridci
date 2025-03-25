@@ -1,8 +1,6 @@
 SIG Open Source Health Quality Model 2024: Guidance for producers
 =================================================================
 
-<sig-toc></sig-toc>
-
 ## Introduction
 
 Contemporary software development heavily relies on open source

@@ -5,8 +5,6 @@ This documentation covers on-premise Sigrid. It is not applicable for cloud-base
 
 This documentation offers useful context on how to keep on-premise Sigrid up-to-date, making it an excellent starting point for ongoing maintenance.
 
-<sig-toc></sig-toc>
-
 ## Prerequisites
 
 - You should have already read the other Sigrid On-Premise documentation
