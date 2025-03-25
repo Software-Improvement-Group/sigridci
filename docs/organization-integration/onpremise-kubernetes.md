@@ -17,8 +17,6 @@ the `example-values.yaml` file provides additional, important details.
 Sigrid's Helm chart is distributed via a private Docker Hub registry, together with the Docker 
 images that make up Sigrid, as described below. 
 
-<sig-toc></sig-toc>
-
 ## Prerequisites
 
 Sigrid requires:

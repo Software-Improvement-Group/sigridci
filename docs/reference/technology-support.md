@@ -3,8 +3,6 @@ Technology support
 
 This page provides an overview of all technologies that can be analyzed by Sigrid for its various capabilities. 
 
-<sig-toc></sig-toc>
-
 ## List of supported technologies
 
 - The first column refers to how the technology is named in Sigrid's [scope configuration file](../reference/analysis-scope-configuration.md#technology-support).

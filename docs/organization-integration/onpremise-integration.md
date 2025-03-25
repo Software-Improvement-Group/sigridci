@@ -5,8 +5,6 @@ This documentation covers on-premise Sigrid. It is not applicable for cloud-base
 
 This document covers everything you need to integrate Sigrid On-Premise in your environment. It also covers the functional differences between the SaaS version and the on-premise version, though these differences are relatively minor.
 
-<sig-toc></sig-toc>
-
 ## High-level overview
 
 From a deployment perspective, on-premise Sigrid consists of two "parts":

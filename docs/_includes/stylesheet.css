@@ -236,7 +236,7 @@ summary {
     flex: 0 0 330px;
     background-color: var(--sig-light);
     border-right: 1px solid var(--sig-medium-gray);
-    max-height: 100vh;
+    max-height: calc(100vh - 48px);
     overflow-y: auto;
     position: sticky;
     top: 48px;
@@ -256,7 +256,7 @@ summary {
 .container nav .toc a, .container nav .toc .category {
     display: block;
     color: #ffffff;
-    padding: 4px 8px 4px 8px;
+    padding: 6px 8px 4px 8px;
 }
 
 .container nav .toc .category {
@@ -311,7 +311,7 @@ summary {
 
 article {
     flex: 1 1 auto;
-    padding: 50px 20px 30px;
+    padding: 50px 50px 30px 50px;
     max-width: 940px;
     margin-left: auto;
     margin-right: auto;
@@ -389,16 +389,20 @@ td, th {
 }
 
 sig-toc {
+    flex: 0 0 200px;
+    position: sticky;
+    right: 0px;
+    top: 135px;
+    max-height: calc(100vh - 135px);
+    overflow-y: auto;
     display: block;
-    width: 600px;
-    border-left: 2px solid #b3cbff;
     padding: 0px 16px 0px 16px;
     font-size: 12px;
 }
 
 sig-toc ul {
     margin: 8px 0px 0px 0px;
-    padding-left: 16px;
+    padding-left: 0px;
     list-style-type: none;
 }
 
@@ -408,14 +412,23 @@ sig-toc li::before {
 
 sig-toc h4 {
     margin-top: 0px;
+    color: var(--sig-dark-blue);
+}
+
+sig-toc a {
+    color: var(--sig-text-gray);
+}
+
+sig-toc a:hover {
+    color: var(--sig-blue);
 }
 
 sig-toc .h3 {
-    margin-left: 20px;
+    margin-left: 0px;
 }
 
 sig-toc .h4 {
-    margin-left: 40px;
+    margin-left: 10px;
 }
 
 .searchForm {

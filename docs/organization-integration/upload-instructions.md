@@ -5,8 +5,6 @@ There are multiple ways to upload your source code. The best and recommended way
 This documentation covers cloud-based Sigrid. On-premise Sigrid requires integration with your development platform, which is explained in the section about [on-premise analysis configuration](../organization-integration/onpremise-analysis.md).
 {: .attention }
 
-<sig-toc></sig-toc>
-
 ## Sigrid CI: Pipeline integration
 
 Integrating Sigrid CI into your pipeline allows you to automatically publish your source code to Sigrid after every change. It also allows you to receive feedback from Sigrid within your development environment.

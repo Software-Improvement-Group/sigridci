@@ -1,9 +1,5 @@
 # Guidelines on how to organize for quality software
 
-<sig-toc></sig-toc>
-
-## Introduction
-
 The purpose of this document is to provide concrete and actionable guidelines on how organizations should set themselves up to achieve high-quality software. While a lot of material is available on how to organize software development, most of it focusses on speed and alignment and mentions quality only in passing. Rather than adding yet another process framework, we identify four different stakeholder groups that are present in almost all organizations and describe what they are expected to do and what they should expect from each other in the quest for quality software. Our aim is for this to be complementary to existing process frameworks and we illustrate this for a couple of well-known ones.
 
 ## Four stakeholder groups in a hybrid model

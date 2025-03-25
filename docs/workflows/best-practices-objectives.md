@@ -1,8 +1,5 @@
 # Guidelines for using Objectives
 
-<sig-toc></sig-toc>
-
-
 ## Introduction
 
 The purpose of this document is to provide concrete and actionable guidelines, hints and tips on how to successfully use portfolio and system level objectives in Sigrid.

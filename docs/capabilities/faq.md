@@ -1,8 +1,6 @@
 Sigrid: Frequently Asked Questions
 ==================================
 
-<sig-toc></sig-toc>
-
 ### Sigrid Security
 
 See [Sigrid Security: Frequently Asked Questions](faq-security.md).
