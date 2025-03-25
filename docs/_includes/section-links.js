@@ -17,10 +17,6 @@ function getSectionHeaderURL(sectionHeader) {
 }
 
 function makeTableOfContents(toc, sectionHeaders) {
-    const title = document.createElement("h4");
-    title.innerText = "On this page";
-    toc.appendChild(title);
-
     const list = document.createElement("ul");
     toc.appendChild(list);
     
@@ -42,11 +38,14 @@ document.addEventListener("DOMContentLoaded", () => {
     const sectionHeaders = document.querySelectorAll("article h2, article h3, article h4");
     const toc = document.querySelector("sig-toc");
 
+    if (sectionHeaders.length == 0) {
+        toc.remove();
+        return;
+    }
+
     for (const sectionHeader of sectionHeaders) {
         makeSectionLink(sectionHeader);
     }
-    
-    if (toc && sectionHeaders.length > 0) {
-        makeTableOfContents(toc, sectionHeaders);
-    }
+
+    makeTableOfContents(toc, sectionHeaders);
 });
