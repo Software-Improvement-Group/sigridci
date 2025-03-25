@@ -406,6 +406,10 @@ sig-toc ul {
     list-style-type: none;
 }
 
+sig-toc li {
+    margin-bottom: 8px;
+}
+
 sig-toc li::before {
     content: '';
 }
