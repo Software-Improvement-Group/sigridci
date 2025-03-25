@@ -11,7 +11,12 @@ You can us the [scope documentation](../reference/analysis-scope-configuration.m
   
 ### How do I enable the change history analysis?
 
-This will happen automatically, assuming that you enabled Architecture Quality in the scope file and the change history is available.
+This will happen automatically if you use Sigrid CI, assuming the change history is available.
+
+### What information does SIG use for the change history analysis? 
+
+Sigrid uses your anonymized repository history to calculate metrics on which code has been changed, and when those changes were made. These statistics do not contain personal information. In fact, if you use Sigrid CI, the developer names will be anonymized client-side, so *before* anything is published to Sigrid. 
+You can find more information on Sigrid data usage in our [Privacy Statement](https://www.softwareimprovementgroup.com/wp-content/uploads/SIG_Sigrid_Privacy_Statement.pdf).
 
 ### Which version control systems does SIG support for analyzing the change history?
 
