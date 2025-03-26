@@ -15,7 +15,6 @@
 import sys
 
 from .report import Report
-from ..publish_options import RunMode
 
 
 class AsciiArtReport(Report):
