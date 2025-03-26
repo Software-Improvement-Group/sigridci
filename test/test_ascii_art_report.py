@@ -71,9 +71,9 @@ class AsciiArtReportTest(TestCase):
         report.generate("1234", feedback, self.options)
         
         expected = """
-            --------------------------------------------------------------------------------
+            -------------------------------------------------------------------------------
             Refactoring candidates
-            --------------------------------------------------------------------------------
+            -------------------------------------------------------------------------------
             
             Duplication
                 None
@@ -91,20 +91,20 @@ class AsciiArtReportTest(TestCase):
             Module Coupling
                 None
             
-            --------------------------------------------------------------------------------
+            -------------------------------------------------------------------------------
             Maintainability ratings
-            --------------------------------------------------------------------------------
-            System property          System on 2022-01-10  Before changes   New/changed code      
-            Volume                   N/A                   N/A              N/A                   
-            Duplication              4.0                   4.0              5.0                   
-            Unit Size                4.0                   4.0              2.0                   
-            Unit Complexity          N/A                   N/A              N/A                   
-            Unit Interfacing         N/A                   N/A              N/A                   
-            Module Coupling          N/A                   N/A              N/A                   
-            Component Independence   N/A                   N/A              N/A                   
-            Component Entanglement   N/A                   N/A              N/A                   
-            --------------------------------------------------------------------------------
-            Maintainability          4.0                   4.0              3.0    
+            -------------------------------------------------------------------------------
+            System property          System on 2022-01-10  Before changes  New/changed code
+            Volume                   N/A                   N/A             N/A             
+            Duplication              4.0                   4.0             5.0             
+            Unit Size                4.0                   4.0             2.0             
+            Unit Complexity          N/A                   N/A             N/A             
+            Unit Interfacing         N/A                   N/A             N/A             
+            Module Coupling          N/A                   N/A             N/A             
+            Component Independence   N/A                   N/A             N/A             
+            Component Entanglement   N/A                   N/A             N/A             
+            -------------------------------------------------------------------------------
+            Maintainability          4.0                   4.0             3.0    
         """
 
         self.assertEqual(buffer.getvalue().strip(), inspect.cleandoc(expected).strip())

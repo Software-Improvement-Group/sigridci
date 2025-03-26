@@ -23,7 +23,7 @@ class AsciiArtReport(Report):
     ANSI_YELLOW = "\033[33m"
     ANSI_RED = "\033[91m"
     ANSI_BLUE = "\033[96m"
-    LINE_WIDTH = 80
+    LINE_WIDTH = 79
 
     def __init__(self, output=sys.stdout, ansiColors=True):
         self.output = output
@@ -58,7 +58,7 @@ class AsciiArtReport(Report):
             )
 
     def printTableRow(self, *row):
-        formattedRow = "%-25s%-22s%-17s%-22s" % tuple(row)
+        formattedRow = "%-25s%-22s%-16s%-16s" % tuple(row)
         print(formattedRow, file=self.output)
 
     def printHeader(self, header):
