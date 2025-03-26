@@ -1,0 +1,16 @@
+@media screen and (max-width: 834px) {
+    nav, sig-toc, .links a:not(:last-child) {
+        display: none;
+    }
+
+    .hamburger {
+        display: inline-block;
+        margin-right: 8px;
+        cursor: pointer;
+    }
+
+    article {
+        padding-left: 16px;
+        padding-right: 16px;
+    }
+}
