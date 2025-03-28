@@ -15,7 +15,6 @@
 import sys
 
 from .report import Report
-from ..publish_options import RunMode
 
 
 class AsciiArtReport(Report):
@@ -24,36 +23,42 @@ class AsciiArtReport(Report):
     ANSI_YELLOW = "\033[33m"
     ANSI_RED = "\033[91m"
     ANSI_BLUE = "\033[96m"
-    LINE_WIDTH = 70
+    LINE_WIDTH = 79
 
     def __init__(self, output=sys.stdout, ansiColors=True):
         self.output = output
         self.ansiColors = ansiColors
 
     def generate(self, analysisId, feedback, options):
-        publish = options.runMode != RunMode.FEEDBACK_ONLY
-
         self.printHeader("Refactoring candidates")
         for metric in self.REFACTORING_CANDIDATE_METRICS:
             self.printMetric(feedback, metric)
 
+        self.printRatingsTable(feedback)
+
+    def printRatingsTable(self, feedback):
         self.printHeader("Maintainability ratings")
-        self.printTableRow(["System property", f"Baseline on {self.formatBaseline(feedback)}", "New/changed code"])
+
+        self.printTableRow(
+            "System property",
+            f"System on {self.formatBaseline(feedback)}",
+            "Before changes",
+            "New/changed code"
+        )
 
         for metric in self.METRICS:
             if metric == "MAINTAINABILITY":
                 self.printSeparator()
 
-            row = [
+            self.printTableRow(
                 self.formatMetricName(metric),
-                "(" + self.formatRating(feedback["baselineRatings"], metric) + ")",
+                self.formatRating(feedback["baselineRatings"], metric),
+                self.formatRating(feedback["changedCodeBeforeRatings"], metric),
                 self.formatRating(feedback["newCodeRatings"], metric)
-            ]
+            )
 
-            self.printTableRow(row)
-
-    def printTableRow(self, row):
-        formattedRow = "%-27s%-25s%-18s" % tuple(row)
+    def printTableRow(self, *row):
+        formattedRow = "%-25s%-22s%-16s%-16s" % tuple(row)
         print(formattedRow, file=self.output)
 
     def printHeader(self, header):
