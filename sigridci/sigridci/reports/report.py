@@ -35,6 +35,11 @@ class Report:
         "MAINTAINABILITY"
     ]
 
+    RISK_CATEGORIES = ["VERY_HIGH", "HIGH", "MODERATE", "MEDIUM", "LOW"]
+    GOOD_CATEGORIES = ["fixed", "improved"]
+    BAD_CATEGORIES = ["introduced", "worsened"]
+    UNCHANGED_CATEGORIES = ["unchanged"]
+
     def generate(self, analysisId, feedback, options):
         pass
 
@@ -55,6 +60,11 @@ class Report:
     def getRefactoringCandidates(self, feedback, metric):
         refactoringCandidates = feedback.get("refactoringCandidates", [])
         return [rc for rc in refactoringCandidates if rc["metric"] == metric or metric == "MAINTAINABILITY"]
+
+    def filterRefactoringCandidates(self, feedback, categories):
+        matches = [rc for rc in feedback["refactoringCandidates"] if rc["category"] in categories]
+        matches.sort(key=lambda rc: self.RISK_CATEGORIES.index(rc.get("riskCategory", "")))
+        return matches
 
     def getSigridUrl(self, options):
         customer = urllib.parse.quote_plus(options.customer.lower())

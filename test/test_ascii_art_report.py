@@ -52,9 +52,9 @@ class AsciiArtReportTest(TestCase):
         
         report = AsciiArtReport()
         
-        self.assertEqual(report.formatRefactoringCandidate(rc1), "    - (introduced)   aap")
-        self.assertEqual(report.formatRefactoringCandidate(rc2), "    - (worsened)     noot\n                     mies")
-        self.assertEqual(report.formatRefactoringCandidate(rc3), "    - (worsened)     noot\n                     mies")
+        self.assertEqual(report.formatRefactoringCandidate(rc1), "Unit Size (introduced)\n  aap")
+        self.assertEqual(report.formatRefactoringCandidate(rc2), "Duplication (worsened)\n  noot\n  mies")
+        self.assertEqual(report.formatRefactoringCandidate(rc3), "Unit Size (worsened)\n  noot\n  mies")
 
     def testPrintRegularReport(self):
         feedback = {
@@ -63,7 +63,11 @@ class AsciiArtReportTest(TestCase):
             "changedCodeBeforeRatings": {"DUPLICATION": 4.0, "UNIT_SIZE": 4.0, "MAINTAINABILITY": 4.0},
             "newCodeRatings": {"DUPLICATION": 5.0, "UNIT_SIZE": 2.0, "MAINTAINABILITY": 3.0},
             "overallRatings": {"DUPLICATION": 4.5, "UNIT_SIZE": 3.0, "MAINTAINABILITY": 3.5},
-            "refactoringCandidates": [{"subject": "a.py::aap()", "category": "introduced", "metric": "UNIT_SIZE"}]
+            "refactoringCandidates": [
+                {"subject": "a.py::aap()", "category": "introduced", "metric": "UNIT_SIZE", "riskCategory": "HIGH"},
+                {"subject": "a.py::aap()", "category": "fixed", "metric": "UNIT_COMPLEXITY", "riskCategory": "HIGH"},
+                {"subject": "a.py::aap()", "category": "worsened", "metric": "UNIT_SIZE", "riskCategory": "MODERATE"}
+            ]
         }
     
         buffer = StringIO()
@@ -72,28 +76,35 @@ class AsciiArtReportTest(TestCase):
         
         expected = """
             -------------------------------------------------------------------------------
-            Refactoring candidates
+            What went well?
             -------------------------------------------------------------------------------
             
-            Duplication
-                None
+            Unit Complexity (fixed)
+              a.py
+              aap()
             
-            Unit Size
-                - (introduced)   a.py
-                                 aap()
+            -------------------------------------------------------------------------------
+            What could be better?
+            -------------------------------------------------------------------------------
             
-            Unit Complexity
-                None
+            Unit Size (introduced)
+              a.py
+              aap()
             
-            Unit Interfacing
-                None
+            Unit Size (worsened)
+              a.py
+              aap()
             
-            Module Coupling
-                None
+            -------------------------------------------------------------------------------
+            Remaining technical debt
+            -------------------------------------------------------------------------------
+            
+            0 refactoring candidates didn't get better or worse.
             
             -------------------------------------------------------------------------------
             Maintainability ratings
             -------------------------------------------------------------------------------
+            
             System property          System on 2022-01-10  Before changes  New/changed code
             Volume                   N/A                   N/A             N/A             
             Duplication              4.0                   4.0             5.0             
