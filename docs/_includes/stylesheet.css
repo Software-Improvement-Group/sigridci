@@ -32,7 +32,7 @@ body, td, th, input[type=text] {
     font-family: "Noir Pro";
     font-size: 16px;
     font-weight: 300;
-    line-height: 1.4;
+    line-height: 1.6;
     color: var(--sig-paragraph-gray);
 }
 
@@ -77,7 +77,7 @@ h4 {
 }
 
 strong {
-    font-weight: 500;
+    font-weight: 400;
 }
 
 ul {
@@ -186,7 +186,7 @@ aside, .attention {
 aside::before, .attention::before {
     content: "Attention";
     display: block;
-    font-weight: 600;
+    font-weight: 400;
     color: #1296f3;
 }
 
@@ -203,7 +203,7 @@ aside::before, .attention::before {
 .faq::before {
     content: "FAQ";
     display: block;
-    font-weight: 600;
+    font-weight: 400;
     color: #b501e4;
 }
 
@@ -220,7 +220,7 @@ aside::before, .attention::before {
 .warning::before {
     content: "Warning";
     display: block;
-    font-weight: 600;
+    font-weight: 400;
     color: #df4949;
 }
 
