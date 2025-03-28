@@ -126,15 +126,18 @@ class MarkdownReportTest(TestCase):
         self.assertEqual(contents.strip(), markdown.strip())
 
     def testSortRefactoringCandidatesTableBySeverity(self):
-        refactoringCandidates = [
-            self.toRefactoringCandidate("aap", "introduced", "UNIT_SIZE", "HIGH"),
-            self.toRefactoringCandidate("noot", "introduced", "UNIT_SIZE", "MODERATE"),
-            self.toRefactoringCandidate("mies", "introduced", "UNIT_COMPLEXITY", "VERY_HIGH")
-        ]
+        feedback = {
+            "refactoringCandidates" : [
+                self.toRefactoringCandidate("aap", "introduced", "UNIT_SIZE", "HIGH"),
+                self.toRefactoringCandidate("noot", "introduced", "UNIT_SIZE", "MODERATE"),
+                self.toRefactoringCandidate("mies", "introduced", "UNIT_COMPLEXITY", "VERY_HIGH")
+            ]
+        }
 
         report = MaintainabilityMarkdownReport()
         report.decorateLinks = False
-        table = report.renderRefactoringCandidatesTable(refactoringCandidates, self.options)
+        table = report.renderRefactoringCandidatesTable(
+            report.filterRefactoringCandidates(feedback, ["introduced"]), self.options)
 
         expected = """
             | Risk | System property | Location |
