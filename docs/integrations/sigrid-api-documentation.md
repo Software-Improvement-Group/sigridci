@@ -829,7 +829,7 @@ For creating groups, the request format is:
   "name": "string",
   "description": "string",
   "users": [
-    "3fa85f64-5717-4562-b3fc-2c963f66afa6"
+    "string($uuid)"
   ],
   "systems": [
     {
@@ -839,9 +839,12 @@ For creating groups, the request format is:
 }
 ```
 
-Users can provide a `name` and `description` when creating groups.
+Users can provide a number of fields when creating groups.
 - The `name` field is simply whatever name the administrator chooses for the group. We recommend a descriptive name either based on which team, division, or responsibility scope this group relates to within your own organization.
 - The `description` field is then the description of the group for traceability purposes. We recommend descriptions that describe the group's intended responsibility and/or scope of the portfolio they will manage in Sigrid.
+- The `users` field contains the set of users that are members of the authorization group and will inherit the permissions granted to the group. A user is denoted by a UUID representing their unique identifier hash.
+- The `systems`field contains the set of systems authorized to be accessible by the group, similar to how it is defined for an individual user. System are denoted by their system name when onboarded in sigrid. 
+    - __NOTE:__ This name can be different from the display name seen in Sigrid, be sure to use the name the sytem was attributed during onboarding. 
 
 A typical response upon group creation has the following format:
 
@@ -859,15 +862,9 @@ A typical response upon group creation has the following format:
     }
   ],
   "updatedAt": "2025-03-26T16:54:22.440Z",
-  "updatedByUser": "3fa85f64-5717-4562-b3fc-2c963f66afa6"
+  "updatedByUser": "string($uuid)"
 }
 ```
-
-Furthermore, unlike the requests made when leveraging the endpoint to return a single user, groups also have two fields that can be modified via the API to manage group permissions: `users` and `systems`. 
-
-- The `users` field contains the set of users that are members of the authorization group and will inherit the permissions granted to the group. A user is denoted by a UUID representing their unique identifier hash.
-- The `systems`field contains the set of systems authorized to be accessible by the group, similar to how it is defined for an individual user. System are denoted by their system name when onboarded in sigrid. 
-    - __NOTE:__ This name can be different from the display name seen in Sigrid, be sure to use the name the sytem was attributed during onboarding. 
 
 Additional available endpoints include for managing permissions on groups:
 - `GET https://sigrid-says.com/rest/auth/api/user-management/{customer}/groups`: Returns a list all authorization groups defined within a portfolio
