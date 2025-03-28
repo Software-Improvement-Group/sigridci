@@ -888,7 +888,7 @@ The response format upon successful request of a single authorization group look
     	}
 	],
 	"updatedAt": "2024-03-07T17:41:59.278Z",
-	"updatedByUser": "3fa85f64-5717-4562-b3fc-2c963f66afa6"
+	"updatedByUser": "string($uuid)"
 }
 ```
 
@@ -925,7 +925,7 @@ Upon succesful request of the above endpoint for a group with id `f4a702ac-b998-
 	"name": "string",
 	"description": "string",
 	"users": [
-		"3fa85f64-5717-4562-b3fc-2c963f66afa6"
+		"string($uuid)"
   	],
 	"systems": [
     	{
@@ -939,7 +939,7 @@ Upon succesful request of the above endpoint for a group with id `f4a702ac-b998-
 		}
 	],
 	"updatedAt": "2024-03-07T17:41:59.278Z",
-	"updatedByUser": "3fa85f64-5717-4562-b3fc-2c963f66afa6"
+	"updatedByUser": "string($uuid)"
 }
 ```
 
