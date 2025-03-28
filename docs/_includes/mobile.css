@@ -13,4 +13,12 @@
         padding-left: 16px;
         padding-right: 16px;
     }
+
+    h1 {
+        font-size: 24px;
+    }
+
+    h2 {
+        font-size: 20px;
+    }
 }
