@@ -88,7 +88,8 @@ class AsciiArtReport(Report):
             print("", file=self.output)
 
     def formatRefactoringCandidate(self, rc):
-        title = f"{self.formatMetricName(rc['metric'])} ({rc['category']})"
+        riskCategoryName = rc.get("riskCategory", "UNKNOWN").lower().replace("_", " ")
+        title = f"{self.formatMetricName(rc['metric'])} ({rc['category']}, {riskCategoryName} risk)"
         subject = rc["subject"].replace("\n", "\n  ").replace("::", "\n  ")
         return f"{title}\n  {subject}"
 

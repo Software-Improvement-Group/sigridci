@@ -52,9 +52,9 @@ class AsciiArtReportTest(TestCase):
         
         report = AsciiArtReport()
         
-        self.assertEqual(report.formatRefactoringCandidate(rc1), "Unit Size (introduced)\n  aap")
-        self.assertEqual(report.formatRefactoringCandidate(rc2), "Duplication (worsened)\n  noot\n  mies")
-        self.assertEqual(report.formatRefactoringCandidate(rc3), "Unit Size (worsened)\n  noot\n  mies")
+        self.assertEqual(report.formatRefactoringCandidate(rc1), "Unit Size (introduced, unknown risk)\n  aap")
+        self.assertEqual(report.formatRefactoringCandidate(rc2), "Duplication (worsened, unknown risk)\n  noot\n  mies")
+        self.assertEqual(report.formatRefactoringCandidate(rc3), "Unit Size (worsened, unknown risk)\n  noot\n  mies")
 
     def testPrintRegularReport(self):
         feedback = {
@@ -79,7 +79,7 @@ class AsciiArtReportTest(TestCase):
             What went well?
             -------------------------------------------------------------------------------
             
-            Unit Complexity (fixed)
+            Unit Complexity (fixed, high risk)
               a.py
               aap()
             
@@ -87,11 +87,11 @@ class AsciiArtReportTest(TestCase):
             What could be better?
             -------------------------------------------------------------------------------
             
-            Unit Size (introduced)
+            Unit Size (introduced, high risk)
               a.py
               aap()
             
-            Unit Size (worsened)
+            Unit Size (worsened, moderate risk)
               a.py
               aap()
             
