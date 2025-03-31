@@ -739,18 +739,18 @@ The response format upon successful request of a single user looks like the foll
 
 ```json
 {
-	"id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
-	"firstName": "string",
-	"lastName": "string",
-	"email": "string",
-	"isAdmin": true,
-  	"accessToAll": true,
-  	"systems": [
-    	{
-      		"systemName": "string"
-    	}
-  	],
-	"lastLoginAt": "2024-03-07T16:54:33.438Z"
+  "id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
+  "firstName": "string",
+  "lastName": "string",
+  "email": "string",
+  "isAdmin": true,
+    "accessToAll": true,
+    "systems": [
+      {
+        "systemName": "string"
+      }
+    ],
+  "lastLoginAt": "2024-03-07T16:54:33.438Z"
 }
 ```
 
@@ -764,21 +764,22 @@ An example request could be the following:
 
 ```shell
 $ curl 'https://sigrid-says.com/rest/auth/api/user-management/{customer}/users/{userID}/permissions' -X PATCH \
-    -H 'Content-Type: application/json' \
-    -H 'Authorization: Bearer {SIGRID_PERSONAL_TOKEN}' \
-    -d '{
-	"accessToAll": false,
-	"systems": [ 
-		{
-			"systemName": "system-a"
-		},
-		{
-			"systemName": "system-b"
-		},
-		{
-			"systemName": "system-c"
-	]
-}'
+  -H 'Content-Type: application/json' \
+  -H 'Authorization: Bearer {SIGRID_PERSONAL_TOKEN}' \
+  -d '{
+    "accessToAll": false,
+    "systems": [ 
+      {
+        "systemName": "system-a"
+      },
+      {
+        "systemName": "system-b"
+      },
+      {
+        "systemName": "system-c"
+      }
+    ]
+  }'
 ```
 
 This request will _replace_ the set of system permissions granted to the specified user with the set provided in the request body consisting of 3 systems - system-a, system-b and system-c. No other change is made, so user details such as firstName / lastName / email all will remain as-is upon successful request of this endpoint.
@@ -787,24 +788,24 @@ Upon succesful request of the above endpoint for a user with id `d987c69d-464f-4
 
 ```json
 {
-	"id": "d987c69d-464f-4276-bea8-5780cc782b97",
-	"firstName": "string",
-	"lastName": "string",
-	"email": "string",
-	"isAdmin": false,
-	"accessToAll": false,
-	"systems": [
-		{
-			"systemName": "system-a"
-		},
-		{
-			"systemName": "system-b"
-		},
-		{
-			"systemName": "system-c"
-		}
-	],
-	"lastLoginAt": "2024-03-07T16:54:33.438Z"
+  "id": "d987c69d-464f-4276-bea8-5780cc782b97",
+  "firstName": "string",
+  "lastName": "string",
+  "email": "string",
+  "isAdmin": false,
+  "accessToAll": false,
+  "systems": [
+	  {
+      "systemName": "system-a"
+    },
+    {
+      "systemName": "system-b"
+    },
+    {
+      "systemName": "system-c"
+    }
+  ],
+  "lastLoginAt": "2024-03-07T16:54:33.438Z"
 }
 ```
 
@@ -876,19 +877,19 @@ The response format upon successful request of a single authorization group look
 
 ```json
 {
-	"id": "string($uuid)",
-	"name": "string",
-	"description": "string",
-	"users": [
-    	"string($uuid)"
-  	],
-	"systems": [
-    	{
-			"systemName": "string"
-    	}
-	],
-	"updatedAt": "2024-03-07T17:41:59.278Z",
-	"updatedByUser": "string($uuid)"
+  "id": "string($uuid)",
+  "name": "string",
+  "description": "string",
+  "users": [
+      "string($uuid)"
+    ],
+  "systems": [
+      {
+      "systemName": "string"
+      }
+  ],
+  "updatedAt": "2024-03-07T17:41:59.278Z",
+  "updatedByUser": "string($uuid)"
 }
 ```
 
@@ -898,20 +899,20 @@ An example request could be the following:
 
 ```shell
 $ curl 'https://sigrid-says.com/rest/auth/api/user-management/{customer}/groups/{groupID}/permissions' -X PATCH \
-	-H 'Content-Type: application/json' \
-	-H 'Authorization: Bearer {SIGRID_PERSONAL_TOKEN}' \
-	-d '{
-	"systems": [ 
-    	{
-			"systemName": "system-x"
-		},
-		{
-			"systemName": "system-y"
-		},
-		{
-			"systemName": "system-z"
-		}
-	]
+  -H 'Content-Type: application/json' \
+  -H 'Authorization: Bearer {SIGRID_PERSONAL_TOKEN}' \
+  -d '{
+  "systems": [ 
+    {
+      "systemName": "system-x"
+    },
+    {
+      "systemName": "system-y"
+    },
+    {
+      "systemName": "system-z"
+    }
+  ]
 }'
 ```
 
@@ -921,25 +922,25 @@ Upon succesful request of the above endpoint for a group with id `f4a702ac-b998-
 
 ```json
 {
-	"id": "f4a702ac-b998-44e1-a271-840a3f75e6d2",
-	"name": "string",
-	"description": "string",
-	"users": [
-		"string($uuid)"
-  	],
-	"systems": [
-    	{
-			"systemName": "system-x"
-		},
-		{
-			"systemName": "system-y"
-		},
-		{
-			"systemName": "system-z"
-		}
-	],
-	"updatedAt": "2024-03-07T17:41:59.278Z",
-	"updatedByUser": "string($uuid)"
+  "id": "f4a702ac-b998-44e1-a271-840a3f75e6d2",
+  "name": "string",
+  "description": "string",
+  "users": [
+    "string($uuid)"
+    ],
+  "systems": [
+    {
+      "systemName": "system-x"
+    },
+    {
+      "systemName": "system-y"
+    },
+    {
+      "systemName": "system-z"
+    }
+  ],
+  "updatedAt": "2024-03-07T17:41:59.278Z",
+  "updatedByUser": "string($uuid)"
 }
 ```
 
@@ -949,40 +950,40 @@ An example request on the same group could be the following:
 
 ```shell
 $ curl 'https://sigrid-says.com/rest/auth/api/user-management/{customer}/groups/f4a702ac-b998-44e1-a271-840a3f75e6d2/members' -X PATCH \
-	-H 'Content-Type: application/json' \
-    -H 'Authorization: Bearer {SIGRID_PERSONAL_TOKEN}' \
-    -d '{
-		"users": [ 
-			"d987c69d-464f-4276-bea8-5780cc782b97",
-			"3fa85f64-5717-4562-b3fc-2c963f66afa6" 
-		]
-	}'
+  -H 'Content-Type: application/json' \
+  -H 'Authorization: Bearer {SIGRID_PERSONAL_TOKEN}' \
+  -d '{
+    "users": [ 
+      "d987c69d-464f-4276-bea8-5780cc782b97",
+      "3fa85f64-5717-4562-b3fc-2c963f66afa6" 
+    ]
+  }'
 ```
 
 Successful response format of this request would look like the following, with the updated members now inheriting the permissions assigned in the previous example:
 
 ```json
 {
-	"id": "f4a702ac-b998-44e1-a271-840a3f75e6d2",
-	"name": "string",
-	"description": "string",
-	"users": [
-    	"d987c69d-464f-4276-bea8-5780cc782b97",
-    	"3fa85f64-5717-4562-b3fc-2c963f66afa6" 
-  	],
-  	"systems": [
-    	{
-			"systemName": "system-x"
-		},
-		{
-			"systemName": "system-y"
-		},
-		{
-			"systemName": "system-z"
-		}
-	],
-	"updatedAt": "2024-03-07T17:41:59.278Z",
-	"updatedByUser": "3fa85f64-5717-4562-b3fc-2c963f66afa6"	
+  "id": "f4a702ac-b998-44e1-a271-840a3f75e6d2",
+  "name": "string",
+  "description": "string",
+  "users": [
+      "d987c69d-464f-4276-bea8-5780cc782b97",
+      "3fa85f64-5717-4562-b3fc-2c963f66afa6" 
+    ],
+    "systems": [
+    {
+      "systemName": "system-x"
+    },
+    {
+      "systemName": "system-y"
+    },
+    {
+      "systemName": "system-z"
+    }
+  ],
+  "updatedAt": "2024-03-07T17:41:59.278Z",
+  "updatedByUser": "3fa85f64-5717-4562-b3fc-2c963f66afa6"	
 }
 ```
 
