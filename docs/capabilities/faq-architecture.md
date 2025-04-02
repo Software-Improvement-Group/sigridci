@@ -48,6 +48,10 @@ they have been squashed.
 
 No, as the shallow clone will only download the code and will *not* download the change history.
 
+### Can I combine multiple repository histories in Sigrid?
+
+Yes. If your pipeline operates on multiple Git repositories, Sigrid CI will export a corresponding `git.log` file for each repository. Each `git.log` file will then be used for the repository/directory in which it was created.
+
 ### Can I exclude my repository from the upload to Sigrid altogether?
 
 Yes. Sigrid CI generates a log file called `git.log`, and you can exclude this file from being uploaded. You can use the `--exclude` [option in Sigrid CI](../reference/client-script-usage.md), for example `--exclude git.log`. 
