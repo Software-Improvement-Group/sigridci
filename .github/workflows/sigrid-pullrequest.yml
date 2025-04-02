@@ -8,6 +8,8 @@ jobs:
     steps:
       - name: "Check out repository"
         uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
       - name: "Special case: We use Sigrid CI on itself, so if we want its own code to be analyzed we need a copy"
         run: "cp -r sigridci/sigridci src && cp sigridci/*.py src"
       - name: "Run Sigrid CI" 
