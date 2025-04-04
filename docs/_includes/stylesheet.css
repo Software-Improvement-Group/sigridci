@@ -430,11 +430,11 @@ sig-toc a:hover {
 }
 
 sig-toc .h3 {
-    margin-left: 0px;
+    margin-left: 10px;
 }
 
 sig-toc .h4 {
-    margin-left: 10px;
+    margin-left: 20px;
 }
 
 .searchForm {
