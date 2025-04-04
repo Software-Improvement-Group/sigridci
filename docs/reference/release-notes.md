@@ -5,6 +5,8 @@ SIG uses [continuous delivery](https://en.wikipedia.org/wiki/Continuous_delivery
 
 ### April 7, 2025
 
+- **Security:** The [portfolio-level security dashboard](../capabilities/portfolio-security.md) now shows the trend of open versus resolved findings, per month. Shows the number of open security findings (new and existing) and resolved findings each month. A healthy process resolves more findings than it opens.
+- **Sigrid CI:** Feedback from Sigrid CI now also included refactoring candidates that have been fixed. This information is not intended as "work items", it's purely positive feedback that is meant to encourage small refactorings as part of the normal development process.
 - **Sigrid CI**: If you have a pipeline that operates on *multiple* Git repositories, Sigrid CI will now export the repository history for each repository. Most people will not actually notice this change, as it's most common to have one pipeline operate on one repository. However, if you're in the minority of people that uses a pipeline that combines multiple repositories, this change means you can now use Sigrid CI out-of-the-box instead of needing to manually configure things.
 - **Open Source Health:** Sigrid reports on open source libraries in [JAR files](https://en.wikipedia.org/wiki/JAR_(file_format)). In most cases, a JAR file contains exactly one library. However, there are rare cases where people use a "fat" or "shadowed" JAR file that contains *multiple* open source libraries. Sigrid will now only report on the contents of those JAR files if the [transitive option](analysis-scope-configuration.md#open-source-health) is enabled in the configuration.
 

@@ -30,9 +30,16 @@ class AsciiArtReport(Report):
         self.ansiColors = ansiColors
 
     def generate(self, analysisId, feedback, options):
-        self.printHeader("Refactoring candidates")
-        for metric in self.REFACTORING_CANDIDATE_METRICS:
-            self.printMetric(feedback, metric)
+        self.printHeader("What went well?")
+        self.printRefactoringCandidates(self.filterRefactoringCandidates(feedback, self.GOOD_CATEGORIES))
+
+        self.printHeader("What could be better?")
+        self.printRefactoringCandidates(self.filterRefactoringCandidates(feedback, self.BAD_CATEGORIES))
+
+        self.printHeader("Remaining technical debt")
+        unchanged = self.filterRefactoringCandidates(feedback, self.UNCHANGED_CATEGORIES)
+        print(f"{len(unchanged)} refactoring candidates didn't get better or worse.", file=self.output)
+        print("", file=self.output)
 
         self.printRatingsTable(feedback)
 
@@ -62,29 +69,29 @@ class AsciiArtReport(Report):
         print(formattedRow, file=self.output)
 
     def printHeader(self, header):
-        print("", file=self.output)
         self.printSeparator()
         print(header, file=self.output)
         self.printSeparator()
+        print("", file=self.output)
 
     def printSeparator(self):
         print("-" * self.LINE_WIDTH, file=self.output)
 
-    def printMetric(self, feedback, metric):
-        print("", file=self.output)
-        print(self.formatMetricName(metric), file=self.output)
-
-        refactoringCandidates = self.getRefactoringCandidates(feedback, metric)
+    def printRefactoringCandidates(self, refactoringCandidates):
         if len(refactoringCandidates) == 0:
-            print("    None", file=self.output)
-        else:
-            for rc in refactoringCandidates:
-                print(self.formatRefactoringCandidate(rc), file=self.output)
+            print("There are no refactoring candidates.", file=self.output)
+            print("", file=self.output)
+            return
+
+        for rc in refactoringCandidates:
+            print(self.formatRefactoringCandidate(rc), file=self.output)
+            print("", file=self.output)
 
     def formatRefactoringCandidate(self, rc):
-        category = ("(" + rc["category"] + ")").ljust(14)
-        subject = rc["subject"].replace("\n", "\n" + (" " * 21)).replace("::", "\n" + (" " * 21))
-        return f"    - {category} {subject}"
+        riskCategoryName = rc.get("riskCategory", "UNKNOWN").lower().replace("_", " ")
+        title = f"{self.formatMetricName(rc['metric'])} ({rc['category']}, {riskCategoryName} risk)"
+        subject = rc["subject"].replace("\n", "\n  ").replace("::", "\n  ")
+        return f"{title}\n  {subject}"
 
     def printColor(self, message, ansiPrefix):
         if self.ansiColors:
