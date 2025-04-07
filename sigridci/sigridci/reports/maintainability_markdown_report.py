@@ -80,9 +80,9 @@ class MaintainabilityMarkdownReport(Report, MarkdownRenderer):
             return "💭️  You did not change any files that are measured by Sigrid"
 
     def renderRefactoringCandidates(self, feedback, options):
-        good = self.filterRefactoringCandidates(feedback, ["improved"])
-        bad = self.filterRefactoringCandidates(feedback, ["introduced", "worsened"])
-        unchanged = self.filterRefactoringCandidates(feedback, ["unchanged"])
+        good = self.filterRefactoringCandidates(feedback, self.GOOD_CATEGORIES)
+        bad = self.filterRefactoringCandidates(feedback, self.BAD_CATEGORIES)
+        unchanged = self.filterRefactoringCandidates(feedback, self.UNCHANGED_CATEGORIES)
 
         md = ""
         md += "## 👍 What went well?\n\n"
@@ -116,29 +116,23 @@ class MaintainabilityMarkdownReport(Report, MarkdownRenderer):
 
         return md
 
-    def filterRefactoringCandidates(self, feedback, categories):
-        return [rc for rc in feedback["refactoringCandidates"] if rc["category"] in categories]
-
     def renderRefactoringCandidatesTable(self, refactoringCandidates, options):
         if len(refactoringCandidates) == 0:
             return ""
-
-        sortFunction = lambda rc: list(self.RISK_CATEGORY_SYMBOLS).index(rc["riskCategory"])
-        sortedRefactoringCandidates = sorted(refactoringCandidates, key=sortFunction)
 
         md = ""
         md += "| Risk | System property | Location |\n"
         md += "|------|-----------------|----------|\n"
 
-        for rc in sortedRefactoringCandidates[0:self.MAX_SHOWN_FINDINGS]:
+        for rc in refactoringCandidates[0:self.MAX_SHOWN_FINDINGS]:
             symbol = self.RISK_CATEGORY_SYMBOLS[rc["riskCategory"]]
             metricName = self.formatMetricName(rc["metric"])
             metricInfo = f"**{metricName}**<br />({rc['category'].title()})"
             location = self.formatRefactoringCandidateLocation(rc, options)
             md += f"| {symbol} | {metricInfo} | {location} |\n"
 
-        if len(sortedRefactoringCandidates) > self.MAX_SHOWN_FINDINGS:
-            md += f"| ⚫️ | | + {len(sortedRefactoringCandidates) - self.MAX_SHOWN_FINDINGS} more |"
+        if len(refactoringCandidates) > self.MAX_SHOWN_FINDINGS:
+            md += f"| ⚫️ | | + {len(refactoringCandidates) - self.MAX_SHOWN_FINDINGS} more |"
 
         return md + "\n"
 
