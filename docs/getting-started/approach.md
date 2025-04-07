@@ -2,7 +2,7 @@
 
 ## What is high quality software?
 
-Finding an objective measure of software quality is tough. Good quality software behaves the way you expect it to, can withstand unforeseen situations, is secure against abuse, and complies with requirements.
+Finding an objective measure of software quality is tough. High quality software behaves the way you expect it to, can withstand unforeseen situations, is secure against abuse, and complies with requirements.
 
 What all these have in common is the need for maintenance. This is the honorable task of developers and the roles surrounding them. Efficient, effective, workable code, *easy to read* even. That is, easy for the developers that come after you. When we talk about technical debt, it is easy to imagine its compounding effects, where over time it gathers interest over the original debt, the technical imperfections of code. The metaphor does not stretch limitlessly, since not all debt must necessarily be recovered (this is essentially a business trade-off). But it is well-understood ("*cruft*" never quite made it past developer argot). Technical debt might be just harmless unrealized potential, but we often see that at a certain point, teams get stuck in a vicious cycle. Then, code/software quality becomes very noticeable to developers, clients and the business. See also our discussion on [technical debt in an agile development process](../workflows/agile-development-process.md#technical-debt). Essentially, *bad code is bad for business*. The inverse is not necessarily always true, but it is certain that you need to have a grip on quality to deliver business value in a predictable and efficient way.
 
