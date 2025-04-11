@@ -15,6 +15,7 @@
 import os
 import sys
 
+from .platform import Platform
 from .publish_options import PublishOptions, RunMode
 from .sigrid_api_client import SigridApiClient
 from .upload_log import UploadLog
@@ -61,6 +62,8 @@ class SigridCiRunner:
         ]
 
     def run(self):
+        self.prepareRun()
+
         systemExists = self.apiClient.checkSystemExists()
         UploadLog.log("Found system in Sigrid" if systemExists else "System is not yet on-boarded to Sigrid")
 
@@ -79,6 +82,13 @@ class SigridCiRunner:
             self.displayMetadata()
         else:
             self.displayFeedback(analysisId)
+
+    def prepareRun(self):
+        # We don't use the options.feedbackURL directly, since that's intended
+        # for interactive usage, but we can use it to check if feedback is
+        # disabled.
+        if self.options.feedbackURL:
+            self.apiClient.logPlatformInformation(Platform.getPlatformId())
 
     def displayFeedback(self, analysisId):
         if self.options.targetRating == "sigrid":
