@@ -60,7 +60,7 @@
                 const system = encodeURIComponent(params.get("system"));
 
                 const image = document.createElement("img");
-                image.src = `${statsURL}?idsite=6&rec=1&ca=1&e_c=${feature}&e_a=${feedback}&e_n=${system}&t={timestamp}`;
+                image.src = `${statsURL}?idsite=6&rec=1&ca=1&e_c=${feature}&e_a=${feedback}&e_n=${system}&t=${timestamp}`;
                 document.body.appendChild(image);
             }
         });
