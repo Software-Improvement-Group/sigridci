@@ -5,7 +5,7 @@ SIG uses [continuous delivery](https://en.wikipedia.org/wiki/Continuous_delivery
 
 ### April 22, 2025
 
-- **Sigrid API:** Sigrid is able to export all Open Source Health findings into an SBOM. The format of this SBOM was updated from CycloneDX version 1.5 to version 1.6. Refer to [the API documentation](../integations/sigrid-api-documentation.md#open-source-health-findings-and-ratings) on how to use this SBOM export.
+- **Sigrid API:** Sigrid is able to export all Open Source Health findings into an SBOM. The format of this SBOM was updated from CycloneDX version 1.5 to version 1.6. Refer to [the API documentation](../integrations/sigrid-api-documentation.md#open-source-health-findings-and-ratings) on how to use this SBOM export.
 
 ### April 7, 2025
 
