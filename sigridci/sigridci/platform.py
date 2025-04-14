@@ -48,6 +48,8 @@ class Platform:
         elif Platform.isBitBucket():
             return "bitbucket"
         elif Platform.isJenkins():
+            # Jenkins uses very generic environment variable names, so we only
+            # conclude it's Jenkins after trying everything else.
             return "Jenkins"
         else:
             return "unknown"
