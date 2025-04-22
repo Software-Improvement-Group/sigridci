@@ -159,7 +159,7 @@ A list of all third-party open source dependencies is available using the follow
 The endpoints will include [Open Source Health Quality Model](../reference/quality-model-documents/open-source-health.html) ratings where available. 
 The path parameter `{customer}` and `{system}` refer to your Sigrid account name and system ID respectively.
 
-The response format is based on the CycloneDX (version 1.5) format for an [SBOM (software bill of materials)](https://en.wikipedia.org/wiki/Software_bill_of_materials). 
+The response format is based on the CycloneDX (version 1.6) format for an [SBOM (software bill of materials)](https://en.wikipedia.org/wiki/Software_bill_of_materials). 
 
 <details markdown="1">
   <summary>Example response for a single system</summary>
@@ -169,7 +169,7 @@ Mimetype: `application/vnd.cyclonedx+json`
 ```json
 {
     "bomFormat": "CycloneDX",
-    "specVersion": "1.5",
+    "specVersion": "1.6",
     "version": 1,
     "metadata": {
         "timestamp": "2022-03-17T09:58:34Z",
