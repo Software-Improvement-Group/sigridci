@@ -34,6 +34,10 @@ class Platform:
         return "BITBUCKET_REPO_SLUG" in os.environ
 
     @staticmethod
+    def isJenkins():
+        return "BUILD_NUMBER" in os.environ
+
+    @staticmethod
     def getPlatformId():
         if Platform.isGitHub():
             return "github"
@@ -43,6 +47,10 @@ class Platform:
             return "azure-devops"
         elif Platform.isBitBucket():
             return "bitbucket"
+        elif Platform.isJenkins():
+            # Jenkins uses very generic environment variable names, so we only
+            # conclude it's Jenkins after trying everything else.
+            return "Jenkins"
         else:
             return "unknown"
 

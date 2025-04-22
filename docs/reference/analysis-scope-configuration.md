@@ -69,7 +69,7 @@ The following example specifies a component that includes all `.js` and `.jsx` f
       exclude:
       - ".*[.]spec[.]jsx?" #excluding all `spec.js` files from this component, wherever they are; alternatively, limiting to files within a `/frontend/` directory tree, `.*/frontend/.*[.]spec[.]js`
           
-When you specify both `include` and `exclude` patterns, the exclude patterns take precedence. In this example, the file `frontend/home.jsx` would be included, but the file `frontend/example.spec.jsx` would be excluded. This is much easier and maintainable than trying `.*(?<![.]spec)[.]jsx?` under `include`, even though that would work.
+When you specify both `include` and `exclude` patterns, the exclude patterns take precedence. In this example, the file `frontend/home.jsx` would be included, but the file `frontend/example.spec.jsx` would be excluded. This is much easier and more maintainable than trying `.*(?<![.]spec)[.]jsx?` under `include`, even though that would work.
 
 Since we know that spec.js files are meant to be test files, what you probably want in this case is to make this distinction according to its context: 
 
