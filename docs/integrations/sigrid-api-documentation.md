@@ -99,10 +99,16 @@ The top-level `maintainability` and `maintainabilityDate` refer to the *current*
 ### Security and reliability findings
 
 Sigrid's REST API provides two endpoints to get all open security or reliability findings for a system:
-* Security findings: `GET https://sigrid-says.com/rest/analysis-results/api/v1/security-findings/{customer}/{system}`
-* Reliability findings: `GET https://sigrid-says.com/rest/analysis-results/api/v1/reliability-findings/{customer}/{system}`
+* Security findings: `GET https://sigrid-says.com/rest/analysis-results/api/v1/security-findings/{customer}/{system}?model={modelName}`
+* Reliability findings: `GET https://sigrid-says.com/rest/analysis-results/api/v1/reliability-findings/{customer}/{system}?model={modelName}`
 
-The parameters `{customer}` and `{system}` refer to your Sigrid account name and system ID respectively. 
+The path parameters `{customer}` and `{system}` refer to your Sigrid account name and system ID respectively. The `modelName` query parameter is optional;
+it specifies the model used to determine the category or categories of each finding. If no `modelName` is given, the default model is used (that is: the OWASP
+Top-10 for security, and the SIG Code Reliability Top-10 for reliability). 
+
+Valid model names are:
+- For security: `ow10` (OWASP Top-10, the default), `sigsec` (SIG Security), `5055sec` (ISO 5055 - Security), `c25` (CWE Top-25), `pci4` (PCI-DSS v4.0), `owasvs4c` (OWASP ASVS 4.0 Chapters), `owasvs4s` (OWASP ASVS 4.0 Sections), `lcnc10` (OWASP Low-Code/No-Code Top-10).
+- For reliability: `sigrel` (SIG Code Reliability Top-10, the default) and `5055rel` (ISO 5055 - Reliability).
 
 <details markdown="1">
   <summary>Example response</summary>
@@ -135,6 +141,9 @@ The parameters `{customer}` and `{system}` refer to your Sigrid account name and
         "isSeverityOverridden": true,
         "weaknessIds": [
             "CWE-12345"
+        ],
+        "categories": [
+            "A1 Broken Access Control"
         ]
     }
 ]
