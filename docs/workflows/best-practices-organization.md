@@ -1,9 +1,5 @@
 # Guidelines on how to organize for quality software
 
-<sig-toc></sig-toc>
-
-## Introduction
-
 The purpose of this document is to provide concrete and actionable guidelines on how organizations should set themselves up to achieve high-quality software. While a lot of material is available on how to organize software development, most of it focusses on speed and alignment and mentions quality only in passing. Rather than adding yet another process framework, we identify four different stakeholder groups that are present in almost all organizations and describe what they are expected to do and what they should expect from each other in the quest for quality software. Our aim is for this to be complementary to existing process frameworks and we illustrate this for a couple of well-known ones.
 
 ## Four stakeholder groups in a hybrid model
@@ -39,7 +35,7 @@ Obviously it is not practical or desirable to involve the entire user organizati
 
 The role of **teams** in the creation of high quality software is obvious: they actually create it. They have three main instruments to leverage their craftsmanship when it comes to creating quality software: peer reviews, tests that run in the pipeline (both functional and non-functional such as Sigrid CI) and hygiene features present in the IDE. The main inputs are quality requirements set by the team themselves, engineering leads and management, including objectives set in Sigrid. In reaching their quality goals, teams may identify impediments that they cannot address themselves (or that are not effectively/efficiently addressed by the team, such as a change to a shared repository that affects other teams as well). These are communicated to engineering leads or management for resolution. 
 
-**Engineering leads** address engineering challenges that are bigger than a single ticket, may transcend teams and have the ability to significantly improve the quality of the software (or ensure that software-to-be-built is of good quality) but are not directly related to feature work. Examples include threat modelling and subsequent mitigations, major refactoring/rearchitecting, but also agreeing on standards for non-functional requirements and how to implement them. Inputs for this group can be concerns raised by teams that they cannot address themselves, standards that need to be met, operational problems (e.g. poor performance) or antipatterns spotted by engineering leads (team leads, tech leads, architects) themselves.
+**Engineering leads** address engineering challenges that are bigger than a single ticket, may transcend teams and have the ability to significantly improve the quality of the software (or ensure that software-to-be-built is of high quality) but are not directly related to feature work. Examples include threat modelling and subsequent mitigations, major refactoring/rearchitecting, but also agreeing on standards for non-functional requirements and how to implement them. Inputs for this group can be concerns raised by teams that they cannot address themselves, standards that need to be met, operational problems (e.g. poor performance) or antipatterns spotted by engineering leads (team leads, tech leads, architects) themselves.
 
 The **User Organization** often has a black-box view of technology: user needs go in, value-adding tech comes out while cost and risk need to be controlled. They want quality software as much as anyone else as long as it can be balanced against cost and organizational needs. They should be open to technical improvement ideas put forward by teams and engineering leads but also challenge them to articulate the cost/risk/benefits of their proposals.
 

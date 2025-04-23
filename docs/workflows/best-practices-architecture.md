@@ -4,8 +4,6 @@ Software architecture has a central position when it comes to managing the life 
 
 Having an up-to-date view of the actual/implemented architecture at all times is therefore key to ensuring your software landscape and its systems remain future-proof. Every architecture is bound to change over time, due to a changing environment in which it operates. This process is referred to as architecture evolution. These guidelines are meant to help architects and development teams with their component architecture, especially when it comes to architecture evolution, based on best practices.
 
-<sig-toc></sig-toc>
-
 ## Why modularize your codebase?
 
 Every non-trivial system is split into components. There are multiple reasons for modularizing your software system: Some relate to technical benefits, some to improve the way of working and co-operation of the developers.

@@ -12,6 +12,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
+import os
 import subprocess
 import tempfile
 from datetime import datetime, timedelta
@@ -74,3 +75,21 @@ class RepositoryHistoryExporterTest(TestCase):
         ]
 
         self.assertEqual(UploadLog.history, expected)
+
+    def testSupportMultipleRepositoriesInSamePipeline(self):
+        tempDir = tempfile.mkdtemp()
+
+        sub1 = subprocess.run(["git", "clone", "https://github.com/BetterCodeHubTraining/cspacman.git", f"{tempDir}/cspacman"])
+        sub1.check_returncode()
+
+        sub2 = subprocess.run(["git", "clone", "https://github.com/LeaVerou/awesomplete.git", f"{tempDir}/awesomplete"])
+        sub2.check_returncode()
+
+        historyExporter = RepositoryHistoryExporter()
+        historyExporter.CUTOFF_DATE = datetime.now() + timedelta(days=-9999)
+        historyExporter.exportHistory(tempDir)
+
+        self.assertFalse(os.path.exists(f"{tempDir}/git.log"))
+        self.assertTrue(os.path.exists(f"{tempDir}/cspacman/git.log"))
+        self.assertTrue(os.path.exists(f"{tempDir}/awesomplete/git.log"))
+

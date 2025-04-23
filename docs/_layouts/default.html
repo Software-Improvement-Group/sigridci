@@ -8,6 +8,7 @@
         <style>
             {% include sigfonts.css %}
             {% include stylesheet.css %}
+            {% include mobile.css %}
         </style>
         
         <script src="https://cdn.jsdelivr.net/npm/lunr@2.3.9/lunr.js"></script>
@@ -16,6 +17,9 @@
     
     <body>
         <div class="topBar">
+            <a class="hamburger">
+                <img src="/images/hamburger.svg" />
+            </a>
             <a href="/" class="sigridLogo">
                 <img src="/images/sigrid-logo-white.svg" />
             </a>
@@ -33,6 +37,7 @@
 
         <div class="container">
             {% include menu.html %}
+
             <article>
                 {{ content }}
 
@@ -42,6 +47,10 @@
                     <a href="https://softwareimprovementgroup.com" target="_blank">&copy; 2025 Software Improvement Group</a>
                 </div>
             </article>
+
+            <sig-toc>
+                <h4>On this page</h4>
+            </sig-toc>
         </div>
 
         <script>

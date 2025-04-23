@@ -3,8 +3,6 @@
 This documentation covers on-premise Sigrid. It is not applicable for cloud-based Sigrid.
 {: .attention }
 
-<sig-toc></sig-toc>
-
 ## Prerequisites
 
 Your development platform will need access to the [Sigrid On-Premise Docker containers](onpremise-integration.md#obtaining-sigrid-on-premise).
