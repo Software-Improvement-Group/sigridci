@@ -99,7 +99,7 @@ Other Settings:
 Assign groups of users to your Authentication app.
 
 ### Info to provide to SIG
-Please Provide SIG with the following.
+Please send an email to [SIG's support department](mailto:support@softwareimprovementgroup.com) with one of the following url's and if known to you, the relevant Sigrid name.
 
 ##### SAML Configuration
 The `App federation MetadataURL` of your authentication app.
