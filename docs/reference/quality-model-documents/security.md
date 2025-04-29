@@ -1,8 +1,6 @@
 SIG Security Quality Model 2025: Guidance for producers
 =================================================================
 
-<sig-toc></sig-toc>
-
 ## Introduction
 
 Since 2020, SIG utilized the Security capability to get a grip on secure 
