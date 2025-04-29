@@ -3,6 +3,25 @@ Sigrid release notes
 
 SIG uses [continuous delivery](https://en.wikipedia.org/wiki/Continuous_delivery), meaning that every change to Sigrid or the underlying analysis is released once our development pipeline has completed. On average, we release somewhere between 10 and 20 times per day. This page therefore doesn't list every single change, since that would quickly lead to an excessively long list of small changes. Instead, this page lists Sigrid and analysis changes that we consider noteworthy for the typical Sigrid user.
 
+### April 22, 2025
+
+- **Sigrid API:** Sigrid is able to export all Open Source Health findings into an SBOM. The format of this SBOM was updated from CycloneDX version 1.5 to version 1.6. Refer to [the API documentation](../integrations/sigrid-api-documentation.md#open-source-health-findings-and-ratings) on how to use this SBOM export.
+
+### April 7, 2025
+
+- **Security:** The [portfolio-level security dashboard](../capabilities/portfolio-security.md) now shows the trend of open versus resolved findings, per month. Shows the number of open security findings (new and existing) and resolved findings each month. A healthy process resolves more findings than it opens.
+- **Sigrid CI:** Feedback from Sigrid CI now also included refactoring candidates that have been fixed. This information is not intended as "work items", it's purely positive feedback that is meant to encourage small refactorings as part of the normal development process.
+- **Sigrid CI**: If you have a pipeline that operates on *multiple* Git repositories, Sigrid CI will now export the repository history for each repository. Most people will not actually notice this change, as it's most common to have one pipeline operate on one repository. However, if you're in the minority of people that uses a pipeline that combines multiple repositories, this change means you can now use Sigrid CI out-of-the-box instead of needing to manually configure things.
+- **Open Source Health:** Sigrid reports on open source libraries in [JAR files](https://en.wikipedia.org/wiki/JAR_(file_format)). In most cases, a JAR file contains exactly one library. However, there are rare cases where people use a "fat" or "shadowed" JAR file that contains *multiple* open source libraries. Sigrid will now only report on the contents of those JAR files if the [transitive option](analysis-scope-configuration.md#open-source-health) is enabled in the configuration.
+
+### March 24, 2025
+
+- **New management dashboard:** SIG is working on an entirely new Sigrid dashboard targeting a management audience. Once this is released, you will be able to choose whether you want your landing page to be the existing (more technical) dashboard, or the new management dashboard. [Let us know](mailto:support@softwareimprovementgroup.com) if you're interested in this new management dashboard, and you want to be involved in its creation during the beta phase.
+- **Open Source Health:** It is possible to [accept certain Open Source Health risks in the configuration file](analysis-scope-configuration.md#exclude-open-source-health-risks). Previously, it was not possible in the Sigrid user interface to differentiate between "there is no risk" versus "the risk has been accepted". This has been changed so that "green" always means there is no risk.
+- **Security:** The security finding page now includes feedback buttons to indicate if findings are clear and useful. This feedback is then used by SIG to improve Sigrid. Note we already used similar feedback buttons in Sigrid CI, this change is about bringing the same mechanism to security findings.
+- **Technology support:** In [Vue.js](https://vuejs.org), [computed properties](https://vuejs.org/guide/essentials/computed) are now also considered to be units. This leads to Maintainability and Architecture findings that are more in line with teams using Vue.js according to best practices.
+- **Technology support:** Open Source Health now supports [pub.dev](https://pub.dev), which is commonly used to manage open source dependencies for Dart/Flutter apps.
+
 ### March 10, 2025
 
 - **Refactoring Candidates - Component Entanglement** Sigrid now produces refactoring candidates related to communication density, a measure under the Component Entanglement metric for maintainability. These new refactoring candidates provide insight into the number of communication lines incident to a targeted component and detail if this communication is excessive according to the Maintainability model's thresholds for this metric. 

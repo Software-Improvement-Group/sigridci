@@ -3,8 +3,6 @@ Analysis scope configuration
 
 You can change Sigrid's configuration for your project, to make Sigrid's feedback as useful and actionable as possible. We call this configuration "the scope", and customizing the configuration for your system is sometimes referred to as "scoping".
 
-<sig-toc></sig-toc>
-
 ## Starting with your Sigrid configuration
 
 You configure Sigrid by creating a file called `sigrid.yaml` in the root of your repository. When you publish your repository to Sigrid, it will pick up the `sigrid.yaml` file. 
@@ -71,7 +69,7 @@ The following example specifies a component that includes all `.js` and `.jsx` f
       exclude:
       - ".*[.]spec[.]jsx?" #excluding all `spec.js` files from this component, wherever they are; alternatively, limiting to files within a `/frontend/` directory tree, `.*/frontend/.*[.]spec[.]js`
           
-When you specify both `include` and `exclude` patterns, the exclude patterns take precedence. In this example, the file `frontend/home.jsx` would be included, but the file `frontend/example.spec.jsx` would be excluded. This is much easier and maintainable than trying `.*(?<![.]spec)[.]jsx?` under `include`, even though that would work.
+When you specify both `include` and `exclude` patterns, the exclude patterns take precedence. In this example, the file `frontend/home.jsx` would be included, but the file `frontend/example.spec.jsx` would be excluded. This is much easier and more maintainable than trying `.*(?<![.]spec)[.]jsx?` under `include`, even though that would work.
 
 Since we know that spec.js files are meant to be test files, what you probably want in this case is to make this distinction according to its context: 
 
@@ -84,16 +82,14 @@ Since we know that spec.js files are meant to be test files, what you probably w
 
 As a convention, all `include` and `exclude` patterns always start with `.*/`. It is tempting to always define patterns relative to the root of the codebase, but it is important to realize that what is considered the "root" is flexible in Sigrid. Depending on how you [map your repositories to systems](../organization-integration/systems.md), the root of your repository might not match the root of the Sigrid system that contains your repository. Starting all patterns `.*/` will avoid confusion in such situations.
 
-### Files ending up in Remainder while YAML pattern seems correct? Please check for non-printing characters in the YAML file
-In some cases, non-printing characters (such as zero-width space characters) end up in YAML files after editing. They are troublesome because they are processed literally by Sigrid. Therefore, a pattern that you have defined might not match in Sigrid, while there does not seem to be a visible problem. This is because not all editors allow you to see non-printing characters, e.g. Gitlab does not (currently). 
+In rare cases, you might see files ending up in a Remainder component, even though your YAML file seems correct. This might be due to non-printable characters (e.g. zero-width spaces). You can use an IDE or text editor to double-check if your project uses non-printable characters in file names.
+{: .attention }
 
-However, Sigrid's `Code explorer` [(see its help page)](../capabilities/system-code-explorer.md) will actually print this as a space character. Also, depending on the markup setting of your editor, a zero-width space character may be visible e.g. as `U+200B` or ​`<0x200b>`, depending on encoding settings. 
-
-### Other common tips and caveats when using regular expressions to define patterns
+### Common tips and caveats when using regular expressions to define patterns
 
 - The full file path must always be matched instead of (part of) a filename. This generally requires some wildcards.
 - All patterns are case-sensitive. This is relevant in case you are specifically searching for naming in camelCase or PascalCase. It is then useful to search for files like `SomeTest.java`.
-- You are entering patterns inside of a YAML file. YAML uses backslashes for escape characters. So if you want to use backslashes inside of your regular expressions, for example `\S+` (i.e. "one or more non-whitespace characters"), you will need to escape the backslash: `\\S+`.
+- You are entering patterns within YAML. YAML uses backslashes for escape characters. So if you want to use backslashes inside of your regular expressions, for example `\S+` (i.e. "one or more non-whitespace characters"), you will need to escape the backslash: `\\S+`.
 - If you want to express a literal dot `.`, use `[.]`. This means: 1 character in a group where only `.` is permitted.
 - Since the commonly used `.*` is greedy, with deep directory structures it may happen that your search term appears in other places than you want, e.g. deeper level directories. Being as specific as possible helps you catch the right folders and files. Commonly, you might be looking for specific file names, while those same search terms should not appear in directory names. For example, you may search for files with *Build* in the name, but avoiding */Build/* directories, since those may contain generated or compiled code. To find filenames specifically, or whenever you want to avoid a deeper level directory, a useful pattern is `[^/]*` or `[^/]+`. This pattern consumes characters as long as it does not find a `/`. When used as `/[^/]*[.]java` it will ensure to catch a filename ending with `.java`. You could also have defined a character set that excludes the folder separator *"/"* with a set like `.*/[\\w-][.]java`, but this is prone to omissions.  
 - Abide by the developer wisdom that solving a problem with a regular expression leads you to have 2 problems. Regular expressions are powerful and may even be fun, but try to match your needs with the simplest possible pattern. Matching "positive" patterns, including the `exclude` option, is far easier than trying with e.g. negative lookaheads `(?!..)`, because catching a full file path is difficult with its non-capturing behavior. There are cases where patterns may work such as `((?![unwanted string]).)+`, but these cases are hard to get right and debug. Also, negative lookbehinds (`?<!`) are not recommended ([rather use an `exclude` pattern as above](#defining-include-and-exclude-patterns)), because they require a known character length and position. 

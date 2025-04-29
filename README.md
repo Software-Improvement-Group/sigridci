@@ -2,7 +2,7 @@
 
 # Sigrid | Software Assurance Platform
 
-[Sigrid](https://www.softwareimprovementgroup.com/solutions/sigrid-software-assurance-platform/) helps you to improve your software by measuring your system's code quality, and then compares the results against a benchmark of 10,000 industry systems to give you concrete advice on areas where you can improve.
+[Sigrid](https://www.softwareimprovementgroup.com/solutions/sigrid-software-assurance-platform/) helps you to improve your software by measuring your system's code quality, and then compares the results against a benchmark of 25,000 industry systems to give you concrete advice on areas where you can improve.
 
 <img src="docs/images/overall-portfolio-dashboard.png" width="700" align="center" />
 

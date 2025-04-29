@@ -1,19 +1,5 @@
 # Guidelines for healthy use of Open Source
 
-<!-- 
-- TODOs 
-  - consider how to use context/meta-information to refine policies? or is it enough to refer to the objectives section?
-  - Check that the benchmark risk categories and the guidance for producers should be consistent with the methodology & guidelines: so same scales etc.
-    - Make sure we are aligned with DPA v4! (can we refer to it?)
-    - and with the guidance for producers
-  - we have to explicitly address: what if we did not reach 4 stars -> then look at the underlying measurements
--->
-
-
-<sig-toc></sig-toc>
-
-## Introduction
-
 The purpose of this document is to provide concrete and actionable guidelines, hints and tips on how to achieve healthy use of third party libraries and frameworks in your application. 
 This covers how to get started, how to stay in control, and how to act when health deteriorates. 
 Where applicable, this document explains how Sigrid can be used to achieve this.

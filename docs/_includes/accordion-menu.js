@@ -36,8 +36,15 @@ document.addEventListener("DOMContentLoaded", () => {
     expandCurrentSection();
     
     const categoryHeaders = document.querySelectorAll("nav .category");
+    const hamburger = document.querySelector(".hamburger");
     
     for (let i = 0; i < categoryHeaders.length; i++) {
         categoryHeaders[i].addEventListener("click", e => expandSection(i));
     }
+
+    hamburger.addEventListener("click", e => {
+        const menu = document.querySelector("nav");
+        console.log(menu.style.display);
+        menu.style.display = menu.style.display == "block" ? "none" : "block";
+    });
 });

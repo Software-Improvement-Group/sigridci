@@ -27,13 +27,17 @@ class RepositoryHistoryExporter:
     COMMIT_PREFIXES = ("@@@", "'@@@")
 
     def exportHistory(self, sourceDir):
-        if os.path.exists(f"{sourceDir}/.git"):
-            self.exportGitHistory(sourceDir)
-        else:
+        possibleLocations = [sourceDir] + [f"{sourceDir}/{sub}" for sub in os.listdir(sourceDir)]
+        repoDirs = [dir for dir in possibleLocations if os.path.isdir(dir) and os.path.exists(f"{dir}/.git")]
+
+        for repoDir in repoDirs:
+            self.exportGitHistory(repoDir)
+
+        if len(repoDirs) == 0:
             UploadLog.log("No repository history found")
 
-    def exportGitHistory(self, sourceDir):
-        gitCommand = ["git", "-C", sourceDir, "--no-pager", "log", "--date=iso", f"--format='{self.GIT_LOG_FORMAT}'",
+    def exportGitHistory(self, repoDir):
+        gitCommand = ["git", "-C", repoDir, "--no-pager", "log", "--date=iso", f"--format='{self.GIT_LOG_FORMAT}'",
                       "--numstat", "--no-merges", f"--after={self.CUTOFF_DATE.strftime('%Y-%m-%d')}"]
 
         try:
@@ -41,7 +45,7 @@ class RepositoryHistoryExporter:
             if output.returncode == 0:
                 UploadLog.log("Including repository history in upload")
                 history = output.stdout.decode("utf8", "ignore")
-                self.createHistoryExportFile(history, f"{sourceDir}/{self.LIGHTWEIGHT_HISTORY_EXPORT_FILE}")
+                self.createHistoryExportFile(history, f"{repoDir}/{self.LIGHTWEIGHT_HISTORY_EXPORT_FILE}")
             else:
                 UploadLog.log("Exporting repository history failed")
         except Exception as e:

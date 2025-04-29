@@ -3,8 +3,6 @@ Sigrid API documentation
 
 In addition to [Sigrid CI](../README.md), Sigrid also provides a more general-purpose REST API that you can use to obtain analysis results from Sigrid. This allows you to integrate data from Sigrid into your workflow. 
 
-<sig-toc></sig-toc>
-
 ## General usage
 
 - The Sigrid API base URL is `https://sigrid-says.com/rest/analysis-results/api/v1`. 
@@ -31,11 +29,11 @@ In Sigrid's web-based user interface, several portfolio (customer) level dashboa
 hides deactivated systems and excluded systems. The filter panel on the right hand side provides 
 two toggles to override this behavior:
 
-<img src="../images/dashboard-toggles.png" width="202" />
+<img src="../images/dashboard-toggles.png" width="150" />
 
 A system can be deactivated, or excluded from dashboards, in the metadata settings page:
 
-<img src="../images/metadata-deactivate.png" width="843" />
+<img src="../images/metadata-deactivate.png" width="400" />
 
 Sigrid's REST API mimics this behavior, as follows:
 * All portfolio-level endpoints by default do not include deactivated nor excluded systems in 
@@ -101,10 +99,16 @@ The top-level `maintainability` and `maintainabilityDate` refer to the *current*
 ### Security and reliability findings
 
 Sigrid's REST API provides two endpoints to get all open security or reliability findings for a system:
-* Security findings: `GET https://sigrid-says.com/rest/analysis-results/api/v1/security-findings/{customer}/{system}`
-* Reliability findings: `GET https://sigrid-says.com/rest/analysis-results/api/v1/reliability-findings/{customer}/{system}`
+* Security findings: `GET https://sigrid-says.com/rest/analysis-results/api/v1/security-findings/{customer}/{system}?model={modelName}`
+* Reliability findings: `GET https://sigrid-says.com/rest/analysis-results/api/v1/reliability-findings/{customer}/{system}?model={modelName}`
 
-The parameters `{customer}` and `{system}` refer to your Sigrid account name and system ID respectively. 
+The path parameters `{customer}` and `{system}` refer to your Sigrid account name and system ID respectively. The `modelName` query parameter is optional;
+it specifies the model used to determine the category or categories of each finding. If no `modelName` is given, the default model is used (that is: the OWASP
+Top-10 for security, and the SIG Code Reliability Top-10 for reliability). 
+
+Valid model names are:
+- For security: `ow10` (OWASP Top-10, the default), `sigsec` (SIG Security), `5055sec` (ISO 5055 - Security), `c25` (CWE Top-25), `pci4` (PCI-DSS v4.0), `owasvs4c` (OWASP ASVS 4.0 Chapters), `owasvs4s` (OWASP ASVS 4.0 Sections), `lcnc10` (OWASP Low-Code/No-Code Top-10).
+- For reliability: `sigrel` (SIG Code Reliability Top-10, the default) and `5055rel` (ISO 5055 - Reliability).
 
 <details markdown="1">
   <summary>Example response</summary>
@@ -137,6 +141,9 @@ The parameters `{customer}` and `{system}` refer to your Sigrid account name and
         "isSeverityOverridden": true,
         "weaknessIds": [
             "CWE-12345"
+        ],
+        "categories": [
+            "A1 Broken Access Control"
         ]
     }
 ]
@@ -152,7 +159,7 @@ A list of all third-party open source dependencies is available using the follow
 The endpoints will include [Open Source Health Quality Model](../reference/quality-model-documents/open-source-health.html) ratings where available. 
 The path parameter `{customer}` and `{system}` refer to your Sigrid account name and system ID respectively.
 
-The response format is based on the CycloneDX (version 1.5) format for an [SBOM (software bill of materials)](https://en.wikipedia.org/wiki/Software_bill_of_materials). 
+The response format is based on the CycloneDX (version 1.6) format for an [SBOM (software bill of materials)](https://en.wikipedia.org/wiki/Software_bill_of_materials). 
 
 <details markdown="1">
   <summary>Example response for a single system</summary>
@@ -162,7 +169,7 @@ Mimetype: `application/vnd.cyclonedx+json`
 ```json
 {
     "bomFormat": "CycloneDX",
-    "specVersion": "1.5",
+    "specVersion": "1.6",
     "version": 1,
     "metadata": {
         "timestamp": "2022-03-17T09:58:34Z",
@@ -688,6 +695,28 @@ Within each objective, the `parentId` refers to the ID of a portfolio objective,
 
 For advanced reporting use cases, you can combine the information from this end point with other end points: Combining the objective status with the [portfolio objectives](#retrieving-portfolio-objectives) allows you to replicate Sigrid's objectives dashboard in your report. You can also combine this with [metadata](#system-metadata) to provide additional drill-down information, for example for specific teams or divisions.
 
+### Removing subsystems
+
+The Sigrid CI script only adds subsystems, they will never disappear by themselves. If you want to remove a subsystem, users with the administrator or maintainer role can do so via the API.
+
+```
+POST https://sigrid-says.com/rest/inboundresults/sig/{customer}/{system}/ci/subsystems:batch-delete/v1
+```
+
+The body of the request is a list of Unix paths that you want to remove from the system.
+
+```json
+    {"names": ["path1", "path2"]}
+```
+
+The following example shows a complete `curl` commmand that will remove the two sub-systems:
+
+```bash
+curl --header 'Authorization: Bearer ${SIGRID_PERSONAL_TOKEN}' -X POST https://sigrid-says.com/rest/inboundresults/sig/{customer}/{system}/ci/subsystems:batch-delete/v1 -H 'Content-Type: application/json' --data '{ "names" : ["path1", "path2"] }'
+```
+
+A new analysis will run for your system and the results will be available in the Sigrid UI and API once the analysis is complete.
+
 ## Managing user permissions via API
 
 In addition to the general usage of the Sigrid API, users also can also perform user management tasks via the API as an alternative to doing these tasks within the web-based user interface of Sigrid itself. This also allows Sigrid administrators to better construct automated processes for managing the access to systems for their users.
@@ -719,18 +748,18 @@ The response format upon successful request of a single user looks like the foll
 
 ```json
 {
-	"id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
-	"firstName": "string",
-	"lastName": "string",
-	"email": "string",
-	"isAdmin": true,
-  	"accessToAll": true,
-  	"systems": [
-    	{
-      		"systemName": "string"
-    	}
-  	],
-	"lastLoginAt": "2024-03-07T16:54:33.438Z"
+  "id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
+  "firstName": "string",
+  "lastName": "string",
+  "email": "string",
+  "isAdmin": true,
+    "accessToAll": true,
+    "systems": [
+      {
+        "systemName": "string"
+      }
+    ],
+  "lastLoginAt": "2024-03-07T16:54:33.438Z"
 }
 ```
 
@@ -744,21 +773,22 @@ An example request could be the following:
 
 ```shell
 $ curl 'https://sigrid-says.com/rest/auth/api/user-management/{customer}/users/{userID}/permissions' -X PATCH \
-    -H 'Content-Type: application/json' \
-    -H 'Authorization: Bearer {SIGRID_PERSONAL_TOKEN}' \
-    -d '{
-	"accessToAll": false,
-	"systems": [ 
-		{
-			"systemName": "system-a"
-		},
-		{
-			"systemName": "system-b"
-		},
-		{
-			"systemName": "system-c"
-	]
-}'
+  -H 'Content-Type: application/json' \
+  -H 'Authorization: Bearer {SIGRID_PERSONAL_TOKEN}' \
+  -d '{
+    "accessToAll": false,
+    "systems": [ 
+      {
+        "systemName": "system-a"
+      },
+      {
+        "systemName": "system-b"
+      },
+      {
+        "systemName": "system-c"
+      }
+    ]
+  }'
 ```
 
 This request will _replace_ the set of system permissions granted to the specified user with the set provided in the request body consisting of 3 systems - system-a, system-b and system-c. No other change is made, so user details such as firstName / lastName / email all will remain as-is upon successful request of this endpoint.
@@ -767,24 +797,24 @@ Upon succesful request of the above endpoint for a user with id `d987c69d-464f-4
 
 ```json
 {
-	"id": "d987c69d-464f-4276-bea8-5780cc782b97",
-	"firstName": "string",
-	"lastName": "string",
-	"email": "string",
-	"isAdmin": false,
-	"accessToAll": false,
-	"systems": [
-		{
-			"systemName": "system-a"
-		},
-		{
-			"systemName": "system-b"
-		},
-		{
-			"systemName": "system-c"
-		}
-	],
-	"lastLoginAt": "2024-03-07T16:54:33.438Z"
+  "id": "d987c69d-464f-4276-bea8-5780cc782b97",
+  "firstName": "string",
+  "lastName": "string",
+  "email": "string",
+  "isAdmin": false,
+  "accessToAll": false,
+  "systems": [
+	  {
+      "systemName": "system-a"
+    },
+    {
+      "systemName": "system-b"
+    },
+    {
+      "systemName": "system-c"
+    }
+  ],
+  "lastLoginAt": "2024-03-07T16:54:33.438Z"
 }
 ```
 
@@ -796,39 +826,81 @@ For more information, see the detailed section on [user management in Sigrid.](.
 
 In addition to managing individual user permissions within the portfolio, authorization group permissions can also be managed via the API. This allows for bulk editing of permissions users inherit based on their authorization group membership, as well as the set of users that are part of a specified group. 
 
-Available endpoints include:
-- `GET https://sigrid-says.com/rest/auth/api/user-management/{customer}/groups`: Returns a list all authorization groups defined within a portfolio
-- `GET https://sigrid-says.com/rest/auth/api/user-management/{customer}/groups/{groupId}`: Returns an authorization group based on their unique identifier
-- `PUT https://sigrid-says.com/rest/auth/api/user-management/{customer}/groups/{groupID}/permissions`: Updates the permissions granted to the authorization group, with all users within the group inheriting the updated permissions
-- `PUT https://sigrid-says.com/rest/auth/api/user-management/{customer}/groups/{groupID}/members`: Updates the set of users that are part of the authorization group
+Administrators have the ability to Create and Delete user groups via the following endpoints:
+- `POST https://sigrid-says.com/rest/auth/api/user-management/{customer}/groups`: Creates a new user group within the specified customer portfolio
+- `DELETE https://sigrid-says.com/rest/auth/api/user-management/{customer}/groups/{groupID}`: Removes the authorization group based on their unique identifier
 
 The path parameters `{customer}` and `{groupID}` refer to your Sigrid account name and a unique authorization group ID respectively.
+
+For creating groups, the request format is:
+
+```json
+{
+  "name": "string",
+  "description": "string",
+  "users": [
+    "string($uuid)"
+  ],
+  "systems": [
+    {
+      "systemName": "string"
+    }
+  ]
+}
+```
+
+Users can provide a number of fields when creating groups.
+- The `name` field is simply whatever name the administrator chooses for the group. We recommend a descriptive name either based on which team, division, or responsibility scope this group relates to within your own organization.
+- The `description` field is then the description of the group for traceability purposes. We recommend descriptions that describe the group's intended responsibility and/or scope of the portfolio they will manage in Sigrid.
+- The `users` field contains the set of users that are members of the authorization group and will inherit the permissions granted to the group. A user is denoted by a UUID representing their unique identifier hash.
+- The `systems`field contains the set of systems authorized to be accessible by the group, similar to how it is defined for an individual user. System are denoted by their system name when onboarded in sigrid. 
+    - __NOTE:__ This name can be different from the display name seen in Sigrid, be sure to use the name the sytem was attributed during onboarding. 
+
+A typical response upon group creation has the following format:
+
+```json
+{
+  "id": "string($uuid)",
+  "name": "string",
+  "description": "string",
+  "users": [
+    "string($uuid)"
+  ],
+  "systems": [
+    {
+      "systemName": "string"
+    }
+  ],
+  "updatedAt": "2025-03-26T16:54:22.440Z",
+  "updatedByUser": "string($uuid)"
+}
+```
+
+Additional available endpoints include for managing permissions on groups:
+- `GET https://sigrid-says.com/rest/auth/api/user-management/{customer}/groups`: Returns a list all authorization groups defined within a portfolio
+- `GET https://sigrid-says.com/rest/auth/api/user-management/{customer}/groups/{groupID}`: Returns an authorization group based on their unique identifier
+- `PUT https://sigrid-says.com/rest/auth/api/user-management/{customer}/groups/{groupID}/permissions`: Updates the permissions granted to the authorization group, with all users within the group inheriting the updated permissions
+- `PUT https://sigrid-says.com/rest/auth/api/user-management/{customer}/groups/{groupID}/members`: Updates the set of users that are part of the authorization group
 
 The response format upon successful request of a single authorization group looks like the following:
 
 ```json
 {
-	"id": "string($uuid)",
-	"name": "string",
-	"description": "string",
-	"users": [
-    	"string($uuid)"
-  	],
-	"systems": [
-    	{
-			"systemName": "string"
-    	}
-	],
-	"updatedAt": "2024-03-07T17:41:59.278Z",
-	"updatedByUser": "3fa85f64-5717-4562-b3fc-2c963f66afa6"
+  "id": "string($uuid)",
+  "name": "string",
+  "description": "string",
+  "users": [
+      "string($uuid)"
+    ],
+  "systems": [
+      {
+      "systemName": "string"
+      }
+  ],
+  "updatedAt": "2024-03-07T17:41:59.278Z",
+  "updatedByUser": "string($uuid)"
 }
 ```
-
-Unlike the response received when leveraging the endpoint to return a single user, groups have two fields that can be modified via the API: `users` and `systems`. 
-
-- The `users` field contains the set of users that are members of the authorization group and will inherit the permissions granted to the group. A user is denoted by a UUID representing their unique identifier hash.
-- The `systems`field contains the set of systems authorized to be accessible by the group, similar to how it is defined for an individual user. System are denoted by their system name when onboarded in sigrid. 
-    - __NOTE:__ This name can be different from the display name seen in Sigrid, be sure to use the name the sytem was attributed during onboarding. 
 
 When leveraging the `PUT https://sigrid-says.com/rest/auth/api/user-management/{customer}/groups/{groupID}/permissions` endpoint, the user must include in the request body the permissions to be updated. 
 
@@ -836,20 +908,20 @@ An example request could be the following:
 
 ```shell
 $ curl 'https://sigrid-says.com/rest/auth/api/user-management/{customer}/groups/{groupID}/permissions' -X PATCH \
-	-H 'Content-Type: application/json' \
-	-H 'Authorization: Bearer {SIGRID_PERSONAL_TOKEN}' \
-	-d '{
-	"systems": [ 
-    	{
-			"systemName": "system-x"
-		},
-		{
-			"systemName": "system-y"
-		},
-		{
-			"systemName": "system-z"
-		}
-	]
+  -H 'Content-Type: application/json' \
+  -H 'Authorization: Bearer {SIGRID_PERSONAL_TOKEN}' \
+  -d '{
+  "systems": [ 
+    {
+      "systemName": "system-x"
+    },
+    {
+      "systemName": "system-y"
+    },
+    {
+      "systemName": "system-z"
+    }
+  ]
 }'
 ```
 
@@ -859,25 +931,25 @@ Upon succesful request of the above endpoint for a group with id `f4a702ac-b998-
 
 ```json
 {
-	"id": "f4a702ac-b998-44e1-a271-840a3f75e6d2",
-	"name": "string",
-	"description": "string",
-	"users": [
-		"3fa85f64-5717-4562-b3fc-2c963f66afa6"
-  	],
-	"systems": [
-    	{
-			"systemName": "system-x"
-		},
-		{
-			"systemName": "system-y"
-		},
-		{
-			"systemName": "system-z"
-		}
-	],
-	"updatedAt": "2024-03-07T17:41:59.278Z",
-	"updatedByUser": "3fa85f64-5717-4562-b3fc-2c963f66afa6"
+  "id": "f4a702ac-b998-44e1-a271-840a3f75e6d2",
+  "name": "string",
+  "description": "string",
+  "users": [
+    "string($uuid)"
+    ],
+  "systems": [
+    {
+      "systemName": "system-x"
+    },
+    {
+      "systemName": "system-y"
+    },
+    {
+      "systemName": "system-z"
+    }
+  ],
+  "updatedAt": "2024-03-07T17:41:59.278Z",
+  "updatedByUser": "string($uuid)"
 }
 ```
 
@@ -887,64 +959,42 @@ An example request on the same group could be the following:
 
 ```shell
 $ curl 'https://sigrid-says.com/rest/auth/api/user-management/{customer}/groups/f4a702ac-b998-44e1-a271-840a3f75e6d2/members' -X PATCH \
-	-H 'Content-Type: application/json' \
-    -H 'Authorization: Bearer {SIGRID_PERSONAL_TOKEN}' \
-    -d '{
-		"users": [ 
-			"d987c69d-464f-4276-bea8-5780cc782b97",
-			"3fa85f64-5717-4562-b3fc-2c963f66afa6" 
-		]
-	}'
+  -H 'Content-Type: application/json' \
+  -H 'Authorization: Bearer {SIGRID_PERSONAL_TOKEN}' \
+  -d '{
+    "users": [ 
+      "d987c69d-464f-4276-bea8-5780cc782b97",
+      "3fa85f64-5717-4562-b3fc-2c963f66afa6" 
+    ]
+  }'
 ```
 
 Successful response format of this request would look like the following, with the updated members now inheriting the permissions assigned in the previous example:
 
 ```json
 {
-	"id": "f4a702ac-b998-44e1-a271-840a3f75e6d2",
-	"name": "string",
-	"description": "string",
-	"users": [
-    	"d987c69d-464f-4276-bea8-5780cc782b97",
-    	"3fa85f64-5717-4562-b3fc-2c963f66afa6" 
-  	],
-  	"systems": [
-    	{
-			"systemName": "system-x"
-		},
-		{
-			"systemName": "system-y"
-		},
-		{
-			"systemName": "system-z"
-		}
-	],
-	"updatedAt": "2024-03-07T17:41:59.278Z",
-	"updatedByUser": "3fa85f64-5717-4562-b3fc-2c963f66afa6"	
+  "id": "f4a702ac-b998-44e1-a271-840a3f75e6d2",
+  "name": "string",
+  "description": "string",
+  "users": [
+      "d987c69d-464f-4276-bea8-5780cc782b97",
+      "3fa85f64-5717-4562-b3fc-2c963f66afa6" 
+    ],
+    "systems": [
+    {
+      "systemName": "system-x"
+    },
+    {
+      "systemName": "system-y"
+    },
+    {
+      "systemName": "system-z"
+    }
+  ],
+  "updatedAt": "2024-03-07T17:41:59.278Z",
+  "updatedByUser": "3fa85f64-5717-4562-b3fc-2c963f66afa6"	
 }
 ```
-
-## Removing subsystems
-
-The Sigrid CI script only adds subsystems, they will never disappear by themselves. If you want to remove a subsystem, users with the administrator or maintainer role can do so via the API.
-
-```
-POST https://sigrid-says.com/rest/inboundresults/sig/{customer}/{system}/ci/subsystems:batch-delete/v1
-```
-
-The body of the request is a list of Unix paths that you want to remove from the system.
-
-```json
-    {"names": ["path1", "path2"]}
-```
-
-The following example shows a complete `curl` commmand that will remove the two sub-systems:
-
-```bash
-curl --header 'Authorization: Bearer ${SIGRID_PERSONAL_TOKEN}' -X POST https://sigrid-says.com/rest/inboundresults/sig/{customer}/{system}/ci/subsystems:batch-delete/v1 -H 'Content-Type: application/json' --data '{ "names" : ["path1", "path2"] }'
-```
-
-A new analysis will run for your system and the results will be available in the Sigrid UI and API once the analysis is complete.
 
 ## Contact and support
 

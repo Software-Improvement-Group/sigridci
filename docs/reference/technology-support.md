@@ -3,8 +3,6 @@ Technology support
 
 This page provides an overview of all technologies that can be analyzed by Sigrid for its various capabilities. 
 
-<sig-toc></sig-toc>
-
 ## List of supported technologies
 
 - The first column refers to how the technology is named in Sigrid's [scope configuration file](../reference/analysis-scope-configuration.md#technology-support).
@@ -411,7 +409,7 @@ In addition to supporting 300+ technologies, Sigrid also supports various open s
 | NuGet                 | C#                     |
 | PuppetForge           | Puppet                 |
 | Poetry                | Python                 |
-| pub.dev               | Dartm Flutter          |
+| pub.dev               | Dart, Flutter          |
 | PyPi                  | Python                 |
 | RubyGems              | Ruby                   |
 | SBT                   | Scala                  |
