@@ -34,6 +34,8 @@ Some Sigrid On-Premise features are *optional*:
   - You are prepared to update Sigrid regularly, at minimum monthly.
 - You need to support and manage a Postgres database service.
   - You are prepared to update Postgres regularly, based on the version policy in this documentation.
+  - Sigrid requires PostgreSQL, including some well-known PostgreSQL extensions.
+  - Several Linux distributions distribute PostgreSQL extensions in a separate package, even the extensions listed in the official PostgreSQL documentation. For that reason, we require that you install the PostgreSQL extensions as well; typically by installing a package named postgresql-contrib via your package manager.
 - You need to have a continuous integration pipeline in one of the following platforms, since Sigrid will integrate with this pipeline: GitHub, GitLab, Azure DevOps.
   - For CI/CD integration, both cloud and server versions of Azure DevOps are supported.
 - You need to have an identity provider supporting one of the following protocols, since Sigrid will integrate with this for authentication: OpenID Connect, SAML, LDAP.
