@@ -46,7 +46,7 @@ class SystemUploadPacker:
         ".gradle/",
         ".idea/",
         ".m2/",
-        "m2/",
+        "m2/repo/",
         ".terraform/",
         ".yarn/"
     ]
