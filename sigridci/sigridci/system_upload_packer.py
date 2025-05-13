@@ -48,6 +48,7 @@ class SystemUploadPacker:
         ".m2/",
         "m2/repo/",
         ".pip-cache/",
+        ".pip-packages/",
         ".terraform/",
         ".yarn/"
     ]
