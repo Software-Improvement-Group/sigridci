@@ -17,7 +17,7 @@ prioritize, and how you bring everyone along. That’s where Sigrid comes in.
 
 > "Organizations often struggle to develop a cyber-risk management program that not only aligns with organizational 
 > goals, but also provides stakeholders with practical tools, methodologies and mechanisms that can be seamlessly 
-> integrated into their daily operations.” - Gartner
+> integrated into their daily operations." - Gartner
 
 ## Balancing new findings and security debt
 
