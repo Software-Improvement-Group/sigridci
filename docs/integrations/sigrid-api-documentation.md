@@ -464,7 +464,7 @@ $ curl 'https://sigrid-says.com/rest/analysis-results/api/v1/system-metadata/{cu
 This example request _replaces_ the list of supplier names with the list consisting of one single supplier name (`Supplier 1`). It also _removes_ the remark. Next to this, it
 leaves all metadata as-is. For instance, if the external ID before executing this request is `ab12345`, after this request it still is. 
 
-### Metadata fields
+#### Metadata fields
 
 The metadata fields are described by the following table. Note that the setting for `deploymentType` is used to assess impact of security findings.
 
