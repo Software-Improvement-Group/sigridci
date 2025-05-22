@@ -111,6 +111,7 @@ picture in the previous section.
 | systemElement.observationType           | See the list of [architecture observations](#architecture-observations) below. Optional field. [1]             |
 | systemElement.technology                | Indicates this is a technology-specific system element. Optional field. [2]                                    |
 | systemElement.annotation                | Text description that provides information for system elements. Optional field, defined in configuration. [3]  |
+| dependency.id                           | ID based on the dependency's fingerprint. Dependencies will retain the same ID across subsequent scans.        |
 | dependency.sourceElementId              | Refers to one of the entries in `systemElements`.                                                              |
 | dependency.targetElementId              | Refers to one of the entries in `systemElements`.                                                              |
 | dependency.type                         | See the [list of dependency types](#dependency-types) below.                                                   |
