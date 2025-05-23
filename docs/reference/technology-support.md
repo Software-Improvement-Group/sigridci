@@ -214,7 +214,7 @@ This page provides an overview of all technologies that can be analyzed by Sigri
 | `powercenter`              | PowerCenter                              | Maintainability, Architecture               | [(8)](#notes)     |
 | `powerfx`                  | Power Fx (AKA Microsoft Power Apps)      | Maintainability                             |
 | `powershell`               | Powershell                               | Maintainability, Architecture               |
-| `progress`                 | Progress (OpenEdge)                      | Maintainability, Architecture, AI           |
+| `progress`                 | Progress (OpenEdge)                      | Maintainability, Architecture, Security, AI           |
 | `pronto`                   | Pronto                                   | Maintainability, Architecture               |
 | `prt`                      | PRT                                      | Maintainability                             |
 | `puppet`                   | Puppet                                   | Maintainability, Architecture               |
