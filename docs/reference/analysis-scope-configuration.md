@@ -155,6 +155,8 @@ The `component_base_dirs` option allows you to define a list of directories, and
       
 This will give you 3 components: `my-sub-component-a`, `my-sub-component-b`, and `other-component`. As you can see, this option is more powerful than `directory_depth` and allows you to create more advanced component structures like the asymmetrical structure in the example. The example also shows the downside: It's more complicated.
 
+If you use the special name `"Root files"`, all files located in the root of the system will be grouped into one top-level component. This is the same behavior that is used by the [automatic component detection](#automatic-component-detection).
+
 ### Manually define components by listing file and directory patterns
 
 If the previous options are still not powerful enough, the last option is to define a completely custom component structure:

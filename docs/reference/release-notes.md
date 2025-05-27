@@ -3,6 +3,12 @@ Sigrid release notes
 
 SIG uses [continuous delivery](https://en.wikipedia.org/wiki/Continuous_delivery), meaning that every change to Sigrid or the underlying analysis is released once our development pipeline has completed. On average, we release somewhere between 10 and 20 times per day. This page therefore doesn't list every single change, since that would quickly lead to an excessively long list of small changes. Instead, this page lists Sigrid and analysis changes that we consider noteworthy for the typical Sigrid user.
 
+### May 19, 2025
+
+- **Management dashboard:** A beta version of the new management dashboard is now available to early adopters. Contact [SIG support](mailto:support@softwareimprovementgroup.com) if you're interested to use this new dashboard.
+- **Technology support:** Kotlin technology support has been extended with support for [primary constructors](https://www.baeldung.com/kotlin/constructors) and [external/internal packages](https://kotlinlang.org/spec/packages-and-imports.html).
+- **Sigrid integrations:** A standardized [issue tracker export](https://github.com/Software-Improvement-Group/sigrid-integrations/tree/main/issue-tracker-export) is now available on GitHub. This allows you to export your issue tracker and publish to SIG, for use in SIG consultancy services. The issue tracker export is open source, to make it transparent on which data is exported and how.
+
 ### April 22, 2025
 
 - **Sigrid API:** Sigrid is able to export all Open Source Health findings into an SBOM. The format of this SBOM was updated from CycloneDX version 1.5 to version 1.6. Refer to [the API documentation](../integrations/sigrid-api-documentation.md#open-source-health-findings-and-ratings) on how to use this SBOM export.

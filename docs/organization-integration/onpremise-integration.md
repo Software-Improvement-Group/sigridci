@@ -34,6 +34,8 @@ Some Sigrid On-Premise features are *optional*:
   - You are prepared to update Sigrid regularly, at minimum monthly.
 - You need to support and manage a Postgres database service.
   - You are prepared to update Postgres regularly, based on the version policy in this documentation.
+  - Sigrid requires PostgreSQL, including some well-known PostgreSQL extensions.
+  - Several Linux distributions distribute PostgreSQL extensions in a separate package, even the extensions listed in the official PostgreSQL documentation. For that reason, we require that you install the PostgreSQL extensions as well; typically by installing a package named postgresql-contrib via your package manager.
 - You need to have a continuous integration pipeline in one of the following platforms, since Sigrid will integrate with this pipeline: GitHub, GitLab, Azure DevOps.
   - For CI/CD integration, both cloud and server versions of Azure DevOps are supported.
 - You need to have an identity provider supporting one of the following protocols, since Sigrid will integrate with this for authentication: OpenID Connect, SAML, LDAP.
@@ -81,7 +83,6 @@ In addition to updating Sigrid itself, you will also need to periodicially updat
 - Single-Tenant Architecture: The on-premise Sigrid distribution is single-tenant, meaning you cannot create your own "tenants." All systems and analyses will be consolidated into your portfolio. However, you can still utilize Sigrid's user management to define access permissions for different users to various systems.
 - Source Code Publishing: You are required to use the [development platform integration](#development-platform-integration) to publish your source code to Sigrid. SFTP uploads and manual uploads are not supported.
 - Multi-Repo Systems: [Multi-repo systems](systems.md#sigrid-view-is-based-on-business-applications) are not supported. You are responsible for publishing source code from your development platform to Sigrid.
-- Scheduling: The on-premise Sigrid distribution does not support scheduling. It is assumed that analyses are performed through your continuous integration pipeline.
 - View Source Feature: The "view source" feature will display the *current* state of the file in your development platform, which may differ from the version of the file that was analyzed by Sigrid.
 - Technology Support Differences:
   - Mendix: Set the variable `CONVERT` to `mendix` in your CI pipeline job, and use `Mendixflow` as language when defining the scope.

@@ -49,28 +49,28 @@ a:hover {
 h1 {
     font-family: "Azeret Mono";
     color: var(--sig-text-black);
-    font-size: 40px;
+    font-size: 32px;
     font-weight: 400;
     letter-spacing: -1.2px;
     line-height: 1.1;
 }
 
 h2 {
-    font-size: 30px;
-    color: var(--sig-text-black);
-    font-weight: 400;
-    margin: 40px 0px 0px 0px;
-}
-
-h3 {
     font-size: 24px;
     color: var(--sig-text-black);
     font-weight: 400;
     margin: 40px 0px 0px 0px;
 }
 
-h4 {
+h3 {
     font-size: 20px;
+    color: var(--sig-text-black);
+    font-weight: 400;
+    margin: 40px 0px 0px 0px;
+}
+
+h4 {
+    font-size: 18px;
     color: var(--sig-text-black);
     font-weight: 400;
     margin: 30px 0px 0px 0px;
