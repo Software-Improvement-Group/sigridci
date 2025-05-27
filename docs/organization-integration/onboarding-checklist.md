@@ -1,7 +1,5 @@
 # Onboarding checklist
 
-<img src="" width="800" />
-
 ### Kick-off
 
 | Task | Responsible | Actions |
