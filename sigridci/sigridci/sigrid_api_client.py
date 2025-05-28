@@ -14,6 +14,7 @@
 
 import json
 import os
+import ssl
 import urllib.parse
 import urllib.request
 from tempfile import TemporaryDirectory
@@ -36,6 +37,8 @@ class SigridApiClient:
         self.urlCustomerName = urllib.parse.quote_plus(options.customer.lower())
         self.urlSystemName = urllib.parse.quote_plus(options.system.lower())
         self.token = os.environ["SIGRID_CI_TOKEN"].strip()
+        if os.environ.get("SIGRID_CA_CERT"):
+            self.sslContext = ssl.create_default_context(cafile=os.getenv("SIGRID_CA_CERT"))
 
         UploadLog.log(f"Using token ending in '****{self.token[-4:]}'")
 
@@ -56,7 +59,7 @@ class SigridApiClient:
         if contentType is not None:
             request.add_header("Content-Type", contentType)
 
-        response = urllib.request.urlopen(request)
+        response = urllib.request.urlopen(request, context=self.sslContext)
         if response.status == 204:
             return {}
 
