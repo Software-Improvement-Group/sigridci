@@ -39,6 +39,8 @@ class SigridApiClient:
         self.token = os.environ["SIGRID_CI_TOKEN"].strip()
         if os.environ.get("SIGRID_CA_CERT"):
             self.sslContext = ssl.create_default_context(cafile=os.getenv("SIGRID_CA_CERT"))
+        else:
+            self.sslContext = None
 
         UploadLog.log(f"Using token ending in '****{self.token[-4:]}'")
 
