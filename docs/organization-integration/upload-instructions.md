@@ -90,6 +90,10 @@ Below an example for the secure copy command, which refers to a private key, the
 ```
 scp -i ~/.ssh/id_rsa system-name-<yyyymmdd>.zip your-upload-account@upload.sigrid-says.com:
 ```
+### Powered by SFTPGo
+
+Upload.sigrid-says.com is powered by [SFTPGo](https://github.com/drakkan/sftpgo)
+
 
 ## Manually uploading source code using the SIG Upload Portal
 
