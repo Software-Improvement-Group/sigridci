@@ -26,7 +26,8 @@ We update container images daily for immediate improvements. The Helm chart is u
    VERSION=<REPLACE-WITH-LATEST-VERSION> # e.g. `1.0.20250206`
 
    for IMAGE in ai-explanation-service auth-api-db-migration auth-api quality-model-service \
-            sigrid-api-db-migration sigrid-api sigrid-frontend sigrid-multi-analyzer; do
+            sigrid-api-db-migration sigrid-api sigrid-frontend sigrid-multi-analyzer \
+            sigrid-multi-importer; do
      docker pull softwareimprovementgroup/${IMAGE}:${VERSION}
      docker tag softwareimprovementgroup/${IMAGE}:${VERSION} ${INTERNAL_REGISTRY_BASE}/softwareimprovementgroup/${IMAGE}:${VERSION}
      docker push ${INTERNAL_REGISTRY_BASE}/${IMAGE}:${VERSION}
