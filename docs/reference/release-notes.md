@@ -8,7 +8,7 @@ SIG uses [continuous delivery](https://en.wikipedia.org/wiki/Continuous_delivery
 - **Technology support:** Sigrid now recognizes [inject dependencies in Angular](https://angular.dev/api/core/inject). If you are using these dependencies in your Angular systems, you will start seeing them across Sigrid.
 - **Integrations:** The integration between [Sigrid and Siemens Polarion](https://github.com/Software-Improvement-Group/sigrid-integrations/tree/main/polarion-integration) has been extended. In addition to Open Source Health and SBOM information, the integration now also provides data on security findings and on Sigrid ratings to Polarion.
 - **Report Generator:** You can now [generate modernization reports using the Report Generator](https://github.com/Software-Improvement-Group/sigrid-integrations/tree/main/report-generator. This report acts as input for your modernization plan, and shows information such as the estimated modernization effort. This information helps your organization to determine which modernization initiatives provide the best return-on-investment from a technical perspective. 
-- **Sigrid API:** You can now obtain the "raw" maintainability analysis results via the Sigrid API. This feature is intended for power users, that want to perform custom analyses. You can find more information in the [API documentation](https://docs.sigrid-says.com/integrations/sigrid-api-documentation.html#maintainability-data).
+- **Sigrid API:** You can now obtain the "raw" maintainability analysis results via the Sigrid API. This feature is intended for power users, that want to perform custom analyses. You can find more information in the [API documentation](../integrations/sigrid-api-documentation.md#maintainability-data).
 
 ### May 19, 2025
 
