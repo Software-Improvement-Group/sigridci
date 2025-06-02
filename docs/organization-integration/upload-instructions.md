@@ -22,7 +22,7 @@ See the "Sigrid CI" section in the menu for an overview of supported platforms. 
 
 The preferred method to upload source code is Sigrid CI, but SIG also offers SFTP uploads for situations where Sigrid CI cannot be used.
 
-The upload server for SFTP uploads is **portal.sig.eu**. To make sure your uploaded files are secure, you will not receive full shell access to our upload server. Your account is jailed, such that other users of the upload server don't know its existence and cannot access it. Files uploaded to your account will be removed from your account after (at most) 3 days and removed from our backup after (at most) 6 weeks. The backup is encrypted using AES256. The disk your account resides on is encrypted using AES256 as well.
+The upload server for SFTP uploads is **upload.sigrid-says.com**. To make sure your uploaded files are secure, you will not receive full shell access to our upload server. Your account is jailed, such that other users of the upload server don't know its existence and cannot access it. Files uploaded to your account will be removed from your account after (at most) 3 days and removed from our backup after (at most) 6 weeks. The backup is encrypted using AES256. The disk your account resides on is encrypted using AES256 as well.
 
 The default folder you connect to is referred to as your home folder. You are free to create new files in your home folder, please be aware that we will keep the files for the last 4 upload dates.
 
@@ -81,14 +81,14 @@ If you are uploading from a Unix, Linux or macOS system, then you probably are i
 
 If you are uploading from Windows, you likely need to create a new key. You can, for example, use the [puttygen3](https://www.chiark.greenend.org.uk/~sgtatham/putty/latest.html) application to accomplish this.
 
-### Uploading to portal.sig.eu via scp
+### Uploading to upload.sigrid-says.com via scp
 
 Connections to our upload server can be made using an SCP client, such as [WinSCP](http://winscp.net/eng/index.php) for Windows, or the command line utility `scp` for Unix, Linux and macOS, which is part of the [OpenSSH](http://www.openssh.com) suite.
 
 Below an example for the secure copy command, which refers to a private key, the zip file to be uploaded and 'your-upload-account' that you will receive from Sigrid support.
 
 ```
-scp -i ~/.ssh/id_rsa system-name-<yyyymmdd>.zip your-upload-account@portal.sig.eu:
+scp -i ~/.ssh/id_rsa system-name-<yyyymmdd>.zip your-upload-account@upload.sigrid-says.com:
 ```
 
 ## Manually uploading source code using the SIG Upload Portal
