@@ -14,6 +14,7 @@
 
 import json
 import os
+import ssl
 import urllib.parse
 import urllib.request
 from tempfile import TemporaryDirectory
@@ -36,6 +37,7 @@ class SigridApiClient:
         self.urlCustomerName = urllib.parse.quote_plus(options.customer.lower())
         self.urlSystemName = urllib.parse.quote_plus(options.system.lower())
         self.token = os.environ["SIGRID_CI_TOKEN"].strip()
+        self.sslContext = ssl.create_default_context(cafile=os.getenv("SIGRID_CA_CERT")) if os.environ.get("SIGRID_CA_CERT") else None
 
         UploadLog.log(f"Using token ending in '****{self.token[-4:]}'")
 
@@ -56,7 +58,7 @@ class SigridApiClient:
         if contentType is not None:
             request.add_header("Content-Type", contentType)
 
-        response = urllib.request.urlopen(request)
+        response = urllib.request.urlopen(request, context=self.sslContext)
         if response.status == 204:
             return {}
 
@@ -145,3 +147,11 @@ class SigridApiClient:
     def fetchObjectives(self):
         path = f"/analysis-results/api/{self.API_VERSION}/objectives/{self.urlCustomerName}/{self.urlSystemName}/config"
         return self.retry(lambda: self.callSigridAPI(path))
+
+    def logPlatformInformation(self, platformId):
+        try:
+            url = f"{self.options.sigridURL}/usage/matomo.php?idsite=6&rec=1&ca=1&e_c=sigridci.platform&e_a={platformId}"
+            request = urllib.request.Request(url)
+            urllib.request.urlopen(request)
+        except:
+            UploadLog.log("Failed to log platform information")

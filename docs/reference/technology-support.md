@@ -3,8 +3,6 @@ Technology support
 
 This page provides an overview of all technologies that can be analyzed by Sigrid for its various capabilities. 
 
-<sig-toc></sig-toc>
-
 ## List of supported technologies
 
 - The first column refers to how the technology is named in Sigrid's [scope configuration file](../reference/analysis-scope-configuration.md#technology-support).
@@ -216,7 +214,7 @@ This page provides an overview of all technologies that can be analyzed by Sigri
 | `powercenter`              | PowerCenter                              | Maintainability, Architecture               | [(8)](#notes)     |
 | `powerfx`                  | Power Fx (AKA Microsoft Power Apps)      | Maintainability                             |
 | `powershell`               | Powershell                               | Maintainability, Architecture               |
-| `progress`                 | Progress (OpenEdge)                      | Maintainability, Architecture, AI           |
+| `progress`                 | Progress (OpenEdge)                      | Maintainability, Architecture, Security, AI           |
 | `pronto`                   | Pronto                                   | Maintainability, Architecture               |
 | `prt`                      | PRT                                      | Maintainability                             |
 | `puppet`                   | Puppet                                   | Maintainability, Architecture               |
@@ -320,7 +318,8 @@ This page provides an overview of all technologies that can be analyzed by Sigri
   - Prefer `cpp` if your system contains a combination of C and C++ code.
 2. Use one of `javascript`, `react`, `vuejs`, `sapui5`, but do not use multiple.
   - Prefer `vuejs` if your system contains [Vue.js](https://vuejs.org) components that use the `.vue` file extension.
-  - Prefer `react` if your codebase contains [React](https://reactjs.org) and/or [JSX](https://reactjs.org/docs/introducing-jsx.html) with Javascript.
+  - Prefer `typescript` if your system contains [React](https://reactjs.org) and/or [JSX](https://reactjs.org/docs/introducing-jsx.html) with _Typescript_.
+  - Prefer `react` if your codebase contains [React](https://reactjs.org) and/or [JSX](https://reactjs.org/docs/introducing-jsx.html) with _Javascript_.
   - Only use `sapui5` if you are using [SAP UI](https://developers.sap.com/topics/ui-development.html).
   - Use `javascript` in all other cases.
 3. Use either `typescript` or `vuets`, but not both.
@@ -411,7 +410,7 @@ In addition to supporting 300+ technologies, Sigrid also supports various open s
 | NuGet                 | C#                     |
 | PuppetForge           | Puppet                 |
 | Poetry                | Python                 |
-| pub.dev               | Dartm Flutter          |
+| pub.dev               | Dart, Flutter          |
 | PyPi                  | Python                 |
 | RubyGems              | Ruby                   |
 | SBT                   | Scala                  |

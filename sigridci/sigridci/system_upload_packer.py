@@ -25,9 +25,9 @@ class SystemUploadPacker:
     MAX_UPLOAD_SIZE_MB = 500
     ALWAYS_INCLUDE = (RepositoryHistoryExporter.LIGHTWEIGHT_HISTORY_EXPORT_FILE)
     EXCLUDE_EXTENSIONS = (".7z", ".amr", ".avi", ".bil", ".bmp", ".db", ".dmp", ".doc", ".docx", ".exe", ".f4v", ".gif",
-                          ".gz", ".heic", ".ico", ".iso", ".jpeg", ".jpg", ".m4a", ".mkv", ".mpeg", ".mpg", ".mpl", ".mov",
-                          ".mp3", ".mp4", ".msi", ".odf", ".odp", ".ods", ".odt", ".otf", ".pdb", ".pdf", ".png", ".ppt",
-                          ".pptx", ".rar", ".rtf", ".sbn", ".shx", ".shp", ".svg", ".swf", ".tar", ".tgz", ".tiff",
+                          ".gz", ".heic", ".ico", ".ipa", ".iso", ".jpeg", ".jpg", ".m4a", ".mkv", ".mpeg", ".mpg", ".mpl",
+                          ".mov", ".mp3", ".mp4", ".msi", ".odf", ".odp", ".ods", ".odt", ".otf", ".pdb", ".pdf", ".png",
+                          ".ppt", ".pptx", ".rar", ".rtf", ".sbn", ".shx", ".shp", ".svg", ".swf", ".tar", ".tgz", ".tiff",
                           ".ttf", ".wmv", ".woff", ".woff2", ".xls", ".xlsm", ".xlsx", ".zip")
 
     DEFAULT_EXCLUDES = [
@@ -46,6 +46,9 @@ class SystemUploadPacker:
         ".gradle/",
         ".idea/",
         ".m2/",
+        "m2/repo/",
+        ".pip-cache/",
+        ".pip-packages/",
         ".terraform/",
         ".yarn/"
     ]
