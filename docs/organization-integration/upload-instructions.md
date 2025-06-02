@@ -58,9 +58,9 @@ When in doubt, please use RSA.
 
 You can verify the authenticity of the upload server by checking its public host key fingerprint. This fingerprint should be visible when connecting to the upload server for the first time, and, depending on the type of authentication used, should be equal to one of the following:
 
-- RSA fingerprint: `4096 SHA256:jGf883nbewCO69bbK3lur/0ZAi0T4d6+P1ySc0NRVpU`
-- ECDSA fingerprint: `256 SHA256:/TfYO8xzMn0+IqjS70Ig4sHdMfQWjD34FNoIbJxQTZQ`
-- ED25519 fingerprint: `256 SHA256:4Ih8DOiO8mj6e8S8GOyK7tjjmHbFkvcpqXRyLWq+jvg`
+- RSA fingerprint: `4096 SHA256:1WMnU9ZOxldY+wfMoybHEQTknQJWd/SSGm0sv92TBDg`
+- ECDSA fingerprint: `256 SHA256:fETp+2EViXNquhE5SxRJ5YBqwiTchFCo0Za0Z+yyv1o`
+- ED25519 fingerprint: `256 SHA256:7AgpHOklx1QpkH88C2nbKFIyDuLhLQzUUnDrD95qF44`
 
 The SFTP/SCP protocol connects to port 22 on our upload server, so your firewall should allow outbound traffic to port 22.
 
