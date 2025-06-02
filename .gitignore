@@ -9,3 +9,4 @@ sigrid-ci-output/
 docs/_site/
 docs/.jekyll-cache/
 .venv
+.DS_Store
