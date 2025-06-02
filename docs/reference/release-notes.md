@@ -3,6 +3,13 @@ Sigrid release notes
 
 SIG uses [continuous delivery](https://en.wikipedia.org/wiki/Continuous_delivery), meaning that every change to Sigrid or the underlying analysis is released once our development pipeline has completed. On average, we release somewhere between 10 and 20 times per day. This page therefore doesn't list every single change, since that would quickly lead to an excessively long list of small changes. Instead, this page lists Sigrid and analysis changes that we consider noteworthy for the typical Sigrid user.
 
+### June 2, 2025
+
+- **Technology support:** Sigrid now recognizes [inject dependencies in Angular](https://angular.dev/api/core/inject). If you are using these dependencies in your Angular systems, you will start seeing them across Sigrid.
+- **Integrations:** The integration between [Sigrid and Siemens Polarion](https://github.com/Software-Improvement-Group/sigrid-integrations/tree/main/polarion-integration) has been extended. In addition to Open Source Health and SBOM information, the integration now also provides data on security findings and on Sigrid ratings to Polarion.
+- **Report Generator:** You can now [generate modernization reports using the Report Generator](https://github.com/Software-Improvement-Group/sigrid-integrations/tree/main/report-generator. This report acts as input for your modernization plan, and shows information such as the estimated modernization effort. This information helps your organization to determine which modernization initiatives provide the best return-on-investment from a technical perspective. 
+- **Sigrid API:** You can now obtain the "raw" maintainability analysis results via the Sigrid API. This feature is intended for power users, that want to perform custom analyses. You can find more information in the [API documentation](../integrations/sigrid-api-documentation.md#maintainability-data).
+
 ### May 19, 2025
 
 - **Management dashboard:** A beta version of the new management dashboard is now available to early adopters. Contact [SIG support](mailto:support@softwareimprovementgroup.com) if you're interested to use this new dashboard.
