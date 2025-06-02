@@ -33,7 +33,6 @@ This documentation offers useful context on how to start configuring on-premise 
      - softwareimprovementgroup/sigrid-frontend
      - softwareimprovementgroup/sigrid-multi-analyzer
      - softwareimprovementgroup/sigrid-multi-importer
-     - softwareimprovementgroup/survey-service  
 
    and the following public images:
      - nginxinc/nginx-unprivileged
@@ -157,7 +156,7 @@ No further context required.
 
 ### *-service:
 
-The secrets provided below are configured to allow the Sigrid API to communicate with downstream APIs. If these secrets are modified, please ensure that they are updated across all three services, as they are associated with a single user.
+The secrets provided below are configured to allow the Sigrid API to communicate with downstream APIs. If these secrets are modified, please ensure that they are updated across all services, as they are associated with a single user.
 
 ```
 config.secret.data.username: "example"
