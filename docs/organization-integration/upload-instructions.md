@@ -104,7 +104,7 @@ Uploading <file> to /<file>
 
 ### Upload.sigrid-says.com is powered by SFTPGo
 
-Link to the [AGPL](https://en.wikipedia.org/wiki/GNU_Affero_General_Public_License) source code of [SFTPGo](https://github.com/drakkan/sftpgo)
+Link to the source code of [SFTPGo](https://github.com/drakkan/sftpgo)
 
 
 ## Manually uploading source code using the SIG Upload Portal
