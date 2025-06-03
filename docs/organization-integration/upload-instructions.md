@@ -85,14 +85,26 @@ If you are uploading from Windows, you likely need to create a new key. You can,
 
 Connections to our upload server can be made using an SCP client, such as [WinSCP](http://winscp.net/eng/index.php) for Windows, or the command line utility `scp` for Unix, Linux and macOS, which is part of the [OpenSSH](http://www.openssh.com) suite.
 
-Below an example for the secure copy command, which refers to a private key, the zip file to be uploaded and 'your-upload-account' that you will receive from Sigrid support.
+An example of the secure copy command scp, which refers to a private key, the zip file to be uploaded and 'your-upload-account' that you will receive from Sigrid support. If you’re leaving out the remote file name, the ‘:’ at the end of ‘upload.sigrid-says.com’ is essential. The warning scp: remote fsetstat: Operation unsupported is harmless.
 
 ```
 scp -i ~/.ssh/id_rsa system-name-<yyyymmdd>.zip your-upload-account@upload.sigrid-says.com:
 ```
-### Powered by SFTPGo
 
-Upload.sigrid-says.com is powered by [SFTPGo](https://github.com/drakkan/sftpgo)
+An example of sftp
+
+```
+% sftp <account>@upload.sigrid-says.com: <<< $'put <file>'
+Connected to upload.sigrid-says.com.
+Changing to: /.
+sftp> put <file>
+Uploading <file> to /<file>
+<file>
+```
+
+### Upload.sigrid-says.com is powered by SFTPGo
+
+Link to the AGPL source code of [SFTPGo](https://github.com/drakkan/sftpgo)
 
 
 ## Manually uploading source code using the SIG Upload Portal
