@@ -9,21 +9,21 @@ This documentation offers useful context on how to start configuring on-premise 
 
 - You should have already read the other Sigrid On-Premise documentation.
 - All pre-requisites from our public documentation are met.
-- You have access to Software Improvement Group DockerHub.
+- You have access to Software Improvement Group [AWS ECR repository](571600876202.dkr.ecr.eu-central-1.amazonaws.com/).
 
 ## Prepare for installation 
 
 ### (A) Prepare container images 
 
-1. Get access to DockerHub from SIG.
+1. Get access to AWS ECR repository from SIG.
    - Please ask your SIG Project Lead/contact person.
    - Provide an email address.
-   - An existing DockerHub account will be invited or a new one created.
-2. To log in to DockerHub as a Helm registry and pull the Helm chart, you need to create a Personal Access Token.
+   - A new user will be created in AWS.
+2. To log in to AWS ECR repository as a Helm registry and pull the Helm chart, you need to create a Access key.
 3. If your deployment is entirely air-gapped please perform the next two steps, otherwise you can continue at "Prepare helm chart".
 4. Pull all container images required:
 
-   from https://hub.docker.com/orgs/softwareimprovementgroup/repositories:
+   from https://571600876202.dkr.ecr.eu-central-1.amazonaws.com/softwareimprovementgroup/repositories:
      - softwareimprovementgroup/ai-explanation-service
      - softwareimprovementgroup/auth-api-db-migration
      - softwareimprovementgroup/auth-api
@@ -38,13 +38,14 @@ This documentation offers useful context on how to start configuring on-premise 
      - nginxinc/nginx-unprivileged
      - redis:7.2.4-alpine
      - haproxy:2.9.4-alpine
-5. Tag the downloaded containers with their tag from DockerHub (e.g. 1.0.2025013).
+     - aws-cli:2.24.6
+5. Tag the downloaded containers with their tag from [AWS ECR repository](571600876202.dkr.ecr.eu-central-1.amazonaws.com/) (e.g. 1.0.20250603).
 6. Re-tag and push the containers to your internal container registry.
 
 ### (A) Prepare helm chart 
 
-1. Helm Login: `helm registry login registry-1.docker.io -u <username> -p <personal_access_token>`
-2. Pull the latest helm chart: `helm pull oci://registry-1.docker.io/softwareimprovementgroup/sigrid-stack --version <latest tag>`
+1. Helm Login: `helm registry login 571600876202.dkr.ecr.eu-central-1.amazonaws.com -u <username> -p <personal_access_token>`
+2. Pull the latest helm chart: `helm pull oci://571600876202.dkr.ecr.eu-central-1.amazonaws.com/softwareimprovementgroup/sigrid-stack --version <latest tag>`
 3. Store the helm chart under your version control making sure not to use clear text secrets, certificates and passwords in your helm.
 4. Use Kubernetes-native secrets, either managed directly in Kubernetes or via an external tool that creates and updates these secret objects.
 
@@ -101,7 +102,7 @@ Your copy of example-values.yaml however is enough to get a complete Sigrid depl
 
 #### global:
 ```
-imageTag: "1.0.20250109"
+imageTag: "1.0.20250603"
 ```
 Provide the tag of the containers you want to use.
 It is important that the tag matches the tags used in Sigrid's Helm chart: all components of Sigrid must always use the same version.
@@ -120,7 +121,7 @@ Note that this initial admin user will have full access to the entire portfolio.
 ```
 imagePullSecrets:
 ```
-This only needs to be provided if your internal container registry requires authentication or if you're pulling SIG containers from DockerHub directly. 
+Here we provide kubernetes native secret which contains AWS `AWS_ACCESS_KEY_ID` and `AWS_SECRET_ACCESS_KEY` so that it can be used for pulling image from ECR repository. 
 
 #### nginx:
 
@@ -254,6 +255,198 @@ You can now start inviting more people to Sigrid if so desired.
         - "run-analyzers --publish"
     ```
 - Commit changes to your test project.
+
+### AWS ECR Key Rotation Documentation
+AWS ECR key rotation system implemented for Sigrid On-Premises deployments. The system automatically refreshes ECR registry credentials to maintain continuous access to container images.
+
+Prerequisites
+- An AWS IAM user with ECR access permissions, SIG will provided that.
+- Access credentials for this user stored in a Kubernetes secret
+- Kubernetes cluster with RBAC enabled
+- AWS CLI version 2.x
+
+The ECR key rotation system serves to:
+
+1. Generate temporary ECR authentication tokens periodically
+2. Create Kubernetes image pull secrets with these tokens
+3. Ensure continuous access to AWS ECR container repositories
+
+The ECR key rotation solution consists of several Kubernetes resources:
+
+| Resource | Purpose |
+| -------- | ------- |
+| ServiceAccount | Provides identity to the CronJob |
+| Role | Defines permissions for secret management |
+| RoleBinding | Associates the Role with the ServiceAccount |
+| ConfigMap | Contains the key rotation script |
+| CronJob | Executes the key rotation script on a schedule |
+
+<img src="../images/onpremise-ecr-access-key-rotation.png" width="600" />
+
+
+1. Service Account (ecr-key-rotation-sa.yaml)
+Creates a Kubernetes identity for the CronJob:
+```yaml
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: ecr-key-rotation-sa
+  namespace: {{ .Release.Namespace }} # namespace where sigrid onprem is/will be deployed.
+```
+
+2. Role (ecr-key-rotation-role.yaml)
+Defines permissions to manage secrets and jobs:
+```yaml
+apiVersion: rbac.authorization.k8s.io/v1
+kind: Role
+rules:
+  - apiGroups: [""]
+    resources: ["secrets"]
+    verbs: ["get", "list", "create", "delete"]
+  - apiGroups: ["batch"]
+    resources: ["jobs"]
+    verbs: ["get", "list", "watch", "create", "update", "patch", "delete"]
+```
+
+3. RoleBinding (ecr-key-rotation-role-binding.yaml)
+Links the Role to the ServiceAccount:
+```yaml
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+subjects:
+  - kind: ServiceAccount
+    name: ecr-key-rotation-sa
+roleRef:
+  kind: Role
+  name: eks-sigrid-onprem-ecr-key-rotation-role
+```
+
+4. ConfigMap (ecr-key-rotation-configmap.yaml)
+Contains the shell script(rotate_ecr_keys.sh) that performs the ECR key rotation process:
+  - Gets a temporary ECR authentication token
+  - Creates a Docker config JSON
+  - Creates/updates a Kubernetes secret containing this config
+```yaml
+apiVersion: v1
+kind: ConfigMap
+data:
+  rotate_ecr_keys.sh: |-
+    # Configuration
+    # Sets up variables for Kubernetes API interaction
+    # Uses the Kubernetes service account token for authentication
+    # Reads namespace from the service account mount
+    K8S_SECRET_NAME={{ .Values.ecrRepository.secretName }}
+    APISERVER=https://kubernetes.default.svc
+    SERVICEACCOUNT=/var/run/secrets/kubernetes.io/serviceaccount
+    NAMESPACE=$(cat ${SERVICEACCOUNT}/namespace)
+    TOKEN=$(cat ${SERVICEACCOUNT}/token)
+    CACERT=${SERVICEACCOUNT}/ca.crt
+    # Uses AWS CLI to retrieve an ECR authentication token
+    # The token is valid for 12 hours from generation
+    # Combines "AWS:" with the password and base64 encodes it (Docker authentication format)
+    PASSWORD=$(aws ecr get-login-password --region $SIGRID_DOWNLOAD_REGION)
+    BASE64_ENCODED_CREDENTIALS=$(echo -n "AWS:${PASSWORD}" | base64 | tr -d '\n')
+    # Creates a JSON definition for a Kubernetes secret
+    # The secret is of type kubernetes.io/dockerconfigjson (special type for Docker registry credentials)
+    # The value of .dockerconfigjson is a base64-encoded Docker config JSON
+    # The format matches Docker's config.json structure with registry auth credentials
+    cat >/tmp/create_secret.json <<EOT
+    { "apiVersion": "v1",
+      "kind": "Secret",
+      "metadata": {
+        "name": "${K8S_SECRET_NAME}"
+      },
+      "type": "kubernetes.io/dockerconfigjson",
+      "data": {
+        ".dockerconfigjson": "$(echo -n "{\"auths\":{\"$SIGRID_DOWNLOAD_REGISTRY\":{\"auth\":\"$BASE64_ENCODED_CREDENTIALS\"}}}" | base64 | tr -d '\n')"
+      }
+    }
+    EOT
+    # Uses curl to directly interact with the Kubernetes API
+    # First deletes the existing secret (if present)
+    # Creates a new secret with fresh credentials
+    # Uses the service account token for authentication
+    # Uses the CA certificate to validate the API server's identity
+    echo "Deleting old secret..."
+    curl -s --cacert ${CACERT} --header "Authorization: Bearer ${TOKEN}" "${APISERVER}/api/v1/namespaces/${NAMESPACE}/secrets/${K8S_SECRET_NAME}" -X DELETE
+    echo "Creating new secret..."
+    curl -s --cacert ${CACERT} --header "Authorization: Bearer ${TOKEN}" "${APISERVER}/api/v1/namespaces/${NAMESPACE}/secrets" -X POST -d @/tmp/create_secret.json -H 'Content-Type: application/json'
+```
+#### Important Technical Details:
+  - Double Base64 Encoding: The script base64-encodes the entire Docker config JSON, which already contains a base64-encoded auth string.
+  - Direct API Interaction: Uses curl instead of kubectl, allowing it to run without kubectl installed.
+  - In-Cluster Authentication: Uses the service account token and CA certificate for secure API interaction.
+
+5. CronJob (ecr-key-rotation-cronjob.yaml)
+The CronJob resource schedules and executes the key rotation process:
+```yaml
+apiVersion: batch/v1
+kind: CronJob
+metadata:
+  name: ecr-key-rotation
+  namespace: {{ .Release.Namespace }} # namespace where sigrid onprem is/will be deployed.
+spec:
+  schedule: "0 */11 * * *"  # At 0 minute past every 11th hour, because token is valid for 12h.
+  concurrencyPolicy: Forbid
+  failedJobsHistoryLimit: 3
+  successfulJobsHistoryLimit: 3
+  jobTemplate:
+    spec:
+      template:
+        spec:
+          serviceAccountName: ecr-key-rotation-sa
+          restartPolicy: OnFailure
+          containers:
+            - name: ecr-key-rotation
+              image: public.ecr.aws/aws-cli/aws-cli:2.24.6  # Using AWS CLI image as base
+              imagePullPolicy: IfNotPresent
+              env:
+                - name: SIGRID_DOWNLOAD_REGISTRY
+                  value: 571600876202.dkr.ecr.eu-central-1.amazonaws.com
+                - name: SIGRID_DOWNLOAD_REGION
+                  value: eu-central-1
+                - name: AWS_ACCESS_KEY_ID
+                  valueFrom:
+                    secretKeyRef:
+                      name: # Kubernetes secret name where access key id is stored
+                      key: AWS_ACCESS_KEY_ID
+                - name: AWS_SECRET_ACCESS_KEY
+                  valueFrom:
+                    secretKeyRef:
+                      name: # Kubernetes secret name where secret access key is stored
+                      key: AWS_SECRET_ACCESS_KEY
+              command:
+                - /bin/sh
+                - -c
+                - date; /app/rotate_ecr_keys.sh
+              resources:
+                requests:
+                  cpu: 100m
+                  memory: 128Mi
+                limits:
+                  memory: 128Mi
+              volumeMounts:
+                - name: script
+                  mountPath: /app
+          volumes:
+            - name: script
+              configMap:
+                name: ecr-key-rotation-script
+                defaultMode: 0555
+```
+6. Store AWS Credentials in Kubernetes
+Create a Kubernetes secret with the IAM user's credentials:
+```yaml
+apiVersion: v1
+kind: Secret
+metadata:
+  name: sig-customer-access-secret
+  namespace: {{ .Release.Namespace }} # namespace where sigrid onprem is/will be deployed.
+type: Opaque
+data:
+  AWS_ACCESS_KEY_ID: #provided by SIG
+  AWS_SECRET_ACCESS_KEY: #provided by SIG
+```
 
 ### Verify a succesful analysis
 

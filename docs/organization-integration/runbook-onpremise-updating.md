@@ -9,7 +9,7 @@ This documentation offers useful context on how to keep on-premise Sigrid up-to-
 
 - You should have already read the other Sigrid On-Premise documentation
 - You have a running Sigrid Deployment
-- You have access to Software Improvement Group DockerHub
+- You have access to Software Improvement Group [AWS ECR repository](571600876202.dkr.ecr.eu-central-1.amazonaws.com/)
 
 ## Update Frequency
 
@@ -23,13 +23,13 @@ We update container images daily for immediate improvements. The Helm chart is u
 1. Pull the latest Docker containers:
 ```bash
    INTERNAL_REGISTRY_BASE=<REPLACE-WITH-REGISTRY>
-   VERSION=<REPLACE-WITH-LATEST-VERSION> # e.g. `1.0.20250206`
+   VERSION=<REPLACE-WITH-LATEST-VERSION> # e.g. `1.0.20250603`
 
    for IMAGE in ai-explanation-service auth-api-db-migration auth-api quality-model-service \
             sigrid-api-db-migration sigrid-api sigrid-frontend sigrid-multi-analyzer \
-            sigrid-multi-importer; do
-     docker pull softwareimprovementgroup/${IMAGE}:${VERSION}
-     docker tag softwareimprovementgroup/${IMAGE}:${VERSION} ${INTERNAL_REGISTRY_BASE}/softwareimprovementgroup/${IMAGE}:${VERSION}
+            sigrid-multi-importer inbound-api; do
+     docker pull 571600876202.dkr.ecr.eu-central-1.amazonaws.com/softwareimprovementgroup/${IMAGE}:${VERSION}
+     docker tag 571600876202.dkr.ecr.eu-central-1.amazonaws.com/softwareimprovementgroup/${IMAGE}:${VERSION} ${INTERNAL_REGISTRY_BASE}/softwareimprovementgroup/${IMAGE}:${VERSION}
      docker push ${INTERNAL_REGISTRY_BASE}/${IMAGE}:${VERSION}
    done
 ```
@@ -37,7 +37,7 @@ We update container images daily for immediate improvements. The Helm chart is u
 2. Pull the latest Helm chart:
 
 ```bash
-   helm pull oci://registry-1.docker.io/softwareimprovementgroup/sigrid-stack --version <latest tag>
+   helm pull oci://571600876202.dkr.ecr.eu-central-1.amazonaws.com/softwareimprovementgroup/sigrid-stack --version <latest tag> # e.g. `0.3.51`
 ```
 
 3. Update the `ImageTag` in the global section of the Helm chart's values file (usually `custom-values.yaml`):

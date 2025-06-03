@@ -240,7 +240,7 @@ The `GET /rest/inboundresults/imports/{partner}/{customer}/{system}/{job}` endpo
       "startTime": "2025-01-10T12:00:44Z",
       "reason": null,
       "containerStatus": {
-        "image": "docker.io/softwareimprovementgoup/sigrid-multi-importer:1.0.20250109",
+        "image": "571600876202.dkr.ecr.eu-central-1.amazonaws.com/softwareimprovementgoup/sigrid-multi-importer:1.0.20250603",
         "imageID": "...",
         "name": "sigrid-importer",
         "ready": false,
