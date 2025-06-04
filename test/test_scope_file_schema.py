@@ -12,6 +12,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
+import inspect
 import json
 import jsonschema
 import yaml
@@ -111,4 +112,24 @@ class ScopeFileSchemaTest(TestCase):
             self.assertTrue(False, "ValidationError should have been raised")
         except jsonschema.ValidationError as e:
             self.assertTrue("{'something': 'noot'} is not valid under any of the given schemas" in e.message)
-        
+
+    def testDependencyCheckerSourceOption(self):
+        base = inspect.cleandoc("""
+            languages:
+              - Python
+            dependencychecker:
+              blocklist: ["NONE"]
+            """)
+
+        scope = yaml.load(f"{base}\n  source: all", Loader=yaml.FullLoader)
+        jsonschema.validate(instance=scope, schema=self.schema)
+
+        scope = yaml.load(f"{base}\n  source: sbom", Loader=yaml.FullLoader)
+        jsonschema.validate(instance=scope, schema=self.schema)
+
+        try:
+            scope = yaml.load(f"{base}\n  source: aap", Loader=yaml.FullLoader)
+            jsonschema.validate(instance=scope, schema=self.schema)
+            self.assertTrue(False, "ValidationError should have been raised")
+        except jsonschema.ValidationError as e:
+            self.assertTrue("in schema['properties']['dependencychecker']['properties']['source']" in e.message)
