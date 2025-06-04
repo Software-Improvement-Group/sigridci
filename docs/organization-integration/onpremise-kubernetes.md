@@ -14,7 +14,7 @@ in the Helm chart, which provides examples of typical configuration values.
 We strongly recommend to use the `example-values.yaml` file next to this documentation page, as 
 the `example-values.yaml` file provides additional, important details.
 
-Sigrid's Helm chart is distributed via a private Docker Hub registry, together with the Docker 
+Sigrid's Helm chart is distributed via a private AWS registry, together with the Docker 
 images that make up Sigrid, as described below. 
 
 ## Prerequisites
@@ -67,7 +67,7 @@ sigrid-api:
     tag: "some-tag"
 ```
 
-Sigrid On-Premise needs access to the following images published on [SIG's private Docker Hub]
+Sigrid On-Premise needs access to the following images published on [SIG's private AWS ECR Repository]
 (https://571600876202.dkr.ecr.eu-central-1.amazonaws.com/softwareimprovementgroup):
 
 - `softwareimprovementgroup/ai-explanation-service`
