@@ -538,10 +538,10 @@
       },
       "additionalProperties": false,
       "required": []
-    }
+    },
+    "checkmarx": false
   },
   "required": ["languages"],
-  "not": {"required": ["checkmarx"]},
   "title": "Sigrid scope configuration file",
   "type": "object"
 }

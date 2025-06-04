@@ -35,12 +35,11 @@ class ScopeFileSchemaTest(TestCase):
             "description", 
             "properties",
             "required",
-            "not",
-            "title", 
+            "title",
             "type"
         ]
     
-        self.assertEqual(list(self.schema.keys()), fields)
+        self.assertEqual(sorted(self.schema.keys()), fields)
             
     def testValidScopeFileAgainstSchema(self):
         scope = """
@@ -72,14 +71,15 @@ class ScopeFileSchemaTest(TestCase):
                 languages:
                   - Java
                 checkmarx:
-                  enabled: true
+                  aap: true
                 """
 
         try:
             parsedScope = yaml.load(scope, Loader=yaml.FullLoader)
             jsonschema.validate(instance=parsedScope, schema=self.schema)
+            self.assertTrue(False, "ValidationError should have been raised")
         except jsonschema.ValidationError as e:
-            self.assertTrue(e.message.endswith("should not be valid under {'required': ['checkmarx']}"))
+            self.assertTrue("schema does not allow {'aap': True}" in e.message)
 
     def testDependencyCheckerExcludeOptions(self):
         scope = """
