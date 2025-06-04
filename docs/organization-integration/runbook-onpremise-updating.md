@@ -9,7 +9,7 @@ This documentation offers useful context on how to keep on-premise Sigrid up-to-
 
 - You should have already read the other Sigrid On-Premise documentation
 - You have a running Sigrid Deployment
-- You have access to Software Improvement Group [AWS ECR repository](571600876202.dkr.ecr.eu-central-1.amazonaws.com/)
+- You have access to Software Improvement Group [AWS ECR repository](https://571600876202.dkr.ecr.eu-central-1.amazonaws.com/)
 
 ## Update Frequency
 

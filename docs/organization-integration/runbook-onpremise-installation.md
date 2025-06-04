@@ -9,7 +9,7 @@ This documentation offers useful context on how to start configuring on-premise 
 
 - You should have already read the other Sigrid On-Premise documentation.
 - All pre-requisites from our public documentation are met.
-- You have access to Software Improvement Group [AWS ECR repository](571600876202.dkr.ecr.eu-central-1.amazonaws.com/).
+- You have access to Software Improvement Group [AWS ECR repository](https://571600876202.dkr.ecr.eu-central-1.amazonaws.com/).
 
 ## Prepare for installation 
 
@@ -39,7 +39,7 @@ This documentation offers useful context on how to start configuring on-premise 
      - redis:7.2.4-alpine
      - haproxy:2.9.4-alpine
      - aws-cli:2.24.6
-5. Tag the downloaded containers with their tag from [AWS ECR repository](571600876202.dkr.ecr.eu-central-1.amazonaws.com/) (e.g. 1.0.20250603).
+5. Tag the downloaded containers with their tag from [AWS ECR repository](https://571600876202.dkr.ecr.eu-central-1.amazonaws.com/) (e.g. 1.0.20250603).
 6. Re-tag and push the containers to your internal container registry.
 
 ### (A) Prepare helm chart 
