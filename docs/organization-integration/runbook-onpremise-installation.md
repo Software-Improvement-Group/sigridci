@@ -281,7 +281,7 @@ The ECR key rotation solution consists of several Kubernetes resources:
 | ConfigMap | Contains the key rotation script |
 | CronJob | Executes the key rotation script on a schedule |
 
-<img src="../images/onpremise-ecr-access-key-rotation.png" width="600" />
+<img src="../images/onpremise-ecr-access-key-rotation.png" width="80%" />
 
 
 1. Service Account (ecr-key-rotation-sa.yaml)

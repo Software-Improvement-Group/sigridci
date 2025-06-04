@@ -48,7 +48,7 @@ Some Sigrid On-Premise features are *optional*:
 
 The Docker containers that form Sigrid On-Premise are distributed via [AWS ECR repository](https://571600876202.dkr.ecr.eu-central-1.amazonaws.com/). You will receive an account that allows you to access the container registry. 
 
-<img src="../images/onpremise-ecr-private-repo.png" width="500" /> 
+<img src="../images/onpremise-ecr-private-repo.png" width="100%" /> 
 
 As explained above, Sigrid consists of several Docker containers. The container `sigrid-multi-analyzer` runs directly in your development platform's continuous integration pipelines, all other containers are deployed to your Kubernetes cluster. These steps are explained in more detail in the following sections.
 
