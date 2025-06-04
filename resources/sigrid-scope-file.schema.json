@@ -230,6 +230,10 @@
       },
       "required": ["description"],
       "additionalProperties": true
+    },
+    "dependency_checker_source": {
+      "type": "string",
+      "enum": ["all", "sbom"]
     }
   },
 
@@ -265,25 +269,6 @@
     "model": {
       "$ref": "#/definitions/model",
       "description": "SIG Maintainability Model that should be used for the analysis, defaults to latest."
-    },
-
-    "alerts": {
-      "type": "object",
-      "properties": {
-        "enabled": {
-          "type": "boolean",
-          "description": "When true, will send alert email notifications when noteworthy events happen."
-        },
-        "recipients": {
-          "type": "array",
-          "items": {
-            "type": "string",
-            "format": "email"
-          },
-          "description": "List of email addresses that should receive alerts."
-        }
-      },
-      "additionalProperties": false
     },
 
     "dependencychecker": {
@@ -379,6 +364,9 @@
             "type": "string"
           },
           "description": "List of technologies for which the analysis should be disabled."
+        },
+        "source": {
+          "$ref": "#/definitions/dependency_checker_source"
         }
       },
       "additionalProperties": false,
