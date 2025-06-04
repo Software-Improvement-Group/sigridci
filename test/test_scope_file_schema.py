@@ -132,4 +132,4 @@ class ScopeFileSchemaTest(TestCase):
             jsonschema.validate(instance=scope, schema=self.schema)
             self.assertTrue(False, "ValidationError should have been raised")
         except jsonschema.ValidationError as e:
-            self.assertTrue("in schema['properties']['dependencychecker']['properties']['source']" in e.message)
+            self.assertTrue("'aap' is not one of ['all', 'sbom']" in e.message)
