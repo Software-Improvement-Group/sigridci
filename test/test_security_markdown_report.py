@@ -47,7 +47,7 @@ class SecurityMarkdownReportTest(TestCase):
             
             | Risk | File | Finding |
             |------|------|---------|
-            | ⚪️ | [Security.java:33](https://example.com/aap/noot/-/blob/mybranch/Security.java#L33) | Weak Hash algorithm used |
+            | 🟣 | [Security.java:33](https://example.com/aap/noot/-/blob/mybranch/Security.java#L33) | Weak Hash algorithm used |
             
             ----
             
@@ -103,6 +103,34 @@ class SecurityMarkdownReportTest(TestCase):
             | ⚪️ | Security.java:33 | Weak Hash algorithm used |
             | ⚪️ | Security.java:33 | Weak Hash algorithm used |
             | | ... and 3 more findings | |
+            
+            ----
+            
+            [**View this system in Sigrid**](https://sigrid-says.com/aap/noot/-/security)
+        """
+
+        self.assertEqual(markdown.strip(), inspect.cleandoc(expected).strip())
+
+    @mock.patch.dict(os.environ, {
+        "SIGRID_CI_MARKDOWN_HTML" : "false",
+        "CI_SERVER_URL" : "https://example.com",
+        "CI_PROJECT_PATH" : "aap/noot",
+        "CI_COMMIT_REF_NAME" : "mybranch",
+    })
+    def testReportBasedOnDiff(self):
+        report = SecurityMarkdownReport("MEDIUM")
+        with open(os.path.dirname(__file__) + "/testdata/security-previous.json", encoding="utf-8", mode="r") as f:
+            report.previousFeedback = json.load(f)
+        markdown = report.renderMarkdown("1234", self.feedback, self.options)
+
+        expected = """
+            # [Sigrid](https://sigrid-says.com/aap/noot/-/security) Security feedback
+            
+            **⚠️  You did not meet your objective of having no medium security findings**
+            
+            | Risk | File | Finding |
+            |------|------|---------|
+            | 🟠 | [Aap.java:33](https://example.com/aap/noot/-/blob/mybranch/Aap.java#L33) | Some other finding |
             
             ----
             
