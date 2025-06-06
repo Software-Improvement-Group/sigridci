@@ -52,7 +52,7 @@ It is possible to extend this list with project-specific files and directories t
 
 Note that it is not necessary to exclude files and directories that would not be analyzed anyway.
 
-Also note that you need to specify excludes for maintainability, components, languages, thirdpartyfindings and dependencychecker ***independently***. In other words: excludes for maintainability do not apply to other models.
+Also note that you need to specify excludes for maintainability, components, languages and dependencychecker ***independently***. However, excludes for maintainability do apply to thirdpartyfindings.
 
 Patterns are defined using regular expressions, as explained in the next section.
 
