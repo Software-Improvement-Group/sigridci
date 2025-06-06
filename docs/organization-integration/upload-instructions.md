@@ -101,9 +101,12 @@ sftp> put <file>
 Uploading <file> to /<file>
 <file>
 ```
+### Viewing the uploaded files
+- After uploading you can view the uploaded files to verify that the upload succeeded.
+- Your uploads will be kept for 30 days. Uploads older than 30 days will be removed.
+
 
 ### Upload.sigrid-says.com is powered by SFTPGo
-
 Link to the source code of [SFTPGo](https://github.com/drakkan/sftpgo)
 
 
