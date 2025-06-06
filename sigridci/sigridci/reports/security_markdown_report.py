@@ -31,14 +31,16 @@ class SecurityMarkdownReport(Report, MarkdownRenderer):
     def __init__(self, objective = "CRITICAL"):
         super().__init__()
         self.objective = objective
+        self.previousFeedback = None
 
     def generate(self, analysisId, feedback, options):
         with open(self.getMarkdownFile(options), "w", encoding="utf-8") as f:
             f.write(self.renderMarkdown(analysisId, feedback, options))
 
     def renderMarkdown(self, analysisId, feedback, options):
-        findings = list(self.getRelevantFindings(feedback))
-        details = self.generateFindingsTable(findings, options)
+        rules = list(self.getRules(feedback))
+        findings = list(self.getRelevantFindings(feedback, rules))
+        details = self.generateFindingsTable(findings, rules, options)
         sigridLink = f"{self.getSigridUrl(options)}/-/security"
         return self.renderMarkdownTemplate(feedback, options, details, sigridLink)
 
@@ -48,7 +50,7 @@ class SecurityMarkdownReport(Report, MarkdownRenderer):
         else:
             return f"⚠️  You did not meet your objective of having no {self.objective.lower()} security findings"
 
-    def generateFindingsTable(self, findings, options):
+    def generateFindingsTable(self, findings, rules, options):
         if len(findings) == 0:
             return ""
 
@@ -56,7 +58,7 @@ class SecurityMarkdownReport(Report, MarkdownRenderer):
         md += "|------|------|---------|\n"
 
         for finding in findings[0:self.MAX_FINDINGS]:
-            symbol = self.SEVERITY_SYMBOLS[self.getFindingSeverity(finding)]
+            symbol = self.SEVERITY_SYMBOLS[self.getFindingSeverity(finding, rules)]
             file = finding["locations"][0]["physicalLocation"]["artifactLocation"]["uri"]
             line = finding["locations"][0]["physicalLocation"]["region"]["startLine"]
             link = self.decorateLink(options, f"{file}:{line}", file, line)
@@ -68,17 +70,33 @@ class SecurityMarkdownReport(Report, MarkdownRenderer):
 
         return md
 
-    def getRelevantFindings(self, feedback):
+    def getRules(self, feedback):
         for run in feedback["runs"]:
-            for result in run["results"]:
-                tags = result.get("properties", {}).get("tags", [])
-                severity = self.getFindingSeverity(result)
-                if len(tags) > 0:
-                    if Objective.isFindingIncluded(severity, self.objective):
-                        yield result
+            for rule in run.get("rules", []):
+                properties = rule.get("properties", {})
+                if properties.get("severity"):
+                    yield rule
 
-    def getFindingSeverity(self, result):
-        return result.get("properties", {}).get("severity", "UNKNOWN")
+    def getRelevantFindings(self, feedback, rules):
+        previousFingerprints = self.getFingerprints(self.previousFeedback) if self.previousFeedback else []
+
+        for run in feedback["runs"]:
+            for result in run.get("results", []):
+                severity = self.getFindingSeverity(result, rules)
+                fingerprint = result["fingerprints"]["sigFingerprint/v1"]
+                if Objective.isFindingIncluded(severity, self.objective) and fingerprint not in previousFingerprints:
+                    yield result
+
+    def getFindingSeverity(self, result, rules):
+        for rule in rules:
+            if rule["id"] == result["ruleId"]:
+                return rule["properties"]["severity"].upper()
+        return "UNKNOWN"
+
+    def getFingerprints(self, feedback):
+        for run in feedback["runs"]:
+            for result in run.get("results", []):
+                yield result["fingerprints"]["sigFingerprint/v1"]
 
     def getCapability(self):
         return "Security"
@@ -87,5 +105,6 @@ class SecurityMarkdownReport(Report, MarkdownRenderer):
         return os.path.abspath(f"{options.outputDir}/security-feedback.md")
 
     def isObjectiveSuccess(self, feedback, options):
-        findings = list(self.getRelevantFindings(feedback))
+        rules = list(self.getRules(feedback))
+        findings = list(self.getRelevantFindings(feedback, rules))
         return len(findings) == 0

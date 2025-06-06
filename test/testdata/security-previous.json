@@ -19,18 +19,11 @@
           "help": {},
           "properties": {
             "tags": [],
-            "severity": "Critical",
+            "severity": "Medium",
             "analyzer": "Google ErrorProne",
             "language": "Java",
             "category": "CORRECTNESS",
             "status": "UNKNOWN"
-          }
-        },
-        {
-          "id": "SomeOtherRule",
-          "name": "Some other rule",
-          "properties": {
-            "severity": "Medium"
           }
         }
       ],
@@ -45,33 +38,6 @@
               "physicalLocation": {
                 "artifactLocation": {
                   "uri": "Security.java",
-                  "uriBaseId": "%SRCROOT%"
-                },
-                "region": {
-                  "startLine": 33
-                }
-              }
-            }
-          ],
-          "fingerprints": {
-            "sigFingerprint/v1": "0fe24dfe0b8c90ae48620e02865b9a3b399b49ea4ef5e020d83e9507d614ebcb"
-          },
-          "properties": {
-            "tags": ["CWE-327"],
-            "category": "Other",
-            "status": "UNKNOWN"
-          }
-        },
-        {
-          "ruleId": "SomeOtherRule",
-          "message": {
-            "text": "Some other finding"
-          },
-          "locations": [
-            {
-              "physicalLocation": {
-                "artifactLocation": {
-                  "uri": "Aap.java",
                   "uriBaseId": "%SRCROOT%"
                 },
                 "region": {

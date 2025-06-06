@@ -60,6 +60,7 @@ if __name__ == "__main__":
     parser.add_argument("--sigridurl", type=str, default="https://sigrid-says.com", help=SUPPRESS)
     parser.add_argument("--capability", type=Capability, choices=list(Capability))
     parser.add_argument("--analysisresults", type=str, help="Generates reports based on analysis results JSON file.")
+    parser.add_argument("--previousresults", type=str, help=SUPPRESS)
     args = parser.parse_args()
 
     if None in [args.customer, args.system, args.capability, args.analysisresults]:
@@ -71,6 +72,8 @@ if __name__ == "__main__":
 
     feedbackProvider = FeedbackProvider(args.capability, options, objectives)
     feedbackProvider.loadLocalAnalysisResults(args.analysisresults)
+    if args.previousresults:
+        feedbackProvider.loadPreviousAnalysisResults(args.previousresults)
     success = feedbackProvider.generateReports()
 
     sys.exit(OBJECTIVE_SUCCESS_EXIT_CODE if success else OBJECTIVE_FAILED_EXIT_CODE)
