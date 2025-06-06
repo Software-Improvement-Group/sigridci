@@ -33,6 +33,10 @@ class Capability(Enum):
 class FeedbackProvider:
     def __init__(self, capability, options, objectives):
         self.options = options
+        self.analysisId = "local"
+        self.feedback = None
+        self.previousFeedback = None
+
         self.markdownReport = self.prepareMarkdownReport(capability, objectives)
         self.additionalReports = [
             GitLabPullRequestReport(self.markdownReport),
