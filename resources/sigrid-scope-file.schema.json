@@ -226,26 +226,14 @@
       "properties": {
         "description": {
           "type": "string"
-        },
-        "action": {
-          "type": "string"
-        },
-        "technologies": {
-          "anyOf": [
-            {
-              "type": "string"
-            },
-            {
-              "type": "array",
-              "items": {
-                "type": "string"
-              }
-            }
-          ]
         }
       },
-      "required": ["description", "action", "technologies"],
+      "required": ["description"],
       "additionalProperties": true
+    },
+    "dependency_checker_source": {
+      "type": "string",
+      "enum": ["all", "sbom"]
     }
   },
 
@@ -281,25 +269,6 @@
     "model": {
       "$ref": "#/definitions/model",
       "description": "SIG Maintainability Model that should be used for the analysis, defaults to latest."
-    },
-
-    "alerts": {
-      "type": "object",
-      "properties": {
-        "enabled": {
-          "type": "boolean",
-          "description": "When true, will send alert email notifications when noteworthy events happen."
-        },
-        "recipients": {
-          "type": "array",
-          "items": {
-            "type": "string",
-            "format": "email"
-          },
-          "description": "List of email addresses that should receive alerts."
-        }
-      },
-      "additionalProperties": false
     },
 
     "dependencychecker": {
@@ -395,6 +364,9 @@
             "type": "string"
           },
           "description": "List of technologies for which the analysis should be disabled."
+        },
+        "source": {
+          "$ref": "#/definitions/dependency_checker_source"
         }
       },
       "additionalProperties": false,
@@ -418,7 +390,7 @@
         },
         "custom_components": {
           "type": "boolean",
-          "description": "Overrides automatic component detection with components defined manually in scope file."
+          "description": "Deprecated. This option is obsolete."
         },
         "file_annotation_components": {
           "type": "boolean",
@@ -465,7 +437,7 @@
         },
         "history_enabled": {
           "type": "boolean",
-          "description": "Deprecated, this is now detected automatically."
+          "description": "Deprecated. This option is obsolete."
         },
         "history": {
           "anyOf": [
@@ -476,7 +448,7 @@
               "type": "string"
             }
           ],
-          "description": "Deprecated, this is now detected automatically."
+          "description": "Deprecated. This option is obsolete."
         },
         "history_period_months": {
           "type": "integer",
@@ -500,7 +472,7 @@
         },
         "branch": {
           "$ref": "#/definitions/branches",
-          "description": "Repository branch to use, comma-separated for multiple branches. Defaults to current branch."
+          "description": "Deprecated. This option is obsolete."
         },
         "duplication": {
           "type": "boolean",
@@ -566,10 +538,10 @@
       },
       "additionalProperties": false,
       "required": []
-    }
+    },
+    "checkmarx": false
   },
   "required": ["languages"],
-  "not": {"required": ["checkmarx"]},
   "title": "Sigrid scope configuration file",
   "type": "object"
 }

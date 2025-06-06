@@ -12,6 +12,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
+import inspect
 import json
 import jsonschema
 import yaml
@@ -34,12 +35,11 @@ class ScopeFileSchemaTest(TestCase):
             "description", 
             "properties",
             "required",
-            "not",
-            "title", 
+            "title",
             "type"
         ]
     
-        self.assertEqual(list(self.schema.keys()), fields)
+        self.assertEqual(sorted(self.schema.keys()), fields)
             
     def testValidScopeFileAgainstSchema(self):
         scope = """
@@ -71,14 +71,15 @@ class ScopeFileSchemaTest(TestCase):
                 languages:
                   - Java
                 checkmarx:
-                  enabled: true
+                  aap: true
                 """
 
         try:
             parsedScope = yaml.load(scope, Loader=yaml.FullLoader)
             jsonschema.validate(instance=parsedScope, schema=self.schema)
+            self.assertTrue(False, "ValidationError should have been raised")
         except jsonschema.ValidationError as e:
-            self.assertTrue(e.message.endswith("should not be valid under {'required': ['checkmarx']}"))
+            self.assertTrue("schema does not allow {'aap': True}" in e.message)
 
     def testDependencyCheckerExcludeOptions(self):
         scope = """
@@ -111,4 +112,24 @@ class ScopeFileSchemaTest(TestCase):
             self.assertTrue(False, "ValidationError should have been raised")
         except jsonschema.ValidationError as e:
             self.assertTrue("{'something': 'noot'} is not valid under any of the given schemas" in e.message)
-        
+
+    def testDependencyCheckerSourceOption(self):
+        base = inspect.cleandoc("""
+            languages:
+              - Python
+            dependencychecker:
+              blocklist: ["NONE"]
+            """)
+
+        scope = yaml.load(f"{base}\n  source: all", Loader=yaml.FullLoader)
+        jsonschema.validate(instance=scope, schema=self.schema)
+
+        scope = yaml.load(f"{base}\n  source: sbom", Loader=yaml.FullLoader)
+        jsonschema.validate(instance=scope, schema=self.schema)
+
+        try:
+            scope = yaml.load(f"{base}\n  source: aap", Loader=yaml.FullLoader)
+            jsonschema.validate(instance=scope, schema=self.schema)
+            self.assertTrue(False, "ValidationError should have been raised")
+        except jsonschema.ValidationError as e:
+            self.assertTrue("'aap' is not one of ['all', 'sbom']" in e.message)
