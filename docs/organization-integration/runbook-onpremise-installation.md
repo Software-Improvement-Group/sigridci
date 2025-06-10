@@ -45,17 +45,13 @@ This documentation offers useful context on how to start configuring on-premise 
 ### (A) Prepare helm chart 
 
 1. Helm Login: 
-`ECR_HOST=571600876202.dkr.ecr.eu-central-1.amazonaws.com`
-
-`REGION=eu-central-1`
-
-`ACCOUNT=571600876202`
-
-`TOKEN=$(aws ecr get-login --region ${REGION} --registry-ids ${ACCOUNT} | cut -d ' ' -f 6)`
-
-`helm registry login ${ECR_HOST} --username AWS --password-stdin`
-
-`echo $TOKEN`
+```bash
+ECR_HOST=571600876202.dkr.ecr.eu-central-1.amazonaws.com
+REGION=eu-central-1
+ACCOUNT=571600876202
+TOKEN=$(aws ecr get-login-password --region ${REGION})
+echo $TOKEN | helm registry login ${ECR_HOST} --username AWS --password-stdin
+```
 2. Pull the latest helm chart: `helm pull oci://571600876202.dkr.ecr.eu-central-1.amazonaws.com/softwareimprovementgroup/sigrid-stack --version <latest tag>`
 3. Store the helm chart under your version control making sure not to use clear text secrets, certificates and passwords in your helm.
 4. Use Kubernetes-native secrets, either managed directly in Kubernetes or via an external tool that creates and updates these secret objects.
