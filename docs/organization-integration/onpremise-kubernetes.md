@@ -46,7 +46,7 @@ global:
   imageRegistry: "571600876202.dkr.ecr.eu-central-1.amazonaws.com/softwareimprovementgroup"
   # Needed because AWS ECR registry is private:
   imagePullSecrets:
-    - name: "Name of kubernetes secret which holds AWS(571600876202) access credentials"
+    - name: "Name of kubernetes secret which holds AWS (account: 571600876202) access credentials"
   # Needed because pod needs to authenticate with AWS ECR registry to pull images:
 ```
 
