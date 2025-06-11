@@ -9,7 +9,7 @@ This documentation offers useful context on how to keep on-premise Sigrid up-to-
 
 - You should have already read the other Sigrid On-Premise documentation
 - You have a running Sigrid Deployment
-- You have access to Software Improvement Group [AWS ECR repository](https://571600876202.dkr.ecr.eu-central-1.amazonaws.com/)
+- You have access to Software Improvement Group [AWS ECR registry](https://571600876202.dkr.ecr.eu-central-1.amazonaws.com/)
 
 ## Update Frequency
 
@@ -22,14 +22,16 @@ We update container images daily for immediate improvements. The Helm chart is u
 
 1. Pull the latest Docker containers:
 ```bash
-   INTERNAL_REGISTRY_BASE=<REPLACE-WITH-REGISTRY>
+   INTERNAL_REGISTRY_BASE=<REPLACE-WITH-REGISTRY-BASE>
+   INTERNAL_DESTINATION=<REPLACE-WITH-DESTINATION-REGISTRY>
    VERSION=<REPLACE-WITH-LATEST-VERSION> # e.g. `1.0.20250603`
+   ECR_REGISTRY=571600876202.dkr.ecr.eu-central-1.amazonaws.com/softwareimprovementgroup
 
    for IMAGE in ai-explanation-service auth-api-db-migration auth-api quality-model-service \
             sigrid-api-db-migration sigrid-api sigrid-frontend sigrid-multi-analyzer \
             sigrid-multi-importer inbound-api; do
-     docker pull 571600876202.dkr.ecr.eu-central-1.amazonaws.com/softwareimprovementgroup/${IMAGE}:${VERSION}
-     docker tag 571600876202.dkr.ecr.eu-central-1.amazonaws.com/softwareimprovementgroup/${IMAGE}:${VERSION} ${INTERNAL_REGISTRY_BASE}/softwareimprovementgroup/${IMAGE}:${VERSION}
+     docker pull ${ECR_REGISTRY}/${IMAGE}:${VERSION}
+     docker tag ${ECR_REGISTRY}/${IMAGE}:${VERSION} ${INTERNAL_DESTINATION}
      docker push ${INTERNAL_REGISTRY_BASE}/${IMAGE}:${VERSION}
    done
 ```

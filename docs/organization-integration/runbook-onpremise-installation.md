@@ -9,17 +9,17 @@ This documentation offers useful context on how to start configuring on-premise 
 
 - You should have already read the other Sigrid On-Premise documentation.
 - All pre-requisites from our public documentation are met.
-- You have access to Software Improvement Group [AWS ECR repository](https://571600876202.dkr.ecr.eu-central-1.amazonaws.com/).
+- You have access to Software Improvement Group [AWS ECR registry](https://571600876202.dkr.ecr.eu-central-1.amazonaws.com/).
 
 ## Prepare for installation 
 
 ### (A) Prepare container images 
 
-1. Get access to AWS ECR repository from SIG.
+1. Get access to AWS ECR registry from SIG.
    - Please ask your SIG Project Lead/contact person.
    - Provide an email address.
    - A new user will be created in AWS.
-2. To log in to AWS ECR repository as a Helm registry and pull the Helm chart, you need to create a Access key.
+2. To log in to AWS ECR registry as a Helm registry and pull the Helm chart, you need to create a Access key.
 3. If your deployment is entirely air-gapped please perform the next two steps, otherwise you can continue at "Prepare helm chart".
 4. Pull all container images required:
 
@@ -39,7 +39,7 @@ This documentation offers useful context on how to start configuring on-premise 
      - redis:7.2.4-alpine
      - haproxy:2.9.4-alpine
      - aws-cli:2.24.6
-5. Tag the downloaded containers with their tag from [AWS ECR repository](https://571600876202.dkr.ecr.eu-central-1.amazonaws.com/) (e.g. 1.0.20250603).
+5. Tag the downloaded containers with their tag from [AWS ECR registry](https://571600876202.dkr.ecr.eu-central-1.amazonaws.com/) (e.g. 1.0.20250603).
 6. Re-tag and push the containers to your internal container registry.
 
 ### (A) Prepare helm chart 

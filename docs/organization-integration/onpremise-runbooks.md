@@ -8,7 +8,7 @@ The following runbooks offer simplified steps and useful context for configuring
 ## Prerequisites
 
 - You should have already read the other Sigrid On-Premise documentation
-- You have access to Software Improvement Group [AWS ECR repository](https://571600876202.dkr.ecr.eu-central-1.amazonaws.com/)
+- You have access to Software Improvement Group [AWS ECR registry](https://571600876202.dkr.ecr.eu-central-1.amazonaws.com/)
 
 ## Runbooks
 
