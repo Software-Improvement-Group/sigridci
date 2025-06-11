@@ -1,5 +1,5 @@
 
-### Manual AWS ECR login password refresh
+### Manual AWS ECR login password refresh and pulling images own registry
 <details>
 <summary>Detailed procedure for Manual AWS ECR login password refresh</summary>
 1. Once the script is executed, it will pull the latest Sigrid images from the AWS ECR registry.
@@ -32,7 +32,7 @@ done
 ```
 </details>
 
-### Automated AWS ECR login password refresh
+### Automated AWS ECR login password refresh and pulling images from Sigrid ECR registry during Sigrid On-Premises deployments
 <details>
 <summary>Detailed procedure for automated AWS ECR login password refresh</summary>
 AWS ECR passwords expire after 12 hours. Therefore, a scheduled refresh can be implemented for Sigrid On-Premises deployments. This approach automatically refreshes the ECR registry password to maintain continuous access to container images. Note: this is only required when no internal container registry (cache) is used, or to automate the refreshing of images in your internal container registry.
