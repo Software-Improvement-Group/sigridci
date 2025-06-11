@@ -19,11 +19,7 @@ This documentation offers useful context on how to start configuring on-premise 
    - Please ask your SIG Project Lead/contact person.
    - Provide an email address.
    - A new user will be created in AWS.
-<<<<<<< HEAD
-2. To log in to AWS ECR registry as a Helm registry and pull the Helm chart, you need to create a Access key.
-=======
-2. To log in to AWS ECR repository as a Helm registry and pull the Helm chart, you will receive an Access key. This can be used to generate a temporary password for the AWS ECR registry.
->>>>>>> 0a895c28f31db8e6351e081b8925470f5a10ff2a
+2. To log in to AWS ECR registry as a Helm registry and pull the Helm chart, you will receive an Access key. This can be used to generate a temporary password for the AWS ECR registry.
 3. If your deployment is entirely air-gapped please perform the next two steps, otherwise you can continue at "Prepare helm chart".
 4. Pull all container images required:
 
