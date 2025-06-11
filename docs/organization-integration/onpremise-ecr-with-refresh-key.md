@@ -1,26 +1,14 @@
 
-#### global:
-```
-imagePullSecrets:
-```
-Here we provide a Kubernetes native secret of type `"kubernetes.io/dockerconfigjson"` which contains the data as described below. This secret is used to authenticate with the AWS ECR registry to pull container images.
-```yaml{
-.dockerconfigjson: '{
-    "auths": {
-        "value of SIGRID_DOWNLOAD_REGISTRY": {
-            "auth": "base64 encoded of content AWS:$(aws ecr get-login-password --region eu-central-1)"
-        }
-    }
-}'
-```
 ### Manual AWS ECR login password refresh
 <details>
 <summary>Detailed procedure for Manual AWS ECR login password refresh</summary>
-1. Script to getting the ECR login password and pulling the latest images from the AWS ECR registry:
+1. Once the script is executed, it will pull the latest Sigrid images from the AWS ECR registry.
+The script uses the AWS CLI to get a login password for the ECR registry and then logs in to the registry using Docker. 
+After that, it pulls the specified images with the given version:
 
 ```bash
 SIGRID_DOWNLOAD_REGION=eu-central-1
-VERSION=1.0.20250603
+VERSION=1.0.20250603 # Replace with the desired version
 SIGRID_DOWNLOAD_REGISTRY=5012345678901.dkr.ecr.${SIGRID_DOWNLOAD_REGION}.amazonaws.com
 export AWS_ACCESS_KEY_ID="provided by SIG"
 export AWS_SECRET_ACCESS_KEY="provided by SIG"
@@ -124,7 +112,7 @@ data:
     # Sets up variables for Kubernetes API interaction
     # Uses the Kubernetes service account token for authentication
     # Reads namespace from the service account mount
-    K8S_SECRET_NAME={{ .Values.ecrRepository.secretName }}
+    K8S_SECRET_NAME=ecr-image-pull-secret
     APISERVER=https://kubernetes.default.svc
     SERVICEACCOUNT=/var/run/secrets/kubernetes.io/serviceaccount
     NAMESPACE=$(cat ${SERVICEACCOUNT}/namespace)
@@ -235,5 +223,12 @@ type: Opaque
 data:
   AWS_ACCESS_KEY_ID: #provided by SIG
   AWS_SECRET_ACCESS_KEY: #provided by SIG
+```
+
+### Update your deployment's values file
+```
+global:
+  imagePullSecrets:
+    - name: ecr-image-pull-secret
 ```
 </details>
