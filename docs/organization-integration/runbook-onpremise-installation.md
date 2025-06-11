@@ -19,7 +19,7 @@ This documentation offers useful context on how to start configuring on-premise 
    - Please ask your SIG Project Lead/contact person.
    - Provide an email address.
    - A new user will be created in AWS.
-2. To log in to AWS ECR repository as a Helm registry and pull the Helm chart, you need to create a Access key.
+2. To log in to AWS ECR repository as a Helm registry and pull the Helm chart, you will receive an Access key. This can be used to generate a temporary password for the AWS ECR registry.
 3. If your deployment is entirely air-gapped please perform the next two steps, otherwise you can continue at "Prepare helm chart".
 4. Pull all container images required:
 
@@ -128,7 +128,7 @@ Note that this initial admin user will have full access to the entire portfolio.
 ```
 imagePullSecrets:
 ```
-Here we provide kubernetes native secret which contains AWS `AWS_ACCESS_KEY_ID` and `AWS_SECRET_ACCESS_KEY` so that it can be used for pulling image from ECR repository. 
+Here we provide a Kubernetes native secret which contains the 2 parts of the AWS Access key: the `AWS_ACCESS_KEY_ID` and the `AWS_SECRET_ACCESS_KEY`, so that it can be used for pulling container images and the Helm chart from the ECR repositories. 
 
 #### nginx:
 
@@ -263,8 +263,8 @@ You can now start inviting more people to Sigrid if so desired.
     ```
 - Commit changes to your test project.
 
-### AWS ECR Key Rotation Documentation
-AWS ECR key rotation system implemented for Sigrid On-Premises deployments. The system automatically refreshes ECR registry credentials to maintain continuous access to container images.
+### AWS ECR password refresh
+AWS ECR passwords expire after 12 hours. Therefore, a scheduled refresh can be implemented for Sigrid On-Premises deployments. This approach automatically refreshes the ECR registry password to maintain continuous access to container images. Note: this is only required when no internal container registry (cache) is used, or to automate the refreshing of images in your internal container registry.
 
 Prerequisites
 - An AWS IAM user with ECR access permissions, SIG will provided that.
