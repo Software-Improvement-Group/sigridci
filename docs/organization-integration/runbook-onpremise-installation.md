@@ -34,13 +34,17 @@ This documentation offers useful context on how to start configuring on-premise 
      - softwareimprovementgroup/sigrid-multi-analyzer
      - softwareimprovementgroup/sigrid-multi-importer
 
-   and the following public images:
+   and the following public images are required if your deployment is entirely air-gapped: #TODO (refine)
      - nginxinc/nginx-unprivileged
      - redis:7.2.4-alpine
      - haproxy:2.9.4-alpine
+   this public image is only required when you're #TODO (might not need to be mentioned)
      - aws-cli:2.24.6
 5. Tag the downloaded containers with their tag from [AWS ECR registry](https://571600876202.dkr.ecr.eu-central-1.amazonaws.com/) (e.g. 1.0.20250603).
 6. Re-tag and push the containers to your internal container registry.
+
+#### AWS ECR login password refresh details #TODO (add more context)
+- [Procedure: Refreshing ECR access key](onpremise-ecr-with-refresh-key.md)
 
 ### (A) Prepare helm chart 
 
@@ -126,9 +130,20 @@ Provide an email address to bootstrap the very first user in Sigrid.
 The email address should match the user's email in the connected IdP.
 Note that this initial admin user will have full access to the entire portfolio. Once Sigrid is fully configured, you can invite another person as an Admin and, if desired, remove or demote the initial admin user to a regular user.
 ```
-imagePullSecrets:
+imagePullSecrets: #TODO (refine, see ecrRepository)
 ```
 Here we provide a Kubernetes native secret which contains the 2 parts of the AWS Access key: the `AWS_ACCESS_KEY_ID` and the `AWS_SECRET_ACCESS_KEY`, so that it can be used for pulling container images and the Helm chart from the ECR repositories. 
+
+#### ecrRepository: #TODO (refine)
+```
+enabled: true
+```
+If your Sigrid deployment allows outbound connections and you would like to pull images from SIG's ECR Repositories directly then you need to enable this service.
+```
+iamUserName: "sig_ecr_example_user"
+sigCustomerAccessSecretName: sig-customer-access-secret
+```
+To make use of SIG's ECR Repositories you will need to provide the `iamUserName` and create a Kubernetes native containing  `AWS_ACCESS_KEY_ID` and `AWS_SECRET_ACCESS_KEY`
 
 #### nginx:
 
@@ -262,9 +277,6 @@ You can now start inviting more people to Sigrid if so desired.
         - "run-analyzers --publish"
     ```
 - Commit changes to your test project.
-
-### AWS ECR login password refresh
-- [Procedure: Refreshing ECR access key](onpremise-ecr-with-refresh-key.md)
 
 ### Verify a successful analysis
 

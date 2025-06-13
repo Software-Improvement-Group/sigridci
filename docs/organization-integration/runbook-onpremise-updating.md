@@ -20,6 +20,8 @@ We update container images daily for immediate improvements. The Helm chart is u
 
 ## Update Instructions
 
+### Manual pulling images #TODO
+
 1. Pull the latest Docker containers:
 ```bash
    ECR_REGISTRY=571600876202.dkr.ecr.eu-central-1.amazonaws.com/softwareimprovementgroup
@@ -36,6 +38,8 @@ We update container images daily for immediate improvements. The Helm chart is u
    done
 ```
 
+### Automated pulling images #TODO
+
 2. Pull the latest Helm chart:
 
 ```bash
@@ -49,7 +53,9 @@ We update container images daily for immediate improvements. The Helm chart is u
      ImageTag: "<REPLACE-WITH-LATEST-VERSION>"
 ```
 
-4. Apply the updates using Helm:
+### 4. Apply the Updates Using Helm
+
+To apply the updates using Helm, you can use the following command. Note how to do this might vary depending on how you deployed Sigrid.
 
 ```bash
    helm upgrade --install sigrid-onprem ./sigrid-stack -n sigrid --values ./sigrid-stack/custom-values.yaml
