@@ -104,6 +104,58 @@ The end point `GET https://sigrid-says.com/rest/analysis-results/api/v1/maintain
 
 This end point is intended for system-to-system integration, where one of your own systems needs to process this data without relying on the Sigrid user interface.
 
+### Maintainability refactoring candidates
+
+Sigrid's Rest API provides several endpoints to get all refactoring candidates for each `systemProperty` under the maintainability model. For each system property, the URL path has the following structure:
+* Refactoring Candidates: `GET https://sigrid-says.com/rest/analysis-results/api/v1/refactoring-candidates/{customer}/{system}/{systemProperty}?technology={technologyName}?count={findingsCount}`
+
+The path parameters `{customer}` and `{system}` refer to your Sigrid account name and system ID respectively, while `{systemProperty}` refers to the name of the metric in the maintainability model, e.g. `unitSize`. 
+
+Valid system property names:
+- `duplication`
+- `unitSize`
+- `unitComplexity`
+- `unitInterfacing`
+- `moduleCoupling`
+- `componentIndependence`
+- `componentEntanglement`
+
+The `technologyName` and `findingsCount` query parameters are optional; `technologyName` allows the user to specify a target technology to returning refactoring candidates of only that type, while `findingsCount` specifies the maximum number of refactoring candidates to return starting from highest priority as determined by Sigrid's analysis.
+
+Reference our [technology support page](../reference/technology-support.md) for all currently valid technology names.
+
+An example response leveraging the `GET https://sigrid-says.com/rest/analysis-results/api/v1/refactoring-candidates/{customer}/{system}/duplication?technology={technologyName}?count=1` endpoint would look like the following:
+
+<details markdown="1">
+  <summary>Example response</summary>
+
+```json
+{
+  "refactoringCandidates": [
+    {
+      "id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
+      "severity": "CRITICAL",
+      "status": "FALSE_POSITIVE",
+      "technology": "string",
+      "snapshotDate": "2025-06-13",
+      "sameComponent": true,
+      "sameFile": true,
+      "locations": [
+        {
+          "component": "string",
+          "file": "string",
+          "moduleId": 0,
+          "startLine": 0,
+          "endLine": 0
+        }
+      ]
+    }
+  ]
+}
+```
+
+</details>
+
 ### Security and reliability findings
 
 Sigrid's REST API provides two endpoints to get all open security or reliability findings for a system:
