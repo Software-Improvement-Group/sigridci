@@ -14,7 +14,7 @@ in the Helm chart, which provides examples of typical configuration values.
 We strongly recommend to use the `example-values.yaml` file next to this documentation page, as 
 the `example-values.yaml` file provides additional, important details.
 
-Sigrid's Helm chart is distributed via a private Docker Hub registry, together with the Docker 
+Sigrid's Helm chart is distributed via a private AWS registry, together with the Docker 
 images that make up Sigrid, as described below. 
 
 ## Prerequisites
@@ -36,17 +36,18 @@ Optional dependencies:
 
 Sigrid consists of a number of Docker images, which the Software Improvement Group (SIG) 
 distributes 
-via [Docker Hub](https://hub.docker.com/u/softwareimprovementgroup). Upon becoming a SIG 
+via [AWS ECR registry](https://571600876202.dkr.ecr.eu-central-1.amazonaws.com/softwareimprovementgroup). Upon becoming a SIG 
 on-premise customer, users get credentials to access the private part of this registry.
 
 It is possible to directly pull from this registry by specifying it globally:
 
 ```yaml
 global:
-  imageRegistry: "docker.io/softwareimprovementgroup"
-  # Needed because hub.docker.com/u/softwareimprovementgroup is private:
+  imageRegistry: "571600876202.dkr.ecr.eu-central-1.amazonaws.com/softwareimprovementgroup"
+  # Needed because AWS ECR registry is private:
   imagePullSecrets:
-    - ...
+    - name: "Name of kubernetes secret which holds AWS (account: 571600876202) access credentials"
+  # Needed because pod needs to authenticate with AWS ECR registry to pull images:
 ```
 
 The Helm chart gives precedence to the values for registry and repository set specifically for each
@@ -66,8 +67,8 @@ sigrid-api:
     tag: "some-tag"
 ```
 
-Sigrid On-Premise needs access to the following images published on [SIG's private Docker Hub]
-(https://hub.docker.com/u/softwareimprovementgroup):
+Sigrid On-Premise needs access to the following images published on [SIG's private AWS ECR registry]
+(https://571600876202.dkr.ecr.eu-central-1.amazonaws.com/softwareimprovementgroup):
 
 - `softwareimprovementgroup/ai-explanation-service`
 - `softwareimprovementgroup/auth-api-db-migration`

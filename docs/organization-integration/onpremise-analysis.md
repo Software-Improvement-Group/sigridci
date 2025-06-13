@@ -39,8 +39,8 @@ The following GitLab job illustrates how to run an analysis:
 ```yaml
 sigrid-publish:
   image:
-    # Pulls from the private part of SIG's registry at Docker Hub; you may need to log in first, or replace this with the image name as cached in your internal registry:
-    name: "softwareimprovementgroup/sigrid-multi-analyzer:$SIGRID_VERSION"
+    # Pulls from the private part of SIG's AWS ECR registry; you may need to log in first, or replace this with the image name as cached in your internal registry:
+    name: "571600876202.dkr.ecr.eu-central-1.amazonaws.com/softwareimprovementgroup/sigrid-multi-analyzer:$SIGRID_VERSION"
   variables:
     # These are all environment variables. For defaults, see the table below.
     # Note that typically, all environment variables marked as "shared" in the table
@@ -240,7 +240,7 @@ The `GET /rest/inboundresults/imports/{partner}/{customer}/{system}/{job}` endpo
       "startTime": "2025-01-10T12:00:44Z",
       "reason": null,
       "containerStatus": {
-        "image": "docker.io/softwareimprovementgoup/sigrid-multi-importer:1.0.20250109",
+        "image": "571600876202.dkr.ecr.eu-central-1.amazonaws.com/softwareimprovementgoup/sigrid-multi-importer:1.0.20250603",
         "imageID": "...",
         "name": "sigrid-importer",
         "ready": false,
