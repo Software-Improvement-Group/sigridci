@@ -100,7 +100,7 @@ The top-level `maintainability` and `maintainabilityDate` refer to the *current*
 
 For reporting purposes, using the available [end points for maintainability ratings](#maintainability-ratings) is usually sufficient. However, some advanced use cases require the full Maintainability data, beyond just the ratings.
 
-The end point `GET https://sigrid-says.com/rest/analysis-results/api/v1/maintainability/{customer}/{system}/raw?snapshotDate={snapshotDate}` will generate the *full* Maintainability analysis results, in JSON format. The `snapshotDate` query parameter is optional; it specifies the date of analysis to retrieve the latest maintainability results for the selected `{system}` (in the format of a localDate, e.g. "2025-01-01"). If no `snpshotDate` is supplied, the endpoint will return the latest/most recent maintainability analysis results for the given `{system}`. 
+The end point `GET https://sigrid-says.com/rest/analysis-results/api/v1/maintainability/{customer}/{system}/raw?snapshotDate={snapshotDate}` will generate the *full* Maintainability analysis results, in JSON format. The `snapshotDate` query parameter is optional; it specifies the date of analysis to retrieve the latest maintainability results for the selected `{system}` (in the format of a localDate, e.g. "2025-01-01"). If no `snapshotDate` is supplied, the endpoint will return the latest/most recent maintainability analysis results for the given `{system}`. 
 
 This end point is intended for system-to-system integration, where one of your own systems needs to process this data without relying on the Sigrid user interface.
 
@@ -832,7 +832,7 @@ When leveraging the `PUT https://sigrid-says.com/rest/auth/api/user-management/{
 An example request could be the following:
 
 ```shell
-$ curl 'https://sigrid-says.com/rest/auth/api/user-management/{customer}/users/{userID}/permissions' -X PATCH \
+$ curl 'https://sigrid-says.com/rest/auth/api/user-management/{customer}/users/{userID}/permissions' -X PUT \
   -H 'Content-Type: application/json' \
   -H 'Authorization: Bearer {SIGRID_PERSONAL_TOKEN}' \
   -d '{
@@ -967,7 +967,7 @@ When leveraging the `PUT https://sigrid-says.com/rest/auth/api/user-management/{
 An example request could be the following:
 
 ```shell
-$ curl 'https://sigrid-says.com/rest/auth/api/user-management/{customer}/groups/{groupID}/permissions' -X PATCH \
+$ curl 'https://sigrid-says.com/rest/auth/api/user-management/{customer}/groups/{groupID}/permissions' -X PUT \
   -H 'Content-Type: application/json' \
   -H 'Authorization: Bearer {SIGRID_PERSONAL_TOKEN}' \
   -d '{
