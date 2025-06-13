@@ -56,6 +56,11 @@ The blue columns contain information on the chosen modernization scenario and th
 - **Estimated effort:** The estimated development effort, based on the SIG benchmark, that would be required to
   complete the scenario. You can see this as the scenario's "technical cost".
 
+In addition to the table, the report also contains some charts that visualize these trade-offs for all modernization
+candidates in your portfolio.
+  
+<img src="../../images/reports/modernization-bubble-chart.png" width="500" />
+
 ## Deciding on a modernization scenario
 
 Defining your overall modernization plan depends on more factors than just technical debt. You can therefore define
