@@ -44,7 +44,7 @@ Since scope files are part of your repository, you can edit them using your pref
 
 <img src="../images/scope-file-ide.png" width="400" />
 
-### Excluding files and directories
+## Excluding files and directories
 
 Sigrid will exclude common patterns by default. For example, directories like `build`, `dist`, and `target` typically contain build output and are not part of the source code. Directories like `node_modules` contain open source libraries and are not part of the application's own source code. Those directories are therefore ignored during the analysis.
 
@@ -85,7 +85,7 @@ As a convention, all `include` and `exclude` patterns always start with `.*/`. I
 In rare cases, you might see files ending up in a Remainder component, even though your YAML file seems correct. This might be due to non-printable characters (e.g. zero-width spaces). You can use an IDE or text editor to double-check if your project uses non-printable characters in file names.
 {: .attention }
 
-### Common tips and caveats when using regular expressions to define patterns
+### Tips and caveats when using regular expressions to define patterns
 
 - The full file path must always be matched instead of (part of) a filename. This generally requires some wildcards.
 - All patterns are case-sensitive. This is relevant in case you are specifically searching for naming in camelCase or PascalCase. It is then useful to search for files like `SomeTest.java`.
@@ -201,12 +201,21 @@ The `dependencychecker` section supports the following options:
 
 | Option name  | Required? | Description                                                                                    |
 |--------------|-----------|------------------------------------------------------------------------------------------------|
-| `blocklist`  | Yes       | List of library names that should not be scanned. Typically used to ignore internal libraries. |
+| `blocklist`  | Yes       | See [defining a blocklist](#defining-a-blocklist).                                             |
 | `transitive` | No        | When true, also scans the dependencies of your dependencies. Defaults to false.                |
-| `exclude`    | No        | List of file/directory patterns that should be excluded from the Open Source Health analysis.  |
+| `exclude`    | No        | See [exclude Open Source Health risks](#exclude-open-source-health-risks).                     |
 | `model`      | No        | SIG Open Source Health model version that should be used for the analysis, defaults to latest. |
+| `source`     | No        | See [configuring SBOM import](#configuring-sbom-import).                                       |
 
-Please Note: dependency exclusions may be necessary in case your system resolves internal dependencies that could expose organization- or system name based on their internal URI. Therefore, as part of the onboarding process, please inform SIG of any such naming conventions that should be filtered. [See also this question in the FAQ on dependency filtering](../capabilities/faq-security.md#does-sig-filter-when-resolving-our-systems-dependencies).
+### Defining a blocklist
+
+Sigrid will normally scan all open source libraries it can find in your codebase. If you want to exclude certain internal libraries from scanning, you can define a "blocklist". Any library with a name matching the blocklist will *not* be scanned by Sigrid.
+
+    dependencychecker:
+      blocklist:
+        - ".*companyname.*"
+
+In this example, any open source library with "companyname" anywhere in the name will not be scanned by Sigrid. The blocklist supports regular expressions, making it easier to exclude libraries in bulk.
 
 ### Exclude Open Source Health risks
 
@@ -223,6 +232,19 @@ In certain situations you can decide to [exclude Open Source Health risks](../ca
         - activity: "com.github.tomas-langer:chalk" # Excludes activity risks for the specified library.
 
 Libraries and/or findings that are excluded using this option will not count towards the Open Source Health star rating, and will not be marked as risks in Sigrid.
+
+### Configuring SBOM import
+
+By default, Sigrid will scan your code base for open source libraries. Optionally, Sigrid can *also* [import open source libraries from SBOM files](../integrations/integration-sbom.md). 
+
+The open source libraries found in the SBOM are normally *added* to the open source libraries found by Sigrid. If you want Sigrid to *only* consider open source libraries found in the SBOM, you can use the following configuration option.
+
+    dependencychecker:
+      blocklist:
+        - ".*companyname.*"
+      source: sbom
+
+Again, you only need this option if you are importing your own SBOM files, *and* you want Sigrid to only use those SBOM files for Open Source Health.
 
 ## Security
 

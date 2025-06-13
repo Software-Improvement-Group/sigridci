@@ -3,6 +3,28 @@ Sigrid release notes
 
 SIG uses [continuous delivery](https://en.wikipedia.org/wiki/Continuous_delivery), meaning that every change to Sigrid or the underlying analysis is released once our development pipeline has completed. On average, we release somewhere between 10 and 20 times per day. This page therefore doesn't list every single change, since that would quickly lead to an excessively long list of small changes. Instead, this page lists Sigrid and analysis changes that we consider noteworthy for the typical Sigrid user.
 
+### June 23, 2025
+
+- **Mendix QSM:** Sigrid now supports [Mendix MPR version 2](https://medium.com/@anjaanabishek/still-on-mendix-mpr-v1-heres-why-it-s-time-to-upgrade-to-mpr-v2-38092567fe6e).
+- **Open Source Health:** Sigrid can [import SBOM files](../integrations/integration-sbom.md) to show open source libraries imported from external sources alongside open source libraries found in your codebase. The [Sigrid configuration](analysis-scope-configuration.md#configuring-sbom-import) now allows you to customize how the SBOM contents should be imported.
+- **Report Generator:** The [modernization report](../capabilities/reports/modernization-report.md) has been expanded with additional visualizations.
+
+### June 16, 2025
+
+- **The SIG model update 2025 is now available.** Every year, SIG updates its quality models based on the SIG benchmark and industry trends. So what are the key changes?
+  - **Maintainability:**
+    - We see a strong trend towards smaller systems. Modern software landscapes increasingly consist of many small, interconnected systems. This trend is accelerating, which is reflected in SIG's benchmark ands leads to more strict Volume ratings.
+  - **Architecture Quality:**
+    - A new Component Adjacency metric has been added to the model. It measures the number of components that are connected to a component, via either incoming or outgoing dependencies. The fewer number of adjacent components, the easier it is to maintain a component independently. This new metric captures aspects of coupling that were not fully covered by the existing metrics.
+    - The Code Reuse metric has been removed, as it overlaps too much with the Duplication metric in the maintainability model. It remains possible to visualize cross-component duplication in the architecture view, but this no longer affects the architecture rating.
+    - The Bounded Evolution metric has been adjusted so that it considers forms of "temporal coupling", i.e. situations where changes in component A necessitate changes in component B.
+  - **Open Source Health:**
+    - For open source libraries with multiple licenses, Sigrid will now consider license risk based on the least restrictive license, instead of the most restrictive license. This change aligns to how most organizations assess license risk for multi-licensed libraries.
+  - **Security:**
+    - SIG now also benchmarks security, so that you can see the benchmarked star ratings alongside the underlying security findings. This makes it easier to compare yourself against the market. You can read more in the [guidelines for managing security across your portfolio](../workflows/best-practices-security.md).  
+  - **Univeral components across Sigrid:** Previously, all Sigrid capabilities supported their own component structure. As of the 2025 model, all Sigrid capabilities now use the same component structure as defined in the [Sigrid configuration](analysis-scope-configuration.md#defining-components). This leads to a more consistent view across Sigrid. 
+  - Your systems will be automatically updated to the new version. However, it is possible to continue using an older version of the model, if you are unable or unwilling to update. You can configure this in the [Sigrid configuration](analysis-scope-configuration.md#configuring-the-sig-maintainability-model-version).
+
 ### June 2, 2025
 
 - **Technology support:** Sigrid now recognizes [inject dependencies in Angular](https://angular.dev/api/core/inject). If you are using these dependencies in your Angular systems, you will start seeing them across Sigrid.

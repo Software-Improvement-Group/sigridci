@@ -1,6 +1,4 @@
-# Our approach to software maintainability: benchmarked code metrics offer perspective
-
-## What is high quality software?
+# Our approach to high quality software
 
 Finding an objective measure of software quality is tough. High quality software behaves the way you expect it to, can withstand unforeseen situations, is secure against abuse, and complies with requirements.
 
