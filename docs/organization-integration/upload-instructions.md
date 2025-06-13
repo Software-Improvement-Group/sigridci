@@ -22,7 +22,7 @@ See the "Sigrid CI" section in the menu for an overview of supported platforms. 
 
 The preferred method to upload source code is Sigrid CI, but SIG also offers SFTP uploads for situations where Sigrid CI cannot be used.
 
-The upload server for SFTP uploads is **portal.sig.eu**. To make sure your uploaded files are secure, you will not receive full shell access to our upload server. Your account is jailed, such that other users of the upload server don't know its existence and cannot access it. Files uploaded to your account will be removed from your account after (at most) 3 days and removed from our backup after (at most) 6 weeks. The backup is encrypted using AES256. The disk your account resides on is encrypted using AES256 as well.
+The upload server for SFTP uploads is **upload.sigrid-says.com**. To make sure your uploaded files are secure, you will not receive full shell access to our upload server. Your account is jailed, such that other users of the upload server don't know its existence and cannot access it. Files uploaded to your account will be removed from your account after (at most) 3 days and removed from our backup after (at most) 6 weeks. The backup is encrypted using AES256. The disk your account resides on is encrypted using AES256 as well.
 
 The default folder you connect to is referred to as your home folder. You are free to create new files in your home folder, please be aware that we will keep the files for the last 4 upload dates.
 
@@ -58,9 +58,9 @@ When in doubt, please use RSA.
 
 You can verify the authenticity of the upload server by checking its public host key fingerprint. This fingerprint should be visible when connecting to the upload server for the first time, and, depending on the type of authentication used, should be equal to one of the following:
 
-- RSA fingerprint: `4096 SHA256:jGf883nbewCO69bbK3lur/0ZAi0T4d6+P1ySc0NRVpU`
-- ECDSA fingerprint: `256 SHA256:/TfYO8xzMn0+IqjS70Ig4sHdMfQWjD34FNoIbJxQTZQ`
-- ED25519 fingerprint: `256 SHA256:4Ih8DOiO8mj6e8S8GOyK7tjjmHbFkvcpqXRyLWq+jvg`
+- RSA fingerprint: `4096 SHA256:1WMnU9ZOxldY+wfMoybHEQTknQJWd/SSGm0sv92TBDg`
+- ECDSA fingerprint: `256 SHA256:fETp+2EViXNquhE5SxRJ5YBqwiTchFCo0Za0Z+yyv1o`
+- ED25519 fingerprint: `256 SHA256:7AgpHOklx1QpkH88C2nbKFIyDuLhLQzUUnDrD95qF44`
 
 The SFTP/SCP protocol connects to port 22 on our upload server, so your firewall should allow outbound traffic to port 22.
 
@@ -81,15 +81,34 @@ If you are uploading from a Unix, Linux or macOS system, then you probably are i
 
 If you are uploading from Windows, you likely need to create a new key. You can, for example, use the [puttygen3](https://www.chiark.greenend.org.uk/~sgtatham/putty/latest.html) application to accomplish this.
 
-### Uploading to portal.sig.eu via scp
+### Uploading to upload.sigrid-says.com via scp
 
 Connections to our upload server can be made using an SCP client, such as [WinSCP](http://winscp.net/eng/index.php) for Windows, or the command line utility `scp` for Unix, Linux and macOS, which is part of the [OpenSSH](http://www.openssh.com) suite.
 
-Below an example for the secure copy command, which refers to a private key, the zip file to be uploaded and 'your-upload-account' that you will receive from Sigrid support.
+An example of the secure copy command scp, which refers to a private key, the zip file to be uploaded and 'your-upload-account' that you will receive from Sigrid support. If you’re leaving out the remote file name, the ‘:’ at the end of ‘upload.sigrid-says.com’ is essential. The warning 'scp: remote fsetstat: Operation unsupported' is harmless.
 
 ```
-scp -i ~/.ssh/id_rsa system-name-<yyyymmdd>.zip your-upload-account@portal.sig.eu:
+scp -i ~/.ssh/id_rsa system-name-<yyyymmdd>.zip your-upload-account@upload.sigrid-says.com:
 ```
+
+An example of sftp
+
+```
+% sftp <account>@upload.sigrid-says.com: <<< $'put <file>'
+Connected to upload.sigrid-says.com.
+Changing to: /.
+sftp> put <file>
+Uploading <file> to /<file>
+<file>
+```
+### Viewing the uploaded files
+- After uploading you can view the uploaded files to verify that the upload succeeded.
+- Your uploads will be kept for 30 days. Uploads older than 30 days will be removed.
+
+
+### Upload.sigrid-says.com is powered by SFTPGo
+Link to the source code of [SFTPGo](https://github.com/drakkan/sftpgo)
+
 
 ## Manually uploading source code using the SIG Upload Portal
 
