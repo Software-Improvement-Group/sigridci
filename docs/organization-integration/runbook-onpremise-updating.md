@@ -22,16 +22,17 @@ We update container images daily for immediate improvements. The Helm chart is u
 
 1. Pull the latest Docker containers:
 ```bash
-   INTERNAL_REGISTRY_BASE=<REPLACE-WITH-REGISTRY-BASE>
-   VERSION=<REPLACE-WITH-LATEST-VERSION> # e.g. `1.0.20250603`
    ECR_REGISTRY=571600876202.dkr.ecr.eu-central-1.amazonaws.com/softwareimprovementgroup
+   INTERNAL_REGISTRY_BASE=<REPLACE-WITH-REGISTRY-BASE>
+   INTERNAL_DESTINATION=${INTERNAL_REGISTRY_BASE}/softwareimprovementgroup
+   VERSION=<REPLACE-WITH-LATEST-VERSION> # e.g. `1.0.20250603`
 
    for IMAGE in ai-explanation-service auth-api-db-migration auth-api quality-model-service \
             sigrid-api-db-migration sigrid-api sigrid-frontend sigrid-multi-analyzer \
             sigrid-multi-importer inbound-api; do
      docker pull ${ECR_REGISTRY}/${IMAGE}:${VERSION}
-     docker tag ${ECR_REGISTRY}/${IMAGE}:${VERSION} ${INTERNAL_REGISTRY_BASE}/softwareimprovementgroup/${IMAGE}:${VERSION}
-     docker push ${INTERNAL_REGISTRY_BASE}/softwareimprovementgroup/${IMAGE}:${VERSION}
+     docker tag ${ECR_REGISTRY}/${IMAGE}:${VERSION} ${INTERNAL_DESTINATION}/${IMAGE}:${VERSION}
+     docker push ${INTERNAL_DESTINATION}/${IMAGE}:${VERSION}
    done
 ```
 
