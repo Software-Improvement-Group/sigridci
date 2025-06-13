@@ -34,10 +34,16 @@ modernization plan, but having concrete information on the technical impact is g
 
 In this table, the black columns contain information that was used as input for the modernization plan:
 
-- **Business criticality:** @@
-- **Volume:** @@
-- **Activity last year:** @@
-- **Technical debt:** @@
+- **Business criticality:** Taken from your [Sigrid metadata](../../organization-integration/metadata.md) for the
+  system. Modernizing business critical systems will be given higher priority.
+- **Volume:** Code volume in person years. Modernizing larger systems is generally more risky, but also potentially
+  carries bigger benefits if the system is actively maintained.
+- **Activity last year:** Shows how much code was changed during the last year. This gives you an indication on
+  whether a system is actively maintained. Systems with a lot of development will benefit more modernization, since
+  improving change speed is more relevant if there are many changes.
+- **Technical debt:** The total amount of technical debt in the system, expressed in person years. Note that
+  eliminating *all* technical debt in the system is often impossible and usually not cost-effective. Instead, the
+  goal is to reduce technical debt to a manageable level.
 
 The blue columns contain information on the chosen modernization scenario and the associated estimates:
 
