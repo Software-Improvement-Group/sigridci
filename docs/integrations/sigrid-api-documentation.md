@@ -966,7 +966,7 @@ The process for updating membership to a group is done in a very similar manner 
 An example request on the same group could be the following:
 
 ```shell
-$ curl 'https://sigrid-says.com/rest/auth/api/user-management/{customer}/groups/f4a702ac-b998-44e1-a271-840a3f75e6d2/members' -X PATCH \
+$ curl 'https://sigrid-says.com/rest/auth/api/user-management/{customer}/groups/f4a702ac-b998-44e1-a271-840a3f75e6d2/members' -X PUT \
   -H 'Content-Type: application/json' \
   -H 'Authorization: Bearer {SIGRID_PERSONAL_TOKEN}' \
   -d '{
