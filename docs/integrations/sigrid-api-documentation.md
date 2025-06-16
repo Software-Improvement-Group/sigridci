@@ -120,7 +120,7 @@ Valid system property names:
 - `componentIndependence`
 - `componentEntanglement`
 
-The `technologyName` and `findingsCount` query parameters are optional; `technologyName` allows the user to specify a target technology to returning refactoring candidates of only that type, while `findingsCount` specifies the maximum number of refactoring candidates to return starting from highest priority as determined by Sigrid's analysis.
+The `technology` and `count` query parameters are optional; `technology` allows the user to specify a target technology to returning refactoring candidates of only that type, while `count` specifies the maximum number of refactoring candidates to return starting from highest priority as determined by Sigrid's analysis.
 
 Reference our [technology support page](../reference/technology-support.md) for all currently valid technology names.
 
