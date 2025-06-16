@@ -100,9 +100,61 @@ The top-level `maintainability` and `maintainabilityDate` refer to the *current*
 
 For reporting purposes, using the available [end points for maintainability ratings](#maintainability-ratings) is usually sufficient. However, some advanced use cases require the full Maintainability data, beyond just the ratings.
 
-The end point `GET https://sigrid-says.com/rest/analysis-results/api/v1/maintainability/{customer}/{system}/raw?snapshotDate={snapshotDate}` will generate the *full* Maintainability analysis results, in JSON format. The `snapshotDate` query parameter is optional; it specifies the date of analysis to retrieve the latest maintainability results for the selected `{system}` (in the format of a localDate, e.g. "2025-01-01"). If no `snpshotDate` is supplied, the endpoint will return the latest/most recent maintainability analysis results for the given `{system}`. 
+The end point `GET https://sigrid-says.com/rest/analysis-results/api/v1/maintainability/{customer}/{system}/raw?snapshotDate={snapshotDate}` will generate the *full* Maintainability analysis results, in JSON format. The `snapshotDate` query parameter is optional; it specifies the date of analysis to retrieve the latest maintainability results for the selected `{system}` (in the format of a localDate, e.g. "2025-01-01"). If no `snapshotDate` is supplied, the endpoint will return the latest/most recent maintainability analysis results for the given `{system}`. 
 
 This end point is intended for system-to-system integration, where one of your own systems needs to process this data without relying on the Sigrid user interface.
+
+### Maintainability refactoring candidates
+
+Sigrid's Rest API provides several endpoints to get all refactoring candidates for each `systemProperty` under the maintainability model. For each system property, the URL path has the following structure:
+* Refactoring Candidates: `GET https://sigrid-says.com/rest/analysis-results/api/v1/refactoring-candidates/{customer}/{system}/{systemProperty}?technology={technologyName}?count={findingsCount}`
+
+The path parameters `{customer}` and `{system}` refer to your Sigrid account name and system ID respectively, while `{systemProperty}` refers to the name of the metric in the maintainability model, e.g. `unitSize`. 
+
+Valid system property names:
+- `duplication`
+- `unitSize`
+- `unitComplexity`
+- `unitInterfacing`
+- `moduleCoupling`
+- `componentIndependence`
+- `componentEntanglement`
+
+The `technology` and `count` query parameters are optional; `technology` allows the user to specify a target technology to returning refactoring candidates of only that type, while `count` specifies the maximum number of refactoring candidates to return starting from highest priority as determined by Sigrid's analysis.
+
+Reference our [technology support page](../reference/technology-support.md) for all currently valid technology names.
+
+An example response leveraging the `GET https://sigrid-says.com/rest/analysis-results/api/v1/refactoring-candidates/{customer}/{system}/duplication?technology={technologyName}?count=1` endpoint would look like the following:
+
+<details markdown="1">
+  <summary>Example response</summary>
+
+```json
+{
+  "refactoringCandidates": [
+    {
+      "id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
+      "severity": "CRITICAL",
+      "status": "FALSE_POSITIVE",
+      "technology": "string",
+      "snapshotDate": "2025-06-13",
+      "sameComponent": true,
+      "sameFile": true,
+      "locations": [
+        {
+          "component": "string",
+          "file": "string",
+          "moduleId": 0,
+          "startLine": 0,
+          "endLine": 0
+        }
+      ]
+    }
+  ]
+}
+```
+
+</details>
 
 ### Security and reliability findings
 
@@ -780,7 +832,7 @@ When leveraging the `PUT https://sigrid-says.com/rest/auth/api/user-management/{
 An example request could be the following:
 
 ```shell
-$ curl 'https://sigrid-says.com/rest/auth/api/user-management/{customer}/users/{userID}/permissions' -X PATCH \
+$ curl 'https://sigrid-says.com/rest/auth/api/user-management/{customer}/users/{userID}/permissions' -X PUT \
   -H 'Content-Type: application/json' \
   -H 'Authorization: Bearer {SIGRID_PERSONAL_TOKEN}' \
   -d '{
@@ -915,7 +967,7 @@ When leveraging the `PUT https://sigrid-says.com/rest/auth/api/user-management/{
 An example request could be the following:
 
 ```shell
-$ curl 'https://sigrid-says.com/rest/auth/api/user-management/{customer}/groups/{groupID}/permissions' -X PATCH \
+$ curl 'https://sigrid-says.com/rest/auth/api/user-management/{customer}/groups/{groupID}/permissions' -X PUT \
   -H 'Content-Type: application/json' \
   -H 'Authorization: Bearer {SIGRID_PERSONAL_TOKEN}' \
   -d '{
