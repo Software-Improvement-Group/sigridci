@@ -13,7 +13,7 @@ SIG uses [continuous delivery](https://en.wikipedia.org/wiki/Continuous_delivery
 
 - **The SIG model update 2025 is now available.** Every year, SIG updates its quality models based on the SIG benchmark and industry trends. So what are the key changes?
   - **Maintainability:**
-    - We see a strong trend towards smaller systems. Modern software landscapes increasingly consist of many small, interconnected systems. This trend is accelerating, which is reflected in SIG's benchmark ands leads to more strict Volume ratings.
+    - We see a strong trend in the market towards smaller systems. This trend is accelerating to the point that modern software landscapes increasingly consist of many small, interconnected systems. The latest benchmark calibration reflects this trend, by taking smaller systems into the calibration set. As a result, the volume metric is recalibrated, meaning lower scores for larger systems. You can notice this in a slight drop of the volume metric.
   - **Architecture Quality:**
     - A new Component Adjacency metric has been added to the model. It measures the number of components that are connected to a component, via either incoming or outgoing dependencies. The fewer number of adjacent components, the easier it is to maintain a component independently. This new metric captures aspects of coupling that were not fully covered by the existing metrics.
     - The Code Reuse metric has been removed, as it overlaps too much with the Duplication metric in the maintainability model. It remains possible to visualize cross-component duplication in the architecture view, but this no longer affects the architecture rating.

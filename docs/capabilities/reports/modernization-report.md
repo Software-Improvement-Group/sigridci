@@ -29,7 +29,7 @@ This results in the following report:
 <img src="../../images/reports/modernization-table.png" width="500" />
 
 This table shows the top 10 "modernization candidates" in your landscape, which are systems that would benefit the
-most from modernizat ion. This is obviously not the *only* information you would typically use for deciding your
+most from modernization. This is obviously not the *only* information you would typically use for deciding your
 modernization plan, but having concrete information on the technical impact is generally helpful for prioritization.
 
 In this table, the black columns contain information that was used as input for the modernization plan:
@@ -45,11 +45,11 @@ In this table, the black columns contain information that was used as input for 
   eliminating *all* technical debt in the system is often impossible and usually not cost-effective. Instead, the
   goal is to reduce technical debt to a manageable level.
 
-The blue columns contain information on the chosen modernization scenario and the associated estimates:
+The blue columns contain information on the proposed modernization scenario and the associated estimates:
 
-- **Scenario:** The chosen modernization scenario, i.e. whether you choose to leave the system as-is, or to
+- **Scenario:** The proposed modernization scenario, i.e. whether you choose to leave the system as-is, or to
   renovate/modernize it, or to rebuild the system entirely. See the section on
-  [deciding on a modernization scenario](#deciding-on-a-modernization-scenario) for more information.
+  [generating modernization scenarios](#generating-modernization-scenarios) for more information.
 - **Estimated change speed increase:** The estimated increase in change speed after completion of the scenario.
   Estimated based on the SIG benchmark. You can see this as the scenario's "technical benefits". There are obviously
   other types of benefits, but this gives you concrete data in an area that is often abstract and hard to quantify. 
@@ -61,7 +61,12 @@ candidates in your portfolio.
   
 <img src="../../images/reports/modernization-bubble-chart.png" width="500" />
 
-## Deciding on a modernization scenario
+In this chart, the x-axis is based on the column "estimated effort" in the table. The y-axis is based on the column
+"estimated change speed increase". The color of each bubble is based on the system's business criticality, with the
+colors being depicted in the chart legend. Finally, the bubble size is based on the column "technical debt", where
+systems with more technical debt appear larger.
+
+## Generating modernization scenarios
 
 Defining your overall modernization plan depends on more factors than just technical debt. You can therefore define
 your expected modernization scenario for each system using Sigrid's
@@ -91,6 +96,10 @@ benefits. If not, you might want to pivot into a new direction, or choose to aba
 Once you've decided on your modernization plan, you can configure the desired outcomes as Sigrid
 [objectives](../../capabilities/objectives.md) across your portfolio. You can then track these objectives
 using Sigrid's [objectives dashboard](../../capabilities/portfolio-objectives.md). 
+
+Tracking the modernization scenario in Sigrid means tracking whether the technical quality objectives associated
+with the scenario have been achieved. For example, you might decide to renovate a system you consider business
+critical. This then requires you to define a suitable quality level, which you can track using Sigrid objectives. 
 
 ## References
 
