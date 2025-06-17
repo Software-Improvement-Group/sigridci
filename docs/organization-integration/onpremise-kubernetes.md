@@ -66,8 +66,8 @@ sigrid-api:
     tag: "some-tag"
 ```
 
-Sigrid On-Premise needs access to the following images published on [SIG's private Docker Hub]
-(https://hub.docker.com/u/softwareimprovementgroup):
+Sigrid On-Premise needs access to the following images published on 
+[SIG's private Docker Hub](https://hub.docker.com/u/softwareimprovementgroup):
 
 - `softwareimprovementgroup/ai-explanation-service`
 - `softwareimprovementgroup/auth-api-db-migration`
