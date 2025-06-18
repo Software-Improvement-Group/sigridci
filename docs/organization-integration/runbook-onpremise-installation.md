@@ -45,8 +45,6 @@ If your deployment is entirely air-gapped or you just want to use your own inter
    - nginxinc/nginx-unprivileged
    - redis:7.2.4-alpine
    - haproxy:2.9.4-alpine
-    this public image is only required when you're #TODO (might not need to be mentioned)
-     - aws-cli:2.24.6
 2. Tag the downloaded containers with their tag from [AWS ECR registry](https://571600876202.dkr.ecr.eu-central-1.amazonaws.com/) (e.g. 1.0.20250603).
 3. Re-tag and push the containers to your internal image registry.
 
