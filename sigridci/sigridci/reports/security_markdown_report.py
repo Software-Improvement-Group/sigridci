@@ -116,7 +116,8 @@ class SecurityMarkdownReport(Report, MarkdownRenderer):
     def getFindingSeverity(self, result, rules):
         for rule in rules:
             if rule["id"] == result["ruleId"]:
-                return rule["properties"]["severity"].upper()
+                severity = rule["properties"]["severity"].upper()
+                return severity.replace("ERROR", "HIGH").replace("WARNING", "MEDIUM")
         return "UNKNOWN"
 
     def getFingerprints(self, feedback):
