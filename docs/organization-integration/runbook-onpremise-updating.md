@@ -20,9 +20,24 @@ We update container images daily for immediate improvements. The Helm chart is u
 
 ## Update Instructions
 
-### Manual pulling images #TODO
+### Update Helm Chart
 
-1. Pull the latest Docker containers:
+Pull the latest Helm chart:
+
+```bash
+   helm pull oci://571600876202.dkr.ecr.eu-central-1.amazonaws.com/softwareimprovementgroup/sigrid-stack --version <latest tag> # e.g. `0.3.51`
+```
+
+#### Using the ECR Login Credentials
+
+For detailed procedures on using/refreshing the ECR access key, refer to:
+- [Procedure: Refreshing ECR access key](onpremise-ecr-with-refresh-key.md)
+
+### Update Containers
+
+#### Situation 1: Completely Air-Gapped Environment
+
+Pull the latest Docker containers:
 ```bash
    ECR_REGISTRY=571600876202.dkr.ecr.eu-central-1.amazonaws.com/softwareimprovementgroup
    INTERNAL_REGISTRY_BASE=<REPLACE-WITH-REGISTRY-BASE>
@@ -38,22 +53,20 @@ We update container images daily for immediate improvements. The Helm chart is u
    done
 ```
 
-### Automated pulling images #TODO
+#### Situation 2: Outbound Connections Allowed
 
-2. Pull the latest Helm chart:
+No action required!
 
-```bash
-   helm pull oci://571600876202.dkr.ecr.eu-central-1.amazonaws.com/softwareimprovementgroup/sigrid-stack --version <latest tag> # e.g. `0.3.51`
-```
+### Update ImageTag
 
-3. Update the `ImageTag` in the global section of the Helm chart's values file (usually `custom-values.yaml`):
+Update the `ImageTag` in the global section of the Helm chart's values file (usually `custom-values.yaml`):
 
 ```bash
    global:
      ImageTag: "<REPLACE-WITH-LATEST-VERSION>"
 ```
 
-### 4. Apply the Updates Using Helm
+### Apply the Updates Using Helm
 
 To apply the updates using Helm, you can use the following command. Note how to do this might vary depending on how you deployed Sigrid.
 
