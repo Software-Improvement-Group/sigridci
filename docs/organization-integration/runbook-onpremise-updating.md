@@ -35,7 +35,7 @@ For detailed procedures on using/refreshing the ECR access key, refer to:
 
 ### Update Containers
 
-#### Situation 1: Completely Air-Gapped Environment
+#### Situation 1: Using your own container registry
 
 Pull the latest Docker containers:
 ```bash
@@ -53,7 +53,7 @@ Pull the latest Docker containers:
    done
 ```
 
-#### Situation 2: Outbound Connections Allowed
+#### Situation 2: Pulling images directly from SIG's AWS ECR Registry
 
 No action required!
 

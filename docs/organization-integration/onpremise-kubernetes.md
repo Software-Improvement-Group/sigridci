@@ -34,10 +34,9 @@ Optional dependencies:
 
 ## (A) Docker image registry
 
-Sigrid consists of a number of Docker images, which the Software Improvement Group (SIG) 
-distributes 
-via [AWS ECR registry](https://571600876202.dkr.ecr.eu-central-1.amazonaws.com/softwareimprovementgroup). Upon becoming a SIG 
-on-premise customer, users get credentials to access the private part of this registry.
+Sigrid consists of a number of Docker images, which the Software Improvement Group (SIG) distributes 
+via [AWS ECR registry](https://571600876202.dkr.ecr.eu-central-1.amazonaws.com/softwareimprovementgroup).
+Upon becoming a SIG on-premise customer, users get credentials to access the private part of this registry.
 
 It is possible to directly pull from this registry by specifying it globally:
 
@@ -80,7 +79,7 @@ Sigrid On-Premise needs access to the following images published on [SIG's priva
 - `softwareimprovementgroup/sigrid-multi-analyzer`
 - `softwareimprovementgroup/sigrid-multi-importer`
 
-In addition, if your deployment is completely air-gapped, please ensure these public images are also published to your internal container registry.
+In addition, if your deployment is completely air-gapped, please ensure these public images are also published to your internal image registry.
 - `nginxinc/nginx-unprivileged`
 - `redis:7.2.4-alpine`
 - `haproxy:2.9.4-alpine`

@@ -26,11 +26,11 @@ This documentation offers useful context on how to start configuring on-premise 
 For detailed procedures on using/refreshing the ECR access key, refer to:
 - [Procedure: Refreshing ECR access key](onpremise-ecr-with-refresh-key.md)
 
-#### Situation 1: Completely Air-Gapped Environment
+#### Situation 1: Using your own container registry
 
-If your deployment is entirely air-gapped, follow these steps to download images to an internal container registry:
+If your deployment is entirely air-gapped or you just want to use your own internal container registry; follow these steps to download images.
 
-3. Pull all container images required:
+1. Pull all container images required:
    From https://571600876202.dkr.ecr.eu-central-1.amazonaws.com/softwareimprovementgroup/repositories:
    - softwareimprovementgroup/ai-explanation-service
    - softwareimprovementgroup/auth-api-db-migration
@@ -45,14 +45,16 @@ If your deployment is entirely air-gapped, follow these steps to download images
    - nginxinc/nginx-unprivileged
    - redis:7.2.4-alpine
    - haproxy:2.9.4-alpine
-4. Tag the downloaded containers with their tag from [AWS ECR registry](https://571600876202.dkr.ecr.eu-central-1.amazonaws.com/) (e.g. 1.0.20250603).
-5. Re-tag and push the containers to your internal container registry.
+    this public image is only required when you're #TODO (might not need to be mentioned)
+     - aws-cli:2.24.6
+2. Tag the downloaded containers with their tag from [AWS ECR registry](https://571600876202.dkr.ecr.eu-central-1.amazonaws.com/) (e.g. 1.0.20250603).
+3. Re-tag and push the containers to your internal image registry.
 
-#### Situation 2: Outbound Connections Allowed
+#### Situation 2: Pulling images directly from SIG's AWS ECR Registry
 
-If outbound connections are allowed, images can be automatically pulled from AWS ECR. You can still choose to use an internal container registry; in that case, refer back to Situation 1.
+If outbound connections are allowed, images can be automatically pulled from AWS ECR.
 
-3. Ensure that a service account is activated to automatically refresh the ECR authorization token. This will allow direct access to SIG images from AWS ECR.
+1. Ensure that a service account is activated to automatically refresh the ECR authorization token. This will allow direct access to SIG images from AWS ECR.
 You can find the Helm configuration in the Installation section of this page under the header `ecrRepository`.
 
 ### (A) Prepare helm chart 
