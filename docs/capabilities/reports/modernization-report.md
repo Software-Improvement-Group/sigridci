@@ -20,8 +20,14 @@ balancing functional progress with modernization initiatives.
 ## The Sigrid modernization report
 
 The [Sigrid Report Generator](https://github.com/Software-Improvement-Group/sigrid-integrations/tree/main/report-generator)
-allows you to export a management report that contains information that can be used to discuss and prioritize
+allows you to generate a management report that contains information that can be used to discuss and prioritize
 modernization initiatives. 
+
+The modernization report requires [Sigrid metadata](../../organization-integration/metadata.md) to provide the
+business context. If you don't provide metadata, the modernization report will be purely based on technical
+information. It is therefore recommended you provide at least the *business criticality* and *lifecycle phase*
+for each system in your portfolio, so this information can be used in the modernization report.
+{: .attention }
 
 The modernization analysis considers both business context and technical aspects for each system in your landscape.
 This results in the following report:
