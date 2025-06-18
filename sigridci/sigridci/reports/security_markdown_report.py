@@ -39,8 +39,20 @@ class SecurityMarkdownReport(Report, MarkdownRenderer):
 
     def renderMarkdown(self, analysisId, feedback, options):
         rules = list(self.getRules(feedback))
-        findings = list(self.getRelevantFindings(feedback, rules))
-        details = self.generateFindingsTable(findings, rules, options)
+        introduced = list(self.getIntroducedFindings(feedback, rules))
+        fixed = list(self.getFixedFindings(feedback))
+
+        details = ""
+        details += "## 👍 What went well?\n\n"
+        details += f"> You fixed **{len(fixed)}** security findings.\n\n"
+        details += self.generateFindingsTable(fixed, rules, options)
+        details += "## 👎 What could be better?\n\n"
+        if len(introduced) > 0:
+            details += f"> Unfortunately, you introduced **{len(introduced)}** security findings.\n\n"
+            details += self.generateFindingsTable(introduced, rules, options)
+        else:
+            details += "> You did not introduce any security findings during your changes, great job!\n\n"
+
         sigridLink = f"{self.getSigridUrl(options)}/-/security"
         return self.renderMarkdownTemplate(feedback, options, details, sigridLink)
 
@@ -68,7 +80,7 @@ class SecurityMarkdownReport(Report, MarkdownRenderer):
         if len(findings) > self.MAX_FINDINGS:
             md += f"| | ... and {len(findings) - self.MAX_FINDINGS} more findings | |\n"
 
-        return md
+        return f"{md}\n"
 
     def getRules(self, feedback):
         for run in feedback["runs"]:
@@ -77,7 +89,7 @@ class SecurityMarkdownReport(Report, MarkdownRenderer):
                 if properties.get("severity"):
                     yield rule
 
-    def getRelevantFindings(self, feedback, rules):
+    def getIntroducedFindings(self, feedback, rules):
         previousFingerprints = self.getFingerprints(self.previousFeedback) if self.previousFeedback else []
 
         for run in feedback["runs"]:
@@ -85,6 +97,20 @@ class SecurityMarkdownReport(Report, MarkdownRenderer):
                 severity = self.getFindingSeverity(result, rules)
                 fingerprint = result["fingerprints"]["sigFingerprint/v1"]
                 if Objective.isFindingIncluded(severity, self.objective) and fingerprint not in previousFingerprints:
+                    yield result
+
+    def getFixedFindings(self, feedback):
+        if not self.previousFeedback:
+            return []
+
+        fingerprints = list(self.getFingerprints(feedback))
+        previousRules = list(self.getRules(self.previousFeedback))
+
+        for run in self.previousFeedback["runs"]:
+            for result in run.get("results", []):
+                severity = self.getFindingSeverity(result, previousRules)
+                fingerprint = result["fingerprints"]["sigFingerprint/v1"]
+                if Objective.isFindingIncluded(severity, self.objective) and fingerprint not in fingerprints:
                     yield result
 
     def getFindingSeverity(self, result, rules):
@@ -106,5 +132,5 @@ class SecurityMarkdownReport(Report, MarkdownRenderer):
 
     def isObjectiveSuccess(self, feedback, options):
         rules = list(self.getRules(feedback))
-        findings = list(self.getRelevantFindings(feedback, rules))
+        findings = list(self.getIntroducedFindings(feedback, rules))
         return len(findings) == 0

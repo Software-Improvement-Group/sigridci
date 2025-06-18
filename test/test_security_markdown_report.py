@@ -45,9 +45,18 @@ class SecurityMarkdownReportTest(TestCase):
             
             **⚠️  You did not meet your objective of having no critical security findings**
             
+            ## 👍 What went well?
+            
+            > You fixed **0** security findings.
+            
+            ## 👎 What could be better?
+            
+            > Unfortunately, you introduced **1** security findings.
+            
             | Risk | File | Finding |
             |------|------|---------|
             | 🟣 | [Security.java:33](https://example.com/aap/noot/-/blob/mybranch/Security.java#L33) | Weak Hash algorithm used |
+            
             
             ----
             
@@ -69,6 +78,14 @@ class SecurityMarkdownReportTest(TestCase):
             # [Sigrid](https://sigrid-says.com/aap/noot/-/security) Security feedback
             
             **✅  You achieved your objective of having no critical security findings**
+            
+            ## 👍 What went well?
+            
+            > You fixed **0** security findings.
+            
+            ## 👎 What could be better?
+            
+            > You did not introduce any security findings during your changes, great job!
             
             
             ----
@@ -92,6 +109,14 @@ class SecurityMarkdownReportTest(TestCase):
             
             **⚠️  You did not meet your objective of having no critical security findings**
             
+            ## 👍 What went well?
+            
+            > You fixed **0** security findings.
+            
+            ## 👎 What could be better?
+            
+            > Unfortunately, you introduced **11** security findings.
+            
             | Risk | File | Finding |
             |------|------|---------|
             | ⚪️ | Security.java:33 | Weak Hash algorithm used |
@@ -103,6 +128,7 @@ class SecurityMarkdownReportTest(TestCase):
             | ⚪️ | Security.java:33 | Weak Hash algorithm used |
             | ⚪️ | Security.java:33 | Weak Hash algorithm used |
             | | ... and 3 more findings | |
+            
             
             ----
             
@@ -128,9 +154,22 @@ class SecurityMarkdownReportTest(TestCase):
             
             **⚠️  You did not meet your objective of having no medium security findings**
             
+            ## 👍 What went well?
+            
+            > You fixed **1** security findings.
+            
+            | Risk | File | Finding |
+            |------|------|---------|
+            | 🟣 | [Security.java:33](https://example.com/aap/noot/-/blob/mybranch/Security.java#L33) | This finding has been fixed in the next snapshot. |
+
+            ## 👎 What could be better?
+            
+            > Unfortunately, you introduced **1** security findings.
+            
             | Risk | File | Finding |
             |------|------|---------|
             | 🟠 | [Aap.java:33](https://example.com/aap/noot/-/blob/mybranch/Aap.java#L33) | Some other finding |
+
             
             ----
             
