@@ -1,7 +1,24 @@
+# Detailed instructions for accessing SIG's AWS ECR
 
-### Logging in to AWC ECR and Pulling the Latest Helm Chart
+This documentation covers on-premise Sigrid. It is not applicable for cloud-based Sigrid.
+{: .attention }
+
+This documentation offers useful examples and context on how to use SIG's AWS ECR.
+
+## Prerequisites
+
+- You should have already read the other Sigrid On-Premise documentation.
+- All pre-requisites from our public documentation are met.
+- You have access to Software Improvement Group [AWS ECR registry](https://571600876202.dkr.ecr.eu-central-1.amazonaws.com/).
+- AWS CLI version 2.x. is available on the client that will pull be used to pull Sigrid's container images and helm chart.
+
+
+## Logging in to AWS ECR and pulling the latest helm chart
 <details>
-<summary></summary>
+<summary>Detailed description for pulling the latest helm chart</summary>
+
+The below script provides and example on how to authenticate and download the latest Sigrid Helm Chart from SIG's AWS ECR.
+
 ```bash
 SIGRID_DOWNLOAD_REGION="eu-central-1"
 SIGRID_DOWNLOAD_REGISTRY="5012345678901.dkr.ecr.${SIGRID_DOWNLOAD_REGION}.amazonaws.com"
@@ -15,20 +32,14 @@ helm pull oci://$HELM_REPOSITORY_URI --version $LATEST_TAG
 ```
 </details>
 
-### Manual AWS ECR Login Password Refresh and Pulling Images to Your Own Registry
+## Using your own container registry
 
 <details>
-<summary>Detailed procedure for Manual AWS ECR login password refresh</summary>
-
-Prerequisites:
-- An AWS IAM user with ECR access permissions, SIG will provide that.
-- AWS CLI version 2.x.
+<summary>Detailed description for manually pulling the latest Sigrid container images</summary>
 
 When this script is executed, it will pull the latest Sigrid images from the AWS ECR registry.
 The script uses the AWS CLI to get a login password for the ECR registry and then logs in to the registry using Docker.
 After that, it pulls the specified images with the given version.
-   
-Note: The same login procedure can also be used for updating Sigrid Helm Chart from SIG's ECR registry.
 
 ```bash
 SIGRID_DOWNLOAD_REGION=eu-central-1
@@ -54,17 +65,51 @@ done
 ```
 </details>
 
-### Automated AWS ECR login password refresh during Sigrid On-Premises deployments
+## Pulling images directly from SIG's AWS ECR Registry using automated ECR login password refresh
 <details>
 <summary>Detailed procedure for automated AWS ECR login password refresh</summary>
-AWS ECR passwords expire after 12 hours. Therefore, a scheduled refresh can be implemented for Sigrid On-Premises deployments. This approach automatically refreshes the ECR registry password to maintain continuous access to container images. Note: this is only required when no internal container registry (cache) is used, or to automate the refreshing of images in your internal container registry.
-Prerequisites
-- An AWS IAM user with ECR access permissions, SIG will provide that.
-- Access credentials for this user stored in a Kubernetes secret.
-- Kubernetes cluster with RBAC enabled.
-- AWS CLI version 2.x.
 
-The ECR key rotation system serves to:
+AWS ECR passwords expire after 12 hours. Therefore, a scheduled refresh can be implemented for Sigrid On-Premises deployments. This approach automatically refreshes the ECR registry password to maintain continuous access to container images.
+
+Note: this is only required when no internal container registry (cache) is used, or to automate the refreshing of images in your internal container registry.
+
+Additional Prerequisites
+- Access credentials for this user stored in a Kubernetes secret. e.g.`sig-customer-access-secret`
+- Kubernetes cluster with RBAC enabled.
+
+### Store AWS Credentials in Kubernetes
+Create a Kubernetes secret with the IAM user's credentials.
+For example, this can be done by using a YAML file and kubectl, but some Kubernetes cluster orchestration tools also allow you to create secrets via a GUI.
+```yaml
+apiVersion: v1
+kind: Secret
+metadata:
+  name: sig-customer-access-secret
+  namespace: {{ .Release.Namespace }} # namespace where sigrid onprem is/will be deployed.
+type: Opaque
+data:
+  AWS_ACCESS_KEY_ID: #provided by SIG
+  AWS_SECRET_ACCESS_KEY: #provided by SIG
+```
+
+### Update your deployment's values file to enable the key rotation service
+```
+global:
+  imagePullSecrets:
+    - name: ecr-image-pull-secret
+
+ecrRepository:
+  enabled: true
+  iamUserName: "sig_ecr_example_user"
+  sigCustomerAccessSecretName: sig-customer-access-secret
+```
+</details>
+
+## The AWS ECR key rotation service
+<details>
+<summary>Detailed description of the AWS ECR key rotation service</summary>
+
+The ECR key rotation service serves to:
 
 1. Generate temporary ECR authentication tokens periodically.
 2. Create Kubernetes image pull secrets with these tokens.
@@ -232,25 +277,5 @@ spec:
               configMap:
                 name: ecr-key-rotation-script
                 defaultMode: 0555
-```
-6. Store AWS Credentials in Kubernetes
-Create a Kubernetes secret with the IAM user's credentials:
-```yaml
-apiVersion: v1
-kind: Secret
-metadata:
-  name: sig-customer-access-secret
-  namespace: {{ .Release.Namespace }} # namespace where sigrid onprem is/will be deployed.
-type: Opaque
-data:
-  AWS_ACCESS_KEY_ID: #provided by SIG
-  AWS_SECRET_ACCESS_KEY: #provided by SIG
-```
-
-### Update your deployment's values file
-```
-global:
-  imagePullSecrets:
-    - name: ecr-image-pull-secret
 ```
 </details>

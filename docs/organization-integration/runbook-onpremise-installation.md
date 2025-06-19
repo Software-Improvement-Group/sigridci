@@ -21,7 +21,7 @@ This documentation offers useful context on how to start configuring on-premise 
    - A new user will be created in AWS.
 2. To log in to AWS ECR registry as a Helm registry and pull the Helm chart, you will receive credentials. These can be used to generate a temporary password for the AWS ECR registry.
 
-- [Detailed instructions for accessing SIG's AWS ECR](onpremise-ecr-with-refresh-key.md)
+[Detailed instructions for accessing SIG's AWS ECR](onpremise-aws-ecr.md)
 
 #### Situation 1: Using your own container registry
 
@@ -58,6 +58,8 @@ You can find the Helm configuration in the Installation section of this page und
 1. Store the helm chart under your version control making sure not to use clear text secrets, certificates and passwords in your helm.
 2. Use Kubernetes-native secrets, either managed directly in Kubernetes or via an external tool that creates and updates these secret objects.
 
+[Detailed instructions for accessing SIG's AWS ECR](onpremise-aws-ecr.md)
+
 ### (B) Prepare DNS (sub)domain
 
 1. Create a (sub)domain to use for your Sigrid deployment.
@@ -68,7 +70,6 @@ You can find the Helm configuration in the Installation section of this page und
 1. In the helm chart directory `sigrid-stack/files`, there are two initialization scripts called `sigriddb-init` and `authdb-init`.
 2. Replace passwords in the init scripts with ones you want to use and store them. You will need to provide them in the Helm charts at a later stage. 
 3. Using `psql`, run the two database initialization scripts in the exact following order: `sigriddb-init` and then `authdb-init`.
-
 4. Store the passwords securely in Kubernetes.
 
 ### (D) Prepare Identity Provider
@@ -146,6 +147,8 @@ iamUserName: "sig_ecr_example_user"
 sigCustomerAccessSecretName: sig-customer-access-secret
 ```
 To make use of SIG's ECR Repositories you will need to provide the `iamUserName` and create a Kubernetes native containing  `AWS_ACCESS_KEY_ID` and `AWS_SECRET_ACCESS_KEY`
+
+[Detailed instructions for accessing SIG's AWS ECR](onpremise-aws-ecr.md)
 
 #### nginx:
 
