@@ -1,20 +1,42 @@
 
-### Manual AWS ECR login password refresh and pulling images to own registry
+### Logging in to AWC ECR and Pulling the Latest Helm Chart
+<details>
+<summary></summary>
+```bash
+SIGRID_DOWNLOAD_REGION="eu-central-1"
+SIGRID_DOWNLOAD_REGISTRY="5012345678901.dkr.ecr.${SIGRID_DOWNLOAD_REGION}.amazonaws.com"
+HELM_REPOSITORY_NAME="softwareimprovementgroup/sigrid-stack"
+HELM_REPOSITORY_URI="${SIGRID_DOWNLOAD_REGISTRY}/${HELM_REPOSITORY_NAME}"
+export AWS_ACCESS_KEY_ID="AKIAEXAMPLE" # Please replace with the one provided by SIG
+export AWS_SECRET_ACCESS_KEY="EXAMPLESECRET" # Please replace with the one provided by SIG
+aws ecr get-login-password --region $SIGRID_DOWNLOAD_REGION | docker login --username AWS --password-stdin $SIGRID_DOWNLOAD_REGISTRY
+LATEST_TAG=$(aws ecr describe-images --repository-name $HELM_REPOSITORY_NAME --region $SIGRID_DOWNLOAD_REGION --query 'sort_by(imageDetails,&imagePushedAt)[-1].imageTags[0]' --output text)
+helm pull oci://$HELM_REPOSITORY_URI --version $LATEST_TAG
+```
+</details>
+
+### Manual AWS ECR Login Password Refresh and Pulling Images to Your Own Registry
+
 <details>
 <summary>Detailed procedure for Manual AWS ECR login password refresh</summary>
-1. Once the script is executed, it will pull the latest Sigrid images from the AWS ECR registry.
-The script uses the AWS CLI to get a login password for the ECR registry and then logs in to the registry using Docker. 
-After that, it pulls the specified images with the given version:
+
+Prerequisites:
+- An AWS IAM user with ECR access permissions, SIG will provide that.
+- AWS CLI version 2.x.
+
+When this script is executed, it will pull the latest Sigrid images from the AWS ECR registry.
+The script uses the AWS CLI to get a login password for the ECR registry and then logs in to the registry using Docker.
+After that, it pulls the specified images with the given version.
+   
+Note: The same login procedure can also be used for updating Sigrid Helm Chart from SIG's ECR registry.
 
 ```bash
 SIGRID_DOWNLOAD_REGION=eu-central-1
-VERSION=1.0.20250603 # Replace with the desired version
 SIGRID_DOWNLOAD_REGISTRY=5012345678901.dkr.ecr.${SIGRID_DOWNLOAD_REGION}.amazonaws.com
-export AWS_ACCESS_KEY_ID="provided by SIG"
-export AWS_SECRET_ACCESS_KEY="provided by SIG"
-AWS_STDERR_FILE="/tmp/.aws-ecr-get-login-stderr"
-PASSWORD=$(aws ecr get-login-password --region $SIGRID_DOWNLOAD_REGION)
-echo $PASSWORD | docker login --username AWS --password-stdin $SIGRID_DOWNLOAD_REGISTRY 2> $AWS_STDERR_FILE > /dev/null
+export AWS_ACCESS_KEY_ID="AKIAEXAMPLE" # Please replace with the one provided by SIG
+export AWS_SECRET_ACCESS_KEY="EXAMPLESECRET" # Please replace with the one provided by SIG
+VERSION=1.0.20250603 # Please replace with the desired container image version
+aws ecr get-login-password --region $SIGRID_DOWNLOAD_REGION | docker login --username AWS --password-stdin $SIGRID_DOWNLOAD_REGISTRY
 IMAGES=(
   softwareimprovementgroup/ai-explanation-service
   softwareimprovementgroup/auth-api-db-migration
@@ -37,16 +59,16 @@ done
 <summary>Detailed procedure for automated AWS ECR login password refresh</summary>
 AWS ECR passwords expire after 12 hours. Therefore, a scheduled refresh can be implemented for Sigrid On-Premises deployments. This approach automatically refreshes the ECR registry password to maintain continuous access to container images. Note: this is only required when no internal container registry (cache) is used, or to automate the refreshing of images in your internal container registry.
 Prerequisites
-- An AWS IAM user with ECR access permissions, SIG will provided that.
-- Access credentials for this user stored in a Kubernetes secret
-- Kubernetes cluster with RBAC enabled
-- AWS CLI version 2.x
+- An AWS IAM user with ECR access permissions, SIG will provide that.
+- Access credentials for this user stored in a Kubernetes secret.
+- Kubernetes cluster with RBAC enabled.
+- AWS CLI version 2.x.
 
 The ECR key rotation system serves to:
 
-1. Generate temporary ECR authentication tokens periodically
-2. Create Kubernetes image pull secrets with these tokens
-3. Ensure continuous access to AWS ECR container repositories
+1. Generate temporary ECR authentication tokens periodically.
+2. Create Kubernetes image pull secrets with these tokens.
+3. Ensure continuous access to AWS ECR container repositories.
 
 The ECR key rotation solution consists of several Kubernetes resources:
 
