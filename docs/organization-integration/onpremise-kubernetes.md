@@ -81,11 +81,11 @@ Sigrid On-Premise needs access to the following images published on [SIG's priva
 
 In addition, if your deployment is completely air-gapped, please ensure these public images are also published to your internal image registry.
 - `nginxinc/nginx-unprivileged`
-- `redis:7.2.4-alpine`
-- `haproxy:2.9.4-alpine`
+- `redis:7.2.7-alpine`
+- `haproxy:3.0.8-alpine`
 
-For the avoidance of doubt: the AI Explanation Service (last image in the list) does NOT contact 
-any LLM by default. It just serves pre-computed explanations.
+For the avoidance of doubt: the AI Explanation Service (first image in the list) does NOT contact any LLM by default. 
+It just serves pre-computed explanations.
 
 ## (B) DNS (sub-)domain to run Sigrid on
 
