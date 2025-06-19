@@ -21,10 +21,7 @@ This documentation offers useful context on how to start configuring on-premise 
    - A new user will be created in AWS.
 2. To log in to AWS ECR registry as a Helm registry and pull the Helm chart, you will receive credentials. These can be used to generate a temporary password for the AWS ECR registry.
 
-#### Using the ECR Login Credentials
-
-For detailed procedures on using/refreshing the ECR access key, refer to:
-- [Procedure: Refreshing ECR access key](onpremise-ecr-with-refresh-key.md)
+- [Detailed instructions for accessing SIG's AWS ECR](onpremise-ecr-with-refresh-key.md)
 
 #### Situation 1: Using your own container registry
 
@@ -52,22 +49,14 @@ If your deployment is entirely air-gapped or you just want to use your own inter
 
 If outbound connections are allowed, images can be automatically pulled from AWS ECR.
 
-1. Ensure that a service account is activated to automatically refresh the ECR authorization token. This will allow direct access to SIG images from AWS ECR.
+Ensure that a service account is activated to automatically refresh the ECR authorization token. This will allow direct access to SIG images from AWS ECR.
 You can find the Helm configuration in the Installation section of this page under the header `ecrRepository`.
 
 ### (A) Prepare helm chart 
 
-1. Helm Login: 
-```bash
-ECR_HOST=571600876202.dkr.ecr.eu-central-1.amazonaws.com
-REGION=eu-central-1
-ACCOUNT=571600876202
-TOKEN=$(aws ecr get-login-password --region ${REGION})
-echo $TOKEN | helm registry login ${ECR_HOST} --username AWS --password-stdin
-```
-2. Pull the latest helm chart: `helm pull oci://571600876202.dkr.ecr.eu-central-1.amazonaws.com/softwareimprovementgroup/sigrid-stack --version <latest tag>`
-3. Store the helm chart under your version control making sure not to use clear text secrets, certificates and passwords in your helm.
-4. Use Kubernetes-native secrets, either managed directly in Kubernetes or via an external tool that creates and updates these secret objects.
+1. Helm login and pull the latest helm chart
+1. Store the helm chart under your version control making sure not to use clear text secrets, certificates and passwords in your helm.
+2. Use Kubernetes-native secrets, either managed directly in Kubernetes or via an external tool that creates and updates these secret objects.
 
 ### (B) Prepare DNS (sub)domain
 
