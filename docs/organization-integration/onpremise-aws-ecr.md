@@ -1,4 +1,4 @@
-# Detailed instructions for accessing SIG's AWS ECR
+# Detailed instructions for accessing and using SIG's AWS ECR
 
 This documentation covers on-premise Sigrid. It is not applicable for cloud-based Sigrid.
 {: .attention }

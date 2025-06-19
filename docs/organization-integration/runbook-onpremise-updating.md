@@ -20,42 +20,17 @@ We update container images daily for immediate improvements. The Helm chart is u
 
 ## Update Instructions
 
-### Update Helm Chart
-
-Pull the latest Helm chart:
-
-```bash
-   helm pull oci://571600876202.dkr.ecr.eu-central-1.amazonaws.com/softwareimprovementgroup/sigrid-stack --version <latest tag> # e.g. `0.3.51`
-```
-
-#### Using the ECR Login Credentials
-
-For detailed procedures on using/refreshing the ECR access key, refer to:
-- [Procedure: Refreshing ECR access key](onpremise-ecr-with-refresh-key.md)
+1. Update Helm Chart
+2. Update Container
+3. Update ImageTag
+4. Apply the updates using Helm
 
 ### Update Containers
 
-#### Situation 1: Using your own container registry
-
-Pull the latest Docker containers:
-```bash
-   ECR_REGISTRY=571600876202.dkr.ecr.eu-central-1.amazonaws.com/softwareimprovementgroup
-   INTERNAL_REGISTRY_BASE=<REPLACE-WITH-REGISTRY-BASE>
-   INTERNAL_DESTINATION=${INTERNAL_REGISTRY_BASE}/softwareimprovementgroup
-   VERSION=<REPLACE-WITH-LATEST-VERSION> # e.g. `1.0.20250603`
-
-   for IMAGE in ai-explanation-service auth-api-db-migration auth-api quality-model-service \
-            sigrid-api-db-migration sigrid-api sigrid-frontend sigrid-multi-analyzer \
-            sigrid-multi-importer inbound-api; do
-     docker pull ${ECR_REGISTRY}/${IMAGE}:${VERSION}
-     docker tag ${ECR_REGISTRY}/${IMAGE}:${VERSION} ${INTERNAL_DESTINATION}/${IMAGE}:${VERSION}
-     docker push ${INTERNAL_DESTINATION}/${IMAGE}:${VERSION}
-   done
-```
-
-#### Situation 2: Pulling images directly from SIG's AWS ECR Registry
-
-No action required!
+- Situation 1: Using your own container registry, see [Detailed instructions for accessing and using SIG's AWS ECR](onpremise-aws-ecr.md).
+  - Pull the latest Docker containers.
+- Situation 2: Pulling images directly from SIG's AWS ECR Registry.
+  - When this is already set up, you don't need to take any action for this step.
 
 ### Update ImageTag
 
@@ -66,7 +41,7 @@ Update the `ImageTag` in the global section of the Helm chart's values file (usu
      ImageTag: "<REPLACE-WITH-LATEST-VERSION>"
 ```
 
-### Apply the Updates Using Helm
+### Apply the updates using Helm
 
 To apply the updates using Helm, you can use the following command. Note how to do this might vary depending on how you deployed Sigrid.
 
