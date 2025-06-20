@@ -45,6 +45,10 @@ cyclonedx-py environment -o .sigrid/sbom.json --output-format json
 
 This will generate the JSON file in the correct directory. We can now follow the [Sigrid CI instructions for GitHub Actions](../sigridci-integration/github-actions.md) to publish our system to Sigrid, just like we did before. There are no special instructions or configurations to make Sigrid "see" the SBOM JSON file, this will happen automatically as long as you generate the file in the correct location.
 
+## Combining the SBOM with Sigrid scanning
+
+By default, Sigrid will combine both the dependencies from your SBOM *and* the dependencies it finds in your codebase. If needed, you can change this behavior so that Sigrid *only* shows the contents of your SBOM. This can be done in the [Sigrid configuration](../reference/analysis-scope-configuration.md#configuring-sbom-import).
+
 ## Contact and support
 
 Feel free to contact [SIG's support department](mailto:support@softwareimprovementgroup.com) for any questions or issues you may have after reading this document, or when using Sigrid or Sigrid CI. Users in Europe can also contact us by phone at +31 20 314 0953.
