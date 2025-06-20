@@ -45,10 +45,9 @@ global:
   imageRegistry: "571600876202.dkr.ecr.eu-central-1.amazonaws.com/softwareimprovementgroup"
   # Needed because AWS ECR registry is private:
   imagePullSecrets:
-    - name: "Name of kubernetes secret which holds AWS (account: 571600876202) access credentials"
+    - name: "Name of kubernetes secret created from automated ECR login password refresh(see https://docs.sigrid-says.com/organization-integration/onpremise-aws-ecr.html#pulling-images-directly-from-sigs-aws-ecr-registry-using-automated-ecr-login-password-refresh)"
   # Needed because pod needs to authenticate with AWS ECR registry to pull images:
 ```
-
 The Helm chart gives precedence to the values for registry and repository set specifically for each
 component and falls back to the global `imageRegistry` if needed. Keep in mind that some 
 sub-charts behave in a different way, or do not honor `imageRegistry` at all. 
@@ -83,6 +82,7 @@ In addition, if your deployment is completely air-gapped, please ensure these pu
 - `nginxinc/nginx-unprivileged`
 - `redis:7.2.7-alpine`
 - `haproxy:3.0.8-alpine`
+- `aws-cli:2.24.6`
 
 For the avoidance of doubt: the AI Explanation Service (first image in the list) does NOT contact any LLM by default. 
 It just serves pre-computed explanations.
