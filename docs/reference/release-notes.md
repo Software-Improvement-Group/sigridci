@@ -7,6 +7,7 @@ SIG uses [continuous delivery](https://en.wikipedia.org/wiki/Continuous_delivery
 
 - **Mendix QSM:** Sigrid now supports [Mendix MPR version 2](https://medium.com/@anjaanabishek/still-on-mendix-mpr-v1-heres-why-it-s-time-to-upgrade-to-mpr-v2-38092567fe6e).
 - **Open Source Health:** Sigrid can [import SBOM files](../integrations/integration-sbom.md) to show open source libraries imported from external sources alongside open source libraries found in your codebase. The [Sigrid configuration](analysis-scope-configuration.md#configuring-sbom-import) now allows you to customize how the SBOM contents should be imported.
+- **Sigrid API:** You can now access the [maintainability refactoring candidates using the Sigrid API](https://docs.sigrid-says.com). This provides you with the same information you get from the refactoring candidates page in Sigrid.
 - **Report Generator:** The [modernization report](../capabilities/reports/modernization-report.md) has been expanded with additional visualizations.
 
 ### June 16, 2025
