@@ -109,6 +109,11 @@ class ObjectiveTest(TestCase):
         self.assertFalse(Objective.meetsFindingObjective(["HIGH"], "HIGH"))
         self.assertFalse(Objective.meetsFindingObjective(["CRITICAL"], "HIGH"))
 
+    def testDoNotCountUnknownSeverityAgainstObjective(self):
+        self.assertTrue(Objective.meetsFindingObjective(["UNKNOWN"], "CRITICAL"))
+        self.assertTrue(Objective.meetsFindingObjective(["UNKNOWN"], "HIGH"))
+        self.assertTrue(Objective.meetsFindingObjective(["UNKNOWN"], "MEDIUM"))
+
     def mockFeedback(self, baseline, changedBefore, changedAfter, newAndChanged):
         return {
             "baselineRatings" : {

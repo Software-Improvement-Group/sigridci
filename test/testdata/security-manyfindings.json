@@ -32,7 +32,8 @@
           "properties": {
             "tags": ["CWE-327"],
             "category": "Other",
-            "status": "UNKNOWN"
+            "status": "UNKNOWN",
+            "severity": "CRITICAL"
           }
         },
         {
@@ -59,7 +60,8 @@
           "properties": {
             "tags": ["CWE-327"],
             "category": "Other",
-            "status": "UNKNOWN"
+            "status": "UNKNOWN",
+            "severity": "CRITICAL"
           }
         },
         {
@@ -86,7 +88,8 @@
           "properties": {
             "tags": ["CWE-327"],
             "category": "Other",
-            "status": "UNKNOWN"
+            "status": "UNKNOWN",
+            "severity": "CRITICAL"
           }
         },
         {
@@ -113,7 +116,8 @@
           "properties": {
             "tags": ["CWE-327"],
             "category": "Other",
-            "status": "UNKNOWN"
+            "status": "UNKNOWN",
+            "severity": "CRITICAL"
           }
         },
         {
@@ -140,7 +144,8 @@
           "properties": {
             "tags": ["CWE-327"],
             "category": "Other",
-            "status": "UNKNOWN"
+            "status": "UNKNOWN",
+            "severity": "CRITICAL"
           }
         },
         {
@@ -167,7 +172,8 @@
           "properties": {
             "tags": ["CWE-327"],
             "category": "Other",
-            "status": "UNKNOWN"
+            "status": "UNKNOWN",
+            "severity": "CRITICAL"
           }
         },
         {
@@ -194,7 +200,8 @@
           "properties": {
             "tags": ["CWE-327"],
             "category": "Other",
-            "status": "UNKNOWN"
+            "status": "UNKNOWN",
+            "severity": "CRITICAL"
           }
         },
         {
@@ -221,7 +228,8 @@
           "properties": {
             "tags": ["CWE-327"],
             "category": "Other",
-            "status": "UNKNOWN"
+            "status": "UNKNOWN",
+            "severity": "CRITICAL"
           }
         },
         {
@@ -248,7 +256,8 @@
           "properties": {
             "tags": ["CWE-327"],
             "category": "Other",
-            "status": "UNKNOWN"
+            "status": "UNKNOWN",
+            "severity": "CRITICAL"
           }
         },
         {
@@ -275,7 +284,8 @@
           "properties": {
             "tags": ["CWE-327"],
             "category": "Other",
-            "status": "UNKNOWN"
+            "status": "UNKNOWN",
+            "severity": "CRITICAL"
           }
         },
         {
@@ -302,7 +312,8 @@
           "properties": {
             "tags": ["CWE-327"],
             "category": "Other",
-            "status": "UNKNOWN"
+            "status": "UNKNOWN",
+            "severity": "CRITICAL"
           }
         }
       ]

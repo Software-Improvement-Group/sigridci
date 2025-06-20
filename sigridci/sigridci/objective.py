@@ -70,10 +70,10 @@ class Objective:
     @staticmethod
     def isFindingIncluded(severity, objective):
         if objective == "CRITICAL":
-            return severity in ("CRITICAL", "UNKNOWN")
+            return severity in ("CRITICAL")
         elif objective == "HIGH":
-            return severity in ("CRITICAL", "HIGH", "UNKNOWN")
+            return severity in ("CRITICAL", "HIGH")
         elif objective == "MEDIUM":
-            return severity in ("CRITICAL", "HIGH", "MEDIUM", "UNKNOWN")
+            return severity in ("CRITICAL", "HIGH", "MEDIUM")
         else:
             return True
