@@ -119,14 +119,14 @@ class SecurityMarkdownReportTest(TestCase):
             
             | Risk | File | Finding |
             |------|------|---------|
-            | ⚪️ | Security.java:33 | Weak Hash algorithm used |
-            | ⚪️ | Security.java:33 | Weak Hash algorithm used |
-            | ⚪️ | Security.java:33 | Weak Hash algorithm used |
-            | ⚪️ | Security.java:33 | Weak Hash algorithm used |
-            | ⚪️ | Security.java:33 | Weak Hash algorithm used |
-            | ⚪️ | Security.java:33 | Weak Hash algorithm used |
-            | ⚪️ | Security.java:33 | Weak Hash algorithm used |
-            | ⚪️ | Security.java:33 | Weak Hash algorithm used |
+            | 🟣 | Security.java:33 | Weak Hash algorithm used |
+            | 🟣 | Security.java:33 | Weak Hash algorithm used |
+            | 🟣 | Security.java:33 | Weak Hash algorithm used |
+            | 🟣 | Security.java:33 | Weak Hash algorithm used |
+            | 🟣 | Security.java:33 | Weak Hash algorithm used |
+            | 🟣 | Security.java:33 | Weak Hash algorithm used |
+            | 🟣 | Security.java:33 | Weak Hash algorithm used |
+            | 🟣 | Security.java:33 | Weak Hash algorithm used |
             | | ... and 3 more findings | |
             
             
