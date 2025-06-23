@@ -3,7 +3,7 @@
 This documentation covers on-premise Sigrid. It is not applicable for cloud-based Sigrid.
 {: .attention }
 
-This documentation offers useful examples and context on how to use SIG's AWS ECR.
+This documentation offers useful examples and context on how to use SIG's Elastic Container Registry, hosted on Amazon Web Services (AWS ECR).
 
 ## Prerequisites
 
