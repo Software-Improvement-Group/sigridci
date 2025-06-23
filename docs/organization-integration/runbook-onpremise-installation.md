@@ -28,7 +28,7 @@ This documentation offers useful context on how to start configuring on-premise 
 If your deployment is entirely air-gapped or you just want to use your own internal container registry; follow these steps to download images.
 
 1. Pull all container images required:
-   From https://571600876202.dkr.ecr.eu-central-1.amazonaws.com/softwareimprovementgroup/repositories:
+   From the AWS ECR registry:
    - softwareimprovementgroup/ai-explanation-service
    - softwareimprovementgroup/auth-api-db-migration
    - softwareimprovementgroup/auth-api
