@@ -32,7 +32,7 @@ We update container images daily for immediate improvements. The Helm chart is u
 - Situation 2: Pulling images directly from SIG's AWS ECR Registry.
   - When this is already set up, you don't need to take any action for this step.
 
-### Update ImageTag
+### Update image tag (Sigrid version)
 
 Update the `imageTag` in the `global` section of the Helm chart's values file (usually `custom-values.yaml`):
 
