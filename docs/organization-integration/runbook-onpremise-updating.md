@@ -34,7 +34,7 @@ We update container images daily for immediate improvements. The Helm chart is u
 
 ### Update ImageTag
 
-Update the `ImageTag` in the global section of the Helm chart's values file (usually `custom-values.yaml`):
+Update the `imageTag` in the `global` section of the Helm chart's values file (usually `custom-values.yaml`):
 
 ```bash
    global:
