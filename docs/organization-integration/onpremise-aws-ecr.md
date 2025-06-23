@@ -47,6 +47,7 @@ SIGRID_DOWNLOAD_REGISTRY="5012345678901.dkr.ecr.${SIGRID_DOWNLOAD_REGION}.amazon
 
 export AWS_ACCESS_KEY_ID="AKIAEXAMPLE" # Please replace with the one provided by SIG
 export AWS_SECRET_ACCESS_KEY="EXAMPLESECRET" # Please replace with the one provided by SIG
+
 VERSION="1.0.20250603" # Please replace with the desired container image version
 aws ecr get-login-password --region $SIGRID_DOWNLOAD_REGION | docker login --username AWS --password-stdin $SIGRID_DOWNLOAD_REGISTRY
 IMAGES=(
