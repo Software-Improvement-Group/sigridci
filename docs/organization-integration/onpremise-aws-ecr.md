@@ -44,6 +44,7 @@ After that, it pulls the specified images with the given version.
 ```bash
 SIGRID_DOWNLOAD_REGION="eu-central-1"
 SIGRID_DOWNLOAD_REGISTRY="5012345678901.dkr.ecr.${SIGRID_DOWNLOAD_REGION}.amazonaws.com"
+
 export AWS_ACCESS_KEY_ID="AKIAEXAMPLE" # Please replace with the one provided by SIG
 export AWS_SECRET_ACCESS_KEY="EXAMPLESECRET" # Please replace with the one provided by SIG
 VERSION="1.0.20250603" # Please replace with the desired container image version
