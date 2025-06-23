@@ -55,7 +55,7 @@ You can find the Helm configuration in the Installation section of this page und
 ### (A) Prepare helm chart 
 
 1. Helm login and pull the latest helm chart
-1. Store the helm chart under your version control making sure not to use clear text secrets, certificates and passwords in your helm.
+1. Store the Helm chart under your version control, ensuring that clear text secrets, certificates, and passwords are not included in version control.
 2. Use Kubernetes-native secrets, either managed directly in Kubernetes or via an external tool that creates and updates these secret objects.
 
 [Detailed instructions for accessing and using SIG's AWS ECR](onpremise-aws-ecr.md)
