@@ -35,7 +35,7 @@ Optional dependencies:
 ## (A) Docker image registry
 
 Sigrid consists of a number of Docker images, which the Software Improvement Group (SIG) distributes 
-via [AWS ECR registry](https://571600876202.dkr.ecr.eu-central-1.amazonaws.com/softwareimprovementgroup).
+via [AWS ECR registry](571600876202.dkr.ecr.eu-central-1.amazonaws.com/softwareimprovementgroup).
 Upon becoming a SIG on-premise customer, users get credentials to access the private part of this registry.
 
 It is possible to directly pull from this registry by specifying it globally:
@@ -66,7 +66,7 @@ sigrid-api:
 ```
 
 Sigrid On-Premise needs access to the following images published on [SIG's private AWS ECR registry]
-(https://571600876202.dkr.ecr.eu-central-1.amazonaws.com/softwareimprovementgroup):
+(571600876202.dkr.ecr.eu-central-1.amazonaws.com/softwareimprovementgroup):
 
 - `softwareimprovementgroup/ai-explanation-service`
 - `softwareimprovementgroup/auth-api-db-migration`
