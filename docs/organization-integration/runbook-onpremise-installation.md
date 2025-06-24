@@ -28,7 +28,7 @@ This documentation offers useful context on how to start configuring on-premise 
 If your deployment is entirely air-gapped or you just want to use your own internal container registry; follow these steps to download images.
 
 1. Pull all container images required:
-   From the AWS ECR registry:
+   From the [AWS ECR registry](https://571600876202.dkr.ecr.eu-central-1.amazonaws.com/):
    - softwareimprovementgroup/ai-explanation-service
    - softwareimprovementgroup/auth-api-db-migration
    - softwareimprovementgroup/auth-api
@@ -38,10 +38,12 @@ If your deployment is entirely air-gapped or you just want to use your own inter
    - softwareimprovementgroup/sigrid-frontend
    - softwareimprovementgroup/sigrid-multi-analyzer
    - softwareimprovementgroup/sigrid-multi-importer
+
    Additionally, the following public images are required:
    - nginxinc/nginx-unprivileged
    - redis:7.2.4-alpine
    - haproxy:2.9.4-alpine
+   - aws-cli:2.24.6
 2. Tag the downloaded containers with their tag from [AWS ECR registry](https://571600876202.dkr.ecr.eu-central-1.amazonaws.com/) (e.g. 1.0.20250603).
 3. Re-tag and push the containers to your internal image registry.
 
@@ -133,9 +135,9 @@ The email address should match the user's email in the connected IdP.
 Note that this initial admin user will have full access to the entire portfolio. Once Sigrid is fully configured, you can invite another person as an Admin and, if desired, remove or demote the initial admin user to a regular user.
 ```
   imagePullSecrets:
-    - name: ecr-image-pull-secret
+    - name: sigrid-onprem-ecr-image-pull-secret
 ```
-Here we provide a Kubernetes native secret which contains the credentials for pulling images to your cluster. If you're using your internal container registry, use the corresponding secret for that registry. If your environment allows outbound connections and you want to use the SIG AWS ECR directly, use `ecr-image-pull-secret`.
+Here we provide a Kubernetes native secret which contains the credentials for pulling images from [AWS ECR registry](https://571600876202.dkr.ecr.eu-central-1.amazonaws.com/) to your cluster. If you're using your internal container registry, use the corresponding secret for that registry(if it has any). If your environment allows outbound connections and you want to use the SIG AWS ECR directly, use `sigrid-onprem-ecr-image-pull-secret`.
 
 #### ecrRepository:
 ```
@@ -143,8 +145,8 @@ enabled: false
 ```
 If your Sigrid deployment allows outbound connections and you would like to pull images from SIG's ECR Repositories directly then you need to enable this service.
 ```
-iamUserName: "sig_ecr_example_user"
-sigCustomerAccessSecretName: sig-customer-access-secret
+iamUserName: "sig_ecr_example_user"  #provided by SIG
+sigCustomerAccessSecretName: sig-customer-access-secret [See Here](../organization-integration/onpremise-aws-ecr.html#store-aws-credentials-in-kubernetes)
 ```
 To make use of SIG's ECR Repositories you will need to provide the `iamUserName` and create a Kubernetes native containing  `AWS_ACCESS_KEY_ID` and `AWS_SECRET_ACCESS_KEY`
 
