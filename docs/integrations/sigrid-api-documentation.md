@@ -211,7 +211,46 @@ Valid model names are:
 
 </details>
 
+### Security ratings
+
+You can obtain the security ratings, which are also available via Sigrid's portfolio and system dashboards,
+using the following end point:
+
+- `GET https://sigrid-says.com/rest/analysis-results/api/v1/model-ratings/{customer}?feature=SECURITY`
+
+The response includes the security ratings for all systems in your portfolio:
+
+<details markdown="1">
+  <summary>Example response</summary>
+
+```json
+[
+   {
+      "id": "ow10",
+      "name": "OWASP Top 10 (2021)",
+      "metadata": {
+         "key": "2025",
+         "modelVersion": "2025_security_sig"
+      },
+      "feature": "SECURITY",
+      "systemName": "mysystem",
+      "adherenceScore": 0.72,
+      "rating": 3.5,
+      "categories": [
+         {
+            "id": "a4",
+            "name": "A4 Insecure Design",
+            "adherenceScore": 0.5,
+            "maxSeverity": "MEDIUM"
+         }
+      ]
+   }
+]
+```
+</details>
+
 ### Open Source Health findings and ratings
+
 A list of all third-party open source dependencies is available using the following endpoints:
 - `GET https://sigrid-says.com/rest/analysis-results/api/v1/osh-findings/{customer}` for your full portfolio of applications;
 - `GET https://sigrid-says.com/rest/analysis-results/api/v1/osh-findings/{customer}/{system}` for a single application.  
