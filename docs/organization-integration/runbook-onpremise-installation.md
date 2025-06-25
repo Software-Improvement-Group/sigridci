@@ -145,10 +145,9 @@ enabled: false
 ```
 If your Sigrid deployment allows outbound connections and you would like to pull images from SIG's ECR Repositories directly then you need to enable this service.
 ```
-iamUserName: "sig_ecr_example_user"  #provided by SIG
 sigCustomerAccessSecretName: sig-customer-access-secret [See Here](../organization-integration/onpremise-aws-ecr.html#store-aws-credentials-in-kubernetes)
 ```
-To make use of SIG's ECR Repositories you will need to provide the `iamUserName` and create a Kubernetes native containing  `AWS_ACCESS_KEY_ID` and `AWS_SECRET_ACCESS_KEY`
+To make use of SIG's ECR Repositories you will need to provide create a Kubernetes native containing  `AWS_ACCESS_KEY_ID` and `AWS_SECRET_ACCESS_KEY` provided by SIG.
 
 [Detailed instructions for accessing and using SIG's AWS ECR](onpremise-aws-ecr.md)
 

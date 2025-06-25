@@ -98,11 +98,10 @@ data:
 ```
 global:
   imagePullSecrets:
-    - name: sigrid-onprem-ecr-image-pull-secret
+    - name: sigrid-ecr-image-pull-secret
 
 ecrRepository:
   enabled: true
-  iamUserName: "sig_ecr_example_user"
   sigCustomerAccessSecretName: sig-customer-access-secret
 ```
 </details>
