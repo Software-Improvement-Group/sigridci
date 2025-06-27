@@ -79,29 +79,21 @@ Additional Prerequisites
 - Access credentials for this user stored in a Kubernetes secret. e.g.`sig-customer-access-secret`
 - Kubernetes cluster with RBAC enabled.
 
-### Store AWS Credentials in Kubernetes
-Create a Kubernetes secret with the IAM user's credentials.
-For example, this can be created by using a YAML file and to create a secret with kubectl, but some Kubernetes cluster orchestration tools also allow you to create secrets via a GUI.
-```yaml
-apiVersion: v1
-kind: Secret
-metadata:
-  name: sig-customer-access-secret
-  namespace: {{ .Release.Namespace }} # namespace where sigrid onprem is/will be deployed.
-type: Opaque
-data:
-  AWS_ACCESS_KEY_ID: #provided by SIG
-  AWS_SECRET_ACCESS_KEY: #provided by SIG
-```
-
 ### Update your deployment's values file to enable the key rotation service
+Add imagePullSecrets and ecrRepository into global.
+
 ```
 global:
+  
   imagePullSecrets:
     - name: sigrid-ecr-image-pull-secret
 
-ecrRepository:
-  enabled: true
-  sigCustomerAccessSecretName: sig-customer-access-secret
+  onPremise:
+    ecrRepository:
+          enabled: true
+          sigCustomerAccessSecret:
+            data:
+              AWS_ACCESS_KEY_ID: "AWS_ACCESS_KEY_ID"
+              AWS_SECRET_ACCESS_KEY: "AWS_SECRET_ACCESS_KEY"
 ```
 </details>
