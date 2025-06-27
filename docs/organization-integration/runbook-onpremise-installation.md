@@ -133,21 +133,25 @@ At a later stage, it needs to be provided as a "CUSTOMER" environment variable t
 Provide an email address to bootstrap the very first user in Sigrid.
 The email address should match the user's email in the connected IdP.
 Note that this initial admin user will have full access to the entire portfolio. Once Sigrid is fully configured, you can invite another person as an Admin and, if desired, remove or demote the initial admin user to a regular user.
+
 ```
   imagePullSecrets:
-    - name: sigrid-onprem-ecr-image-pull-secret
-```
-Here we provide a Kubernetes native secret which contains the credentials for pulling images from [AWS ECR registry](571600876202.dkr.ecr.eu-central-1.amazonaws.com/) to your cluster. If you're using your internal container registry, use the corresponding secret for that registry(if it has any). If your environment allows outbound connections and you want to use the SIG AWS ECR directly, use `sigrid-onprem-ecr-image-pull-secret`.
+    - name: sigrid-ecr-image-pull-secret
 
-#### ecrRepository:
 ```
-enabled: false
+Here we can provide a Kubernetes native secret which contains the credentials for pulling images from [AWS ECR registry](571600876202.dkr.ecr.eu-central-1.amazonaws.com/) to your cluster. If you're using your internal container registry, use the corresponding secret for that registry(if it has any). If your environment allows outbound connections and you want to use the SIG AWS ECR directly, use `sigrid-ecr-image-pull-secret`.
+
 ```
-If your Sigrid deployment allows outbound connections and you would like to pull images from SIG's ECR Repositories directly then you need to enable this service.
+   onPremise:
+     ecrRepository:
+           enabled: true
+           sigCustomerAccessSecret:
+             data:
+               AWS_ACCESS_KEY_ID: "AWS_ACCESS_KEY_ID"
+               AWS_SECRET_ACCESS_KEY: "AWS_SECRET_ACCESS_KEY"
 ```
-sigCustomerAccessSecretName: sig-customer-access-secret [See Here](../organization-integration/onpremise-aws-ecr.html#store-aws-credentials-in-kubernetes)
-```
-To make use of SIG's ECR Repositories you will need to provide create a Kubernetes native containing  `AWS_ACCESS_KEY_ID` and `AWS_SECRET_ACCESS_KEY` provided by SIG.
+
+This service is disabled by default, but if you want to pull images from [AWS ECR registry](571600876202.dkr.ecr.eu-central-1.amazonaws.com/) directly you should enable this service. Please use `AWS_ACCESS_KEY_ID` and `AWS_SECRET_ACCESS_KEY` provided by SIG.
 
 [Detailed instructions for accessing and using SIG's AWS ECR](onpremise-aws-ecr.md)
 
