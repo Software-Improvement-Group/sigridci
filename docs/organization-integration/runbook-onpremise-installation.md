@@ -9,44 +9,58 @@ This documentation offers useful context on how to start configuring on-premise 
 
 - You should have already read the other Sigrid On-Premise documentation.
 - All pre-requisites from our public documentation are met.
-- You have access to Software Improvement Group DockerHub.
+- You have access to Software Improvement Group [AWS ECR registry](571600876202.dkr.ecr.eu-central-1.amazonaws.com/).
 
 ## Prepare for installation 
 
-### (A) Prepare container images 
+### (A) Prepare Container Images 
 
-1. Get access to DockerHub from SIG.
+1. Get access to AWS ECR registry from SIG.
    - Please ask your SIG Project Lead/contact person.
    - Provide an email address.
-   - An existing DockerHub account will be invited or a new one created.
-2. To log in to DockerHub as a Helm registry and pull the Helm chart, you need to create a Personal Access Token.
-3. If your deployment is entirely air-gapped please perform the next two steps, otherwise you can continue at "Prepare helm chart".
-4. Pull all container images required:
+   - A new user will be created in AWS.
+2. To log in to AWS ECR registry as a Helm registry and pull the Helm chart, you will receive credentials. These can be used to generate a temporary password for the AWS ECR registry.
 
-   from https://hub.docker.com/orgs/softwareimprovementgroup/repositories:
-     - softwareimprovementgroup/ai-explanation-service
-     - softwareimprovementgroup/auth-api-db-migration
-     - softwareimprovementgroup/auth-api
-     - softwareimprovementgroup/quality-model-service
-     - softwareimprovementgroup/sigrid-api-db-migration
-     - softwareimprovementgroup/sigrid-api
-     - softwareimprovementgroup/sigrid-frontend
-     - softwareimprovementgroup/sigrid-multi-analyzer
-     - softwareimprovementgroup/sigrid-multi-importer
+[Detailed instructions for accessing and using SIG's AWS ECR](onpremise-aws-ecr.md)
 
-   and the following public images:
-     - nginxinc/nginx-unprivileged
-     - redis:7.2.4-alpine
-     - haproxy:2.9.4-alpine
-5. Tag the downloaded containers with their tag from DockerHub (e.g. 1.0.2025013).
-6. Re-tag and push the containers to your internal container registry.
+#### Situation 1: Using your own container registry
+
+If your deployment is entirely air-gapped or you just want to use your own internal container registry; follow these steps to download images.
+
+1. Pull all container images required:
+   From the [AWS ECR registry](571600876202.dkr.ecr.eu-central-1.amazonaws.com/):
+   - softwareimprovementgroup/ai-explanation-service
+   - softwareimprovementgroup/auth-api-db-migration
+   - softwareimprovementgroup/auth-api
+   - softwareimprovementgroup/quality-model-service
+   - softwareimprovementgroup/sigrid-api-db-migration
+   - softwareimprovementgroup/sigrid-api
+   - softwareimprovementgroup/sigrid-frontend
+   - softwareimprovementgroup/sigrid-multi-analyzer
+   - softwareimprovementgroup/sigrid-multi-importer
+
+   Additionally, the following public images are required:
+   - nginxinc/nginx-unprivileged
+   - redis:7.2.4-alpine
+   - haproxy:2.9.4-alpine
+   - aws-cli:2.24.6
+2. Tag the downloaded containers with their tag from [AWS ECR registry](571600876202.dkr.ecr.eu-central-1.amazonaws.com/) (e.g. 1.0.20250603).
+3. Re-tag and push the containers to your internal image registry.
+
+#### Situation 2: Pulling images directly from SIG's AWS ECR Registry
+
+If outbound connections are allowed, images can be automatically pulled from AWS ECR.
+
+Ensure that a service account is activated to automatically refresh the ECR authorization token. This will allow direct access to SIG images from AWS ECR.
+You can find the Helm configuration in the Installation section of this page under the header `ecrRepository`.
 
 ### (A) Prepare helm chart 
 
-1. Helm Login: `helm registry login registry-1.docker.io -u <username> -p <personal_access_token>`
-2. Pull the latest helm chart: `helm pull oci://registry-1.docker.io/softwareimprovementgroup/sigrid-stack --version <latest tag>`
-3. Store the helm chart under your version control making sure not to use clear text secrets, certificates and passwords in your helm.
-4. Use Kubernetes-native secrets, either managed directly in Kubernetes or via an external tool that creates and updates these secret objects.
+1. Helm login and pull the latest helm chart
+1. Store the Helm chart under your version control, ensuring that clear text secrets, certificates, and passwords are not included in version control.
+2. Use Kubernetes-native secrets, either managed directly in Kubernetes or via an external tool that creates and updates these secret objects.
+
+[Detailed instructions for accessing and using SIG's AWS ECR](onpremise-aws-ecr.md)
 
 ### (B) Prepare DNS (sub)domain
 
@@ -58,7 +72,6 @@ This documentation offers useful context on how to start configuring on-premise 
 1. In the helm chart directory `sigrid-stack/files`, there are two initialization scripts called `sigriddb-init` and `authdb-init`.
 2. Replace passwords in the init scripts with ones you want to use and store them. You will need to provide them in the Helm charts at a later stage. 
 3. Using `psql`, run the two database initialization scripts in the exact following order: `sigriddb-init` and then `authdb-init`.
-
 4. Store the passwords securely in Kubernetes.
 
 ### (D) Prepare Identity Provider
@@ -101,26 +114,46 @@ Your copy of example-values.yaml however is enough to get a complete Sigrid depl
 
 #### global:
 ```
-imageTag: "1.0.20250109"
+  imageTag: "1.0.20250603"
 ```
 Provide the tag of the containers you want to use.
 It is important that the tag matches the tags used in Sigrid's Helm chart: all components of Sigrid must always use the same version.
 ```
-onPremise.customer: "company"
+  onPremise:
+    customer: company
 ```
 Provide a technical shortname for your company/team.
 This will eventually be displayed in the address bar of Sigrid like so `https://YOUR-SIGRID_DOMAIN.COM/company`. 
 At a later stage, it needs to be provided as a "CUSTOMER" environment variable to the analysis job in your CI pipeline. 
 ```
-onPremise.administrators: - admin@company.com
+  onPremise:
+    administrators:
+      - admin@company.com
 ```
 Provide an email address to bootstrap the very first user in Sigrid.
 The email address should match the user's email in the connected IdP.
 Note that this initial admin user will have full access to the entire portfolio. Once Sigrid is fully configured, you can invite another person as an Admin and, if desired, remove or demote the initial admin user to a regular user.
+
 ```
-imagePullSecrets:
+  imagePullSecrets:
+    - name: sigrid-ecr-image-pull-secret
+
 ```
-This only needs to be provided if your internal container registry requires authentication or if you're pulling SIG containers from DockerHub directly. 
+Here we can provide a Kubernetes native secret which contains the credentials for pulling images from [AWS ECR registry](571600876202.dkr.ecr.eu-central-1.amazonaws.com/) to your cluster. If you're using your internal container registry, use the corresponding secret for that registry(if it has any). If your environment allows outbound connections and you want to use the SIG AWS ECR directly, use `sigrid-ecr-image-pull-secret`.
+
+```
+   onPremise:
+     ecrRepository:
+           enabled: true
+           sigCustomerAccessSecret:
+             data:
+               AWS_ACCESS_KEY_ID: "AWS_ACCESS_KEY_ID"
+               AWS_SECRET_ACCESS_KEY: "AWS_SECRET_ACCESS_KEY"
+```
+
+This service is disabled by default, but if you want to pull images from [AWS ECR registry](571600876202.dkr.ecr.eu-central-1.amazonaws.com/) directly you should enable this service. Please use `AWS_ACCESS_KEY_ID` and `AWS_SECRET_ACCESS_KEY` provided by SIG.
+
+[Detailed instructions for accessing and using SIG's AWS ECR](onpremise-aws-ecr.md)
 
 #### nginx:
 
@@ -130,7 +163,7 @@ If your deployment is air-gapped, adjust the values below.
 image.registry: ""
 image.repository: ""nginxinc/nginx-unprivileged""
 ```
- Provide full URL to your registry and container image.
+Provide full URL to your registry and container image.
 ```
 image.tag: "mainline-alpine"
 ```
@@ -255,7 +288,7 @@ You can now start inviting more people to Sigrid if so desired.
     ```
 - Commit changes to your test project.
 
-### Verify a succesful analysis
+### Verify a successful analysis
 
 - Monitor any importer pods on your deployment, once it's finished the analysis and import to Sigrid is done.
 - Login to Sigrid and verify you can now see a system.

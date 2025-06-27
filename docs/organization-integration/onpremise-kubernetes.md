@@ -14,7 +14,7 @@ in the Helm chart, which provides examples of typical configuration values.
 We strongly recommend to use the `example-values.yaml` file next to this documentation page, as 
 the `example-values.yaml` file provides additional, important details.
 
-Sigrid's Helm chart is distributed via a private Docker Hub registry, together with the Docker 
+Sigrid's Helm chart is distributed via a private AWS registry, together with the Docker 
 images that make up Sigrid, as described below. 
 
 ## Prerequisites
@@ -34,21 +34,20 @@ Optional dependencies:
 
 ## (A) Docker image registry
 
-Sigrid consists of a number of Docker images, which the Software Improvement Group (SIG) 
-distributes 
-via [Docker Hub](https://hub.docker.com/u/softwareimprovementgroup). Upon becoming a SIG 
-on-premise customer, users get credentials to access the private part of this registry.
+Sigrid consists of a number of Docker images, which the Software Improvement Group (SIG) distributes 
+via [AWS ECR registry](571600876202.dkr.ecr.eu-central-1.amazonaws.com/softwareimprovementgroup).
+Upon becoming a SIG on-premise customer, users get credentials to access the private part of this registry.
 
 It is possible to directly pull from this registry by specifying it globally:
 
 ```yaml
 global:
-  imageRegistry: "docker.io/softwareimprovementgroup"
-  # Needed because hub.docker.com/u/softwareimprovementgroup is private:
+  imageRegistry: "571600876202.dkr.ecr.eu-central-1.amazonaws.com/softwareimprovementgroup"
+  # Needed because AWS ECR registry is private:
   imagePullSecrets:
-    - ...
+    - name: "Name of kubernetes secret created from automated ECR login password refresh(see https://docs.sigrid-says.com/organization-integration/onpremise-aws-ecr.html#pulling-images-directly-from-sigs-aws-ecr-registry-using-automated-ecr-login-password-refresh)"
+  # Needed because pod needs to authenticate with AWS ECR registry to pull images:
 ```
-
 The Helm chart gives precedence to the values for registry and repository set specifically for each
 component and falls back to the global `imageRegistry` if needed. Keep in mind that some 
 sub-charts behave in a different way, or do not honor `imageRegistry` at all. 
@@ -66,8 +65,8 @@ sigrid-api:
     tag: "some-tag"
 ```
 
-Sigrid On-Premise needs access to the following images published on 
-[SIG's private Docker Hub](https://hub.docker.com/u/softwareimprovementgroup):
+Sigrid On-Premise needs access to the following images published on [SIG's private AWS ECR registry]
+(571600876202.dkr.ecr.eu-central-1.amazonaws.com/softwareimprovementgroup):
 
 - `softwareimprovementgroup/ai-explanation-service`
 - `softwareimprovementgroup/auth-api-db-migration`
@@ -79,10 +78,11 @@ Sigrid On-Premise needs access to the following images published on
 - `softwareimprovementgroup/sigrid-multi-analyzer`
 - `softwareimprovementgroup/sigrid-multi-importer`
 
-In addition, if your deployment is completely air-gapped, please ensure these public images are also published to your internal container registry.
+In addition, if your deployment is completely air-gapped, please ensure these public images are also published to your internal image registry.
 - `nginxinc/nginx-unprivileged`
 - `redis:7.2.7-alpine`
 - `haproxy:3.0.8-alpine`
+- `aws-cli:2.24.6`
 
 For the avoidance of doubt: the AI Explanation Service (first image in the list) does NOT contact any LLM by default. 
 It just serves pre-computed explanations.
