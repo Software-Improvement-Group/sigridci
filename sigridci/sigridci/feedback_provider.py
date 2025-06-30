@@ -33,6 +33,10 @@ class Capability(Enum):
 class FeedbackProvider:
     def __init__(self, capability, options, objectives):
         self.options = options
+        self.analysisId = "local"
+        self.feedback = None
+        self.previousFeedback = None
+
         self.markdownReport = self.prepareMarkdownReport(capability, objectives)
         self.additionalReports = [
             GitLabPullRequestReport(self.markdownReport),
@@ -57,6 +61,10 @@ class FeedbackProvider:
             self.analysisId = "local"
             self.feedback = json.load(f)
 
+    def loadPreviousAnalysisResults(self, analysisResultsFile):
+        with open(analysisResultsFile, mode="r", encoding="utf-8") as f:
+            self.previousFeedback = json.load(f)
+
     def generateReports(self):
         if self.feedback is None:
             raise Exception("No feedback provided")
@@ -65,6 +73,7 @@ class FeedbackProvider:
             os.mkdir(self.options.outputDir)
 
         for report in [self.markdownReport] + self.additionalReports:
+            report.previousFeedback = self.previousFeedback
             report.generate(self.analysisId, self.feedback, self.options)
 
         print(f"Sigrid CI feedback is available from {self.markdownReport.getMarkdownFile(self.options)}")
