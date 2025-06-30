@@ -21,7 +21,7 @@ Many tools that export SARIF will be supported with no or minimal extra effort f
 
 ## Which findings are imported by Sigrid?
 
-Sigrid uses benchmarking to assign a severity to findings, based on the severity of similar findings in SIG's benchmark. To do this, Sigrid needs to know the CWE for a finding, otherwise it doesn't know which findings should be considered "comparable".  This means your security tool needs to export a list of `tags` in the `properties` section of each finding that includes the CWEs corresponding to that finding.
+Sigrid uses benchmarking to assign a severity to findings, based on the severity of similar findings in SIG's benchmark. To do this, Sigrid needs to know the CWE for a finding, otherwise it doesn't know which findings should be considered "comparable".  This means your security tool needs to export a (JSON) array of `tags` in the `properties` section of each finding that includes the CWEs corresponding to that finding, in the format `CWE-xyz`.
 
 ## Triaging findings: Which system is in control?
 
