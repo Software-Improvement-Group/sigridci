@@ -249,6 +249,12 @@ The response includes the security ratings for all systems in your portfolio:
 ```
 </details>
 
+The example above returns the security ratings for all systems in your portfolio. If you are only interested in the security ratings for a specific system, you can use the system-level end point:
+
+- `GET https://sigrid-says.com/rest/analysis-results/api/v1/model-ratings/{customer}/{system}?feature=SECURITY`
+
+Both the portfolio-level and system-level end point return the *current* security ratings by default. If you want to obtain the security ratings for a specific moment in time, you can add the query parameter `endDate=yyyy-mm-dd`, for example `endDate=2025-07-01`.
+
 ### Open Source Health findings and ratings
 
 A list of all third-party open source dependencies is available using the following endpoints:
