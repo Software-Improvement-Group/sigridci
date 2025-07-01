@@ -30,7 +30,7 @@ A summary of counts, changes and identified risks are shown in four panels next 
 
 <img src="../images/system-osh-icon-dep-management.png" class="inline" />  **Management:** possible risk originating from dependencies in binaries (e.g. JARs for Java) instead of configurations in package managers.
 
-<img src="../images/system-osh-icon-legal.png" class="inline" />  **Legal licenses:** third-party dependencies may have restricted licenses, that restrict how you can use it or e.g. obliges you to publish certain source code. This should always trigger a check by a legal expert. 
+<img src="../images/system-osh-icon-legal.png" class="inline" />  **Legal licenses:** third-party dependencies may have restricted licenses, that restrict how you can use it or e.g. obliges you to publish certain source code. This should always trigger a check by a legal expert. Note that some open source libraries might have *multiple* licenses. For example, if you see a library with a license of "MIT; GPL", it means that library is licensed under both the [MIT license](https://opensource.org/license/mit) and the [GPL license](http://www.gnu.org/licenses/gpl-3.0.en.html).
 
 ### Navigating the top tiles in the overview page 
 The default views shows the Open Source Health Quality Model ratings first:
