@@ -2,8 +2,6 @@
 
 Sigrid allows you to import your security findings into Sigrid so you can use Sigrid as single source of truth for all software quality needs. Imported findings will show up in the Security Findings page in Sigrid.
 
-## Importing - general process
-
 Whichever security tool you use, the process of importing into Sigrid is largely the same:
 
 1. **Security license needed:** A security license is needed to access Sigrid's security features. Contact your SIG account manager if you do not have one yet.
@@ -21,5 +19,10 @@ Many tools that export SARIF will be supported with no or minimal extra effort f
 - [Fortify (SARIF format)](integration-security-fortify.md)
 - [Checkmarx (SARIF format)](integration-security-checkmarx.md)
 
+## Which findings are imported by Sigrid?
+
+Sigrid uses benchmarking to assign a severity to findings, based on the severity of similar findings in SIG's benchmark. To do this, Sigrid needs to know the CWE for a finding, otherwise it doesn't know which findings should be considered "comparable".  This means your security tool needs to export a (JSON) array of `tags` in the `properties` section of each finding that includes the CWEs corresponding to that finding, in the format `CWE-xyz`.
+
 ## Triaging findings: Which system is in control?
+
 Security findings typically need to be processed and triaged to determine whether they are false positives, prioritized, etc. When importing external results, you can choose to either do the triage in your own tool, or in Sigrid which [also provides this feature](../capabilities/system-security.md#changing-a-findings-status-and-audit-trail). To ensure consistency, make an explicit choice which system is in charge of triage. Where possible, Sigrid respects already triaged findings during its import.

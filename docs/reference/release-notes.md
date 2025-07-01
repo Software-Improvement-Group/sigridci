@@ -3,11 +3,13 @@ Sigrid release notes
 
 SIG uses [continuous delivery](https://en.wikipedia.org/wiki/Continuous_delivery), meaning that every change to Sigrid or the underlying analysis is released once our development pipeline has completed. On average, we release somewhere between 10 and 20 times per day. This page therefore doesn't list every single change, since that would quickly lead to an excessively long list of small changes. Instead, this page lists Sigrid and analysis changes that we consider noteworthy for the typical Sigrid user.
 
-### June 23, 2025
+### June 30, 2025
 
 - **Mendix QSM:** Sigrid now supports [Mendix MPR version 2](https://medium.com/@anjaanabishek/still-on-mendix-mpr-v1-heres-why-it-s-time-to-upgrade-to-mpr-v2-38092567fe6e).
+- **Mendix QSM:** Sigrid will now find more licenses for open source libraries in JAR files. Previously, Sigrid could only find the license if it was published by the library author. Sigrid will now also scan other sources, including licenses embedded in the JAR file itself. 
 - **Open Source Health:** Sigrid can [import SBOM files](../integrations/integration-sbom.md) to show open source libraries imported from external sources alongside open source libraries found in your codebase. The [Sigrid configuration](analysis-scope-configuration.md#configuring-sbom-import) now allows you to customize how the SBOM contents should be imported.
 - **Sigrid API:** You can now access the [maintainability refactoring candidates using the Sigrid API](../integrations/sigrid-api-documentation.md#maintainability-refactoring-candidates). This provides you with the same information you get from the refactoring candidates page in Sigrid.
+- **Sigrid API:** In addition to the security *findings*, which were already available via the API, you can now also obtain the [security ratings for all systems in your portfolio](../integrations/sigrid-api-documentation.md#security-ratings). 
 - **Report Generator:** The [modernization report](../capabilities/reports/modernization-report.md) has been expanded with additional visualizations.
 
 ### June 16, 2025
