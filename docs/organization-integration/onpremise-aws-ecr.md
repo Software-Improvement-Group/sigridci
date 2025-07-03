@@ -14,8 +14,6 @@ This documentation offers useful examples and context on how to use SIG's Elasti
 
 
 ## Logging in to AWS ECR and pulling the latest helm chart
-<details>
-<summary>Detailed description for pulling the latest helm chart</summary>
 
 The below script provides and example on how to authenticate and download the latest Sigrid Helm Chart from SIG's AWS ECR.
 
@@ -30,12 +28,8 @@ aws ecr get-login-password --region $SIGRID_DOWNLOAD_REGION | docker login --use
 LATEST_TAG=$(aws ecr describe-images --repository-name $HELM_REPOSITORY_NAME --region $SIGRID_DOWNLOAD_REGION --query 'sort_by(imageDetails,&imagePushedAt)[-1].imageTags[0]' --output text)
 helm pull oci://$HELM_REPOSITORY_URI --version $LATEST_TAG
 ```
-</details>
 
 ## Using your own container registry
-
-<details>
-<summary>Detailed description for manually pulling the latest Sigrid container images</summary>
 
 When this script is executed, it will pull the latest Sigrid images from the AWS ECR registry.
 The script uses the AWS CLI to get a login password for the ECR registry and then logs in to the registry using Docker.
@@ -65,11 +59,8 @@ for IMAGE in "${IMAGES[@]}"; do
   docker pull $SIGRID_DOWNLOAD_REGISTRY/$IMAGE:$VERSION
 done
 ```
-</details>
 
 ## Pulling images directly from SIG's AWS ECR Registry using automated ECR login password refresh
-<details>
-<summary>Detailed procedure for automated AWS ECR login password refresh</summary>
 
 AWS ECR passwords expire after 12 hours. Therefore, a scheduled refresh can be implemented for Sigrid On-Premises deployments. This approach automatically refreshes the ECR registry password to maintain continuous access to container images.
 
@@ -80,6 +71,7 @@ Additional Prerequisites
 - Kubernetes cluster with RBAC enabled.
 
 ### Update your deployment's values file to enable the key rotation service
+
 Add imagePullSecrets and ecrRepository into global.
 
 ```
@@ -96,4 +88,3 @@ global:
               AWS_ACCESS_KEY_ID: "AWS_ACCESS_KEY_ID"
               AWS_SECRET_ACCESS_KEY: "AWS_SECRET_ACCESS_KEY"
 ```
-</details>
