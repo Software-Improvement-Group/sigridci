@@ -72,6 +72,12 @@ In this chart, the x-axis is based on the column "estimated effort" in the table
 colors being depicted in the chart legend. Finally, the bubble size is based on the column "technical debt", where
 systems with more technical debt appear larger.
 
+<img src="../../images/reports/modernization-summary.png" width="350" />
+
+Finally, the modernization report includes a management summary. Unlike the previous slides, this does not focus
+on the individual systems or steps within the modernization plan. Instead, it focuses on the entire software 
+portfolio and overall potential impact.
+
 ## Generating modernization scenarios
 
 Defining your overall modernization plan depends on more factors than just technical debt. You can therefore define
