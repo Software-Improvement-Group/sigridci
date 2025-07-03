@@ -175,7 +175,7 @@ If the previous options are still not powerful enough, the last option is to def
           
 As you can see, this allows you to manually define every single component. Each component can include certain directories and/or files, both of which can be specified using regular expressions.
 
-This option is extremely flexible... but it's also extremely maintenance intensive. Using this option means you will need to update your Sigrid configuration whenever you make changes to your project structure. We recommend you only use this option if you have extremely specific needs that cannot be addressed by any of the other options.
+This option is extremely flexible, but it's also extremely maintenance intensive. Using this option means you will need to update your Sigrid configuration whenever you make changes to your project structure. Also, because you're listing individual files and directories, Sigrid will not be able to automatically detect sub-components when using this option. We therefore recommend you only use this option if you have extremely specific needs that cannot be addressed by any of the other options.
 {: .warning }
 
 ## Configuring the SIG Maintainability Model version
