@@ -667,7 +667,8 @@ class SigridCiRunnerTest(TestCase):
             "Validating scope configuration file",
             "--------------------------------------------------------------------------------",
             "Invalid scope configuration file:",
-            "    - Missing scope configuration file (sigrid.yaml)",
+            "    - Missing sigrid.yaml file",
+            "    - See https://docs.sigrid-says.com/reference/analysis-scope-configuration.html#removing-the-scope-configuration-file",
             "--------------------------------------------------------------------------------"
         ]
 

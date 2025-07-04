@@ -46,6 +46,9 @@ class SigridCiRunner:
         "remark"
     ]
 
+    DOCS_URL = "https://docs.sigrid-says.com"
+    MISSING_SCOPE_URL = f"{DOCS_URL}/reference/analysis-scope-configuration.html#removing-the-scope-configuration-file"
+
     def __init__(self, options: PublishOptions, apiClient: SigridApiClient):
         self.options = options
         self.apiClient = apiClient
@@ -114,7 +117,7 @@ class SigridCiRunner:
             self.validateConfiguration(lambda: self.apiClient.validateScopeFile(scope), "scope configuration file")
 
         if scope is None and metadata.get("scopeFileInRepository"):
-            message = {"valid" : False, "notes" : ["Missing scope configuration file (sigrid.yaml)"]}
+            message = {"valid" : False, "notes" : ["Missing sigrid.yaml file", f"See {self.MISSING_SCOPE_URL}"]}
             self.validateConfiguration(lambda: message, "scope configuration file")
 
         metadataFile = self.options.readMetadataFile()
