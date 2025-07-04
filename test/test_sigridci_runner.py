@@ -74,8 +74,7 @@ class SigridCiRunnerTest(TestCase):
             "/analysis-results/api/v1/system-metadata/aap/noot",
             "/inboundresults/sig/aap/noot/ci/uploads/v1",
             "UPLOAD",
-            "/analysis-results/sigridci/aap/noot/v1/ci/results/123",
-            "/analysis-results/api/v1/system-metadata/aap/noot"
+            "/analysis-results/sigridci/aap/noot/v1/ci/results/123"
         ]
 
         self.assertEqual(UploadLog.history, expectedLog)
@@ -109,8 +108,7 @@ class SigridCiRunnerTest(TestCase):
             "/analysis-results/api/v1/system-metadata/aap/noot",
             "/inboundresults/sig/aap/noot/ci/uploads/v1/publish",
             "UPLOAD",
-            "/analysis-results/sigridci/aap/noot/v1/ci/results/123",
-            "/analysis-results/api/v1/system-metadata/aap/noot"
+            "/analysis-results/sigridci/aap/noot/v1/ci/results/123"
         ]
 
         self.assertEqual(UploadLog.history, expectedLog)
@@ -143,8 +141,7 @@ class SigridCiRunnerTest(TestCase):
             "/analysis-results/sigridci/aap/noot/v1/ci",
             "/analysis-results/api/v1/system-metadata/aap/noot",
             "/inboundresults/sig/aap/noot/ci/uploads/v1/publishonly",
-            "UPLOAD",
-            "/analysis-results/api/v1/system-metadata/aap/noot"
+            "UPLOAD"
         ]
 
         self.assertEqual(UploadLog.history, expectedLog)
@@ -196,8 +193,7 @@ class SigridCiRunnerTest(TestCase):
             "/analysis-results/api/v1/system-metadata/aap/noot",
             "/inboundresults/sig/aap/noot/ci/uploads/v1/publish?subsystem=mysubsystem",
             "UPLOAD",
-            "/analysis-results/sigridci/aap/noot/v1/ci/results/123",
-            "/analysis-results/api/v1/system-metadata/aap/noot"
+            "/analysis-results/sigridci/aap/noot/v1/ci/results/123"
         ]
 
         self.assertEqual(apiClient.called, expectedCalls)
@@ -634,6 +630,49 @@ class SigridCiRunnerTest(TestCase):
         self.assertEqual(UploadLog.history, expectedLog)
         self.assertEqual(apiClient.called, expectedCalls)
 
+    def testMissingScopeFileIsNotErrorIfNoPreviousScopeFileExists(self):
+        apiClient = MockApiClient(self.options)
+        apiClient.responses["/inboundresults/sig/aap/noot/ci/validate/v1"] = {"valid" : True, "notes" : []}
+        apiClient.responses["/analysis-results/api/v1/system-metadata/aap/noot"] = {"scopeFileInRepository" : False}
+
+        runner = SigridCiRunner(self.options, apiClient)
+        runner.reports = []
+
+        with self.assertRaises(SystemExit):
+            runner.run()
+
+        expectedLog = [
+            "Using token ending in '****ummy'",
+            "Found system in Sigrid",
+            "Creating upload",
+            "Upload size is 1 MB"
+        ]
+
+        self.assertEqual(UploadLog.history, expectedLog)
+
+    def testMissingScopeFileIsErrorIfPreviousScopeFileExists(self):
+        apiClient = MockApiClient(self.options)
+        apiClient.responses["/inboundresults/sig/aap/noot/ci/validate/v1"] = {"valid" : True, "notes" : []}
+        apiClient.responses["/analysis-results/api/v1/system-metadata/aap/noot"] = {"scopeFileInRepository" : True}
+
+        runner = SigridCiRunner(self.options, apiClient)
+        runner.reports = []
+
+        with self.assertRaises(SystemExit):
+            runner.run()
+
+        expectedLog = [
+            "Using token ending in '****ummy'",
+            "Found system in Sigrid",
+            "Validating scope configuration file",
+            "--------------------------------------------------------------------------------",
+            "Invalid scope configuration file:",
+            "    - Missing scope configuration file (sigrid.yaml)",
+            "--------------------------------------------------------------------------------"
+        ]
+
+        self.assertEqual(UploadLog.history, expectedLog)
+
     def createTempFile(self, dir, name, contents):
         with open(f"{dir}/{name}", "w") as fileRef:
             fileRef.write(contents)
@@ -653,6 +692,7 @@ class MockApiClient(SigridApiClient):
         self.POLL_INTERVAL = 1
 
     def callSigridAPI(self, path, body=None, contentType=None):
+        print(path)
         self.called.append(path)
     
         if not self.systemExists and path.endswith("/sigridci/aap/noot/v1/ci"):
