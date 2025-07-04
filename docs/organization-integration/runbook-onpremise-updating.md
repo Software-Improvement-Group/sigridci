@@ -9,7 +9,7 @@ This documentation offers useful context on how to keep on-premise Sigrid up-to-
 
 - You should have already read the other Sigrid On-Premise documentation
 - You have a running Sigrid Deployment
-- You have access to Software Improvement Group DockerHub
+- You have access to Software Improvement Group [AWS ECR registry](571600876202.dkr.ecr.eu-central-1.amazonaws.com/)
 
 ## Update Frequency
 
@@ -20,34 +20,30 @@ We update container images daily for immediate improvements. The Helm chart is u
 
 ## Update Instructions
 
-1. Pull the latest Docker containers:
-```bash
-   INTERNAL_REGISTRY_BASE=<REPLACE-WITH-REGISTRY>
-   VERSION=<REPLACE-WITH-LATEST-VERSION> # e.g. `1.0.20250206`
+1. Update Helm Chart
+2. Update Container
+3. Update ImageTag
+4. Apply the updates using Helm
 
-   for IMAGE in ai-explanation-service auth-api-db-migration auth-api quality-model-service \
-            sigrid-api-db-migration sigrid-api sigrid-frontend sigrid-multi-analyzer \
-            sigrid-multi-importer; do
-     docker pull softwareimprovementgroup/${IMAGE}:${VERSION}
-     docker tag softwareimprovementgroup/${IMAGE}:${VERSION} ${INTERNAL_REGISTRY_BASE}/softwareimprovementgroup/${IMAGE}:${VERSION}
-     docker push ${INTERNAL_REGISTRY_BASE}/softwareimprovementgroup/${IMAGE}:${VERSION}
-   done
-```
+### Update Containers
 
-2. Pull the latest Helm chart:
+- Situation 1: Using your own container registry, see [Detailed instructions for accessing and using SIG's AWS ECR](onpremise-aws-ecr.md).
+  - Pull the latest Docker containers.
+- Situation 2: Pulling images directly from SIG's AWS ECR Registry.
+  - When this is already set up, you don't need to take any action for this step.
 
-```bash
-   helm pull oci://registry-1.docker.io/softwareimprovementgroup/sigrid-stack --version <latest tag>
-```
+### Update image tag (Sigrid version)
 
-3. Update the `ImageTag` in the global section of the Helm chart's values file (usually `custom-values.yaml`):
+Update the `imageTag` in the `global` section of the Helm chart's values file (usually `custom-values.yaml`):
 
 ```bash
    global:
      ImageTag: "<REPLACE-WITH-LATEST-VERSION>"
 ```
 
-4. Apply the updates using Helm:
+### Apply the updates using Helm
+
+To apply the updates using Helm, you can use the following command. Note how to do this might vary depending on how you deployed Sigrid.
 
 ```bash
    helm upgrade --install sigrid-onprem ./sigrid-stack -n sigrid --values ./sigrid-stack/custom-values.yaml

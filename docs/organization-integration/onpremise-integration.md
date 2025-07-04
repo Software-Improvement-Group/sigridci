@@ -30,7 +30,7 @@ Some Sigrid On-Premise features are *optional*:
 ## Requirements
 
 - Your infrastructure needs to support running applications on Kubernetes.
-- You need to allow outbound connections to pull the latest Sigrid container images from DockerHub.
+- You need to allow outbound connections to pull the latest Sigrid container images from [AWS ECR registry](571600876202.dkr.ecr.eu-central-1.amazonaws.com).
   - You can pull them directly into your Kubernetes or use your own container registry.
   - You are prepared to update Sigrid regularly, at minimum monthly.
 - You need to support and manage a Postgres database service.
@@ -48,9 +48,9 @@ Some Sigrid On-Premise features are *optional*:
 
 ## Obtaining Sigrid on-premise
 
-The Docker containers that form Sigrid On-Premise are distributed via [DockerHub](https://hub.docker.com). You will receive an account that allows you to access the container registry. 
+The Docker containers that form Sigrid On-Premise are distributed via [AWS ECR registry](571600876202.dkr.ecr.eu-central-1.amazonaws.com/). You will receive an account that allows you to access the container registry. 
 
-<img src="../images/onpremise-dockerhub.png" width="500" /> 
+<img src="../images/onpremise-ecr-private-repo.png" width="100%" /> 
 
 As explained above, Sigrid consists of several Docker containers. The container `sigrid-multi-analyzer` runs directly in your development platform's continuous integration pipelines, all other containers are deployed to your Kubernetes cluster. These steps are explained in more detail in the following sections.
 
