@@ -46,6 +46,9 @@ class SigridCiRunner:
         "remark"
     ]
 
+    DOCS_URL = "https://docs.sigrid-says.com"
+    MISSING_SCOPE_URL = f"{DOCS_URL}/reference/analysis-scope-configuration.html#removing-the-scope-configuration-file"
+
     def __init__(self, options: PublishOptions, apiClient: SigridApiClient):
         self.options = options
         self.apiClient = apiClient
@@ -67,21 +70,22 @@ class SigridCiRunner:
         systemExists = self.apiClient.checkSystemExists()
         UploadLog.log("Found system in Sigrid" if systemExists else "System is not yet on-boarded to Sigrid")
 
-        if systemExists and not self.apiClient.fetchMetadata().get("active", True):
-            UploadLog.log("Publish blocked: System has been deactivated by your Sigrid administrator, in the Sigrid system settings page")
+        metadata = self.apiClient.fetchMetadata() if systemExists else {}
+        if systemExists and not metadata.get("active", True):
+            UploadLog.log("Publish blocked: System has been deactivated by your Sigrid administrator in the Sigrid system settings page")
             sys.exit(1)
 
         self.prepareMetadata()
-        self.validateConfigurationFiles()
+        self.validateConfigurationFiles(metadata)
         analysisId = self.apiClient.submitUpload(systemExists)
 
         if not systemExists:
             UploadLog.log(f"System '{self.options.system}' has been on-boarded and will appear in Sigrid shortly")
         elif self.options.runMode == RunMode.PUBLISH_ONLY:
             UploadLog.log("Your project's source code has been published to Sigrid")
-            self.displayMetadata()
+            self.displayMetadata(metadata)
         else:
-            self.displayFeedback(analysisId)
+            self.displayFeedback(analysisId, metadata)
 
     def prepareRun(self):
         # We don't use the options.feedbackURL directly, since that's intended
@@ -90,12 +94,12 @@ class SigridCiRunner:
         if self.options.feedbackURL:
             self.apiClient.logPlatformInformation(Platform.getPlatformId())
 
-    def displayFeedback(self, analysisId):
+    def displayFeedback(self, analysisId, metadata):
         if self.options.targetRating == "sigrid":
             self.options.targetRating = self.loadSigridTarget()
 
         feedback = self.apiClient.fetchAnalysisResults(analysisId)
-        self.displayMetadata()
+        self.displayMetadata(metadata)
 
         if not os.path.exists(self.options.outputDir):
             os.mkdir(self.options.outputDir)
@@ -103,13 +107,18 @@ class SigridCiRunner:
         for report in self.reports:
             report.generate(analysisId, feedback, self.options)
 
-    def validateConfigurationFiles(self):
+    def validateConfigurationFiles(self, metadata):
         scope = self.options.readScopeFile()
+
         if scope is not None:
             if self.options.subsystem not in (None, "", "root", "scopefile"):
                 UploadLog.log("Warning: You cannot provide a scope configuration file for a subsystem, it will be ignored.")
 
             self.validateConfiguration(lambda: self.apiClient.validateScopeFile(scope), "scope configuration file")
+
+        if scope is None and metadata.get("scopeFileInRepository"):
+            message = {"valid" : False, "notes" : ["Missing sigrid.yaml file", f"See {self.MISSING_SCOPE_URL}"]}
+            self.validateConfiguration(lambda: message, "scope configuration file")
 
         metadataFile = self.options.readMetadataFile()
         if metadataFile is not None:
@@ -129,11 +138,11 @@ class SigridCiRunner:
             UploadLog.log("-" * 80)
             sys.exit(1)
 
-    def displayMetadata(self):
+    def displayMetadata(self, metadata):
         if self.options.readMetadataFile() == None:
             print("")
             print("Sigrid metadata for this system:")
-            for key, value in self.apiClient.fetchMetadata().items():
+            for key, value in metadata.items():
                 if value:
                     print(f"    {key}:".ljust(20) + str(value))
 
