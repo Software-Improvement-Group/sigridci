@@ -693,7 +693,6 @@ class MockApiClient(SigridApiClient):
         self.POLL_INTERVAL = 1
 
     def callSigridAPI(self, path, body=None, contentType=None):
-        print(path)
         self.called.append(path)
     
         if not self.systemExists and path.endswith("/sigridci/aap/noot/v1/ci"):
