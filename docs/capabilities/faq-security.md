@@ -29,6 +29,10 @@ Yes. This is configurable. Scanning transitive dependencies is preferable from a
 
 Therefore, scanning transitive dependencies can be enabled or disabled in [the analysis configuration](../reference/analysis-scope-configuration.md#open-source-health). 
 
+### Does Sigrid for Mendix (QSM) scan for transitive dependencies.
+No. While QSM allows the option to turn on transitive dependency scanning via the sigrid.yaml, we do not advise it as it leads to a significant increase of findings which are already refined an investigated by the Mendix marketplace team and are not actionable by the user themselves.
+
+
 ### Why does the finding list count certain findings twice?
 
 The findings list indicates *compliance*. Sometimes a single finding on a vulnerable library has multiple vulnerabilities in multiple categories (e.g. injection and XXE). In that case these are counted separately in the list. However, despite the finding appearing in multiple categories, it is still the same finding. It only counts as a single finding towards the total, and resolving the finding will resolve it towards all categories.
