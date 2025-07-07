@@ -427,6 +427,10 @@ We recommend you add `sigrid.yaml` to your repository, so that it is automatical
 
 - If you want to *retrieve* the scope configuration file used by Sigrid, you can use the [Sigrid API](../integrations/sigrid-api-documentation.md). You can also use the [example code on GitHub](https://github.com/Software-Improvement-Group/sigrid-integrations/tree/main/get-scope-file) for this.
 - If you want to *update* the scope configuration file, independently of your source code, you can still use [Sigrid CI](client-script-usage.md). You can also use the [example code on GitHub](https://github.com/Software-Improvement-Group/sigrid-integrations/tree/main/get-scope-file) for this.
+
+## Removing the scope configuration file
+
+Once you have decided to create a scope configuration file to customize your Sigrid configuration, there is no way to go back. If you try to delete the `sigrid.yaml` file from your repository, you will receive an error message when trying to run Sigrid CI.
           
 ## Sigrid metadata
 
