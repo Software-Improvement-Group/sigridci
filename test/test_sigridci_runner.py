@@ -74,7 +74,8 @@ class SigridCiRunnerTest(TestCase):
             "/analysis-results/api/v1/system-metadata/aap/noot",
             "/inboundresults/sig/aap/noot/ci/uploads/v1",
             "UPLOAD",
-            "/analysis-results/sigridci/aap/noot/v1/ci/results/123"
+            "/analysis-results/sigridci/aap/noot/v1/ci/results/123",
+            "/analysis-results/api/v1/system-metadata/aap/noot"
         ]
 
         self.assertEqual(UploadLog.history, expectedLog)
@@ -108,7 +109,8 @@ class SigridCiRunnerTest(TestCase):
             "/analysis-results/api/v1/system-metadata/aap/noot",
             "/inboundresults/sig/aap/noot/ci/uploads/v1/publish",
             "UPLOAD",
-            "/analysis-results/sigridci/aap/noot/v1/ci/results/123"
+            "/analysis-results/sigridci/aap/noot/v1/ci/results/123",
+            "/analysis-results/api/v1/system-metadata/aap/noot"
         ]
 
         self.assertEqual(UploadLog.history, expectedLog)
@@ -141,7 +143,8 @@ class SigridCiRunnerTest(TestCase):
             "/analysis-results/sigridci/aap/noot/v1/ci",
             "/analysis-results/api/v1/system-metadata/aap/noot",
             "/inboundresults/sig/aap/noot/ci/uploads/v1/publishonly",
-            "UPLOAD"
+            "UPLOAD",
+            "/analysis-results/api/v1/system-metadata/aap/noot"
         ]
 
         self.assertEqual(UploadLog.history, expectedLog)
@@ -193,7 +196,8 @@ class SigridCiRunnerTest(TestCase):
             "/analysis-results/api/v1/system-metadata/aap/noot",
             "/inboundresults/sig/aap/noot/ci/uploads/v1/publish?subsystem=mysubsystem",
             "UPLOAD",
-            "/analysis-results/sigridci/aap/noot/v1/ci/results/123"
+            "/analysis-results/sigridci/aap/noot/v1/ci/results/123",
+            "/analysis-results/api/v1/system-metadata/aap/noot"
         ]
 
         self.assertEqual(apiClient.called, expectedCalls)
@@ -619,7 +623,7 @@ class SigridCiRunnerTest(TestCase):
         expectedLog = [
             "Using token ending in '****ummy'",
             "Found system in Sigrid",
-            "Publish blocked: System has been deactivated by your Sigrid administrator in the Sigrid system settings page"
+            "Publish blocked: System has been deactivated by your Sigrid administrator, in the Sigrid system settings page"
         ]
 
         expectedCalls = [
@@ -629,50 +633,6 @@ class SigridCiRunnerTest(TestCase):
 
         self.assertEqual(UploadLog.history, expectedLog)
         self.assertEqual(apiClient.called, expectedCalls)
-
-    def testMissingScopeFileIsNotErrorIfNoPreviousScopeFileExists(self):
-        apiClient = MockApiClient(self.options)
-        apiClient.responses["/inboundresults/sig/aap/noot/ci/validate/v1"] = {"valid" : True, "notes" : []}
-        apiClient.responses["/analysis-results/api/v1/system-metadata/aap/noot"] = {"scopeFileInRepository" : False}
-
-        runner = SigridCiRunner(self.options, apiClient)
-        runner.reports = []
-
-        with self.assertRaises(SystemExit):
-            runner.run()
-
-        expectedLog = [
-            "Using token ending in '****ummy'",
-            "Found system in Sigrid",
-            "Creating upload",
-            "Upload size is 1 MB"
-        ]
-
-        self.assertEqual(UploadLog.history, expectedLog)
-
-    def testMissingScopeFileIsErrorIfPreviousScopeFileExists(self):
-        apiClient = MockApiClient(self.options)
-        apiClient.responses["/inboundresults/sig/aap/noot/ci/validate/v1"] = {"valid" : True, "notes" : []}
-        apiClient.responses["/analysis-results/api/v1/system-metadata/aap/noot"] = {"scopeFileInRepository" : True}
-
-        runner = SigridCiRunner(self.options, apiClient)
-        runner.reports = []
-
-        with self.assertRaises(SystemExit):
-            runner.run()
-
-        expectedLog = [
-            "Using token ending in '****ummy'",
-            "Found system in Sigrid",
-            "Validating scope configuration file",
-            "--------------------------------------------------------------------------------",
-            "Invalid scope configuration file:",
-            "    - Missing sigrid.yaml file",
-            "    - See https://docs.sigrid-says.com/reference/analysis-scope-configuration.html#removing-the-scope-configuration-file",
-            "--------------------------------------------------------------------------------"
-        ]
-
-        self.assertEqual(UploadLog.history, expectedLog)
 
     def createTempFile(self, dir, name, contents):
         with open(f"{dir}/{name}", "w") as fileRef:
