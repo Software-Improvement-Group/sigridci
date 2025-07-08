@@ -81,3 +81,12 @@ In general, we recommend you address Open Source Health risks by [updating your 
 However, there are situations in which it is impossible address a risk, and the only remaining option is to simply accept it. For example, some vulnerabilities are disputed. In that situation, "fixing" the risk is not possible, as there is no library version that removes the (disputed) vulnerability. Depicting those risks can lead to misinterpretation, as people looking at Sigrid without context have no way of knowing this vulnerability isn't as serious as it first seems. 
 
 You can therefore exclude certain risks in the [Open Source Health configuration options](../reference/analysis-scope-configuration.md#exclude-open-source-health-risks). This includes situations where you want to exclude a certain finding for a library (e.g. license risk) while still wanting Sigrid to scan the library for other types of risk.
+
+## How does Sigrid handle transitive dependencies?
+
+The term "transitive dependencies" means the dependencies of your dependencies. By default, Sigrid will *not* report on transitive dependencies, and will only cover your direct dependencies. 
+
+However, you can enable transitive dependency scanning in the [Sigrid configuration](../reference/analysis-scope-configuration.md#open-source-health). If you decide to enable this option, the transitive dependencies will *only* count towards your system's vulnerability risk and license risk. Other types of risk, like the freshness risk, do not apply to transitive dependencies. 
+
+So why do some risks apply to transitive dependencies, but not others? The key difference is *who* is responsible for the risk. If your system contains security vulnerabilities in transitive dependencies, that's your problem, because your system is now vulnerable. Same for license risk. For something like freshness risk, that's *not* your problem, it's the problem of the people maintaining your direct dependency which is using the direct dependency.
+
