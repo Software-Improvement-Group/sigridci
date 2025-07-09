@@ -3,6 +3,13 @@ Sigrid release notes
 
 SIG uses [continuous delivery](https://en.wikipedia.org/wiki/Continuous_delivery), meaning that every change to Sigrid or the underlying analysis is released once our development pipeline has completed. On average, we release somewhere between 10 and 20 times per day. This page therefore doesn't list every single change, since that would quickly lead to an excessively long list of small changes. Instead, this page lists Sigrid and analysis changes that we consider noteworthy for the typical Sigrid user.
 
+### July 14, 2025
+
+- **Maintainability:** The [maintainability benchmark view](../capabilities/portfolio-maintainability.md#maintainability-benchmark) is now available in Sigrid. This visualization is used often in SIG consultancy and the Report Generator, but is now also available from Sigrid itself. 
+- **Open Source Health:** Sigrid now recognizes open source libraries with "and"/"or" licenses, which are commonly used in the [SPDX license ID](https://spdx.dev/learn/handling-license-info/). The license risk is then based on the most permissive part of the license.
+- **Report Generator:** The Report Generator can now also generate the [system maintainability one-pager](https://github.com/Software-Improvement-Group/sigrid-integrations/tree/main/report-generator#generating-standard-reports). This is a "classic" SIG report that, as the name implies, focuses on the maintainability trend for an single system.
+- **Technology support:** In Kotlin, [single expression functions](https://medium.com/@husayn.fakher/understanding-single-expression-functions-in-kotlin-10-questions-answered-09bacf6789e8) are now considered as units by Sigrid. This will result in feedback that is both more fair and more actionable. 
+
 ### June 30, 2025
 
 - **Mendix QSM:** Sigrid now supports [Mendix MPR version 2](https://medium.com/@anjaanabishek/still-on-mendix-mpr-v1-heres-why-it-s-time-to-upgrade-to-mpr-v2-38092567fe6e).

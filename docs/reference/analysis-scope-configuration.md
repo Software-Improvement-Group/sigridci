@@ -52,9 +52,12 @@ It is possible to extend this list with project-specific files and directories t
 
 Note that it is not necessary to exclude files and directories that would not be analyzed anyway.
 
-Also note that you need to specify excludes for maintainability, components, languages and dependencychecker ***independently***. However, excludes for maintainability do apply to thirdpartyfindings.
+Adding files and direcories to the top-level `exclude` option will *not* exclude those files and directories from the 
+security scan. See [excluding files and directories from security scanning](#excluding-files-and-directories-from-security-scanning)
+if you want to *also* exclude files/directories for security.
+{: .warning }
 
-Patterns are defined using regular expressions, as explained in the next section.
+Exclude patterns are defined using regular expressions, as explained in the next section.
 
 ### Defining include and exclude patterns
 
@@ -266,13 +269,25 @@ Sigrid uses a combination of its own security checks and security checks perform
 
 This `thirdpartyfindings` section in the scope file supports the following options:
 
-| Option name              | Required? | Description                                                                         |
-|--------------------------|-----------|-------------------------------------------------------------------------------------|
-| `enabled`                | Yes       | Set to `true` to enable security analysis.                                          |
-| `exclude`                | No        | List of file/directory patterns that should be excluded from the security analysis. |
-| `disabled_rules`         | No        | List of rule IDs that should be ignored during analysis.                            |
-| `disabled_analyzers`     | No        | List of specific scanning tools that should be ignored during analysis.             |
-| `enabled_analyzers`      | No        | List of specific scanning tools to enable (if not enabled by default).              |
+| Option name              | Required? | Description                                                                                                            |
+|--------------------------|-----------|------------------------------------------------------------------------------------------------------------------------|
+| `enabled`                | Yes       | Set to `true` to enable security analysis.                                                                             |
+| `exclude`                | No        | See [excluding files and directories from security scanning](#excluding-files-and-directories-from-security-scanning). |
+| `disabled_rules`         | No        | List of rule IDs that should be ignored during analysis.                                                               |
+| `disabled_analyzers`     | No        | List of specific scanning tools that should be ignored during analysis.                                                |
+| `enabled_analyzers`      | No        | List of specific scanning tools to enable (if not enabled by default).                                                 |
+
+### Excluding files and directories from security scanning
+
+You can use the `exclude` option to exclude certain files and directories from the security scan.
+
+    thirdpartyfindings:
+      exclude:
+        - ".*/stub/.*"
+
+Like other include/exclude patterns in Sigrid, these options are defined using
+[refular expressions](#defining-include-and-exclude-patterns).
+The example above will therefore exclude all files in the directory `stub`.
 
 ### Excluding security rules
 
