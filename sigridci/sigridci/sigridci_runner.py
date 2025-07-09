@@ -116,7 +116,7 @@ class SigridCiRunner:
 
             self.validateConfiguration(lambda: self.apiClient.validateScopeFile(scope), "scope configuration file")
 
-        if scope is None and metadata.get("scopeFileInRepository"):
+        if scope is None and metadata.get("scopeFileInRepository") and not self.options.subsystem:
             message = {"valid" : False, "notes" : ["Missing sigrid.yaml file", f"See {self.MISSING_SCOPE_URL}"]}
             self.validateConfiguration(lambda: message, "scope configuration file")
 

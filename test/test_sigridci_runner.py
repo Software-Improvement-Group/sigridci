@@ -674,6 +674,27 @@ class SigridCiRunnerTest(TestCase):
 
         self.assertEqual(UploadLog.history, expectedLog)
 
+    def testMissingScopeFileIsFineForSubsystems(self):
+        apiClient = MockApiClient(self.options)
+        apiClient.responses["/inboundresults/sig/aap/noot/ci/validate/v1"] = {"valid" : True, "notes" : []}
+        apiClient.responses["/analysis-results/api/v1/system-metadata/aap/noot"] = {"scopeFileInRepository" : True}
+
+        self.options.subsystem = "aap"
+        runner = SigridCiRunner(self.options, apiClient)
+        runner.reports = []
+
+        with self.assertRaises(SystemExit):
+            runner.run()
+
+        expectedLog = [
+            "Using token ending in '****ummy'",
+            "Found system in Sigrid",
+            "Creating upload",
+            "Upload size is 1 MB"
+        ]
+
+        self.assertEqual(UploadLog.history, expectedLog)
+
     def createTempFile(self, dir, name, contents):
         with open(f"{dir}/{name}", "w") as fileRef:
             fileRef.write(contents)
