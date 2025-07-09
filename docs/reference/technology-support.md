@@ -312,7 +312,7 @@ This page provides an overview of all technologies that can be analyzed by Sigri
 | `xul`                      | XUL                                      | Maintainability                             |
 | `yaml`                     | YAML                                     | Maintainability, Architecture               | [(5)](#notes)     |
 
-#### Notes
+### Notes
 
 1. Use either `c` or `cpp`, but not both.
   - Prefer `cpp` if your system contains a combination of C and C++ code.
@@ -337,6 +337,43 @@ This page provides an overview of all technologies that can be analyzed by Sigri
 9. Sigrid CI is not supported for this technology. You can still use Sigrid, but you will need to use one of the [alternative upload channels](../organization-integration/upload-instructions.md).
 10. `typescript` should also be used with React and/or JSX files with Typescript that use the `.ts` or `.tsx` file extensions.
 11. Technology support is currently in beta, and not yet generally available. Contact SIG if you want to participate in this beta program.
+
+### Framework-specific support
+
+The [list of supported technologies](#list-of-supported-technologies) refers to the *base* technologies. 
+For many modern technologies, the choice of frameworks has a significant impact on your system structure and architecture.
+Sigrid therefore also provides support for framework-specific constructs, for the following frameworks:
+
+Android,
+Angular,
+Doctrine,
+Entity Framework,
+Flask,
+GWT,
+JavaFX,
+Javalin,
+JDBC,
+JMS,
+JNI,
+JPA,
+Hibernate,
+Laminas,
+Mongoose,
+Qt,
+RabbitMQ,
+React,
+S3,
+Spring,
+Spring Boot,
+Spring Cloud,
+Spring Data,
+Spring Kafka,
+Styled Components,
+Swing,
+Svelte,
+WPF
+VueJS,
+Yii.
 
 ## Technology conversion configuration
 
@@ -430,22 +467,22 @@ Note this section only described *third party* security analysis analyzers. The 
 | Astrée                 | C, C++                            | Requires *Sigrid Security for Embedded Systems* license. |
 | Bandit                 | Python                            |
 | Checkmarx              | (many)                            | Requires *Sigrid Security Checkmarx* license.            |
-| ErrorProne.NET         | C#                                |
+| ErrorProne.NET         | C#                                | Requires compiling code.                                 |
 | ESLint                 | JavaScript, TypeScript            |
 | FB Contrib             | Java                              |
 | FindSecBugs            | Java                              |
 | FlawFinder             | C                                 |
-| Google ErrorProne      | Java                              |
+| Google ErrorProne      | Java                              | Requires compiling code.                                 |
 | Gosec                  | Go                                |
 | KICS                   | Docker, Ansible, Kubernetes, etc. |
-| Microsoft Code Quality | C#                                |
+| Microsoft Code Quality | C#                                | Requires compiling code.                                 |
 | MobSF                  | Android                           |
-| MultithreadingAnalyzer | C#                                |
+| MultithreadingAnalyzer | C#                                | Requires compiling code.                                 |
 | NodeJS Scan            | JavaScript, TypeScript            |
-| Puma Security          | C#                                |
-| SecurityCodeScan       | C#                                |
-| SonarQube (C#)         | C#                                |
-| SonarQube (Java)       | Java                              |
+| Puma Security          | C#                                | Requires compiling code.                                 |
+| SecurityCodeScan       | C#                                | Requires compiling code.                                 |
+| SonarQube (C#)         | C#                                | Requires compiling code.                                 |
+| SonarQube (Java)       | Java                              | Requires compiling code.                                 | 
 | SpotBugs               | Java                              |
 | SemGrep                | (many)                            |
 | VMWare CSA             | Java, C#, configuration           | Cloud Suitability Analyzer.                              |

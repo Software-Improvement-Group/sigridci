@@ -133,3 +133,17 @@ class ScopeFileSchemaTest(TestCase):
             self.assertTrue(False, "ValidationError should have been raised")
         except jsonschema.ValidationError as e:
             self.assertTrue("'aap' is not one of ['all', 'sbom']" in e.message)
+
+    def testArchitectureRoleOption(self):
+        scope = """
+            languages:
+              - Python
+            architecture:
+              component_roles:
+                - role: utility
+                  include:
+                    - ".*util.*"
+            """
+
+        parsedScope = yaml.load(scope, Loader=yaml.FullLoader)
+        jsonschema.validate(instance=parsedScope, schema=self.schema)
