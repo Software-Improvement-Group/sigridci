@@ -291,6 +291,17 @@ summary {
     border-left: 4px solid transparent;
 }
 
+.container nav .toc a.page em {
+    font-style: normal;
+    text-transform: uppercase;
+    font-size: 10px;
+    background-color: var(--sig-orange);
+    margin-left: 12px;
+    padding: 4px 8px 1px 8px;
+    border-radius: 8px;
+    color: var(--sig-white);
+}
+
 .container nav .toc a.subPage {
     padding-left: 56px !important;
     font-size: 12px !important;

@@ -69,7 +69,7 @@ Here, "*Maintainability change*" is chosen as the meaning of the color scheme. T
 
 You can filter per division/team/supplier on different quality aspects, and track the trends of each. 
 
-## Trends in the context of and objectives
+## Trends in the context of objectives
 Whether quality trends are heading in the right direction does depend on context/goals. The expected quality direction is not necessarily only upwards, but could be: restrict deterioration, stabilization, or cutting volume as a priority. This is why [quality objectives](objectives.md) are important. System-/portfolio quality overviews and their standing on helps getting a shared understanding and commitment towards quality of systems and the portfolio.
 
 ## Using quality trend lines 
@@ -79,3 +79,10 @@ On a trend line, quality trends can help you see movements over time, possibly f
 
 Systems can be (un)selected on the bottom of the graph. 
 
+## Maintainability benchmark
+
+The top-level "maintainability" menu contains the SIG maintainability benchmark view. This view will depict the systems in your portfolio, relative to the thousands of other systems in the SIG benchmark. 
+
+<img src="../images/maintainability-benchmark.png" width="600" />
+
+In this visualization, the horizontal axis represents the system volume in person years, and the vertical axis represents the maintainability star rating. Each dot represents one of the systems in the SIG maintainability benchmark.

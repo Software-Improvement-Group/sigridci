@@ -113,6 +113,7 @@ picture in the previous section.
 | systemElement.observationType       | See the list of [architecture observations](#architecture-observations) below. Optional field. [1]             |
 | systemElement.technology            | Indicates this is a technology-specific system element. Optional field. [2]                                    |
 | systemElement.annotation            | Text description that provides information for system elements. Optional field, defined in configuration. [3]  |
+| systemElement.roles                 | List of [role labels](#component-role-labels). Optional field.                                                 |
 | dependency.id                       | ID based on the dependency's fingerprint. Dependencies will retain the same ID across subsequent scans.        |
 | dependency.sourceElementId          | Refers to one of the entries in `systemElements`.                                                              |
 | dependency.targetElementId          | Refers to one of the entries in `systemElements`.                                                              |
@@ -197,3 +198,9 @@ Dependency types are considated into three "families":
 | USER_INTERFACE_MOBILE  | Deployed as a mobile application (i.e. iOS or Android).       | Yes         |
 | USER_INTERFACE_WEB     | Exposes a web/browser interface.                              | Yes         |
 | WEB_APP                | Deployed as a web back-end.                                   | No          |
+
+### Component role labels
+
+| Role    | Description                            |
+|---------|----------------------------------------|
+| UTILITY | Indicates this is a utility component. |
