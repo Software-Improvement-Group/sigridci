@@ -48,7 +48,7 @@ Some Sigrid On-Premise features are *optional*:
 
 ## Obtaining Sigrid on-premise
 
-The Docker containers that form Sigrid On-Premise are distributed via [AWS ECR registry](571600876202.dkr.ecr.eu-central-1.amazonaws.com/). You will receive an account that allows you to access the container registry. 
+The Docker containers that form Sigrid On-Premise are distributed via AWS ECR registry. You will receive an account that allows you to access the container registry. 
 
 <img src="../images/onpremise-ecr-private-repo.png" width="100%" /> 
 

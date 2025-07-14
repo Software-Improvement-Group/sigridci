@@ -9,7 +9,7 @@ This documentation offers useful examples and context on how to use SIG's Elasti
 
 - You should have already read the other Sigrid On-Premise documentation.
 - All pre-requisites from our public documentation are met.
-- You have access to Software Improvement Group [AWS ECR registry](571600876202.dkr.ecr.eu-central-1.amazonaws.com/).
+- You have access to Software Improvement Group AWS ECR registry.
 - AWS CLI version 2.x. is available on the client that will pull be used to pull Sigrid's container images and helm chart.
 
 
