@@ -30,7 +30,7 @@ Some Sigrid On-Premise features are *optional*:
 ## Requirements
 
 - Your infrastructure needs to support running applications on Kubernetes.
-- You need to allow outbound connections to pull the latest Sigrid container images from [AWS ECR registry](571600876202.dkr.ecr.eu-central-1.amazonaws.com).
+- You need to allow outbound connections to pull the latest Sigrid container images from AWS ECR registry.
   - You can pull them directly into your Kubernetes or use your own container registry.
   - You are prepared to update Sigrid regularly, at minimum monthly.
 - You need to support and manage a Postgres database service.
