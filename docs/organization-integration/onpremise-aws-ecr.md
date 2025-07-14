@@ -19,7 +19,7 @@ The below script provides and example on how to authenticate and download the la
 
 ```bash
 SIGRID_DOWNLOAD_REGION="eu-central-1"
-SIGRID_DOWNLOAD_REGISTRY="5012345678901.dkr.ecr.${SIGRID_DOWNLOAD_REGION}.amazonaws.com"
+SIGRID_DOWNLOAD_REGISTRY="571600876202.dkr.ecr.${SIGRID_DOWNLOAD_REGION}.amazonaws.com"
 HELM_REPOSITORY_NAME="softwareimprovementgroup/sigrid-stack"
 HELM_REPOSITORY_URI="${SIGRID_DOWNLOAD_REGISTRY}/${HELM_REPOSITORY_NAME}"
 export AWS_ACCESS_KEY_ID="AKIAEXAMPLE" # Please replace with the one provided by SIG
@@ -37,7 +37,7 @@ After that, it pulls the specified images with the given version.
 
 ```bash
 SIGRID_DOWNLOAD_REGION="eu-central-1"
-SIGRID_DOWNLOAD_REGISTRY="5012345678901.dkr.ecr.${SIGRID_DOWNLOAD_REGION}.amazonaws.com"
+SIGRID_DOWNLOAD_REGISTRY="571600876202.dkr.ecr.${SIGRID_DOWNLOAD_REGION}.amazonaws.com"
 
 export AWS_ACCESS_KEY_ID="AKIAEXAMPLE" # Please replace with the one provided by SIG
 export AWS_SECRET_ACCESS_KEY="EXAMPLESECRET" # Please replace with the one provided by SIG
