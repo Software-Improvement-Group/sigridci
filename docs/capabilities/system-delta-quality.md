@@ -1,5 +1,5 @@
 # System-level Delta quality
-Delta quality is a part of the system maintainability analysis. As such it is default for all systems. It requires more than 1 snapshot to make a comparison. Delta quality tells you 
+Delta quality is a part of the system maintainability analysis. As such it is default for all systems. It requires more than 1 snapshot to make a comparison. Delta quality in Sigrid provides insights into how code changes impact your software system's overall quality over time. It allows you to track the quality of new, modified, and deleted code, helping ensure that development efforts are maintaining or improving code quality rather than introducing technical debt.
 
 ## Navigating to Delta quality view
 You can reach this view in different ways: Via the top menu, or clicking an a capability on the System or Portfolio *Overview* pages. See the [system-level Overview page](system-overview.md#navigating-to-capabilities) or [portfolio-level Overview page](portfolio-overview.md#navigating-to-capabilities).
