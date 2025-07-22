@@ -14,6 +14,7 @@
 
 import os
 import re
+import yaml
 from bs4 import BeautifulSoup
 from unittest import TestCase
 
@@ -67,7 +68,25 @@ class DocumentationTest(TestCase):
             for line in contents.split("\n"):
                 if "<sig-toc>" in line:
                     self.fail(f"{file} should not define it's own table of contents")
-        
+
+    def testTechnologySupportListShouldMatchYaml(self):
+        with open("resources/technologies.yaml", "r") as f:
+            technologyList = yaml.safe_load(f)
+            technologyMap = {tech["context"]: tech for tech in technologyList}
+
+        with open("docs/reference/technology-support.md", "r") as f:
+            rows = [line for line in f.readlines() if line.startswith("| `")]
+            getCells = lambda row: [cell.replace("`", "").strip() for cell in row.split("|") if cell != ""]
+            supportTable = [getCells(row) for row in rows]
+
+        for row in supportTable:
+            if row[0] not in technologyMap:
+                self.fail(f"Technology '{row[0]}' is not defined in technologies.yaml")
+
+        for tech in technologyList:
+            if tech["context"] not in [row[0] for row in supportTable] and tech["context"] != "unknown":
+                self.fail(f"Technology '{tech['context']}' is not defined in technology support table")
+
     def readDocumentationPages(self):
         with open("README.md", "r") as fileRef:
             yield ("README.md", fileRef.read())
