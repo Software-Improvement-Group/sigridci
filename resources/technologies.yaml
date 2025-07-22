@@ -1,0 +1,1260 @@
+- context: abap
+  display_name: "ABAP"
+  category: customization
+
+- context: abapcds
+  display_name: "ABAP Core Data Services"
+  category: customization
+
+- context: abapsmartforms
+  display_name: "ABAP SmartForms"
+  category: customization
+
+- context: abl
+  display_name: "Abl"
+  category: legacy
+
+- context: accell
+  display_name: "Accell"
+  category: legacy
+
+- context: acl
+  display_name: "ACL"
+  category: configuration
+
+- context: actionscript
+  display_name: "ActionScript"
+  category: web
+
+- context: actionscript3
+  display_name: "ActionScript 3"
+  category: web
+
+- context: ada
+  display_name: "Ada"
+  category: legacy
+
+- context: adabasnatural
+  display_name: "Adabas Natural"
+  category: database
+
+- context: adfxml
+  display_name: "ADF XML"
+  category: templating
+
+- context: agilepoint
+  display_name: "AgilePoint"
+  category: bpm
+  visual: true
+
+- context: altovauml
+  display_name: "Altova UML"
+  category: customization
+
+- context: angularjstemplate
+  display_name: "Angular Templates"
+  category: templating
+
+- context: ansible
+  display_name: "Ansible"
+  category: dsl
+
+- context: apachecamel
+  display_name: "Apache Camel"
+  category: bpm
+  visual: true
+
+- context: apex
+  display_name: "APEX"
+  category: database
+
+- context: applicationmaster
+  display_name: "Application Master"
+  category: customization
+
+- context: axystudio
+  display_name: "AxyStudio functions"
+  category: legacy
+
+- context: aps
+  display_name: "APS"
+  category: legacy
+
+- context: ash
+  display_name: "ArtosScript (ash)"
+  category: legacy
+
+- context: asp
+  display_name: "ASP"
+  category: templating
+
+- context: aspx
+  display_name: "ASP.NET"
+  category: templating
+
+- context: assembly
+  display_name: "Assembly"
+  category: embedded
+
+- context: aura
+  display_name: "Aura"
+  category: dsl
+
+- context: axway
+  display_name: "Axway"
+  category: database
+  visual: true
+
+- context: axyworkflow
+  display_name: "Axystudio workflows"
+  category: bpm
+  visual: true
+
+- context: baan
+  display_name: "Baan"
+  category: legacy
+
+- context: basic
+  display_name: "BASIC"
+  category: legacy
+
+- context: batch
+  display_name: "Batch"
+  category: scripting
+
+- context: beanshell
+  display_name: "BeanShell"
+  category: scripting
+
+- context: beinformed
+  display_name: "Be Informed"
+  category: low_code
+  visual: true
+
+- context: beinformedknowledgemodels
+  display_name: "Be Informed Knowledge Models"
+  category: bpm
+  visual: true
+
+- context: biztalk
+  display_name: "BizTalk"
+  category: bpm
+  visual: true
+
+- context: biztalkrules
+  display_name: "BizTalk Rules Engine"
+  category: dsl
+
+- context: blazerules
+  display_name: "Blaze BRM"
+  category: dsl
+
+- context: blueprism
+  display_name: "Blue Prism"
+  category: bpm
+  visual: true
+
+- context: blueriq
+  display_name: "Blueriq flows/processes"
+  category: low_code
+  visual: true
+
+- context: blueriqexpressions
+  display_name: "Blueriq expressions"
+  category: templating
+  visual: true
+
+- context: bsp
+  display_name: "Bsp"
+  category: templating
+
+- context: bpel
+  display_name: "BPEL"
+  category: bpm
+  visual: true
+
+- context: bpm
+  display_name: "BPMN"
+  category: bpm
+  visual: true
+
+- context: brail
+  display_name: "Brail"
+  category: dsl
+
+- context: c
+  display_name: "C"
+  category: embedded
+
+- context: cache
+  display_name: "Cache"
+  category: mainframe
+
+- context: cacheobjectscript
+  display_name: "Cache ObjectScript"
+  category: scripting
+
+- context: ccl
+  display_name: "CCL"
+  category: legacy
+
+- context: cicode
+  display_name: "Cicode"
+  category: legacy
+
+- context: cgdc
+  display_name: "CGDC"
+  category: legacy
+
+- context: cgt
+  display_name: "CGT"
+  category: legacy
+
+- context: cl
+  display_name: "CL"
+  category: configuration
+
+- context: clearbasic
+  display_name: "Clearbasic"
+  category: legacy
+
+- context: cobol
+  display_name: "Cobol"
+  category: mainframe
+
+- context: coffeescript
+  display_name: "CoffeeScript"
+  category: web
+
+- context: coldfusion
+  display_name: "ColdFusion"
+  category: web
+
+- context: configuration
+  display_name: "Configuration"
+  category: configuration
+
+- context: coolgenc
+  display_name: "CoolGen C"
+  category: legacy
+
+- context: coolgencobol
+  display_name: "CoolGen Cobol"
+  category: mainframe
+
+- context: cpp
+  display_name: "C++"
+  category: embedded
+
+- context: csharp
+  display_name: "C#"
+  category: modern_general_purpose
+
+- context: csp
+  display_name: "CSP"
+  category: templating
+
+- context: css
+  display_name: "CSS"
+  category: stylesheet
+
+- context: cucumber
+  display_name: "Cucumber"
+  category: dsl
+
+- context: cypher
+  display_name: "Cypher"
+  category: dsl
+
+- context: dart
+  display_name: "Dart"
+  category: modern_general_purpose
+
+- context: datastage
+  display_name: "Datastage"
+  category: customization
+
+- context: datastageetl
+  display_name: "DatastageETL"
+  category: bpm
+  visual: true
+
+- context: datastageworkflow
+  display_name: "DatastageWorkflow"
+  category: bpm
+  visual: true
+
+- context: db2
+  display_name: "DB2"
+  category: database
+
+- context: dcl
+  display_name: "Dcl"
+  category: mainframe
+
+- context: delphi
+  display_name: "Delphi"
+  category: legacy
+
+- context: delphiforms
+  display_name: "Delphi Forms"
+  category: configuration
+
+- context: deltacobol
+  display_name: "Delta/Cobol"
+  category: mainframe
+
+- context: djangotemplates
+  display_name: "Django Templates"
+  category: templating
+
+- context: docker
+  display_name: "Docker"
+  category: dsl
+
+- context: documentumxcp
+  display_name: "Documentum xCP"
+  category: low_code
+  visual: true
+
+- context: drools
+  display_name: "Drools"
+  category: dsl
+
+- context: dscript
+  display_name: "Dscript"
+  category: dsl
+
+- context: easytrieve
+  display_name: "Easytrieve"
+  category: customization
+
+- context: egl
+  display_name: "EGL"
+  category: dsl
+
+- context: ejs
+  display_name: "EJS"
+  category: customization
+
+- context: elixir
+  display_name: "Elixir"
+  category: modern_general_purpose
+
+- context: embeddedsql
+  display_name: "C++ Embedded SQL"
+  category: database
+
+- context: erb
+  display_name: "ERB"
+  category: templating
+
+- context: esql
+  display_name: "ESQL"
+  category: database
+
+- context: filetab
+  display_name: "File Tab"
+  category: mainframe
+
+- context: finacle
+  display_name: "Finacle"
+  category: customization
+
+- context: fme
+  display_name: "FME"
+  category: bpm
+  visual: true
+
+- context: fortran
+  display_name: "FORTRAN"
+  category: legacy
+
+- context: freeformatcobol
+  display_name: "Freeformat Cobol"
+  category: mainframe
+
+- context: freemarker
+  display_name: "Freemarker"
+  category: templating
+
+- context: gensym
+  display_name: "Gensym"
+  category: customization
+
+- context: go
+  display_name: "Go"
+  category: modern_general_purpose
+
+- context: gosu
+  display_name: "Gosu"
+  category: scripting
+
+- context: groovy
+  display_name: "Groovy"
+  category: modern_general_purpose
+
+- context: grpc
+  display_name: "gRPC"
+  category: configuration
+
+- context: gsp
+  display_name: "GSP"
+  category: templating
+
+- context: guidefinition
+  display_name: "GUI Definition"
+  category: configuration
+
+- context: gupta
+  display_name: "Gupta"
+  category: dsl
+
+- context: haml
+  display_name: "Haml"
+  category: templating
+
+- context: hql
+  display_name: "HQL"
+  category: database
+
+- context: html
+  display_name: "HTML"
+  category: templating
+
+- context: ibmace
+  display_name: "IBM ACE"
+  category: bpm
+  visual: true
+
+- context: ibmbpmbpd
+  display_name: "IBM BPM (BPD)"
+  category: bpm
+  visual: true
+
+- context: ibmbpmprocess
+  display_name: "IBM BPM (Process)"
+  category: bpm
+  visual: true
+
+- context: ideal
+  display_name: "Ideal"
+  category: legacy
+
+- context: informatica
+  display_name: "Informatica"
+  category: customization
+
+- context: informix4gl
+  display_name: "Informix 4GL"
+  category: legacy
+
+- context: informixsql
+  display_name: "Informix SQL"
+  category: database
+
+- context: ingres
+  display_name: "Ingres"
+  category: dsl
+
+- context: intershoppipeline
+  display_name: "Intershop (Pipeline)"
+  category: customization
+  visual: true
+
+- context: jade
+  display_name: "Jade"
+  category: templating
+
+- context: jasperreports
+  display_name: "Jasper Reports"
+  category: configuration
+
+- context: java
+  display_name: "Java"
+  category: modern_general_purpose
+
+- context: javafx
+  display_name: "Java FX"
+  category: web
+
+- context: javascript
+  display_name: "JavaScript"
+  category: modern_general_purpose
+
+- context: jbc
+  display_name: "JBC"
+  category: legacy
+
+- context: jbpm
+  display_name: "jBPM"
+  category: bpm
+  visual: true
+
+- context: jcl
+  display_name: "JCL"
+  category: mainframe
+
+- context: jcs
+  display_name: "JCS"
+  category: dsl
+
+- context: jde
+  display_name: "JDE"
+  category: legacy
+
+- context: jinja
+  display_name: "Jinja"
+  category: templating
+
+- context: jsf
+  display_name: "JSF"
+  category: templating
+
+- context: json
+  display_name: "JSON"
+  category: configuration
+
+- context: jsp
+  display_name: "JSP"
+  category: templating
+
+- context: kotlin
+  display_name: "Kotlin"
+  category: modern_general_purpose
+
+- context: less
+  display_name: "Less"
+  category: stylesheet
+
+- context: linc
+  display_name: "LINC"
+  category: legacy
+
+- context: lion
+  display_name: "Lion"
+  category: legacy
+
+- context: lodestar
+  display_name: "Lodestar"
+  category: legacy
+
+- context: logicapps
+  display_name: "Logic Apps"
+  category: low_code
+  visual: true
+
+- context: logicnets
+  display_name: "LogicNets"
+  category: low_code
+  visual: true
+
+- context: lotusscript
+  display_name: "LotusScript"
+  category: customization
+
+- context: lua
+  display_name: "Lua"
+  category: modern_general_purpose
+
+- context: magnum
+  display_name: "Magnum"
+  category: mainframe
+
+- context: magic
+  display_name: "Magic"
+  category: customization
+
+- context: magik
+  display_name: "Magik"
+  category: customization
+
+- context: matlab
+  display_name: "Matlab"
+  category: scientific
+
+- context: mediationflows
+  display_name: "Mediation Flows"
+  category: bpm
+  visual: true
+
+- context: mendix
+  display_name: "Mendix"
+  category: low_code
+
+- context: mendixflow
+  display_name: "Mendix"
+  category: bpm
+  visual: true
+
+- context: messagebuilder
+  display_name: "MessageBuilder"
+  category: legacy
+
+- context: mpsbehavior
+  display_name: "MPS Behavior"
+  category: dsl
+
+- context: mpsclass
+  display_name: "MPS Class"
+  category: dsl
+
+- context: mpstranslator
+  display_name: "MPS Translator"
+  category: dsl
+
+- context: mule
+  display_name: "Mule"
+  category: bpm
+  visual: true
+
+- context: mtwize
+  display_name: "MtWize"
+  category: configuration
+
+- context: murexdatadictionary
+  display_name: "Murex Data Dictionary"
+  category: customization
+
+- context: murexlookuptable
+  display_name: "Murex Lookup Table"
+  category: customization
+
+- context: murexscript
+  display_name: "Murex Script"
+  category: customization
+
+- context: murexworkflow
+  display_name: "Murex Workflow"
+  category: bpm
+  visual: true
+
+- context: mustache
+  display_name: "Mustache"
+  category: templating
+
+- context: mysql
+  display_name: "MySQL"
+  category: database
+
+- context: nabsic
+  display_name: "Nabsic"
+  category: dsl
+
+- context: naviscript
+  display_name: "Naviscript"
+  category: customization
+
+- context: navision
+  display_name: "Navision"
+  category: customization
+
+- context: netweaveridm
+  display_name: "NetweaverIDM"
+  category: bpm
+  visual: true
+
+- context: netiqidmpolicy
+  display_name: "NetIQ IDM Policy"
+  category: dsl
+
+- context: netiqidmrequest
+  display_name: "NetIQ IDM Request"
+  category: dsl
+
+- context: netiqidmworkflow
+  display_name: "NetIQ IDM Workflow"
+  category: bpm
+  visual: true
+
+- context: nonstopsql
+  display_name: "Nonstop SQL"
+  category: database
+
+- context: normalizedsystemsjava
+  display_name: "Normalized Systems Java"
+  category: dsl
+
+- context: normalizedsystemsjavascript
+  display_name: "Normalized Systems JavaScript"
+  category: dsl
+
+- context: normalizedsystemsmodel
+  display_name: "Normalized Systems Model"
+  category: low_code
+
+- context: normalizedsystemstypescript
+  display_name: "Normalized Systems TypeScript"
+  category: dsl
+
+- context: objectivec
+  display_name: "Objective-C"
+  category: modern_general_purpose
+
+- context: odi
+  display_name: "ODI"
+  category: customization
+
+- context: odm
+  display_name: "ODM"
+  category: bpm
+  visual: true
+
+- context: omt
+  display_name: "OMT"
+  category: dsl
+
+- context: opa
+  display_name: "OPA"
+  category: configuration
+
+- context: opc
+  display_name: "OPC"
+  category: dsl
+
+- context: openroad
+  display_name: "OpenROAD 4GL"
+  category: legacy
+
+- context: oraclebpm
+  display_name: "Oracle BPM"
+  category: bpm
+  visual: true
+
+- context: oracleofsaa
+  display_name: "Oracle OFSAA"
+  category: bpm
+  visual: true
+
+- context: oracleworkflow
+  display_name: "Oracle Workflow"
+  category: bpm
+  visual: true
+
+- context: ords
+  display_name: "ORDS"
+  category: database
+
+- context: osb
+  display_name: "OSB"
+  category: bpm
+  visual: true
+
+- context: osbproxy
+  display_name: "OSB Proxy"
+  category: bpm
+  visual: true
+
+- context: osmprocess
+  display_name: "OSM Process"
+  category: bpm
+  visual: true
+
+- context: osmtask
+  display_name: "OSM Task"
+  category: configuration
+
+- context: outsystems
+  display_name: "OutSystems"
+  category: low_code
+  visual: true
+
+- context: pascal
+  display_name: "Pascal"
+  category: legacy
+
+- context: pega
+  display_name: "Pega"
+  category: customization
+
+- context: pegajsp
+  display_name: "PEGA JSP"
+  category: templating
+
+- context: perl
+  display_name: "Perl"
+  category: scripting
+
+- context: php
+  display_name: "PHP"
+  category: web
+
+- context: plc
+  display_name: "PLC"
+  category: embedded
+
+- context: plcfbd
+  display_name: "PLC Functional Block Diagram"
+  category: embedded
+
+- context: plcil
+  display_name: "PLC Instruction List"
+  category: embedded
+
+- context: plcld
+  display_name: "PLC Ladder Diagram"
+  category: embedded
+
+- context: plcsfc
+  display_name: "PLC Sequential Function Chart"
+  category: embedded
+
+- context: plcst
+  display_name: "PLC Structured Text"
+  category: embedded
+
+- context: pli
+  display_name: "PL/I"
+  category: mainframe
+
+- context: plsql
+  display_name: "PL/SQL"
+  category: database
+
+- context: plsqlforms
+  display_name: "PL/SQL Forms"
+  category: configuration
+
+- context: plsqlreports
+  display_name: "PL/SQL Reports"
+  category: configuration
+
+- context: pluk
+  display_name: "PLUK"
+  category: mainframe
+
+- context: polymertemplates
+  display_name: "Polymer Templates"
+  category: templating
+
+- context: postgresql
+  display_name: "PostgreSQL"
+  category: database
+
+- context: powerbuilder
+  display_name: "Powerbuilder"
+  category: legacy
+
+- context: powercenter
+  display_name: "PowerCenter"
+  category: legacy
+  visual: true
+
+- context: powerfx
+  display_name: "Power Fx"
+  category: low_code
+
+- context: powershell
+  display_name: "Powershell"
+  category: scripting
+
+- context: progress
+  display_name: "Progress"
+  category: legacy
+
+- context: prt
+  display_name: "PRT"
+  category: legacy
+
+- context: puppet
+  display_name: "Puppet"
+  category: sdi
+
+- context: python
+  display_name: "Python"
+  category: modern_general_purpose
+
+- context: r
+  display_name: "R"
+  category: scientific
+
+- context: radience
+  display_name: "Radience"
+  category: legacy
+
+- context: razor
+  display_name: "Razor"
+  category: templating
+
+- context: react
+  display_name: "React"
+  category: web
+
+- context: regelspraak
+  display_name: "ALEF Regelspraak"
+  category: dsl
+  visual: true
+
+- context: regelspraakhtml
+  display_name: "ALEF Regelspraak"
+  category: dsl
+
+- context: rexx
+  display_name: "Rexx"
+  category: mainframe
+
+- context: robot
+  display_name: "Robot"
+  category: scripting
+
+- context: rpg
+  display_name: "RPG"
+  category: mainframe
+
+- context: ruby
+  display_name: "Ruby"
+  category: modern_general_purpose
+
+- context: rust
+  display_name: "Rust"
+  category: modern_general_purpose
+
+- context: salesforceapex
+  display_name: "Salesforce Apex"
+  category: customization
+
+- context: salesforceflow
+  display_name: "Salesforce Flow"
+  category: low_code
+  visual: true
+
+- context: salesforceprocessbuilder
+  display_name: "Salesforce Process Builder"
+  category: low_code
+  visual: true
+
+- context: sappo
+  display_name: "SAP PO"
+  category: customization
+  visual: true
+
+- context: sapui5
+  display_name: "SapUI5"
+  category: customization
+
+- context: sas
+  display_name: "SAS"
+  category: scientific
+
+- context: sasflows
+  display_name: "SAS Flows"
+  category: low_code
+  visual: true
+
+- context: sass
+  display_name: "Sass"
+  category: stylesheet
+
+- context: servicenow
+  display_name: "ServiceNow"
+  category: customization
+  visual: true
+
+- context: siebeldeclarative
+  display_name: "Siebel Declarative"
+  category: customization
+
+- context: siebeljs
+  display_name: "Siebel JS"
+  category: customization
+
+- context: siebelscripted
+  display_name: "Siebel Scripted"
+  category: customization
+
+- context: siebelworkflow
+  display_name: "Siebel Workflow"
+  category: customization
+  visual: true
+
+- context: siebeltbui
+  display_name: "Siebel TBUI"
+  category: customization
+  visual: true
+
+- context: slim
+  display_name: "Slim"
+  category: templating
+
+- context: smalltalk
+  display_name: "Smalltalk"
+  category: legacy
+
+- context: solidity
+  display_name: "Solidity"
+  category: legacy
+
+- context: sonicesb
+  display_name: "Sonic ESB"
+  category: bpm
+  visual: true
+
+- context: spl
+  display_name: "SPL"
+  category: scripting
+
+- context: ssis
+  display_name: "SSIS"
+  category: low_code
+  visual: true
+
+- context: scala
+  display_name: "Scala"
+  category: modern_general_purpose
+
+- context: scl
+  display_name: "SCL"
+  category: scripting
+
+- context: scr
+  display_name: "SCR"
+  category: legacy
+
+- context: script
+  display_name: "Shell script"
+  category: scripting
+
+- context: sqlj
+  display_name: "SQLJ"
+  category: database
+
+- context: sqlite
+  display_name: "SQLite"
+  category: database
+
+- context: sqr
+  display_name: "SQR"
+  category: legacy
+
+- context: starlimssql
+  display_name: "StarLIMS"
+  category: legacy
+
+- context: streamserve
+  display_name: "StreamServe"
+  category: dsl
+
+- context: swift
+  display_name: "Swift"
+  category: modern_general_purpose
+
+- context: synapse
+  display_name: "Synapse"
+  category: templating
+
+- context: synon
+  display_name: "Synon"
+  category: legacy
+
+- context: t4
+  display_name: "T4"
+  category: templating
+
+- context: tacl
+  display_name: "TACL"
+  category: legacy
+
+- context: tal
+  display_name: "TAL"
+  category: legacy
+
+- context: tandem
+  display_name: "Tandem"
+  category: mainframe
+
+- context: tapestry
+  display_name: "Tapestry"
+  category: templating
+
+- context: terraform
+  display_name: "Terraform"
+  category: sdi
+
+- context: thrift
+  display_name: "Thrift"
+  category: configuration
+
+- context: thymeleaf
+  display_name: "Thymeleaf"
+  category: templating
+
+- context: tibco
+  display_name: "TIBCO BW"
+  category: bpm
+  visual: true
+
+- context: tibcobe
+  display_name: "TIBCO BE (XML)"
+  category: bpm
+
+- context: tibcobejava
+  display_name: "TIBCO BE (Java)"
+  category: customization
+
+- context: tibcobestatemachine
+  display_name: "TIBCO BE (State Machine)"
+  category: customization
+
+- context: tibcobw6
+  display_name: "TIBCO BW6"
+  category: bpm
+  visual: true
+
+- context: tripleforms
+  display_name: "TriplEforms"
+  category: templating
+  visual: true
+
+- context: trs
+  display_name: "TRS Transactietabellen"
+  category: dsl
+
+- context: tsql
+  display_name: "T-SQL"
+  category: database
+
+- context: turtle
+  display_name: "Turtle"
+  category: dsl
+
+- context: twig
+  display_name: "Twig"
+  category: templating
+
+- context: typescript
+  display_name: "TypeScript"
+  category: modern_general_purpose
+
+- context: uil
+  display_name: "UIL (Motif)"
+  category: configuration
+
+- context: uniface
+  display_name: "Uniface"
+  category: legacy
+
+- context: until
+  display_name: "Until"
+  category: legacy
+
+- context: vag
+  display_name: "Visual Age"
+  category: legacy
+
+- context: vagrecord
+  display_name: "Visual Age Record"
+  category: configuration
+
+- context: vb
+  display_name: "VB"
+  category: legacy
+
+- context: vbnet
+  display_name: "VB.Net"
+  category: legacy
+
+- context: velocity
+  display_name: "Velocity"
+  category: templating
+
+- context: vgl
+  display_name: "VGL"
+  category: legacy
+
+- context: visualforce
+  display_name: "VisualForce"
+  category: templating
+
+- context: visualrpg
+  display_name: "Visual RPG"
+  category: legacy
+
+- context: visualobjects
+  display_name: "Visual Objects"
+  category: dsl
+
+- context: vuejs
+  display_name: "VueJS"
+  category: web
+
+- context: vuets
+  display_name: "VueTS"
+  category: web
+
+- context: vulcan
+  display_name: "Vulcan.NET"
+  category: dsl
+
+- context: webfocus
+  display_name: "WebFocus"
+  category: legacy
+
+- context: webmethods
+  display_name: "WebMethods"
+  category: bpm
+  visual: true
+
+- context: websmart
+  display_name: "WebSmart"
+  category: dsl
+
+- context: websmartpanels
+  display_name: "WebSmart Panels"
+  category: templating
+
+- context: wonderware
+  display_name: "Wonderware"
+  category: dsl
+
+- context: wtx
+  display_name: "WTX"
+  category: dsl
+
+- context: wsdl
+  display_name: "WSDL"
+  category: configuration
+
+- context: xaml
+  display_name: "XAML"
+  category: templating
+
+- context: xml
+  display_name: "XML"
+  category: configuration
+
+- context: xpdl
+  display_name: "Tibco ActiveMatrix BPM"
+  category: bpm
+  visual: true
+
+- context: xpp
+  display_name: "X++ AX"
+  category: customization
+
+- context: xpp365
+  display_name: "X++ 365"
+  category: customization
+
+- context: xquery
+  display_name: "Xquery"
+  category: templating
+
+- context: xsd
+  display_name: "XSD"
+  category: configuration
+
+- context: xslt
+  display_name: "XSLT"
+  category: templating
+
+- context: xul
+  display_name: "XUL"
+  category: templating
+
+- context: yaml
+  display_name: "YAML"
+  category: configuration
+
+- context: unknown
+  display_name: "Unknown"
+  category: configuration

@@ -147,3 +147,17 @@ class ScopeFileSchemaTest(TestCase):
 
         parsedScope = yaml.load(scope, Loader=yaml.FullLoader)
         jsonschema.validate(instance=parsedScope, schema=self.schema)
+
+    def testDanglingExcludeOptionIsError(self):
+        scope = """
+            languages:
+              - Python
+            exclude:
+            """
+
+        try:
+            parsedScope = yaml.load(scope, Loader=yaml.FullLoader)
+            jsonschema.validate(instance=parsedScope, schema=self.schema)
+            self.assertTrue(False, "ValidationError should have been raised")
+        except jsonschema.ValidationError as e:
+            self.assertTrue("None is not of type 'array'" in e.message)
