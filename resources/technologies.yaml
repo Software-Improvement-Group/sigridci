@@ -876,10 +876,6 @@
   display_name: "Razor"
   category: templating
 
-- context: react
-  display_name: "React"
-  category: web
-
 - context: regelspraak
   display_name: "ALEF Regelspraak"
   category: dsl
