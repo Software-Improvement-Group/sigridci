@@ -47,6 +47,7 @@ class SystemUploadPacker:
         ".idea/",
         ".m2/",
         "m2/repo/",
+        ".mendix-cache/",
         ".nx/",
         ".pip-cache/",
         ".pip-packages/",
