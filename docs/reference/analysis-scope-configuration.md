@@ -122,9 +122,9 @@ This automatic detection is usually sufficient for the majority of projects. How
           include:
             - ".*/our-smoke-tests/.*[.]java"
 
-This example will classify all Java code in the `our-smoke-tests` directory as test code.
+This example will classify all Java code in the `our-smoke-tests` directory as test code. The patterns for test code take precedence over the patterns for production code.   
 
-If you choose to manually override the technology detection, be aware that every file must match a single technology. Defining overlapping patterns, where multiple technologies "claim" the same file, will result in an error.
+If you choose to manually override the technology detection, be aware that every file must match a single technology. If you define overlapping patterns where multiple technologies "claim" the same file, the first matching technology will be used.
 {: .warning }
 
 ## Defining components
