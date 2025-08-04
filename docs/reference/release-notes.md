@@ -6,6 +6,7 @@ SIG uses [continuous delivery](https://en.wikipedia.org/wiki/Continuous_delivery
 ### July 28, 2025
 
 - **Management dashboard:** A beta version of [the new management dashboard](../capabilities/management-dashboard.md) is now available to all Sigrid users that have the Security and/or the Open Source Health license. If you do *not* have these licenses, you will receive access to the beta version of the dashboard at a later time.
+- **Scope configuration:** The technology configuration for React has been simplified. Previously, you needed to explicitly configure whether you were using React. People found this complicated, especially for systems that use both React and "plain" JavaScript/TypeScript. This is now much more simple: If you're using JavaScript or TypeScript, Sigrid will automatically detect whether you're using React in those files. This change is backward compatible, so old configurations will continue to work.  
 - You might have noticed that Sigrid looks a bit different. Sigrid's color scheme has been updated as part of SIG's brand refresh.
 
 ### July 14, 2025

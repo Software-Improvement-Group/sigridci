@@ -222,7 +222,6 @@ This page provides an overview of all technologies that can be analyzed by Sigri
 | `r`                           | R                                      | Maintainability, Architecture               |
 | `radience`                    | Radience                               | Maintainability, Architecture               | [(8)](#notes)     |
 | `razor`                       | Razor                                  | Maintainability, Architecture, AI           |
-| `react`                       | React                                  | Maintainability, Architecture, Security, AI | [(2)](#notes)     |
 | `regelspraak`                 | ALEF Regelspraak                       | Maintainability, Architecture               | [(8)](#notes)     |
 | `regelspraakhtml`             | ALEF Regelspraak (HTML export)         | Maintainability, Architecture               | [(8)](#notes)     |
 | `rexx`                        | Rexx                                   | Maintainability, Architecture               |
@@ -318,10 +317,8 @@ This page provides an overview of all technologies that can be analyzed by Sigri
 
 1. Use either `c` or `cpp`, but not both.
   - Prefer `cpp` if your system contains a combination of C and C++ code.
-2. Use one of `javascript`, `react`, `vuejs`, `sapui5`, but do not use multiple.
+2. Use one of `javascript`, `vuejs`, `sapui5`, but do not use multiple.
   - Prefer `vuejs` if your system contains [Vue.js](https://vuejs.org) components that use the `.vue` file extension.
-  - Prefer `typescript` if your system contains [React](https://reactjs.org) and/or [JSX](https://reactjs.org/docs/introducing-jsx.html) with _Typescript_.
-  - Prefer `react` if your codebase contains [React](https://reactjs.org) and/or [JSX](https://reactjs.org/docs/introducing-jsx.html) with _Javascript_.
   - Only use `sapui5` if you are using [SAP UI](https://developers.sap.com/topics/ui-development.html).
   - Use `javascript` in all other cases.
 3. Use either `typescript` or `vuets`, but not both.
