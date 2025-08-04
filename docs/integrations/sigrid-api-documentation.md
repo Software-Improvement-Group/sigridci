@@ -512,6 +512,7 @@ The response format of both system-level endpoints (`GET` and `PATCH`) is as fol
   "remark" : "A remark",
   "externalID" : "ab12345",
   "isDevelopmentOnly" : false,
+  "mainTechnology": "java",
   "technologyCategory": "MODERN_GENERAL_PURPOSE"
 }
 ```
@@ -542,6 +543,7 @@ The response format of the customer-level endpoint (`GET https://sigrid-says.com
     "remark" : "A remark",
     "externalID" : "ab12345",
     "isDevelopmentOnly" : false,
+    "mainTechnology": "java",
     "technologyCategory": "MODERN_GENERAL_PURPOSE"
   }
 ]
@@ -554,7 +556,10 @@ All properties can be null except for `supplierNames` and `teamNames` (which are
 For the `PATCH` endpoint, please take the following into account:
 - Only users with admin rights are allowed to change metadata.
 - A `PATCH` endpoint requires a body as well as a `Content-Type` header. This is best illustrated with the example below.
-- The `Content-Type` header needs to be set to `application/merge-patch+json` or `application/json`. The former is the official one, the latter behaves exactly the same. 
+- The `Content-Type` header needs to be set to `application/merge-patch+json` or `application/json`. The former is the official one, the latter behaves exactly the same.
+- While it is possible to set `mainTechnology`, it will be overwritten automatically the next time
+  the system is published. In addition, it has to be a known technology name (see the leftmost
+  column in the list of [supported technologies](../reference/technology-support.md)).
 
 ```shell
 $ curl 'https://sigrid-says.com/rest/analysis-results/api/v1/system-metadata/{customer}/{system}' -X PATCH \
@@ -573,23 +578,27 @@ leaves all metadata as-is. For instance, if the external ID before executing thi
 
 The metadata fields are described by the following table. Note that the setting for `deploymentType` is used to assess impact of security findings.
 
-|Path                          |Type     |Description                                                                                                                               |
-|------------------------------|---------|------------------------------------------------------------------------------------------------------------------------------------------|
-|`displayName`                 |`String` |The display name of the system. Must be between 0 and 60 characters. Can contain blanks: true|
-|`externalDisplayName`         |`String` |The external display name of the system. Must be between 0 and 60 characters. Can contain blanks: true|
-|`divisionName`                |`String` |The name of the division this system belongs to. Must be between 0 and 60 characters. Can contain blanks: true|
-|`supplierNames`               |`Array`  |Array of the names of the suppliers for this system|
-|`teamNames`                   |`Array`  |Array of the names of the teams maintaining this system|
-|`inProductionSince`           |`Number` |The year the system went into production. Cannot be later than the current year, must be at least 1960|
-|`businessCriticality`         |`String` |Importance of the system in terms of the effects of it not being available on the user's business. Must match any of the following values (case-sensitive): CRITICAL, HIGH, MEDIUM, LOW|
-|`lifecyclePhase`              |`String` |The phase of its lifecycle the system is in. Must be an industry identifier from the table of lifecycle phase identifiers below (case-sensitive)|
-|`targetIndustry`              |`String` |The industry in which the system is normally used. Must be an industry identifier from the table of target industry identifiers below (case-sensitive)|
-|`deploymentType`              |`String` |The way in which the system is typically deployed. Must be an industry identifier from the table of deployment types below (case-sensitive)|
-|`applicationType`             |`String` |The type of the system. Must be an industry identifier from the table of application types below (case-sensitive)|
-|`softwareDistributionStrategy`|`String` |The type of the software distribution strategy. Must be one of the distribution strategy identifiers from the table below (case-sensitive)|
-|`isDevelopmentOnly`           |`Boolean`|If true, the system is not shown as part of customer's portfolio, in the UI this is known as the "Excluded from dashboards" toggle|
-|`remark`                      |`String` |Remark(s) about the system as (possibly empty) free-format text. Must be between 0 and 300 characters. Can contain blanks: true|
-|`externalID`                  |`String` |Allow customers to record an external identifier for a system. free-format text. Must be between 0 and 60 characters. Can contain blanks: true|
+| Path                           | Type      | Description                                                                                                                                                                             |
+|--------------------------------|-----------|-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| `displayName`                  | `String`  | The display name of the system. Must be between 0 and 60 characters. Can contain blanks: true                                                                                           |
+| `externalDisplayName`          | `String`  | The external display name of the system. Must be between 0 and 60 characters. Can contain blanks: true                                                                                  |
+| `divisionName`                 | `String`  | The name of the division this system belongs to. Must be between 0 and 60 characters. Can contain blanks: true                                                                          |
+| `supplierNames`                | `Array`   | Array of the names of the suppliers for this system                                                                                                                                     |
+| `teamNames`                    | `Array`   | Array of the names of the teams maintaining this system                                                                                                                                 |
+| `inProductionSince`            | `Number`  | The year the system went into production. Cannot be later than the current year, must be at least 1960                                                                                  |
+| `businessCriticality`          | `String`  | Importance of the system in terms of the effects of it not being available on the user's business. Must match any of the following values (case-sensitive): CRITICAL, HIGH, MEDIUM, LOW |
+| `lifecyclePhase`               | `String`  | The phase of its lifecycle the system is in. Must be an industry identifier from the table of lifecycle phase identifiers below (case-sensitive)                                        |
+| `targetIndustry`               | `String`  | The industry in which the system is normally used. Must be an industry identifier from the table of target industry identifiers below (case-sensitive)                                  |
+| `deploymentType`               | `String`  | The way in which the system is typically deployed. Must be an industry identifier from the table of deployment types below (case-sensitive)                                             |
+| `applicationType`              | `String`  | The type of the system. Must be an industry identifier from the table of application types below (case-sensitive)                                                                       |
+| `softwareDistributionStrategy` | `String`  | The type of the software distribution strategy. Must be one of the distribution strategy identifiers from the table below (case-sensitive)                                              |
+| `mainTechnology`               | `String`  | (Read-only) The main technology of the system. Must be a [supported technology](../reference/technology-support.md))                                                                    |
+| `technologyCategory`           | `String`  | (Read-only) The category of the main technology <br/><br/>of the system. Must be a technology category from the table of technology categories (case-sensitive)                         |
+| `isDevelopmentOnly`            | `Boolean` | If true, the system is not shown as part of customer's portfolio, in the UI this is known as the "Excluded from dashboards" toggle                                                      |
+| `remark`                       | `String`  | Remark(s) about the system as (possibly empty) free-format text. Must be between 0 and 300 characters. Can contain blanks: true                                                         |
+| `externalID`                   | `String`  | Allow customers to record an external identifier for a system. free-format text. Must be between 0 and 60 characters. Can contain blanks: true                                          |
+
+Metadata fields marked as read-only can be updated using the `PATCH` endpoint, but the new value will be overwritten the next time the system is published.
 
 The specific set of values that are allowed for each field can be found in the respective section on the [system metadata fields and allowed values](../organization-integration/metadata.md#system-metadata-fields-and-corresponding-allowed-values) on the system metadata page.
 
@@ -759,7 +768,8 @@ This end point returns the following response:
 ```json
 {
   "systems": [
-    "systemName": "my-example-system",
+    {
+      "systemName": "my-example-system",
       "objectives": [
         {
           "type": "OSH_MAX_LICENSE_RISK",
@@ -783,8 +793,8 @@ This end point returns the following response:
           "level": "SYSTEM"
         }
       ]
-    ]
-  }
+    }
+  ]
 }
 ```
 
