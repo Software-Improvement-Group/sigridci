@@ -3,6 +3,13 @@ Sigrid release notes
 
 SIG uses [continuous delivery](https://en.wikipedia.org/wiki/Continuous_delivery), meaning that every change to Sigrid or the underlying analysis is released once our development pipeline has completed. On average, we release somewhere between 10 and 20 times per day. This page therefore doesn't list every single change, since that would quickly lead to an excessively long list of small changes. Instead, this page lists Sigrid and analysis changes that we consider noteworthy for the typical Sigrid user.
 
+### August 11, 2025
+
+- **Architecture Quality:** Added the option to [label components to indicate their purpose within the architecture](../capabilities/architecture-quality.md#labeling-components-to-communicate-their-role-in-the-architecture). Using this option influences both the visualization and the metrics. It can be used to add more architecture *context* to Sigrid, which is helpful when communicating how certain findings should be interpreted. 
+- **Objectives:** It is now possible to document a [rationale for system objectives](../capabilities/portfolio-objectives.md#importance-of-the-rationale-field). System objectives can be seen as exceptions to your normal quality policies. This makes it important to know *why* this exception exists. Having the option to write a rationale allows you to document this reason in Sigrid.
+- **Open Source Health:** Sigrid now also detects licenses embedded as plain text in [Maven POM files](https://maven.apache.org/guides/introduction/introduction-to-the-pom.html). This allows Sigrid to determine the license for such libraries, even if they did not "offically" register their license with Maven Central.
+- **Report Generator:** A report based on [Sigrid objectives](../capabilities/portfolio-objectives.md) has been added to the [Report Generator](https://github.com/Software-Improvement-Group/sigrid-integrations/tree/main/report-generator). This report contains the overall trend as well as a breakdown into teams.
+
 ### July 28, 2025
 
 - **Management dashboard:** A beta version of [the new management dashboard](../capabilities/management-dashboard.md) is now available to all Sigrid users that have the Security and/or the Open Source Health license. If you do *not* have these licenses, you will receive access to the beta version of the dashboard at a later time.
@@ -39,14 +46,14 @@ SIG uses [continuous delivery](https://en.wikipedia.org/wiki/Continuous_delivery
     - For transitive libraries, Sigrid will now only count the vulnerability risk and license risk towards your rating. This means that other risks, such as freshness, do *not* count towards the rating for transitive libraries. See the documentation on [transitive dependency risk](../capabilities/system-open-source-health.md#how-does-sigrid-handle-transitive-dependencies) for more information.
   - **Security:**
     - SIG now also benchmarks security, so that you can see the benchmarked star ratings alongside the underlying security findings. This makes it easier to compare yourself against the market. You can read more in the [guidelines for managing security across your portfolio](../workflows/best-practices-security.md).  
-  - **Univeral components across Sigrid:** Previously, all Sigrid capabilities supported their own component structure. As of the 2025 model, all Sigrid capabilities now use the same component structure as defined in the [Sigrid configuration](analysis-scope-configuration.md#defining-components). This leads to a more consistent view across Sigrid. 
+  - **Universal components across Sigrid:** Previously, all Sigrid capabilities supported their own component structure. As of the 2025 model, all Sigrid capabilities now use the same component structure as defined in the [Sigrid configuration](analysis-scope-configuration.md#defining-components). This leads to a more consistent view across Sigrid. 
   - Your systems will be automatically updated to the new version. However, it is possible to continue using an older version of the model, if you are unable or unwilling to update. You can configure this in the [Sigrid configuration](analysis-scope-configuration.md#configuring-the-sig-maintainability-model-version).
 
 ### June 2, 2025
 
 - **Technology support:** Sigrid now recognizes [inject dependencies in Angular](https://angular.dev/api/core/inject). If you are using these dependencies in your Angular systems, you will start seeing them across Sigrid.
 - **Integrations:** The integration between [Sigrid and Siemens Polarion](https://github.com/Software-Improvement-Group/sigrid-integrations/tree/main/polarion-integration) has been extended. In addition to Open Source Health and SBOM information, the integration now also provides data on security findings and on Sigrid ratings to Polarion.
-- **Report Generator:** You can now [generate modernization reports using the Report Generator](https://github.com/Software-Improvement-Group/sigrid-integrations/tree/main/report-generator. This report acts as input for your modernization plan, and shows information such as the estimated modernization effort. This information helps your organization to determine which modernization initiatives provide the best return-on-investment from a technical perspective. 
+- **Report Generator:** You can now [generate modernization reports using the Report Generator](https://github.com/Software-Improvement-Group/sigrid-integrations/tree/main/report-generator). This report acts as input for your modernization plan, and shows information such as the estimated modernization effort. This information helps your organization to determine which modernization initiatives provide the best return-on-investment from a technical perspective. 
 - **Sigrid API:** You can now obtain the "raw" maintainability analysis results via the Sigrid API. This feature is intended for power users, that want to perform custom analyses. You can find more information in the [API documentation](../integrations/sigrid-api-documentation.md#maintainability-data).
 
 ### May 19, 2025
