@@ -55,6 +55,8 @@ If you use the configuration DSL to define your dependencies, Sigrid will automa
         api "com.google.code.gson:gson:2.8.8"
         testImplementation "org.junit.jupiter:junit-jupiter:5.7.2"
     }
+
+Additionally, Gradle supports a feature called [version catalogs](https://docs.gradle.org/current/userguide/version_catalogs.html), which are TOML files that can be referenced by Gradle build scripts. Sigrid will pick up version catalogs, scan the dependencies, and display the results alongside the dependencies declared in the build scripts themselves.
     
 Defining dependencies in this way will work just fine. However, there are much more flexible ways. You can define `ext` properties. You can define properties in `gradle.properties`. You can have full-blown Groovy/Kotlin logic. If you project uses these dynamic features, Sigrid might not be able to pick up all dependencies (again, it's hard to say where the line is exactly, since Gradle is so flexible).
 
