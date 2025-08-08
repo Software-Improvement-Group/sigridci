@@ -133,6 +133,16 @@ Upon saving, a new entry will be added to the Saved Views list with the specifie
 - A maximum of 10 Views are able to be saved per system
 - Saved Views are tied to the system, not the user - any user with access to the system can select and render any saved view existing for a given system.
 
+### Labeling components to communicate their role in the architecture
+
+@@@
+
+<img src="../images/aq-component-role.png" width="200" />
+
+@@@
+
+You can define component roles in the [configuration](../reference/analysis-scope-configuration.md#labeling-components-to-communicate-their-role-in-the-architecture).
+
 ## Frequently asked questions
 
 See [Architecture Quality: frequently asked questions](faq-architecture.md) for more detailed information on operational details regarding Architecture Quality. This includes questions regarding uploading code, technology support, and configuration.

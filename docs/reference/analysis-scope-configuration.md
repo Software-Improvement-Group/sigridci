@@ -310,18 +310,19 @@ Architecture Quality is available by default. However, you can still use the var
 
 The `architecture` section of the scope file supports the following options:
 
-| Option                     | Required | Description                                                                                                                    |
-|----------------------------|----------|--------------------------------------------------------------------------------------------------------------------------------|
-| `model`                    | No       | SIG Architecture Quality Model that should be used for the analysis, defaults to latest.                                       |
-| `exclude`                  | No       | See [Excluding files and directories for Architecture Quality](#excluding-files-and-directories-for-architecture-quality).     |
-| `add_dependencies`         | No       | See [Manually specifying architecture dependencies](#manually-specifying-architecture-dependencies).                           |
-| `remove_dependencies`      | No       | See [Manually specifying architecture dependencies](#manually-removing-architecture-dependencies).                             |
-| `undesirable_dependencies` | No       | See [Highlighting undesirable dependencies](#highlighting-undesirable-dependencies).                                           |
-| `add_system_elements`      | No       | See [Manually specifying architecture elements](#manually-specifying-architecture-elements).                                   |
-| `grouping`                 | No       | See [Grouping and annotating components in Architecture Quality](#grouping-and-annotating-components-in-architecture-quality). |
-| `history_period_months`    | No       | See [Analyzing your repository history](#analyzing-your-repository-history).                                                   |
-| `history_start`            | No       | See [Analyzing your repository history](#analyzing-your-repository-history).                                                   |
-| `history_end`              | No       | See [Analyzing your repository history](#analyzing-your-repository-history).                                                   |
+| Option                     | Required | Description                                                                                                                                  |
+|----------------------------|----------|----------------------------------------------------------------------------------------------------------------------------------------------|
+| `model`                    | No       | SIG Architecture Quality Model that should be used for the analysis, defaults to latest.                                                     |
+| `exclude`                  | No       | See [Excluding files and directories for Architecture Quality](#excluding-files-and-directories-for-architecture-quality).                   |
+| `add_dependencies`         | No       | See [Manually specifying architecture dependencies](#manually-specifying-architecture-dependencies).                                         |
+| `remove_dependencies`      | No       | See [Manually specifying architecture dependencies](#manually-removing-architecture-dependencies).                                           |
+| `undesirable_dependencies` | No       | See [Highlighting undesirable dependencies](#highlighting-undesirable-dependencies).                                                         |
+| `add_system_elements`      | No       | See [Manually specifying architecture elements](#manually-specifying-architecture-elements).                                                 |
+| `grouping`                 | No       | See [Grouping and annotating components in Architecture Quality](#grouping-and-annotating-components-in-architecture-quality).               |
+| `component_roles`          | No       | See [Labeling components to communicate their role in the architecture](#labeling-components-to-communicate-their-role-in-the-architecture). |
+| `history_period_months`    | No       | See [Analyzing your repository history](#analyzing-your-repository-history).                                                                 |
+| `history_start`            | No       | See [Analyzing your repository history](#analyzing-your-repository-history).                                                                 |
+| `history_end`              | No       | See [Analyzing your repository history](#analyzing-your-repository-history).                                                                 |
 
 ### Analyzing your repository history
       
@@ -419,6 +420,16 @@ You can define architecture groups and annotations, and these annotations are th
           annotation: "Slightly longer text that adds more context beyond just the name."
         
 The contents of the `include` option refer to the component names you see in Architecture Quality. You can either use the exact component names, or you can use regular expressions. For example, using `target: backend.*` will match all components that have a name starting with "backend". Note you are matching the component name, not the files *within* the component.
+
+### Labeling components to communicate their role in the architecture
+
+@@@
+
+    architecture:
+      component_roles:
+        - role: utility
+          include:
+            - ".*core-.*"
 
 ## Enabling experimental analysis features
 

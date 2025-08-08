@@ -29,6 +29,8 @@ information. It is therefore recommended you provide at least the *business crit
 for each system in your portfolio, so this information can be used in the modernization report.
 {: .attention }
 
+## Report contents
+
 The modernization analysis considers both business context and technical aspects for each system in your landscape.
 This results in the following report:
 
