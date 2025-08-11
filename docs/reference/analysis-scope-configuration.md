@@ -236,6 +236,8 @@ In certain situations you can decide to [exclude Open Source Health risks](../ca
 
 Libraries and/or findings that are excluded using this option will not count towards the Open Source Health star rating, and will not be marked as risks in Sigrid.
 
+The options for excluding paths, license risk, and activity risk all support regular expressions. The option to exclude vulnerabilities intentionally does *not* support regular expressions, as we believe there is no reasonable use case to start bulk-excluding vulnerabilities.
+
 ### Configuring SBOM import
 
 By default, Sigrid will scan your code base for open source libraries. Optionally, Sigrid can *also* [import open source libraries from SBOM files](../integrations/integration-sbom.md). 
