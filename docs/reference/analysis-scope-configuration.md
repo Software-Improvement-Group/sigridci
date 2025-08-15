@@ -425,7 +425,9 @@ The contents of the `include` option refer to the component names you see in Arc
 
 ### Labeling components to communicate their role in the architecture
 
-@@@
+You can designate architecture roles to components via the `component_roles` secton, allowing users to [indicate intentional architectural design decisions and have Sigrid's quality scoring reflect this](../capabilities/architecture-quality.md#labeling-components-to-communicate-their-role-in-the-architecture). 
+
+At the time, one role is able to be assigned to a component, `Utility~. This label is inherited by all child artifacts/sub-components found within the specified parent component. With this role in place, those labeled components (and their child/sub-components!) will not be evaluated for the Component Coupling and Component Adjacency system property ratings under the Architecture Quality module. As with the other customization options, this is done in the configuration:
 
     architecture:
       component_roles:
