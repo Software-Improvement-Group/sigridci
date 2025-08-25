@@ -37,6 +37,8 @@ In some cases, the parent POM itself *also* has a parent POM. This usually refer
 
 Sigrid is able to scan the parent POM, but only if the parent POM is included in the source code that was published. And that's a problem, because as we just established these parent POMs are usually *not* part of the repository (by definition, as they contain all shared configuration across repositories). And if the parent POM is not published to Sigrid, then Sigrid is not able to read the file.
 
+### Maven dependency tree files
+
 If you want Sigrid to scan your parent POM without having to include its original file in your upload, you can also generate a [Maven dependency report](https://maven.apache.org/plugins/maven-dependency-plugin/tree-mojo.html) and upload that to Sigrid. You can generate this report from the command line, as part of your build pipeline:
 
     mvn dependency:tree > maven.tree
@@ -55,24 +57,52 @@ If you use the configuration DSL to define your dependencies, Sigrid will automa
         api "com.google.code.gson:gson:2.8.8"
         testImplementation "org.junit.jupiter:junit-jupiter:5.7.2"
     }
+
+Additionally, Gradle supports a feature called [version catalogs](https://docs.gradle.org/current/userguide/version_catalogs.html), which are TOML files that can be referenced by Gradle build scripts. Sigrid will pick up version catalogs, scan the dependencies, and display the results alongside the dependencies declared in the build scripts themselves.
     
 Defining dependencies in this way will work just fine. However, there are much more flexible ways. You can define `ext` properties. You can define properties in `gradle.properties`. You can have full-blown Groovy/Kotlin logic. If you project uses these dynamic features, Sigrid might not be able to pick up all dependencies (again, it's hard to say where the line is exactly, since Gradle is so flexible).
 
-However, Gradle also supports [lockfiles](https://docs.gradle.org/current/userguide/dependency_locking.html). These lockfiles define exactly which libraries and version are used by your projects, and are committed to your repository. If your codebase contains a Gradle lockfile, Sigrid will use this lockfile instead of `build.gradle`. This ensures Sigrid is able to extract all of your project's dependencies. Note that using a lockfile is a best practice even without considering Sigrid, as this allows for fully reproducible builds. Sigrid will only consider lockfiles when transitive scanning is set to true. 
+### Gradle dependency tree files
 
-### NPM
+As mentioned above, Gradle is very dynamic, so it might not be possible for Sigrid to extract every single dependency from your build scripts.
+
+Alternatively, you can generate a Gradle dependency tree during your build pipeline, and publish that to Sigrid. This dependency tree file will then be picked up by Sigrid. The advantage of using the dependency tree file is that you're guaranteed to get 100 percent the same dependencies locally and in Sigrid. The main downside is that you need to add some additional logic to your pipeline to make this work.
+
+If your Gradle project consists of a **single module**, add the following command to your pipeline script. Note you will need to run this command *before* Sigrid CI.
+
+    gradle dependencies > gradle.tree
+
+If your Gradle project consists of **multiple modules**, there is an additional step. Gradle [does not support](https://stackoverflow.com/questions/44266687/how-to-print-out-all-dependencies-in-a-gradle-multi-project-build) a multi-module dependency tree out of the box. You can address this by adding the following task to your root Gradle build file:
+
+    allprojects {
+        task allDependencies(type: DependencyReportTask) {}
+    }
+
+You can then call this task during your pipeline.
+
+    gradle allDependencies > gradle.tree
+
+This will create a Gradle dependency tree file containing the dependency trees for all Gradle subprojects.
+
+Whether the dependency tree files is used for transitive dependencies depends on your Sigrid configuration. If you have enabled [transitive dependency analysis in the configuration](../reference/analysis-scope-configuration.md#open-source-health), the transitive dependencies will be extracted from the tree file. If you have not enabled this option, only direct dependencies will be extracted from the tree file.
+
+### Gradle lock files
+
+Gradle also supports [lockfiles](https://docs.gradle.org/current/userguide/dependency_locking.html). These lockfiles define exactly which libraries and version are used by your projects, and are committed to your repository. If your codebase contains a Gradle lockfile, Sigrid will use this lockfile instead of `build.gradle`. This ensures Sigrid is able to extract all of your project's dependencies. Note that using a lockfile is a best practice even without considering Sigrid, as this allows for fully reproducible builds. Sigrid will only consider lockfiles when transitive scanning is set to true.
+
+## NPM
 
 NPM dependencies are defined in `package.json`, but NPM also generates a [lockfile](https://docs.npmjs.com/cli/v9/configuring-npm/package-lock-json) called `package-lock.json`. Since the lockfile defines the exact versions, Sigrid will prioritize the lockfile over the regular `package.json`.
 
-### Yarn
+## Yarn
 
 Yarn is very similar to NPM, but its lockfile is called `yarn.lock` instead of NPM's `package-lock.json`. Like for NPM, Sigrid will prioritize the lockfile over `package.json` during its analysis.
 
-### Poetry
+## Poetry
 
 [Poetry](https://python-poetry.org) is a Python dependency management tool, that is sometimes used as an alternative to the more popular PIP. Sigrid currently only supports analyzing the Poetry lockfile, which is called `poetry.lock`. This lockfile needs to be included in the codebase that is published to Sigrid, and is then analyzed automatically. Do note that [using a Poetry lockfile is a best practice](https://python-poetry.org), so there are good reasons for using this lockfile even beyond Sigrid.
 
-### Other dependency management tools
+## Other dependency management tools
 
 This page provides some additional instructions and explanation for commonly used dependency management tools. For the complete list of all supportec technologies, refer to the [supported dependency management tools and open source ecosystems](../reference/technology-support.md).
 
