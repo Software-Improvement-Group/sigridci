@@ -22,9 +22,8 @@ On-boarding is done automatically when you first run Sigrid CI. As long as you h
 
 Sigrid CI can provide feedback as pull request comments. This makes easier to process Sigrid's feedback during your pull request review, as the feedback is more visual and it also reduces the number of clicks you need to read the feedback.
 
-Azure DevOps will, by default, not run pipelines for pull requests. You need to enable this manually via "build policies" in your organization or project settings. You can find more information on this in the [Azure DevOps documentation](https://learn.microsoft.com/en-us/azure/devops/repos/git/branch-policies?view=azure-devops&tabs=browser#build-validation). Note that automatically running pipelines for pull requests is a general best practice, so enabling this setting has benefits beyond Sigrid.
-
-To create a pull request comment, the `<repo name> Build Service` user must have the `Contribute to pull requests` permission.  You can find information on how to edit user permissions in the [Azure DevOps documentation](https://learn.microsoft.com/en-us/azure/devops/repos/git/set-git-repository-permissions?view=azure-devops).
+- Azure DevOps will, by default, not run pipelines for pull requests. You need to enable this manually via "build policies" in your organization or project settings. You can find more information on this in the [Azure DevOps documentation](https://learn.microsoft.com/en-us/azure/devops/repos/git/branch-policies?view=azure-devops&tabs=browser#build-validation). Note that automatically running pipelines for pull requests is a general best practice, so enabling this setting has benefits beyond Sigrid.
+- To create a pull request comment, the `<repo name> Build Service` user must have the `Contribute to pull requests` permission.  You can find information on how to edit user permissions in the [Azure DevOps documentation](https://learn.microsoft.com/en-us/azure/devops/repos/git/set-git-repository-permissions?view=azure-devops).
 
 ### Step 2: Create pipeline configuration file
 
@@ -81,7 +80,7 @@ Commit and push this file to the repository, so that Azure DevOps can use this c
 
 **Security note:** The `softwareimprovementgroup/sigridci:azure` Docker image deliberately runs as root (in other words, we deliberately did not include a `USER` instruction in the Dockerfile that generates this image). Based on [Microsoft's documentation](https://learn.microsoft.com/en-us/azure/devops/pipelines/process/container-phases?view=azure-devops&tabs=yaml#linux-based-containers), we understand that Linux-based Docker images used in Azure DevOps need to run as root (fifth requirement). 
 
-### Alternative 2b: Download Sigrid CI client script
+#### Alternative 2b: Download Sigrid CI client script
 
 If you are unable to use Docker, for example because you are using local runners, you can still use Sigrid CI by downloading the Sigrid CI client script directly from GitHub. In the root of your repository, create a file `azure-devops-pipeline.yaml` and add the following contents:
 
