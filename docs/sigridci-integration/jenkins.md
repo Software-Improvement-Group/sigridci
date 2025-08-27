@@ -49,7 +49,7 @@ pipeline {
     
     environment {
         SIGRID_CI_TOKEN = credentials('SIGRID_CI_TOKEN')
-        PYTHONIOENCODING = utf8
+        PYTHONIOENCODING = 'utf8'
     }
 
     stages {
@@ -72,14 +72,16 @@ pipeline {
 
     environment {
         SIGRID_CI_TOKEN = credentials('SIGRID_CI_TOKEN')
-        PYTHONIOENCODING = utf8
+        PYTHONIOENCODING = 'utf8'
+        SIGRID_CI_GITHUB = 'https://github.com/Software-Improvement-Group/sigridci.git'
+        SIGRID_CI_DIR = 'sigridci'
     }
 
     stages {
         stage('build') {
             steps {
-                sh 'git clone https://github.com/Software-Improvement-Group/sigridci.git sigridci'
-                sh './sigridci/sigridci/sigridci.py --customer <example_customer_name> --system <example_system_name> --source . --publish'
+                sh 'git clone --depth 1 $SIGRID_CI_GITHUB $SIGRID_CI_DIR || git -C $SIGRID_CI_DIR pull'
+                sh './$SIGRID_CI_DIR/sigridci/sigridci.py --customer <example_customer_name> --system <example_system_name> --source . --publish'
             }
         }
     }
