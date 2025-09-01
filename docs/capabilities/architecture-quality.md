@@ -133,6 +133,28 @@ Upon saving, a new entry will be added to the Saved Views list with the specifie
 - A maximum of 10 Views are able to be saved per system
 - Saved Views are tied to the system, not the user - any user with access to the system can select and render any saved view existing for a given system.
 
+### Labeling components to communicate their role in the architecture
+
+You can now assign roles to components within your system that allow Sigrid to better reflect their usage and intention in the evaluation of your architecture. Roles assigned to a component can affect how the measurement model evaluates star-ratings or visualize the component in order to better reflect intentional design decisions made by the engineering team that are deemed an acceptable risk that Sigrid can ignore.
+
+#### Labeling Components as Utility Components
+
+At the moment, we have a single role users can designate a component as, a `Utility`. 
+
+There are many cases where design decisions result in higher-than-average coupling to centralized abstractions (interfaces) or even discrete code (libraries, utils), but from the engineering team's perspective this is intentional and can be deemed acceptable and preferred. The `Utility` role attempts to reflect this by allowing expected coupling to be deemed as acceptable and not influence the overall rating.
+
+You can define component roles in the [configuration](../reference/analysis-scope-configuration.md#labeling-components-to-communicate-their-role-in-the-architecture). 
+ 
+ **NOTE: This label is inherited by all child artifacts/sub-components found within the specified parent component.**
+
+Labeling a component as `Utility` has the following affects:
+
+1. Components (and their child/sub-components!) marked as `Utility` will not be evaluated for Component Coupling and Component Adjacency.
+2. These properties are marked as N/A and will no longer affect the overall AQ score – remaining properties are unchanged
+3. `Utility` components are visualized in the Sigrid interface with specific UI indicators for ease of tracking. All dependencies remain shown, only the property star-ratings are not evaluated.
+
+<img src="../images/aq-component-role.png" width="200" />
+
 ## Frequently asked questions
 
 See [Architecture Quality: frequently asked questions](faq-architecture.md) for more detailed information on operational details regarding Architecture Quality. This includes questions regarding uploading code, technology support, and configuration.
