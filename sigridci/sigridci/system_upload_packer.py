@@ -27,8 +27,8 @@ class SystemUploadPacker:
     EXCLUDE_EXTENSIONS = (".7z", ".amr", ".avi", ".bil", ".bmp", ".db", ".dmp", ".doc", ".docx", ".exe", ".f4v", ".gif",
                           ".gz", ".heic", ".ico", ".ipa", ".iso", ".jpeg", ".jpg", ".m4a", ".mda", ".mkv", ".mpeg",
                           ".mpg", ".mpl", ".mov", ".mp3", ".mp4", ".msi", ".odf", ".odp", ".ods", ".odt", ".otf", ".pdb",
-                          ".pdf", ".png", ".ppt", ".pptx", ".rar", ".rtf", ".sbn", ".shx", ".shp", ".svg", ".swf", ".tar",
-                          ".tgz", ".tiff", ".ttf", ".wmv", ".woff", ".woff2", ".xls", ".xlsm", ".xlsx", ".zip")
+                          ".pdf", ".png", ".ppt", ".pptx", ".rar", ".rtf", ".sbn", ".shx", ".shp", ".so", ".svg",
+                          ".swf", ".tar", ".tgz", ".tiff", ".ttf", ".wmv", ".woff", ".woff2", ".xls", ".xlsm", ".xlsx", ".zip")
 
     DEFAULT_EXCLUDES = [
         "$tf/",
