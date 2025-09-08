@@ -107,7 +107,7 @@ The information will include your app's identifier, redirectURL etc.
 
 | IdP | App federation MetadataURL |
 | ---------- | ---------- |
-| Azure/Entra ID | `https://login.microsoftonline.com/<tenant_id>/federationmetadata/2007-06/federationmetadata.xml` |
+| Azure/Entra ID | `https://login.microsoftonline.com/<tenant_id>/federationmetadata/2007-06/federationmetadata.xml?appid=<app_id>` |
 | Okta  | `https://<myOktaOrg>.okta.com/app/<app_id>/sso/saml/metadata` |
 
 ##### OpenID Connect Configuration
