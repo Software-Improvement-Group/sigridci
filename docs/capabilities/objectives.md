@@ -22,7 +22,7 @@ If you want to add or modify objectives for a single system, first navigate to y
 
 <img src="../images/define-objectives.png" width="300" />
 
-When you're adding a new objective, you have the option to add a rationale for it. You can use this rationale to communicate *why* your objective exists.
+When you're adding a new objective, you have the option to add a rationale (remark) for it. You can use this rationale to communicate *why* your objective exists.
 This is especially important in situations where your system's objectives deviate from your "normal" portfolio objectives. You can see your portfolio objective as policies, meaning system objectives are exceptions to those policies.
 In those situations, it's helpful to add a rationale to explain *why* your system is an exception. 
 Usually, there is a perfectly good reason for making an exception, but that makes it even more important that you communicate those reasons.
