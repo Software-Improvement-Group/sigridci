@@ -18,11 +18,16 @@ Two types of objectives exist:
 
 ## Setting System Objectives
 
-To Set System Objectives, navigate to your desired system's overview page, and Click on Modify Objectives. You can find your desired system from the treemap or search the column under the Treemap.
+If you want to add or modify system objectives, first navigate to your system's [system overview page](system-overview.md), and click on *Modify Objectives*.
 
-## How to set Objectives
+<img src="../images/define-objectives" width="300" />
 
- 
+When you're adding a new objective, you have the option to add a rationale for it. You can use this rationale to communicate *why* your objective exists.
+This is especially important in situations where your system's objectives deviate from your "normal" portfolio objectives. You can see your portfolio objective as policies, meaning system objectives are exceptions to those policies.
+In those situations, it's helpful to add a rationale to explain *why* your system is an exception. 
+Usually, there is a perfectly good reason for making an exception, but that makes it even more important that you communicate those reasons.
+
+<img src="../images/define-objectives-rationale.png" width="300" />
 
 ## Comparing status and objectives in the System Overview page
 
