@@ -731,7 +731,7 @@ It takes a request body with the following structure:
 | Type                                                | Description                                                                                             |
 |-----------------------------------------------------|---------------------------------------------------------------------------------------------------------|
 | **Regular objectives**                              |
-| `MAINTAINABILITY`                                   | Star rating, between 0.5 and 5.5 (inclusive).                                                           |
+| `MAINTAINABILITY`                                   | Overall maintainability rating, between 0.5 and 5.5 stars (inclusive).                                                           |
 | `TEST_CODE_RATIO`                                   | Test code ratio. Positive decimal number, e.g. 0.7 sets a target of 70%                                 |
 | `ARCHITECTURE_QUALITY`                              | Overall architecture quality rating, between 0.5 and 5.5 stars (inclusive).                                                           |
 | `OSH_MAX_SEVERITY`                                  | Highest allowed severity of known vulnerabilities. One of: `NONE`, `LOW`, `MEDIUM`, `HIGH`, `CRITICAL`. |
