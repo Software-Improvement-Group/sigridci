@@ -701,6 +701,8 @@ This end point returns the following response structure:
       "TEST_CODE_RATIO": 0.8
     }
 
+See the section on [defining and editing system objectives](#defining-and-editing-system-objectives) for a list of all possible objectives types.
+
 Systems always have a single target per objective type. If you define multiple overlapping objectives, 
 precedence rules are applied to determine which objective "wins" and gets to decide the target for
 that system:
@@ -726,16 +728,35 @@ It takes a request body with the following structure:
 }
 ```
 
-| Type                     | Description                                       | Allowed target values                                         |
-|--------------------------|---------------------------------------------------|---------------------------------------------------------------|
-| MAINTAINABILITY          | Overall maintainability rating                    | Decimal number between 0.5 and 5.5, inclusive                 |
-| TEST_CODE_RATIO          | Test code ratio                                   | Positive decimal number, e.g. 0.7 sets a target of 70%        |
-| ARCHITECTURE_QUALITY     | Decimal number between 0.5 and 5.5, inclusive     | Decimal number between 0.5 and 5.5, inclusive                 |
-| OSH_MAX_SEVERITY         | Highest allowed severity of known vulnerabilities | One of: `"NONE"`, `"LOW"`, `"MEDIUM"`, `"HIGH"`, `"CRITICAL"` |
-| OSH_MAX_FRESHNESS_RISK   | Highest allowed freshness risk                    | One of: `"NONE"`, `"LOW"`, `"MEDIUM"`, `"HIGH"`, `"CRITICAL"` | 
-| OSH_MAX_LICENSE_RISK     | Highest allowed license risk                      | One of: `"NONE"`, `"LOW"`, `"MEDIUM"`, `"HIGH"`, `"CRITICAL"` |
-| SECURITY_MAX_SEVERITY    | Highest allowed severity of security findings     | One of: `"NONE"`, `"LOW"`, `"MEDIUM"`, `"HIGH"`, `"CRITICAL"` |
-| RELIABILITY_MAX_SEVERITY | Highest allowed severity of reliability findings  | One of: `"NONE"`, `"LOW"`, `"MEDIUM"`, `"HIGH"`, `"CRITICAL"` | 
+| Type                                                | Description                                                                                             |
+|-----------------------------------------------------|---------------------------------------------------------------------------------------------------------|
+| **Regular objectives**                              |
+| `MAINTAINABILITY`                                   | Overall maintainability rating, between 0.5 and 5.5 stars (inclusive).                                                           |
+| `TEST_CODE_RATIO`                                   | Test code ratio. Positive decimal number, e.g. 0.7 sets a target of 70%                                 |
+| `ARCHITECTURE_QUALITY`                              | Overall architecture quality rating, between 0.5 and 5.5 stars (inclusive).                                                           |
+| `OSH_MAX_SEVERITY`                                  | Highest allowed severity of known vulnerabilities. One of: `NONE`, `LOW`, `MEDIUM`, `HIGH`, `CRITICAL`. |
+| `OSH_MAX_FRESHNESS_RISK`                            | Highest allowed freshness risk. One of: `NONE`, `LOW`, `MEDIUM`, `HIGH`, `CRITICAL`.                    | 
+| `OSH_MAX_LICENSE_RISK`                              | Highest allowed license risk. One of: `NONE`, `LOW`, `MEDIUM`, `HIGH`, `CRITICAL`.                      |
+| `SECURITY_MAX_SEVERITY`                             | Highest allowed severity of security findings. One of: `NONE`, `LOW`, `MEDIUM`, `HIGH`, `CRITICAL`.     |
+| `RELIABILITY_MAX_SEVERITY`                          | Highest allowed severity of reliability findings. One of: `NONE`, `LOW`, `MEDIUM`, `HIGH`, `CRITICAL`.  |
+| **Detailed objectives**                             | Star ratings, between 0.5 and 5.5 (inclusive).                                                          |
+| `MAINTAINABILITY_VOLUME`                            |
+| `MAINTAINABILITY_DUPLICATION`                       |
+| `MAINTAINABILITY_UNIT_SIZE`                         |
+| `MAINTAINABILITY_UNIT_COMPLEXITY`                   |
+| `MAINTAINABILITY_UNIT_INTERFACING`                  |
+| `MAINTAINABILITY_MODULE_COUPLING`                   |
+| `MAINTAINABILITY_COMPONENT_INDEPENDENCE`            |
+| `MAINTAINABILITY_COMPONENT_ENTANGLEMENT`            |
+| `ARCHITECTURE_QUALITY_CODE_BREAKDOWN`               |
+| `ARCHITECTURE_QUALITY_COMPONENT_COUPLING`           |
+| `ARCHITECTURE_QUALITY_COMPONENT_ADJACENCY`          |
+| `ARCHITECTURE_QUALITY_COMPONENT_COHESION`           |
+| `ARCHITECTURE_QUALITY_COMMUNICATION_CENTRALIZATION` |
+| `ARCHITECTURE_QUALITY_DATA_COUPLING`                |
+| `ARCHITECTURE_QUALITY_BOUNDED_EVOLUTION`            |
+| `ARCHITECTURE_QUALITY_KNOWLEDGE_DISTRIBUTION`       |
+| `ARCHITECTURE_QUALITY_COMPONENT_FRESHNESS`          |
 
 The endpoint returns the objective that was just created or modified.
 
