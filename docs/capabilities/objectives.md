@@ -20,7 +20,7 @@ Two types of objectives exist:
 
 If you want to add or modify system objectives, first navigate to your system's [system overview page](system-overview.md), and click on *Modify Objectives*.
 
-<img src="../images/define-objectives" width="300" />
+<img src="../images/define-objectives.png" width="300" />
 
 When you're adding a new objective, you have the option to add a rationale for it. You can use this rationale to communicate *why* your objective exists.
 This is especially important in situations where your system's objectives deviate from your "normal" portfolio objectives. You can see your portfolio objective as policies, meaning system objectives are exceptions to those policies.
