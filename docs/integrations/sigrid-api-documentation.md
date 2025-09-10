@@ -733,7 +733,7 @@ It takes a request body with the following structure:
 | **Regular objectives**                              |
 | `MAINTAINABILITY`                                   | Star rating, between 0.5 and 5.5 (inclusive).                                                           |
 | `TEST_CODE_RATIO`                                   | Test code ratio. Positive decimal number, e.g. 0.7 sets a target of 70%                                 |
-| `ARCHITECTURE_QUALITY`                              | Star rating, between 0.5 and 5.5 (inclusive).                                                           |
+| `ARCHITECTURE_QUALITY`                              | Overall architecture quality rating, between 0.5 and 5.5 stars (inclusive).                                                           |
 | `OSH_MAX_SEVERITY`                                  | Highest allowed severity of known vulnerabilities. One of: `NONE`, `LOW`, `MEDIUM`, `HIGH`, `CRITICAL`. |
 | `OSH_MAX_FRESHNESS_RISK`                            | Highest allowed freshness risk. One of: `NONE`, `LOW`, `MEDIUM`, `HIGH`, `CRITICAL`.                    | 
 | `OSH_MAX_LICENSE_RISK`                              | Highest allowed license risk. One of: `NONE`, `LOW`, `MEDIUM`, `HIGH`, `CRITICAL`.                      |
