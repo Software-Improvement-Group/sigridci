@@ -18,7 +18,7 @@ Two types of objectives exist:
 
 ## Setting System Objectives
 
-If you want to add or modify system objectives, first navigate to your system's [system overview page](system-overview.md), and click on *Modify Objectives*.
+If you want to add or modify objectives for a single system, first navigate to your system's [system overview page](system-overview.md), and click on *Modify Objectives*.
 
 <img src="../images/define-objectives.png" width="300" />
 
