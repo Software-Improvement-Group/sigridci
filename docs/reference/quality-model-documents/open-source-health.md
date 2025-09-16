@@ -1,4 +1,4 @@
-SIG Open Source Health Quality Model 2024: Guidance for producers
+SIG Open Source Health Quality Model 2025: Guidance for producers
 =================================================================
 
 ## Introduction
@@ -104,11 +104,11 @@ To score a 4 stars rating for this property a producer should aim at
 having:
 
 - The percentage of dependencies that are out-of-date for more than 1
-year should not exceed 39%.
+year should not exceed 34.2%.
 - The percentage of dependencies that are out-of-date for more than 2
-years should not exceed 22.9%.
+years should not exceed 19.1%.
 - The percentage of dependencies that are out-of-date for more than 3,5
-years should not exceed 11.8%.
+years should not exceed 11.1%.
 - No dependency should be out-of-date for more than 5 years. 
 
 ## License use
@@ -144,7 +144,7 @@ is in the table below:
 | No risk        | MIT, BSD, Apache                                           |
 
 To score a 4 stars rating for this property, a system should have at
-most four dependencies associated with low-risk licenses.
+most three dependencies associated with low-risk licenses.
 
 ## Activity
 
@@ -164,11 +164,11 @@ To score a 4 stars rating for this property a producer should aim at
 having:
 
 - The percentage of dependencies latest released more than 1 year ago
-should not exceed 27.7%.
+should not exceed 21.4%.
 - The percentage of dependencies latest released more than 2 years ago
-should not exceed 20.1%.
+should not exceed 13.0%.
 - The percentage of dependencies latest released more than 4 years ago
-should not exceed 10.2%.
+should not exceed 9.6%.
 - No dependency's latest release should be more than 5,5 years old.
 
 ## Management
@@ -187,7 +187,7 @@ For the evaluation of the management property, SIG measures unmanaged
 third party open-source dependencies.
 
 To score a 4 stars rating for this property, a system should have at
-most 4.2% unmanaged dependencies.
+most 6% unmanaged dependencies.
 
 ## Contact and support
 

@@ -59,7 +59,7 @@ The package managers need to be integrated in your CI/CD pipeline.
 Set the thresholds for library risks that are (not) acceptable: this is applicable to all types of risks. Set these goals in the [Sigrid objectives](../capabilities/portfolio-objectives.md). 
   > SIG advises the following objectives: 
   >  - _No library vulnerabilities_: having vulnerabilities of medium or higher risk is generally not acceptable as a goal, and since there are relatively few low-risk vulnerabilities in practice, a 'clean sweep' of all vulnerabilities is preferred.
-  >  - _No unacceptable licenses_; for a typical context this means no licenses that come with obligations or restrictions for commercial usage (see the [OSH Guidelines for producers](../reference/quality-model-documents/open-source-health.md) for more details.). In Sigrid these are classified as no-risk, and include the MIT, BSD, and Apache licenses.
+  >  - _No unacceptable licenses_; for a typical context this means no licenses that come with obligations or restrictions for commercial usage (e.g., AGPL. See the [OSH Guidelines for producers](../reference/quality-model-documents/open-source-health.md) for more details.). In Sigrid these are classified as no-risk, and include the MIT, BSD, and Apache licenses.
   >  - _Ensure overall OSH quality rating is 4.0 stars or more_.  
 
 #### Policy III: Define how frequent to check for risks
@@ -195,16 +195,16 @@ SIG assesses whether a license is generally considered a risk for use within com
     1. **Linked libs through network**: As linked libraries that are called through the network.
     1. **Internal use only**: As libraries that are used internally only.
 
-The following table shows how various types of licenses are (not) suitable for different distribution policies, and explains how these common licenses are mapped to general risk levels. But do note that if your distribution model is clear, and the value listed for the particular license-distribution model is 'ok' in the table, then your actual licensing risk is minimal:
+The following table shows how various types of licenses are (not) suitable for different distribution policies. To understand how these common licenses are mapped to general risk levels, you can refer to the [OSH Guideline for producers](../reference/quality-model-documents/open-source-health.md). But do note that if your distribution model is clear, and the value listed for the particular license-distribution model is 'ok' in the table, then your actual licensing risk is minimal:
 
 
-| Risk level | License category | Common licenses | Distribute modified code | Distribute linked libraries | Linked libs through network | Internal use only |
-|------------|------------------|-----------------|------------------------|---------------------------|------------|-------------------------|
-| none     | permissive       | Apache / MIT / BSD| Ok | Ok | Ok | Ok |
-| low      | Weak copy-left   | LGPL / MPL / CC-BY-ND | prohibited | Ok | Ok | Ok |
-| medium   | Strong copy-left | GPL | prohibited | prohibited | Ok | Ok |
-| high     | Viral            | AGPL / CC-BY-NC / EUPL | prohibited | prohibited | prohibited | Ok |
-| critical | Commercial       | EULA / non-OSS / custom | prohibited | prohibited | prohibited | prohibited |
+| License category | Common licenses | Distribute modified code | Distribute linked libraries | Linked libs through network | Internal use only |
+|------------------|-----------------|------------------------|---------------------------|------------|-------------------------|
+| permissive       | Apache / MIT / BSD| Ok | Ok | Ok | Ok |
+| Weak copy-left   | LGPL / MPL / CC-BY-ND | prohibited | Ok | Ok | Ok |
+| Strong copy-left | GPL | prohibited | prohibited | Ok | Ok |
+| Viral            | CC-BY-NC / EUPL | prohibited | prohibited | prohibited | Ok |
+| Commercial       | AGPL / EULA / non-OSS / custom | prohibited | prohibited | prohibited | prohibited |
 
 
 
