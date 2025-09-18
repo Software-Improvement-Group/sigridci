@@ -22,6 +22,7 @@ from .reports.gitlab_pull_request_report import GitLabPullRequestReport
 from .reports.junit_format_report import JUnitFormatReport
 from .reports.maintainability_markdown_report import MaintainabilityMarkdownReport
 from .reports.osh_markdown_report import OpenSourceHealthMarkdownReport
+from .reports.pipeline_summary_report import PipelineSummaryReport
 from .reports.security_markdown_report import SecurityMarkdownReport
 
 
@@ -78,4 +79,5 @@ class FeedbackProvider:
         reports = [markdownReport, GitLabPullRequestReport(markdownReport), AzurePullRequestReport(markdownReport)]
         if self.capability == Capability.MAINTAINABILITY:
             reports += [AsciiArtReport(), JUnitFormatReport()]
+        reports.append(PipelineSummaryReport(markdownReport))
         return reports
