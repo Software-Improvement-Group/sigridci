@@ -40,13 +40,12 @@ class AzurePullRequestReport(Report):
         # comments every time they make a commit. We have no way to persist this,
         # so we need to check the existing comments.
         existingId = self.findExistingSigridCommentThreadId()
-        status = Objective.determineStatus(feedback, options)
 
         if existingId == None:
-            self.callAzure("POST", self.buildRequestBody(markdown, status), None)
+            self.callAzure("POST", self.buildRequestBody(markdown, feedback, options), None)
             UploadLog.log(f"Published new {self.markdownRenderer.getCapability()} feedback to Azure DevOps")
         else:
-            self.callAzure("PATCH", self.buildRequestBody(markdown, status), existingId)
+            self.callAzure("PATCH", self.buildRequestBody(markdown, feedback, options), existingId)
             UploadLog.log(f"Updated existing {self.markdownRenderer.getCapability()} feedback in Azure DevOps")
 
     def isSupported(self, options):
@@ -88,18 +87,18 @@ class AzurePullRequestReport(Report):
         else:
             return f"{baseURL}{project}/_apis/git/repositories/{repo}/pullRequests/{pr}/threads?api-version={self.AZURE_API_VERSION}"
 
-    def buildRequestBody(self, markdown, status):
+    def buildRequestBody(self, markdown, feedback, options):
         return {
             "comments": [{
                 "parentCommentId": 0,
                 "content": markdown,
                 "commentType": "text"
             }],
-            "status": self.getCommentStatus(status)
+            "status": self.getCommentStatus(feedback, options)
         }
 
-    def getCommentStatus(self, status):
-        if status in [ObjectiveStatus.ACHIEVED, ObjectiveStatus.IMPROVED, ObjectiveStatus.UNKNOWN]:
+    def getCommentStatus(self, feedback, options):
+        if self.markdownRenderer.isObjectiveSuccess(feedback, options):
             return "closed"
         else:
             return "active"

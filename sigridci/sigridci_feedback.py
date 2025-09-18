@@ -18,13 +18,19 @@ import os
 import sys
 from argparse import ArgumentParser, SUPPRESS
 
-from sigridci.feedback_provider import Capability, FeedbackProvider
-from sigridci.publish_options import PublishOptions, RunMode
+from sigridci.feedback_provider import FeedbackProvider
+from sigridci.publish_options import PublishOptions, RunMode, Capability
 from sigridci.sigrid_api_client import SigridApiClient
 
 
 OBJECTIVE_SUCCESS_EXIT_CODE = 0
 OBJECTIVE_FAILED_EXIT_CODE = 115
+
+CAPABILITIES = {
+    "maintainability" : Capability.MAINTAINABILITY,
+    "osh" : Capability.OPEN_SOURCE_HEALTH,
+    "security" : Capability.SECURITY
+}
 
 
 def parseFeedbackOptions(args):
@@ -33,6 +39,7 @@ def parseFeedbackOptions(args):
         customer=args.customer,
         system=args.system,
         runMode=RunMode.FEEDBACK_ONLY,
+        capabilities=[CAPABILITIES[args.capability]],
         outputDir=args.out,
         sigridURL=args.sigridurl
     )
@@ -54,18 +61,14 @@ def determineObjectives(options):
 if __name__ == "__main__":
     parser = ArgumentParser(description="Provides Sigrid CI feedback for the specified analysis.")
     parser.add_argument("--partner", type=str, default="sig", help=SUPPRESS)
-    parser.add_argument("--customer", type=str, help="Name of your organization's Sigrid account.")
-    parser.add_argument("--system", type=str, help="Name of your system in Sigrid, letters/digits/hyphens only.")
+    parser.add_argument("--customer", type=str, required=True, help="Name of your organization's Sigrid account.")
+    parser.add_argument("--system", type=str, required=True, help="Name of your system in Sigrid, letters/digits/hyphens only.")
     parser.add_argument("--out", type=str, default="sigrid-ci-output", help="Output directory for Sigrid CI feedback.")
-    parser.add_argument("--sigridurl", type=str, default="https://sigrid-says.com", help=SUPPRESS)
-    parser.add_argument("--capability", type=Capability, choices=list(Capability))
-    parser.add_argument("--analysisresults", type=str, help="Generates reports based on analysis results JSON file.")
-    parser.add_argument("--previousresults", type=str, help=SUPPRESS)
+    parser.add_argument("--sigridurl", type=str, default="https://sigrid-says.com", help="Sigrid base URL.")
+    parser.add_argument("--capability", type=str, required=True, choices=list(CAPABILITIES.keys()))
+    parser.add_argument("--analysisresults", type=str, required=True, help="Analysis results JSON file.")
+    parser.add_argument("--previousresults", type=str, help="Baseline analysis results JSON file used for comparison.")
     args = parser.parse_args()
-
-    if None in [args.customer, args.system, args.capability, args.analysisresults]:
-        parser.print_help()
-        sys.exit(1)
 
     options = parseFeedbackOptions(args)
     objectives = determineObjectives(options)

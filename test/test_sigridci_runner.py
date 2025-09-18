@@ -29,7 +29,7 @@ class SigridCiRunnerTest(TestCase):
 
     def setUp(self):
         self.tempDir = tempfile.mkdtemp()
-        self.options = PublishOptions("aap", "noot", RunMode.FEEDBACK_ONLY, self.tempDir, targetRating=3.5)
+        self.options = PublishOptions("aap", "noot", RunMode.FEEDBACK_ONLY, self.tempDir)
 
         UploadLog.clear()
 
@@ -74,6 +74,7 @@ class SigridCiRunnerTest(TestCase):
             "/analysis-results/api/v1/system-metadata/aap/noot",
             "/inboundresults/sig/aap/noot/ci/uploads/v1",
             "UPLOAD",
+            "/analysis-results/api/v1/objectives/aap/noot/config",
             "/analysis-results/sigridci/aap/noot/v1/ci/results/123"
         ]
 
@@ -108,6 +109,7 @@ class SigridCiRunnerTest(TestCase):
             "/analysis-results/api/v1/system-metadata/aap/noot",
             "/inboundresults/sig/aap/noot/ci/uploads/v1/publish",
             "UPLOAD",
+            "/analysis-results/api/v1/objectives/aap/noot/config",
             "/analysis-results/sigridci/aap/noot/v1/ci/results/123"
         ]
 
@@ -193,6 +195,7 @@ class SigridCiRunnerTest(TestCase):
             "/analysis-results/api/v1/system-metadata/aap/noot",
             "/inboundresults/sig/aap/noot/ci/uploads/v1/publish?subsystem=mysubsystem",
             "UPLOAD",
+            "/analysis-results/api/v1/objectives/aap/noot/config",
             "/analysis-results/sigridci/aap/noot/v1/ci/results/123"
         ]
 
@@ -540,39 +543,6 @@ class SigridCiRunnerTest(TestCase):
         self.assertEqual(os.path.exists(f"{self.tempDir}/sigrid-metadata.yaml"), True)
         with open(f"{self.tempDir}/sigrid-metadata.yaml") as f:
             self.assertEqual(f.read(), "metadata:\n  externalID: 1")
-
-    def testIgnoreObsoleteNewCodeObjective(self):
-        apiClient = MockApiClient(self.options)
-        apiClient.responses["/analysis-results/api/v1/objectives/aap/noot/config"] = {
-            "NEW_CODE_QUALITY" : 4.0,
-            "MAINTAINABILITY" : 3.5
-        }
-
-        runner = SigridCiRunner(self.options, apiClient)
-        runner.reports = []
-        target = runner.loadSigridTarget()
-
-        self.assertEqual(target, 3.5)
-
-    def testUseMaintainabilityTargetIfNoNewCodeTarget(self):
-        apiClient = MockApiClient(self.options)
-        apiClient.responses["/analysis-results/api/v1/objectives/aap/noot/config"] = {"MAINTAINABILITY" : 2.0}
-
-        runner = SigridCiRunner(self.options, apiClient)
-        runner.reports = []
-        target = runner.loadSigridTarget()
-
-        self.assertEqual(target, 2.0)
-
-    def testFallbackToDefaultTargetIfNoSigridObjectives(self):
-        apiClient = MockApiClient(self.options)
-        apiClient.responses["/analysis-results/api/v1/objectives/aap/noot/config"] = {}
-
-        runner = SigridCiRunner(self.options, apiClient)
-        runner.reports = []
-        target = runner.loadSigridTarget()
-
-        self.assertEqual(target, 3.5)
 
     def testUploadShouldBeDeletedAfterSubmission(self):
         self.createTempFile(self.tempDir, "a.py", "print(123)")

@@ -15,7 +15,6 @@
 from xml.dom.minidom import Document
 
 from .report import Report
-from ..objective import Objective, ObjectiveStatus
 
 
 class JUnitFormatReport(Report):
@@ -35,7 +34,7 @@ class JUnitFormatReport(Report):
         testCase.setAttribute("name", "Maintainability")
         testSuite.appendChild(testCase)
 
-        failures = self.getFailures(feedback, options)
+        failures = list(self.getFailures(feedback))
         if len(failures) > 0:
             failure = dom.createElement("failure")
             failure.appendChild(dom.createTextNode("Refactoring candidates:\n\n" + "\n".join(failures)))
@@ -43,15 +42,10 @@ class JUnitFormatReport(Report):
 
         return dom.toprettyxml(indent="    ")
 
-    def getFailures(self, feedback, options):
-        status = Objective.determineStatus(feedback, options)
-        failures = []
-
-        if status == ObjectiveStatus.WORSENED:
-            for metric in self.REFACTORING_CANDIDATE_METRICS:
-                failures += [self.formatFinding(rc) for rc in self.getRefactoringCandidates(feedback, metric)]
-
-        return failures
+    def getFailures(self, feedback):
+        for metric in self.REFACTORING_CANDIDATE_METRICS:
+            for rc in self.getRefactoringCandidates(feedback, metric):
+                yield self.formatFinding(rc)
 
     def formatFinding(self, rc):
         return f"- {rc['subject']}\n  ({self.formatMetricName(rc['metric'])}, {rc['category']})"

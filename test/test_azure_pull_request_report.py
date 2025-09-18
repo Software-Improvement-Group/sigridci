@@ -13,10 +13,9 @@
 # limitations under the License.
 
 import json
-from tempfile import NamedTemporaryFile, mkdtemp
+from tempfile import mkdtemp
 from unittest import TestCase
 
-from sigridci.sigridci.objective import ObjectiveStatus
 from sigridci.sigridci.publish_options import PublishOptions, RunMode
 from sigridci.sigridci.reports.azure_pull_request_report import AzurePullRequestReport
 from sigridci.sigridci.reports.maintainability_markdown_report import MaintainabilityMarkdownReport
@@ -25,16 +24,13 @@ from sigridci.sigridci.reports.maintainability_markdown_report import Maintainab
 class AzurePullRequestReportTest(TestCase):
 
     def testCommentIsDependentOnStatus(self):
-        with NamedTemporaryFile() as f:
-            f.write("This is Markdown feedback\n\n...with multiple lines".encode("utf8"))
+        options = PublishOptions("aap", "noot", RunMode.FEEDBACK_ONLY)
+        good = {"newCodeRatings" : {"MAINTAINABILITY" : 5.0}}
+        bad = {"newCodeRatings" : {"MAINTAINABILITY" : 2.0}}
+        report = AzurePullRequestReport(MaintainabilityMarkdownReport())
 
-            report = AzurePullRequestReport(f)
-
-            self.assertEqual("closed", report.buildRequestBody(f.name, ObjectiveStatus.ACHIEVED)["status"])
-            self.assertEqual("closed", report.buildRequestBody(f.name, ObjectiveStatus.IMPROVED)["status"])
-            self.assertEqual("active", report.buildRequestBody(f.name, ObjectiveStatus.UNCHANGED)["status"])
-            self.assertEqual("active", report.buildRequestBody(f.name, ObjectiveStatus.WORSENED)["status"])
-            self.assertEqual("closed", report.buildRequestBody(f.name, ObjectiveStatus.UNKNOWN)["status"])
+        self.assertEqual("closed", report.buildRequestBody("", good, options)["status"])
+        self.assertEqual("closed", report.buildRequestBody("", bad, options)["status"])
 
     def testPostNewComment(self):
         tempDir = mkdtemp()

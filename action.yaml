@@ -12,10 +12,10 @@ inputs:
     description: "Source code directory."
     required: false
     default: "."
-  targetquality:
-    description: "Minimum required star rating for new/changed code, use 'sigrid' to use target defined in Sigrid."
+  capability:
+    description: "Comma-separated list of Sigrid capabilities (`maintainability,osh,security`). Default is maintainability.."
     required: false
-    default: "sigrid"
+    default: "maintainability"
   publish:
     description: "Publishes your source code to Sigrid (true/false)."
     required: false
@@ -102,8 +102,6 @@ runs:
     - ${{ inputs.system }}
     - "--source"
     - ${{ inputs.source }}
-    - "--targetquality"
-    - ${{ inputs.targetquality }}
     - ${{ (inputs.publish == 'true' && '--publish') || '--dummy' }}
     - ${{ (inputs.publishonly == 'true' && '--publishonly') || '--dummy' }}
     - ${{ (inputs.includehistory == 'true' && '--include-history') || '--dummy' }}
@@ -116,6 +114,8 @@ runs:
     - ${{ inputs.subsystem }}
     - "--convert"
     - ${{ inputs.convert }}
+    - "--capability"
+    - ${{ inputs.capability }}
   env:
     displayname: ${{ inputs.displayname }}
     divisionname: ${{ inputs.divisionname }}
