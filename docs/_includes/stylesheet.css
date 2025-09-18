@@ -513,3 +513,23 @@ sig-toc .h4 {
 .awesomplete .visually-hidden {
     display: none;
 }
+
+.technologySupportCategories {
+    text-align: right;
+    margin-top: 24px;
+}
+
+.technologySupportCategories a {
+    margin-left: 12px;
+    margin-right: 12px;
+    cursor: pointer;
+}
+
+.technologySupportCategories .active {
+    color: var(--sig-blue);
+    font-weight: 600;
+}
+
+.technologySupportTable .unavailable {
+    color: var(--sig-light-gray);
+}
