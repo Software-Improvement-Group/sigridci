@@ -15,9 +15,7 @@
 import sys
 
 from .ascii_art_report import AsciiArtReport
-from .maintainability_markdown_report import MaintainabilityMarkdownReport
 from .report import Report
-from ..objective import Objective, ObjectiveStatus
 from ..publish_options import RunMode
 
 
