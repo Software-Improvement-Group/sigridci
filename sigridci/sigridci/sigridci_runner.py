@@ -20,11 +20,6 @@ from .platform import Platform
 from .publish_options import PublishOptions, RunMode
 from .sigrid_api_client import SigridApiClient
 from .upload_log import UploadLog
-from .reports.ascii_art_report import AsciiArtReport
-from .reports.azure_pull_request_report import AzurePullRequestReport
-from .reports.gitlab_pull_request_report import GitLabPullRequestReport
-from .reports.junit_format_report import JUnitFormatReport
-from .reports.maintainability_markdown_report import MaintainabilityMarkdownReport
 
 
 class SigridCiRunner:
@@ -53,6 +48,7 @@ class SigridCiRunner:
 
     def run(self):
         self.prepareRun()
+        self.performLicenseCheck()
 
         systemExists = self.apiClient.checkSystemExists()
         UploadLog.log("Found system in Sigrid" if systemExists else "System is not yet on-boarded to Sigrid")
@@ -80,6 +76,14 @@ class SigridCiRunner:
         # disabled.
         if self.options.feedbackURL:
             self.apiClient.logPlatformInformation(Platform.getPlatformId())
+
+    def performLicenseCheck(self):
+        licenses = self.apiClient.fetchLicenses()["licenses"]
+        missing = [capability.name for capability in self.options.capabilities if capability.name not in licenses]
+        if len(missing) > 0:
+            UploadLog.log(f"You do not have the Sigrid license for {', '.join(missing)}.")
+            sys.exit(1)
+
 
     def displayFeedback(self, analysisId, metadata):
         objectives = self.apiClient.fetchObjectives()

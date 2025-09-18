@@ -53,7 +53,6 @@ class SigridCiRunnerTest(TestCase):
 
         apiClient = MockApiClient(self.options)
         runner = SigridCiRunner(self.options, apiClient)
-        runner.reports = []
         runner.run()
 
         expectedLog = [
@@ -70,6 +69,7 @@ class SigridCiRunnerTest(TestCase):
         ]
 
         expectedCalls = [
+            "/analysis-results/api/v1/licenses/aap",
             "/analysis-results/sigridci/aap/noot/v1/ci",
             "/analysis-results/api/v1/system-metadata/aap/noot",
             "/inboundresults/sig/aap/noot/ci/uploads/v1",
@@ -88,7 +88,6 @@ class SigridCiRunnerTest(TestCase):
 
         apiClient = MockApiClient(self.options)
         runner = SigridCiRunner(self.options, apiClient)
-        runner.reports = []
         runner.run()
 
         expectedLog = [
@@ -105,6 +104,7 @@ class SigridCiRunnerTest(TestCase):
         ]
 
         expectedCalls = [
+            "/analysis-results/api/v1/licenses/aap",
             "/analysis-results/sigridci/aap/noot/v1/ci",
             "/analysis-results/api/v1/system-metadata/aap/noot",
             "/inboundresults/sig/aap/noot/ci/uploads/v1/publish",
@@ -123,7 +123,6 @@ class SigridCiRunnerTest(TestCase):
 
         apiClient = MockApiClient(self.options)
         runner = SigridCiRunner(self.options, apiClient)
-        runner.reports = []
         runner.run()
 
         expectedLog = [
@@ -140,6 +139,7 @@ class SigridCiRunnerTest(TestCase):
         ]
 
         expectedCalls = [
+            "/analysis-results/api/v1/licenses/aap",
             "/analysis-results/sigridci/aap/noot/v1/ci",
             "/analysis-results/api/v1/system-metadata/aap/noot",
             "/inboundresults/sig/aap/noot/ci/uploads/v1/publishonly",
@@ -154,7 +154,6 @@ class SigridCiRunnerTest(TestCase):
 
         apiClient = MockApiClient(self.options, systemExists=False)
         runner = SigridCiRunner(self.options, apiClient)
-        runner.reports = []
         runner.run()
 
         expectedLog = [
@@ -171,6 +170,7 @@ class SigridCiRunnerTest(TestCase):
         ]
 
         expectedCalls = [
+            "/analysis-results/api/v1/licenses/aap",
             "/analysis-results/sigridci/aap/noot/v1/ci",
             "/inboundresults/sig/aap/noot/ci/uploads/v1/onboarding",
             "UPLOAD"
@@ -187,10 +187,10 @@ class SigridCiRunnerTest(TestCase):
 
         apiClient = MockApiClient(self.options)
         runner = SigridCiRunner(self.options, apiClient)
-        runner.reports = []
         runner.run()
 
         expectedCalls = [
+            "/analysis-results/api/v1/licenses/aap",
             "/analysis-results/sigridci/aap/noot/v1/ci",
             "/analysis-results/api/v1/system-metadata/aap/noot",
             "/inboundresults/sig/aap/noot/ci/uploads/v1/publish?subsystem=mysubsystem",
@@ -204,7 +204,6 @@ class SigridCiRunnerTest(TestCase):
     def testExitWithMessageIfUploadEmpty(self):
         apiClient = MockApiClient(self.options, systemExists=False)
         runner = SigridCiRunner(self.options, apiClient)
-        runner.reports = []
 
         with self.assertRaises(SystemExit):
             runner.run()
@@ -214,7 +213,6 @@ class SigridCiRunnerTest(TestCase):
 
         apiClient = MockApiClient(self.options, systemExists=True, uploadAttempts=3)
         runner = SigridCiRunner(self.options, apiClient)
-        runner.reports = []
         runner.run()
 
         expectedLog = [
@@ -245,7 +243,6 @@ class SigridCiRunnerTest(TestCase):
 
         apiClient = MockApiClient(self.options, systemExists=True, uploadAttempts=99)
         runner = SigridCiRunner(self.options, apiClient)
-        runner.reports = []
 
         expectedLog = [
             "Using token ending in '****ummy'",
@@ -297,7 +294,6 @@ class SigridCiRunnerTest(TestCase):
         apiClient.responses["/inboundresults/sig/aap/noot/ci/validate/v1"] = {"valid": True}
 
         runner = SigridCiRunner(self.options, apiClient)
-        runner.reports = []
         runner.run()
 
         expectedLog = [
@@ -324,8 +320,6 @@ class SigridCiRunnerTest(TestCase):
         apiClient.responses["/inboundresults/sig/aap/noot/ci/validate/v1"] = {"valid" : False, "notes" : ["test"]}
 
         runner = SigridCiRunner(self.options, apiClient)
-        runner.reports = []
-
         with self.assertRaises(SystemExit):
             runner.run()
 
@@ -348,7 +342,6 @@ class SigridCiRunnerTest(TestCase):
         apiClient.responses["/inboundresults/sig/aap/noot/ci/validate/v1"] = {"valid" : False, "notes" : ["test"]}
 
         runner = SigridCiRunner(self.options, apiClient)
-        runner.reports = []
 
         with self.assertRaises(SystemExit):
             # This should cause a system exit because an empty scope file
@@ -364,7 +357,6 @@ class SigridCiRunnerTest(TestCase):
         apiClient.responses["/inboundresults/sig/aap/noot/ci/validate/v1"] = {"valid" : True}
 
         runner = SigridCiRunner(self.options, apiClient)
-        runner.reports = []
         runner.run()
 
         self.assertIn("Warning: You cannot provide a scope configuration file for a subsystem, it will be ignored.",
@@ -379,7 +371,6 @@ class SigridCiRunnerTest(TestCase):
         apiClient.responses["/inboundresults/sig/aap/noot/ci/validate/v1"] = {"valid" : True}
 
         runner = SigridCiRunner(self.options, apiClient)
-        runner.reports = []
         runner.run()
 
         self.assertNotIn("Warning: You cannot provide a scope configuration file for a subsystem, it will be ignored.",
@@ -392,7 +383,6 @@ class SigridCiRunnerTest(TestCase):
         apiClient.responses["/analysis-results/sigridci/aap/validate"] = {"valid" : False, "notes" : ["test"]}
 
         runner = SigridCiRunner(self.options, apiClient)
-        runner.reports = []
 
         with self.assertRaises(SystemExit):
             # This should cause a system exit because an empty metadata file
@@ -406,7 +396,6 @@ class SigridCiRunnerTest(TestCase):
         apiClient.responses["/analysis-results/api/v1/system-metadata/aap/noot"] = {"aap" : 2, "noot" : None}
 
         runner = SigridCiRunner(self.options, apiClient)
-        runner.reports = []
         runner.run()
 
         expectedLog = [
@@ -431,7 +420,6 @@ class SigridCiRunnerTest(TestCase):
         apiClient.responses["/analysis-results/sigridci/aap/validate"] = {"valid" : True, "notes": []}
 
         runner = SigridCiRunner(self.options, apiClient)
-        runner.reports = []
         runner.run()
 
         expectedLog = [
@@ -450,7 +438,6 @@ class SigridCiRunnerTest(TestCase):
         apiClient.responses["/analysis-results/sigridci/aap/validate"] = {"valid" : False, "notes": ["test"]}
 
         runner = SigridCiRunner(self.options, apiClient)
-        runner.reports = []
 
         with self.assertRaises(SystemExit):
             runner.run()
@@ -470,7 +457,6 @@ class SigridCiRunnerTest(TestCase):
     def testDoNotValidateMetadataFileIfNotPresent(self):
         apiClient = MockApiClient(self.options)
         runner = SigridCiRunner(self.options, apiClient)
-        runner.reports = []
 
         with self.assertRaises(SystemExit):
             runner.run()
@@ -479,7 +465,8 @@ class SigridCiRunnerTest(TestCase):
             "Using token ending in '****ummy'",
             "Found system in Sigrid",
             "Creating upload",
-            "Upload size is 1 MB"
+            "Upload size is 1 MB",
+            "No code found to upload, please check the directory used for --source"
         ]
 
         self.assertEqual(UploadLog.history, expectedLog)
@@ -487,7 +474,6 @@ class SigridCiRunnerTest(TestCase):
     def testDoNotGenerateFileWithoutEnvironmentVariables(self):
         apiClient = MockApiClient(self.options)
         runner = SigridCiRunner(self.options, apiClient)
-        runner.reports = []
         runner.prepareMetadata()
 
         self.assertEqual(os.path.exists(f"{self.tempDir}/sigrid-metadata.yaml"), False)
@@ -497,7 +483,6 @@ class SigridCiRunnerTest(TestCase):
 
         apiClient = MockApiClient(self.options)
         runner = SigridCiRunner(self.options, apiClient)
-        runner.reports = []
         runner.prepareMetadata()
 
         self.assertEqual(os.path.exists(f"{self.tempDir}/sigrid-metadata.yaml"), True)
@@ -510,7 +495,6 @@ class SigridCiRunnerTest(TestCase):
 
         apiClient = MockApiClient(self.options)
         runner = SigridCiRunner(self.options, apiClient)
-        runner.reports = []
         runner.prepareMetadata()
 
         self.assertEqual(os.path.exists(f"{self.tempDir}/sigrid-metadata.yaml"), True)
@@ -523,7 +507,6 @@ class SigridCiRunnerTest(TestCase):
 
         apiClient = MockApiClient(self.options)
         runner = SigridCiRunner(self.options, apiClient)
-        runner.reports = []
         runner.prepareMetadata()
 
         self.assertEqual(os.path.exists(f"{self.tempDir}/sigrid-metadata.yaml"), True)
@@ -536,7 +519,6 @@ class SigridCiRunnerTest(TestCase):
 
         apiClient = MockApiClient(self.options)
         runner = SigridCiRunner(self.options, apiClient)
-        runner.reports = []
         with self.assertRaises(Exception):
             runner.prepareMetadata()
 
@@ -549,7 +531,6 @@ class SigridCiRunnerTest(TestCase):
 
         apiClient = MockApiClient(self.options)
         runner = SigridCiRunner(self.options, apiClient)
-        runner.reports = []
         runner.run()
 
         for root, dirs, files in os.walk("."):
@@ -563,7 +544,6 @@ class SigridCiRunnerTest(TestCase):
 
         apiClient = MockApiClient(self.options)
         runner = SigridCiRunner(self.options, apiClient)
-        runner.reports = []
         with self.assertRaises(SystemExit) as raised:
             runner.run()
 
@@ -582,7 +562,6 @@ class SigridCiRunnerTest(TestCase):
         apiClient.responses["/analysis-results/api/v1/system-metadata/aap/noot"] = {"active" : False}
 
         runner = SigridCiRunner(self.options, apiClient)
-        runner.reports = []
         with self.assertRaises(SystemExit) as raised:
             runner.run()
 
@@ -593,6 +572,7 @@ class SigridCiRunnerTest(TestCase):
         ]
 
         expectedCalls = [
+            "/analysis-results/api/v1/licenses/aap",
             "/analysis-results/sigridci/aap/noot/v1/ci",
             "/analysis-results/api/v1/system-metadata/aap/noot"
         ]
@@ -606,7 +586,6 @@ class SigridCiRunnerTest(TestCase):
         apiClient.responses["/analysis-results/api/v1/system-metadata/aap/noot"] = {"scopeFileInRepository" : False}
 
         runner = SigridCiRunner(self.options, apiClient)
-        runner.reports = []
 
         with self.assertRaises(SystemExit):
             runner.run()
@@ -615,7 +594,8 @@ class SigridCiRunnerTest(TestCase):
             "Using token ending in '****ummy'",
             "Found system in Sigrid",
             "Creating upload",
-            "Upload size is 1 MB"
+            "Upload size is 1 MB",
+            "No code found to upload, please check the directory used for --source"
         ]
 
         self.assertEqual(UploadLog.history, expectedLog)
@@ -626,7 +606,6 @@ class SigridCiRunnerTest(TestCase):
         apiClient.responses["/analysis-results/api/v1/system-metadata/aap/noot"] = {"scopeFileInRepository" : True}
 
         runner = SigridCiRunner(self.options, apiClient)
-        runner.reports = []
 
         with self.assertRaises(SystemExit):
             runner.run()
@@ -651,8 +630,6 @@ class SigridCiRunnerTest(TestCase):
 
         self.options.subsystem = "aap"
         runner = SigridCiRunner(self.options, apiClient)
-        runner.reports = []
-
         with self.assertRaises(SystemExit):
             runner.run()
 
@@ -660,10 +637,31 @@ class SigridCiRunnerTest(TestCase):
             "Using token ending in '****ummy'",
             "Found system in Sigrid",
             "Creating upload",
-            "Upload size is 1 MB"
+            "Upload size is 1 MB",
+            "No code found to upload, please check the directory used for --source"
         ]
 
         self.assertEqual(UploadLog.history, expectedLog)
+
+    def testLicenseCheckSucceeds(self):
+        apiClient = MockApiClient(self.options)
+        apiClient.responses["/analysis-results/api/v1/licenses/aap"] = {"licenses" : ["MAINTAINABILITY"]}
+
+        runner = SigridCiRunner(self.options, apiClient)
+        with self.assertRaises(SystemExit):
+            runner.run()
+
+        self.assertEqual(UploadLog.history[-1], "No code found to upload, please check the directory used for --source")
+
+    def testLicenseCheckFails(self):
+        apiClient = MockApiClient(self.options)
+        apiClient.responses["/analysis-results/api/v1/licenses/aap"] = {"licenses" : ["AAP"]}
+
+        runner = SigridCiRunner(self.options, apiClient)
+        with self.assertRaises(SystemExit):
+            runner.run()
+
+        self.assertEqual(UploadLog.history[-1], "You do not have the Sigrid license for MAINTAINABILITY.")
 
     def createTempFile(self, dir, name, contents):
         with open(f"{dir}/{name}", "w") as fileRef:
@@ -680,12 +678,15 @@ class MockApiClient(SigridApiClient):
         self.systemExists = systemExists
         self.uploadAttempts = uploadAttempts
         self.attempt = 0
-        self.responses = {}
         self.POLL_INTERVAL = 1
+
+        self.responses = {
+            "/analysis-results/api/v1/licenses/aap" : {"licenses" : ["MAINTAINABILITY"]}
+        }
 
     def callSigridAPI(self, path, body=None, contentType=None):
         self.called.append(path)
-    
+
         if not self.systemExists and path.endswith("/sigridci/aap/noot/v1/ci"):
             # Mock an HTTP 404.
             raise urllib.error.HTTPError(path, 404, "", Message(), None)
