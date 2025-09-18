@@ -39,7 +39,7 @@ def parseFeedbackOptions(args):
         customer=args.customer,
         system=args.system,
         runMode=RunMode.FEEDBACK_ONLY,
-        capabilities=[CAPABILITIES[args.capability]],
+        capabilities=[CAPABILITIES[args.capability.lower()]],
         outputDir=args.out,
         sigridURL=args.sigridurl
     )
