@@ -1,8 +1,9 @@
 # Sigrid Local Runner
 
 This documentation covers the Sigrid Local Runner, which is only used when you are part of an
-[IT Due Diligence](https://www.softwareimprovementgroup.com/it-due-diligence/) where your source code needs to
-remain on-premise. You do not need the Local Runner outside of IT Due Diligences. 
+[IT Due Diligence](https://www.softwareimprovementgroup.com/it-due-diligence/) or a
+[Software Risk Assessment](https://www.softwareimprovementgroup.com/software-risk-assessment/)
+performed by a SIG consultancy partner, where your source code needs to remain on-premise. 
 {: .attention }
 
 The Local Runner does the following:
@@ -37,7 +38,7 @@ You can now provide the Local Runner with the license file and the source code d
 <img src="../images/local-runner/input.png" width="300" />
 
 The license file is only valid for a limited time. If you see an error message that your license file has
-expired, contact SIG to request a new one.
+expired, [notify your support contact](#support) to request a new one.
 
 If you're not seeing any red error messages, you're good to go. You can now click the button to start analyzing
 your source code. This might take a while, depending on how large your source code is. 
@@ -49,7 +50,7 @@ Optionally, you can click "show process output" to see the log output. This is p
 After the analysis has completed, you will see the following confirmation message. This indicates the Local Runner
 has successfully completed its analysis, and has published the analysis results to Sigrid. That means you're done!
 
-If your analysis results in an error, [contact SIG](#contact-and-support) so we can try to help you out.
+If your analysis results in an error, [notify your support contact](#support) so we can try to help you out.
 
 If you made a mistake, you can use the Local Runner multiple times. Whenever you use the Local Runner, the new
 analysis results will simply replace the old ones. You can continue to use the Local Runner for as long as your
@@ -61,8 +62,7 @@ The Local Runner is able to analyze over 250 different technologies. For a full 
 [list of supported technologies](../reference/technology-support.md#list-of-supported-technologies)
 and filter the table by "Local Runner".
 
-## Contact and support
+## Support
 
-Feel free to contact [SIG's support department](mailto:support@softwareimprovementgroup.com) for any questions or
-issues you may have after reading this document, or when using Sigrid or Sigrid CI. Users in Europe can also contact 
-us by phone at +31 20 314 0953.
+You can find the name and contact details of your support contact in the same email that contains your Local Runner
+download link and Sigrid license file.

@@ -172,11 +172,14 @@ Please make sure that you use the UTF-8 character encoding when creating the ZIP
 
 ## Publishing analysis results to Sigrid without uploading your code
 
-If you are part of an [IT Due Diligence](https://www.softwareimprovementgroup.com/it-due-diligence/), SIG provides a
-special service where you can analyze your source code *locally* without, needing to upload your source code. At the
-end of the analysis, the analysis results are published to Sigrid, but the source code itself is never uploaded.
-You can find more information in the [Local Runner documentation](../organization-integration/local-runner.md).
-This service is *only* available as part of an IT Due Diligence, it is not available for "normal" Sigrid.
+If you are part of an [IT Due Diligence](https://www.softwareimprovementgroup.com/it-due-diligence/) or a
+[Software Risk Assessment](https://www.softwareimprovementgroup.com/software-risk-assessment/) performed by a
+SIG consultancy partner, SIG provides a special service where you can analyze your source code *locally* without
+needing to upload your source code. At the end of the analysis, the analysis results are published to Sigrid,
+but the source code itself is never uploaded. You can find more information in the
+[Local Runner documentation](../organization-integration/local-runner.md). This service is *only* available as
+part of IT Due Diligences and Software Risk Assessments performed by SIG consultancy partners, it is not available
+for "normal" Sigrid.
 
 ## What if something went wrong?
 
