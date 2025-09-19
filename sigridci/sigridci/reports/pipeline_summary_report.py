@@ -31,7 +31,6 @@ class PipelineSummaryReport(Report):
 
         print("", file=self.output)
         self.printConclusionMessage(feedback, options)
-        self.printLandingPage(analysisId, options)
 
         # If you publish(only) we never break the build
         # We can break the build when running on a branch or pull request.
@@ -46,13 +45,3 @@ class PipelineSummaryReport(Report):
         asciiArt = AsciiArtReport(self.output, self.ansiColors)
         color = asciiArt.ANSI_GREEN if success else asciiArt.ANSI_YELLOW
         asciiArt.printColor(f"** {message} **", asciiArt.ANSI_BOLD + color)
-
-    def printLandingPage(self, analysisId, options):
-        landingPage = self.getSigridUrl(options)
-
-        print("", file=self.output)
-        print("-" * (len(landingPage) + 4), file=self.output)
-        print("View this system in Sigrid:", file=self.output)
-        print(f"    {landingPage}", file=self.output)
-        print("-" * (len(landingPage) + 4), file=self.output)
-        print("", file=self.output)

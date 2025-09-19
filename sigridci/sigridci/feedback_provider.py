@@ -58,8 +58,12 @@ class FeedbackProvider:
             report.previousFeedback = self.previousFeedback
             report.generate(self.analysisId, self.feedback, self.options)
 
-        print(f"Sigrid CI feedback is available from {markdownReport.getMarkdownFile(self.options)}")
-        print(f"View this system in Sigrid: {markdownReport.getSigridUrl(self.options)}")
+        print("")
+        print(f"Sigrid CI feedback is available from\n    {markdownReport.getMarkdownFile(self.options)}")
+        print("")
+        print(f"View this system in Sigrid:\n    {markdownReport.getSigridUrl(self.options)}")
+        print("")
+
         return markdownReport.isObjectiveSuccess(self.feedback, self.options)
 
     def prepareMarkdownReport(self):

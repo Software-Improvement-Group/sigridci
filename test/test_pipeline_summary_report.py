@@ -44,11 +44,6 @@ class PipelineSummaryReportTest(TestCase):
 
         expected = """
             ** ⚠️  Your code did not improve maintainability towards your objective of 3.5 stars **
-            
-            ---------------------------------------
-            View this system in Sigrid:
-                https://example-sigrid.com/aap/noot
-            ---------------------------------------
         """
 
         self.assertEqual(buffer.getvalue().strip(), inspect.cleandoc(expected).strip())
@@ -78,11 +73,6 @@ class PipelineSummaryReportTest(TestCase):
 
         expected = """
             ** 💭️  You did not change any files that are measured by Sigrid **
-            
-            ---------------------------------------
-            View this system in Sigrid:
-                https://example-sigrid.com/aap/noot
-            ---------------------------------------
         """
 
         self.assertEqual(buffer.getvalue().strip(), inspect.cleandoc(expected).strip())
