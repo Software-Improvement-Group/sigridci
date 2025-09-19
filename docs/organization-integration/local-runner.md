@@ -1,9 +1,7 @@
 # Sigrid Local Runner
 
-This documentation covers the Sigrid Local Runner, which is only used when you are part of an
-[IT Due Diligence](https://www.softwareimprovementgroup.com/it-due-diligence/) or a
-[Software Risk Assessment](https://www.softwareimprovementgroup.com/software-risk-assessment/)
-performed by a SIG consultancy partner, where your source code needs to remain on-premise. 
+This documentation covers the Sigrid Local Runner, which is only used when you are part of a one-off assessment
+where your source code needs to remain on-premise. The Sigrid Local Runner cannot be used for Sigrid subscriptions.
 {: .attention }
 
 The Local Runner does the following:
