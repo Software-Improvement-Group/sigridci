@@ -66,7 +66,7 @@ def parseTarget(target):
 
 def parseCapabilities(names):
     try:
-        return [Capability(name.lower().strip()) for name in names.split(",")]
+        return [CAPABILITIES[name.lower().strip()] for name in names.split(",")]
     except KeyError as e:
         print(f"Invalid value for --capability: {str(e)}")
         sys.exit(1)
