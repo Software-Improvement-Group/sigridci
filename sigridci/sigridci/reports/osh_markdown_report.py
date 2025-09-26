@@ -43,7 +43,7 @@ class OpenSourceHealthMarkdownReport(Report, MarkdownRenderer):
         if self.isObjectiveSuccess(feedback, options):
             return f"✅  You achieved your objective of having no {objectiveDisplayName}"
         else:
-            return f"⚠️  You did not meet your objective of having no {objectiveDisplayName}"
+            return f"⚠️  You failed your objective of having no {objectiveDisplayName}"
 
     def generateFindingsTable(self, includedVulnerabilities):
         if len(includedVulnerabilities) == 0:

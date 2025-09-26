@@ -38,7 +38,7 @@ class OpenSourceHealthMarkdownReportTest(TestCase):
         expected = """
             # [Sigrid](https://sigrid-says.com/aap/noot/-/open-source-health) Open Source Health feedback
             
-            **⚠️  You did not meet your objective of having no critical open source vulnerabilities**
+            **⚠️  You failed your objective of having no critical open source vulnerabilities**
             
             | Risk | Dependency | Description |
             |------|------------|-------------|
@@ -59,7 +59,7 @@ class OpenSourceHealthMarkdownReportTest(TestCase):
         expected = """
             # [Sigrid](https://sigrid-says.com/aap/noot/-/open-source-health) Open Source Health feedback
             
-            **⚠️  You did not meet your objective of having no high open source vulnerabilities**
+            **⚠️  You failed your objective of having no high open source vulnerabilities**
             
             | Risk | Dependency | Description |
             |------|------------|-------------|
@@ -103,7 +103,7 @@ class OpenSourceHealthMarkdownReportTest(TestCase):
         expected = """
             # [Sigrid](https://sigrid-says.com/aap/noot/-/open-source-health) Open Source Health feedback
             
-            **⚠️  You did not meet your objective of having no high open source vulnerabilities**
+            **⚠️  You failed your objective of having no high open source vulnerabilities**
             
             | Risk | Dependency | Description |
             |------|------------|-------------|
