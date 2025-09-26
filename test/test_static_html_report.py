@@ -34,7 +34,7 @@ class StaticHtmlReportTest(TestCase):
         }
 
         with TemporaryDirectory() as tempDir:
-            options = PublishOptions("aap", "noot", RunMode.FEEDBACK_ONLY, "/tmp", outputDir=tempDir)
+            options = PublishOptions("aap", "noot", RunMode.FEEDBACK_ONLY, outputDir=tempDir)
             report = StaticHtmlReport(3.5)
             report.generate("test", feedback, options)
 
