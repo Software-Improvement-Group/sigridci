@@ -24,9 +24,13 @@ from .reports.maintainability_markdown_report import MaintainabilityMarkdownRepo
 from .reports.osh_markdown_report import OpenSourceHealthMarkdownReport
 from .reports.pipeline_summary_report import PipelineSummaryReport
 from .reports.security_markdown_report import SecurityMarkdownReport
+from .reports.static_html_report import StaticHtmlReport
 
 
 class FeedbackProvider:
+    DEFAULT_RATING_OBJECTIVE = 3.5
+    DEFAULT_FINDING_OBJECTIVE = "CRITICAL"
+
     def __init__(self, capability, options, objectives):
         self.capability = capability
         self.objectives = objectives
@@ -68,13 +72,13 @@ class FeedbackProvider:
 
     def prepareMarkdownReport(self):
         if self.capability == Capability.MAINTAINABILITY:
-            objective = self.objectives.get("MAINTAINABILITY", 3.5)
+            objective = self.objectives.get("MAINTAINABILITY", self.DEFAULT_RATING_OBJECTIVE)
             return MaintainabilityMarkdownReport(objective)
         elif self.capability == Capability.OPEN_SOURCE_HEALTH:
-            objective = self.objectives.get("OSH_MAX_SEVERITY", "CRITICAL")
+            objective = self.objectives.get("OSH_MAX_SEVERITY", self.DEFAULT_FINDING_OBJECTIVE)
             return OpenSourceHealthMarkdownReport(objective)
         elif self.capability == Capability.SECURITY:
-            objective = self.objectives.get("SECURITY_MAX_SEVERITY", "CRITICAL")
+            objective = self.objectives.get("SECURITY_MAX_SEVERITY", self.DEFAULT_FINDING_OBJECTIVE)
             return SecurityMarkdownReport(objective)
         else:
             raise Exception(f"Unknown capability: {self.capability}")
@@ -82,6 +86,7 @@ class FeedbackProvider:
     def prepareAdditionalReports(self, markdownReport):
         reports = [markdownReport, GitLabPullRequestReport(markdownReport), AzurePullRequestReport(markdownReport)]
         if self.capability == Capability.MAINTAINABILITY:
-            reports += [AsciiArtReport(), JUnitFormatReport()]
+            objective = self.objectives.get("MAINTAINABILITY", self.DEFAULT_RATING_OBJECTIVE)
+            reports += [AsciiArtReport(), JUnitFormatReport(), StaticHtmlReport(objective)]
         reports.append(PipelineSummaryReport(markdownReport))
         return reports
