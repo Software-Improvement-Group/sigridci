@@ -1,0 +1,2410 @@
+{
+  "bomFormat": "CycloneDX",
+  "specVersion": "1.6",
+  "version": 1,
+  "metadata": {
+    "timestamp": "2025-09-19T07:28:13Z",
+    "tools": [
+      {
+        "vendor": "Software Improvement Group",
+        "name": "Sigrid",
+        "version": "2025_osh_sig",
+        "externalReferences": [
+          {
+            "type": "other",
+            "url": "https://sigrid-says.com/example/junit/-/open-source-health"
+          }
+        ]
+      }
+    ],
+    "properties": [
+      {
+        "name": "sigrid:ratings:system",
+        "value": "2.814"
+      },
+      {
+        "name": "sigrid:ratings:vulnerability",
+        "value": "2.475501113585746"
+      },
+      {
+        "name": "sigrid:ratings:licenses",
+        "value": "4.0"
+      },
+      {
+        "name": "sigrid:ratings:freshness",
+        "value": "1.4705882352941178"
+      },
+      {
+        "name": "sigrid:ratings:management",
+        "value": "5.5"
+      },
+      {
+        "name": "sigrid:ratings:activity",
+        "value": "1.4705882352941178"
+      },
+      {
+        "name": "externalId",
+        "value": "1234"
+      }
+    ]
+  },
+  "components": [
+    {
+      "type": "library",
+      "bom-ref": "pkg:maven/org.gradle/test-retry-gradle-plugin@1.2.1",
+      "group": "org.gradle",
+      "name": "test-retry-gradle-plugin",
+      "version": "1.2.1",
+      "licenses": [],
+      "purl": "pkg:maven/org.gradle/test-retry-gradle-plugin@1.2.1",
+      "properties": [
+        {
+          "name": "sigrid:risk:vulnerability",
+          "value": "NONE"
+        },
+        {
+          "name": "sigrid:risk:legal",
+          "value": "UNKNOWN"
+        },
+        {
+          "name": "sigrid:risk:freshness",
+          "value": "UNKNOWN"
+        },
+        {
+          "name": "sigrid:risk:activity",
+          "value": "UNKNOWN"
+        },
+        {
+          "name": "sigrid:risk:stability",
+          "value": "NONE"
+        },
+        {
+          "name": "sigrid:risk:management",
+          "value": "NONE"
+        },
+        {
+          "name": "sigrid:next:version",
+          "value": "?"
+        },
+        {
+          "name": "sigrid:latest:version",
+          "value": "?"
+        }
+      ],
+      "evidence": {
+        "occurrences": [
+          {
+            "location": "buildSrc/build.gradle.kts"
+          }
+        ]
+      }
+    },
+    {
+      "type": "library",
+      "bom-ref": "pkg:maven/org.codehaus.groovy/groovy-bom@2.5.14",
+      "group": "org.codehaus.groovy",
+      "name": "groovy-bom",
+      "version": "2.5.14",
+      "licenses": [
+        {
+          "license": {
+            "name": "The Apache Software License, Version 2.0"
+          }
+        }
+      ],
+      "purl": "pkg:maven/org.codehaus.groovy/groovy-bom@2.5.14",
+      "properties": [
+        {
+          "name": "sigrid:transitive",
+          "value": "DIRECT"
+        },
+        {
+          "name": "sigrid:risk:vulnerability",
+          "value": "NONE"
+        },
+        {
+          "name": "sigrid:risk:legal",
+          "value": "NONE"
+        },
+        {
+          "name": "sigrid:risk:freshness",
+          "value": "HIGH"
+        },
+        {
+          "name": "sigrid:risk:activity",
+          "value": "NONE"
+        },
+        {
+          "name": "sigrid:risk:stability",
+          "value": "NONE"
+        },
+        {
+          "name": "sigrid:risk:management",
+          "value": "NONE"
+        },
+        {
+          "name": "sigrid:releaseDate",
+          "value": "2020-12-03"
+        },
+        {
+          "name": "sigrid:next:version",
+          "value": "3.0.8"
+        },
+        {
+          "name": "sigrid:next:releaseDate",
+          "value": "2021-04-20"
+        },
+        {
+          "name": "sigrid:latest:version",
+          "value": "3.0.25"
+        },
+        {
+          "name": "sigrid:latest:releaseDate",
+          "value": "2025-05-27"
+        }
+      ],
+      "evidence": {
+        "occurrences": [
+          {
+            "location": "gradle/libs.versions.toml"
+          }
+        ]
+      }
+    },
+    {
+      "type": "library",
+      "bom-ref": "pkg:maven/org.apache.logging.log4j/log4j-core@2.14.1",
+      "group": "org.apache.logging.log4j",
+      "name": "log4j-core",
+      "version": "2.14.1",
+      "licenses": [],
+      "purl": "pkg:maven/org.apache.logging.log4j/log4j-core@2.14.1",
+      "properties": [
+        {
+          "name": "sigrid:transitive",
+          "value": "DIRECT"
+        },
+        {
+          "name": "sigrid:risk:vulnerability",
+          "value": "CRITICAL"
+        },
+        {
+          "name": "sigrid:risk:legal",
+          "value": "UNKNOWN"
+        },
+        {
+          "name": "sigrid:risk:freshness",
+          "value": "HIGH"
+        },
+        {
+          "name": "sigrid:risk:activity",
+          "value": "NONE"
+        },
+        {
+          "name": "sigrid:risk:stability",
+          "value": "NONE"
+        },
+        {
+          "name": "sigrid:risk:management",
+          "value": "NONE"
+        },
+        {
+          "name": "sigrid:releaseDate",
+          "value": "2021-03-07"
+        },
+        {
+          "name": "sigrid:next:version",
+          "value": "2.15.0"
+        },
+        {
+          "name": "sigrid:next:releaseDate",
+          "value": "2021-12-09"
+        },
+        {
+          "name": "sigrid:latest:version",
+          "value": "2.25.1"
+        },
+        {
+          "name": "sigrid:latest:releaseDate",
+          "value": "2025-07-05"
+        }
+      ],
+      "evidence": {
+        "occurrences": [
+          {
+            "location": "gradle/libs.versions.toml"
+          }
+        ]
+      }
+    },
+    {
+      "type": "library",
+      "bom-ref": "pkg:maven/org.opentest4j/opentest4j@1.2.0",
+      "group": "org.opentest4j",
+      "name": "opentest4j",
+      "version": "1.2.0",
+      "licenses": [
+        {
+          "license": {
+            "name": "The Apache License, Version 2.0"
+          }
+        }
+      ],
+      "purl": "pkg:maven/org.opentest4j/opentest4j@1.2.0",
+      "properties": [
+        {
+          "name": "sigrid:transitive",
+          "value": "DIRECT"
+        },
+        {
+          "name": "sigrid:risk:vulnerability",
+          "value": "NONE"
+        },
+        {
+          "name": "sigrid:risk:legal",
+          "value": "NONE"
+        },
+        {
+          "name": "sigrid:risk:freshness",
+          "value": "MEDIUM"
+        },
+        {
+          "name": "sigrid:risk:activity",
+          "value": "MEDIUM"
+        },
+        {
+          "name": "sigrid:risk:stability",
+          "value": "NONE"
+        },
+        {
+          "name": "sigrid:risk:management",
+          "value": "NONE"
+        },
+        {
+          "name": "sigrid:releaseDate",
+          "value": "2019-06-06"
+        },
+        {
+          "name": "sigrid:next:version",
+          "value": "1.3.0"
+        },
+        {
+          "name": "sigrid:next:releaseDate",
+          "value": "2023-07-06"
+        },
+        {
+          "name": "sigrid:latest:version",
+          "value": "1.3.0"
+        },
+        {
+          "name": "sigrid:latest:releaseDate",
+          "value": "2023-07-06"
+        }
+      ],
+      "evidence": {
+        "occurrences": [
+          {
+            "location": "gradle/libs.versions.toml"
+          }
+        ]
+      }
+    },
+    {
+      "type": "library",
+      "bom-ref": "pkg:maven/org.openjdk.jmh/jmh-core@1.32",
+      "group": "org.openjdk.jmh",
+      "name": "jmh-core",
+      "version": "1.32",
+      "licenses": [
+        {
+          "license": {
+            "name": "GNU General Public License (GPL), version 2, with the Classpath exception"
+          }
+        }
+      ],
+      "purl": "pkg:maven/org.openjdk.jmh/jmh-core@1.32",
+      "properties": [
+        {
+          "name": "sigrid:transitive",
+          "value": "DIRECT"
+        },
+        {
+          "name": "sigrid:risk:vulnerability",
+          "value": "NONE"
+        },
+        {
+          "name": "sigrid:risk:legal",
+          "value": "LOW"
+        },
+        {
+          "name": "sigrid:risk:freshness",
+          "value": "HIGH"
+        },
+        {
+          "name": "sigrid:risk:activity",
+          "value": "MEDIUM"
+        },
+        {
+          "name": "sigrid:risk:stability",
+          "value": "NONE"
+        },
+        {
+          "name": "sigrid:risk:management",
+          "value": "NONE"
+        },
+        {
+          "name": "sigrid:releaseDate",
+          "value": "2021-05-26"
+        },
+        {
+          "name": "sigrid:next:version",
+          "value": "1.33"
+        },
+        {
+          "name": "sigrid:next:releaseDate",
+          "value": "2021-08-09"
+        },
+        {
+          "name": "sigrid:latest:version",
+          "value": "1.37"
+        },
+        {
+          "name": "sigrid:latest:releaseDate",
+          "value": "2023-08-03"
+        }
+      ],
+      "evidence": {
+        "occurrences": [
+          {
+            "location": "gradle/libs.versions.toml"
+          }
+        ]
+      }
+    },
+    {
+      "type": "library",
+      "bom-ref": "pkg:maven/HH/mm@ss.SSSZ",
+      "group": "HH",
+      "name": "mm",
+      "version": "ss.SSSZ",
+      "licenses": [],
+      "purl": "pkg:maven/HH/mm@ss.SSSZ",
+      "properties": [
+        {
+          "name": "sigrid:risk:vulnerability",
+          "value": "NONE"
+        },
+        {
+          "name": "sigrid:risk:legal",
+          "value": "UNKNOWN"
+        },
+        {
+          "name": "sigrid:risk:freshness",
+          "value": "UNKNOWN"
+        },
+        {
+          "name": "sigrid:risk:activity",
+          "value": "UNKNOWN"
+        },
+        {
+          "name": "sigrid:risk:stability",
+          "value": "NONE"
+        },
+        {
+          "name": "sigrid:risk:management",
+          "value": "NONE"
+        },
+        {
+          "name": "sigrid:next:version",
+          "value": "?"
+        },
+        {
+          "name": "sigrid:latest:version",
+          "value": "?"
+        }
+      ],
+      "evidence": {
+        "occurrences": [
+          {
+            "location": "build.gradle.kts"
+          }
+        ]
+      }
+    },
+    {
+      "type": "library",
+      "bom-ref": "pkg:maven/Xdoclint/none@",
+      "group": "Xdoclint",
+      "name": "none",
+      "version": "",
+      "licenses": [],
+      "purl": "pkg:maven/Xdoclint/none@",
+      "properties": [
+        {
+          "name": "sigrid:risk:vulnerability",
+          "value": "NONE"
+        },
+        {
+          "name": "sigrid:risk:legal",
+          "value": "UNKNOWN"
+        },
+        {
+          "name": "sigrid:risk:freshness",
+          "value": "UNKNOWN"
+        },
+        {
+          "name": "sigrid:risk:activity",
+          "value": "UNKNOWN"
+        },
+        {
+          "name": "sigrid:risk:stability",
+          "value": "NONE"
+        },
+        {
+          "name": "sigrid:risk:management",
+          "value": "NONE"
+        },
+        {
+          "name": "sigrid:next:version",
+          "value": "?"
+        },
+        {
+          "name": "sigrid:latest:version",
+          "value": "?"
+        }
+      ],
+      "evidence": {
+        "occurrences": [
+          {
+            "location": "documentation/documentation.gradle.kts"
+          }
+        ]
+      }
+    },
+    {
+      "type": "library",
+      "bom-ref": "pkg:maven/org.apache.logging.log4j/log4j-jul@2.14.1",
+      "group": "org.apache.logging.log4j",
+      "name": "log4j-jul",
+      "version": "2.14.1",
+      "licenses": [
+        {
+          "license": {
+            "name": "Apache"
+          }
+        }
+      ],
+      "purl": "pkg:maven/org.apache.logging.log4j/log4j-jul@2.14.1",
+      "properties": [
+        {
+          "name": "sigrid:transitive",
+          "value": "DIRECT"
+        },
+        {
+          "name": "sigrid:risk:vulnerability",
+          "value": "NONE"
+        },
+        {
+          "name": "sigrid:risk:legal",
+          "value": "NONE"
+        },
+        {
+          "name": "sigrid:risk:freshness",
+          "value": "HIGH"
+        },
+        {
+          "name": "sigrid:risk:activity",
+          "value": "NONE"
+        },
+        {
+          "name": "sigrid:risk:stability",
+          "value": "NONE"
+        },
+        {
+          "name": "sigrid:risk:management",
+          "value": "NONE"
+        },
+        {
+          "name": "sigrid:releaseDate",
+          "value": "2021-03-07"
+        },
+        {
+          "name": "sigrid:next:version",
+          "value": "2.15.0"
+        },
+        {
+          "name": "sigrid:next:releaseDate",
+          "value": "2021-12-09"
+        },
+        {
+          "name": "sigrid:latest:version",
+          "value": "2.25.1"
+        },
+        {
+          "name": "sigrid:latest:releaseDate",
+          "value": "2025-07-05"
+        }
+      ],
+      "evidence": {
+        "occurrences": [
+          {
+            "location": "gradle/libs.versions.toml"
+          }
+        ]
+      }
+    },
+    {
+      "type": "library",
+      "bom-ref": "pkg:maven/org.assertj/assertj-core@3.20.2",
+      "group": "org.assertj",
+      "name": "assertj-core",
+      "version": "3.20.2",
+      "licenses": [
+        {
+          "license": {
+            "name": "Apache License, Version 2.0"
+          }
+        }
+      ],
+      "purl": "pkg:maven/org.assertj/assertj-core@3.20.2",
+      "properties": [
+        {
+          "name": "sigrid:transitive",
+          "value": "DIRECT"
+        },
+        {
+          "name": "sigrid:risk:vulnerability",
+          "value": "NONE"
+        },
+        {
+          "name": "sigrid:risk:legal",
+          "value": "NONE"
+        },
+        {
+          "name": "sigrid:risk:freshness",
+          "value": "HIGH"
+        },
+        {
+          "name": "sigrid:risk:activity",
+          "value": "NONE"
+        },
+        {
+          "name": "sigrid:risk:stability",
+          "value": "NONE"
+        },
+        {
+          "name": "sigrid:risk:management",
+          "value": "NONE"
+        },
+        {
+          "name": "sigrid:releaseDate",
+          "value": "2021-06-20"
+        },
+        {
+          "name": "sigrid:next:version",
+          "value": "3.21.0"
+        },
+        {
+          "name": "sigrid:next:releaseDate",
+          "value": "2021-09-19"
+        },
+        {
+          "name": "sigrid:latest:version",
+          "value": "3.27.5"
+        },
+        {
+          "name": "sigrid:latest:releaseDate",
+          "value": "2025-09-18"
+        }
+      ],
+      "evidence": {
+        "occurrences": [
+          {
+            "location": "gradle/libs.versions.toml"
+          }
+        ]
+      }
+    },
+    {
+      "type": "library",
+      "bom-ref": "pkg:maven/biz.aQute.bnd/biz.aQute.bnd.gradle@5.3.0",
+      "group": "biz.aQute.bnd",
+      "name": "biz.aQute.bnd.gradle",
+      "version": "5.3.0",
+      "licenses": [
+        {
+          "license": {
+            "name": "(Apache-2.0;EPL-2.0)"
+          }
+        }
+      ],
+      "purl": "pkg:maven/biz.aQute.bnd/biz.aQute.bnd.gradle@5.3.0",
+      "properties": [
+        {
+          "name": "sigrid:risk:vulnerability",
+          "value": "NONE"
+        },
+        {
+          "name": "sigrid:risk:legal",
+          "value": "NONE"
+        },
+        {
+          "name": "sigrid:risk:freshness",
+          "value": "HIGH"
+        },
+        {
+          "name": "sigrid:risk:activity",
+          "value": "NONE"
+        },
+        {
+          "name": "sigrid:risk:stability",
+          "value": "NONE"
+        },
+        {
+          "name": "sigrid:risk:management",
+          "value": "NONE"
+        },
+        {
+          "name": "sigrid:releaseDate",
+          "value": "2021-02-22"
+        },
+        {
+          "name": "sigrid:next:version",
+          "value": "6.0.0"
+        },
+        {
+          "name": "sigrid:next:releaseDate",
+          "value": "2021-10-04"
+        },
+        {
+          "name": "sigrid:latest:version",
+          "value": "7.1.0"
+        },
+        {
+          "name": "sigrid:latest:releaseDate",
+          "value": "2024-11-26"
+        }
+      ],
+      "evidence": {
+        "occurrences": [
+          {
+            "location": "buildSrc/build.gradle.kts"
+          }
+        ]
+      }
+    },
+    {
+      "type": "library",
+      "bom-ref": "pkg:maven/org.slf4j/slf4j-jdk14@1.7.30",
+      "group": "org.slf4j",
+      "name": "slf4j-jdk14",
+      "version": "1.7.30",
+      "licenses": [
+        {
+          "license": {
+            "name": "MIT License"
+          }
+        }
+      ],
+      "purl": "pkg:maven/org.slf4j/slf4j-jdk14@1.7.30",
+      "properties": [
+        {
+          "name": "sigrid:transitive",
+          "value": "DIRECT"
+        },
+        {
+          "name": "sigrid:risk:vulnerability",
+          "value": "NONE"
+        },
+        {
+          "name": "sigrid:risk:legal",
+          "value": "NONE"
+        },
+        {
+          "name": "sigrid:risk:freshness",
+          "value": "HIGH"
+        },
+        {
+          "name": "sigrid:risk:activity",
+          "value": "NONE"
+        },
+        {
+          "name": "sigrid:risk:stability",
+          "value": "NONE"
+        },
+        {
+          "name": "sigrid:risk:management",
+          "value": "NONE"
+        },
+        {
+          "name": "sigrid:releaseDate",
+          "value": "2019-12-16"
+        },
+        {
+          "name": "sigrid:next:version",
+          "value": "1.7.31"
+        },
+        {
+          "name": "sigrid:next:releaseDate",
+          "value": "2021-06-17"
+        },
+        {
+          "name": "sigrid:latest:version",
+          "value": "2.0.17"
+        },
+        {
+          "name": "sigrid:latest:releaseDate",
+          "value": "2025-02-25"
+        }
+      ],
+      "evidence": {
+        "occurrences": [
+          {
+            "location": "gradle/libs.versions.toml"
+          }
+        ]
+      }
+    },
+    {
+      "type": "library",
+      "bom-ref": "pkg:maven/org.jetbrains.kotlinx/kotlinx-coroutines-core@1.4.3",
+      "group": "org.jetbrains.kotlinx",
+      "name": "kotlinx-coroutines-core",
+      "version": "1.4.3",
+      "licenses": [
+        {
+          "license": {
+            "name": "The Apache Software License, Version 2.0"
+          }
+        }
+      ],
+      "purl": "pkg:maven/org.jetbrains.kotlinx/kotlinx-coroutines-core@1.4.3",
+      "properties": [
+        {
+          "name": "sigrid:transitive",
+          "value": "DIRECT"
+        },
+        {
+          "name": "sigrid:risk:vulnerability",
+          "value": "NONE"
+        },
+        {
+          "name": "sigrid:risk:legal",
+          "value": "NONE"
+        },
+        {
+          "name": "sigrid:risk:freshness",
+          "value": "HIGH"
+        },
+        {
+          "name": "sigrid:risk:activity",
+          "value": "NONE"
+        },
+        {
+          "name": "sigrid:risk:stability",
+          "value": "NONE"
+        },
+        {
+          "name": "sigrid:risk:management",
+          "value": "NONE"
+        },
+        {
+          "name": "sigrid:releaseDate",
+          "value": "2021-03-03"
+        },
+        {
+          "name": "sigrid:next:version",
+          "value": "1.5.0"
+        },
+        {
+          "name": "sigrid:next:releaseDate",
+          "value": "2021-05-14"
+        },
+        {
+          "name": "sigrid:latest:version",
+          "value": "1.10.2"
+        },
+        {
+          "name": "sigrid:latest:releaseDate",
+          "value": "2025-04-08"
+        }
+      ],
+      "evidence": {
+        "occurrences": [
+          {
+            "location": "gradle/libs.versions.toml"
+          }
+        ]
+      }
+    },
+    {
+      "type": "library",
+      "bom-ref": "pkg:maven/commons-io/commons-io@2.9.0",
+      "group": "commons-io",
+      "name": "commons-io",
+      "version": "2.9.0",
+      "licenses": [
+        {
+          "license": {
+            "name": "Apache"
+          }
+        }
+      ],
+      "purl": "pkg:maven/commons-io/commons-io@2.9.0",
+      "properties": [
+        {
+          "name": "sigrid:transitive",
+          "value": "DIRECT"
+        },
+        {
+          "name": "sigrid:risk:vulnerability",
+          "value": "HIGH"
+        },
+        {
+          "name": "sigrid:risk:legal",
+          "value": "NONE"
+        },
+        {
+          "name": "sigrid:risk:freshness",
+          "value": "HIGH"
+        },
+        {
+          "name": "sigrid:risk:activity",
+          "value": "NONE"
+        },
+        {
+          "name": "sigrid:risk:stability",
+          "value": "NONE"
+        },
+        {
+          "name": "sigrid:risk:management",
+          "value": "NONE"
+        },
+        {
+          "name": "sigrid:releaseDate",
+          "value": "2021-05-22"
+        },
+        {
+          "name": "sigrid:next:version",
+          "value": "2.10.0"
+        },
+        {
+          "name": "sigrid:next:releaseDate",
+          "value": "2021-06-10"
+        },
+        {
+          "name": "sigrid:latest:version",
+          "value": "2.20.0"
+        },
+        {
+          "name": "sigrid:latest:releaseDate",
+          "value": "2025-07-14"
+        }
+      ],
+      "evidence": {
+        "occurrences": [
+          {
+            "location": "gradle/libs.versions.toml"
+          }
+        ]
+      }
+    },
+    {
+      "type": "library",
+      "bom-ref": "pkg:maven/io.github.classgraph/classgraph@4.8.106",
+      "group": "io.github.classgraph",
+      "name": "classgraph",
+      "version": "4.8.106",
+      "licenses": [
+        {
+          "license": {
+            "name": "MIT"
+          }
+        }
+      ],
+      "purl": "pkg:maven/io.github.classgraph/classgraph@4.8.106",
+      "properties": [
+        {
+          "name": "sigrid:transitive",
+          "value": "DIRECT"
+        },
+        {
+          "name": "sigrid:risk:vulnerability",
+          "value": "MEDIUM"
+        },
+        {
+          "name": "sigrid:risk:legal",
+          "value": "NONE"
+        },
+        {
+          "name": "sigrid:risk:freshness",
+          "value": "HIGH"
+        },
+        {
+          "name": "sigrid:risk:activity",
+          "value": "NONE"
+        },
+        {
+          "name": "sigrid:risk:stability",
+          "value": "NONE"
+        },
+        {
+          "name": "sigrid:risk:management",
+          "value": "NONE"
+        },
+        {
+          "name": "sigrid:releaseDate",
+          "value": "2021-05-28"
+        },
+        {
+          "name": "sigrid:next:version",
+          "value": "4.8.107"
+        },
+        {
+          "name": "sigrid:next:releaseDate",
+          "value": "2021-06-02"
+        },
+        {
+          "name": "sigrid:latest:version",
+          "value": "4.8.181"
+        },
+        {
+          "name": "sigrid:latest:releaseDate",
+          "value": "2025-07-16"
+        }
+      ],
+      "evidence": {
+        "occurrences": [
+          {
+            "location": "gradle/libs.versions.toml"
+          }
+        ]
+      }
+    },
+    {
+      "type": "library",
+      "bom-ref": "pkg:maven/org.mockito/mockito-junit-jupiter@3.10.0",
+      "group": "org.mockito",
+      "name": "mockito-junit-jupiter",
+      "version": "3.10.0",
+      "licenses": [
+        {
+          "license": {
+            "name": "The MIT License"
+          }
+        }
+      ],
+      "purl": "pkg:maven/org.mockito/mockito-junit-jupiter@3.10.0",
+      "properties": [
+        {
+          "name": "sigrid:transitive",
+          "value": "DIRECT"
+        },
+        {
+          "name": "sigrid:risk:vulnerability",
+          "value": "NONE"
+        },
+        {
+          "name": "sigrid:risk:legal",
+          "value": "NONE"
+        },
+        {
+          "name": "sigrid:risk:freshness",
+          "value": "HIGH"
+        },
+        {
+          "name": "sigrid:risk:activity",
+          "value": "NONE"
+        },
+        {
+          "name": "sigrid:risk:stability",
+          "value": "NONE"
+        },
+        {
+          "name": "sigrid:risk:management",
+          "value": "NONE"
+        },
+        {
+          "name": "sigrid:releaseDate",
+          "value": "2021-05-12"
+        },
+        {
+          "name": "sigrid:next:version",
+          "value": "3.11.0"
+        },
+        {
+          "name": "sigrid:next:releaseDate",
+          "value": "2021-06-03"
+        },
+        {
+          "name": "sigrid:latest:version",
+          "value": "5.19.0"
+        },
+        {
+          "name": "sigrid:latest:releaseDate",
+          "value": "2025-08-15"
+        }
+      ],
+      "evidence": {
+        "occurrences": [
+          {
+            "location": "gradle/libs.versions.toml"
+          }
+        ]
+      }
+    },
+    {
+      "type": "library",
+      "bom-ref": "pkg:maven/-Xlint/-overrides@",
+      "group": "-Xlint",
+      "name": "-overrides",
+      "version": "",
+      "licenses": [],
+      "purl": "pkg:maven/-Xlint/-overrides@",
+      "properties": [
+        {
+          "name": "sigrid:risk:vulnerability",
+          "value": "NONE"
+        },
+        {
+          "name": "sigrid:risk:legal",
+          "value": "UNKNOWN"
+        },
+        {
+          "name": "sigrid:risk:freshness",
+          "value": "UNKNOWN"
+        },
+        {
+          "name": "sigrid:risk:activity",
+          "value": "UNKNOWN"
+        },
+        {
+          "name": "sigrid:risk:stability",
+          "value": "NONE"
+        },
+        {
+          "name": "sigrid:risk:management",
+          "value": "NONE"
+        },
+        {
+          "name": "sigrid:next:version",
+          "value": "?"
+        },
+        {
+          "name": "sigrid:latest:version",
+          "value": "?"
+        }
+      ],
+      "evidence": {
+        "occurrences": [
+          {
+            "location": "buildSrc/src/main/kotlin/java-library-conventions.gradle.kts"
+          }
+        ]
+      }
+    },
+    {
+      "type": "library",
+      "bom-ref": "pkg:maven/gradle.plugin.com.github.jengelman.gradle.plugins/shadow@7.0.0",
+      "group": "gradle.plugin.com.github.jengelman.gradle.plugins",
+      "name": "shadow",
+      "version": "7.0.0",
+      "licenses": [],
+      "purl": "pkg:maven/gradle.plugin.com.github.jengelman.gradle.plugins/shadow@7.0.0",
+      "properties": [
+        {
+          "name": "sigrid:risk:vulnerability",
+          "value": "NONE"
+        },
+        {
+          "name": "sigrid:risk:legal",
+          "value": "UNKNOWN"
+        },
+        {
+          "name": "sigrid:risk:freshness",
+          "value": "UNKNOWN"
+        },
+        {
+          "name": "sigrid:risk:activity",
+          "value": "UNKNOWN"
+        },
+        {
+          "name": "sigrid:risk:stability",
+          "value": "NONE"
+        },
+        {
+          "name": "sigrid:risk:management",
+          "value": "NONE"
+        },
+        {
+          "name": "sigrid:next:version",
+          "value": "?"
+        },
+        {
+          "name": "sigrid:latest:version",
+          "value": "?"
+        }
+      ],
+      "evidence": {
+        "occurrences": [
+          {
+            "location": "buildSrc/build.gradle.kts"
+          }
+        ]
+      }
+    },
+    {
+      "type": "library",
+      "bom-ref": "pkg:maven/com.univocity/univocity-parsers@2.9.1",
+      "group": "com.univocity",
+      "name": "univocity-parsers",
+      "version": "2.9.1",
+      "licenses": [
+        {
+          "license": {
+            "name": "Apache 2"
+          }
+        }
+      ],
+      "purl": "pkg:maven/com.univocity/univocity-parsers@2.9.1",
+      "properties": [
+        {
+          "name": "sigrid:transitive",
+          "value": "DIRECT"
+        },
+        {
+          "name": "sigrid:risk:vulnerability",
+          "value": "NONE"
+        },
+        {
+          "name": "sigrid:risk:legal",
+          "value": "NONE"
+        },
+        {
+          "name": "sigrid:risk:freshness",
+          "value": "NONE"
+        },
+        {
+          "name": "sigrid:risk:activity",
+          "value": "HIGH"
+        },
+        {
+          "name": "sigrid:risk:stability",
+          "value": "NONE"
+        },
+        {
+          "name": "sigrid:risk:management",
+          "value": "NONE"
+        },
+        {
+          "name": "sigrid:releaseDate",
+          "value": "2021-01-18"
+        },
+        {
+          "name": "sigrid:next:version",
+          "value": "N/A"
+        },
+        {
+          "name": "sigrid:latest:version",
+          "value": "2.9.1"
+        },
+        {
+          "name": "sigrid:latest:releaseDate",
+          "value": "2021-01-18"
+        }
+      ],
+      "evidence": {
+        "occurrences": [
+          {
+            "location": "gradle/libs.versions.toml"
+          }
+        ]
+      }
+    },
+    {
+      "type": "library",
+      "bom-ref": "pkg:maven/org.apache.servicemix.bundles/org.apache.servicemix.bundles.junit@4.13.2_1",
+      "group": "org.apache.servicemix.bundles",
+      "name": "org.apache.servicemix.bundles.junit",
+      "version": "4.13.2_1",
+      "licenses": [
+        {
+          "license": {
+            "name": "The Apache Software License, Version 2.0"
+          }
+        }
+      ],
+      "purl": "pkg:maven/org.apache.servicemix.bundles/org.apache.servicemix.bundles.junit@4.13.2_1",
+      "properties": [
+        {
+          "name": "sigrid:risk:vulnerability",
+          "value": "NONE"
+        },
+        {
+          "name": "sigrid:risk:legal",
+          "value": "NONE"
+        },
+        {
+          "name": "sigrid:risk:freshness",
+          "value": "NONE"
+        },
+        {
+          "name": "sigrid:risk:activity",
+          "value": "HIGH"
+        },
+        {
+          "name": "sigrid:risk:stability",
+          "value": "NONE"
+        },
+        {
+          "name": "sigrid:risk:management",
+          "value": "NONE"
+        },
+        {
+          "name": "sigrid:releaseDate",
+          "value": "2021-03-01"
+        },
+        {
+          "name": "sigrid:next:version",
+          "value": "N/A"
+        },
+        {
+          "name": "sigrid:latest:version",
+          "value": "4.13.2_1"
+        },
+        {
+          "name": "sigrid:latest:releaseDate",
+          "value": "2021-03-01"
+        }
+      ],
+      "evidence": {
+        "occurrences": [
+          {
+            "location": "buildSrc/src/main/kotlin/junit4-compatibility.gradle.kts"
+          }
+        ]
+      }
+    },
+    {
+      "type": "library",
+      "bom-ref": "pkg:maven/info.picocli/picocli@4.6.1",
+      "group": "info.picocli",
+      "name": "picocli",
+      "version": "4.6.1",
+      "licenses": [
+        {
+          "license": {
+            "name": "The Apache Software License, version 2.0"
+          }
+        }
+      ],
+      "purl": "pkg:maven/info.picocli/picocli@4.6.1",
+      "properties": [
+        {
+          "name": "sigrid:transitive",
+          "value": "DIRECT"
+        },
+        {
+          "name": "sigrid:risk:vulnerability",
+          "value": "NONE"
+        },
+        {
+          "name": "sigrid:risk:legal",
+          "value": "NONE"
+        },
+        {
+          "name": "sigrid:risk:freshness",
+          "value": "HIGH"
+        },
+        {
+          "name": "sigrid:risk:activity",
+          "value": "NONE"
+        },
+        {
+          "name": "sigrid:risk:stability",
+          "value": "NONE"
+        },
+        {
+          "name": "sigrid:risk:management",
+          "value": "NONE"
+        },
+        {
+          "name": "sigrid:releaseDate",
+          "value": "2021-01-03"
+        },
+        {
+          "name": "sigrid:next:version",
+          "value": "4.6.2"
+        },
+        {
+          "name": "sigrid:next:releaseDate",
+          "value": "2021-11-05"
+        },
+        {
+          "name": "sigrid:latest:version",
+          "value": "4.7.7"
+        },
+        {
+          "name": "sigrid:latest:releaseDate",
+          "value": "2025-04-19"
+        }
+      ],
+      "evidence": {
+        "occurrences": [
+          {
+            "location": "gradle/libs.versions.toml"
+          }
+        ]
+      }
+    },
+    {
+      "type": "library",
+      "bom-ref": "pkg:maven/org.openjdk.jmh/jmh-generator-annprocess@1.32",
+      "group": "org.openjdk.jmh",
+      "name": "jmh-generator-annprocess",
+      "version": "1.32",
+      "licenses": [
+        {
+          "license": {
+            "name": "GNU General Public License (GPL), version 2, with the Classpath exception"
+          }
+        }
+      ],
+      "purl": "pkg:maven/org.openjdk.jmh/jmh-generator-annprocess@1.32",
+      "properties": [
+        {
+          "name": "sigrid:transitive",
+          "value": "DIRECT"
+        },
+        {
+          "name": "sigrid:risk:vulnerability",
+          "value": "NONE"
+        },
+        {
+          "name": "sigrid:risk:legal",
+          "value": "LOW"
+        },
+        {
+          "name": "sigrid:risk:freshness",
+          "value": "HIGH"
+        },
+        {
+          "name": "sigrid:risk:activity",
+          "value": "MEDIUM"
+        },
+        {
+          "name": "sigrid:risk:stability",
+          "value": "NONE"
+        },
+        {
+          "name": "sigrid:risk:management",
+          "value": "NONE"
+        },
+        {
+          "name": "sigrid:releaseDate",
+          "value": "2021-05-26"
+        },
+        {
+          "name": "sigrid:next:version",
+          "value": "1.33"
+        },
+        {
+          "name": "sigrid:next:releaseDate",
+          "value": "2021-08-09"
+        },
+        {
+          "name": "sigrid:latest:version",
+          "value": "1.37"
+        },
+        {
+          "name": "sigrid:latest:releaseDate",
+          "value": "2023-08-03"
+        }
+      ],
+      "evidence": {
+        "occurrences": [
+          {
+            "location": "gradle/libs.versions.toml"
+          }
+        ]
+      }
+    },
+    {
+      "type": "library",
+      "bom-ref": "pkg:maven/org.apiguardian/apiguardian-api@1.1.2",
+      "group": "org.apiguardian",
+      "name": "apiguardian-api",
+      "version": "1.1.2",
+      "licenses": [
+        {
+          "license": {
+            "name": "The Apache License, Version 2.0"
+          }
+        }
+      ],
+      "purl": "pkg:maven/org.apiguardian/apiguardian-api@1.1.2",
+      "properties": [
+        {
+          "name": "sigrid:transitive",
+          "value": "DIRECT"
+        },
+        {
+          "name": "sigrid:risk:vulnerability",
+          "value": "NONE"
+        },
+        {
+          "name": "sigrid:risk:legal",
+          "value": "NONE"
+        },
+        {
+          "name": "sigrid:risk:freshness",
+          "value": "NONE"
+        },
+        {
+          "name": "sigrid:risk:activity",
+          "value": "HIGH"
+        },
+        {
+          "name": "sigrid:risk:stability",
+          "value": "NONE"
+        },
+        {
+          "name": "sigrid:risk:management",
+          "value": "NONE"
+        },
+        {
+          "name": "sigrid:releaseDate",
+          "value": "2021-06-27"
+        },
+        {
+          "name": "sigrid:next:version",
+          "value": "N/A"
+        },
+        {
+          "name": "sigrid:latest:version",
+          "value": "1.1.2"
+        },
+        {
+          "name": "sigrid:latest:releaseDate",
+          "value": "2021-06-27"
+        }
+      ],
+      "evidence": {
+        "occurrences": [
+          {
+            "location": "gradle/libs.versions.toml"
+          }
+        ]
+      }
+    },
+    {
+      "type": "library",
+      "bom-ref": "pkg:maven/com.tngtech.archunit/archunit-junit5@0.20.1",
+      "group": "com.tngtech.archunit",
+      "name": "archunit-junit5",
+      "version": "0.20.1",
+      "licenses": [
+        {
+          "license": {
+            "name": "The Apache Software License, Version 2.0"
+          }
+        }
+      ],
+      "purl": "pkg:maven/com.tngtech.archunit/archunit-junit5@0.20.1",
+      "properties": [
+        {
+          "name": "sigrid:transitive",
+          "value": "DIRECT"
+        },
+        {
+          "name": "sigrid:risk:vulnerability",
+          "value": "NONE"
+        },
+        {
+          "name": "sigrid:risk:legal",
+          "value": "NONE"
+        },
+        {
+          "name": "sigrid:risk:freshness",
+          "value": "HIGH"
+        },
+        {
+          "name": "sigrid:risk:activity",
+          "value": "NONE"
+        },
+        {
+          "name": "sigrid:risk:stability",
+          "value": "NONE"
+        },
+        {
+          "name": "sigrid:risk:management",
+          "value": "NONE"
+        },
+        {
+          "name": "sigrid:releaseDate",
+          "value": "2021-07-16"
+        },
+        {
+          "name": "sigrid:next:version",
+          "value": "0.21.0"
+        },
+        {
+          "name": "sigrid:next:releaseDate",
+          "value": "2021-08-22"
+        },
+        {
+          "name": "sigrid:latest:version",
+          "value": "1.4.1"
+        },
+        {
+          "name": "sigrid:latest:releaseDate",
+          "value": "2025-05-07"
+        }
+      ],
+      "evidence": {
+        "occurrences": [
+          {
+            "location": "gradle/libs.versions.toml"
+          }
+        ]
+      }
+    },
+    {
+      "type": "library",
+      "bom-ref": "pkg:maven/org.jooq/joox@1.6.2",
+      "group": "org.jooq",
+      "name": "joox",
+      "version": "1.6.2",
+      "licenses": [
+        {
+          "license": {
+            "name": "Apache License, Version 2.0"
+          }
+        }
+      ],
+      "purl": "pkg:maven/org.jooq/joox@1.6.2",
+      "properties": [
+        {
+          "name": "sigrid:transitive",
+          "value": "DIRECT"
+        },
+        {
+          "name": "sigrid:risk:vulnerability",
+          "value": "NONE"
+        },
+        {
+          "name": "sigrid:risk:legal",
+          "value": "NONE"
+        },
+        {
+          "name": "sigrid:risk:freshness",
+          "value": "MEDIUM"
+        },
+        {
+          "name": "sigrid:risk:activity",
+          "value": "LOW"
+        },
+        {
+          "name": "sigrid:risk:stability",
+          "value": "NONE"
+        },
+        {
+          "name": "sigrid:risk:management",
+          "value": "NONE"
+        },
+        {
+          "name": "sigrid:releaseDate",
+          "value": "2019-06-18"
+        },
+        {
+          "name": "sigrid:next:version",
+          "value": "2.0.0"
+        },
+        {
+          "name": "sigrid:next:releaseDate",
+          "value": "2022-11-23"
+        },
+        {
+          "name": "sigrid:latest:version",
+          "value": "2.0.1"
+        },
+        {
+          "name": "sigrid:latest:releaseDate",
+          "value": "2024-05-07"
+        }
+      ],
+      "evidence": {
+        "occurrences": [
+          {
+            "location": "gradle/libs.versions.toml"
+          }
+        ]
+      }
+    },
+    {
+      "type": "library",
+      "bom-ref": "pkg:maven/org.hamcrest/hamcrest@2.2",
+      "group": "org.hamcrest",
+      "name": "hamcrest",
+      "version": "2.2",
+      "licenses": [
+        {
+          "license": {
+            "name": "BSD License 3"
+          }
+        }
+      ],
+      "purl": "pkg:maven/org.hamcrest/hamcrest@2.2",
+      "properties": [
+        {
+          "name": "sigrid:transitive",
+          "value": "DIRECT"
+        },
+        {
+          "name": "sigrid:risk:vulnerability",
+          "value": "NONE"
+        },
+        {
+          "name": "sigrid:risk:legal",
+          "value": "NONE"
+        },
+        {
+          "name": "sigrid:risk:freshness",
+          "value": "LOW"
+        },
+        {
+          "name": "sigrid:risk:activity",
+          "value": "LOW"
+        },
+        {
+          "name": "sigrid:risk:stability",
+          "value": "NONE"
+        },
+        {
+          "name": "sigrid:risk:management",
+          "value": "NONE"
+        },
+        {
+          "name": "sigrid:releaseDate",
+          "value": "2019-10-16"
+        },
+        {
+          "name": "sigrid:next:version",
+          "value": "3.0"
+        },
+        {
+          "name": "sigrid:next:releaseDate",
+          "value": "2024-08-01"
+        },
+        {
+          "name": "sigrid:latest:version",
+          "value": "3.0"
+        },
+        {
+          "name": "sigrid:latest:releaseDate",
+          "value": "2024-08-01"
+        }
+      ],
+      "evidence": {
+        "occurrences": [
+          {
+            "location": "gradle/libs.versions.toml"
+          }
+        ]
+      }
+    },
+    {
+      "type": "library",
+      "bom-ref": "pkg:maven/de.sormuras/bartholdy@0.2.3",
+      "group": "de.sormuras",
+      "name": "bartholdy",
+      "version": "0.2.3",
+      "licenses": [
+        {
+          "license": {
+            "name": "The MIT License"
+          }
+        }
+      ],
+      "purl": "pkg:maven/de.sormuras/bartholdy@0.2.3",
+      "properties": [
+        {
+          "name": "sigrid:transitive",
+          "value": "DIRECT"
+        },
+        {
+          "name": "sigrid:risk:vulnerability",
+          "value": "NONE"
+        },
+        {
+          "name": "sigrid:risk:legal",
+          "value": "NONE"
+        },
+        {
+          "name": "sigrid:risk:freshness",
+          "value": "NONE"
+        },
+        {
+          "name": "sigrid:risk:activity",
+          "value": "CRITICAL"
+        },
+        {
+          "name": "sigrid:risk:stability",
+          "value": "NONE"
+        },
+        {
+          "name": "sigrid:risk:management",
+          "value": "NONE"
+        },
+        {
+          "name": "sigrid:releaseDate",
+          "value": "2018-12-03"
+        },
+        {
+          "name": "sigrid:next:version",
+          "value": "N/A"
+        },
+        {
+          "name": "sigrid:latest:version",
+          "value": "0.2.3"
+        },
+        {
+          "name": "sigrid:latest:releaseDate",
+          "value": "2018-12-03"
+        }
+      ],
+      "evidence": {
+        "occurrences": [
+          {
+            "location": "gradle/libs.versions.toml"
+          }
+        ]
+      }
+    },
+    {
+      "type": "library",
+      "bom-ref": "pkg:maven/org.spockframework/spock-core@1.3-groovy-2.5",
+      "group": "org.spockframework",
+      "name": "spock-core",
+      "version": "1.3-groovy-2.5",
+      "licenses": [
+        {
+          "license": {
+            "name": "The Apache Software License, Version 2.0"
+          }
+        }
+      ],
+      "purl": "pkg:maven/org.spockframework/spock-core@1.3-groovy-2.5",
+      "properties": [
+        {
+          "name": "sigrid:transitive",
+          "value": "DIRECT"
+        },
+        {
+          "name": "sigrid:risk:vulnerability",
+          "value": "NONE"
+        },
+        {
+          "name": "sigrid:risk:legal",
+          "value": "NONE"
+        },
+        {
+          "name": "sigrid:risk:freshness",
+          "value": "HIGH"
+        },
+        {
+          "name": "sigrid:risk:activity",
+          "value": "HIGH"
+        },
+        {
+          "name": "sigrid:risk:stability",
+          "value": "NONE"
+        },
+        {
+          "name": "sigrid:risk:management",
+          "value": "NONE"
+        },
+        {
+          "name": "sigrid:releaseDate",
+          "value": "2019-03-04"
+        },
+        {
+          "name": "sigrid:next:version",
+          "value": "2.0-groovy-2.5"
+        },
+        {
+          "name": "sigrid:next:releaseDate",
+          "value": "2021-05-17"
+        },
+        {
+          "name": "sigrid:latest:version",
+          "value": "2.0-groovy-2.5"
+        },
+        {
+          "name": "sigrid:latest:releaseDate",
+          "value": "2021-05-17"
+        }
+      ],
+      "evidence": {
+        "occurrences": [
+          {
+            "location": "gradle/libs.versions.toml"
+          }
+        ]
+      }
+    },
+    {
+      "type": "library",
+      "bom-ref": "pkg:maven/com.github.gunnarmorling/jfrunit@main-SNAPSHOT",
+      "group": "com.github.gunnarmorling",
+      "name": "jfrunit",
+      "version": "main-SNAPSHOT",
+      "licenses": [],
+      "purl": "pkg:maven/com.github.gunnarmorling/jfrunit@main-SNAPSHOT",
+      "properties": [
+        {
+          "name": "sigrid:transitive",
+          "value": "DIRECT"
+        },
+        {
+          "name": "sigrid:risk:vulnerability",
+          "value": "NONE"
+        },
+        {
+          "name": "sigrid:risk:legal",
+          "value": "UNKNOWN"
+        },
+        {
+          "name": "sigrid:risk:freshness",
+          "value": "UNKNOWN"
+        },
+        {
+          "name": "sigrid:risk:activity",
+          "value": "UNKNOWN"
+        },
+        {
+          "name": "sigrid:risk:stability",
+          "value": "MEDIUM"
+        },
+        {
+          "name": "sigrid:risk:management",
+          "value": "NONE"
+        },
+        {
+          "name": "sigrid:next:version",
+          "value": "?"
+        },
+        {
+          "name": "sigrid:latest:version",
+          "value": "?"
+        }
+      ],
+      "evidence": {
+        "occurrences": [
+          {
+            "location": "gradle/libs.versions.toml"
+          }
+        ]
+      }
+    },
+    {
+      "type": "library",
+      "bom-ref": "pkg:maven/junit/junit@4.13.2",
+      "group": "junit",
+      "name": "junit",
+      "version": "4.13.2",
+      "licenses": [],
+      "purl": "pkg:maven/junit/junit@4.13.2",
+      "properties": [
+        {
+          "name": "sigrid:transitive",
+          "value": "DIRECT"
+        },
+        {
+          "name": "sigrid:risk:vulnerability",
+          "value": "NONE"
+        },
+        {
+          "name": "sigrid:risk:legal",
+          "value": "UNKNOWN"
+        },
+        {
+          "name": "sigrid:risk:freshness",
+          "value": "NONE"
+        },
+        {
+          "name": "sigrid:risk:activity",
+          "value": "HIGH"
+        },
+        {
+          "name": "sigrid:risk:stability",
+          "value": "NONE"
+        },
+        {
+          "name": "sigrid:risk:management",
+          "value": "NONE"
+        },
+        {
+          "name": "sigrid:releaseDate",
+          "value": "2021-02-13"
+        },
+        {
+          "name": "sigrid:next:version",
+          "value": "N/A"
+        },
+        {
+          "name": "sigrid:latest:version",
+          "value": "4.13.2"
+        },
+        {
+          "name": "sigrid:latest:releaseDate",
+          "value": "2021-02-13"
+        }
+      ],
+      "evidence": {
+        "occurrences": [
+          {
+            "location": "gradle/libs.versions.toml"
+          }
+        ]
+      }
+    },
+    {
+      "type": "library",
+      "bom-ref": "pkg:maven/-Xlint/all@",
+      "group": "-Xlint",
+      "name": "all",
+      "version": "",
+      "licenses": [],
+      "purl": "pkg:maven/-Xlint/all@",
+      "properties": [
+        {
+          "name": "sigrid:risk:vulnerability",
+          "value": "NONE"
+        },
+        {
+          "name": "sigrid:risk:legal",
+          "value": "UNKNOWN"
+        },
+        {
+          "name": "sigrid:risk:freshness",
+          "value": "UNKNOWN"
+        },
+        {
+          "name": "sigrid:risk:activity",
+          "value": "UNKNOWN"
+        },
+        {
+          "name": "sigrid:risk:stability",
+          "value": "NONE"
+        },
+        {
+          "name": "sigrid:risk:management",
+          "value": "NONE"
+        },
+        {
+          "name": "sigrid:next:version",
+          "value": "?"
+        },
+        {
+          "name": "sigrid:latest:version",
+          "value": "?"
+        }
+      ],
+      "evidence": {
+        "occurrences": [
+          {
+            "location": "buildSrc/src/main/kotlin/java-library-conventions.gradle.kts"
+          }
+        ]
+      }
+    },
+    {
+      "type": "library",
+      "bom-ref": "pkg:maven/com.gradle.enterprise/test-distribution-gradle-plugin@2.1.1-rc-2",
+      "group": "com.gradle.enterprise",
+      "name": "test-distribution-gradle-plugin",
+      "version": "2.1.1-rc-2",
+      "licenses": [],
+      "purl": "pkg:maven/com.gradle.enterprise/test-distribution-gradle-plugin@2.1.1-rc-2",
+      "properties": [
+        {
+          "name": "sigrid:risk:vulnerability",
+          "value": "NONE"
+        },
+        {
+          "name": "sigrid:risk:legal",
+          "value": "UNKNOWN"
+        },
+        {
+          "name": "sigrid:risk:freshness",
+          "value": "UNKNOWN"
+        },
+        {
+          "name": "sigrid:risk:activity",
+          "value": "UNKNOWN"
+        },
+        {
+          "name": "sigrid:risk:stability",
+          "value": "MEDIUM"
+        },
+        {
+          "name": "sigrid:risk:management",
+          "value": "NONE"
+        },
+        {
+          "name": "sigrid:next:version",
+          "value": "?"
+        },
+        {
+          "name": "sigrid:latest:version",
+          "value": "?"
+        }
+      ],
+      "evidence": {
+        "occurrences": [
+          {
+            "location": "buildSrc/build.gradle.kts"
+          }
+        ]
+      }
+    },
+    {
+      "type": "library",
+      "bom-ref": "pkg:maven/junit/junit@",
+      "group": "junit",
+      "name": "junit",
+      "version": "",
+      "licenses": [],
+      "purl": "pkg:maven/junit/junit@",
+      "properties": [
+        {
+          "name": "sigrid:risk:vulnerability",
+          "value": "MEDIUM"
+        },
+        {
+          "name": "sigrid:risk:legal",
+          "value": "UNKNOWN"
+        },
+        {
+          "name": "sigrid:risk:freshness",
+          "value": "CRITICAL"
+        },
+        {
+          "name": "sigrid:risk:activity",
+          "value": "HIGH"
+        },
+        {
+          "name": "sigrid:risk:stability",
+          "value": "NONE"
+        },
+        {
+          "name": "sigrid:risk:management",
+          "value": "NONE"
+        },
+        {
+          "name": "sigrid:next:version",
+          "value": "3.7"
+        },
+        {
+          "name": "sigrid:next:releaseDate",
+          "value": "2007-05-14"
+        },
+        {
+          "name": "sigrid:latest:version",
+          "value": "4.13.2"
+        },
+        {
+          "name": "sigrid:latest:releaseDate",
+          "value": "2021-02-13"
+        }
+      ],
+      "evidence": {
+        "occurrences": [
+          {
+            "location": "buildSrc/src/main/kotlin/junit4-compatibility.gradle.kts"
+          }
+        ]
+      }
+    },
+    {
+      "type": "library",
+      "bom-ref": "pkg:maven/biz.aQute.bnd/biz.aQute.bndlib@5.3.0",
+      "group": "biz.aQute.bnd",
+      "name": "biz.aQute.bndlib",
+      "version": "5.3.0",
+      "licenses": [
+        {
+          "license": {
+            "name": "(Apache-2.0;EPL-2.0)"
+          }
+        }
+      ],
+      "purl": "pkg:maven/biz.aQute.bnd/biz.aQute.bndlib@5.3.0",
+      "properties": [
+        {
+          "name": "sigrid:transitive",
+          "value": "DIRECT"
+        },
+        {
+          "name": "sigrid:risk:vulnerability",
+          "value": "NONE"
+        },
+        {
+          "name": "sigrid:risk:legal",
+          "value": "NONE"
+        },
+        {
+          "name": "sigrid:risk:freshness",
+          "value": "HIGH"
+        },
+        {
+          "name": "sigrid:risk:activity",
+          "value": "NONE"
+        },
+        {
+          "name": "sigrid:risk:stability",
+          "value": "NONE"
+        },
+        {
+          "name": "sigrid:risk:management",
+          "value": "NONE"
+        },
+        {
+          "name": "sigrid:releaseDate",
+          "value": "2021-02-22"
+        },
+        {
+          "name": "sigrid:next:version",
+          "value": "6.0.0"
+        },
+        {
+          "name": "sigrid:next:releaseDate",
+          "value": "2021-10-04"
+        },
+        {
+          "name": "sigrid:latest:version",
+          "value": "7.1.0"
+        },
+        {
+          "name": "sigrid:latest:releaseDate",
+          "value": "2024-11-26"
+        }
+      ],
+      "evidence": {
+        "occurrences": [
+          {
+            "location": "gradle/libs.versions.toml"
+          }
+        ]
+      }
+    },
+    {
+      "type": "library",
+      "bom-ref": "pkg:maven/org.codehaus.groovy/groovy@3.0.8",
+      "group": "org.codehaus.groovy",
+      "name": "groovy",
+      "version": "3.0.8",
+      "licenses": [
+        {
+          "license": {
+            "name": "The Apache Software License, Version 2.0"
+          }
+        }
+      ],
+      "purl": "pkg:maven/org.codehaus.groovy/groovy@3.0.8",
+      "properties": [
+        {
+          "name": "sigrid:transitive",
+          "value": "DIRECT"
+        },
+        {
+          "name": "sigrid:risk:vulnerability",
+          "value": "NONE"
+        },
+        {
+          "name": "sigrid:risk:legal",
+          "value": "NONE"
+        },
+        {
+          "name": "sigrid:risk:freshness",
+          "value": "HIGH"
+        },
+        {
+          "name": "sigrid:risk:activity",
+          "value": "NONE"
+        },
+        {
+          "name": "sigrid:risk:stability",
+          "value": "NONE"
+        },
+        {
+          "name": "sigrid:risk:management",
+          "value": "NONE"
+        },
+        {
+          "name": "sigrid:releaseDate",
+          "value": "2021-04-20"
+        },
+        {
+          "name": "sigrid:next:version",
+          "value": "3.0.9"
+        },
+        {
+          "name": "sigrid:next:releaseDate",
+          "value": "2021-09-06"
+        },
+        {
+          "name": "sigrid:latest:version",
+          "value": "3.0.25"
+        },
+        {
+          "name": "sigrid:latest:releaseDate",
+          "value": "2025-05-27"
+        }
+      ],
+      "evidence": {
+        "occurrences": [
+          {
+            "location": "gradle/libs.versions.toml"
+          }
+        ]
+      }
+    }
+  ],
+  "vulnerabilities": [
+    {
+      "id": "CVE-2021-45046",
+      "ratings": [
+        {
+          "score": 9.0,
+          "severity": "critical",
+          "method": "CVSSv3"
+        }
+      ],
+      "cwes": [
+        502
+      ],
+      "description": "Deserialization of Untrusted Data",
+      "affects": [
+        {
+          "ref": "pkg:maven/org.apache.logging.log4j/log4j-core@2.14.1"
+        }
+      ]
+    },
+    {
+      "id": "CVE-2021-47621",
+      "ratings": [
+        {
+          "score": 6.5,
+          "severity": "medium",
+          "method": "CVSSv3"
+        }
+      ],
+      "cwes": [
+        611
+      ],
+      "description": "Improper Restriction of XML External Entity Reference",
+      "affects": [
+        {
+          "ref": "pkg:maven/io.github.classgraph/classgraph@4.8.106"
+        }
+      ]
+    },
+    {
+      "id": "CVE-2021-45105",
+      "ratings": [
+        {
+          "score": 8.6,
+          "severity": "high",
+          "method": "CVSSv3"
+        }
+      ],
+      "cwes": [
+        20
+      ],
+      "description": "Improper Input Validation",
+      "affects": [
+        {
+          "ref": "pkg:maven/org.apache.logging.log4j/log4j-core@2.14.1"
+        }
+      ]
+    },
+    {
+      "id": "CVE-2024-47554",
+      "ratings": [
+        {
+          "score": 7.5,
+          "severity": "high",
+          "method": "CVSSv3"
+        }
+      ],
+      "cwes": [
+        400
+      ],
+      "description": "Uncontrolled Resource Consumption",
+      "affects": [
+        {
+          "ref": "pkg:maven/commons-io/commons-io@2.9.0"
+        }
+      ]
+    },
+    {
+      "id": "CVE-2020-15250",
+      "ratings": [
+        {
+          "score": 4.4,
+          "severity": "medium",
+          "method": "CVSSv3"
+        }
+      ],
+      "cwes": [
+        200
+      ],
+      "description": "Exposure of Sensitive Information to an Unauthorized Actor",
+      "affects": [
+        {
+          "ref": "pkg:maven/junit/junit@"
+        }
+      ]
+    },
+    {
+      "id": "CVE-2021-44228",
+      "ratings": [
+        {
+          "score": 10.0,
+          "severity": "critical",
+          "method": "CVSSv3"
+        }
+      ],
+      "cwes": [
+        20
+      ],
+      "description": "Improper Input Validation",
+      "affects": [
+        {
+          "ref": "pkg:maven/org.apache.logging.log4j/log4j-core@2.14.1"
+        }
+      ]
+    },
+    {
+      "id": "CVE-2021-44832",
+      "ratings": [
+        {
+          "score": 6.6,
+          "severity": "medium",
+          "method": "CVSSv3"
+        }
+      ],
+      "cwes": [
+        20
+      ],
+      "description": "Improper Input Validation",
+      "affects": [
+        {
+          "ref": "pkg:maven/org.apache.logging.log4j/log4j-core@2.14.1"
+        }
+      ]
+    }
+  ]
+}
