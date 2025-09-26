@@ -3,7 +3,7 @@
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
 # You may obtain a copy of the License at
-# 
+#
 #     http://www.apache.org/licenses/LICENSE-2.0
 #
 # Unless required by applicable law or agreed to in writing, software
@@ -17,15 +17,16 @@ from io import StringIO
 from unittest import TestCase
 
 from sigridci.sigridci.publish_options import PublishOptions, RunMode
+from sigridci.sigridci.reports.maintainability_markdown_report import MaintainabilityMarkdownReport
 from sigridci.sigridci.reports.pipeline_summary_report import PipelineSummaryReport
 
 
-class ConclusionReportTest(TestCase):
+class PipelineSummaryReportTest(TestCase):
     maxDiff = None
 
     def setUp(self):
         self.options = PublishOptions("aap", "noot", RunMode.FEEDBACK_AND_PUBLISH, "/tmp",
-            targetRating=3.5, sigridURL="https://example-sigrid.com")
+                                      sigridURL="https://example-sigrid.com")
 
     def testDisplayLandingPageFromClient(self):
         feedback = {
@@ -36,20 +37,15 @@ class ConclusionReportTest(TestCase):
             "overallRatings": {"DUPLICATION": 4.5, "UNIT_SIZE": 3.0, "MAINTAINABILITY": 3.2},
             "refactoringCandidates": []
         }
-    
+
         buffer = StringIO()
-        report = PipelineSummaryReport(buffer, ansiColors=False)
+        report = PipelineSummaryReport(MaintainabilityMarkdownReport(), output=buffer, ansiColors=False)
         report.generate("1234", feedback, self.options)
-        
+
         expected = """
             ** ⚠️  Your code did not improve maintainability towards your objective of 3.5 stars **
-            
-            ---------------------------------------
-            View this system in Sigrid:
-                https://example-sigrid.com/aap/noot
-            ---------------------------------------
         """
-                
+
         self.assertEqual(buffer.getvalue().strip(), inspect.cleandoc(expected).strip())
 
     def testSigridLinkIsLowercase(self):
@@ -57,10 +53,10 @@ class ConclusionReportTest(TestCase):
         self.options.system = "NOOT"
 
         buffer = StringIO()
-        report = PipelineSummaryReport(buffer, ansiColors=False)
+        report = PipelineSummaryReport(MaintainabilityMarkdownReport(), output=buffer, ansiColors=False)
 
         self.assertEqual(report.getSigridUrl(self.options), "https://example-sigrid.com/aap/noot")
-        
+
     def testSpecialTextIfNoCodeChanged(self):
         feedback = {
             "baseline": "20220110",
@@ -72,16 +68,11 @@ class ConclusionReportTest(TestCase):
         }
 
         buffer = StringIO()
-        report = PipelineSummaryReport(buffer, ansiColors=False)
+        report = PipelineSummaryReport(MaintainabilityMarkdownReport(), output=buffer, ansiColors=False)
         report.generate("1234", feedback, self.options)
 
         expected = """
             ** 💭️  You did not change any files that are measured by Sigrid **
-            
-            ---------------------------------------
-            View this system in Sigrid:
-                https://example-sigrid.com/aap/noot
-            ---------------------------------------
         """
 
         self.assertEqual(buffer.getvalue().strip(), inspect.cleandoc(expected).strip())

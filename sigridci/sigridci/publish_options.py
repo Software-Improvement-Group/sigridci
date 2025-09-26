@@ -25,6 +25,12 @@ class RunMode(Enum):
     PUBLISH_ONLY = 3
 
 
+class Capability(Enum):
+    MAINTAINABILITY = "Maintainability"
+    OPEN_SOURCE_HEALTH = "Open Source Health"
+    SECURITY = "Security"
+
+
 @dataclass
 class PublishOptions:
     customer: str
@@ -37,16 +43,14 @@ class PublishOptions:
     includeHistory: bool = False
     showUploadContents: bool = False
     convert: str = None
-    targetRating: Union[float, str] = "sigrid"
     outputDir: str = "sigrid-ci-output"
     sigridURL: str = "https://sigrid-says.com"
     feedbackURL: str = "https://docs.sigrid-says.com/landing/feedback.html"
     partner: str = "sig"
+    capabilities: List[Capability] = field(default_factory=lambda: [Capability.MAINTAINABILITY])
 
     SYSTEM_NAME_PATTERN = re.compile("^[a-z0-9]+(-[a-z0-9]+)*$", re.IGNORECASE)
     SYSTEM_NAME_LENGTH = range(2, 65)
-    DEFAULT_TARGET = 3.5
-    DEFAULT_FINDINGS_OBJECTIVE = "CRITICAL"
 
     def getSystemId(self):
         return f"{self.partner}-{self.customer}-{self.system}"

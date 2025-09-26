@@ -93,7 +93,7 @@ class SystemUploadPacker:
         if uploadSizeMB > self.MAX_UPLOAD_SIZE_MB:
             raise Exception(f"Upload exceeds maximum size of {self.MAX_UPLOAD_SIZE_MB} MB")
         elif not hasContents:
-            print(f"No code found to upload, please check the directory used for --source")
+            UploadLog.log("No code found to upload, please check the directory used for --source")
             sys.exit(1)
         elif uploadSizeBytes < 50000:
             UploadLog.log("Warning: Upload is very small, source directory might not contain all source code")

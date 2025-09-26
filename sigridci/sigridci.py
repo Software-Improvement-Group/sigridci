@@ -18,11 +18,16 @@ import os
 import sys
 from argparse import ArgumentParser, SUPPRESS
 
-from sigridci.publish_options import PublishOptions, RunMode
+from sigridci.publish_options import PublishOptions, RunMode, Capability
 from sigridci.sigrid_api_client import SigridApiClient
 from sigridci.platform import Platform
 from sigridci.sigridci_runner import SigridCiRunner
 from sigridci.upload_log import UploadLog
+
+
+CAPABILITIES = {
+    "maintainability" : Capability.MAINTAINABILITY,
+}
 
 
 def parsePublishOptions(args):
@@ -33,12 +38,12 @@ def parsePublishOptions(args):
         subsystem=args.subsystem,
         convert=args.convert,
         runMode=parseRunMode(args),
+        capabilities=parseCapabilities(args.capability),
         sourceDir=args.source,
         excludePatterns=args.exclude.split(","),
         includePatterns=args.include.split(","),
         includeHistory=True,
         showUploadContents=args.showupload,
-        targetRating=parseTarget(args.targetquality),
         outputDir=args.out,
         sigridURL=args.sigridurl
     )
@@ -59,33 +64,37 @@ def parseTarget(target):
     return float(target)
 
 
+def parseCapabilities(names):
+    try:
+        return [CAPABILITIES[name.lower().strip()] for name in names.split(",")]
+    except KeyError as e:
+        print(f"Invalid value for --capability: {str(e)}")
+        sys.exit(1)
+
+
 if __name__ == "__main__":
     parser = ArgumentParser(description="Starts a Sigrid CI analysis and provides feedback on the outcomes.")
     parser.add_argument("--partner", type=str, default="sig", help=SUPPRESS)
-    parser.add_argument("--customer", type=str, help="Name of your organization's Sigrid account.")
-    parser.add_argument("--system", type=str, help="Name of your system in Sigrid, letters/digits/hyphens only.")
+    parser.add_argument("--customer", type=str, required=True, help="Name of your organization's Sigrid account.")
+    parser.add_argument("--system", type=str, required=True, help="Name of your system in Sigrid, letters/digits/hyphens only.")
     parser.add_argument("--subsystem", type=str, default="", help="Publishes your code as a subsystem within a Sigrid system.")
     parser.add_argument("--convert", type=str, default="", help="Code conversion for specific technologies")
-    parser.add_argument("--source", type=str, help="Path of your project's source code.")
-    parser.add_argument("--targetquality", type=str, default="sigrid", help=SUPPRESS)
+    parser.add_argument("--source", type=str, required=True, help="Path of your project's source code.")
+    parser.add_argument("--capability", type=str, default="maintainability", help=f"Comma-separated Sigrid capabilities ({','.join(CAPABILITIES.keys())}).")
     parser.add_argument("--publish", action="store_true", help="Publishes analysis results to Sigrid.")
     parser.add_argument("--publishonly", action="store_true", help="Only publishes to Sigrid without waiting for results.")
     parser.add_argument("--exclude", type=str, default="", help="Comma-separated list of files/directories to exclude.")
     parser.add_argument("--include", type=str, default="", help="Comma-separated list of files/directories to include.")
     parser.add_argument("--showupload", action="store_true", help="Logs the contents of the upload published to Sigrid.")
     parser.add_argument("--out", type=str, default="sigrid-ci-output", help="Output directory for Sigrid CI feedback.")
-    parser.add_argument("--sigridurl", type=str, default="https://sigrid-says.com", help=SUPPRESS)
-    # This option is now enabled by default, using an anonymized history,
-    # but we leave it here to avoid breaking people's configuration.
+    parser.add_argument("--sigridurl", type=str, default="https://sigrid-says.com", help="Sigrid base URL.")
+    # These options are now obsolete, but we leave them here to avoid breaking people's configuration.
     parser.add_argument("--include-history", action="store_true", help=SUPPRESS)
+    parser.add_argument("--targetquality", type=str, help=SUPPRESS)
     # Dummy argument used when passing false to boolean arguments.
     # BooleanOptionalAction would solve this, but requires Python 3.9+.
     parser.add_argument("--dummy", action="store_true", help=SUPPRESS)
     args = parser.parse_args()
-
-    if None in [args.customer, args.system, args.source]:
-        parser.print_help()
-        sys.exit(1)
 
     if not os.path.exists(args.source):
         print(f"Source code directory not found: {args.source}")

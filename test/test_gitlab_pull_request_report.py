@@ -36,7 +36,7 @@ class GitLabPullRequestReportTest(TestCase):
     def setUp(self):
         UploadLog.clear()
         self.tempDir = mkdtemp()
-        self.options = PublishOptions("aap", "noot", RunMode.FEEDBACK_ONLY, targetRating=3.5, outputDir=self.tempDir)
+        self.options = PublishOptions("aap", "noot", RunMode.FEEDBACK_ONLY, outputDir=self.tempDir)
 
         self.feedback = {
             "baseline": "20220110",

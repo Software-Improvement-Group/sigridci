@@ -18,7 +18,6 @@ import os
 from .report import Report, MarkdownRenderer
 from ..objective import Objective, ObjectiveStatus
 from ..platform import Platform
-from ..publish_options import PublishOptions
 
 
 class MaintainabilityMarkdownReport(Report, MarkdownRenderer):
@@ -33,13 +32,17 @@ class MaintainabilityMarkdownReport(Report, MarkdownRenderer):
         "LOW" : "🟢"
     }
 
+    def __init__(self, objective=3.5):
+        super().__init__()
+        self.objective = objective
+
     def generate(self, analysisId, feedback, options):
         with open(self.getMarkdownFile(options), "w", encoding="utf-8") as f:
             markdown = self.renderMarkdown(analysisId, feedback, options)
             f.write(markdown)
 
     def renderMarkdown(self, analysisId, feedback, options):
-        status = Objective.determineStatus(feedback, options)
+        status = Objective.determineStatus(feedback, self.objective)
         sigridLink = self.getSigridUrl(options)
 
         md = f"# [Sigrid]({sigridLink}) maintainability feedback\n\n"
@@ -61,12 +64,11 @@ class MaintainabilityMarkdownReport(Report, MarkdownRenderer):
         return md
 
     def renderSummary(self, feedback, options):
-        return f"**{self.getSummaryText(feedback, options)}**"
+        return f"**{self.getSummary(feedback, options)}**"
 
-    def getSummaryText(self, feedback, options):
-        status = Objective.determineStatus(feedback, options)
-        targetRating = PublishOptions.DEFAULT_TARGET if isinstance(options.targetRating, str) else options.targetRating
-        targetText = f"{targetRating:.1f} stars"
+    def getSummary(self, feedback, options):
+        status = Objective.determineStatus(feedback, self.objective)
+        targetText = f"{self.objective:.1f} stars"
 
         if status == ObjectiveStatus.ACHIEVED:
             return f"✅  You wrote maintainable code and achieved your objective of {targetText}"
@@ -158,5 +160,5 @@ class MaintainabilityMarkdownReport(Report, MarkdownRenderer):
         return os.path.abspath(f"{options.outputDir}/feedback.md")
 
     def isObjectiveSuccess(self, feedback, options):
-        status = Objective.determineStatus(feedback, options)
+        status = Objective.determineStatus(feedback, self.objective)
         return status != ObjectiveStatus.WORSENED

@@ -25,7 +25,7 @@ class MarkdownReportTest(TestCase):
     maxDiff = None
 
     def setUp(self):
-        self.options = PublishOptions("aap", "noot", RunMode.FEEDBACK_ONLY, "/tmp", targetRating=3.5, feedbackURL="")
+        self.options = PublishOptions("aap", "noot", RunMode.FEEDBACK_ONLY, "/tmp", feedbackURL="")
 
     @mock.patch.dict(os.environ, {"SIGRID_CI_MARKDOWN_HTML" : "false"})
     def testMarkdown(self):
