@@ -36,6 +36,7 @@ class OpenSourceHealthMarkdownReportTest(TestCase):
     @mock.patch.dict(os.environ, {"SIGRID_CI_MARKDOWN_HTML" : "false"})
     def testIncludeFindingsBasedOnObjectives(self):
         report = OpenSourceHealthMarkdownReport("CRITICAL")
+        report.decorateLinks = False
         markdown = report.renderMarkdown("1234", self.feedback, self.options)
 
         expected = """
@@ -64,6 +65,7 @@ class OpenSourceHealthMarkdownReportTest(TestCase):
     @mock.patch.dict(os.environ, {"SIGRID_CI_MARKDOWN_HTML" : "false"})
     def testSortFindingsBasedOnSeverity(self):
         report = OpenSourceHealthMarkdownReport("HIGH")
+        report.decorateLinks = False
         markdown = report.renderMarkdown("1234", self.feedback, self.options)
 
         expected = """
@@ -93,6 +95,7 @@ class OpenSourceHealthMarkdownReportTest(TestCase):
     @mock.patch.dict(os.environ, {"SIGRID_CI_MARKDOWN_HTML" : "false"})
     def testLimitFeedbackWhenTooManyVulnerabilities(self):
         report = OpenSourceHealthMarkdownReport("LOW")
+        report.decorateLinks = False
         markdown = report.renderMarkdown("1234", self.feedback, self.options)
 
         expected = """
@@ -145,6 +148,7 @@ class OpenSourceHealthMarkdownReportTest(TestCase):
     @mock.patch.dict(os.environ, {"SIGRID_CI_MARKDOWN_HTML" : "false"})
     def testShowUpdatedLibraries(self):
         report = OpenSourceHealthMarkdownReport("HIGH")
+        report.decorateLinks = False
         report.previousFeedback = self.previousFeedback
         markdown = report.renderMarkdown("1234", self.feedback, self.options)
 
