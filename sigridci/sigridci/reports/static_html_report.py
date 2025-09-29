@@ -23,6 +23,10 @@ class StaticHtmlReport(Report):
     HTML_STAR_FULL = "&#9733;"
     HTML_STAR_EMPTY = "&#9734;"
 
+    def __init__(self, objective):
+        super().__init__()
+        self.objective = objective
+
     def generate(self, analysisId, feedback, options):
         with open(os.path.dirname(__file__) + "/sigridci-feedback-template.html", encoding="utf-8", mode="r") as f:
             template = f.read()
@@ -36,22 +40,22 @@ class StaticHtmlReport(Report):
         placeholders = {
             "CUSTOMER" : html.escape(options.customer),
             "SYSTEM" : html.escape(options.system),
-            "TARGET" : "%.1f" % options.targetRating,
+            "TARGET" : "%.1f" % self.objective,
             "LINES_OF_CODE_TOUCHED" : "%d" % feedback.get("newCodeLinesOfCode", 0),
             "BASELINE_DATE" : self.formatBaseline(feedback),
             "SIGRID_LINK" : self.getSigridUrl(options),
-            "MAINTAINABILITY_PASSED" : self.formatPassed(feedback, options)
+            "MAINTAINABILITY_PASSED" : self.formatPassed(feedback)
         }
 
         for metric in self.METRICS:
-            placeholders[f"{metric}_OVERALL"] = self.formatRating(feedback["baselineRatings"], metric)
-            placeholders[f"{metric}_NEW"] = self.formatRating(feedback["newCodeRatings"], metric)
-            placeholders[f"{metric}_STARS_OVERALL"] = self.formatHtmlStars(feedback["baselineRatings"], metric)
-            placeholders[f"{metric}_STARS_NEW"] = self.formatHtmlStars(feedback["newCodeRatings"], metric)
+            placeholders[f"{metric}_OVERALL"] = self.formatRating(feedback.get("baselineRatings", {}), metric)
+            placeholders[f"{metric}_NEW"] = self.formatRating(feedback.get("newCodeRatings", {}), metric)
+            placeholders[f"{metric}_STARS_OVERALL"] = self.formatHtmlStars(feedback.get("baselineRatings", {}), metric)
+            placeholders[f"{metric}_STARS_NEW"] = self.formatHtmlStars(feedback.get("newCodeRatings", {}), metric)
             placeholders[f"{metric}_REFACTORING_CANDIDATES"] = self.formatRefactoringCandidates(feedback, metric)
 
-        placeholders["MAINTAINABILITY_TARGET"] = "%.1f" % options.targetRating
-        placeholders["MAINTAINABILITY_PASSED"] = self.formatPassed(feedback, options)
+        placeholders["MAINTAINABILITY_TARGET"] = "%.1f" % self.objective
+        placeholders["MAINTAINABILITY_PASSED"] = self.formatPassed(feedback)
 
         return self.fillPlaceholders(template, placeholders)
 
@@ -60,8 +64,8 @@ class StaticHtmlReport(Report):
             template = template.replace(f"@@@{placeholder}", value)
         return template
 
-    def formatPassed(self, feedback, options):
-        status = Objective.determineStatus(feedback, options)
+    def formatPassed(self, feedback):
+        status = Objective.determineStatus(feedback, self.objective)
         return "failed" if status == ObjectiveStatus.WORSENED else "passed"
 
     def formatRefactoringCandidates(self, feedback, metric):

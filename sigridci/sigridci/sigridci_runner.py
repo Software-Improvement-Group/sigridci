@@ -15,18 +15,11 @@
 import os
 import sys
 
+from .feedback_provider import FeedbackProvider
 from .platform import Platform
 from .publish_options import PublishOptions, RunMode
 from .sigrid_api_client import SigridApiClient
 from .upload_log import UploadLog
-from .reports.ascii_art_report import AsciiArtReport
-from .reports.azure_pull_request_report import AzurePullRequestReport
-from .reports.gitlab_pull_request_report import GitLabPullRequestReport
-from .reports.json_report import JsonReport
-from .reports.junit_format_report import JUnitFormatReport
-from .reports.maintainability_markdown_report import MaintainabilityMarkdownReport
-from .reports.pipeline_summary_report import PipelineSummaryReport
-from .reports.static_html_report import StaticHtmlReport
 
 
 class SigridCiRunner:
@@ -53,19 +46,9 @@ class SigridCiRunner:
         self.options = options
         self.apiClient = apiClient
 
-        self.reports = [
-            AsciiArtReport(),
-            MaintainabilityMarkdownReport(),
-            StaticHtmlReport(),
-            JUnitFormatReport(),
-            JsonReport(),
-            AzurePullRequestReport(MaintainabilityMarkdownReport()),
-            GitLabPullRequestReport(MaintainabilityMarkdownReport()),
-            PipelineSummaryReport()
-        ]
-
     def run(self):
         self.prepareRun()
+        self.performLicenseCheck()
 
         systemExists = self.apiClient.checkSystemExists()
         UploadLog.log("Found system in Sigrid" if systemExists else "System is not yet on-boarded to Sigrid")
@@ -94,18 +77,25 @@ class SigridCiRunner:
         if self.options.feedbackURL:
             self.apiClient.logPlatformInformation(Platform.getPlatformId())
 
-    def displayFeedback(self, analysisId, metadata):
-        if self.options.targetRating == "sigrid":
-            self.options.targetRating = self.loadSigridTarget()
+    def performLicenseCheck(self):
+        licenseData = self.apiClient.fetchLicenses()
+        licenses = licenseData.get("licenses", licenseData.get("licences", []))
+        missing = [capability.name for capability in self.options.capabilities if capability.name not in licenses]
+        if len(missing) > 0:
+            UploadLog.log(f"You do not have the Sigrid license for {', '.join(missing)}.")
+            sys.exit(1)
 
+
+    def displayFeedback(self, analysisId, metadata):
+        objectives = self.apiClient.fetchObjectives()
         feedback = self.apiClient.fetchAnalysisResults(analysisId)
         self.displayMetadata(metadata)
 
-        if not os.path.exists(self.options.outputDir):
-            os.mkdir(self.options.outputDir)
-
-        for report in self.reports:
-            report.generate(analysisId, feedback, self.options)
+        for capability in self.options.capabilities:
+            feedbackProvider = FeedbackProvider(capability, self.options, objectives)
+            feedbackProvider.analysisId = analysisId
+            feedbackProvider.feedback = feedback
+            feedbackProvider.generateReports()
 
     def validateConfigurationFiles(self, metadata):
         scope = self.options.readScopeFile()
@@ -159,9 +149,3 @@ class SigridCiRunner:
                 for name, value in metadata.items():
                     formattedValue = f"[\"{value}\"]" if name in ["teamNames", "supplierNames"] else f"\"{value}\""
                     writer.write(f"  {name}: {formattedValue}\n")
-
-    def loadSigridTarget(self):
-        objectives = self.apiClient.fetchObjectives()
-        targetRating = objectives.get("MAINTAINABILITY", PublishOptions.DEFAULT_TARGET)
-        UploadLog.log("Using Sigrid for target rating (%.1f stars)" % targetRating)
-        return targetRating

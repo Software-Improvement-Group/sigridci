@@ -24,7 +24,7 @@ class AsciiArtReportTest(TestCase):
     maxDiff = None
 
     def setUp(self):
-        self.options = PublishOptions("aap", "noot", RunMode.FEEDBACK_ONLY, "/tmp", targetRating=3.5)
+        self.options = PublishOptions("aap", "noot", RunMode.FEEDBACK_ONLY, "/tmp")
     
     def testGetRefactoringCandidatesForNewFormat(self):
         feedback = {

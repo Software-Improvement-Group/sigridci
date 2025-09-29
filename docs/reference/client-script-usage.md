@@ -22,20 +22,20 @@ The [general Sigrid CI documentation](../sigridci-integration/development-workfl
 
 The script takes a limited number of mandatory arguments. However, Sigrid CI's behavior can be configured and customized using a large number of optional arguments that can be used to align Sigrid CI's behavior to your development team's workflow. The following arguments are available:
 
-| Argument          | Required | Example value       | Description                                                                                                                         |
-|-------------------|----------|---------------------|-------------------------------------------------------------------------------------------------------------------------------------|
-| `--customer`      | Yes      | examplecustomername | Name of your organization's Sigrid account. Contact SIG support if you are not sure about this. [1]                                 |
-| `--system`        | Yes      | examplesystemname   | Name of your system in Sigrid. Contact SIG support if you are not sure about this. [2]                                              |
-| `--subsystem `    | No       | frontend            | Used to map between repository directory structure versus the one known by Sigrid. [5]                                              |
-| `--source`        | No       | .                   | Path of your project's source code. Use "." for current directory.                                                                  |
-| `--publish`       | No       | N/A                 | Automatically publishes analysis results to Sigrid. [1]                                                                             |
-| `--publishonly`   | No       | N/A                 | Publishes analysis results to Sigrid, but *does not* provide feedback in the CI environment itself. [3]                             |
-| `--exclude`       | No       | /build/,.png        | Comma-separated list of file and/or directory names that should be excluded from the upload. [4, 7]                                 |
-| `--include`       | No       | /build/,.png        | Comma-separated list of file and/or directory names that should be included in the upload. [6, 7]                                   |
-| `--targetquality` | No       | 3.5                 | See [defining quality objectives](#defining-quality-objectives).                                                                    |
-| `--showupload`    | No       | N/A                 | Logs the contents of the upload before submitting it to Sigrid.                                                                     |
-| `--convert`       | No       | beinformed          | Used for some technologies. See [technology conversion configuration](technology-support.md#technology-conversion-configuration).   |
-| `--out`           | No       | /tmp                | Output directory for Sigrid CI feedback, default is `sigrid-ci-output`.                                                             |
+| Argument          | Required | Example value       | Description                                                                                                                       |
+|-------------------|----------|---------------------|-----------------------------------------------------------------------------------------------------------------------------------|
+| `--customer`      | Yes      | examplecustomername | Name of your organization's Sigrid account. Contact SIG support if you are not sure about this. [1]                               |
+| `--system`        | Yes      | examplesystemname   | Name of your system in Sigrid. Contact SIG support if you are not sure about this. [2]                                            |
+| `--subsystem `    | No       | frontend            | Used to map between repository directory structure versus the one known by Sigrid. [5]                                            |
+| `--source`        | No       | .                   | Path of your project's source code. Use "." for current directory.                                                                |
+| `--capability`    | No       | maintainability     | Comma-separated list of Sigrid capabilities (`maintainability`). Default is maintainability.                                      |
+| `--publish`       | No       | N/A                 | Automatically publishes analysis results to Sigrid. [1]                                                                           |
+| `--publishonly`   | No       | N/A                 | Publishes analysis results to Sigrid, but *does not* provide feedback in the CI environment itself. [3]                           |
+| `--exclude`       | No       | /build/,.png        | Comma-separated list of file and/or directory names that should be excluded from the upload. [4, 7]                               |
+| `--include`       | No       | /build/,.png        | Comma-separated list of file and/or directory names that should be included in the upload. [6, 7]                                 |
+| `--showupload`    | No       | N/A                 | Logs the contents of the upload before submitting it to Sigrid.                                                                   |
+| `--convert`       | No       | beinformed          | Used for some technologies. See [technology conversion configuration](technology-support.md#technology-conversion-configuration). |
+| `--out`           | No       | /tmp                | Output directory for Sigrid CI feedback, default is `sigrid-ci-output`.                                                           |
 
 Notes:
 
@@ -86,17 +86,11 @@ So when to use these options:
 
 Sigrid CI compares the quality of the new/changed code against the configured target quality level. The target is always relative to the thousands of other systems in the SIG benchmark. This means you do not need to fix every single minor issue, as long as the overall quality is OK you are still allowed to proceed.
 
-### Option 1: Use Sigrid's maintainability target for your system (default)
-
 By default, Sigrid CI will use the maintainability target you have defined for your system in Sigrid. This is the same target that is depicted in the "system objectives" list you see in Sigrid. See below:
 
 <img src="../images/sigrid-objectives.png" width="500" />
 
-* **Default setting:** If you do not set any objective, Sigrid CI will use a default target of 3.5 stars. This is the lower threshold of the better-than-average 4-star range. Four-star code quality is the level that SIG recommends for systems with modern technologies in active development.
-
-### Option 2: Use a maintainability target in Sigrid CI that is different from the target in Sigrid
-
-Using the `--targetquality` parameter allows you to override the maintainability target defined in Sigrid. For example, `--targetquality 4.0` will require pull requests to be 4.0 stars even if the system-level maintainability target defined in Sigrid is 3.5 stars. You would normally use the same target in both, but in some situations, you might want to be more strict or more lenient for pull requests.
+If you do not set any objective, Sigrid CI will use a default target of 3.5 stars. This is the lower threshold of the better-than-average 4-star range. Four-star code quality is the level that SIG recommends for systems with modern technologies in active development.
 
 ## Connecting to Sigrid using a proxy
 
