@@ -73,7 +73,7 @@ if __name__ == "__main__":
     options = parseFeedbackOptions(args)
     objectives = determineObjectives(options)
 
-    feedbackProvider = FeedbackProvider(args.capability, options, objectives)
+    feedbackProvider = FeedbackProvider(CAPABILITIES[args.capability], options, objectives)
     feedbackProvider.loadLocalAnalysisResults(args.analysisresults)
     if args.previousresults:
         feedbackProvider.loadPreviousAnalysisResults(args.previousresults)
