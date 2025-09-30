@@ -37,6 +37,7 @@ class MaintainabilityMarkdownReport(Report, MarkdownRenderer):
         self.objective = objective
 
     def generate(self, analysisId, feedback, options):
+        print(feedback)
         with open(self.getMarkdownFile(options), "w", encoding="utf-8") as f:
             markdown = self.renderMarkdown(analysisId, feedback, options)
             f.write(markdown)
