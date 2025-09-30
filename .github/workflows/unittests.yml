@@ -17,9 +17,9 @@ jobs:
       - name: "Check out repository"
         uses: actions/checkout@v4
       - run: >
-          python3 sigridci/sigridci_feedback.py
-            --customer example 
-            --system junit 
-            --capability maintainability"
+          python3 sigridci/sigridci_feedback.py \
+            --customer example \
+            --system junit \
+            --capability maintainability \
             --analysisresults test/maintainability.md
           cat sigrid-ci-output/feedback.md
