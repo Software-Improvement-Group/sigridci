@@ -43,7 +43,7 @@ class FeedbackProviderTest(TestCase):
 
         oshFeedback = FeedbackProvider(Capability.OPEN_SOURCE_HEALTH, options, {})
         oshFeedback.analysisId = "1234"
-        oshFeedback.feedback = {"dependencies" : []}
+        oshFeedback.feedback = {"components" : [], "metadata" : {"timestamp" : "2025-09-29"}}
         oshFeedback.generateReports()
 
         self.assertTrue(os.path.exists(f"{tempDir}/osh-feedback.md"))
