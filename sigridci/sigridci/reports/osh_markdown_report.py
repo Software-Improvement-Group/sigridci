@@ -59,25 +59,27 @@ class OpenSourceHealthMarkdownReport(Report, MarkdownRenderer):
             details += self.generateFindingsTable(updated, options)
         if len(fixable) > 0:
             details += "## 👎 What could be better?\n\n"
-            details += f"> You have **{len(fixable)}** vulnerable open source libraries with a fix available.\n\n"
+            details += f"> You have **{len(fixable)}** vulnerable open source libraries with a fix available.  \n"
+            details += "> Consider upgrading to a version that no longer contains the vulnerability.\n\n"
             details += self.generateFindingsTable(fixable, options)
         if len(unfixable) > 0:
-            details += "## 😑 You have findings that you cannot address right now\n\n"
-            details += f"> You have **{len(unfixable)}** vulnerable open source libraries without a fix available.\n\n"
+            details += "## 😑 You have findings that you need to investigate in more depth\n\n"
+            details += f"> You have **{len(unfixable)}** vulnerable open source libraries without a fix available.  \n"
+            details += "> You need to investigate the security risk, and discuss how to manage it accordingly.\n\n"
             details += self.generateFindingsTable(unfixable, options)
 
         sigridLink = f"{self.getSigridUrl(options)}/-/open-source-health"
         return self.renderMarkdownTemplate(feedback, options, details, sigridLink)
 
     def getSummary(self, feedback, options):
-        objectiveDisplayName = f"{self.objective.lower()} severity open source vulnerabilities"
+        objectiveDisplayName = f"{self.objective.lower()}-severity open source vulnerabilities"
         if self.isObjectiveSuccess(feedback, options):
             return f"✅  You achieved your objective of having no {objectiveDisplayName}."
         else:
-            return f"⚠️  You failed your objective of having no {objectiveDisplayName}."
+            return f"⚠️  You failed to meet your objective of having no {objectiveDisplayName}."
 
     def generateFindingsTable(self, libraries, options):
-        md = "| Risk | Library | Latest version | Location(s) |\n"
+        md = "| Vulnerability risk | Library | Latest version | Location(s) |\n"
         md += "|----|----|----|----|\n"
 
         for library in sorted(libraries, key=lambda lib: self.SORT_RISK.index(lib.risk))[0:self.MAX_FINDINGS]:

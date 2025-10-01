@@ -42,15 +42,16 @@ class OpenSourceHealthMarkdownReportTest(TestCase):
         expected = """
             # [Sigrid](https://sigrid-says.com/aap/noot/-/open-source-health) Open Source Health feedback
             
-            **⚠️  You failed your objective of having no critical severity open source vulnerabilities.**
+            **⚠️  You failed to meet your objective of having no critical-severity open source vulnerabilities.**
             
             Sigrid compared your code against the baseline of 2025-09-19.
             
             ## 👎 What could be better?
             
-            > You have **1** vulnerable open source libraries with a fix available.
+            > You have **1** vulnerable open source libraries with a fix available.  
+            > Consider upgrading to a version that no longer contains the vulnerability.
             
-            | Risk | Library | Latest version | Location(s) |
+            | Vulnerability risk | Library | Latest version | Location(s) |
             |----|----|----|----|
             | 🟣 | org.apache.logging.log4j:log4j-core 2.14.1 | 2.25.1 | gradle/libs.versions.toml |
             
@@ -71,15 +72,16 @@ class OpenSourceHealthMarkdownReportTest(TestCase):
         expected = """
             # [Sigrid](https://sigrid-says.com/aap/noot/-/open-source-health) Open Source Health feedback
             
-            **⚠️  You failed your objective of having no high severity open source vulnerabilities.**
+            **⚠️  You failed to meet your objective of having no high-severity open source vulnerabilities.**
             
             Sigrid compared your code against the baseline of 2025-09-19.
             
             ## 👎 What could be better?
             
-            > You have **2** vulnerable open source libraries with a fix available.
+            > You have **2** vulnerable open source libraries with a fix available.  
+            > Consider upgrading to a version that no longer contains the vulnerability.
             
-            | Risk | Library | Latest version | Location(s) |
+            | Vulnerability risk | Library | Latest version | Location(s) |
             |----|----|----|----|
             | 🟣 | org.apache.logging.log4j:log4j-core 2.14.1 | 2.25.1 | gradle/libs.versions.toml |
             | 🔴 | commons-io:commons-io 2.9.0 | 2.20.0 | gradle/libs.versions.toml |
@@ -101,15 +103,16 @@ class OpenSourceHealthMarkdownReportTest(TestCase):
         expected = """
             # [Sigrid](https://sigrid-says.com/aap/noot/-/open-source-health) Open Source Health feedback
             
-            **⚠️  You failed your objective of having no low severity open source vulnerabilities.**
+            **⚠️  You failed to meet your objective of having no low-severity open source vulnerabilities.**
             
             Sigrid compared your code against the baseline of 2025-09-19.
             
             ## 👎 What could be better?
             
-            > You have **21** vulnerable open source libraries with a fix available.
+            > You have **21** vulnerable open source libraries with a fix available.  
+            > Consider upgrading to a version that no longer contains the vulnerability.
             
-            | Risk | Library | Latest version | Location(s) |
+            | Vulnerability risk | Library | Latest version | Location(s) |
             |----|----|----|----|
             | 🟣 | org.apache.logging.log4j:log4j-core 2.14.1 | 2.25.1 | gradle/libs.versions.toml |
             | 🔴 | commons-io:commons-io 2.9.0 | 2.20.0 | gradle/libs.versions.toml |
@@ -121,11 +124,12 @@ class OpenSourceHealthMarkdownReportTest(TestCase):
             | 🟢 | org.apache.logging.log4j:log4j-jul 2.14.1 | 2.25.1 | gradle/libs.versions.toml |
             | | ... 13 more vulnerable open source libraries | |
             
-            ## 😑 You have findings that you cannot address right now
+            ## 😑 You have findings that you need to investigate in more depth
 
-            > You have **13** vulnerable open source libraries without a fix available.
+            > You have **13** vulnerable open source libraries without a fix available.  
+            > You need to investigate the security risk, and discuss how to manage it accordingly.
             
-            | Risk | Library | Latest version | Location(s) |
+            | Vulnerability risk | Library | Latest version | Location(s) |
             |----|----|----|----|
             | 🟢 | org.gradle:test-retry-gradle-plugin 1.2.1 |  | buildSrc/build.gradle.kts |
             | 🟢 | HH:mm ss.SSSZ |  | build.gradle.kts |
@@ -155,7 +159,7 @@ class OpenSourceHealthMarkdownReportTest(TestCase):
         expected = """
             # [Sigrid](https://sigrid-says.com/aap/noot/-/open-source-health) Open Source Health feedback
             
-            **⚠️  You failed your objective of having no high severity open source vulnerabilities.**
+            **⚠️  You failed to meet your objective of having no high-severity open source vulnerabilities.**
             
             Sigrid compared your code against the baseline of 2025-09-18.
             
@@ -163,15 +167,16 @@ class OpenSourceHealthMarkdownReportTest(TestCase):
             
             > You updated **1** vulnerable open source libraries.
             
-            | Risk | Library | Latest version | Location(s) |
+            | Vulnerability risk | Library | Latest version | Location(s) |
             |----|----|----|----|
             | 🔴 | commons-io:commons-other 1.99 | 3.0 | gradle/libs.versions.toml |
             
             ## 👎 What could be better?
             
-            > You have **2** vulnerable open source libraries with a fix available.
+            > You have **2** vulnerable open source libraries with a fix available.  
+            > Consider upgrading to a version that no longer contains the vulnerability.
             
-            | Risk | Library | Latest version | Location(s) |
+            | Vulnerability risk | Library | Latest version | Location(s) |
             |----|----|----|----|
             | 🟣 | org.apache.logging.log4j:log4j-core 2.14.1 | 2.25.1 | gradle/libs.versions.toml |
             | 🔴 | commons-io:commons-io 2.9.0 | 2.20.0 | gradle/libs.versions.toml |
