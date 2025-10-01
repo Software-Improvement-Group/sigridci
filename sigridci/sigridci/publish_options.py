@@ -16,7 +16,7 @@ import os
 import re
 from dataclasses import dataclass, field
 from enum import Enum
-from typing import List, Union
+from typing import List
 
 
 class RunMode(Enum):

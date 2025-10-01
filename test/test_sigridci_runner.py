@@ -12,6 +12,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
+import json
 import os
 import tempfile
 import urllib.error
@@ -26,6 +27,7 @@ from sigridci.sigridci.upload_log import UploadLog
 
 
 class SigridCiRunnerTest(TestCase):
+    maxDiff = None
 
     def setUp(self):
         self.tempDir = tempfile.mkdtemp()
@@ -80,6 +82,7 @@ class SigridCiRunnerTest(TestCase):
 
         self.assertEqual(UploadLog.history, expectedLog)
         self.assertEqual(apiClient.called, expectedCalls)
+        self.assertEqual(apiClient.received["/inboundresults/sig/aap/noot/ci/uploads/v1"]["mode"], "DEFAULT")
 
     def testPublishRun(self):
         self.createTempFile(self.tempDir, "a.py", "print(123)")
@@ -107,7 +110,7 @@ class SigridCiRunnerTest(TestCase):
             "/analysis-results/api/v1/licenses/aap",
             "/analysis-results/sigridci/aap/noot/v1/ci",
             "/analysis-results/api/v1/system-metadata/aap/noot",
-            "/inboundresults/sig/aap/noot/ci/uploads/v1/publish",
+            "/inboundresults/sig/aap/noot/ci/uploads/v1",
             "UPLOAD",
             "/analysis-results/api/v1/objectives/aap/noot/config",
             "/analysis-results/sigridci/aap/noot/v1/ci/results/123"
@@ -115,6 +118,7 @@ class SigridCiRunnerTest(TestCase):
 
         self.assertEqual(UploadLog.history, expectedLog)
         self.assertEqual(apiClient.called, expectedCalls)
+        self.assertEqual(apiClient.received["/inboundresults/sig/aap/noot/ci/uploads/v1"]["mode"], "PUBLISH")
 
     def testPublishOnlyRun(self):
         self.createTempFile(self.tempDir, "a.py", "print(123)")
@@ -142,12 +146,13 @@ class SigridCiRunnerTest(TestCase):
             "/analysis-results/api/v1/licenses/aap",
             "/analysis-results/sigridci/aap/noot/v1/ci",
             "/analysis-results/api/v1/system-metadata/aap/noot",
-            "/inboundresults/sig/aap/noot/ci/uploads/v1/publishonly",
+            "/inboundresults/sig/aap/noot/ci/uploads/v1",
             "UPLOAD"
         ]
 
         self.assertEqual(UploadLog.history, expectedLog)
         self.assertEqual(apiClient.called, expectedCalls)
+        self.assertEqual(apiClient.received["/inboundresults/sig/aap/noot/ci/uploads/v1"]["mode"], "PUBLISHONLY")
 
     def testOnBoardingRun(self):
         self.createTempFile(self.tempDir, "a.py", "print(123)")
@@ -172,12 +177,13 @@ class SigridCiRunnerTest(TestCase):
         expectedCalls = [
             "/analysis-results/api/v1/licenses/aap",
             "/analysis-results/sigridci/aap/noot/v1/ci",
-            "/inboundresults/sig/aap/noot/ci/uploads/v1/onboarding",
+            "/inboundresults/sig/aap/noot/ci/uploads/v1",
             "UPLOAD"
         ]
 
         self.assertEqual(UploadLog.history, expectedLog)
         self.assertEqual(apiClient.called, expectedCalls)
+        self.assertEqual(apiClient.received["/inboundresults/sig/aap/noot/ci/uploads/v1"]["mode"], "ONBOARDING")
 
     def testAddSubsystemOptionToUrl(self):
         self.createTempFile(self.tempDir, "a.py", "print(123)")
@@ -193,13 +199,15 @@ class SigridCiRunnerTest(TestCase):
             "/analysis-results/api/v1/licenses/aap",
             "/analysis-results/sigridci/aap/noot/v1/ci",
             "/analysis-results/api/v1/system-metadata/aap/noot",
-            "/inboundresults/sig/aap/noot/ci/uploads/v1/publish?subsystem=mysubsystem",
+            "/inboundresults/sig/aap/noot/ci/uploads/v1",
             "UPLOAD",
             "/analysis-results/api/v1/objectives/aap/noot/config",
             "/analysis-results/sigridci/aap/noot/v1/ci/results/123"
         ]
 
         self.assertEqual(apiClient.called, expectedCalls)
+        self.assertEqual(apiClient.received["/inboundresults/sig/aap/noot/ci/uploads/v1"]["mode"], "PUBLISH")
+        self.assertEqual(apiClient.received["/inboundresults/sig/aap/noot/ci/uploads/v1"]["subsystem"], "mysubsystem")
 
     def testExitWithMessageIfUploadEmpty(self):
         apiClient = MockApiClient(self.options, systemExists=False)
@@ -675,6 +683,7 @@ class MockApiClient(SigridApiClient):
         super().__init__(options)
 
         self.called = []
+        self.received = {}
         self.systemExists = systemExists
         self.uploadAttempts = uploadAttempts
         self.attempt = 0
@@ -686,6 +695,8 @@ class MockApiClient(SigridApiClient):
 
     def callSigridAPI(self, path, body=None, contentType=None):
         self.called.append(path)
+        if body and contentType == "application/json":
+            self.received[path] = json.loads(body)
 
         if not self.systemExists and path.endswith("/sigridci/aap/noot/v1/ci"):
             # Mock an HTTP 404.

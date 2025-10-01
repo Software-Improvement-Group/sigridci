@@ -27,6 +27,7 @@ from sigridci.upload_log import UploadLog
 
 CAPABILITIES = {
     "maintainability" : Capability.MAINTAINABILITY,
+    "osh" : Capability.OPEN_SOURCE_HEALTH
 }
 
 
