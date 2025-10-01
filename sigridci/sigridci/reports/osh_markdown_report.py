@@ -13,21 +13,10 @@
 # limitations under the License.
 
 import os
-from dataclasses import dataclass
-from typing import List
 
 from .report import Report, MarkdownRenderer
 from .security_markdown_report import SecurityMarkdownReport
-from ..objective import Objective
-
-
-@dataclass
-class Library:
-    risk: str
-    name: str
-    version: str
-    latestVersion: str
-    files: List[str]
+from ..analysisresults.cyclonedx_processor import CycloneDXProcessor
 
 
 class OpenSourceHealthMarkdownReport(Report, MarkdownRenderer):
@@ -39,14 +28,15 @@ class OpenSourceHealthMarkdownReport(Report, MarkdownRenderer):
         super().__init__()
         self.objective = objective
         self.previousFeedback = None
+        self.processor = CycloneDXProcessor()
 
     def generate(self, analysisId, feedback, options):
         with open(self.getMarkdownFile(options), "w", encoding="utf-8") as f:
             f.write(self.renderMarkdown(analysisId, feedback, options))
 
     def renderMarkdown(self, analysisId, feedback, options):
-        libraries = list(self.extractRelevantLibraries(feedback))
-        previousLibraries = list(self.extractRelevantLibraries(self.previousFeedback))
+        libraries = list(self.processor.extractRelevantLibraries(feedback, self.objective))
+        previousLibraries = list(self.processor.extractRelevantLibraries(self.previousFeedback, self.objective))
 
         fixable = [lib for lib in libraries if self.isFixable(lib)]
         unfixable = [lib for lib in libraries if not self.isFixable(lib)]
@@ -92,20 +82,6 @@ class OpenSourceHealthMarkdownReport(Report, MarkdownRenderer):
 
         return f"{md}\n"
 
-    def extractRelevantLibraries(self, feedback):
-        if feedback is None:
-            return
-
-        for component in feedback.get("components", []):
-            name = f"{component['group']}:{component['name']}" if component.get("group") else component["name"]
-            files = [occurrence["location"] for occurrence in component["evidence"]["occurrences"]]
-            properties = {prop["name"]: prop["value"] for prop in component["properties"]}
-            risk = properties["sigrid:risk:vulnerability"]
-            latestVersion = properties["sigrid:latest:version"].replace("?", "")
-
-            if Objective.isFindingIncluded(risk, self.objective):
-                yield Library(risk, name, component["version"], latestVersion, files)
-
     def isFixable(self, library):
         return library.latestVersion and library.version != library.latestVersion
 
@@ -126,5 +102,6 @@ class OpenSourceHealthMarkdownReport(Report, MarkdownRenderer):
         return os.path.abspath(f"{options.outputDir}/osh-feedback.md")
 
     def isObjectiveSuccess(self, feedback, options):
-        fixable = [lib for lib in self.extractRelevantLibraries(feedback) if self.isFixable(lib)]
+        libraries = list(self.processor.extractRelevantLibraries(feedback, self.objective))
+        fixable = [lib for lib in libraries if self.isFixable(lib)]
         return len(fixable) == 0
