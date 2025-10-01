@@ -15,7 +15,7 @@
 from dataclasses import dataclass
 from typing import List
 
-from ...sigridci.objective import Objective
+from ..objective import Objective
 
 
 @dataclass
