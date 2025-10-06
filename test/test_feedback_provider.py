@@ -14,10 +14,10 @@
 
 import os
 import tempfile
-from unittest import TestCase, mock
+from unittest import TestCase
 
-from sigridci.sigridci.feedback_provider import FeedbackProvider, Capability
-from sigridci.sigridci.publish_options import PublishOptions, RunMode
+from sigridci.sigridci.feedback_provider import FeedbackProvider
+from sigridci.sigridci.publish_options import PublishOptions, RunMode, Capability
 from sigridci.sigridci.reports.maintainability_markdown_report import MaintainabilityMarkdownReport
 from sigridci.sigridci.reports.osh_markdown_report import OpenSourceHealthMarkdownReport
 from sigridci.sigridci.reports.security_markdown_report import SecurityMarkdownReport
@@ -33,9 +33,9 @@ class FeedbackProviderTest(TestCase):
         oshFeedback = FeedbackProvider(Capability.OPEN_SOURCE_HEALTH, options, {})
         securityFeedback = FeedbackProvider(Capability.SECURITY, options, {})
 
-        self.assertEqual(MaintainabilityMarkdownReport, type(maintainabilityFeedback.markdownReport))
-        self.assertEqual(OpenSourceHealthMarkdownReport, type(oshFeedback.markdownReport))
-        self.assertEqual(SecurityMarkdownReport, type(securityFeedback.markdownReport))
+        self.assertEqual(MaintainabilityMarkdownReport, type(maintainabilityFeedback.prepareMarkdownReport()))
+        self.assertEqual(OpenSourceHealthMarkdownReport, type(oshFeedback.prepareMarkdownReport()))
+        self.assertEqual(SecurityMarkdownReport, type(securityFeedback.prepareMarkdownReport()))
 
     def testGenerateReportsBasedOnCapability(self):
         tempDir = tempfile.mkdtemp()
@@ -43,7 +43,7 @@ class FeedbackProviderTest(TestCase):
 
         oshFeedback = FeedbackProvider(Capability.OPEN_SOURCE_HEALTH, options, {})
         oshFeedback.analysisId = "1234"
-        oshFeedback.feedback = {"dependencies" : []}
+        oshFeedback.feedback = {"components" : [], "metadata" : {"timestamp" : "2025-09-29"}}
         oshFeedback.generateReports()
 
         self.assertTrue(os.path.exists(f"{tempDir}/osh-feedback.md"))

@@ -15,45 +15,33 @@
 import sys
 
 from .ascii_art_report import AsciiArtReport
-from .maintainability_markdown_report import MaintainabilityMarkdownReport
 from .report import Report
-from ..objective import Objective, ObjectiveStatus
 from ..publish_options import RunMode
 
 
 class PipelineSummaryReport(Report):
 
-    def __init__(self, output=sys.stdout, ansiColors=True):
+    def __init__(self, markdownReport, *, output=sys.stdout, ansiColors=True):
+        self.markdownReport = markdownReport
         self.output = output
         self.ansiColors = ansiColors
 
     def generate(self, analysisId, feedback, options):
-        status = Objective.determineStatus(feedback, options)
+        success = self.markdownReport.isObjectiveSuccess(feedback, options)
 
         print("", file=self.output)
-        self.printConclusionMessage(feedback, options, status)
-        self.printLandingPage(analysisId, options)
+        self.printConclusionMessage(feedback, options)
 
         # If you publish(only) we never break the build
         # We can break the build when running on a branch or pull request.
-        if options.runMode == RunMode.FEEDBACK_ONLY and status == ObjectiveStatus.WORSENED:
+        if options.runMode == RunMode.FEEDBACK_ONLY and not success:
             sys.exit(1)
 
-    def printConclusionMessage(self, feedback, options, status):
+    def printConclusionMessage(self, feedback, options):
+        success = self.markdownReport.isObjectiveSuccess(feedback, options)
         # Use the same summary text as what we use in the Markdown report.
-        markdownReport = MaintainabilityMarkdownReport()
-        message = markdownReport.getSummaryText(feedback, options)
+        message = self.markdownReport.getSummary(feedback, options)
 
         asciiArt = AsciiArtReport(self.output, self.ansiColors)
-        color = asciiArt.ANSI_GREEN if markdownReport.isObjectiveSuccess(feedback, options) else asciiArt.ANSI_YELLOW
+        color = asciiArt.ANSI_GREEN if success else asciiArt.ANSI_YELLOW
         asciiArt.printColor(f"** {message} **", asciiArt.ANSI_BOLD + color)
-
-    def printLandingPage(self, analysisId, options):
-        landingPage = self.getSigridUrl(options)
-
-        print("", file=self.output)
-        print("-" * (len(landingPage) + 4), file=self.output)
-        print("View this system in Sigrid:", file=self.output)
-        print(f"    {landingPage}", file=self.output)
-        print("-" * (len(landingPage) + 4), file=self.output)
-        print("", file=self.output)

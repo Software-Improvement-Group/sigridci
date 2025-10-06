@@ -170,6 +170,14 @@ This will clone a Git repository, and then create a ZIP file containing both the
 
 Please make sure that you use the UTF-8 character encoding when creating the ZIP file.
 
+## Publishing analysis results to Sigrid without uploading your code
+
+If you are part of a one-off assessment where your source code needs to remain on-premise, SIG provides a special
+service where you can analyze your source code *locally* without needing to upload your source code. At the end of
+the analysis, the analysis results are published to Sigrid, but the source code itself is never uploaded.
+You can find more information in the [Local Runner documentation](../organization-integration/local-runner.md).
+The Sigrid Local Runner is *only* available for one-off assessments, and cannot be used for Sigrid subscriptions.
+
 ## What if something went wrong?
 
 We recommend using Sigrid CI to publish your source code to Sigrid CI, since this approach is automated and therefore less error prone. If you run into issues while publishing your code it's best to [contact SIG's support team directly](#contact-and-support).

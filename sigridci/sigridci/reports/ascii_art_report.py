@@ -59,9 +59,9 @@ class AsciiArtReport(Report):
 
             self.printTableRow(
                 self.formatMetricName(metric),
-                self.formatRating(feedback["baselineRatings"], metric),
-                self.formatRating(feedback["changedCodeBeforeRatings"], metric),
-                self.formatRating(feedback["newCodeRatings"], metric)
+                self.formatRating(feedback.get("baselineRatings", {}), metric),
+                self.formatRating(feedback.get("changedCodeBeforeRatings", {}), metric),
+                self.formatRating(feedback.get("newCodeRatings", {}), metric)
             )
 
     def printTableRow(self, *row):

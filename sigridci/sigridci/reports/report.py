@@ -13,12 +13,13 @@
 # limitations under the License.
 
 import urllib.parse
+from abc import ABC, abstractmethod
 from datetime import datetime
 
 from ..platform import Platform
 
 
-class Report:
+class Report(ABC):
     REFACTORING_CANDIDATE_METRICS = [
         "DUPLICATION",
         "UNIT_SIZE",
@@ -40,6 +41,7 @@ class Report:
     BAD_CATEGORIES = ["introduced", "worsened"]
     UNCHANGED_CATEGORIES = ["unchanged"]
 
+    @abstractmethod
     def generate(self, analysisId, feedback, options):
         pass
 
@@ -62,7 +64,7 @@ class Report:
         return [rc for rc in refactoringCandidates if rc["metric"] == metric or metric == "MAINTAINABILITY"]
 
     def filterRefactoringCandidates(self, feedback, categories):
-        matches = [rc for rc in feedback["refactoringCandidates"] if rc["category"] in categories]
+        matches = [rc for rc in feedback.get("refactoringCandidates", []) if rc["category"] in categories]
         matches.sort(key=lambda rc: self.RISK_CATEGORIES.index(rc.get("riskCategory", "")))
         return matches
 
@@ -72,12 +74,13 @@ class Report:
         return f"{options.sigridURL}/{customer}/{system}"
 
 
-class MarkdownRenderer:
+class MarkdownRenderer(ABC):
     def __init__(self):
         self.decorateLinks = True
 
+    @abstractmethod
     def renderMarkdown(self, analysisId, feedback, options):
-        raise NotImplementedError()
+        pass
 
     def renderMarkdownTemplate(self, feedback, options, details, sigridLink):
         md = f"# [Sigrid]({sigridLink}) {self.getCapability()} feedback\n\n"
@@ -109,17 +112,21 @@ class MarkdownRenderer:
         featureId = "sigridci." + self.getCapability().lower().replace(" ", "")
         return f"{options.feedbackURL}?feature={featureId}&feedback={reaction}&system={options.getSystemId()}"
 
+    @abstractmethod
     def getSummary(self, feedback, options):
-        raise NotImplementedError()
+        pass
 
+    @abstractmethod
     def getCapability(self):
-        raise NotImplementedError()
+        pass
 
+    @abstractmethod
     def getMarkdownFile(self, options):
-        raise NotImplementedError()
+        pass
 
+    @abstractmethod
     def isObjectiveSuccess(self, feedback, options):
-        raise NotImplementedError()
+        pass
 
     def decorateLink(self, options, label, file, line=0):
         if options.subsystem and file.startswith(f"{options.subsystem}/"):

@@ -10,6 +10,19 @@ jobs:
       - run: "pip3 install -r test/requirements.txt --user"
       - run: "python3 -m unittest"
       - run: "importchecker sigridci"
+  feedback_smoketest:
+    name: "Sigrid CI on-premise smoke test"
+    runs-on: ubuntu-latest
+    steps:
+      - name: "Check out repository"
+        uses: actions/checkout@v4
+      - run: >
+          python3 sigridci/sigridci_feedback.py \
+            --customer example \
+            --system junit \
+            --capability maintainability \
+            --analysisresults test/testdata/maintainability.json
+          cat sigrid-ci-output/feedback.md
   compatibility-check:
     name: "Python compatibility check"
     runs-on: ubuntu-latest

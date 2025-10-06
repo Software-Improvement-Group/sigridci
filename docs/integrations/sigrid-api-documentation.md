@@ -853,6 +853,23 @@ curl --header 'Authorization: Bearer ${SIGRID_PERSONAL_TOKEN}' -X POST https://s
 
 A new analysis will run for your system and the results will be available in the Sigrid UI and API once the analysis is complete.
 
+### Sigrid licenses
+
+Sigrid consists of multiple "licenses". For example, to use the Open Source Health feature, you need the corresponding license. This end point allow you to programmatically check your Sigrid licenses.
+
+    GET https://sigrid-says.com/rest/analysis-results/api/v1/licenses/{customer}
+
+This end point returns the following response:
+
+```json
+{
+  "customer": "example",
+  "licenses": ["MAINTAINABILITY", "ARCHITECTURE_QUALITY", "OPEN_SOURCE_HEALTH", "SECURITY", "RELIABILITY"]
+}
+```
+
+If you're a typical Sigrid user, you probably already know which licenses you have and therefore probably don't need this end point. However, if you have access to *multiple* Sigrid accounts, you can use this end point to programmatically obtain the licenses for each one.
+
 ## Managing user permissions via API
 
 In addition to the general usage of the Sigrid API, users also can also perform user management tasks via the API as an alternative to doing these tasks within the web-based user interface of Sigrid itself. This also allows Sigrid administrators to better construct automated processes for managing the access to systems for their users.

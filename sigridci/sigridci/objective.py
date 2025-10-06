@@ -26,14 +26,13 @@ class ObjectiveStatus(Enum):
 class Objective:
 
     @staticmethod
-    def determineStatus(feedback, options):
-        target = options.targetRating
-        newAndChangedAfter = feedback["newCodeRatings"].get("MAINTAINABILITY", None)
-        baseline = feedback["baselineRatings"].get("MAINTAINABILITY", None)
+    def determineStatus(feedback, objective):
+        newAndChangedAfter = feedback.get("newCodeRatings", {}).get("MAINTAINABILITY", None)
+        baseline = feedback.get("baselineRatings", {}).get("MAINTAINABILITY", None)
         changedCodeBefore = feedback.get("changedCodeBeforeRatings", {}).get("MAINTAINABILITY", None)
         changedCodeAfter = feedback.get("changedCodeAfterRatings", {}).get("MAINTAINABILITY", None)
 
-        if newAndChangedAfter == None or target in (None, "sigrid"):
+        if newAndChangedAfter is None or objective is None:
             return ObjectiveStatus.UNKNOWN
 
         # We're using a split norm. If you've achieved your objective, we let
@@ -41,7 +40,7 @@ class Objective:
         # unreasonably negative (i.e. failing people that drop from 4.5 to 4.3
         # stars). Only when you *don't* meet your objective do we start looking
         # at the trend and whether you're moving in the right direction.
-        if newAndChangedAfter >= target:
+        if newAndChangedAfter >= objective:
             return ObjectiveStatus.ACHIEVED
 
         hasChangedCode = changedCodeBefore != None and changedCodeAfter != None

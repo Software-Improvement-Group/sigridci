@@ -3,6 +3,13 @@ Sigrid release notes
 
 SIG uses [continuous delivery](https://en.wikipedia.org/wiki/Continuous_delivery), meaning that every change to Sigrid or the underlying analysis is released once our development pipeline has completed. On average, we release somewhere between 10 and 20 times per day. This page therefore doesn't list every single change, since that would quickly lead to an excessively long list of small changes. Instead, this page lists Sigrid and analysis changes that we consider noteworthy for the typical Sigrid user.
 
+### September 22, 2025
+
+- The new menu structure and navigation have been updated based on your feedback. [Let us know](mailto:support@softwareimprovementgroup.com) if you have further feedback, as we'll continue to make updates over the coming months to make Sigrid's user interface easier to use.
+- **Open Source Health:** Sigrid is now more tolerant when [importing SBOM files](../integrations/integration-sbom.md). Some tools produce SBOMs that are invalid, leading to issues when trying to import those files into Sigrid. We made Sigrid a bit more tolerant for common errors, so that you can still integrate these SBOMs with Sigrid.
+- **Sigrid API:** You can now check your [Sigrid licenses using the API](../integrations/sigrid-api-documentation.md#sigrid-licenses).
+- **Technology support:** Sigrid now supports [Normalized Systems](https://normalizedsystems.org) for JavaScript and TypeScript (in addition to Normalized Systems for Java, which was already supported).
+
 ### September 8, 2025
 
 - Sigrid has a new menu and navigation structure. Over the years, the number of different pages within Sigrid has grown considerably. This can make certain features hard to find, especially for new users. The new navigation structure makes it easier to discover those features, and also communicates the different between portfolio-level and system-level pages more clearly. 
