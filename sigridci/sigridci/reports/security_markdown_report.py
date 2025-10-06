@@ -25,6 +25,7 @@ class SecurityMarkdownReport(Report, MarkdownRenderer):
         "HIGH" : "🔴",
         "MEDIUM" : "🟠",
         "LOW" : "🟡",
+        "NONE" : "🟢",
         "UNKNOWN" : "⚪️"
     }
 
