@@ -136,9 +136,9 @@ class SigridApiClient:
         path = f"/analysis-results/sigridci/{self.urlCustomerName}/{self.urlSystemName}/{self.API_VERSION}/ci"
         return self.retry(lambda: self.callSigridAPI(path), allow404=True) != False
 
-    def fetchAnalysisResults(self, analysisId):
+    def fetchAnalysisResults(self, analysisId, capability):
         UploadLog.log("Waiting for analysis results")
-        path = f"/analysis-results/sigridci/{self.urlCustomerName}/{self.urlSystemName}/{self.API_VERSION}/ci/results/{analysisId}"
+        path = f"/analysis-results/sigridci/{self.urlCustomerName}/{self.urlSystemName}/{self.API_VERSION}/ci/results/{analysisId}?type={capability}"
         return self.retry(lambda: self.callSigridAPI(path), attempts=self.POLL_ATTEMPTS, allowEmpty=False)
 
     def fetchMetadata(self):
