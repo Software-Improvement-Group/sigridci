@@ -1,37 +1,37 @@
-# Sigrid Local Runner
+# Sigrid Local
 
-This documentation covers the Sigrid Local Runner, which is only used when you are part of a one-off assessment
-where your source code needs to remain on-premise. The Sigrid Local Runner cannot be used for Sigrid subscriptions.
+This documentation covers the Sigrid Local, which is only used when you are part of a one-off assessment
+where your source code needs to remain on-premise. Sigrid Local cannot be used for Sigrid subscriptions.
 {: .attention }
 
-The Local Runner does the following:
+Sigrid Local does the following:
 
 - Analyze your source code. This is done locally, so the source code will never leave your environment.
 - Publish the analysis results to Sigrid. Your source code is *not* published to Sigrid.
 
 ## Prerequisites
 
-Before you can start using the Local Runner, you need the following:
+Before you can start using the Sigrid Local, you need the following:
 
 - You need to install [Docker](https://www.docker.com). In most cases, the most convenient to run Docker locally
   is by installing [Docker Desktop](https://docs.docker.com/desktop/). Docker Desktop supports Windows, Mac, and Linux.
 - A Sigrid license file. This is provided to you by SIG.
-- Download and install the Local Runner. A download link is provided to you by SIG. The Local Runner
-  supports Windows, Mac, and Linux.
-- You will need local access to your source code that you want to analyze using the Local Runner. 
+- Download and install the Sigrid Local. A download link is provided to you by SIG. 
+  Sigrid Local supports Windows, Mac, and Linux.
+- You will need local access to your source code that you want to analyze using Sigrid Local. 
 
-## Using the Local Runner
+## Using Sigrid Local
 
-When you start the Local Runner, you'll see something that looks like this:
+When you start Sigrid Local, you'll see something that looks like this:
 
 <img src="../images/local-runner/welcome.png" width="500" />
 
-The Local Runner checks if Docker is running. If you followed the [prerequisites](#prerequisites), you should see
+Sigrid Local checks if Docker is running. If you followed the [prerequisites](#prerequisites), you should see
 a green box confirming this:
 
 <img src="../images/local-runner/docker.png" width="300" />
 
-You can now provide the Local Runner with the license file and the source code directory.
+You can now provide Sigrid Local with the license file and the source code directory.
 
 <img src="../images/local-runner/input.png" width="300" />
 
@@ -45,22 +45,22 @@ your source code. This might take a while, depending on how large your source co
 
 Optionally, you can click "show process output" to see the log output. This is purely for information purposes.
 
-After the analysis has completed, you will see the following confirmation message. This indicates the Local Runner
+After the analysis has completed, you will see the following confirmation message. This indicates Sigrid Local
 has successfully completed its analysis, and has published the analysis results to Sigrid. That means you're done!
 
 If your analysis results in an error, [notify your support contact](#support) so we can try to help you out.
 
-If you made a mistake, you can use the Local Runner multiple times. Whenever you use the Local Runner, the new
-analysis results will simply replace the old ones. You can continue to use the Local Runner for as long as your
+If you made a mistake, you can use Sigrid Local multiple times. Whenever you use Sigrid Local, the new
+analysis results will simply replace the old ones. You can continue to use Sigrid Local for as long as your
 Sigrid license file is valid.
 
 ## Supported technologies
 
-The Local Runner is able to analyze over 250 different technologies. For a full overview, see the 
+Sigrid Local is able to analyze over 250 different technologies. For a full overview, see the 
 [list of supported technologies](../reference/technology-support.md#list-of-supported-technologies)
-and filter the table by "Local Runner".
+and filter the table by "Sigrid Local".
 
 ## Support
 
-You can find the name and contact details of your support contact in the same email that contains your Local Runner
+You can find the name and contact details of your support contact in the same email that contains your Sigrid Local
 download link and Sigrid license file.
