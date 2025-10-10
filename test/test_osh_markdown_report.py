@@ -55,6 +55,8 @@ class OpenSourceHealthMarkdownReportTest(TestCase):
             |----|----|----|----|
             | 🟣 | org.apache.logging.log4j:log4j-core 2.14.1 | 2.25.1 | gradle/libs.versions.toml |
             
+            If you believe these findings are false positives, you can [exclude them in the Sigrid configuration](https://docs.sigrid-says.com/reference/analysis-scope-configuration.html#exclude-open-source-health-risks).
+            
             
             ----
             
@@ -85,6 +87,8 @@ class OpenSourceHealthMarkdownReportTest(TestCase):
             |----|----|----|----|
             | 🟣 | org.apache.logging.log4j:log4j-core 2.14.1 | 2.25.1 | gradle/libs.versions.toml |
             | 🔴 | commons-io:commons-io 2.9.0 | 2.20.0 | gradle/libs.versions.toml |
+            
+            If you believe these findings are false positives, you can [exclude them in the Sigrid configuration](https://docs.sigrid-says.com/reference/analysis-scope-configuration.html#exclude-open-source-health-risks).
             
             
             ----
@@ -123,6 +127,8 @@ class OpenSourceHealthMarkdownReportTest(TestCase):
             | 🟢 | org.openjdk.jmh:jmh-core 1.32 | 1.37 | gradle/libs.versions.toml |
             | 🟢 | org.apache.logging.log4j:log4j-jul 2.14.1 | 2.25.1 | gradle/libs.versions.toml |
             | | ... 13 more vulnerable open source libraries | |
+            
+            If you believe these findings are false positives, you can [exclude them in the Sigrid configuration](https://docs.sigrid-says.com/reference/analysis-scope-configuration.html#exclude-open-source-health-risks).
             
             ## 😑 You have findings that you need to investigate in more depth
 
@@ -180,6 +186,8 @@ class OpenSourceHealthMarkdownReportTest(TestCase):
             |----|----|----|----|
             | 🟣 | org.apache.logging.log4j:log4j-core 2.14.1 | 2.25.1 | gradle/libs.versions.toml |
             | 🔴 | commons-io:commons-io 2.9.0 | 2.20.0 | gradle/libs.versions.toml |
+            
+            If you believe these findings are false positives, you can [exclude them in the Sigrid configuration](https://docs.sigrid-says.com/reference/analysis-scope-configuration.html#exclude-open-source-health-risks).
             
             
             ----

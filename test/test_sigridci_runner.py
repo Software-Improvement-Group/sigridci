@@ -77,7 +77,7 @@ class SigridCiRunnerTest(TestCase):
             "/inboundresults/sig/aap/noot/ci/uploads/v1",
             "UPLOAD",
             "/analysis-results/api/v1/objectives/aap/noot/config",
-            "/analysis-results/sigridci/aap/noot/v1/ci/results/123"
+            "/analysis-results/sigridci/aap/noot/v1/ci/results/123?type=Capability.MAINTAINABILITY"
         ]
 
         self.assertEqual(UploadLog.history, expectedLog)
@@ -113,7 +113,7 @@ class SigridCiRunnerTest(TestCase):
             "/inboundresults/sig/aap/noot/ci/uploads/v1",
             "UPLOAD",
             "/analysis-results/api/v1/objectives/aap/noot/config",
-            "/analysis-results/sigridci/aap/noot/v1/ci/results/123"
+            "/analysis-results/sigridci/aap/noot/v1/ci/results/123?type=Capability.MAINTAINABILITY"
         ]
 
         self.assertEqual(UploadLog.history, expectedLog)
@@ -202,7 +202,7 @@ class SigridCiRunnerTest(TestCase):
             "/inboundresults/sig/aap/noot/ci/uploads/v1",
             "UPLOAD",
             "/analysis-results/api/v1/objectives/aap/noot/config",
-            "/analysis-results/sigridci/aap/noot/v1/ci/results/123"
+            "/analysis-results/sigridci/aap/noot/v1/ci/results/123?type=Capability.MAINTAINABILITY"
         ]
 
         self.assertEqual(apiClient.called, expectedCalls)
