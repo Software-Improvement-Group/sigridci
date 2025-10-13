@@ -108,7 +108,7 @@ class SigridApiClient:
             "convert": self.options.convert or None
         }
 
-        return self.retry(lambda: self.callSigridAPI(path, json.dumps(body), "application/json"))
+        return self.retry(lambda: self.callSigridAPI(path, json.dumps(body).encode("utf8"), "application/json"))
 
     def validateScopeFile(self, scopeFile):
         path = f"/inboundresults/{self.urlPartnerName}/{self.urlCustomerName}/{self.urlSystemName}/ci/validate/{self.API_VERSION}"
