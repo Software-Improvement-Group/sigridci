@@ -126,7 +126,16 @@ the Helm chart and this documentation against self-managed PostgreSQL.
 
 It is the responsibility of the on-premise customer to initialize and manage PostgreSQL. The 
 Helm chart (and this page) assumes that a properly initialized PostgreSQL server is available 
-and reachable from the Kubernetes cluster. In the Helm chart configuration, a number of mandatory 
+and reachable from the Kubernetes cluster.
+
+We recommend reviewing PostgreSQL configuration parameters e.g. in  `postgresql.conf`. 
+In particular, set the following to avoid connection issues during concurrent analysis imports:
+
+```conf
+max_connections = 500
+```
+
+In the Helm chart configuration, a number of mandatory 
 settings need to be provided:
 - The endpoint at which the PostgreSQL server is reachable. By default, Sigrid connects at 
   the standard port for PostgreSQL (5432).

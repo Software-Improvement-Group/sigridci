@@ -9,11 +9,11 @@ This page provides an overview of all technologies that can be analyzed by Sigri
 - The column "supported Sigrid capabilities" does *not* list Open Source Health. The reason is that Open Source Health is based on open source ecosystems, not specific technologies. Refer to the section on [supported technologies for Open Source Health](#supported-open-source-ecosystems) for more information.
 - In the list of supported capabilities, "AI" indicates Sigrid offer AI-generated explanations related to findings, which makes them more actionable and easier to understand.
 
-<a>Sigrid</a> \| <a>On-premise Sigrid</a> \| <a>Local Runner</a>
+<a>Sigrid</a> \| <a>On-premise Sigrid</a> \| <a>Sigrid Local</a>
 {: .technologySupportCategories }
 
-| Name in configuration file    | Technology name(s)                     | Supported Sigrid capabilities               | Notes                          |
-|-------------------------------|----------------------------------------|---------------------------------------------|--------------------------------|
+| Name in configuration file    | Technology name(s)                     | Supported Sigrid capabilities               | Notes                                       |
+|-------------------------------|----------------------------------------|---------------------------------------------|---------------------------------------------|
 | `abap`                        | ABAP (SAP)                             | Maintainability, AI                         |
 | `abapcds`                     | ABAP Core Data Services                | Maintainability                             |
 | `abapsmartforms`              | ABAP SmartForms                        | Maintainability, Architecture               |
@@ -26,11 +26,11 @@ This page provides an overview of all technologies that can be analyzed by Sigri
 | `adabasnatural`               | Adabas Natural                         | Maintainability, Architecture               |
 | `adfxml`                      | ADF XML                                | Maintainability,                            |
 | `agilepoint`                  | AgilePoint                             | Maintainability, Architecture               |
-| `altovauml`                   | Altova UML                             | Maintainability, Architecture               | [(4)](#notes), [(8)](#notes)   |
-| `angularjstemplate`           | Angular Templates                      | Maintainability, AI                         | [(7)](#notes)                  |
+| `altovauml`                   | Altova UML                             | Maintainability, Architecture               | [(4)](#notes), [(8)](#notes)                |
+| `angularjstemplate`           | Angular Templates                      | Maintainability, AI                         | [(7)](#notes)                               |
 | `ansible`                     | Ansible                                | Maintainability, Security                   |
 | `apachecamel`                 | Apache Camel                           | Maintainability, Architecture               |
-| `apex`                        | Oracle APEX                            | Maintainability, Architecture               | [(4)](#notes), [(8)](#notes)   |
+| `apex`                        | Oracle APEX                            | Maintainability, Architecture               | [(4)](#notes), [(8)](#notes)                |
 | `aps`                         | APS                                    | Maintainability, Architecture               |
 | `applicationmaster`           | Application Master                     | Maintainability, Architecture               |
 | `ash`                         | ArtosScript (ash)                      | Maintainability, Architecture               |
@@ -38,21 +38,21 @@ This page provides an overview of all technologies that can be analyzed by Sigri
 | `aspx`                        | ASP.NET                                | Maintainability, Architecture, AI           |
 | `assembly`                    | Assembly                               | Maintainability, Architecture               |
 | `aura`                        | Aura                                   | Maintainability, Architecture               |
-| `axway`                       | Axway                                  | Maintainability, Architecture               | [(4)](#notes), [(8)](#notes)   |
-| `axystudio`                   | AxyStudio functions                    | Maintainability                             | [(4)](#notes), [(8)](#notes)   |
+| `axway`                       | Axway                                  | Maintainability, Architecture               | [(4)](#notes), [(8)](#notes)                |
+| `axystudio`                   | AxyStudio functions                    | Maintainability                             | [(4)](#notes), [(8)](#notes)                |
 | `axyworkflow`                 | AxyStudio workflows                    | Maintainability, Architecture               |
-| `baan`                        | Baan                                   | Maintainability                             | [(4)](#notes), [(8)](#notes)   |
+| `baan`                        | Baan                                   | Maintainability                             | [(4)](#notes), [(8)](#notes)                |
 | `basic`                       | BASIC                                  | Maintainability, Architecture               |
 | `batch`                       | Batch                                  | Maintainability, Architecture               |
 | `beanshell`                   | BeanShell                              | Maintainability                             |
-| `beinformed`                  | Be Informed case management            | Maintainability, Architecture               | [(4)](#notes), [(8)](#notes)   |
-| `beinformedknowledgemodels`   | Be Informed knowledge models           | Maintainability, Architecture               | [(4)](#notes), [(8)](#notes)   |
+| `beinformed`                  | Be Informed case management            | Maintainability, Architecture               | [(4)](#notes), [(8)](#notes)                |
+| `beinformedknowledgemodels`   | Be Informed knowledge models           | Maintainability, Architecture               | [(4)](#notes), [(8)](#notes)                |
 | `biztalk`                     | BizTalk                                | Maintainability, Architecture               |
 | `biztalkrules`                | BizTalk Rules Engine                   | Maintainability                             |
-| `blazerules`                  | Blaze BRM                              | Maintainability                             | [(4)](#notes), [(8)](#notes)   |
+| `blazerules`                  | Blaze BRM                              | Maintainability                             | [(4)](#notes), [(8)](#notes)                |
 | `blueprism`                   | Blue Prism                             | Maintainability, Architecture               |
-| `blueriq`                     | Blueriq flows/processes                | Maintainability, Architecture               | [(4)](#notes), [(8)](#notes)   |
-| `blueriqexpressions`          | Blueriq expressions                    | Maintainability, Architecture               | [(4)](#notes), [(8)](#notes)   |
+| `blueriq`                     | Blueriq flows/processes                | Maintainability, Architecture               | [(4)](#notes), [(8)](#notes)                |
+| `blueriqexpressions`          | Blueriq expressions                    | Maintainability, Architecture               | [(4)](#notes), [(8)](#notes)                |
 | `bpel`                        | BPEL                                   | Maintainability, Architecture               |
 | `bpm`                         | BPMN                                   | Maintainability, Architecture               |
 | `brail`                       | Brail                                  | Maintainability                             |
@@ -69,7 +69,7 @@ This page provides an overview of all technologies that can be analyzed by Sigri
 | `cobol`                       | Cobol                                  | Maintainability, Architecture. AI           |
 | `coffeescript`                | CoffeeScript                           | Maintainability, Architecture               |
 | `coldfusion`                  | ColdFusion                             | Maintainability, Architecture               |
-| `configuration`               | Configuration                          | Maintainability                             | [(5)](#notes)                  |
+| `configuration`               | Configuration                          | Maintainability                             | [(5)](#notes)                               |
 | `coolgenc`                    | CoolGen C                              | Maintainability, Architecture               |
 | `coolgencobol`                | CoolGen Cobol                          | Maintainability, Architecture               |
 | `cpp`                         | C++                                    | Maintainability, Architecture, Security, AI |
@@ -103,7 +103,7 @@ This page provides an overview of all technologies that can be analyzed by Sigri
 | `finacle`                     | Finacle                                | Maintainability, Architecture               |
 | `freeformatcobol`             | Freeformat Cobol                       | Maintainability, Architecture               |
 | `freemarker`                  | Freemarker                             | Maintainability, Architecture               |
-| `fme`                         | FME                                    | Maintainability, Architecture               | [(4)](#notes), [(8)](#notes)   |
+| `fme`                         | FME                                    | Maintainability, Architecture               | [(4)](#notes), [(8)](#notes)                |
 | `fortran`                     | FORTRAN                                | Maintainability, Architecture               |
 | `gensym`                      | Gensym                                 | Maintainability, Architecture               |
 | `grpc`                        | gRPC                                   | Maintainability, Architecture               |
@@ -111,14 +111,14 @@ This page provides an overview of all technologies that can be analyzed by Sigri
 | `gosu`                        | Gosu                                   | Maintainability, Architecture, Security     |
 | `groovy`                      | Groovy                                 | Maintainability, Architecture, Security, AI |
 | `gsp`                         | GSP                                    | Maintainability, Architecture               |
-| `guidefinition`               | GUI Definition                         | Maintainability                             | [(5)](#notes)                  |
+| `guidefinition`               | GUI Definition                         | Maintainability                             | [(5)](#notes)                               |
 | `gupta`                       | Gupta                                  | Maintainability, Architecture               |
 | `haml`                        | Haml                                   | Maintainability, Architecture               |
-| `html`                        | HTML                                   | Maintainability, Architecture               | [(7)](#notes)                  |
+| `html`                        | HTML                                   | Maintainability, Architecture               | [(7)](#notes)                               |
 | `hql`                         | HQL                                    | Maintainability, Architecture               |
 | `ibmace`                      | IBM ACE                                | Maintainability                             |
-| `ibmbpmbpd`                   | IBM BPM (BPD)                          | Maintainability, Architecture               | [(4)](#notes), [(8)](#notes)   |
-| `ibmbpmprocess`               | IBM BPM (Process)                      | Maintainability, Architecture               | [(4)](#notes), [(8)](#notes)   |
+| `ibmbpmbpd`                   | IBM BPM (BPD)                          | Maintainability, Architecture               | [(4)](#notes), [(8)](#notes)                |
+| `ibmbpmprocess`               | IBM BPM (Process)                      | Maintainability, Architecture               | [(4)](#notes), [(8)](#notes)                |
 | `ideal`                       | Ideal                                  | Maintainability, Architecture               |
 | `informatica`                 | Informatica                            | Maintainability                             |
 | `informix4gl`                 | Informix 4GL                           | Maintainability, Architecture               |
@@ -129,7 +129,7 @@ This page provides an overview of all technologies that can be analyzed by Sigri
 | `jade`                        | Jade                                   | Maintainability, Architecture               |
 | `java`                        | Java                                   | Maintainability, Architecture, Security, AI |
 | `javafx`                      | Java FX                                | Maintainability, Architecture               |
-| `javascript`                  | JavaScript (includes NodeJS)           | Maintainability, Architecture, Security     | [(2)](#notes)                  |
+| `javascript`                  | JavaScript (includes NodeJS)           | Maintainability, Architecture, Security     | [(2)](#notes)                               |
 | `javascript`                  | Google App Script                      | Maintainability, Architecture, AI           |
 | `jbc`                         | JBC                                    | Maintainability, Architecture               |
 | `jbpm`                        | jBPM                                   | Maintainability, Architecture               |
@@ -138,12 +138,12 @@ This page provides an overview of all technologies that can be analyzed by Sigri
 | `jde`                         | JDE                                    | Maintainability                             |
 | `jinja`                       | Jinja                                  | Maintainability, Architecture               |
 | `jsf`                         | JSF                                    | Maintainability, Architecture               |
-| `json`                        | JSON                                   | Maintainability, Architecture               | [(5)](#notes)                  |
+| `json`                        | JSON                                   | Maintainability, Architecture               | [(5)](#notes)                               |
 | `jsp`                         | JSP                                    | Maintainability, Architecture               |
 | `kotlin`                      | Kotlin                                 | Maintainability, Architecture, Security, AI |
 | `less`                        | Less                                   | Maintainability, Architecture               |
-| `linc`                        | LINC                                   | Maintainability, Architecture               | [(4)](#notes), [(8)](#notes)   |
-| `lion`                        | Lion                                   | Maintainability, Architecture               | [(4)](#notes), [(8)](#notes)   |
+| `linc`                        | LINC                                   | Maintainability, Architecture               | [(4)](#notes), [(8)](#notes)                |
+| `lion`                        | Lion                                   | Maintainability, Architecture               | [(4)](#notes), [(8)](#notes)                |
 | `lodestar`                    | Lodestar                               | Maintainability, Architecture               |
 | `logicapps`                   | Logic Apps                             | Maintainability                             |
 | `logicnets`                   | LogicNets                              | Maintainability, Architecture               |
@@ -154,12 +154,12 @@ This page provides an overview of all technologies that can be analyzed by Sigri
 | `magnum`                      | Magnum                                 | Maintainability, Architecture               |
 | `matlab`                      | Matlab                                 | Maintainability, Architecture               |
 | `mediationflows`              | Mediation Flows                        | Maintainability, Architecture               |
-| `mendix`                      | Mendix                                 | Maintainability, Architecture, Security     | [(9)](#notes), [(4)](#notes)   |
-| `mendixflow`                  | Mendix microflows/nanoflows *(Beta)*   | Maintainability, Architecture, Security     | [(11)](#notes), [(4)](#notes)  |
+| `mendix`                      | Mendix                                 | Maintainability, Architecture, Security     | [(9)](#notes), [(4)](#notes)                |
+| `mendixflow`                  | Mendix microflows/nanoflows *(Beta)*   | Maintainability, Architecture, Security     | [(11)](#notes), [(4)](#notes)               |
 | `messagebuilder`              | MessageBuilder                         | Maintainability, Architecture               |
-| `mpsbehavior`                 | MPS Behavior                           | Maintainability                             | [(4)](#notes), [(8)](#notes)   |
-| `mpsclass`                    | MPS Class                              | Maintainability                             | [(4)](#notes), [(8)](#notes)   |
-| `mpstranslator`               | MPS Translator                         | Maintainability                             | [(4)](#notes), [(8)](#notes)   |
+| `mpsbehavior`                 | MPS Behavior                           | Maintainability                             | [(4)](#notes), [(8)](#notes)                |
+| `mpsclass`                    | MPS Class                              | Maintainability                             | [(4)](#notes), [(8)](#notes)                |
+| `mpstranslator`               | MPS Translator                         | Maintainability                             | [(4)](#notes), [(8)](#notes)                |
 | `mule`                        | Mule                                   | Maintainability, Architecture               |
 | `mtwize`                      | MtWize                                 | Maintainability, Architecture               |
 | `murexdatadictionary`         | Murex Data Dictionary                  | Maintainability, Architecture               |
@@ -168,12 +168,12 @@ This page provides an overview of all technologies that can be analyzed by Sigri
 | `murexworkflow`               | Murex Workflow                         | Maintainability, Architecture               |
 | `mustache`                    | Mustache (includes Handlebars)         | Maintainability, Architecture               |
 | `mysql`                       | MySQL                                  | Maintainability, Architecture               |
-| `nabsic`                      | Nabsic                                 | Maintainability, Architecture               | [(4)](#notes), [(8)](#notes)   |
+| `nabsic`                      | Nabsic                                 | Maintainability, Architecture               | [(4)](#notes), [(8)](#notes)                |
 | `naviscript`                  | Naviscript                             | Maintainability, Architecture               |
 | `navision`                    | Navision (AKA Dynamics NAV, AL)        | Maintainability, Architecture               |
-| `netiqidmpolicy`              | NetIQ IDM Policy                       | Maintainability                             | [(4)](#notes), [(8)](#notes)   |
-| `netiqidmrequest`             | NetIQ IDM Request                      | Maintainability                             | [(4)](#notes), [(8)](#notes)   |
-| `netiqidmworkflow`            | NetIQ IDM Workflow                     | Maintainability                             | [(4)](#notes), [(8)](#notes)   |
+| `netiqidmpolicy`              | NetIQ IDM Policy                       | Maintainability                             | [(4)](#notes), [(8)](#notes)                |
+| `netiqidmrequest`             | NetIQ IDM Request                      | Maintainability                             | [(4)](#notes), [(8)](#notes)                |
+| `netiqidmworkflow`            | NetIQ IDM Workflow                     | Maintainability                             | [(4)](#notes), [(8)](#notes)                |
 | `netweaveridm`                | NetweaverIDM                           | Maintainability, Architecture               |
 | `nonstopsql`                  | Nonstop SQL                            | Maintainability, Architecture               |
 | `normalizedsystemsjava`       | Normalized Systems Java                | Maintainability, Architecture               |
@@ -191,17 +191,17 @@ This page provides an overview of all technologies that can be analyzed by Sigri
 | `oracleofsaa`                 | Oracle OFSAA                           | Maintainability, Architecture               |
 | `oracleworkflow`              | Oracle Workflow                        | Maintainability, Architecture               |
 | `ords`                        | ORDS                                   | Maintainability                             |
-| `osb`                         | OSB                                    | Maintainability, Architecture               | [(4)](#notes), [(8)](#notes)   |
-| `osbproxy`                    | OSB Proxy                              | Maintainability, Architecture               | [(4)](#notes), [(8)](#notes)   |
+| `osb`                         | OSB                                    | Maintainability, Architecture               | [(4)](#notes), [(8)](#notes)                |
+| `osbproxy`                    | OSB Proxy                              | Maintainability, Architecture               | [(4)](#notes), [(8)](#notes)                |
 | `osmprocess`                  | OSM Process                            | Maintainability, Architecture               |
 | `osmtask`                     | OSM Task                               | Maintainability, Architecture               |
-| `outsystems`                  | OutSystems                             | Maintainability, Architecture               | [(1)](#notes), [(9)](#notes)   |
+| `outsystems`                  | OutSystems                             | Maintainability, Architecture               | [(1)](#notes), [(4)](#notes), [(9)](#notes) |
 | `pascal`                      | Pascal                                 | Maintainability, Architecture               |
-| `pega`                        | Pega                                   | Maintainability                             | [(1)](#notes), [(9)](#notes)   |
-| `pegajsp`                     | PEGA JSP                               | Maintainability                             | [(9)](#notes)                  |
+| `pega`                        | Pega                                   | Maintainability                             | [(1)](#notes), [(9)](#notes)                |
+| `pegajsp`                     | PEGA JSP                               | Maintainability                             | [(9)](#notes)                               |
 | `perl`                        | Perl                                   | Maintainability, Architecture, Security     |
 | `php`                         | PHP                                    | Maintainability, Architecture, Security     |
-| `plc`                         | PLC                                    | Maintainability, Architecture               | [(4)](#notes), [(8)](#notes)   |
+| `plc`                         | PLC                                    | Maintainability, Architecture               | [(4)](#notes), [(8)](#notes)                |
 | `plcfbd`                      | PLC Functional Block Diagram           | Maintainability                             |
 | `plcil`                       | PLC Instruction List                   | Maintainability                             |
 | `plcld`                       | PLC Ladder Diagram                     | Maintainability                             |
@@ -209,13 +209,13 @@ This page provides an overview of all technologies that can be analyzed by Sigri
 | `plcst`                       | PLC Structured Text                    | Maintainability                             |
 | `pli`                         | PL/I                                   | Maintainability, Architecture               |
 | `plsql`                       | Oracle PL/SQL                          | Maintainability, Architecture, AI           |
-| `plsqlforms`                  | Oracle PL/SQL Forms                    | Maintainability                             | [(4)](#notes), [(8)](#notes)   |
+| `plsqlforms`                  | Oracle PL/SQL Forms                    | Maintainability                             | [(4)](#notes), [(8)](#notes)                |
 | `plsqlreports`                | Oracle PL/SQL Reports                  | Maintainability                             |
 | `pluk`                        | PLUK                                   | Maintainability, Architecture               |
-| `polymertemplates`            | Polymer Templates                      | Maintainability, Architecture               | [(4)](#notes), [(8)](#notes)   |
+| `polymertemplates`            | Polymer Templates                      | Maintainability, Architecture               | [(4)](#notes), [(8)](#notes)                |
 | `postgresql`                  | PostgreSQL                             | Maintainability, Architecture               |
 | `powerbuilder`                | Powerbuilder                           | Maintainability, Architecture               |
-| `powercenter`                 | PowerCenter                            | Maintainability, Architecture               | [(4)](#notes), [(8)](#notes)   |
+| `powercenter`                 | PowerCenter                            | Maintainability, Architecture               | [(4)](#notes), [(8)](#notes)                |
 | `powerfx`                     | Power Fx (AKA Microsoft Power Apps)    | Maintainability                             |
 | `powershell`                  | Powershell                             | Maintainability, Architecture               |
 | `progress`                    | Progress (OpenEdge)                    | Maintainability, Architecture, Security, AI |
@@ -223,33 +223,33 @@ This page provides an overview of all technologies that can be analyzed by Sigri
 | `puppet`                      | Puppet                                 | Maintainability, Architecture               |
 | `python`                      | Python                                 | Maintainability, Architecture, Security, AI |
 | `r`                           | R                                      | Maintainability, Architecture               |
-| `radience`                    | Radience                               | Maintainability, Architecture               | [(4)](#notes), [(8)](#notes)   |
+| `radience`                    | Radience                               | Maintainability, Architecture               | [(4)](#notes), [(8)](#notes)                |
 | `razor`                       | Razor                                  | Maintainability, Architecture, AI           |
-| `regelspraak`                 | ALEF Regelspraak                       | Maintainability, Architecture               | [(4)](#notes), [(8)](#notes)   |
-| `regelspraakhtml`             | ALEF Regelspraak (HTML export)         | Maintainability, Architecture               | [(4)](#notes), [(8)](#notes)   |
+| `regelspraak`                 | ALEF Regelspraak                       | Maintainability, Architecture               | [(4)](#notes), [(8)](#notes)                |
+| `regelspraakhtml`             | ALEF Regelspraak (HTML export)         | Maintainability, Architecture               | [(4)](#notes), [(8)](#notes)                |
 | `rexx`                        | Rexx                                   | Maintainability, Architecture               |
 | `robot`                       | Robot                                  | Maintainability                             |
 | `rpg`                         | RPG                                    | Maintainability, Architecture               |
 | `ruby`                        | Ruby (includes Ruby on Rails)          | Maintainability, Architecture, Security, AI |
-| `rust`                        | Rust                                   | Maintainability, Architecture, AI           | [(4)](#notes), [(8)](#notes)   |
+| `rust`                        | Rust                                   | Maintainability, Architecture, AI           | [(4)](#notes), [(8)](#notes)                |
 | `salesforceapex`              | Salesforce Apex                        | Maintainability, Architecture               |
 | `salesforceflow`              | Salesforce Flow                        | Maintainability, Architecture               |
 | `salesforceprocessbuilder`    | Salesforce Process Builder             | Maintainability                             |
-| `sappo`                       | SAP PO                                 | Maintainability, Architecture               | [(4)](#notes), [(8)](#notes)   |
+| `sappo`                       | SAP PO                                 | Maintainability, Architecture               | [(4)](#notes), [(8)](#notes)                |
 | `sapui5`                      | SapUI5                                 | Maintainability, Architecture               |
 | `sas`                         | SAS                                    | Maintainability, Architecture               |
-| `sasflows`                    | SAS Flows                              | Maintainability                             | [(4)](#notes), [(8)](#notes)   |
+| `sasflows`                    | SAS Flows                              | Maintainability                             | [(4)](#notes), [(8)](#notes)                |
 | `sass`                        | Sass                                   | Maintainability, Architecture               |
 | `scala`                       | Scala                                  | Maintainability, Architecture, Security, AI |
 | `scl`                         | SCL                                    | Maintainability, Architecture               |
 | `scr`                         | SCR                                    | Maintainability, Architecture               |
 | `script`                      | Shell script                           | Maintainability, Architecture               |
-| `servicenow`                  | ServiceNow                             | Maintainability, Architecture               | [(4)](#notes), [(8)](#notes)   |
-| `siebeldeclarative`           | Siebel Declarative                     | Maintainability, Architecture               | [(4)](#notes), [(8)](#notes)   |
-| `siebeljs`                    | Siebel JS                              | Maintainability, Architecture               | [(4)](#notes), [(8)](#notes)   |
-| `siebelscripted`              | Siebel Scripted                        | Maintainability, Architecture               | [(4)](#notes), [(8)](#notes)   |
-| `siebelworkflow`              | Siebel Workflow                        | Maintainability, Architecture               | [(4)](#notes), [(8)](#notes)   |
-| `siebeltbui`                  | Siebel TBUI                            | Maintainability, Architecture               | [(4)](#notes), [(8)](#notes)   |
+| `servicenow`                  | ServiceNow                             | Maintainability, Architecture               | [(4)](#notes), [(8)](#notes)                |
+| `siebeldeclarative`           | Siebel Declarative                     | Maintainability, Architecture               | [(4)](#notes), [(8)](#notes)                |
+| `siebeljs`                    | Siebel JS                              | Maintainability, Architecture               | [(4)](#notes), [(8)](#notes)                |
+| `siebelscripted`              | Siebel Scripted                        | Maintainability, Architecture               | [(4)](#notes), [(8)](#notes)                |
+| `siebelworkflow`              | Siebel Workflow                        | Maintainability, Architecture               | [(4)](#notes), [(8)](#notes)                |
+| `siebeltbui`                  | Siebel TBUI                            | Maintainability, Architecture               | [(4)](#notes), [(8)](#notes)                |
 | `slim`                        | Slim                                   | Maintainability                             |
 | `smalltalk`                   | Smalltalk                              | Maintainability, Architecture               |
 | `solidity`                    | Solidity                               | Maintainability, Architecture               |
@@ -267,7 +267,7 @@ This page provides an overview of all technologies that can be analyzed by Sigri
 | `t4`                          | T4                                     | Maintainability                             |
 | `tacl`                        | TACL                                   | Maintainability, Architecture               |
 | `tal`                         | TAL                                    | Maintainability                             |
-| `tandem`                      | Tandem                                 | Maintainability, Architecture               | [(4)](#notes), [(8)](#notes)   |
+| `tandem`                      | Tandem                                 | Maintainability, Architecture               | [(4)](#notes), [(8)](#notes)                |
 | `tapestry`                    | Tapestry                               | Maintainability, Architecture               |
 | `terraform`                   | Terraform                              | Maintainability, Architecture, Security     |
 | `thrift`                      | Thrift                                 | Maintainability, Architecture               |
@@ -278,13 +278,13 @@ This page provides an overview of all technologies that can be analyzed by Sigri
 | `tibcobestatemachine`         | TIBCO BE (State Machine)               | Maintainability, Architecture               |
 | `tibcobw6`                    | TIBCO BW6                              | Maintainability, Architecture               |
 | `tripleforms`                 | TriplEforms                            | Maintainability                             |
-| `trs`                         | TRS                                    | Maintainability                             | [(4)](#notes), [(8)](#notes)   |
+| `trs`                         | TRS                                    | Maintainability                             | [(4)](#notes), [(8)](#notes)                |
 | `tsql`                        | T-SQL (Microsoft SQL Server, MS SQL))  | Maintainability, Architecture, AI           |
 | `turtle`                      | Turtle                                 | Maintainability                             |
 | `twig`                        | Twig                                   | Maintainability                             |
-| `typescript`                  | TypeScript (includes React/TypeScript) | Maintainability, Architecture, Security, AI | [(3, 10)](#notes)              |
+| `typescript`                  | TypeScript (includes React/TypeScript) | Maintainability, Architecture, Security, AI | [(3, 10)](#notes)                           |
 | `uil`                         | UIL (Motif)                            | Maintainability, Architecture               |
-| `uniface`                     | Uniface                                | Maintainability, Architecture               | [(4)](#notes), [(8)](#notes)   |
+| `uniface`                     | Uniface                                | Maintainability, Architecture               | [(4)](#notes), [(8)](#notes)                |
 | `until`                       | Until                                  | Maintainability, Architecture               |
 | `vag`                         | Visual Age                             | Maintainability, Architecture               |
 | `vagrecord`                   | Visual Age Record                      | Maintainability, Architecture               |
@@ -295,26 +295,26 @@ This page provides an overview of all technologies that can be analyzed by Sigri
 | `visualforce`                 | VisualForce                            | Maintainability                             |
 | `visualrpg`                   | Visual RPG                             | Maintainability, Architecture               |
 | `visualobjects`               | Visual Objects                         | Maintainability, Architecture               |
-| `vuejs`                       | VueJS                                  | Maintainability, Architecture, Security, AI | [(2)](#notes)                  |
-| `vuets`                       | VueTS                                  | Maintainability, Architecture, Security     | [(3)](#notes)                  |
+| `vuejs`                       | VueJS                                  | Maintainability, Architecture, Security, AI | [(2)](#notes)                               |
+| `vuets`                       | VueTS                                  | Maintainability, Architecture, Security     | [(3)](#notes)                               |
 | `vulcan`                      | Vulcan.NET                             | Maintainability, Architecture               |
 | `webfocus`                    | WebFocus                               | Maintainability, Architecture               |
 | `webmethods`                  | WebMethods                             | Maintainability, Architecture               |
-| `websmart`                    | WebSmart                               | Maintainability, Architecture               | [(4)](#notes), [(8)](#notes)   |
+| `websmart`                    | WebSmart                               | Maintainability, Architecture               | [(4)](#notes), [(8)](#notes)                |
 | `websmartpanels`              | WebSmart Panels                        | Maintainability                             |
 | `wonderware`                  | Wonderware                             | Maintainability                             |
 | `wsdl`                        | WSDL                                   | Maintainability, Architecture               |
 | `wtx`                         | WTX                                    | Maintainability                             |
 | `xaml`                        | XAML                                   | Maintainability, Architecture               |
-| `xml`                         | XML                                    | Maintainability, Architecture               | [(5)](#notes)                  |
+| `xml`                         | XML                                    | Maintainability, Architecture               | [(5)](#notes)                               |
 | `xpdl`                        | Tibco ActiveMatrix BPM                 | Maintainability                             |
-| `xpp`                         | X++ AX                                 | Maintainability, Architecture               | [(4)](#notes), [(8)](#notes)   |
-| `xpp365`                      | X++ for Dynamics 365                   | Maintainability, Architecture               | [(4)](#notes), [(8)](#notes)   |
+| `xpp`                         | X++ AX                                 | Maintainability, Architecture               | [(4)](#notes), [(8)](#notes)                |
+| `xpp365`                      | X++ for Dynamics 365                   | Maintainability, Architecture               | [(4)](#notes), [(8)](#notes)                |
 | `xquery`                      | Xquery                                 | Maintainability, Architecture               |
 | `xsd`                         | XSD                                    | Maintainability, Architecture               |
 | `xslt`                        | XSLT                                   | Maintainability, Architecture               |
 | `xul`                         | XUL                                    | Maintainability                             |
-| `yaml`                        | YAML                                   | Maintainability, Architecture               | [(5)](#notes)                  |
+| `yaml`                        | YAML                                   | Maintainability, Architecture               | [(5)](#notes)                               |
 {: .technologySupportTable }
 
 ### Notes
@@ -327,7 +327,7 @@ This page provides an overview of all technologies that can be analyzed by Sigri
 3. Use either `typescript` or `vuets`, but not both.
   - Prefer `vuets` if you're using [Vue.js](https://vuejs.org) in combination with TypeScript code. 
   - Prefer `typescript` in all other cases.
-4. Not supported by the [Local Runner](../organization-integration/local-runner.md).
+4. Not supported by the [Sigrid Local](../organization-integration/sigrid-local.md).
 5. In most cases, configuration files are not considered part of production code and are therefore not relevant for Sigrid's maintainability analysis. Only add these technologies if you consider them part of the system's production code.
 6. "Unknown technology" will be shown in Sigrid when the technology cannot be detected.
 7. Use either `html` or `angularjstemplate`, but not both.
