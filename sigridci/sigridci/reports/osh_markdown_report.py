@@ -23,6 +23,7 @@ class OpenSourceHealthMarkdownReport(Report, MarkdownRenderer):
     MAX_FINDINGS = SecurityMarkdownReport.MAX_FINDINGS
     SYMBOLS = SecurityMarkdownReport.SEVERITY_SYMBOLS
     SORT_RISK = list(SecurityMarkdownReport.SEVERITY_SYMBOLS.keys())
+    DOCS_LINK = "https://docs.sigrid-says.com/reference/analysis-scope-configuration.html#exclude-open-source-health-risks"
 
     def __init__(self, objective = "CRITICAL"):
         super().__init__()
@@ -52,6 +53,8 @@ class OpenSourceHealthMarkdownReport(Report, MarkdownRenderer):
             details += f"> You have **{len(fixable)}** vulnerable open source libraries with a fix available.  \n"
             details += "> Consider upgrading to a version that no longer contains the vulnerability.\n\n"
             details += self.generateFindingsTable(fixable, options)
+            details += "If you believe these findings are false positives, "
+            details += f"you can [exclude them in the Sigrid configuration]({self.DOCS_LINK}).\n\n"
         if len(unfixable) > 0:
             details += "## 😑 You have findings that you need to investigate in more depth\n\n"
             details += f"> You have **{len(unfixable)}** vulnerable open source libraries without a fix available.  \n"

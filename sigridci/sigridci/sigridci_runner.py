@@ -88,10 +88,10 @@ class SigridCiRunner:
 
     def displayFeedback(self, analysisId, metadata):
         objectives = self.apiClient.fetchObjectives()
-        feedback = self.apiClient.fetchAnalysisResults(analysisId)
         self.displayMetadata(metadata)
 
         for capability in self.options.capabilities:
+            feedback = self.apiClient.fetchAnalysisResults(analysisId, capability)
             feedbackProvider = FeedbackProvider(capability, self.options, objectives)
             feedbackProvider.analysisId = analysisId
             feedbackProvider.feedback = feedback
