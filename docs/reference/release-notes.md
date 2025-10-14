@@ -9,7 +9,7 @@ SIG uses [continuous delivery](https://en.wikipedia.org/wiki/Continuous_delivery
 - **Code Explorer:** You can now filter the list of findings by status. For example, you can filter the list to only show findings that were marked as "risk accepted", which allows you to review the rationale for accepting those risks. You can also filter all findings marked as "false positive", to double-check those findings are *actually* false positives. This filter option is available for all types of findings, and accessible from the filter icon in the [Code Explorer page](../capabilities/system-code-explorer.md).
 - **Code Explorer:** It is now possible to add remarks to maintainability findings. You can use these remarks to indicate why something needs to be fixed, or why something *shouldn't* be fixed because the alternatives would be worse.
 
-### October 5, 2025
+### October 6, 2025
 
 - **Code Explorer:** Exporting the duplication findings to CSV now includes an additional column with the duplication percentage. This is useful for power users that want to e.g. filter on 100% duplicates.
 - **Code Explorer:** The performance of loading findings in the Code Explorer has improved significantly. You will mainly notice this if you have a very large system, and are trying to view the total list of findings across the entire system.
