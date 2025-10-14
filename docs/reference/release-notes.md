@@ -3,10 +3,11 @@ Sigrid release notes
 
 SIG uses [continuous delivery](https://en.wikipedia.org/wiki/Continuous_delivery), meaning that every change to Sigrid or the underlying analysis is released once our development pipeline has completed. On average, we release somewhere between 10 and 20 times per day. This page therefore doesn't list every single change, since that would quickly lead to an excessively long list of small changes. Instead, this page lists Sigrid and analysis changes that we consider noteworthy for the typical Sigrid user.
 
-### October 22, 2025
+### October 20, 2025
 
 - **Sigrid API:** You can now retrieve the maintainability of new/changed code using the API. This is the same information that you can find in Sigrid's [delta quality page](../capabilities/system-delta-quality.md). Having API access for this information makes it easier to integrate this data into your own dashboards and reporting. You can find more information in the [API documentation]().
 - **Code Explorer:** You can now filter the list of findings by status. For example, you can filter the list to only show findings that were marked as "risk accepted", which allows you to review the rationale for accepting those risks. You can also filter all findings marked as "false positive", to double-check those findings are *actually* false positives. This filter option is available for all types of findings, and accessible from the filter icon in the [Code Explorer page](../capabilities/system-code-explorer.md).
+- **Code Explorer:** It is now possible to add remarks to maintainability findings. You can use these remarks to indicate why something needs to be fixed, or why something *shouldn't* be fixed because the alternatives would be worse.
 
 ### October 5, 2025
 
