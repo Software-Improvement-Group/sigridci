@@ -17,7 +17,9 @@ Before you can start using the Sigrid Local, you need the following:
   is by installing [Docker Desktop](https://docs.docker.com/desktop/). Docker Desktop supports Windows, Mac, and Linux.
 - A Sigrid license file. This is provided to you by SIG.
 - Download and install the Sigrid Local. A download link is provided to you by SIG. 
-  Sigrid Local supports Windows, Mac, and Linux.
+  Sigrid Local supports Windows, Mac, and Linux. If you are part of an enterprise IT organization, you might not be
+  allowed to download and run applications yourself. In these situations, consult your IT department on how to make
+  Sigrid Local available to you.
 - You will need local access to your source code that you want to analyze using Sigrid Local. 
 
 ## Using Sigrid Local
