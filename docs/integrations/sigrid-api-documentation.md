@@ -96,6 +96,59 @@ The parameter `{customer}` refers to your Sigrid account name.
 
 The top-level `maintainability` and `maintainabilityDate` refer to the *current* state of each system. The `allRatings` array contains a list of all *historic* measurements, which can be used for reporting or trend information.
 
+### Maintainability delta quality
+
+This end point allows you to retrieve the maintainability of only the new and/or changed code. This is the same information as you can find in Sigrid's [delta quality page](../capabilities/system-delta-quality.md). 
+
+    `GET https://sigrid-says.com/rest/analysis-results/api/v1/delta-quality/{customer}/{system}?type=NEW_AND_CHANGED_CODE&startDate=2025-09-01&endDate=2025-10-01`
+
+The end point requires 3 mandatory query parameters:
+
+- `type` is one of `NEW_AND_CHANGED_CODE`, `NEW_CODE`, `CHANGED_CODE`, `REMOVED_CODE`. This matches the different tabs you see in Sigrid's delta quality page.
+- `startDate` in `yyyy-mm-dd` format.
+- `endDate` in `yyyy-mm-dd` format.
+
+<details markdown="1">
+  <summary>Example response</summary>
+
+```json
+{
+  "systemRatingAtStart": 3.4809950112683796,
+  "systemRatingAtEnd": 3.4793285702234433,
+  "filesRatingAtEnd": 3.622633848690621,
+  "unitSize": {
+    "systemRiskProfileAtStart": {
+      "rating": 4.970784175990668,
+      "lowRisk": 85.43280522831913,
+      "moderateRisk": 13.812313260207082,
+      "highRisk": 0.5804917719247658,
+      "veryHighRisk": 0.1743897395490256
+    },
+    "filesRiskProfileAtStart": null,
+    "filesRiskProfileAtEnd": {
+      "rating": 4.866121898673264,
+      "lowRisk": 82.55187138288026,
+      "moderateRisk": 16.620470879524106,
+      "highRisk": 0.827657737595626,
+      "veryHighRisk": 0.0
+    }
+  },
+  (...)
+}
+```
+
+</details>
+
+This response contains the following information, all of which can also be seen in Sigrid's delta quality page:
+
+- `systemRatingAtStart`: The overall maintainability rating at the start of the period.
+- `systemRatingAtEnd`: The overall maintainability rating at the end of the period.
+- `systemRatingAtEnd`: The overall maintainability rating at the end of the period.
+- `filesRatingAtEnd`: The maintainability rating for *only the changes files* at the end of the period.
+- In addition to the overall ratings, you will also get the following details for each system property:
+  - `systemRiskProfileAtStart` contains the risk profile at the start of the period.
+  - `filesRiskProfileAtEnd` contains the risk profile for *only the changes files* at the end of the period.
+
 ### Maintainability data
 
 For reporting purposes, using the available [end points for maintainability ratings](#maintainability-ratings) is usually sufficient. However, some advanced use cases require the full Maintainability data, beyond just the ratings.
