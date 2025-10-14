@@ -81,6 +81,6 @@ class ApiStub(SigridApiClient):
     def callSigridAPI(self, path, body=None, contentType=None):
         self.called.append(path)
         if body:
-            self.received.append(body)
+            self.received.append(body.decode("utf8"))
         if self.exception:
             raise self.exception
