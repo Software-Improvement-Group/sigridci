@@ -63,7 +63,6 @@ Note the branch name `master` in the example. This should refer to your primary 
 If you are unable to use Docker, for example because you are using local runners, you can still use Sigrid CI by downloading the Sigrid CI client script directly from GitHub:
 
 ```
-image: softwareimprovementgroup/sigridci
 
 pipelines:
   branches:
