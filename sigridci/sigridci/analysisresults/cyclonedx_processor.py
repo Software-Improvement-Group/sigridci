@@ -13,6 +13,7 @@
 # limitations under the License.
 
 from dataclasses import dataclass
+from typing import List
 
 from ..objective import Objective
 
@@ -23,7 +24,7 @@ class Library:
     name: str
     version: str
     latestVersion: str
-    files: list[str]
+    files: List[str]
 
 
 class CycloneDXProcessor:

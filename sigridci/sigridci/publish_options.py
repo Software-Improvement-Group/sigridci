@@ -16,7 +16,7 @@ import os
 import re
 from dataclasses import dataclass, field
 from enum import Enum
-from typing import Union
+from typing import List, Union
 
 
 class RunMode(Enum):
@@ -38,8 +38,8 @@ class PublishOptions:
     runMode: RunMode
     sourceDir: str = "."
     subsystem: str = ""
-    excludePatterns: list[str] = field(default_factory=lambda: [])
-    includePatterns: list[str] = field(default_factory=lambda: [])
+    excludePatterns: List[str] = field(default_factory=lambda: [])
+    includePatterns: List[str] = field(default_factory=lambda: [])
     includeHistory: bool = False
     showUploadContents: bool = False
     convert: str = None
@@ -47,7 +47,7 @@ class PublishOptions:
     sigridURL: str = "https://sigrid-says.com"
     feedbackURL: str = "https://docs.sigrid-says.com/landing/feedback.html"
     partner: str = "sig"
-    capabilities: list[Capability] = field(default_factory=lambda: [Capability.MAINTAINABILITY])
+    capabilities: List[Capability] = field(default_factory=lambda: [Capability.MAINTAINABILITY])
 
     SYSTEM_NAME_PATTERN = re.compile("^[a-z0-9]+(-[a-z0-9]+)*$", re.IGNORECASE)
     SYSTEM_NAME_LENGTH = range(2, 65)

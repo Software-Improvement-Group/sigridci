@@ -14,7 +14,7 @@ The [general Sigrid CI documentation](../sigridci-integration/development-workfl
 
 - Docker
 - If you are *not* using Docker
-  - Python 3.9 or higher
+  - Python 3.7 or higher
   - Git
   - To support custom runners and on-premise installations, the Sigrid CI client script intentionally does not require any [PIP](https://pypi.org/project/pip/) dependencies.
 

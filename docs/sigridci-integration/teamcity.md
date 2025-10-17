@@ -8,7 +8,7 @@ This documentation covers cloud-based Sigrid. On-premise Sigrid does not support
 
 - You have a [Sigrid](https://sigrid-says.com) user account. 
 - You have created an [authentication token for using Sigrid CI](../organization-integration/authentication-tokens.md).
-- [Python 3.9 or higher](https://www.python.org) needs to be available in the CI environment. The client scripts for Sigrid CI are based on Python.
+- [Python 3.7 or higher](https://www.python.org) needs to be available in the CI environment. The client scripts for Sigrid CI are based on Python.
 - The examples assume [Git](https://git-scm.com) is available in your TeamCity environment.
 
 ## On-boarding your system to Sigrid
