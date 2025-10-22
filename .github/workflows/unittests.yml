@@ -23,3 +23,20 @@ jobs:
             --capability maintainability \
             --analysisresults test/testdata/maintainability.json
           cat sigrid-ci-output/feedback.md
+  compatibility-check:
+    name: "Python compatibility check"
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        python-version: ["3.9", "3.13"]
+    steps:
+      - name: "Check out repository"
+        uses: actions/checkout@v4
+      - name: "Set up Python ${{ matrix.python-version }}"
+        uses: actions/setup-python@v4
+        with:
+          python-version: ${{ matrix.python-version }}
+      - name: "Check compatibility with Python version"
+        run: |
+          python -m compileall -f sigridci
+          cd sigridci && python -c "import sigridci; print('Import successful for Python ${{ matrix.python-version }}')"
