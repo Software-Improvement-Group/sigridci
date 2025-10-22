@@ -86,8 +86,8 @@ class Platform:
 
     @staticmethod
     def checkEnvironment():
-        if sys.version_info.major == 2 or sys.version_info.minor < 9:
-            print("Sigrid CI requires Python 3.9 or higher")
+        if sys.version_info.major == 2 or sys.version_info.minor < 7:
+            print("Sigrid CI requires Python 3.7 or higher")
             sys.exit(1)
 
         token = os.environ.get("SIGRID_CI_TOKEN", None)
