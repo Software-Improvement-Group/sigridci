@@ -29,9 +29,9 @@ html, body {
 }
 
 body, td, th, input[type=text] {
-    font-family: "Noir Pro";
+    font-family: "Open Sans", sans-serif;
     font-size: 16px;
-    font-weight: 300;
+    font-weight: 400;
     line-height: 1.6;
     color: var(--sig-paragraph-gray);
 }
@@ -47,7 +47,7 @@ a:hover {
 }
 
 h1 {
-    font-family: "Azeret Mono";
+    font-family: "Azeret Mono", sans-serif;
     color: var(--sig-text-black);
     font-size: 32px;
     font-weight: 400;
