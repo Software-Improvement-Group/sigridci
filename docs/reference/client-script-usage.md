@@ -47,24 +47,6 @@ Notes:
 6. Include can be used to narrow down the upload to specific folders and/or files. In addition, exclude can be used to exclude files and folders from the included folders.
 7. Folders should always be surrounded by '/' characters
 
-## Using subsystems to combine repositories
-
-Refer to the [documentation on mapping repositories to systems](../organization-integration/systems.md) for more information on when to combine multiple repositories into a single system in Sigrid.
-
-The `--subsystem` option can be used to map multiple repositories to the same Sigrid system. The `--subsystem` parameter effectively moves the repository to a directory within the system that you defined as `--system`. An exception to the processing of `--subsystem` is when you add `--subsystem root`. This is reserved for files that you want to end up in the system's root directory. This is especially relevant when you are adding a `sigrid.yaml` file to a system that is combining repositories. Then you would use `--subsystem root` to make sure that the `sigrid.yaml` is published to the root of the system (thus, it is not interpreted as a subsystem called `root`, in which case it would have ended up as a separate directory). `Sigrid.yaml` files that are published inside a `--subsystem`, such as `--subsystem frontend` will be ignored.
-
-Please add the `--subsystem` parameter to both the PR as the `--publish` or `--publishonly` runs if you use one of these 2 options.
-
-If Sigrid CI runs for multiple subsystems of the same system in parallel the results might be inconsistent.
-For example, you might get feedback on another component because you appear to be making changes.
-This is because a parallel run changed the baseline since the start of your analysis.
-
-To reduce the likelihood of inconsistencies, keep in mind the following guidelines:
-- If you want to publish all repositories simultaneously, (e.g. on a schedule), combine them on your side and send the aggregate as a regular system.
-- If the repositories of the system are very active and sees many merges (which result in parallel publishes) it is safer to use `--publishonly` than `--publish`.
-
-If susbsystems need to be removed from the system this can be done via the [Sigrid API](../integrations/sigrid-api-documentation.md#removing-subsystems)
-
 ## What is the difference between `--publish` and `--publishonly`?
 
 Sigrid CI can run in different "modes", depending on your [development process and workflow](../sigridci-integration/development-workflows.md). The following table shows what happens depending on the values of these options:
@@ -92,17 +74,29 @@ By default, Sigrid CI will use the maintainability target you have defined for y
 
 If you do not set any objective, Sigrid CI will use a default target of 3.5 stars. This is the lower threshold of the better-than-average 4-star range. Four-star code quality is the level that SIG recommends for systems with modern technologies in active development.
 
-## Connecting to Sigrid using a proxy
+## Using subsystems to combine repositories
+
+Refer to the [documentation on mapping repositories to systems](../organization-integration/systems.md) for more information on when to combine multiple repositories into a single system in Sigrid.
+
+The `--subsystem` option can be used to map multiple repositories to the same Sigrid system. The `--subsystem` parameter effectively moves the repository to a directory within the system that you defined as `--system`. An exception to the processing of `--subsystem` is when you add `--subsystem root`. This is reserved for files that you want to end up in the system's root directory. This is especially relevant when you are adding a `sigrid.yaml` file to a system that is combining repositories. Then you would use `--subsystem root` to make sure that the `sigrid.yaml` is published to the root of the system (thus, it is not interpreted as a subsystem called `root`, in which case it would have ended up as a separate directory). `Sigrid.yaml` files that are published inside a `--subsystem`, such as `--subsystem frontend` will be ignored.
+
+Please add the `--subsystem` parameter to both the PR as the `--publish` or `--publishonly` runs if you use one of these 2 options.
+
+If Sigrid CI runs for multiple subsystems of the same system in parallel the results might be inconsistent.
+For example, you might get feedback on another component because you appear to be making changes.
+This is because a parallel run changed the baseline since the start of your analysis.
+
+To reduce the likelihood of inconsistencies, keep in mind the following guidelines:
+- If you want to publish all repositories simultaneously, (e.g. on a schedule), combine them on your side and send the aggregate as a regular system.
+- If the repositories of the system are very active and sees many merges (which result in parallel publishes) it is safer to use `--publishonly` than `--publish`.
+
+If subsystems need to be removed from the system this can be done via the [Sigrid API](../integrations/sigrid-api-documentation.md#removing-subsystems)
+
+## Connecting Sigrid CI using a proxy
 
 If your environment requires a proxy to connect to the internet, you can configure Sigrid CI to use this proxy.
 You define an environment variable `SIGRID_CI_PROXY_URL`, which will then be picked up by Sigrid CI. 
 The value of this environment variable should be the complete proxy URL, so including the protocol, and also including user information if required. 
-
-## Additional information on configuring Sigrid CI
-
-You can find more details on how to configure Sigrid CI [here](../sigridci-integration/github-actions.md).
-
-To see how Sigrid CI provides feedback directly in your pull request, review [these instructions](../sigridci-integration/github-actions.md#usage).
 
 ## Contact and support
 
