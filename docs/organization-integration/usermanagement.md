@@ -5,7 +5,7 @@ This documentation covers cloud-based Sigrid. On-premise Sigrid requires integra
 {: .attention }
 
 When managing user access to Sigrid we need to consider both Authentication (verifying identity) and Authorization (the permissions of that identity). 
-- Authentication is performed when users are logging in. This step makes a comparison with what is known about a user e.g. (whether it exists, whether it is active). After Authenication is successful, 
+- Authentication is performed when users are logging in. This step makes a comparison with what is known about a user e.g. (whether it exists, whether it is active). After Authentication is successful, 
 - Authorization determines what that user can see and do.
 
 Sigrid offers two ways of managing Authentication and one type of Authorization. 
