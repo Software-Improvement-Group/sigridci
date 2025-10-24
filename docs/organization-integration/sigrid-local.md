@@ -39,6 +39,14 @@ cannot be verified"**
 If you are part of an enterprise IT organization, you might not be allowed to do this yourself. Please check
 with your IT department on how to make Sigrid Local available to you.
 
+**If you're using Windows, and you get an error message that "Windows protected your PC."**
+
+- Click "More info".
+- Click "Run anyway".
+
+If you are part of an enterprise IT organization, you might not be allowed to do this yourself. Please check
+with your IT department on how to make Sigrid Local available to you.
+
 ## Using Sigrid Local
 
 When you start Sigrid Local, you'll see something that looks like this:
