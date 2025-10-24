@@ -20,7 +20,24 @@ Before you can start using the Sigrid Local, you need the following:
   Sigrid Local supports Windows, Mac, and Linux. If you are part of an enterprise IT organization, you might not be
   allowed to download and run applications yourself. In these situations, consult your IT department on how to make
   Sigrid Local available to you.
-- You will need local access to your source code that you want to analyze using Sigrid Local. 
+- You will need local access to your source code that you want to analyze using Sigrid Local.
+
+## Installing Sigrid Local
+
+You will have received two files: A ZIP file containing the Sigrid Local application, and a `.lic` file containing
+your license. You then start Sigrid Local like you start any other application, you can leave the license file for
+later. 
+
+**If you are using a Mac and you get an error message that "Sigrid Local cannot be opened because the developer
+cannot be verified"**
+
+- Open System Settings.
+- Go to the "Privacy and Security" tab.
+- Scroll down to the "Security" section.
+- Find the message that Sigrid Local cannot be opened, and click "Open anyway".
+
+If you are part of an enterprise IT organization, you might not be allowed to do this yourself. Please check
+with your IT department on how to make Sigrid Local available to you.
 
 ## Using Sigrid Local
 
