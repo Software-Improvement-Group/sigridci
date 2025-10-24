@@ -73,7 +73,8 @@ allocated based on the business-criticality of your systems.
 <img src="../images/management-dashboard-effort.png" width="600" />
 
 The char on the right illustrates the amount of technical debt introduced and resolved per month, measured in 
-Person Years of development. To understand how technical debt is measured please consult this paper.
+Person Years of development. To understand how technical debt is measured please consult
+[this paper](https://www.researchgate.net/publication/228684782_An_Empirical_Model_of_Technical_Debt_and_Interest).
 
 ### Long term trend and progress
 
