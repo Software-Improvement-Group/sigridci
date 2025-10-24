@@ -4,9 +4,9 @@ User management in Sigrid
 This documentation covers cloud-based Sigrid. On-premise Sigrid requires integration with your identity provider, which is explained in the section about [on-premise integration](../organization-integration/onpremise-integration.md).
 {: .attention }
 
-When managing user access to Sigrid we need to consider both Authentication (can you enter?) and Authorization (what can you see?). 
-- Authentication is the step where users are allowed to enter the platform. After Authenication is successful, 
-- Authorization defines which user can access the analysis results of which systems.
+When managing user access to Sigrid we need to consider both Authentication (verifying identity) and Authorization (the permissions of that identity). 
+- Authentication is performed when users are logging in. This step makes a comparison with what is known about a user e.g. (whether it exists, whether it is active). After Authentication is successful, 
+- Authorization determines what that user can see and do.
 
 Sigrid offers two ways of managing Authentication and one type of Authorization. 
 
