@@ -34,7 +34,7 @@ We will create two pipelines:
 - The first will publish the main/master branch to [sigrid-says.com](https://sigrid-says.com) after every commit. 
 - The second will provide pull request integration: it will compare the contents of the pull request against the main/master branch.
 
-#### Alternative 2a: Docker-based run
+#### Alternative 2a: Use the Sigrid CI Docker image
 
 The recommended approach is to run Sigrid CI using the [Docker image](https://hub.docker.com/r/softwareimprovementgroup/sigridci) published by SIG. In your BitBucket repository, create a file `bitbucket-pipelines.yml`. You can then configure both pipelines in the same configuration file:
 
@@ -58,12 +58,13 @@ pipelines:
 
 Note the branch name `master` in the example. This should refer to your primary branch. In most projects this is called either `master` or `main`, but the default project name could be different for your project.
 
-#### Alternative 2b: Download Sigrid CI client script
+#### Alternative 2b: Use a different Docker image
 
-If you are unable to use Docker, for example because you are using local runners, you can still use Sigrid CI by downloading the Sigrid CI client script directly from GitHub:
+BitBucket Pipelines requires you define an image. However, this doesn't nessacarily have to be the Sigrid CI image. You can also use a different image, which then downloads the Sigrid CI client script directly from GitHub:
 
 ```
-image: softwareimprovementgroup/sigridci
+# This can also be your own image, or any other image that contains Python.
+image: python:3.13-alpine
 
 pipelines:
   branches:
