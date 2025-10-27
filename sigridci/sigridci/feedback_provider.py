@@ -55,6 +55,9 @@ class FeedbackProvider:
         if not os.path.exists(self.options.outputDir):
             os.mkdir(self.options.outputDir)
 
+        with open(f"{self.options.outputDir}/{self.capability.shortName}.json", mode="w", encoding="utf-8") as f:
+            json.dump(self.feedback, f, sort_keys=False, indent=4)
+
         markdownReport = self.prepareMarkdownReport()
         reports = self.prepareAdditionalReports(markdownReport)
 
