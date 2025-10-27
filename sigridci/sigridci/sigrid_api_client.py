@@ -138,7 +138,7 @@ class SigridApiClient:
 
     def fetchAnalysisResults(self, analysisId, capability):
         UploadLog.log("Waiting for analysis results")
-        path = f"/analysis-results/sigridci/{self.urlCustomerName}/{self.urlSystemName}/{self.API_VERSION}/ci/results/{analysisId}?type={capability}"
+        path = f"/analysis-results/sigridci/{self.urlCustomerName}/{self.urlSystemName}/{self.API_VERSION}/ci/results/{analysisId}?type={capability.name}"
         return self.retry(lambda: self.callSigridAPI(path), attempts=self.POLL_ATTEMPTS, allowEmpty=False)
 
     def fetchMetadata(self):

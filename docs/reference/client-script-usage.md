@@ -64,6 +64,30 @@ So when to use these options:
   - This is suitable for merge commits to the main/master branch. In that situation, you do not need feedback, since you *already had* your feedback in the pull request and there is no reason to receive the same feedback again when merging your changes. 
   - Moreover, this publishes your code to Sigrid in a fire-and-forget fashion, which is faster since the script will not wait for the analysis to complete and will immediately exit. This is suitable for the main/master branch scenario described above, but can also be used in other situations where the fire-and-forget behavior is preferred.
 
+## Letting Sigrid CI fail your pipeline
+
+Sigrid CI will return a different exit code depending on whether you achieved or failed your
+[quality objectives](#defining-quality-objectives). If you want to use Sigrid CI as a mandatory quality gate, 
+you can use this exit code to fail your pipeline.
+
+We actually recommend you do *not* fail your pipeline in this way. Ideally, you would use Sigrid CI feedback as input
+for your code reviewer, with the final decision being up to the reviewer. Any form of automated quality check will
+eventually produce results that are unfair, so we prefer leaving the final decision up to people. If you want to use
+Sigrid CI in this way, you can make Sigrid CI a warning rather than an error. This is the default behavior that we
+use in the configuration examples across the documentation.
+
+However, we concede there are situations and organizations where people do want the pipeline to fail. You can use
+the Sigrid CI exit code for this, and you can even make this behavior more nuanced based on the specific exit code:
+
+- Exit code 0: All quality checks passed.
+- Exit code 1: An error occurred while running Sigrid CI.
+- Exit code 2: You failed your quality objective for Maintainability.
+- Exit code 4: You failed your quality objective for Open Source Health.
+- Exit code 8: You failed your quality objective for Open Source Health.
+
+These exit codes "stack", so an exit code of 6 means you failed your quality objectives for both Maintainability
+and Open Source Health.
+
 ## Defining quality objectives
 
 Sigrid CI compares the quality of the new/changed code against the configured target quality level. The target is always relative to the thousands of other systems in the SIG benchmark. This means you do not need to fix every single minor issue, as long as the overall quality is OK you are still allowed to proceed.

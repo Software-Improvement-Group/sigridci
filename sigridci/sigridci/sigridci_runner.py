@@ -64,11 +64,13 @@ class SigridCiRunner:
 
         if not systemExists:
             UploadLog.log(f"System '{self.options.system}' has been on-boarded and will appear in Sigrid shortly")
+            return 0
         elif self.options.runMode == RunMode.PUBLISH_ONLY:
             UploadLog.log("Your project's source code has been published to Sigrid")
             self.displayMetadata(metadata)
+            return 0
         else:
-            self.displayFeedback(analysisId, metadata)
+            return self.displayFeedback(analysisId, metadata)
 
     def prepareRun(self):
         # We don't use the options.feedbackURL directly, since that's intended
@@ -88,6 +90,8 @@ class SigridCiRunner:
 
     def displayFeedback(self, analysisId, metadata):
         objectives = self.apiClient.fetchObjectives()
+        exitCode = 0
+
         self.displayMetadata(metadata)
 
         for capability in self.options.capabilities:
@@ -95,7 +99,11 @@ class SigridCiRunner:
             feedbackProvider = FeedbackProvider(capability, self.options, objectives)
             feedbackProvider.analysisId = analysisId
             feedbackProvider.feedback = feedback
-            feedbackProvider.generateReports()
+            success = feedbackProvider.generateReports()
+            if not success:
+                exitCode += capability.exitCode
+
+        return exitCode
 
     def validateConfigurationFiles(self, metadata):
         scope = self.options.readScopeFile()

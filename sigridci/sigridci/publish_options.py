@@ -18,17 +18,13 @@ from dataclasses import dataclass, field
 from enum import Enum
 from typing import List
 
+from .capability import Capability, MAINTAINABILITY
+
 
 class RunMode(Enum):
     FEEDBACK_ONLY = 1
     FEEDBACK_AND_PUBLISH = 2
     PUBLISH_ONLY = 3
-
-
-class Capability(Enum):
-    MAINTAINABILITY = "Maintainability"
-    OPEN_SOURCE_HEALTH = "Open Source Health"
-    SECURITY = "Security"
 
 
 @dataclass
@@ -47,7 +43,7 @@ class PublishOptions:
     sigridURL: str = "https://sigrid-says.com"
     feedbackURL: str = "https://docs.sigrid-says.com/landing/feedback.html"
     partner: str = "sig"
-    capabilities: List[Capability] = field(default_factory=lambda: [Capability.MAINTAINABILITY])
+    capabilities: List[Capability] = field(default_factory=lambda: [MAINTAINABILITY])
 
     SYSTEM_NAME_PATTERN = re.compile("^[a-z0-9]+(-[a-z0-9]+)*$", re.IGNORECASE)
     SYSTEM_NAME_LENGTH = range(2, 65)
