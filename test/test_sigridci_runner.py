@@ -20,6 +20,7 @@ from email.message import Message
 from io import BytesIO
 from unittest import TestCase
 
+from sigridci.sigridci.capability import MAINTAINABILITY, OPEN_SOURCE_HEALTH
 from sigridci.sigridci.publish_options import PublishOptions, RunMode
 from sigridci.sigridci.sigrid_api_client import SigridApiClient
 from sigridci.sigridci.sigridci_runner import SigridCiRunner
@@ -352,9 +353,43 @@ class SigridCiRunnerTest(TestCase):
         runner = SigridCiRunner(self.options, apiClient)
 
         with self.assertRaises(SystemExit):
-            # This should cause a system exit because an empty scope file
-            # is invalid. If there is no system exit, this test will fail.
+            # This should cause a system exit because the scope file is invalid.
             runner.run()
+
+    def testDependencyCheckerSectionInScopeFileIsRequiredForOSH(self):
+        self.createTempFile(self.tempDir, "sigrid.yaml", "dependencychecker:\n  blocklist: []")
+
+        self.options.capabilities = [MAINTAINABILITY, OPEN_SOURCE_HEALTH]
+
+        apiClient = MockApiClient(self.options)
+        apiClient.responses["/inboundresults/sig/aap/noot/ci/validate/v1"] = {"valid" : True, "notes" : ["test"]}
+
+        runner = SigridCiRunner(self.options, apiClient)
+        runner.validateConfigurationFiles({})
+
+    def testMissingDependencyCheckerSectionInScopeFileIsValidForMaintainability(self):
+        self.createTempFile(self.tempDir, "sigrid.yaml", "component_depth: 1")
+
+        self.options.capabilities = [MAINTAINABILITY]
+
+        apiClient = MockApiClient(self.options)
+        apiClient.responses["/inboundresults/sig/aap/noot/ci/validate/v1"] = {"valid" : True, "notes" : ["test"]}
+
+        runner = SigridCiRunner(self.options, apiClient)
+        runner.validateConfigurationFiles({})
+
+    def testMissingDependencyCheckerSectionInScopeFileIsInvalidForOSH(self):
+        self.createTempFile(self.tempDir, "sigrid.yaml", "component_depth: 1")
+
+        self.options.capabilities = [MAINTAINABILITY, OPEN_SOURCE_HEALTH]
+
+        apiClient = MockApiClient(self.options)
+        apiClient.responses["/inboundresults/sig/aap/noot/ci/validate/v1"] = {"valid" : True, "notes" : ["test"]}
+
+        runner = SigridCiRunner(self.options, apiClient)
+        with self.assertRaises(SystemExit):
+            runner.validateConfigurationFiles({})
+        self.assertEqual(UploadLog.history[-2], "    - Missing required field 'dependencychecker'.")
 
     def testCannotUseScopeFileInCombinationWithSubsystem(self):
         self.createTempFile(self.tempDir, "sigrid.yaml", "default_excludes: true")

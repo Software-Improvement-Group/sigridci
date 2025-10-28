@@ -15,6 +15,7 @@
 import os
 import sys
 
+from .capability import OPEN_SOURCE_HEALTH, SECURITY
 from .feedback_provider import FeedbackProvider
 from .platform import Platform
 from .publish_options import PublishOptions, RunMode
@@ -113,6 +114,10 @@ class SigridCiRunner:
                 UploadLog.log("Warning: You cannot provide a scope configuration file for a subsystem, it will be ignored.")
 
             self.validateConfiguration(lambda: self.apiClient.validateScopeFile(scope), "scope configuration file")
+            if OPEN_SOURCE_HEALTH in self.options.capabilities and not "dependencychecker:" in scope:
+                self.showValidationError("scope configuration file", ["Missing required field 'dependencychecker'."])
+            if SECURITY in self.options.capabilities and not "thirdpartyfindings:" in scope:
+                self.showValidationError("scope configuration file", ["Missing required field 'thirdpartyfindings'."])
 
         if scope is None and metadata.get("scopeFileInRepository") and not self.options.subsystem:
             message = {"valid" : False, "notes" : ["Missing sigrid.yaml file", f"See {self.MISSING_SCOPE_URL}"]}
@@ -125,16 +130,18 @@ class SigridCiRunner:
     def validateConfiguration(self, validationCall, configurationName):
         UploadLog.log(f"Validating {configurationName}")
         validationResult = validationCall()
-
         if validationResult["valid"]:
             UploadLog.log("Validation passed")
         else:
-            UploadLog.log("-" * 80)
-            UploadLog.log(f"Invalid {configurationName}:")
-            for note in validationResult["notes"]:
-                UploadLog.log(f"    - {note}")
-            UploadLog.log("-" * 80)
-            sys.exit(1)
+            self.showValidationError(configurationName, validationResult["notes"])
+
+    def showValidationError(self, configurationName, notes):
+        UploadLog.log("-" * 80)
+        UploadLog.log(f"Invalid {configurationName}:")
+        for note in notes:
+            UploadLog.log(f"    - {note}")
+        UploadLog.log("-" * 80)
+        sys.exit(1)
 
     def displayMetadata(self, metadata):
         if self.options.readMetadataFile() == None:
