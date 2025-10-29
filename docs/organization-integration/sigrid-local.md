@@ -38,6 +38,8 @@ cannot be verified"**
 - Scroll down to the "Security" section.
 - Find the message that Sigrid Local cannot be opened, and click "Open anyway".
 
+<img src="../images/local-runner/security-warning-mac.png" width="500" />
+
 If you are part of an enterprise IT organization, you might not be allowed to do this yourself. Please check
 with your IT department on how to make Sigrid Local available to you.
 
