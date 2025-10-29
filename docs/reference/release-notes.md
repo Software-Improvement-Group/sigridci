@@ -3,6 +3,12 @@ Sigrid release notes
 
 SIG uses [continuous delivery](https://en.wikipedia.org/wiki/Continuous_delivery), meaning that every change to Sigrid or the underlying analysis is released once our development pipeline has completed. On average, we release somewhere between 10 and 20 times per day. This page therefore doesn't list every single change, since that would quickly lead to an excessively long list of small changes. Instead, this page lists Sigrid and analysis changes that we consider noteworthy for the typical Sigrid user.
 
+### November 2, 2025
+
+- **Technology support:** The configuration for [Vue](https://vuejs.org) has been simplified. Previously, you needed to manually configure whether you were using Vue with JavaScript or Vue with TypeScript. This is now decided automatically. Old configurations are grandfathered into the new behavior, so there is no need to update your existing configuration.
+- **Technology support:** There is no more need to manually configure [SAP UI 5](https://sapui5.hana.ondemand.com), this is now detected automatically. The new behavior is backward compatible, so old configurations will continue to work.
+- **Sigrid Local:** Sigrid Local can now be used for [Mendix](https://www.mendix.com) systems.
+
 ### October 20, 2025
 
 - **Sigrid API:** You can now retrieve the maintainability of new/changed code using the API. This is the same information that you can find in Sigrid's [delta quality page](../capabilities/system-delta-quality.md). Having API access for this information makes it easier to integrate this data into your own dashboards and reporting. You can find more information in the [API documentation]().
