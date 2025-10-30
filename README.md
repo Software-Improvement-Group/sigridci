@@ -14,7 +14,7 @@ This repository hosts the Sigrid documentation, which you can access via [docs.s
 
 <img src="docs/images/documentation-screenshot.png" width="600" align="center" />
 
-We encourage collaboration, so you are welcome to use GitHib features like issues or pull requests if you want to request additions or changes to the documentation.
+We encourage collaboration, so you are welcome to use GitHub features like issues or pull requests if you want to request additions or changes to the documentation.
 
 ## Sigrid CI: Development process integration
 
