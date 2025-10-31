@@ -18,19 +18,12 @@ import os
 import sys
 from argparse import ArgumentParser, SUPPRESS
 
+from sigridci.capability import MAINTAINABILITY, OPEN_SOURCE_HEALTH, SECURITY
 from sigridci.feedback_provider import FeedbackProvider
 from sigridci.publish_options import PublishOptions, RunMode, Capability
 from sigridci.sigrid_api_client import SigridApiClient
 
-
-OBJECTIVE_SUCCESS_EXIT_CODE = 0
-OBJECTIVE_FAILED_EXIT_CODE = 115
-
-CAPABILITIES = {
-    "maintainability" : Capability.MAINTAINABILITY,
-    "osh" : Capability.OPEN_SOURCE_HEALTH,
-    "security" : Capability.SECURITY
-}
+CAPABILITIES = {cap.shortName: cap for cap in [MAINTAINABILITY, OPEN_SOURCE_HEALTH, SECURITY]}
 
 
 def parseFeedbackOptions(args):
@@ -79,4 +72,4 @@ if __name__ == "__main__":
         feedbackProvider.loadPreviousAnalysisResults(args.previousresults)
     success = feedbackProvider.generateReports()
 
-    sys.exit(OBJECTIVE_SUCCESS_EXIT_CODE if success else OBJECTIVE_FAILED_EXIT_CODE)
+    sys.exit(0 if success else feedbackProvider.capability.exitCode)

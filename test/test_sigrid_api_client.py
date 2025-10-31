@@ -38,7 +38,9 @@ class SigridApiClientTest(TestCase):
         apiClient = ApiStub(options)
         apiClient.obtainUploadLocation(True)
 
-        self.assertEqual(apiClient.called, ["/inboundresults/sig/aap/noot/ci/uploads/v1/publishonly?subsystem=mies"])
+        self.assertEqual(apiClient.called, ["/inboundresults/sig/aap/noot/ci/uploads/v1"])
+        self.assertTrue("\"mode\": \"PUBLISHONLY\"" in apiClient.received[0])
+        self.assertTrue("\"subsystem\": \"mies\"" in apiClient.received[0])
 
     @mock.patch.dict(os.environ, {"SIGRID_CI_TOKEN" : "mytoken\n"})
     def testAddConvertParameter(self):
@@ -46,7 +48,9 @@ class SigridApiClientTest(TestCase):
         apiClient = ApiStub(options)
         apiClient.obtainUploadLocation(True)
 
-        self.assertEqual(apiClient.called, ["/inboundresults/sig/aap/noot/ci/uploads/v1/publishonly?convert=beinformed"])
+        self.assertEqual(apiClient.called, ["/inboundresults/sig/aap/noot/ci/uploads/v1"])
+        self.assertTrue("\"mode\": \"PUBLISHONLY\"" in apiClient.received[0])
+        self.assertTrue("\"convert\": \"beinformed\"" in apiClient.received[0])
 
     @mock.patch.dict(os.environ, {"SIGRID_CI_TOKEN" : "mytoken\n"})
     def testAddConvertParameter(self):
@@ -54,7 +58,10 @@ class SigridApiClientTest(TestCase):
         apiClient = ApiStub(options)
         apiClient.obtainUploadLocation(True)
 
-        self.assertEqual(apiClient.called, ["/inboundresults/sig/aap/noot/ci/uploads/v1/publishonly?subsystem=mies&convert=beinformed"])
+        self.assertEqual(apiClient.called, ["/inboundresults/sig/aap/noot/ci/uploads/v1"])
+        self.assertTrue("\"mode\": \"PUBLISHONLY\"" in apiClient.received[0])
+        self.assertTrue("\"subsystem\": \"mies\"" in apiClient.received[0])
+        self.assertTrue("\"convert\": \"beinformed\"" in apiClient.received[0])
 
     @mock.patch.dict(os.environ, {"SIGRID_CI_TOKEN" : "mytoken\n"})
     def testLogToken(self):
@@ -69,8 +76,11 @@ class ApiStub(SigridApiClient):
         super().__init__(options)
         self.exception = exception
         self.called = []
+        self.received = []
 
     def callSigridAPI(self, path, body=None, contentType=None):
         self.called.append(path)
+        if body:
+            self.received.append(body.decode("utf8"))
         if self.exception:
             raise self.exception

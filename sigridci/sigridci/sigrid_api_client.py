@@ -93,21 +93,22 @@ class SigridApiClient:
     def obtainUploadLocation(self, systemExists):
         path = f"/inboundresults/{self.urlPartnerName}/{self.urlCustomerName}/{self.urlSystemName}/ci/uploads/{self.API_VERSION}"
 
+        mode = "DEFAULT"
         if not systemExists:
-            path += "/onboarding"
+            mode = "ONBOARDING"
         elif self.options.runMode == RunMode.PUBLISH_ONLY:
-            path += "/publishonly"
+            mode = "PUBLISHONLY"
         elif self.options.runMode == RunMode.FEEDBACK_AND_PUBLISH:
-            path += "/publish"
+            mode = "PUBLISH"
 
-        if self.options.subsystem and self.options.convert:
-            path += "?subsystem=" + urllib.parse.quote_plus(self.options.subsystem) + "&convert=" + urllib.parse.quote_plus(self.options.convert)
-        elif self.options.subsystem:
-            path += "?subsystem=" + urllib.parse.quote_plus(self.options.subsystem)
-        elif self.options.convert:
-            path += "?convert=" + urllib.parse.quote_plus(self.options.convert)
+        body = {
+            "mode" : mode,
+            "capabilities" : [cap.name for cap in self.options.capabilities],
+            "subsystem": self.options.subsystem or None,
+            "convert": self.options.convert or None
+        }
 
-        return self.retry(lambda: self.callSigridAPI(path))
+        return self.retry(lambda: self.callSigridAPI(path, json.dumps(body).encode("utf8"), "application/json"))
 
     def validateScopeFile(self, scopeFile):
         path = f"/inboundresults/{self.urlPartnerName}/{self.urlCustomerName}/{self.urlSystemName}/ci/validate/{self.API_VERSION}"
@@ -135,9 +136,9 @@ class SigridApiClient:
         path = f"/analysis-results/sigridci/{self.urlCustomerName}/{self.urlSystemName}/{self.API_VERSION}/ci"
         return self.retry(lambda: self.callSigridAPI(path), allow404=True) != False
 
-    def fetchAnalysisResults(self, analysisId):
+    def fetchAnalysisResults(self, analysisId, capability):
         UploadLog.log("Waiting for analysis results")
-        path = f"/analysis-results/sigridci/{self.urlCustomerName}/{self.urlSystemName}/{self.API_VERSION}/ci/results/{analysisId}"
+        path = f"/analysis-results/sigridci/{self.urlCustomerName}/{self.urlSystemName}/{self.API_VERSION}/ci/results/{analysisId}?type={capability.name}"
         return self.retry(lambda: self.callSigridAPI(path), attempts=self.POLL_ATTEMPTS, allowEmpty=False)
 
     def fetchMetadata(self):
