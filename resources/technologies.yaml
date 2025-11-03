@@ -924,10 +924,6 @@
   category: customization
   visual: true
 
-- context: sapui5
-  display_name: "SapUI5"
-  category: customization
-
 - context: sas
   display_name: "SAS"
   category: scientific
@@ -1169,12 +1165,8 @@
   display_name: "Visual Objects"
   category: dsl
 
-- context: vuejs
-  display_name: "VueJS"
-  category: web
-
-- context: vuets
-  display_name: "VueTS"
+- context: vue
+  display_name: "Vue"
   category: web
 
 - context: vulcan

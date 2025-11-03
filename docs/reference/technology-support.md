@@ -129,8 +129,7 @@ This page provides an overview of all technologies that can be analyzed by Sigri
 | `jade`                        | Jade                                   | Maintainability, Architecture               |
 | `java`                        | Java                                   | Maintainability, Architecture, Security, AI |
 | `javafx`                      | Java FX                                | Maintainability, Architecture               |
-| `javascript`                  | JavaScript (includes NodeJS)           | Maintainability, Architecture, Security     | [(2)](#notes)                               |
-| `javascript`                  | Google App Script                      | Maintainability, Architecture, AI           |
+| `javascript`                  | JavaScript (includes NodeJS)           | Maintainability, Architecture, Security     | [(3)](#notes)                               | 
 | `jbc`                         | JBC                                    | Maintainability, Architecture               |
 | `jbpm`                        | jBPM                                   | Maintainability, Architecture               |
 | `jcl`                         | JCL                                    | Maintainability, Architecture               |
@@ -155,7 +154,7 @@ This page provides an overview of all technologies that can be analyzed by Sigri
 | `matlab`                      | Matlab                                 | Maintainability, Architecture               |
 | `mediationflows`              | Mediation Flows                        | Maintainability, Architecture               |
 | `mendix`                      | Mendix                                 | Maintainability, Architecture, Security     | [(9)](#notes), [(4)](#notes)                |
-| `mendixflow`                  | Mendix microflows/nanoflows *(Beta)*   | Maintainability, Architecture, Security     | [(11)](#notes), [(4)](#notes)               |
+| `mendixflow`                  | Mendix microflows/nanoflows            | Maintainability, Architecture, Security     | [(11)](#notes)                              |
 | `messagebuilder`              | MessageBuilder                         | Maintainability, Architecture               |
 | `mpsbehavior`                 | MPS Behavior                           | Maintainability                             | [(4)](#notes), [(8)](#notes)                |
 | `mpsclass`                    | MPS Class                              | Maintainability                             | [(4)](#notes), [(8)](#notes)                |
@@ -236,7 +235,6 @@ This page provides an overview of all technologies that can be analyzed by Sigri
 | `salesforceflow`              | Salesforce Flow                        | Maintainability, Architecture               |
 | `salesforceprocessbuilder`    | Salesforce Process Builder             | Maintainability                             |
 | `sappo`                       | SAP PO                                 | Maintainability, Architecture               | [(4)](#notes), [(8)](#notes)                |
-| `sapui5`                      | SapUI5                                 | Maintainability, Architecture               |
 | `sas`                         | SAS                                    | Maintainability, Architecture               |
 | `sasflows`                    | SAS Flows                              | Maintainability                             | [(4)](#notes), [(8)](#notes)                |
 | `sass`                        | Sass                                   | Maintainability, Architecture               |
@@ -282,7 +280,7 @@ This page provides an overview of all technologies that can be analyzed by Sigri
 | `tsql`                        | T-SQL (Microsoft SQL Server, MS SQL))  | Maintainability, Architecture, AI           |
 | `turtle`                      | Turtle                                 | Maintainability                             |
 | `twig`                        | Twig                                   | Maintainability                             |
-| `typescript`                  | TypeScript (includes React/TypeScript) | Maintainability, Architecture, Security, AI | [(3, 10)](#notes)                           |
+| `typescript`                  | TypeScript (includes React/TypeScript) | Maintainability, Architecture, Security, AI | [(10)](#notes)                              |
 | `uil`                         | UIL (Motif)                            | Maintainability, Architecture               |
 | `uniface`                     | Uniface                                | Maintainability, Architecture               | [(4)](#notes), [(8)](#notes)                |
 | `until`                       | Until                                  | Maintainability, Architecture               |
@@ -295,8 +293,7 @@ This page provides an overview of all technologies that can be analyzed by Sigri
 | `visualforce`                 | VisualForce                            | Maintainability                             |
 | `visualrpg`                   | Visual RPG                             | Maintainability, Architecture               |
 | `visualobjects`               | Visual Objects                         | Maintainability, Architecture               |
-| `vuejs`                       | VueJS                                  | Maintainability, Architecture, Security, AI | [(2)](#notes)                               |
-| `vuets`                       | VueTS                                  | Maintainability, Architecture, Security     | [(3)](#notes)                               |
+| `vue`                         | Vue                                    | Maintainability, Architecture, Security, AI | [(2)](#notes)                               |
 | `vulcan`                      | Vulcan.NET                             | Maintainability, Architecture               |
 | `webfocus`                    | WebFocus                               | Maintainability, Architecture               |
 | `webmethods`                  | WebMethods                             | Maintainability, Architecture               |
@@ -320,14 +317,10 @@ This page provides an overview of all technologies that can be analyzed by Sigri
 ### Notes
 
 1. Not supported by [on-premise Sigrid](../organization-integration/onpremise-integration.md).
-2. Use one of `javascript`, `vuejs`, `sapui5`, but do not use multiple.
-  - Prefer `vuejs` if your system contains [Vue.js](https://vuejs.org) components that use the `.vue` file extension.
-  - Only use `sapui5` if you are using [SAP UI](https://developers.sap.com/topics/ui-development.html).
-  - Use `javascript` in all other cases.
-3. Use either `typescript` or `vuets`, but not both.
-  - Prefer `vuets` if you're using [Vue.js](https://vuejs.org) in combination with TypeScript code. 
-  - Prefer `typescript` in all other cases.
-4. Not supported by the [Sigrid Local](../organization-integration/sigrid-local.md).
+2. Sigrid automatically detects whether you are using Vue in combination with JavaScript or Vue in combination
+   with TypeScript.
+3. Sigrid will automatically detect if you are using React within your JavaScript and/or TypeScript code.
+4. Not supported by [Sigrid Local](../organization-integration/sigrid-local.md).
 5. In most cases, configuration files are not considered part of production code and are therefore not relevant for Sigrid's maintainability analysis. Only add these technologies if you consider them part of the system's production code.
 6. "Unknown technology" will be shown in Sigrid when the technology cannot be detected.
 7. Use either `html` or `angularjstemplate`, but not both.
@@ -363,6 +356,7 @@ Qt,
 RabbitMQ,
 React,
 S3,
+SAP UI,
 Spring,
 Spring Boot,
 Spring Cloud,
@@ -372,7 +366,7 @@ Styled Components,
 Swing,
 Svelte,
 WPF
-VueJS,
+Vue,
 Yii.
 
 ## Technology conversion configuration

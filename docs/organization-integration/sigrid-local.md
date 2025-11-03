@@ -21,6 +21,8 @@ Before you can start using the Sigrid Local, you need the following:
   allowed to download and run applications yourself. In these situations, consult your IT department on how to make
   Sigrid Local available to you.
 - You will need local access to your source code that you want to analyze using Sigrid Local.
+- In terms of hardware, you will need a laptop with at least 16 GB of memory and 10 GB of disk space.
+  If your system is very large, over a million lines of code, you will need 32 GB of memory.
 
 ## Installing Sigrid Local
 
@@ -35,6 +37,8 @@ cannot be verified"**
 - Go to the "Privacy and Security" tab.
 - Scroll down to the "Security" section.
 - Find the message that Sigrid Local cannot be opened, and click "Open anyway".
+
+<img src="../images/local-runner/security-warning-mac.png" width="500" />
 
 If you are part of an enterprise IT organization, you might not be allowed to do this yourself. Please check
 with your IT department on how to make Sigrid Local available to you.
@@ -86,6 +90,12 @@ Sigrid license file is valid.
 Sigrid Local is able to analyze over 250 different technologies. For a full overview, see the 
 [list of supported technologies](../reference/technology-support.md#list-of-supported-technologies)
 and filter the table by "Sigrid Local".
+
+## Differences between Sigrid Local and cloud-based Sigrid
+
+- Since the source code remains on-premise, Sigrid will not be able to show source code.
+- You need a separate license for each system you want run using Sigrid Local. 
+- Sigrid Local targets one-off assessments, and is not suitable for continuously monitoring systems over time.
 
 ## Support
 
