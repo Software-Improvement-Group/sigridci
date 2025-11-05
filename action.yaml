@@ -50,6 +50,10 @@ inputs:
     description: "Output directory for Sigrid CI feedback."
     required: false
     default: "sigrid-ci-output"
+  targetquality:
+    description: "The desired target quality threshold"
+    required: false
+    type: "number"
     
   # Sigrid metadata
   displayname:
