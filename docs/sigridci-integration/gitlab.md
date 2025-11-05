@@ -8,7 +8,7 @@ This documentation covers cloud-based Sigrid. For on-premise Sigrid, refer to th
 
 - You have a [Sigrid](https://sigrid-says.com) user account. 
 - You have created an [authentication token for using Sigrid CI](../organization-integration/authentication-tokens.md).
-- [Python 3.7 or higher](https://www.python.org) needs to be available in the CI environment if you do not use the [Docker image](https://hub.docker.com/r/softwareimprovementgroup/sigridci) published by SIG. The client scripts for Sigrid CI are based on Python.
+- [Python 3.9 or higher](https://www.python.org) needs to be available in the CI environment if you do not use the [Docker image](https://hub.docker.com/r/softwareimprovementgroup/sigridci) published by SIG. The client scripts for Sigrid CI are based on Python.
 
 ## On-boarding your system to Sigrid
 
@@ -106,7 +106,7 @@ sigridpublish:
 
 #### Alternative 2b: Download SIG's Sigrid CI Python script
 
-Alternative 2b does not use a Docker image. Instead, the Sigrid CI GitLab jobs download SIG's Sigrid CI Python script directly from GitHub and runs it on your GitLab runner. This requires Github.com to be accessible from your CI environment and Python 3.7 to be available on your GitLab runners.
+Alternative 2b does not use a Docker image. Instead, the Sigrid CI GitLab jobs download SIG's Sigrid CI Python script directly from GitHub and runs it on your GitLab runner. This requires GitHub.com to be accessible from your CI environment and Python 3.9 to be available on your GitLab runners.
 
 Sigrid CI consists of a number of Python-based client scripts, that interact with Sigrid in order to analyze your project's source code and provide feedback based on the results. These client scripts need to be available to your GitLab runners, in order to call the scripts *from* the CI pipeline. 
 
