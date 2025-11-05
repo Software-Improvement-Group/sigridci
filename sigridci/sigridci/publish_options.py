@@ -38,6 +38,7 @@ class PublishOptions:
     runMode: RunMode
     sourceDir: str = "."
     subsystem: str = ""
+    ignore_missing_scope_file: bool = False
     excludePatterns: List[str] = field(default_factory=lambda: [])
     includePatterns: List[str] = field(default_factory=lambda: [])
     includeHistory: bool = False

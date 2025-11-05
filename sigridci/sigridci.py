@@ -36,6 +36,7 @@ def parsePublishOptions(args):
         customer=args.customer.lower(),
         system=args.system.lower(),
         subsystem=args.subsystem,
+        ignore_missing_scope_file=args.ignore_missing_scope_file,
         convert=args.convert,
         runMode=parseRunMode(args),
         capabilities=parseCapabilities(args.capability),
@@ -75,6 +76,7 @@ def parseCapabilities(names):
 if __name__ == "__main__":
     parser = ArgumentParser(description="Starts a Sigrid CI analysis and provides feedback on the outcomes.")
     parser.add_argument("--partner", type=str, default="sig", help=SUPPRESS)
+    parser.add_argument("--ignore-missing-scope-file", action="store_true", help="File sigrid.yaml is handled separately.")
     parser.add_argument("--customer", type=str, required=True, help="Name of your organization's Sigrid account.")
     parser.add_argument("--system", type=str, required=True, help="Name of your system in Sigrid, letters/digits/hyphens only.")
     parser.add_argument("--subsystem", type=str, default="", help="Publishes your code as a subsystem within a Sigrid system.")
