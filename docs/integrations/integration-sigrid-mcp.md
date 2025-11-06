@@ -26,7 +26,7 @@ The currently supported technologies are:
 
 ### Setup
 
-- Step 1: Obtain a Sigrid Token (https://docs.sigrid-says.com/organization-integration/authentication-tokens.html)
+- Step 1: Obtain a Sigrid Token — see the Sigrid docs on [authentication tokens](https://docs.sigrid-says.com/organization-integration/authentication-tokens.html)
 - Step 2: Configure MCP tool in your IDE or AI Coding Assistant
 - Step 3: Tune agent instructions rules or policies for Sigrid MCP Guardrails to your needs
 - Step 4: Pick a LLM with support for MCP tools (recommended: GPT-5, Claude 4 series, Gemini 2.5 series or higher)
@@ -113,7 +113,6 @@ Add:
 - Install Node
 - Open MCP settings
 - Add configuration:
-
 ```
 {
   "mcpServers": {
@@ -190,6 +189,3 @@ Sigrid MCP provides the code quality and security analysis, but it is up to the 
 | Connection fails | Ensure --allow-http flag is present (proxy mode) |
 | Bad Request: No valid session ID provided | Restarting the client and/or simply enabling/disabling the MCP servers |
 | AI Coding Assistant ignores MCP tool | Try one of the recommended LLMs: GPT-5, Claude 4 series, Gemini 2.5 series or higher |
-
-
-
