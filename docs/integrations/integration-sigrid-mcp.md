@@ -26,7 +26,7 @@ The currently supported technologies are:
 
 ### Setup
 
-- Step 1: Obtain a Sigrid Token — see the Sigrid docs on [authentication tokens](https://docs.sigrid-says.com/organization-integration/authentication-tokens.html)
+- Step 1: Obtain a Sigrid Token — see the Sigrid docs on [authentication tokens](../organization-integration/authentication-tokens.md)
 - Step 2: Configure MCP tool in your IDE or AI Coding Assistant
 - Step 3: Tune agent instructions rules or policies for Sigrid MCP Guardrails to your needs
 - Step 4: Pick a LLM with support for MCP tools (recommended: GPT-5, Claude 4 series, Gemini 2.5 series or higher)
@@ -85,8 +85,8 @@ Proxy (mcp-remote)
 - Install Node (needed for the npx package)
 - Install GitHub Copilot extension
 - Connect your GitHub account
-- In main screen of VSCode, click the settings icon on bottom left, select “Profiles”
-- Click MCP Servers. If prompted to create a new file, say “Yes”
+- In main screen of VSCode, click the settings icon on bottom left, select "Profiles"
+- Click MCP Servers. If prompted to create a new file, say "Yes"
 
 Add:
 ```
