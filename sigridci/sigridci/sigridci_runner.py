@@ -119,7 +119,7 @@ class SigridCiRunner:
             if SECURITY in self.options.capabilities and not "thirdpartyfindings:" in scope:
                 self.showValidationError("scope configuration file", ["Missing required field 'thirdpartyfindings'."])
 
-        if scope is None and metadata.get("scopeFileInRepository") and not self.options.subsystem:
+        if scope is None and metadata.get("scopeFileInRepository") and not self.options.subsystem and not self.options.ignoreMissingScopeFile:
             message = {"valid" : False, "notes" : ["Missing sigrid.yaml file", f"See {self.MISSING_SCOPE_URL}"]}
             self.validateConfiguration(lambda: message, "scope configuration file")
 

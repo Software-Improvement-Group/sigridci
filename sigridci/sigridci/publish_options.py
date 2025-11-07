@@ -44,6 +44,7 @@ class PublishOptions:
     feedbackURL: str = "https://docs.sigrid-says.com/landing/feedback.html"
     partner: str = "sig"
     capabilities: List[Capability] = field(default_factory=lambda: [MAINTAINABILITY])
+    ignoreMissingScopeFile: bool = False
 
     SYSTEM_NAME_PATTERN = re.compile("^[a-z0-9]+(-[a-z0-9]+)*$", re.IGNORECASE)
     SYSTEM_NAME_LENGTH = range(2, 65)
