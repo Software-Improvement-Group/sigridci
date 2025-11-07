@@ -446,6 +446,7 @@ In addition to supporting 300+ technologies, Sigrid also supports various open s
 | RubyGems              | Ruby                   |
 | SBT                   | Scala                  |
 | SwiftPM               | Swift                  |
+| UV                    | Python                 | 
 | Unmanaged JAR files   | Java                   |
 | Unmanaged DLL files   | C#                     |
 | Unmanaged JS files    | JavaScript             |
