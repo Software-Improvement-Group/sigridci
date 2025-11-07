@@ -6,7 +6,6 @@ SIG uses [continuous delivery](https://en.wikipedia.org/wiki/Continuous_delivery
 ### November 10, 2025
 
 - **Sigrid CI:** Sigrid CI for Open Source Health is now in beta. [Contact us](mailto:support@softwareimprovementgroup.com) if you're interested in joining the beta program. You can find more information in our [new documentation on using Sigrid CI](../sigridci-integration/using-sigridci.md).
-- **Risk dashboard:** The risk dashboard is changing. You can find more information on these changes, and *why* we're making these changes, in our [documentation](../capabilities/portfolio-risk-dashboard-plans.md).
 - **Technology support:** Sigrid now supports [UV](https://docs.astral.sh/uv/) for Open Source Health.
 
 ### November 3, 2025
