@@ -13,11 +13,12 @@ During the technical onboarding we will ask you what authorisation you require. 
 
 ## how to onboard Mendix projects from the teamserver
 
-Mendix offers a self service app to do this. The [addon app](https://addon.mendix.com) helps you onboard new projects in QSM. After 5-10 minutes you will receive an email stating the onboarding was succesful and you will be able to see the results for this project in QSM.
+Mendix offers a self service app to do this. The [addon app](https://addon.mendix.com) helps you onboard new projects in QSM. By default the MainLine will be cloned unless a specific branch is specified. After 5-10 minutes you will receive an email stating the onboarding was succesful and you will be able to see the results for this project in QSM.
 
 What do you need:
 
-- the name of the Mendix project that you want to onboard in QSM
+- the name and appid of the Mendix project that you want to onboard in QSM.
+- the name of a specific branch if needed.
 - your Mendix login, make sure that your access level is at least Scrum Master 
 - with that login you create a [Personal Acces Token](https://docs.mendix.com/apidocs-mxsdk/mxsdk/set-up-your-pat/).  When creating the PAT please choose these read only security settings:
  `mx:modelrepository:repo:read Read access to Team Server Git repositories and Team Server API`  
