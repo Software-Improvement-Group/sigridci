@@ -3,7 +3,12 @@ Sigrid release notes
 
 SIG uses [continuous delivery](https://en.wikipedia.org/wiki/Continuous_delivery), meaning that every change to Sigrid or the underlying analysis is released once our development pipeline has completed. On average, we release somewhere between 10 and 20 times per day. This page therefore doesn't list every single change, since that would quickly lead to an excessively long list of small changes. Instead, this page lists Sigrid and analysis changes that we consider noteworthy for the typical Sigrid user.
 
-### November 2, 2025
+### November 10, 2025
+
+- **Sigrid CI:** Sigrid CI for Open Source Health is now in beta. [Contact us](mailto:support@softwareimprovementgroup.com) if you're interested in joining the beta program. You can find more information in our [new documentation on using Sigrid CI](../sigridci-integration/using-sigridci.md).
+- **Technology support:** Sigrid now supports [UV](https://docs.astral.sh/uv/) for Open Source Health.
+
+### November 3, 2025
 
 - **Technology support:** The configuration for [Vue](https://vuejs.org) has been simplified. Previously, you needed to manually configure whether you were using Vue with JavaScript or Vue with TypeScript. This is now decided automatically. Old configurations are grandfathered into the new behavior, so there is no need to update your existing configuration.
 - **Technology support:** There is no more need to manually configure [SAP UI 5](https://sapui5.hana.ondemand.com), this is now detected automatically. The new behavior is backward compatible, so old configurations will continue to work.
