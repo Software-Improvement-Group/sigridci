@@ -59,7 +59,7 @@ that would not be reasonable. The behavior we're going for is known as
 [the boy scout rule](https://deviq.com/principles/boy-scout-rule), where you should leave your code (or your campsite)
 cleaner than you found it. 
 
-### Open Source Health feedback
+### Open Source Health feedback (Beta)
 
 Sigrid CI gives feedback on security vulnerabilities in open source libraries. Sigrid also checks other aspects of
 using open source libraries, such as licenses and freshness, but those are not part of Sigrid CI. So why is this
