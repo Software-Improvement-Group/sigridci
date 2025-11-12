@@ -77,7 +77,7 @@ eventually produce results that are unfair, so we prefer leaving the final decis
 Sigrid CI in this way, you can make Sigrid CI a warning rather than an error. This is the default behavior that we
 use in the configuration examples across the documentation.
 
-However, we concede there are situations and organizations where people do want the pipeline to fail. You can use
+However, if you do want to use a mandatory quality gate, you can use
 the Sigrid CI exit code for this, and you can even make this behavior more nuanced based on the specific exit code:
 
 - Exit code 0: All quality checks passed.
