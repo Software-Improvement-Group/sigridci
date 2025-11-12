@@ -67,7 +67,7 @@ So when to use these options:
 
 ## Letting Sigrid CI fail your pipeline
 
-Sigrid CI will return a different exit code depending on whether you achieved or failed your
+Sigrid CI returns a different exit code depending on whether you achieved or failed your
 [quality objectives](#defining-quality-objectives). If you want to use Sigrid CI as a mandatory quality gate, 
 you can use this exit code to fail your pipeline.
 
