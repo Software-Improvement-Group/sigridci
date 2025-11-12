@@ -113,4 +113,4 @@ if __name__ == "__main__":
 
     UploadLog.log("Starting Sigrid CI")
     runner = SigridCiRunner(options, apiClient)
-    sys.exit(runner.run() or 0)
+    sys.exit(runner.run())

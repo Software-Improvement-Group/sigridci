@@ -14,6 +14,7 @@
 
 import json
 import os
+import uuid
 
 from .capability import MAINTAINABILITY, OPEN_SOURCE_HEALTH, SECURITY
 from .reports.ascii_art_report import AsciiArtReport
@@ -25,6 +26,7 @@ from .reports.osh_markdown_report import OpenSourceHealthMarkdownReport
 from .reports.pipeline_summary_report import PipelineSummaryReport
 from .reports.security_markdown_report import SecurityMarkdownReport
 from .reports.static_html_report import StaticHtmlReport
+from .upload_log import UploadLog
 
 
 class FeedbackProvider:
@@ -55,7 +57,8 @@ class FeedbackProvider:
         if not os.path.exists(self.options.outputDir):
             os.mkdir(self.options.outputDir)
 
-        with open(f"{self.options.outputDir}/{self.capability.shortName}.json", mode="w", encoding="utf-8") as f:
+        rawFeedbackFile = f"{self.options.outputDir}/{self.capability.shortName}-{uuid.uuid4()}.json"
+        with open(rawFeedbackFile, mode="w", encoding="utf-8") as f:
             json.dump(self.feedback, f, sort_keys=False, indent=4)
 
         markdownReport = self.prepareMarkdownReport()
