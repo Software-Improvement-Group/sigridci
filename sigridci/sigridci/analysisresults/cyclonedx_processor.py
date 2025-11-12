@@ -35,7 +35,7 @@ class CycloneDXProcessor:
 
         for component in feedback.get("components", []):
             name = f"{component['group']}:{component['name']}" if component.get("group") else component["name"]
-            files = [occurrence["location"] for occurrence in component["evidence"]["occurrences"]]
+            files = [occurrence["location"] for occurrence in component.get("evidence", []).get("occurrences", [])]
             properties = {prop["name"]: prop["value"] for prop in component["properties"]}
             risk = properties["sigrid:risk:vulnerability"]
             latestVersion = properties["sigrid:latest:version"].replace("?", "")
