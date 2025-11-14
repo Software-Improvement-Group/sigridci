@@ -110,7 +110,7 @@ jobs:
         if: always()
         with:
           message-id: sigrid
-          message-path: sigrid-ci-output/feedback.md
+          message-path: sigrid-ci-output/*feedback.md
 ```
 {% endraw %}
 
@@ -179,7 +179,7 @@ jobs:
         if: always()
         with:
           message-id: sigrid
-          message-path: sigrid-ci-output/feedback.md
+          message-path: sigrid-ci-output/*feedback.md
 ```
 {% endraw %}
 

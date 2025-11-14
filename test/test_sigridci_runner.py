@@ -12,6 +12,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
+import json
 import os
 import tempfile
 import urllib.error
@@ -19,6 +20,7 @@ from email.message import Message
 from io import BytesIO
 from unittest import TestCase
 
+from sigridci.sigridci.capability import MAINTAINABILITY, OPEN_SOURCE_HEALTH
 from sigridci.sigridci.publish_options import PublishOptions, RunMode
 from sigridci.sigridci.sigrid_api_client import SigridApiClient
 from sigridci.sigridci.sigridci_runner import SigridCiRunner
@@ -26,6 +28,7 @@ from sigridci.sigridci.upload_log import UploadLog
 
 
 class SigridCiRunnerTest(TestCase):
+    maxDiff = None
 
     def setUp(self):
         self.tempDir = tempfile.mkdtemp()
@@ -75,11 +78,12 @@ class SigridCiRunnerTest(TestCase):
             "/inboundresults/sig/aap/noot/ci/uploads/v1",
             "UPLOAD",
             "/analysis-results/api/v1/objectives/aap/noot/config",
-            "/analysis-results/sigridci/aap/noot/v1/ci/results/123"
+            "/analysis-results/sigridci/aap/noot/v1/ci/results/123?type=MAINTAINABILITY"
         ]
 
         self.assertEqual(UploadLog.history, expectedLog)
         self.assertEqual(apiClient.called, expectedCalls)
+        self.assertEqual(apiClient.received["/inboundresults/sig/aap/noot/ci/uploads/v1"]["mode"], "DEFAULT")
 
     def testPublishRun(self):
         self.createTempFile(self.tempDir, "a.py", "print(123)")
@@ -107,14 +111,15 @@ class SigridCiRunnerTest(TestCase):
             "/analysis-results/api/v1/licenses/aap",
             "/analysis-results/sigridci/aap/noot/v1/ci",
             "/analysis-results/api/v1/system-metadata/aap/noot",
-            "/inboundresults/sig/aap/noot/ci/uploads/v1/publish",
+            "/inboundresults/sig/aap/noot/ci/uploads/v1",
             "UPLOAD",
             "/analysis-results/api/v1/objectives/aap/noot/config",
-            "/analysis-results/sigridci/aap/noot/v1/ci/results/123"
+            "/analysis-results/sigridci/aap/noot/v1/ci/results/123?type=MAINTAINABILITY"
         ]
 
         self.assertEqual(UploadLog.history, expectedLog)
         self.assertEqual(apiClient.called, expectedCalls)
+        self.assertEqual(apiClient.received["/inboundresults/sig/aap/noot/ci/uploads/v1"]["mode"], "PUBLISH")
 
     def testPublishOnlyRun(self):
         self.createTempFile(self.tempDir, "a.py", "print(123)")
@@ -142,12 +147,13 @@ class SigridCiRunnerTest(TestCase):
             "/analysis-results/api/v1/licenses/aap",
             "/analysis-results/sigridci/aap/noot/v1/ci",
             "/analysis-results/api/v1/system-metadata/aap/noot",
-            "/inboundresults/sig/aap/noot/ci/uploads/v1/publishonly",
+            "/inboundresults/sig/aap/noot/ci/uploads/v1",
             "UPLOAD"
         ]
 
         self.assertEqual(UploadLog.history, expectedLog)
         self.assertEqual(apiClient.called, expectedCalls)
+        self.assertEqual(apiClient.received["/inboundresults/sig/aap/noot/ci/uploads/v1"]["mode"], "PUBLISHONLY")
 
     def testOnBoardingRun(self):
         self.createTempFile(self.tempDir, "a.py", "print(123)")
@@ -172,12 +178,13 @@ class SigridCiRunnerTest(TestCase):
         expectedCalls = [
             "/analysis-results/api/v1/licenses/aap",
             "/analysis-results/sigridci/aap/noot/v1/ci",
-            "/inboundresults/sig/aap/noot/ci/uploads/v1/onboarding",
+            "/inboundresults/sig/aap/noot/ci/uploads/v1",
             "UPLOAD"
         ]
 
         self.assertEqual(UploadLog.history, expectedLog)
         self.assertEqual(apiClient.called, expectedCalls)
+        self.assertEqual(apiClient.received["/inboundresults/sig/aap/noot/ci/uploads/v1"]["mode"], "ONBOARDING")
 
     def testAddSubsystemOptionToUrl(self):
         self.createTempFile(self.tempDir, "a.py", "print(123)")
@@ -193,13 +200,15 @@ class SigridCiRunnerTest(TestCase):
             "/analysis-results/api/v1/licenses/aap",
             "/analysis-results/sigridci/aap/noot/v1/ci",
             "/analysis-results/api/v1/system-metadata/aap/noot",
-            "/inboundresults/sig/aap/noot/ci/uploads/v1/publish?subsystem=mysubsystem",
+            "/inboundresults/sig/aap/noot/ci/uploads/v1",
             "UPLOAD",
             "/analysis-results/api/v1/objectives/aap/noot/config",
-            "/analysis-results/sigridci/aap/noot/v1/ci/results/123"
+            "/analysis-results/sigridci/aap/noot/v1/ci/results/123?type=MAINTAINABILITY"
         ]
 
         self.assertEqual(apiClient.called, expectedCalls)
+        self.assertEqual(apiClient.received["/inboundresults/sig/aap/noot/ci/uploads/v1"]["mode"], "PUBLISH")
+        self.assertEqual(apiClient.received["/inboundresults/sig/aap/noot/ci/uploads/v1"]["subsystem"], "mysubsystem")
 
     def testExitWithMessageIfUploadEmpty(self):
         apiClient = MockApiClient(self.options, systemExists=False)
@@ -344,9 +353,43 @@ class SigridCiRunnerTest(TestCase):
         runner = SigridCiRunner(self.options, apiClient)
 
         with self.assertRaises(SystemExit):
-            # This should cause a system exit because an empty scope file
-            # is invalid. If there is no system exit, this test will fail.
+            # This should cause a system exit because the scope file is invalid.
             runner.run()
+
+    def testDependencyCheckerSectionInScopeFileIsRequiredForOSH(self):
+        self.createTempFile(self.tempDir, "sigrid.yaml", "dependencychecker:\n  blocklist: []")
+
+        self.options.capabilities = [MAINTAINABILITY, OPEN_SOURCE_HEALTH]
+
+        apiClient = MockApiClient(self.options)
+        apiClient.responses["/inboundresults/sig/aap/noot/ci/validate/v1"] = {"valid" : True, "notes" : ["test"]}
+
+        runner = SigridCiRunner(self.options, apiClient)
+        runner.validateConfigurationFiles({})
+
+    def testMissingDependencyCheckerSectionInScopeFileIsValidForMaintainability(self):
+        self.createTempFile(self.tempDir, "sigrid.yaml", "component_depth: 1")
+
+        self.options.capabilities = [MAINTAINABILITY]
+
+        apiClient = MockApiClient(self.options)
+        apiClient.responses["/inboundresults/sig/aap/noot/ci/validate/v1"] = {"valid" : True, "notes" : ["test"]}
+
+        runner = SigridCiRunner(self.options, apiClient)
+        runner.validateConfigurationFiles({})
+
+    def testMissingDependencyCheckerSectionInScopeFileIsInvalidForOSH(self):
+        self.createTempFile(self.tempDir, "sigrid.yaml", "component_depth: 1")
+
+        self.options.capabilities = [MAINTAINABILITY, OPEN_SOURCE_HEALTH]
+
+        apiClient = MockApiClient(self.options)
+        apiClient.responses["/inboundresults/sig/aap/noot/ci/validate/v1"] = {"valid" : True, "notes" : ["test"]}
+
+        runner = SigridCiRunner(self.options, apiClient)
+        with self.assertRaises(SystemExit):
+            runner.validateConfigurationFiles({})
+        self.assertEqual(UploadLog.history[-2], "    - Missing required field 'dependencychecker'.")
 
     def testCannotUseScopeFileInCombinationWithSubsystem(self):
         self.createTempFile(self.tempDir, "sigrid.yaml", "default_excludes: true")
@@ -675,6 +718,7 @@ class MockApiClient(SigridApiClient):
         super().__init__(options)
 
         self.called = []
+        self.received = {}
         self.systemExists = systemExists
         self.uploadAttempts = uploadAttempts
         self.attempt = 0
@@ -686,6 +730,8 @@ class MockApiClient(SigridApiClient):
 
     def callSigridAPI(self, path, body=None, contentType=None):
         self.called.append(path)
+        if body and contentType == "application/json":
+            self.received[path] = json.loads(body)
 
         if not self.systemExists and path.endswith("/sigridci/aap/noot/v1/ci"):
             # Mock an HTTP 404.

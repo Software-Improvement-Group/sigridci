@@ -35,10 +35,15 @@ class CycloneDXProcessor:
 
         for component in feedback.get("components", []):
             name = f"{component['group']}:{component['name']}" if component.get("group") else component["name"]
-            files = [occurrence["location"] for occurrence in component["evidence"]["occurrences"]]
+            files = list(self.getOccurrenceLocations(component))
             properties = {prop["name"]: prop["value"] for prop in component["properties"]}
             risk = properties["sigrid:risk:vulnerability"]
-            latestVersion = properties["sigrid:latest:version"].replace("?", "")
+            latestVersion = properties.get("sigrid:latest:version", "").replace("?", "")
 
             if Objective.isFindingIncluded(risk, objective):
                 yield Library(risk, name, component["version"], latestVersion, files)
+
+    def getOccurrenceLocations(self, component):
+        if component.get("evidence") and component["evidence"].get("occurrences"):
+            for occurrence in component["evidence"]["occurrences"]:
+                yield occurrence["location"]

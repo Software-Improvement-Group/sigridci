@@ -29,7 +29,7 @@ class SecurityMarkdownReport(Report, MarkdownRenderer):
         "UNKNOWN" : "⚪️"
     }
 
-    def __init__(self, objective = "CRITICAL"):
+    def __init__(self, objective = "HIGH"):
         super().__init__()
         self.objective = objective
         self.previousFeedback = None
@@ -58,10 +58,11 @@ class SecurityMarkdownReport(Report, MarkdownRenderer):
         return self.renderMarkdownTemplate(feedback, options, details, sigridLink)
 
     def getSummary(self, feedback, options):
+        objectiveLabel = Objective.getSeverityObjectiveLabel(self.objective)
         if self.isObjectiveSuccess(feedback, options):
-            return f"✅  You achieved your objective of having no {self.objective.lower()} security findings"
+            return f"✅  You achieved your objective of having {objectiveLabel} security findings"
         else:
-            return f"⚠️  You did not meet your objective of having no {self.objective.lower()} security findings"
+            return f"⚠️  You did not meet your objective of having {objectiveLabel} security findings"
 
     def generateFindingsTable(self, findings, rules, options):
         if len(findings) == 0:
