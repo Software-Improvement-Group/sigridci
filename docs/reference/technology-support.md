@@ -375,52 +375,53 @@ For the vast majority of technologies, you can simply publish your repository an
 
 This configuration can be managed using the `--convert` [option in Sigrid CI](client-script-usage.md#command-line-options). This is only applicable for the following technologies:
 
-| Technology          | Value of the `--convert` option                                         |
-|---------------------|-------------------------------------------------------------------------|
-| ABB Control Builder | `ABBControlBuilder`                                                     |
-| Altova UML          | `AltovaUML`                                                             |
-| Oracle APEX         | `Apex`                                                                  |
-| Axway               | `Axway`                                                                 |
-| Axystudio           | `Axystudio`                                                             |
-| BRM                 | `BRM`                                                                   |
-| Be Informed         | `Beinformed`                                                            |
-| Blueriq             | `Blueriq`                                                               |
-| Data Bricks         | `Databricks`                                                            |
-| Ecostruxure         | `Ecostruxure`                                                           |
-| FME                 | `FME`                                                                   |
-| IBM BPM             | `IbmBpm`                                                                |
-| Infinite Blue       | `Infiniteblue`                                                          |
-| JDE                 | `JDE`                                                                   |
-| Linc                | `Linc`                                                                  |
-| Lion                | `Lion`                                                                  |
-| Lion/COBOL          | `LionCobol`                                                             |
-| MicroFocus COBOL    | `MicroFocusCobol`                                                       |
-| MPS                 | `MPSLanguage`                                                           |
-| Nabsic              | `Nabsic`                                                                |
-| NetIQ IDM           | `NetIQIDM`                                                              |
-| OSB Pipeline        | `OSBPipeline`                                                           |
-| OutSystems          | `Outsystems` or `OutsystemsExporter` (contact SIG support for details)  |
-| PEGA                | `Pega` or `PegaFilter` (contact SIG support for details)                |
-| PL/SQL Headstart    | `PlsqlHeadstart`                                                        |
-| PL/SQL Forms        | `Plsqlforms`                                                            |
-| Polymer             | `Polymer`                                                               |
-| PowerCenter         | `Powercenter`                                                           |
-| Radience            | `Radience`                                                              |
-| Regelspraak         | `Regelspraak` or `Regelspraakhtml` (contact SIG support for details)    |
-| Rust                | `Rust`                                                                  |
-| Sailpoint BeanShell | `Sailpointbeanshell`                                                    |
-| SAP PO              | `Sappo`                                                                 |
-| SAS Flows           | `Sasflows`                                                              |
-| ServiceNow          | `ServiceNow`                                                            |
-| Siebel              | `SiebelProject` or `SiebelRepository` (contact SIG support for details) |
-| Svelte              | `Svelte`                                                                |
-| Uniface             | `Ssduniface` or `Unifacexml` (contact SIG support for details)          |
-| Tandem              | `Tandem`                                                                |
-| TRS                 | `Trs`                                                                   |
-| USoft               | `Usoft` or `UsoftEsi` (contact SIG support for details)                 |
-| WebSmart            | `Websmart`                                                              |
-| X++                 | `Xpp`                                                                   |
-| X++ 365             | `Axmodel`                                                               |
+| Technology               | Value of the `--convert` option                                         |
+|--------------------------|-------------------------------------------------------------------------|
+| ABB Control Builder      | `ABBControlBuilder`                                                     |
+| Altova UML               | `AltovaUML`                                                             |
+| Oracle APEX              | `Apex`                                                                  |
+| Axway                    | `Axway`                                                                 |
+| Axystudio                | `Axystudio`                                                             |
+| BRM                      | `BRM`                                                                   |
+| Be Informed              | `Beinformed`                                                            |
+| Blueriq                  | `Blueriq`                                                               |
+| Data Bricks              | `Databricks`                                                            |
+| Ecostruxure              | `Ecostruxure`                                                           |
+| FME                      | `FME`                                                                   |
+| IBM BPM                  | `IbmBpm`                                                                |
+| Infinite Blue            | `Infiniteblue`                                                          |
+| JDE                      | `JDE`                                                                   |
+| Linc                     | `Linc`                                                                  |
+| Lion                     | `Lion`                                                                  |
+| Lion/COBOL               | `LionCobol`                                                             |
+| MicroFocus COBOL         | `MicroFocusCobol`                                                       |
+| MPS                      | `MPSLanguage`                                                           |
+| Nabsic                   | `Nabsic`                                                                |
+| NetIQ IDM                | `NetIQIDM`                                                              |
+| OSB Pipeline             | `OSBPipeline`                                                           |
+| OutSystems               | `Outsystems` or `OutsystemsExporter` (contact SIG support for details)  |
+| PEGA                     | `Pega` or `PegaFilter` (contact SIG support for details)                |
+| Pentaho Data Integration | `Pentahodataintegration`                                                |
+| PL/SQL Headstart         | `PlsqlHeadstart`                                                        |
+| PL/SQL Forms             | `Plsqlforms`                                                            |
+| Polymer                  | `Polymer`                                                               |
+| PowerCenter              | `Powercenter`                                                           |
+| Radience                 | `Radience`                                                              |
+| Regelspraak              | `Regelspraak` or `Regelspraakhtml` (contact SIG support for details)    |
+| Rust                     | `Rust`                                                                  |
+| Sailpoint BeanShell      | `Sailpointbeanshell`                                                    |
+| SAP PO                   | `Sappo`                                                                 |
+| SAS Flows                | `Sasflows`                                                              |
+| ServiceNow               | `ServiceNow`                                                            |
+| Siebel                   | `SiebelProject` or `SiebelRepository` (contact SIG support for details) |
+| Svelte                   | `Svelte`                                                                |
+| Uniface                  | `Ssduniface` or `Unifacexml` (contact SIG support for details)          |
+| Tandem                   | `Tandem`                                                                |
+| TRS                      | `Trs`                                                                   |
+| USoft                    | `Usoft` or `UsoftEsi` (contact SIG support for details)                 |
+| WebSmart                 | `Websmart`                                                              |
+| X++                      | `Xpp`                                                                   |
+| X++ 365                  | `Axmodel`                                                               |
 
 ## Supported open source ecosystems
 

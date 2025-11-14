@@ -1202,6 +1202,31 @@ Successful response format of this request would look like the following, with t
 }
 ```
 
+### Creating users
+
+Administrators can use the API to create users in Sigrid. This is suitable for situations where you want to fully automate Sigrid user management based on your internal address book, without needing to rely on Sigrid's user interface for user management. To create a user, you can use the following end point:
+
+    POST https://sigrid-says.com/rest/auth/api/user-management/{customer}/users
+
+The end point requires the following request body:
+
+```json
+{
+  "userInfo": {
+    "firstName": "string",
+    "lastName": "string",
+    "emailAddress": "string"
+  },
+  "isSSO": true
+}
+```
+
+### Deleting users
+
+Administrators can use the following end point to delete users from Sigrid entirely, without needing to use the user intrerface:
+
+    DELETE https://sigrid-says.com/rest/auth/api/user-management/{customer}/users/{userId}
+
 ## Contact and support
 
 Feel free to contact [SIG's support department](mailto:support@softwareimprovementgroup.com) for any questions or issues you may have after reading this document, or when using Sigrid or Sigrid CI. Users in Europe can also contact us by phone at +31 20 314 0953.

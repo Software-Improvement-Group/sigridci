@@ -3,10 +3,12 @@ Sigrid release notes
 
 SIG uses [continuous delivery](https://en.wikipedia.org/wiki/Continuous_delivery), meaning that every change to Sigrid or the underlying analysis is released once our development pipeline has completed. On average, we release somewhere between 10 and 20 times per day. This page therefore doesn't list every single change, since that would quickly lead to an excessively long list of small changes. Instead, this page lists Sigrid and analysis changes that we consider noteworthy for the typical Sigrid user.
 
-### November 10, 2025
+### November 17, 2025
 
 - **Sigrid CI:** Sigrid CI for Open Source Health is now in beta. [Contact us](mailto:support@softwareimprovementgroup.com) if you're interested in joining the beta program. You can find more information in our [new documentation on using Sigrid CI](../sigridci-integration/using-sigridci.md).
 - **Technology support:** Sigrid now supports [UV](https://docs.astral.sh/uv/) for Open Source Health.
+- **Technology support:** Sigrid now supports [Pentaho Data Integration](https://pentaho.com/products/pentaho-data-integration/). The [technology support documentation](../reference/technology-support.md#technology-conversion-configuration) contains more information on how you can publish your systems using this technology.
+- **Sigrid API:** Administrators can now use the API to create and delete users. See the [API documentation](../integrations/sigrid-api-documentation.md#creating-users) for more information. 
 
 ### November 3, 2025
 
