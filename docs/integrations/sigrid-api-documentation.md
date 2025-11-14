@@ -923,22 +923,35 @@ This end point returns the following response:
 
 If you're a typical Sigrid user, you probably already know which licenses you have and therefore probably don't need this end point. However, if you have access to *multiple* Sigrid accounts, you can use this end point to programmatically obtain the licenses for each one.
 
-## Managing user permissions via API
+## User management
 
-In addition to the general usage of the Sigrid API, users also can also perform user management tasks via the API as an alternative to doing these tasks within the web-based user interface of Sigrid itself. This also allows Sigrid administrators to better construct automated processes for managing the access to systems for their users.
+In addition to the general usage of the Sigrid API, users also can also perform user management tasks via the API as an alternative to doing these tasks within the web-based user interface of Sigrid itself. 
+This allows Sigrid administrators to better construct automated processes for managing the access to systems for their users.
 
-* The Sigrid UM API base URL is `https://sigrid-says.com/rest/auth/api`.
-* Authentication for the Sigrid API uses the same [authentication tokens](../organization-integration/authentication-tokens.md) that are used by Sigrid CI.
-* You need to pass the authentication token to each request in the HTTP header: `Authorization: Bearer {SIGRID_PERSONAL_TOKEN}`.
-* All end points will return HTTP status 401 if the token is invalid, expired or revoked.
-* All end points will return HTTP status 403 if the token belongs to an non-admin user.
-* All end points return JSON and therefore return a Content-Type of `application/json`.
+### Creating users
 
-The following example shows how to call the User Management API via `curl`:
+Administrators can use the API to create users in Sigrid. This is suitable for situations where you want to fully automate Sigrid user management based on your internal address book, without needing to rely on Sigrid's user interface for user management. To create a user, you can use the following end point:
 
-```shell
-curl -H 'Authorization: Bearer {SIGRID_PERSONAL_TOKEN}' https://sigrid-says.com/rest/auth/api/user-management/{customer}/users
+    POST https://sigrid-says.com/rest/auth/api/user-management/{customer}/users
+
+The end point requires the following request body:
+
+```json
+{
+  "userInfo": {
+    "firstName": "string",
+    "lastName": "string",
+    "emailAddress": "string"
+  },
+  "isSSO": true
+}
 ```
+
+### Deleting users
+
+Administrators can use the following end point to delete users from Sigrid entirely, without needing to use the user interface:
+
+    DELETE https://sigrid-says.com/rest/auth/api/user-management/{customer}/users/{userId}
 
 ### Managing individual user permissions
 
@@ -1201,31 +1214,6 @@ Successful response format of this request would look like the following, with t
   "updatedByUser": "3fa85f64-5717-4562-b3fc-2c963f66afa6"	
 }
 ```
-
-### Creating users
-
-Administrators can use the API to create users in Sigrid. This is suitable for situations where you want to fully automate Sigrid user management based on your internal address book, without needing to rely on Sigrid's user interface for user management. To create a user, you can use the following end point:
-
-    POST https://sigrid-says.com/rest/auth/api/user-management/{customer}/users
-
-The end point requires the following request body:
-
-```json
-{
-  "userInfo": {
-    "firstName": "string",
-    "lastName": "string",
-    "emailAddress": "string"
-  },
-  "isSSO": true
-}
-```
-
-### Deleting users
-
-Administrators can use the following end point to delete users from Sigrid entirely, without needing to use the user interface:
-
-    DELETE https://sigrid-says.com/rest/auth/api/user-management/{customer}/users/{userId}
 
 ## Contact and support
 
