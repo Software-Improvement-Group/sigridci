@@ -1223,7 +1223,7 @@ The end point requires the following request body:
 
 ### Deleting users
 
-Administrators can use the following end point to delete users from Sigrid entirely, without needing to use the user intrerface:
+Administrators can use the following end point to delete users from Sigrid entirely, without needing to use the user interface:
 
     DELETE https://sigrid-says.com/rest/auth/api/user-management/{customer}/users/{userId}
 
