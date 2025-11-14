@@ -15,7 +15,7 @@ jobs:
       - name: "Run Sigrid CI" 
         env:
           SIGRID_CI_TOKEN: "${{ secrets.SIGRID_CI_TOKEN }}"
-        run: "./sigridci/sigridci.py --customer sig --system sigridci-client --source ."
+        run: "./sigridci/sigridci.py --customer sig --system sigridci-client --source . --capability maintainability,osh"
       - name: "Save Sigrid CI results"
         if: always()
         uses: actions/upload-artifact@v4
@@ -28,7 +28,7 @@ jobs:
         if: always()
         with:
           message-id: sigrid
-          message-path: sigrid-ci-output/feedback.md
+          message-path: sigrid-ci-output/*feedback.md
   sigridci_docker:
     name: "Sigrid CI in Docker"
     runs-on: ubuntu-latest
@@ -44,5 +44,6 @@ jobs:
         with:
           customer: "sig"
           system: "sigridci-client"
+          capability: "maintainability,osh"
         env:
           SIGRID_CI_TOKEN: "${{ secrets.SIGRID_CI_TOKEN }}"

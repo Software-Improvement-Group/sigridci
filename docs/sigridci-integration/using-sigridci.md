@@ -90,6 +90,14 @@ Sigrid CI separates vulnerable open source libraries into two categories:
   vulnerability and possible follow-up actions. This is explained in more detail, also from a process perspective,
   in our [guidelines on using open source](../workflows/best-practices-osh.md#how-to-remediate-vulnerabilities).
 
+#### Adding Open Source Health feedback to an existing Sigrid CI configuration
+
+- **All platforms:** You need to add the option `--capability maintainability,osh` to the Sigrid CI step in your
+  pipeline configuration. 
+- **GitHub:** In addition to the above, you need one extra step: In your pipeline configuration, look for the
+  line `message-path: sigrid-ci-output/feedback.md`, and change this to `message-path: sigrid-ci-output/*feedback.md`.
+  Adding the asterisk allows you to get feedback on *all* Sigrid capabilities, not just maintainability.
+
 ## How do you deal with feedback from Sigrid CI?
 
 Feedback from Sigrid CI is intended to be used in the context of a

@@ -18,16 +18,15 @@ import os
 import sys
 from argparse import ArgumentParser, SUPPRESS
 
-from sigridci.publish_options import PublishOptions, RunMode, Capability
+from sigridci.capability import MAINTAINABILITY, OPEN_SOURCE_HEALTH
+from sigridci.publish_options import PublishOptions, RunMode
 from sigridci.sigrid_api_client import SigridApiClient
 from sigridci.platform import Platform
 from sigridci.sigridci_runner import SigridCiRunner
 from sigridci.upload_log import UploadLog
 
 
-CAPABILITIES = {
-    "maintainability" : Capability.MAINTAINABILITY,
-}
+CAPABILITIES = {cap.shortName: cap for cap in [MAINTAINABILITY, OPEN_SOURCE_HEALTH]}
 
 
 def parsePublishOptions(args):
@@ -36,7 +35,6 @@ def parsePublishOptions(args):
         customer=args.customer.lower(),
         system=args.system.lower(),
         subsystem=args.subsystem,
-        ignore_missing_scope_file=args.ignore_missing_scope_file,
         convert=args.convert,
         runMode=parseRunMode(args),
         capabilities=parseCapabilities(args.capability),
@@ -46,7 +44,8 @@ def parsePublishOptions(args):
         includeHistory=True,
         showUploadContents=args.showupload,
         outputDir=args.out,
-        sigridURL=args.sigridurl
+        sigridURL=args.sigridurl,
+        ignoreMissingScopeFile=args.ignore_missing_scope_file
     )
 
 
@@ -114,4 +113,6 @@ if __name__ == "__main__":
 
     UploadLog.log("Starting Sigrid CI")
     runner = SigridCiRunner(options, apiClient)
-    runner.run()
+    exitCode = runner.run()
+    if options.runMode == RunMode.FEEDBACK_ONLY:
+        sys.exit(exitCode)

@@ -18,7 +18,6 @@ import urllib.request
 
 from .report import Report, MarkdownRenderer
 from ..api_caller import ApiCaller
-from ..objective import Objective, ObjectiveStatus
 from ..publish_options import RunMode
 from ..upload_log import UploadLog
 

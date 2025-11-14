@@ -43,7 +43,7 @@ class SecurityMarkdownReportTest(TestCase):
         expected = """
             # [Sigrid](https://sigrid-says.com/aap/noot/-/security) Security feedback
             
-            **⚠️  You did not meet your objective of having no critical security findings**
+            **⚠️  You did not meet your objective of having no critical-severity security findings**
             
             ## 👍 What went well?
             
@@ -77,7 +77,7 @@ class SecurityMarkdownReportTest(TestCase):
         expected = """
             # [Sigrid](https://sigrid-says.com/aap/noot/-/security) Security feedback
             
-            **✅  You achieved your objective of having no critical security findings**
+            **✅  You achieved your objective of having no critical-severity security findings**
             
             ## 👍 What went well?
             
@@ -107,7 +107,7 @@ class SecurityMarkdownReportTest(TestCase):
         expected = """
             # [Sigrid](https://sigrid-says.com/aap/noot/-/security) Security feedback
             
-            **⚠️  You did not meet your objective of having no critical security findings**
+            **⚠️  You did not meet your objective of having no critical-severity security findings**
             
             ## 👍 What went well?
             
@@ -144,7 +144,7 @@ class SecurityMarkdownReportTest(TestCase):
         "CI_COMMIT_REF_NAME" : "mybranch",
     })
     def testReportBasedOnDiff(self):
-        report = SecurityMarkdownReport("MEDIUM")
+        report = SecurityMarkdownReport("LOW")
         with open(os.path.dirname(__file__) + "/testdata/security-previous.json", encoding="utf-8", mode="r") as f:
             report.previousFeedback = json.load(f)
         markdown = report.renderMarkdown("1234", self.feedback, self.options)
@@ -152,7 +152,7 @@ class SecurityMarkdownReportTest(TestCase):
         expected = """
             # [Sigrid](https://sigrid-says.com/aap/noot/-/security) Security feedback
             
-            **⚠️  You did not meet your objective of having no medium security findings**
+            **⚠️  You did not meet your objective of having no medium-severity security findings**
             
             ## 👍 What went well?
             
