@@ -69,39 +69,47 @@ class ObjectiveTest(TestCase):
         status = Objective.determineStatus(feedback, 3.5)
         self.assertEqual(status, ObjectiveStatus.UNKNOWN)
 
-    def testIsFindingIncluded(self):
-        self.assertTrue(Objective.isFindingIncluded("CRITICAL", "CRITICAL"))
-        self.assertFalse(Objective.isFindingIncluded("HIGH", "CRITICAL"))
-        self.assertFalse(Objective.isFindingIncluded("MEDIUM", "CRITICAL"))
-        self.assertFalse(Objective.isFindingIncluded("LOW", "CRITICAL"))
-
-        self.assertTrue(Objective.isFindingIncluded("CRITICAL", "HIGH"))
-        self.assertTrue(Objective.isFindingIncluded("HIGH", "HIGH"))
-        self.assertFalse(Objective.isFindingIncluded("MEDIUM", "HIGH"))
-        self.assertFalse(Objective.isFindingIncluded("LOW", "HIGH"))
-
-        self.assertTrue(Objective.isFindingIncluded("CRITICAL", "MEDIUM"))
-        self.assertTrue(Objective.isFindingIncluded("HIGH", "MEDIUM"))
-        self.assertTrue(Objective.isFindingIncluded("MEDIUM", "MEDIUM"))
-        self.assertFalse(Objective.isFindingIncluded("LOW", "MEDIUM"))
-
-    def testMeetsFindingObjective(self):
-        self.assertTrue(Objective.meetsFindingObjective([], "CRITICAL"))
+    def testCriticalObjectiveMeansEverythingisFine(self):
+        self.assertTrue(Objective.meetsFindingObjective(["CRITICAL"], "CRITICAL"))
         self.assertTrue(Objective.meetsFindingObjective(["HIGH"], "CRITICAL"))
+        self.assertTrue(Objective.meetsFindingObjective(["MEDIUM"], "CRITICAL"))
+        self.assertTrue(Objective.meetsFindingObjective(["LOW"], "CRITICAL"))
 
-        self.assertFalse(Objective.meetsFindingObjective(["CRITICAL"], "CRITICAL"))
-        self.assertFalse(Objective.meetsFindingObjective(["HIGH", "CRITICAL"], "CRITICAL"))
-
-        self.assertTrue(Objective.meetsFindingObjective([], "HIGH"))
-        self.assertTrue(Objective.meetsFindingObjective(["MEDIUM"], "HIGH"))
-
-        self.assertFalse(Objective.meetsFindingObjective(["HIGH"], "HIGH"))
+    def testHighObjectiveMeansCriticalFindingsAreNotAllowed(self):
         self.assertFalse(Objective.meetsFindingObjective(["CRITICAL"], "HIGH"))
+        self.assertTrue(Objective.meetsFindingObjective(["HIGH"], "HIGH"))
+        self.assertTrue(Objective.meetsFindingObjective(["MEDIUM"], "HIGH"))
+        self.assertTrue(Objective.meetsFindingObjective(["LOW"], "HIGH"))
+
+    def testMediumObjectiveMeansCriticalAndHighAreNotAllowed(self):
+        self.assertFalse(Objective.meetsFindingObjective(["CRITICAL"], "MEDIUM"))
+        self.assertFalse(Objective.meetsFindingObjective(["HIGH"], "MEDIUM"))
+        self.assertTrue(Objective.meetsFindingObjective(["MEDIUM"], "MEDIUM"))
+        self.assertTrue(Objective.meetsFindingObjective(["LOW"], "MEDIUM"))
+
+    def testLowObjectiveStillAllowsLowSeverity(self):
+        self.assertFalse(Objective.meetsFindingObjective(["CRITICAL"], "LOW"))
+        self.assertFalse(Objective.meetsFindingObjective(["HIGH"], "LOW"))
+        self.assertTrue(Objective.meetsFindingObjective(["LOW"], "LOW"))
+        self.assertTrue(Objective.meetsFindingObjective(["NONE"], "LOW"))
+
+    def testNoneObjectiveMeansNothingIsAllowed(self):
+        self.assertFalse(Objective.meetsFindingObjective(["CRITICAL"], "NONE"))
+        self.assertFalse(Objective.meetsFindingObjective(["HIGH"], "NONE"))
+        self.assertFalse(Objective.meetsFindingObjective(["LOW"], "NONE"))
+        self.assertTrue(Objective.meetsFindingObjective(["NONE"], "NONE"))
 
     def testDoNotCountUnknownSeverityAgainstObjective(self):
         self.assertTrue(Objective.meetsFindingObjective(["UNKNOWN"], "CRITICAL"))
         self.assertTrue(Objective.meetsFindingObjective(["UNKNOWN"], "HIGH"))
         self.assertTrue(Objective.meetsFindingObjective(["UNKNOWN"], "MEDIUM"))
+
+    def testSeverityObjectiveLabel(self):
+        self.assertEqual("any", Objective.getSeverityObjectiveLabel("CRITICAL"))
+        self.assertEqual("no critical-severity", Objective.getSeverityObjectiveLabel("HIGH"))
+        self.assertEqual("no high-severity", Objective.getSeverityObjectiveLabel("MEDIUM"))
+        self.assertEqual("no medium-severity", Objective.getSeverityObjectiveLabel("LOW"))
+        self.assertEqual("no", Objective.getSeverityObjectiveLabel("NONE"))
 
     def mockFeedback(self, baseline, changedBefore, changedAfter, newAndChanged):
         return {

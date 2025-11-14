@@ -30,7 +30,7 @@ from .reports.static_html_report import StaticHtmlReport
 
 class FeedbackProvider:
     DEFAULT_RATING_OBJECTIVE = 3.5
-    DEFAULT_FINDING_OBJECTIVE = "CRITICAL"
+    DEFAULT_FINDING_OBJECTIVE = "HIGH"
 
     def __init__(self, capability, options, objectives):
         self.capability = capability

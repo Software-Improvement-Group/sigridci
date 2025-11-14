@@ -17,6 +17,7 @@ import os
 from .report import Report, MarkdownRenderer
 from .security_markdown_report import SecurityMarkdownReport
 from ..analysisresults.cyclonedx_processor import CycloneDXProcessor
+from ..objective import Objective
 
 
 class OpenSourceHealthMarkdownReport(Report, MarkdownRenderer):
@@ -25,7 +26,7 @@ class OpenSourceHealthMarkdownReport(Report, MarkdownRenderer):
     SORT_RISK = list(SecurityMarkdownReport.SEVERITY_SYMBOLS.keys())
     DOCS_LINK = "https://docs.sigrid-says.com/reference/analysis-scope-configuration.html#exclude-open-source-health-risks"
 
-    def __init__(self, objective = "CRITICAL"):
+    def __init__(self, objective = "HIGH"):
         super().__init__()
         self.objective = objective
         self.previousFeedback = None
@@ -65,11 +66,11 @@ class OpenSourceHealthMarkdownReport(Report, MarkdownRenderer):
         return self.renderMarkdownTemplate(feedback, options, details, sigridLink)
 
     def getSummary(self, feedback, options):
-        objectiveDisplayName = f"{self.objective.lower()}-severity open source vulnerabilities"
+        objectiveDisplayName = f"{Objective.getSeverityObjectiveLabel(self.objective)} open source vulnerabilities"
         if self.isObjectiveSuccess(feedback, options):
-            return f"✅  You achieved your objective of having no {objectiveDisplayName}."
+            return f"✅  You achieved your objective of having {objectiveDisplayName}."
         else:
-            return f"⚠️  You failed to meet your objective of having no {objectiveDisplayName}."
+            return f"⚠️  You failed to meet your objective of having {objectiveDisplayName}."
 
     def generateFindingsTable(self, libraries, options):
         md = "| Vulnerability risk | Library | Latest version | Location(s) |\n"
