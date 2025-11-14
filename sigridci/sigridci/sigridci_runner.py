@@ -15,7 +15,7 @@
 import os
 import sys
 
-from .capability import OPEN_SOURCE_HEALTH, SECURITY
+from .capability import OPEN_SOURCE_HEALTH, SECURITY, Capability
 from .feedback_provider import FeedbackProvider
 from .platform import Platform
 from .publish_options import PublishOptions, RunMode
@@ -100,11 +100,20 @@ class SigridCiRunner:
             feedbackProvider = FeedbackProvider(capability, self.options, objectives)
             feedbackProvider.analysisId = analysisId
             feedbackProvider.feedback = feedback
+            feedbackProvider.previousFeedback = self.loadFeedbackBaseline(capability)
             success = feedbackProvider.generateReports()
             if not success:
                 exitCode += capability.exitCode
 
         return exitCode
+
+    def loadFeedbackBaseline(self, capability):
+        if capability == OPEN_SOURCE_HEALTH:
+            return self.apiClient.fetchOpenSourceHealth()
+        elif capability == SECURITY:
+            return self.apiClient.fetchSecurityFindings()
+        else:
+            return None
 
     def validateConfigurationFiles(self, metadata):
         scope = self.options.readScopeFile()
