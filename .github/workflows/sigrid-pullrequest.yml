@@ -28,7 +28,7 @@ jobs:
         if: always()
         with:
           message-id: sigrid
-          message-path: sigrid-ci-output/feedback.md
+          message-path: sigrid-ci-output/*feedback.md
   sigridci_docker:
     name: "Sigrid CI in Docker"
     runs-on: ubuntu-latest
