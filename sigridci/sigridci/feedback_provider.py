@@ -26,7 +26,6 @@ from .reports.osh_markdown_report import OpenSourceHealthMarkdownReport
 from .reports.pipeline_summary_report import PipelineSummaryReport
 from .reports.security_markdown_report import SecurityMarkdownReport
 from .reports.static_html_report import StaticHtmlReport
-from .upload_log import UploadLog
 
 
 class FeedbackProvider:
@@ -67,12 +66,6 @@ class FeedbackProvider:
         for report in reports:
             report.previousFeedback = self.previousFeedback
             report.generate(self.analysisId, self.feedback, self.options)
-
-        print("")
-        print(f"Sigrid CI feedback is available from\n    {markdownReport.getMarkdownFile(self.options)}")
-        print("")
-        print(f"View this system in Sigrid:\n    {markdownReport.getSigridUrl(self.options)}")
-        print("")
 
         return markdownReport.isObjectiveSuccess(self.feedback, self.options)
 

@@ -113,4 +113,6 @@ if __name__ == "__main__":
 
     UploadLog.log("Starting Sigrid CI")
     runner = SigridCiRunner(options, apiClient)
-    sys.exit(runner.run())
+    exitCode = runner.run()
+    if options.runMode == RunMode.FEEDBACK_ONLY:
+        sys.exit(exitCode)

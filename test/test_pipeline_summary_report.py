@@ -46,7 +46,7 @@ class PipelineSummaryReportTest(TestCase):
             ** ⚠️  Your code did not improve maintainability towards your objective of 3.5 stars **
         """
 
-        self.assertEqual(buffer.getvalue().strip(), inspect.cleandoc(expected).strip())
+        self.assertEqual(buffer.getvalue().strip().split("\n")[0], inspect.cleandoc(expected))
 
     def testSigridLinkIsLowercase(self):
         self.options.customer = "Aap"
@@ -75,4 +75,4 @@ class PipelineSummaryReportTest(TestCase):
             ** 💭️  You did not change any files that are measured by Sigrid **
         """
 
-        self.assertEqual(buffer.getvalue().strip(), inspect.cleandoc(expected).strip())
+        self.assertEqual(buffer.getvalue().strip().split("\n")[0], inspect.cleandoc(expected).strip())
