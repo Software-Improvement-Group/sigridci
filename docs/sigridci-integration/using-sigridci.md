@@ -98,6 +98,37 @@ Sigrid CI separates vulnerable open source libraries into two categories:
   line `message-path: sigrid-ci-output/feedback.md`, and change this to `message-path: sigrid-ci-output/*feedback.md`.
   Adding the asterisk allows you to get feedback on *all* Sigrid capabilities, not just maintainability.
 
+### Security feedback (Beta)
+
+Sigrid CI provides security feedback based on your [objectives](../capabilities/portfolio-objectives.md).
+As with [open source vulnerabilities](#open-source-health-feedback-beta), you do need to fix every single
+security finding that does not meet your objective.
+
+<img src="../images/ci/security-feedback.png" width="350" />
+
+When you encounter security findings during code reviews, there are three ways how you can deal with them:
+
+- **Address the finding in the pull request:** It's always the best course of action to just address the finding
+  within the pull request. This prevents the finding from ever going into the main/master branch, which is generally
+  considered a best practice in [shift-left thinking](https://en.wikipedia.org/wiki/Shift-left_testing). 
+- **Merge the pull request, manage the finding via Sigrid:** In some cases, the pull request author and reviewer might
+  agree it's not feasible to address the finding right now. In those situations, it's OK to merge the pull request.
+  This will cause the security finding to appear in Sigrid's
+  [Security dashboard](../capabilities/portfolio-security.md), where it can be tracked.
+- **Merge the pull request, mark the finding as a false positive in Sigrid:** Like any automated check, Sigrid can
+  produce findings that are false positives. In those situations, if the pull request author and reviewer agree the
+  finding is *actually* a false positive, it's OK to merge the pull request. You can then mark the finding as a false
+  positive in Sigrid's [security page](../capabilities/system-security.md). False positives are automatically excluded
+  from future Sigrid CI feedback. 
+
+#### Adding Security feedback to an existing Sigrid CI configuration
+
+- **All platforms:** You need to add the option `--capability maintainability,osh,security` to the Sigrid CI step in
+  your pipeline configuration.
+- **GitHub:** In addition to the above, you need one extra step: In your pipeline configuration, look for the
+  line `message-path: sigrid-ci-output/feedback.md`, and change this to `message-path: sigrid-ci-output/*feedback.md`.
+  Adding the asterisk allows you to get feedback on *all* Sigrid capabilities, not just maintainability.
+
 ## How do you deal with feedback from Sigrid CI?
 
 Feedback from Sigrid CI is intended to be used in the context of a

@@ -18,12 +18,10 @@ import os
 import sys
 from argparse import ArgumentParser, SUPPRESS
 
-from sigridci.capability import MAINTAINABILITY, OPEN_SOURCE_HEALTH, SECURITY
+from sigridci.capability import CAPABILITY_SHORT_NAMES
 from sigridci.feedback_provider import FeedbackProvider
-from sigridci.publish_options import PublishOptions, RunMode, Capability
+from sigridci.publish_options import PublishOptions, RunMode
 from sigridci.sigrid_api_client import SigridApiClient
-
-CAPABILITIES = {cap.shortName: cap for cap in [MAINTAINABILITY, OPEN_SOURCE_HEALTH, SECURITY]}
 
 
 def parseFeedbackOptions(args):
@@ -32,7 +30,7 @@ def parseFeedbackOptions(args):
         customer=args.customer,
         system=args.system,
         runMode=RunMode.FEEDBACK_ONLY,
-        capabilities=[CAPABILITIES[args.capability.lower()]],
+        capabilities=[CAPABILITY_SHORT_NAMES[args.capability.lower()]],
         outputDir=args.out,
         sigridURL=args.sigridurl
     )
@@ -58,7 +56,7 @@ if __name__ == "__main__":
     parser.add_argument("--system", type=str, required=True, help="Name of your system in Sigrid, letters/digits/hyphens only.")
     parser.add_argument("--out", type=str, default="sigrid-ci-output", help="Output directory for Sigrid CI feedback.")
     parser.add_argument("--sigridurl", type=str, default="https://sigrid-says.com", help="Sigrid base URL.")
-    parser.add_argument("--capability", type=str, required=True, choices=list(CAPABILITIES.keys()))
+    parser.add_argument("--capability", type=str, required=True, choices=list(CAPABILITY_SHORT_NAMES.keys()))
     parser.add_argument("--analysisresults", type=str, required=True, help="Analysis results JSON file.")
     parser.add_argument("--previousresults", type=str, help="Baseline analysis results JSON file used for comparison.")
     args = parser.parse_args()
@@ -66,7 +64,7 @@ if __name__ == "__main__":
     options = parseFeedbackOptions(args)
     objectives = determineObjectives(options)
 
-    feedbackProvider = FeedbackProvider(CAPABILITIES[args.capability], options, objectives)
+    feedbackProvider = FeedbackProvider(CAPABILITY_SHORT_NAMES[args.capability], options, objectives)
     feedbackProvider.loadLocalAnalysisResults(args.analysisresults)
     if args.previousresults:
         feedbackProvider.loadPreviousAnalysisResults(args.previousresults)
