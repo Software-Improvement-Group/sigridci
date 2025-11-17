@@ -25,7 +25,7 @@ from sigridci.sigridci.reports.osh_text_report import OpenSourceHealthTextReport
 class OpenSourceHealthTextReportTest(TestCase):
 
     def testPrintVulnerableLibraries(self):
-        options = PublishOptions("aap", "noot", RunMode.FEEDBACK_ONLY, sourceDir="/tmp", feedbackURL="")
+        options = PublishOptions("aap", "noot", RunMode.FEEDBACK_ONLY, sourceDir="/aap", feedbackURL="")
 
         with open(os.path.dirname(__file__) + "/testdata/osh-junit.json", encoding="utf-8", mode="r") as f:
             feedback = json.load(f)
