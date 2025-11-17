@@ -36,4 +36,6 @@ class OpenSourceHealthTextReport(Report):
             for finding in findings:
                 symbol = SecurityMarkdownReport.SEVERITY_SYMBOLS[finding.risk]
                 print(f"    {symbol} {finding.name} {finding.version}", file=self.output)
+                for file in finding.files:
+                    print(f"        Defined in {file}", file=self.output)
             print("", file=self.output)

@@ -38,6 +38,7 @@ class OpenSourceHealthTextReportTest(TestCase):
             Vulnerable open source libraries
             
                 🟣 org.apache.logging.log4j:log4j-core 2.14.1
+                    Defined in gradle/libs.versions.toml
         """
 
         self.assertEqual(inspect.cleandoc(expected), buffer.getvalue().strip())
