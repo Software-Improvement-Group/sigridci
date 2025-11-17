@@ -23,6 +23,7 @@ from .reports.gitlab_pull_request_report import GitLabPullRequestReport
 from .reports.junit_format_report import JUnitFormatReport
 from .reports.maintainability_markdown_report import MaintainabilityMarkdownReport
 from .reports.osh_markdown_report import OpenSourceHealthMarkdownReport
+from .reports.osh_text_report import OpenSourceHealthTextReport
 from .reports.pipeline_summary_report import PipelineSummaryReport
 from .reports.security_markdown_report import SecurityMarkdownReport
 from .reports.static_html_report import StaticHtmlReport
@@ -34,11 +35,21 @@ class FeedbackProvider:
 
     def __init__(self, capability, options, objectives):
         self.capability = capability
-        self.objectives = objectives
+        self.objective = self.getObjective(objectives)
         self.options = options
         self.analysisId = "local"
         self.feedback = None
         self.previousFeedback = None
+
+    def getObjective(self, objectives):
+        if self.capability == MAINTAINABILITY:
+            return objectives.get("MAINTAINABILITY", self.DEFAULT_RATING_OBJECTIVE)
+        elif self.capability == OPEN_SOURCE_HEALTH:
+            return objectives.get("OSH_MAX_SEVERITY", self.DEFAULT_FINDING_OBJECTIVE)
+        elif self.capability == SECURITY:
+            return objectives.get("SECURITY_MAX_SEVERITY", self.DEFAULT_FINDING_OBJECTIVE)
+        else:
+            raise Exception(f"Unknown capability: {self.capability}")
 
     def loadLocalAnalysisResults(self, analysisResultsFile):
         with open(analysisResultsFile, mode="r", encoding="utf-8") as f:
@@ -71,21 +82,19 @@ class FeedbackProvider:
 
     def prepareMarkdownReport(self):
         if self.capability == MAINTAINABILITY:
-            objective = self.objectives.get("MAINTAINABILITY", self.DEFAULT_RATING_OBJECTIVE)
-            return MaintainabilityMarkdownReport(objective)
+            return MaintainabilityMarkdownReport(self.objective)
         elif self.capability == OPEN_SOURCE_HEALTH:
-            objective = self.objectives.get("OSH_MAX_SEVERITY", self.DEFAULT_FINDING_OBJECTIVE)
-            return OpenSourceHealthMarkdownReport(objective)
+            return OpenSourceHealthMarkdownReport(self.objective)
         elif self.capability == SECURITY:
-            objective = self.objectives.get("SECURITY_MAX_SEVERITY", self.DEFAULT_FINDING_OBJECTIVE)
-            return SecurityMarkdownReport(objective)
+            return SecurityMarkdownReport(self.objective)
         else:
             raise Exception(f"Unknown capability: {self.capability}")
 
     def prepareAdditionalReports(self, markdownReport):
         reports = [markdownReport, GitLabPullRequestReport(markdownReport), AzurePullRequestReport(markdownReport)]
         if self.capability == MAINTAINABILITY:
-            objective = self.objectives.get("MAINTAINABILITY", self.DEFAULT_RATING_OBJECTIVE)
-            reports += [AsciiArtReport(), JUnitFormatReport(), StaticHtmlReport(objective)]
+            reports += [AsciiArtReport(), JUnitFormatReport(), StaticHtmlReport(self.objective)]
+        elif self.capability == OPEN_SOURCE_HEALTH:
+            reports += [OpenSourceHealthTextReport(self.objective)]
         reports.append(PipelineSummaryReport(markdownReport))
         return reports

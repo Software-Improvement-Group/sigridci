@@ -706,6 +706,32 @@ class SigridCiRunnerTest(TestCase):
 
         self.assertEqual(UploadLog.history[-1], "You do not have the Sigrid license for MAINTAINABILITY.")
 
+    def testCompareAgainstOpenSourceHealthBaseline(self):
+        self.createTempFile(self.tempDir, "a.py", "print(123)")
+
+        self.options.capabilities = [OPEN_SOURCE_HEALTH]
+
+        apiClient = MockApiClient(self.options)
+        apiClient.responses["/analysis-results/api/v1/licenses/aap"]["licenses"].append("OPEN_SOURCE_HEALTH")
+        with open(os.path.dirname(__file__) + "/testdata/osh-junit-previous.json", encoding="utf-8", mode="r") as f:
+            apiClient.responses["/analysis-results/api/v1/osh-findings/aap/noot"] = json.load(f)
+
+        runner = SigridCiRunner(self.options, apiClient)
+        runner.run()
+
+        expectedCalls = [
+            "/analysis-results/api/v1/licenses/aap",
+            "/analysis-results/sigridci/aap/noot/v1/ci",
+            "/analysis-results/api/v1/system-metadata/aap/noot",
+            "/inboundresults/sig/aap/noot/ci/uploads/v1",
+            "UPLOAD",
+            "/analysis-results/api/v1/objectives/aap/noot/config",
+            "/analysis-results/sigridci/aap/noot/v1/ci/results/123?type=OPEN_SOURCE_HEALTH",
+            "/analysis-results/api/v1/osh-findings/aap/noot"
+        ]
+
+        self.assertEqual(apiClient.called, expectedCalls)
+
     def createTempFile(self, dir, name, contents):
         with open(f"{dir}/{name}", "w") as fileRef:
             fileRef.write(contents)
