@@ -28,8 +28,8 @@ class GitLabPullRequestReport(Report):
     def __init__(self, markdownRenderer: MarkdownRenderer):
         self.markdownRenderer = markdownRenderer
 
-        certFile = os.getenv("SIGRID_GITLAB_CA_CERT")
-        self.sslContext = ssl.create_default_context(cafile=certFile) if certFile else None
+        certPath = os.getenv("SIGRID_GITLAB_CA_CERT_PATH")
+        self.sslContext = ssl.create_default_context(cafile=certPath) if certPath else None
 
     def generate(self, analysisId, feedback, options):
         if self.isWithinGitLabMergeRequestPipeline(options):
