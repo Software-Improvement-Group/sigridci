@@ -14,6 +14,7 @@
 
 import json
 import os
+import ssl
 import urllib.request
 
 from .report import Report, MarkdownRenderer
@@ -27,6 +28,9 @@ class AzurePullRequestReport(Report):
 
     def __init__(self, markdownRenderer: MarkdownRenderer):
         self.markdownRenderer = markdownRenderer
+
+        certFile = os.getenv("SIGRID_AZURE_CA_CERT")
+        self.sslContext = ssl.create_default_context(cafile=certFile) if certFile else None
 
     def generate(self, analysisId, feedback, options):
         if not self.isSupported(options):
@@ -77,7 +81,7 @@ class AzurePullRequestReport(Report):
         request.add_header("Content-Type", "application/json")
 
         api = ApiCaller("Azure DevOps", pollInterval=5)
-        return api.retryRequest(lambda: urllib.request.urlopen(request))
+        return api.retryRequest(lambda: urllib.request.urlopen(request, context=self.sslContext))
 
     def buildURL(self, threadId):
         baseURL = os.environ["SYSTEM_TEAMFOUNDATIONCOLLECTIONURI"]

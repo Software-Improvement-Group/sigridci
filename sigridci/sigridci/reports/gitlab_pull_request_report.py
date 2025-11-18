@@ -14,6 +14,7 @@
 
 import json
 import os
+import ssl
 import urllib.request
 
 from .report import Report, MarkdownRenderer
@@ -26,6 +27,9 @@ class GitLabPullRequestReport(Report):
 
     def __init__(self, markdownRenderer: MarkdownRenderer):
         self.markdownRenderer = markdownRenderer
+
+        certFile = os.getenv("SIGRID_GITLAB_CA_CERT")
+        self.sslContext = ssl.create_default_context(cafile=certFile) if certFile else None
 
     def generate(self, analysisId, feedback, options):
         if self.isWithinGitLabMergeRequestPipeline(options):
@@ -53,7 +57,7 @@ class GitLabPullRequestReport(Report):
         request.add_header("PRIVATE-TOKEN", os.environ["SIGRIDCI_GITLAB_COMMENT_TOKEN"])
 
         api = ApiCaller("GitLab", pollInterval=5)
-        return api.retryRequest(lambda: urllib.request.urlopen(request))
+        return api.retryRequest(lambda: urllib.request.urlopen(request, context=self.sslContext))
 
     def buildPostCommentURL(self, existingCommentId):
         baseURL = os.environ["CI_API_V4_URL"]
