@@ -30,11 +30,12 @@ If your deployment is entirely air-gapped or you just want to use your own inter
 1. Pull all container images required:
    From the AWS ECR registry:
    - softwareimprovementgroup/ai-explanation-service
-   - softwareimprovementgroup/auth-api-db-migration
    - softwareimprovementgroup/auth-api
+   - softwareimprovementgroup/auth-api-db-migration
+   - softwareimprovementgroup/inbound-api
    - softwareimprovementgroup/quality-model-service
-   - softwareimprovementgroup/sigrid-api-db-migration
    - softwareimprovementgroup/sigrid-api
+   - softwareimprovementgroup/sigrid-api-db-migration
    - softwareimprovementgroup/sigrid-frontend
    - softwareimprovementgroup/sigrid-multi-analyzer
    - softwareimprovementgroup/sigrid-multi-importer
