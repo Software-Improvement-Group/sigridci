@@ -29,15 +29,18 @@ class GitLabPullRequestReport(Report):
 
     def generate(self, analysisId, feedback, options):
         if self.isWithinGitLabMergeRequestPipeline(options):
-            existingCommentId = self.findExistingCommentId()
-            body = self.buildRequestBody(self.markdownRenderer.renderMarkdown(analysisId, feedback, options))
+            try:
+                existingCommentId = self.findExistingCommentId()
+                body = self.buildRequestBody(self.markdownRenderer.renderMarkdown(analysisId, feedback, options))
 
-            if existingCommentId is None:
-                self.callAPI("POST", self.buildPostCommentURL(None), body)
-                UploadLog.log(f"Published {self.markdownRenderer.getCapability()} feedback to GitLab")
-            else:
-                self.callAPI("PUT", self.buildPostCommentURL(existingCommentId), body)
-                UploadLog.log(f"Updated existing GitLab {self.markdownRenderer.getCapability()} feedback")
+                if existingCommentId is None:
+                    self.callAPI("POST", self.buildPostCommentURL(None), body)
+                    UploadLog.log(f"Published {self.markdownRenderer.getCapability()} feedback to GitLab")
+                else:
+                    self.callAPI("PUT", self.buildPostCommentURL(existingCommentId), body)
+                    UploadLog.log(f"Updated existing GitLab {self.markdownRenderer.getCapability()} feedback")
+            except SystemExit:
+                print("Failed to publish feedback to Gitab")
 
     def isWithinGitLabMergeRequestPipeline(self, options):
         return "CI_MERGE_REQUEST_IID" in os.environ and \

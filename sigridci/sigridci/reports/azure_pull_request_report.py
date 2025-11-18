@@ -35,17 +35,21 @@ class AzurePullRequestReport(Report):
         UploadLog.log("Sending feedback to Azure DevOps API")
 
         markdown = self.markdownRenderer.renderMarkdown(analysisId, feedback, options)
-        # We want to update the existing comment, to avoid spamming people with new
-        # comments every time they make a commit. We have no way to persist this,
-        # so we need to check the existing comments.
-        existingId = self.findExistingSigridCommentThreadId()
 
-        if existingId == None:
-            self.callAzure("POST", self.buildRequestBody(markdown, feedback, options), None)
-            UploadLog.log(f"Published new {self.markdownRenderer.getCapability()} feedback to Azure DevOps")
-        else:
-            self.callAzure("PATCH", self.buildRequestBody(markdown, feedback, options), existingId)
-            UploadLog.log(f"Updated existing {self.markdownRenderer.getCapability()} feedback in Azure DevOps")
+        try:
+            # We want to update the existing comment, to avoid spamming people with new
+            # comments every time they make a commit. We have no way to persist this,
+            # so we need to check the existing comments.
+            existingId = self.findExistingSigridCommentThreadId()
+
+            if existingId == None:
+                self.callAzure("POST", self.buildRequestBody(markdown, feedback, options), None)
+                UploadLog.log(f"Published new {self.markdownRenderer.getCapability()} feedback to Azure DevOps")
+            else:
+                self.callAzure("PATCH", self.buildRequestBody(markdown, feedback, options), existingId)
+                UploadLog.log(f"Updated existing {self.markdownRenderer.getCapability()} feedback in Azure DevOps")
+        except SystemExit:
+            print("Failed to publish feedback to Azure DevOps")
 
     def isSupported(self, options):
         return "SYSTEM_ACCESSTOKEN" in os.environ and \
