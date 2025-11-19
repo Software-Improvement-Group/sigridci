@@ -16,7 +16,7 @@ import sys
 
 from .report import Report
 from .security_markdown_report import SecurityMarkdownReport
-from ..analysisresults.sarif_processor import SarifProcessor
+from ..analysisresults.findings_processor import FindingsProcessor
 
 
 class SecurityTextReport(Report):
@@ -26,7 +26,7 @@ class SecurityTextReport(Report):
         self.objective = objective
 
     def generate(self, analysisId, feedback, options):
-        processor = SarifProcessor()
+        processor = FindingsProcessor()
         findings = list(processor.extractRelevantFindings(feedback, self.objective))
 
         if len(findings) > 0:

@@ -26,12 +26,23 @@ class Finding:
     line: int
 
 
-class SarifProcessor:
+class FindingsProcessor:
     def extractRelevantFindings(self, feedback, objective):
+        findings = self.extractAllFindings(feedback)
+        return [finding for finding in findings if Objective.isFindingIncluded(finding.risk, objective)]
+
+    def extractAllFindings(self, feedback):
         if feedback is None:
             return []
-        findings = list(self.extractAllFindings(feedback))
-        return [finding for finding in findings if Objective.isFindingIncluded(finding.risk, objective)]
+        elif "runs" in feedback:
+            sarifProcessor = SarifProcessor()
+            return list(sarifProcessor.extractAllFindings(feedback))
+        else:
+            sigridFindingsProcessor = SigridFindingsProcessor()
+            return list(sigridFindingsProcessor.extractAllFindings(feedback))
+
+
+class SarifProcessor:
 
     def extractAllFindings(self, feedback):
         rules = list(self.getRules(feedback))
@@ -58,3 +69,9 @@ class SarifProcessor:
                 if rule["id"] == result["ruleId"]:
                     severity = rule["properties"]["severity"].replace("ERROR", "HIGH").replace("WARNING", "MEDIUM")
         return severity.upper() if severity else "UNKNOWN"
+
+
+class SigridFindingsProcessor:
+    def extractAllFindings(self, feedback):
+        for finding in feedback:
+            yield Finding(finding["id"], finding["severity"], finding["type"], finding["filePath"], finding["startLine"])

@@ -73,6 +73,7 @@ class SecurityMarkdownReport(Report, MarkdownRenderer):
 
         for finding in findings[0:self.MAX_FINDINGS]:
             symbol = self.SEVERITY_SYMBOLS[self.getFindingSeverity(finding, rules)]
+            file = finding["locations"][0]["physicalLocation"]["artifactLocation"]["uri"]
             line = finding["locations"][0]["physicalLocation"]["region"]["startLine"]
             link = self.decorateLink(options, f"{file}:{line}", file, line)
             description = finding["message"]["text"]
