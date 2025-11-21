@@ -776,5 +776,5 @@ class MockApiClient(SigridApiClient):
             self.called.append("UPLOAD")
             return True
         else:
-            raise urllib.error.HTTPError("/upload", 500, "", Message(), None)
+            raise urllib.error.HTTPError("/upload", 503, "", Message(), None)
      
