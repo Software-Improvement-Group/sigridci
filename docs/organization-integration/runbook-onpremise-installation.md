@@ -264,7 +264,7 @@ You can now start inviting more people to Sigrid if so desired.
       - name: JavaScript
     ```
 - Create a pipeline.
-  - Example: Where all secrets except SYSTEM can be omitted if already stored as secrets in your e.g. GitLab. Also override image name if you're pulling from your own container registry.
+  - Example: Where all secrets except SYSTEM can be omitted if already templated or stored as secrets in your e.g. GitLab. Also override image name if you're pulling from your own container registry.
     ```
     sigrid-publish:
       image:

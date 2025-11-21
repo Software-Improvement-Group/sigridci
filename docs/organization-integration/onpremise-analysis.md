@@ -91,7 +91,19 @@ We distinguish two types of environment variables:
 - Shared: these typically have the same value across different CI/CD projects for the same Sigrid 
   deployment. SIG recommends configuring these as variables managed by the CI/CD environment (often 
   called "secrets").
-- Non-shared: these typically differ across projects.
+- Non-shared: these typically differ between projects and should be configured individually in each pipeline.
+
+Using Shared Variables in Pipelines:
+- Using shared variables directly in the pipeline can be cumbersome. It's easier to either store all shared variables 
+  at a higher level in your CI/CD project hierarchy or use a template for them and include it in your pipeline. 
+  Make sure credentials are masked. Only the SYSTEM variable needs to be defined in the project pipeline itself, 
+  and the SIGRID_CI_TOKEN is best stored as a project-level variable.
+
+Example: Using a GitLab CI/CD template to store shared environment variables:
+```yaml
+include:
+  - template: 'path/to/your/template.yml'
+```
 
 | Variable                       | Required | Shared? | Default   |
 |--------------------------------|----------|---------|-----------|
@@ -119,6 +131,8 @@ Notes:
 - `SIGRID_URL`: (sub-)domain where this Sigrid On-Premise deployment is hosted, e.g. 
   `https://sigrid.mycompany.com`.
 - `SIGRID_CI_TOKEN`: a personal access token created in Sigrid's UI.
+- `SIGRID_VERSION`: specifies the version tag of the Sigrid-Multi-Analyzer container.
+  Ensure that the version matches the corresponding release version used in Kubernetes deployment.
 - `BUCKET`: name of the bucket in which analysis results are stored.
 - `AWS_ENDPOINT_URL`: URL at which an S3-compatible object store can be reached. Defaults to Amazon AWS 
   S3 endpoints.
