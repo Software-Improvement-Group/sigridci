@@ -7,10 +7,11 @@ This documentation covers on-premise Sigrid. It is not applicable for cloud-base
 
 Your development platform will need access to the [Sigrid On-Premise Docker containers](onpremise-integration.md#obtaining-sigrid-on-premise).
 
-Each system to be analyzed needs an analysis configuration in the form of a file called
-`sigrid.yaml` in the root directory of the system. Typically, this configuration is maintained by
-the developers responsible for the system and consequently is not discussed here. Developers are
-referred to the [analysis configuration reference](../reference/analysis-scope-configuration.md).
+Each system to be analyzed requires an analysis configuration file named `sigrid.yaml` in the root directory. 
+If no file is provided, this configuration is automatically generated (not stored in Sigrid or the pipeline). 
+Creating a `sigrid.yaml` is only needed when developers want more control over the content of the analysis. 
+Typically, this configuration is maintained by the developers responsible for the system. 
+Developers can refer to the [analysis configuration reference](../reference/analysis-scope-configuration.md).
 
 Sigrid's analyses require access to an S3-compatible object store. This can be Amazon's 
 implementation, or an on-premise equivalent that supports Amazon's S3 API, such as [MinIO](https://min.io) or 
