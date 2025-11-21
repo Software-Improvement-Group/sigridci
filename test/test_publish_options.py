@@ -52,8 +52,21 @@ class PublishOptionsTest(TestCase):
         self.assertFalse(self.toOptions("noot", "20230222").isValidSystemName())
 
     def testValidateSubSystemNameAccordingToRules(self):
-        # insert logic to test isValidSubSystemName according to the rules
-        pass
+        self.assertTrue(self.toOptions("noot", "aap", "sub.system-1/part").isValidSubSystemName())
+        self.assertTrue(self.toOptions("noot", "aap", "a").isValidSubSystemName())
+        self.assertTrue(self.toOptions("noot", "aap", "A1._-/b").isValidSubSystemName())
+        self.assertTrue(self.toOptions("noot", "aap", "subsystem").isValidSubSystemName())
+        self.assertTrue(self.toOptions("noot", "aap", "sub.system/part-name").isValidSubSystemName())
+        self.assertTrue(self.toOptions("noot", "aap", "subsystem123").isValidSubSystemName())
+        self.assertTrue(self.toOptions("noot", "aap", "SUBSYSTEM").isValidSubSystemName())
+        
+        self.assertFalse(self.toOptions("noot", "aap", ".subsystem").isValidSubSystemName())
+        self.assertFalse(self.toOptions("noot", "aap", "subsystem.").isValidSubSystemName())
+        self.assertFalse(self.toOptions("noot", "aap", "subsystem123!").isValidSubSystemName())
+        self.assertFalse(self.toOptions("noot", "aap", "sub..system").isValidSubSystemName())
+        self.assertFalse(self.toOptions("noot", "aap", "sub system").isValidSubSystemName())
+        self.assertFalse(self.toOptions("noot", "aap", ".").isValidSubSystemName())
+        self.assertFalse(self.toOptions("noot", "aap", "sub//system").isValidSubSystemName())
 
     def toOptions(self, customer, system, tempDir="/tmp"):
         return PublishOptions(customer, system, RunMode.FEEDBACK_ONLY, tempDir)
