@@ -57,6 +57,11 @@ class SecurityMarkdownReportTest(TestCase):
             |------|------|---------|
             | 🟣 | [Security.java:33](https://example.com/aap/noot/-/blob/mybranch/Security.java#L33) | Weak Hash algorithm used |
             
+            If you believe these findings are false positives,
+            you can [exclude the rule](https://docs.sigrid-says.com/reference/analysis-scope-configuration.html#excluding-security-rules) in the Sigrid configuration.
+            If you believe these findings are located in files that should not be scanned, you can also
+            [exclude the files and/or directories](https://docs.sigrid-says.com/reference/analysis-scope-configuration.html#excluding-files-and-directories-from-security-scanning) in the configuration.
+
             
             ----
             
@@ -129,6 +134,11 @@ class SecurityMarkdownReportTest(TestCase):
             | 🟣 | Security.java:33 | Weak Hash algorithm used |
             | | ... and 3 more findings | |
             
+            If you believe these findings are false positives,
+            you can [exclude the rule](https://docs.sigrid-says.com/reference/analysis-scope-configuration.html#excluding-security-rules) in the Sigrid configuration.
+            If you believe these findings are located in files that should not be scanned, you can also
+            [exclude the files and/or directories](https://docs.sigrid-says.com/reference/analysis-scope-configuration.html#excluding-files-and-directories-from-security-scanning) in the configuration.
+            
             
             ----
             
@@ -153,7 +163,7 @@ class SecurityMarkdownReportTest(TestCase):
             # [Sigrid](https://sigrid-says.com/aap/noot/-/security) Security feedback
             
             **⚠️  You did not meet your objective of having no medium-severity security findings**
-            
+
             ## 👍 What went well?
             
             > You fixed **1** security findings.
@@ -161,7 +171,7 @@ class SecurityMarkdownReportTest(TestCase):
             | Risk | File | Finding |
             |------|------|---------|
             | 🟣 | [Security.java:33](https://example.com/aap/noot/-/blob/mybranch/Security.java#L33) | This finding has been fixed in the next snapshot. |
-
+            
             ## 👎 What could be better?
             
             > Unfortunately, you introduced **1** security findings.
@@ -169,7 +179,12 @@ class SecurityMarkdownReportTest(TestCase):
             | Risk | File | Finding |
             |------|------|---------|
             | 🟠 | [Aap.java:33](https://example.com/aap/noot/-/blob/mybranch/Aap.java#L33) | Some other finding |
-
+            
+            If you believe these findings are false positives,
+            you can [exclude the rule](https://docs.sigrid-says.com/reference/analysis-scope-configuration.html#excluding-security-rules) in the Sigrid configuration.
+            If you believe these findings are located in files that should not be scanned, you can also
+            [exclude the files and/or directories](https://docs.sigrid-says.com/reference/analysis-scope-configuration.html#excluding-files-and-directories-from-security-scanning) in the configuration.
+            
             
             ----
             

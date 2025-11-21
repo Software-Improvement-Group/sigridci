@@ -43,7 +43,6 @@ class FindingsProcessor:
 
 
 class SarifProcessor:
-
     def extractAllFindings(self, feedback):
         rules = list(self.getRules(feedback))
 

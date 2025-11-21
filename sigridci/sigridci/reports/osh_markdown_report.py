@@ -18,13 +18,13 @@ from .report import Report, MarkdownRenderer
 from .security_markdown_report import SecurityMarkdownReport
 from ..analysisresults.cyclonedx_processor import CycloneDXProcessor
 from ..objective import Objective
+from ..platform import OSH_EXCLUDE_DOCS
 
 
 class OpenSourceHealthMarkdownReport(Report, MarkdownRenderer):
     MAX_FINDINGS = SecurityMarkdownReport.MAX_FINDINGS
     SYMBOLS = SecurityMarkdownReport.SEVERITY_SYMBOLS
     SORT_RISK = list(SecurityMarkdownReport.SEVERITY_SYMBOLS.keys())
-    DOCS_LINK = "https://docs.sigrid-says.com/reference/analysis-scope-configuration.html#exclude-open-source-health-risks"
 
     def __init__(self, objective = "HIGH"):
         super().__init__()
@@ -55,7 +55,7 @@ class OpenSourceHealthMarkdownReport(Report, MarkdownRenderer):
             details += "> Consider upgrading to a version that no longer contains the vulnerability.\n\n"
             details += self.generateFindingsTable(fixable, options)
             details += "If you believe these findings are false positives, "
-            details += f"you can [exclude them in the Sigrid configuration]({self.DOCS_LINK}).\n\n"
+            details += f"you can [exclude them in the Sigrid configuration]({OSH_EXCLUDE_DOCS}).\n\n"
         if len(unfixable) > 0:
             details += "## 😑 You have findings that you need to investigate in more depth\n\n"
             details += f"> You have **{len(unfixable)}** vulnerable open source libraries without a fix available.  \n"
