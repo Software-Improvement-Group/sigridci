@@ -1,0 +1,34 @@
+[
+  {
+    "id": "0006d9dd-5288-424a-bf8b-077c98ef00ee",
+    "href": "https://sigrid-says.com/aap/mendix-native-file-documents-demo/-/security/0006d9dd-5288-424a-bf8b-077c98ef00ee",
+    "firstSeenAnalysisDate": "2025-10-24",
+    "lastSeenAnalysisDate": "2025-10-24",
+    "firstSeenSnapshotDate": "2025-10-24",
+    "lastSeenSnapshotDate": "2025-10-24",
+    "filePath": "widgets/com.mendix.widget.native.WebView/com/mendix/widget/native/webview/WebView.android.js",
+    "startLine": 853,
+    "endLine": 855,
+    "component": "widgets/com.mendix.widget.native.WebView",
+    "type": "String comparisons using '===', '!==', '!=' and '==' is vulnerable to timing attacks",
+    "cweId": "CWE-208",
+    "severity": "MEDIUM",
+    "impact": "LOW",
+    "exploitability": "HIGH",
+    "severityScore": 5.2,
+    "impactScore": 2.2,
+    "exploitabilityScore": 3.0,
+    "status": "RAW",
+    "remark": null,
+    "toolName": "NodeJS Scan",
+    "ruleId": "njsscan.crypto.node_timing_attack",
+    "weaknessIds": [
+      "CWE-208"
+    ],
+    "categories": [
+      "A1 Broken Access Control"
+    ],
+    "isManualFinding": false,
+    "isSeverityOverridden": false
+  }
+]

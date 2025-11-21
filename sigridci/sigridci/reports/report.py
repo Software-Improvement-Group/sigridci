@@ -89,7 +89,8 @@ class MarkdownRenderer(ABC):
             if Platform.isHtmlMarkdownSupported():
                 md += "<details><summary>Show details</summary>\n\n"
             md += details
-            md += self.renderReactionSection(options)
+            if not self.isObjectiveSuccess(feedback, options):
+                md += self.renderReactionSection(options)
             if Platform.isHtmlMarkdownSupported():
                 md += "</details>\n"
         md += "\n----\n\n"
