@@ -14,6 +14,7 @@
 
 import json
 import os
+import ssl
 import urllib.request
 
 from .report import Report, MarkdownRenderer
@@ -28,6 +29,9 @@ class AzurePullRequestReport(Report):
     def __init__(self, markdownRenderer: MarkdownRenderer):
         self.markdownRenderer = markdownRenderer
 
+        certPath = os.getenv("SIGRID_AZURE_CA_CERT_PATH")
+        self.sslContext = ssl.create_default_context(cafile=certPath) if certPath else None
+
     def generate(self, analysisId, feedback, options):
         if not self.isSupported(options):
             return
@@ -35,17 +39,21 @@ class AzurePullRequestReport(Report):
         UploadLog.log("Sending feedback to Azure DevOps API")
 
         markdown = self.markdownRenderer.renderMarkdown(analysisId, feedback, options)
-        # We want to update the existing comment, to avoid spamming people with new
-        # comments every time they make a commit. We have no way to persist this,
-        # so we need to check the existing comments.
-        existingId = self.findExistingSigridCommentThreadId()
 
-        if existingId == None:
-            self.callAzure("POST", self.buildRequestBody(markdown, feedback, options), None)
-            UploadLog.log(f"Published new {self.markdownRenderer.getCapability()} feedback to Azure DevOps")
-        else:
-            self.callAzure("PATCH", self.buildRequestBody(markdown, feedback, options), existingId)
-            UploadLog.log(f"Updated existing {self.markdownRenderer.getCapability()} feedback in Azure DevOps")
+        try:
+            # We want to update the existing comment, to avoid spamming people with new
+            # comments every time they make a commit. We have no way to persist this,
+            # so we need to check the existing comments.
+            existingId = self.findExistingSigridCommentThreadId()
+
+            if existingId == None:
+                self.callAzure("POST", self.buildRequestBody(markdown, feedback, options), None)
+                UploadLog.log(f"Published new {self.markdownRenderer.getCapability()} feedback to Azure DevOps")
+            else:
+                self.callAzure("PATCH", self.buildRequestBody(markdown, feedback, options), existingId)
+                UploadLog.log(f"Updated existing {self.markdownRenderer.getCapability()} feedback in Azure DevOps")
+        except SystemExit:
+            print("Failed to publish feedback to Azure DevOps")
 
     def isSupported(self, options):
         return "SYSTEM_ACCESSTOKEN" in os.environ and \
@@ -73,7 +81,7 @@ class AzurePullRequestReport(Report):
         request.add_header("Content-Type", "application/json")
 
         api = ApiCaller("Azure DevOps", pollInterval=5)
-        return api.retryRequest(lambda: urllib.request.urlopen(request))
+        return api.retryRequest(lambda: urllib.request.urlopen(request, context=self.sslContext))
 
     def buildURL(self, threadId):
         baseURL = os.environ["SYSTEM_TEAMFOUNDATIONCOLLECTIONURI"]

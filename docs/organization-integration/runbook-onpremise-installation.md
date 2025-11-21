@@ -30,11 +30,12 @@ If your deployment is entirely air-gapped or you just want to use your own inter
 1. Pull all container images required:
    From the AWS ECR registry:
    - softwareimprovementgroup/ai-explanation-service
-   - softwareimprovementgroup/auth-api-db-migration
    - softwareimprovementgroup/auth-api
+   - softwareimprovementgroup/auth-api-db-migration
+   - softwareimprovementgroup/inbound-api
    - softwareimprovementgroup/quality-model-service
-   - softwareimprovementgroup/sigrid-api-db-migration
    - softwareimprovementgroup/sigrid-api
+   - softwareimprovementgroup/sigrid-api-db-migration
    - softwareimprovementgroup/sigrid-frontend
    - softwareimprovementgroup/sigrid-multi-analyzer
    - softwareimprovementgroup/sigrid-multi-importer
@@ -295,4 +296,4 @@ You can now start inviting more people to Sigrid if so desired.
 
 ## Contact and support
 
-Feel free to contact [SIG's support department](mailto:support@softwareimprovementgroup.com) for any questions or issues you may have after reading this document, or when using Sigrid or Sigrid CI. Users in Europe can also contact us by phone at +31 20 314 0953.
+Feel free to contact [SIG's support department](mailto:support@softwareimprovementgroup.com) for any questions or issues you may have after reading this document, or when using Sigrid or Sigrid-Multi-Analyzer. Users in Europe can also contact us by phone at +31 20 314 0953.

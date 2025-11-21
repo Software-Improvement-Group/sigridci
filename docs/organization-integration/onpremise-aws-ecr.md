@@ -46,11 +46,12 @@ VERSION="1.0.20250603" # Please replace with the desired container image version
 aws ecr get-login-password --region $SIGRID_DOWNLOAD_REGION | docker login --username AWS --password-stdin $SIGRID_DOWNLOAD_REGISTRY
 IMAGES=(
   softwareimprovementgroup/ai-explanation-service
-  softwareimprovementgroup/auth-api-db-migration
   softwareimprovementgroup/auth-api
+  softwareimprovementgroup/auth-api-db-migration
+  softwareimprovementgroup/inbound-api
   softwareimprovementgroup/quality-model-service
-  softwareimprovementgroup/sigrid-api-db-migration
   softwareimprovementgroup/sigrid-api
+  softwareimprovementgroup/sigrid-api-db-migration
   softwareimprovementgroup/sigrid-frontend
   softwareimprovementgroup/sigrid-multi-analyzer
   softwareimprovementgroup/sigrid-multi-importer
