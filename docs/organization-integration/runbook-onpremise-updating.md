@@ -66,7 +66,7 @@ In addition to updating Sigrid components, it's important to maintain other syst
 
 The update frequency for these systems should be determined based on your organization's needs and policies. However, it's crucial to keep these systems up-to-date to ensure optimal performance, security, and compatibility with Sigrid.
 
-Note: Specific update instructions for PostgreSQL and and other systems are not provided here, as they can vary depending on your setup and chosen systems. Please refer to the official documentation of these systems for proper update procedures.
+Note: Specific update instructions for PostgreSQL and other systems are not provided here, as they can vary depending on your setup and chosen systems. Please refer to the official documentation of these systems for proper update procedures.
 
 ## Contact and support
 

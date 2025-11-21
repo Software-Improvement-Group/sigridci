@@ -108,7 +108,7 @@ can be found at `nginx.ingress` where any needed annotations can be added, or th
 
 While technically, TLS can be disabled in the Helm chart, in practice it is required for any 
 host except `localhost`. The reason is that Sigrid uses OAuth2 / OpenID Connect; the respective 
-standards state that TLS is mandatory for all hosts except `localhost`. OAuth2/OpenID Connect 
+standards (see [RFC 6749](https://datatracker.ietf.org/doc/html/rfc6749#section-10.3) and [RFC 8252](https://datatracker.ietf.org/doc/html/rfc8252#section-8.3)) state that TLS is mandatory for all hosts except `localhost`. OAuth2/OpenID Connect 
 compliant products typically follow this requirement. As a concrete example, several IdPs refuse 
 to register callback URLs that do not start with `https` unless the host is `localhost` or `127.
 0.0.1`.
@@ -128,7 +128,7 @@ It is the responsibility of the on-premise customer to initialize and manage Pos
 Helm chart (and this page) assumes that a properly initialized PostgreSQL server is available 
 and reachable from the Kubernetes cluster.
 
-We recommend reviewing PostgreSQL configuration parameters e.g. in  `postgresql.conf`. 
+We recommend reviewing PostgreSQL configuration parameters, e.g. in [`postgresql.conf`](https://www.postgresql.org/docs/current/runtime-config.html). 
 In particular, set the following to avoid connection issues during concurrent analysis imports:
 
 ```conf
@@ -276,7 +276,7 @@ auth-api:
 
 Notes:
 1. The first `host` from `global.hosts` is used for the redirect URI: if the redirect URI isn't 
-   overridden elsewhere in `values.yaml`, the redirect UIR is taken from this host. In the 
+   overridden elsewhere in `values.yaml`, the redirect URI is taken from this host. In the 
    example here, it would be https://my-sigrid.example.com/rest/auth/login/oauth2/code/sigridmfa.
 2. These are obviously just examples. The issuer URI of many IdPs are not just a hostname, but 
    also include a path, e.g. `https://my-idp.example.com/oauth`. The `jwk-set-uri` doesn't 
@@ -367,7 +367,7 @@ auth-api:
 ## (F) Access to an S3-compatible object store
 
 Sigrid uses an S3-compatible object store to transfer analysis results from CI/CD jobs to Sigrid.
-Hence, access to an S3-compabible object store is mandatory. This might be Amazon's S3, or a 
+Hence, access to an S3-compatible object store is mandatory. This might be Amazon's S3, or a 
 compatible store such as [MinIO](https://min.io). Providing (access to) an object store is the 
 responsibility of the on-premise customer; no object store is provided by the Helm chart.
 
@@ -552,7 +552,7 @@ configure the code repository as an OAuth2 provider:
 - For GitLab, see ["Configure GitLab as an OAuth 2.0 authentication identity provider"](https://docs.gitlab.com/ee/integration/oauth_provider.html).
 - For GitHub, see ["Creating an OAuth app"](https://docs.github.com/en/apps/oauth-apps/building-oauth-apps/creating-an-oauth-app).
 - For Azure DevOps, the modern way is via Microsoft Entra, see ["Quickstart: Register an application with the Microsoft identity platform"](https://learn.microsoft.com/en-us/entra/identity-platform/quickstart-register-app?tabs=certificate).
-  - For viewing source code fragements, only the cloud version of Azure DevOps is supported.
+  - For viewing source code fragments, only the cloud version of Azure DevOps is supported.
 
 The newly created client registration can then be configured in the Helm chart like so:
 
@@ -589,7 +589,11 @@ Notes:
 4. The client ID and secret are determined by the code repository, typically when creating the 
    registration. See for instance [the relevant GitLab documentation](https://docs.gitlab.com/ee/integration/oauth_provider.html#view-all-authorized-applications.html).
 5. Scope should provide **at minimum** read rights to projects and source code. See for instance [the available GitLab scopes](https://docs.gitlab.com/ee/integration/oauth_provider.html#view-all-authorized-applications.html).  
-   The specific scope depends on the repository type. For example: GitLab: `read_repository`, GitHub: `repo`, Azure DevOps: `vso.code`.
+   The specific scope depends on the repository type. The minimum required scopes for each supported provider are:
+   - GitLab: `read_repository`
+   - GitHub: `repo`
+   - Azure DevOps: `vso.code`
+   These scopes provide read rights to projects and source code, which are necessary for Sigrid to display source code fragments in the UI.
 
 ## Contact and support
 

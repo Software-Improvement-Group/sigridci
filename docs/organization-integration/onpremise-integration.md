@@ -75,7 +75,7 @@ This also means SIG does not back-port any changes to older versions: If you wan
 
 ## Updating your environment
 
-In addition to updating Sigrid itself, you will also need to periodicially update your environment in which Sigrid runs. SIG uses the following support policy for infrastructure component versions:
+In addition to updating Sigrid itself, you will also need to periodically update your environment in which Sigrid runs. SIG uses the following support policy for infrastructure component versions:
 
 - For Kubernetes, we support the latest 2 major versions. You can track the Kubernetes version history in [this overview](https://kubernetes.io/releases/).
 - For Postgres, we also support the latest 2 major versions. You can track the Postgres version history in [this overview](https://www.postgresql.org/support/versioning/).
@@ -90,11 +90,9 @@ In addition to updating Sigrid itself, you will also need to periodicially updat
   - Mendix: Set the variable `CONVERT` to `mendix` in your CI pipeline job, and use `Mendixflow` as language when defining the scope.
   - Outsystems: This technology is not supported.
 - Unavailable Features:
-  - Open Source Health - currently work-in-progress
-  - Security: Results for the following tools cannot be generated:
+  - Open Source Health - This feature will soon become availabe in Sigrid On-Premise.
+  - Security: The following tool(s) are currently unsupported in Sigrid On-Premise, and integration is not planned:
     - Checkmarx
-    - Astrée
-  - Green Code
   - Interactive AI Explanations
 
 ## Contact and support
