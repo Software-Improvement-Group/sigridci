@@ -255,7 +255,7 @@ The `GET /rest/inboundresults/imports/{partner}/{customer}/{system}/{job}` endpo
       "startTime": "2025-01-10T12:00:44Z",
       "reason": null,
       "containerStatus": {
-        "image": "571600876202.dkr.ecr.eu-central-1.amazonaws.com/softwareimprovementgoup/sigrid-multi-importer:1.0.20250603",
+        "image": "571600876202.dkr.ecr.eu-central-1.amazonaws.com/softwareimprovementgroup/sigrid-multi-importer:1.0.20250603",
         "imageID": "...",
         "name": "sigrid-importer",
         "ready": false,
@@ -297,7 +297,7 @@ It is also possible to *manually* start an analysis, and then publish the analys
 We recommend you integrate Sigrid-Multi-Analyzer into your pipeline. This ensures the results you see in Sigrid are always "live", since the analysis will run after every commit. It also allows for developers to receive Sigrid feedback directly in their pull requests. 
 {: .warning }
 
-You can run the analysis and publish the analysis results using the same Docker container. If you run Sigrid-Multi-Analyzer ad-hoc, you will still need to provide the [environment variables](#sigrid-ci-environment-variables). Since there are quite some environment variables, it's easiest to use Docker's `--env-file` option for this. This option is explained in the [Docker documentation](https://docs.docker.com/reference/cli/docker/container/run/).
+You can run the analysis and publish the analysis results using the same Docker container. If you run Sigrid-Multi-Analyzer ad-hoc, you will still need to provide the [Sigrid-Multi-Analyzer environment variables](#sigrid-multi-analyzer-environment-variables). Since there are quite some environment variables, it's easiest to use Docker's `--env-file` option for this. This option is explained in the [Docker documentation](https://docs.docker.com/reference/cli/docker/container/run/).
 
 The following example shows how to start an ad-hoc analysis for a system located in a local `/mysystem` directory:
 
@@ -314,19 +314,24 @@ The version tag (`$SIGRID_VERSION`) should match your version of Sigrid on-premi
 ### Optional: connection to source code repositories
 To set up the Helm charts, please follow the instructions provided [here](onpremise-kubernetes.md#g-optional-connection-to-source-code-repositories).
 
+> **Note:** The following environment variables are only required for manual system publishing and are not part of the standard Sigrid-Multi-Analyzer environment variable table above.  
+> They are used to connect to external source code repositories when publishing a system manually.
+
 For manual system publishing, you need to supply additional environment variables beyond those mentioned [here](onpremise-analysis.md#sigrid-ci-environment-variables).
 
 Please provide the following environment variables:
 
-- **`SOURCES_API_BASE_URL`** (required):  
+- **`SOURCES_API_BASE_URL`** (required, manual publishing only):  
   Description: The entry point for the API of the source code repository.  
-  Example: `https://github.example.com/api/v3` 
-- **`SOURCES_PROJECT_SLUG`** (required):  
+  Example value: `https://github.example.com/api/v3` 
+- **`SOURCES_PROJECT_SLUG`** (required, manual publishing only):  
   Description: The project slug identifies your project within your CI/CD environment. It typically appears in URLs displayed in your browser, representing the part that follows the server address.   
-  Example: `Software-Improvement-Group/sigridci`
-- **`SOURCES_REF`** (optional):  
+  Project URL: `https://github.example.com/Software-Improvement-Group/sigridci`
+  Example value: `Software-Improvement-Group/sigridci`
+- **`SOURCES_REF`** (optional, manual publishing only):  
   Description: The branch name for the source view (defaults to 'main' if not provided).  
-  Example: `patch_20250123`
+  Ref URL: https://github.example.com/api/v3/repos/Software-Improvement-Group/sigridci/branches/patch_20250123
+  Example value: `patch_20250123`
 
 ## Contact and support
 

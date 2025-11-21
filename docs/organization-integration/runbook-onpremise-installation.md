@@ -83,12 +83,6 @@ When an OIDC compatible Identity Provider is available:
 3. Sigrid requires three attribute claims: email, family_name, and given_name. Please add any missing claims manually if not provided by your Identity Provider.
 4. Create a secret and store it securely in Kubernetes.
 
-### (E) Prepare an RSA keypair for the signing of UWT tokens
-
-This part will soon become obsolete in a newer Sigrid release. 
-1. Create a 2048-bit RSA keypair: `openssl genpkey -out uwt_signing_key.pem -algorithm RSA -pkeyopt rsa_keygen_bits:2048`
-2. Store the certificate securely in Kubernetes.
-
 ### (F) Prepare access to an S3-compatible object store 
 
 1. Create a machine user in your object store.
@@ -162,7 +156,7 @@ If your deployment is air-gapped, adjust the values below.
 
 ```
 image.registry: ""
-image.repository: ""nginxinc/nginx-unprivileged""
+image.repository: "nginxinc/nginx-unprivileged"
 ```
 Provide full URL to your registry and container image.
 ```
@@ -176,7 +170,7 @@ These values can be retrieved using the GUI or .well-known endpoint of your Iden
 
 ```
 config.oauth2.resourceServer.data.issuer-uri: "https://my-idp.example.com" 
-config.oauth2.resourceServer.data.jwk-set-uri: "https://my-idp.example.com/jwks.json 
+config.oauth2.resourceServer.data.jwk-set-uri: "https://my-idp.example.com/jwks.json" 
 config.oauth2.provider.sigridmfa.issuer-uri: "https://my-idp.example.com" 
 ```
 
@@ -206,7 +200,7 @@ They will work as is but can be modified.
 redis.data.password: "example-password" 
 redis.data.sentinel-password: "example-password" 
 ```
-If you want to use the use a self-provided redis server, also adjust `host: ""`
+If you want to use a self-provided redis server, also adjust `host: ""`
 
 ## Install helm chart
 We assume that your Kubernetes cluster is ready and that you have created a namespace. There are several ways to install a Helm chart. One common method is as follows: `helm upgrade --install <deployment-name> <helm-chart-path> -n <namespace> --values <values-file-path>`
@@ -238,7 +232,8 @@ You can now start inviting more people to Sigrid if so desired.
 - Preferably, set up project secrets based on your use case.  
 *You can also set them up at the organization or group level, but ensure you are not unintentionally overriding any default project variables in the process.*
   - `CUSTOMER: "company_name"`
-  - `SIGRID_CI_TOKEN: "Sigrid Token"BUCKET: "some-bucket"`   
+  - `SIGRID_CI_TOKEN: "Sigrid Token"`  
+  - `BUCKET: "some-bucket"`   
   The name of the bucket you've created.
   - `SIGRID_VERSION: "should match ImageTag from helm global"`
   - `AWS_ENDPOINT_URL: "https://minio.my-company.com"`  
