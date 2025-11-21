@@ -279,10 +279,10 @@ The endpoints discussed in this section are thin wrappers around the [equivalent
 
 It is also possible to *manually* start an analysis, and then publish the analysis results to Sigrid. You can use this option when your system doesn't have a pipeline, or when you need to import a system in Sigrid ad-hoc.
 
-We recommend you integrate Sigrid CI into your pipeline. This ensures the results you see in Sigrid are always "live", since the analysis will run after every commit. It also allows for developers to receive Sigrid feedback directly in their pull requests. 
+We recommend you integrate Sigrid-Multi-Analyzer into your pipeline. This ensures the results you see in Sigrid are always "live", since the analysis will run after every commit. It also allows for developers to receive Sigrid feedback directly in their pull requests. 
 {: .warning }
 
-You can run the analysis and publish the analysis results using the same Docker container. If you run Sigrid CI ad-hoc, you will still need to provide the [environment variables](#sigrid-ci-environment-variables). Since there are quite some environment variables, it's easiest to use Docker's `--env-file` option for this. This option is explained in the [Docker documentation](https://docs.docker.com/reference/cli/docker/container/run/).
+You can run the analysis and publish the analysis results using the same Docker container. If you run Sigrid-Multi-Analyzer ad-hoc, you will still need to provide the [environment variables](#sigrid-ci-environment-variables). Since there are quite some environment variables, it's easiest to use Docker's `--env-file` option for this. This option is explained in the [Docker documentation](https://docs.docker.com/reference/cli/docker/container/run/).
 
 The following example shows how to start an ad-hoc analysis for a system located in a local `/mysystem` directory:
 
@@ -315,4 +315,4 @@ Please provide the following environment variables:
 
 ## Contact and support
 
-Feel free to contact [SIG's support department](mailto:support@softwareimprovementgroup.com) for any questions or issues you may have after reading this document, or when using Sigrid or Sigrid CI. Users in Europe can also contact us by phone at +31 20 314 0953.
+Feel free to contact [SIG's support department](mailto:support@softwareimprovementgroup.com) for any questions or issues you may have after reading this document, or when using Sigrid or Sigrid-Multi-Analyzer. Users in Europe can also contact us by phone at +31 20 314 0953.
