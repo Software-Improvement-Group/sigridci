@@ -33,7 +33,7 @@ class PipelineSummaryReport(Report):
         print("", file=self.output)
         self.printConclusionMessage(feedback, options)
         print("", file=self.output)
-        print(f"Sigrid CI {capability} feedback is available from:\n    {markdownFile}", file=self.output)
+        print(f"Sigrid CI {capability.displayName} feedback is available from:\n    {markdownFile}", file=self.output)
         print("", file=self.output)
         print(f"View this system in Sigrid:\n    {sigridLink}", file=self.output)
         print("", file=self.output)

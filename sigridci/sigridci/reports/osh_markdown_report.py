@@ -17,6 +17,7 @@ import os
 from .report import Report, MarkdownRenderer
 from .security_markdown_report import SecurityMarkdownReport
 from ..analysisresults.cyclonedx_processor import CycloneDXProcessor
+from ..capability import OPEN_SOURCE_HEALTH
 from ..objective import Objective
 
 
@@ -100,7 +101,7 @@ class OpenSourceHealthMarkdownReport(Report, MarkdownRenderer):
         return self.previousFeedback["metadata"]["timestamp"][0:10]
 
     def getCapability(self):
-        return "Open Source Health"
+        return OPEN_SOURCE_HEALTH
 
     def getMarkdownFile(self, options):
         return os.path.abspath(f"{options.outputDir}/osh-feedback.md")
