@@ -83,7 +83,7 @@ class MarkdownRenderer(ABC):
         pass
 
     def renderMarkdownTemplate(self, feedback, options, details, sigridLink):
-        md = f"# [Sigrid]({sigridLink}) {self.getCapability()} feedback\n\n"
+        md = f"# {self.formatTitle(sigridLink)}\n\n"
         md += f"**{self.getSummary(feedback, options)}**\n\n"
         if len(details) > 0:
             if Platform.isHtmlMarkdownSupported():
@@ -96,6 +96,11 @@ class MarkdownRenderer(ABC):
         md += "\n----\n\n"
         md += f"[**View this system in Sigrid**]({sigridLink})"
         return md
+
+    def formatTitle(self, sigridLink):
+        capability = self.getCapability()
+        suffix = " *(Beta)*" if capability.beta else ""
+        return f"[Sigrid]({sigridLink}) {capability.displayName} feedback{suffix}"
 
     def renderReactionSection(self, options):
         if not options.feedbackURL:
@@ -110,7 +115,7 @@ class MarkdownRenderer(ABC):
         return md
 
     def getReactionLink(self, options, reaction):
-        featureId = "sigridci." + self.getCapability().lower().replace(" ", "")
+        featureId = f"sigridci.{self.getCapability().shortName}"
         return f"{options.feedbackURL}?feature={featureId}&feedback={reaction}&system={options.getSystemId()}"
 
     @abstractmethod

@@ -48,10 +48,10 @@ class AzurePullRequestReport(Report):
 
             if existingId == None:
                 self.callAzure("POST", self.buildRequestBody(markdown, feedback, options), None)
-                UploadLog.log(f"Published new {self.markdownRenderer.getCapability()} feedback to Azure DevOps")
+                UploadLog.log(f"Published new {self.markdownRenderer.getCapability().displayName} feedback to Azure DevOps")
             else:
                 self.callAzure("PATCH", self.buildRequestBody(markdown, feedback, options), existingId)
-                UploadLog.log(f"Updated existing {self.markdownRenderer.getCapability()} feedback in Azure DevOps")
+                UploadLog.log(f"Updated existing {self.markdownRenderer.getCapability().displayName} feedback in Azure DevOps")
         except SystemExit:
             print("Failed to publish feedback to Azure DevOps")
 
@@ -71,7 +71,7 @@ class AzurePullRequestReport(Report):
         return None
 
     def isExistingComment(self, comment):
-        header = f"{self.markdownRenderer.getCapability()} feedback".lower()
+        header = f"{self.markdownRenderer.getCapability().displayName} feedback".lower()
         return comment["content"].startswith(("# Sigrid", "# [Sigrid]")) and header in comment["content"].lower()
 
     def callAzure(self, method, body, threadId):
