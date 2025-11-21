@@ -48,6 +48,8 @@ class PublishOptions:
 
     SYSTEM_NAME_PATTERN = re.compile("^[a-z0-9]+(-[a-z0-9]+)*$", re.IGNORECASE)
     SYSTEM_NAME_LENGTH = range(2, 65)
+    SUBSYSTEM_NAME_PATTERN = re.compile(r'^[A-Za-z0-9][A-Za-z0-9._\-/]*[A-Za-z0-9]$')
+    SUBSYSTEM_CONSECUTIVE_PATTERN = re.compile(r'[./]{2,}')
 
     def getSystemId(self):
         return f"{self.partner}-{self.customer}-{self.system}"
@@ -61,6 +63,8 @@ class PublishOptions:
     def isValidSubSystemName(self):
         return self.SUBSYSTEM_NAME_PATTERN.match(self.subsystem)
             # insert logic to ensure subsystem_name matches our criteria
+        return bool(self.SUBSYSTEM_NAME_PATTERN.match(self.subsystem)) and \
+            not bool(self.SUBSYSTEM_CONSECUTIVE_PATTERN.search(self.subsystem))
 
     def readScopeFile(self):
         return self.locateFile(["sigrid.yaml", "sigrid.yml"])
