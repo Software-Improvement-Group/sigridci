@@ -112,8 +112,9 @@ if __name__ == "__main__":
         sys.exit(1)
     
     if not options.isValidSubSystemName():
-        # insert subsystem name validation failure handling
-        pass
+        print(f"Invalid subsystem name, subsystem name should match '{PublishOptions.SUBSYSTEM_NAME_PATTERN.pattern}' "
+              "and not contain consecutive dots or slashes.")
+        sys.exit(1)
 
     UploadLog.log("Starting Sigrid CI")
     runner = SigridCiRunner(options, apiClient)
