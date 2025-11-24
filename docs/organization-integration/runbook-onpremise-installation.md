@@ -83,6 +83,12 @@ When an OIDC compatible Identity Provider is available:
 3. Sigrid requires three attribute claims: email, family_name, and given_name. Please add any missing claims manually if not provided by your Identity Provider.
 4. Create a secret and store it securely in Kubernetes.
 
+### (E) Prepare an RSA keypair for the signing of UWT tokens
+
+This part will soon become obsolete in a newer Sigrid release. 
+1. Create a 2048-bit RSA keypair: `openssl genpkey -out uwt_signing_key.pem -algorithm RSA -pkeyopt rsa_keygen_bits:2048`
+2. Store the certificate securely in Kubernetes.
+
 ### (F) Prepare access to an S3-compatible object store 
 
 1. Create a machine user in your object store.
