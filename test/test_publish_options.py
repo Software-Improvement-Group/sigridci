@@ -53,7 +53,7 @@ class PublishOptionsTest(TestCase):
 
     def testValidateSubSystemNameAccordingToRules(self):
         self.assertTrue(self.toOptionsWithSubsystem("sub.system-1/part").isValidSubSystemName())
-        self.assertTrue(self.toOptionsWithSubsystem("a").isValidSubSystemName())
+        self.assertTrue(self.toOptionsWithSubsystem("aa").isValidSubSystemName())
         self.assertTrue(self.toOptionsWithSubsystem("A1._-/b").isValidSubSystemName())
         self.assertTrue(self.toOptionsWithSubsystem("subsystem").isValidSubSystemName())
         self.assertTrue(self.toOptionsWithSubsystem("sub.system/part-name").isValidSubSystemName())
