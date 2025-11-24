@@ -85,7 +85,6 @@ When an OIDC compatible Identity Provider is available:
 
 ### (E) Prepare an RSA keypair for the signing of UWT tokens
 
-This part will soon become obsolete in a newer Sigrid release. 
 1. Create a 2048-bit RSA keypair: `openssl genpkey -out uwt_signing_key.pem -algorithm RSA -pkeyopt rsa_keygen_bits:2048`
 2. Store the certificate securely in Kubernetes.
 
