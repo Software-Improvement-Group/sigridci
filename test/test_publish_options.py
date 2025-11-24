@@ -71,8 +71,8 @@ class PublishOptionsTest(TestCase):
     def testEmptySubSystemIsValid(self):
         self.assertTrue(self.toOptionsWithSubsystem("").isValidSubSystemName())
 
-    def toOptions(self, customer, system, tempDir="/tmp"):
+    def toOptions(self, customer, system, tempDir="/aap"):
         return PublishOptions(customer, system, RunMode.FEEDBACK_ONLY, tempDir)
 
-    def toOptionsWithSubsystem(self, subsystem, customer="aap", system="noot", tempDir="/tmp"):
+    def toOptionsWithSubsystem(self, subsystem, customer="aap", system="noot", tempDir="/aap"):
         return PublishOptions(customer, system, RunMode.FEEDBACK_ONLY, tempDir, subsystem=subsystem)
