@@ -41,10 +41,10 @@ The script takes a limited number of mandatory arguments. However, Sigrid CI's b
 Notes:
 
 1. Customer names can only contain lowercase letters and numbers.
-2. System names can only contain lowercase letters, numbers, and hyphens.
+2. System names must be 2-64 characters long and may use letters, digits, and hyphens, but cannot start or end with a hyphen or contain consecutive hyphens.
 3. Typically, you would use the `--publish` option when committing to the main/master branch, and you would *not* use it for pull requests. See below for more information.  
 4. These files and directories are excluded *on top of* Sigrid's default excludes. By default, Sigrid excludes things like third party libraries (e.g. `/node_modules/` for NPM libraries, build output (e.g. `/target/` for Maven builds), and generated code. 
-5. See the section below for more details and its limitations.
+5. Subsystems must start and end with a letter or digit and may include letters, digits, dots, underscores, dashes, or slashes, but cannot contain consecutive dots or slashes. See the section below for more details and its limitations.
 6. Include can be used to narrow down the upload to specific folders and/or files. In addition, exclude can be used to exclude files and folders from the included folders.
 7. Folders should always be surrounded by '/' characters
 
