@@ -40,7 +40,7 @@ class OpenSourceHealthMarkdownReportTest(TestCase):
         markdown = report.renderMarkdown("1234", self.feedback, self.options)
 
         expected = """
-            # [Sigrid](https://sigrid-says.com/aap/noot/-/open-source-health) Open Source Health feedback
+            # [Sigrid](https://sigrid-says.com/aap/noot/-/open-source-health) Open Source Health feedback *(Beta)*
             
             **⚠️  You failed to meet your objective of having no critical-severity open source vulnerabilities.**
             
@@ -72,7 +72,7 @@ class OpenSourceHealthMarkdownReportTest(TestCase):
         markdown = report.renderMarkdown("1234", self.feedback, self.options)
 
         expected = """
-            # [Sigrid](https://sigrid-says.com/aap/noot/-/open-source-health) Open Source Health feedback
+            # [Sigrid](https://sigrid-says.com/aap/noot/-/open-source-health) Open Source Health feedback *(Beta)*
             
             **⚠️  You failed to meet your objective of having no high-severity open source vulnerabilities.**
             
@@ -105,7 +105,7 @@ class OpenSourceHealthMarkdownReportTest(TestCase):
         markdown = report.renderMarkdown("1234", self.feedback, self.options)
 
         expected = """
-            # [Sigrid](https://sigrid-says.com/aap/noot/-/open-source-health) Open Source Health feedback
+            # [Sigrid](https://sigrid-says.com/aap/noot/-/open-source-health) Open Source Health feedback *(Beta)*
             
             **⚠️  You failed to meet your objective of having no medium-severity open source vulnerabilities.**
             
@@ -141,7 +141,7 @@ class OpenSourceHealthMarkdownReportTest(TestCase):
         markdown = report.renderMarkdown("1234", self.feedback, self.options)
 
         expected = """
-            # [Sigrid](https://sigrid-says.com/aap/noot/-/open-source-health) Open Source Health feedback
+            # [Sigrid](https://sigrid-says.com/aap/noot/-/open-source-health) Open Source Health feedback *(Beta)*
             
             **⚠️  You failed to meet your objective of having no high-severity open source vulnerabilities.**
             

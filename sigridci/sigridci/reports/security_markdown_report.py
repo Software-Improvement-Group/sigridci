@@ -15,6 +15,7 @@
 import os
 
 from .report import Report, MarkdownRenderer
+from ..capability import SECURITY
 from ..objective import Objective
 
 
@@ -129,7 +130,7 @@ class SecurityMarkdownReport(Report, MarkdownRenderer):
                 yield result["fingerprints"]["sigFingerprint/v1"]
 
     def getCapability(self):
-        return "Security"
+        return SECURITY
 
     def getMarkdownFile(self, options):
         return os.path.abspath(f"{options.outputDir}/security-feedback.md")

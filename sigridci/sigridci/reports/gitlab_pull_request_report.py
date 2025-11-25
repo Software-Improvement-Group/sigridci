@@ -39,10 +39,10 @@ class GitLabPullRequestReport(Report):
 
                 if existingCommentId is None:
                     self.callAPI("POST", self.buildPostCommentURL(None), body)
-                    UploadLog.log(f"Published {self.markdownRenderer.getCapability()} feedback to GitLab")
+                    UploadLog.log(f"Published {self.markdownRenderer.getCapability().displayName} feedback to GitLab")
                 else:
                     self.callAPI("PUT", self.buildPostCommentURL(existingCommentId), body)
-                    UploadLog.log(f"Updated existing GitLab {self.markdownRenderer.getCapability()} feedback")
+                    UploadLog.log(f"Updated existing GitLab {self.markdownRenderer.getCapability().displayName} feedback")
             except SystemExit:
                 print("Failed to publish feedback to Gitab")
 
@@ -86,5 +86,5 @@ class GitLabPullRequestReport(Report):
                     return comment["id"]
 
     def isExistingComment(self, comment):
-        header = f"{self.markdownRenderer.getCapability()} feedback"
+        header = f"{self.markdownRenderer.getCapability().displayName} feedback"
         return comment["body"].startswith(("# Sigrid", "# [Sigrid]")) and header.lower() in comment["body"].lower()

@@ -41,7 +41,7 @@ class SecurityMarkdownReportTest(TestCase):
         markdown = report.renderMarkdown("1234", self.feedback, self.options)
 
         expected = """
-            # [Sigrid](https://sigrid-says.com/aap/noot/-/security) Security feedback
+            # [Sigrid](https://sigrid-says.com/aap/noot/-/security) Security feedback *(Beta)*
             
             **⚠️  You did not meet your objective of having no critical-severity security findings**
             
@@ -75,7 +75,7 @@ class SecurityMarkdownReportTest(TestCase):
         markdown = report.renderMarkdown("1234", noResults, self.options)
 
         expected = """
-            # [Sigrid](https://sigrid-says.com/aap/noot/-/security) Security feedback
+            # [Sigrid](https://sigrid-says.com/aap/noot/-/security) Security feedback *(Beta)*
             
             **✅  You achieved your objective of having no critical-severity security findings**
             
@@ -105,7 +105,7 @@ class SecurityMarkdownReportTest(TestCase):
         markdown = report.renderMarkdown("1234", manyResults, self.options)
 
         expected = """
-            # [Sigrid](https://sigrid-says.com/aap/noot/-/security) Security feedback
+            # [Sigrid](https://sigrid-says.com/aap/noot/-/security) Security feedback *(Beta)*
             
             **⚠️  You did not meet your objective of having no critical-severity security findings**
             
@@ -150,7 +150,7 @@ class SecurityMarkdownReportTest(TestCase):
         markdown = report.renderMarkdown("1234", self.feedback, self.options)
 
         expected = """
-            # [Sigrid](https://sigrid-says.com/aap/noot/-/security) Security feedback
+            # [Sigrid](https://sigrid-says.com/aap/noot/-/security) Security feedback *(Beta)*
             
             **⚠️  You did not meet your objective of having no medium-severity security findings**
             
