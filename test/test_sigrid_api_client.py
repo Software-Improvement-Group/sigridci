@@ -70,7 +70,7 @@ class SigridApiClientTest(TestCase):
 
         self.assertEqual(["Using token ending in '****oken'"], UploadLog.history)
 
-    @mock.patch.dict(os.environ, {"SIGRID_CI_PROXY_HOST" : "proxy.example.com"})
+    @mock.patch.dict(os.environ, {"SIGRID_CI_TOKEN" : "dummy", "SIGRID_CI_PROXY_HOST" : "proxy.example.com"})
     def testBuildSimpleProxyURL(self):
         options = PublishOptions("aap", "noot", runMode=RunMode.PUBLISH_ONLY, sourceDir="/aap")
         apiClient = ApiStub(options)
