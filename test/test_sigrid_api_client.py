@@ -77,6 +77,7 @@ class SigridApiClientTest(TestCase):
         self.assertEqual("https://proxy.example.com", apiClient.buildProxyURL("https"))
 
     @mock.patch.dict(os.environ, {
+        "SIGRID_CI_TOKEN" : "dummy",
         "SIGRID_CI_PROXY_HOST" : "proxy.example.com",
         "SIGRID_CI_PROXY_USER" : "aap",
         "SIGRID_CI_PROXY_PASSWORD" : "1=2"
