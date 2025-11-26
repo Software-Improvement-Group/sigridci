@@ -94,11 +94,11 @@ We distinguish two types of environment variables:
   called "secrets").
 - Non-shared: these typically differ between projects and should be configured individually in each pipeline.
 
-Using Shared Variables in Pipelines:
-- Using shared variables directly in the pipeline can be cumbersome. It's easier to either store all shared variables 
-  at a higher level in your CI/CD project hierarchy or use a template for them and include it in your pipeline. 
-  Make sure credentials are masked. Only the SYSTEM variable needs to be defined in the project pipeline itself, 
-  and the SIGRID_CI_TOKEN is best stored as a project-level variable.
+Using Shared Variables in Pipelines
+- Using shared variables directly in the pipeline can be cumbersome.  
+  It's easier to either store all shared variables at a higher level in your CI/CD project hierarchy or use a template for them and include it in your pipeline.  
+  **Important:** Even when using templates, **do not put secrets in plain text**. Store sensitive values as project-level variables so they remain masked.  
+  Only the `SYSTEM` variable needs to be defined in the project pipeline itself.
 
 Example: Using a GitLab CI/CD template to store shared environment variables:
 ```yaml
