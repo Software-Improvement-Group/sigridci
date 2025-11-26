@@ -84,7 +84,7 @@ the Sigrid CI exit code for this, and you can even make this behavior more nuanc
 - Exit code 1: An error occurred while running Sigrid CI.
 - Exit code 2: You failed your quality objective for Maintainability.
 - Exit code 4: You failed your quality objective for Open Source Health.
-- Exit code 8: You failed your quality objective for Open Source Health.
+- Exit code 8: You failed your quality objective for Security.
 
 These exit codes "stack", so an exit code of 6 means you failed your quality objectives for both Maintainability
 and Open Source Health.
@@ -120,8 +120,13 @@ If subsystems need to be removed from the system this can be done via the [Sigri
 ## Connecting Sigrid CI using a proxy
 
 If your environment requires a proxy to connect to the internet, you can configure Sigrid CI to use this proxy.
-You define an environment variable `SIGRID_CI_PROXY_URL`, which will then be picked up by Sigrid CI. 
-The value of this environment variable should be the complete proxy URL, so including the protocol, and also including user information if required. 
+This is done by defining the following 3 environment variables and making them available to Sigrid CI:
+
+- `SIGRID_CI_PROXY_HOST` (for example `myproxy.example.com`)
+- `SIGRID_CI_PROXY_USER` (for example `johndoe`)
+- `SIGRID_CI_PROXY_PASSWORD` (you should treat this as a secret in your pipeline configuration)
+
+Sigrid CI will then use these environment variables to communicate with Sigrid via your proxy.
 
 ## Contact and support
 

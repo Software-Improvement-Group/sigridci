@@ -41,14 +41,6 @@ class SigridApiClient:
 
         UploadLog.log(f"Using token ending in '****{self.token[-4:]}'")
 
-        if os.environ.get("SIGRID_CI_PROXY_URL"):
-            proxyHandler = urllib.request.ProxyHandler({
-                "http": os.environ["SIGRID_CI_PROXY_URL"],
-                "https": os.environ["SIGRID_CI_PROXY_URL"],
-            })
-            proxyOpener = urllib.request.build_opener(proxyHandler)
-            urllib.request.install_opener(proxyOpener)
-
     def callSigridAPI(self, path, body=None, contentType=None):
         delimiter = "" if path.startswith("/") else "/"
         url = f"{self.baseURL}/rest{delimiter}{path}"
@@ -58,7 +50,8 @@ class SigridApiClient:
         if contentType is not None:
             request.add_header("Content-Type", contentType)
 
-        response = urllib.request.urlopen(request, context=self.sslContext)
+        response = self.openRequest(request)
+
         if response.status == 204:
             return {}
 
@@ -68,6 +61,27 @@ class SigridApiClient:
             return {}
         else:
             return json.loads(responseBody)
+
+    def openRequest(self, request):
+        if os.environ.get("SIGRID_CI_PROXY_URL"):
+            proxies = {protocol: os.environ["SIGRID_CI_PROXY_URL"] for protocol in ["http", "https"]}
+            return urllib.request.build_opener(urllib.request.ProxyHandler(proxies)).open(request)
+        elif os.environ.get("SIGRID_CI_PROXY_HOST"):
+            proxies = {protocol: self.buildProxyURL(protocol) for protocol in ["http", "https"]}
+            return urllib.request.build_opener(urllib.request.ProxyHandler(proxies)).open(request)
+        else:
+            return urllib.request.urlopen(request, context=self.sslContext)
+
+    def buildProxyURL(self, protocol):
+        host = os.environ.get("SIGRID_CI_PROXY_HOST")
+        user = os.environ.get("SIGRID_CI_PROXY_USER")
+        password = os.environ.get("SIGRID_CI_PROXY_PASSWORD")
+
+        if user and password:
+            return f"{protocol}://{urllib.parse.quote_plus(user)}:{urllib.parse.quote_plus(password)}@{host}"
+        else:
+            return f"{protocol}://{host}"
+
 
     def retry(self, operation, *, attempts=5, allow404=False, allowEmpty=True):
         api = ApiCaller("Sigrid", self.POLL_INTERVAL)
@@ -130,7 +144,7 @@ class SigridApiClient:
             uploadRequest.add_header("Content-Type", "application/zip")
             uploadRequest.add_header("Content-Length", "%d" % os.path.getsize(upload))
             uploadRequest.add_header("x-amz-server-side-encryption", "AES256")
-            urllib.request.urlopen(uploadRequest)
+            return self.openRequest(uploadRequest)
 
     def checkSystemExists(self):
         path = f"/analysis-results/sigridci/{self.urlCustomerName}/{self.urlSystemName}/{self.API_VERSION}/ci"
