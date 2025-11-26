@@ -133,7 +133,7 @@ Notes:
   `https://sigrid.mycompany.com`.
 - `SIGRID_CI_TOKEN`: a personal access token created in Sigrid's UI.
 - `SIGRID_VERSION`: specifies the version tag of the Sigrid-Multi-Analyzer container.
-  Ensure that the version matches the corresponding release version used in Kubernetes deployment.
+  Ensure that the version matches the version used for the Sigrid web application you have deployed in Kubernetes.
 - `BUCKET`: name of the bucket in which analysis results are stored.
 - `AWS_ENDPOINT_URL`: URL at which an S3-compatible object store can be reached. Defaults to Amazon AWS 
   S3 endpoints.
