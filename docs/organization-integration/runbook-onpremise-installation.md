@@ -280,7 +280,7 @@ You can now start inviting more people to Sigrid if so desired.
     ```
 - Optional: Create an analysis scope.
   - By default, a scope file is generated and used for analysis. In many cases, this is sufficient. If you want more control over the analysis results, 
-    for example, to include or exclude certain file extensions or folders, you can create your own scope.
+    for example, to include or exclude certain file extensions or folders, you can define your own scope.
   - Create a `sigrid.yaml` file in the root of your test project.
   - Comprehensive documentation can be found here: [Analysis-scope-configuration](../reference/analysis-scope-configuration.md)
   - Example:
