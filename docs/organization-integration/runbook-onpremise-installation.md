@@ -255,7 +255,7 @@ You can now start inviting more people to Sigrid if so desired.
   - For efficient Sigrid setup, use a minimal test project in the CI pipeline. This allows for quicker iterations. Once configured correctly, you can analyze any project size.
 - Create a test-branch.
 - Create a pipeline.
-  - Example: Where all secrets except SYSTEM can be omitted if already templated or stored as secrets in your e.g. GitLab. Also override image name if you're pulling from your own container registry.
+  - Example: Where all secrets except SYSTEM can be omitted if already templated or stored as secrets in e.g. your GitLab. Also override image name if you're pulling from your own container registry.
     ```
     sigrid-publish:
       image:
