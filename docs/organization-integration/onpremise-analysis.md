@@ -317,7 +317,7 @@ To set up the Helm charts, please follow the instructions provided [here](onprem
 > **Note:** The following environment variables are only required for manual system publishing and are not part of the standard Sigrid-Multi-Analyzer environment variable table above.  
 > They are used to connect to external source code repositories when publishing a system manually.
 
-For manual system publishing, you need to supply additional environment variables beyond those mentioned [here](onpremise-analysis.md#sigrid-ci-environment-variables).
+For manual system publishing, you need to supply additional environment variables beyond those mentioned [here](onpremise-analysis.md#sigrid-multi-analyzer-environment-variables).
 
 Please provide the following environment variables:
 
