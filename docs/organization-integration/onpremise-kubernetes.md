@@ -593,7 +593,7 @@ Notes:
    - GitLab: `read_repository`
    - GitHub: `repo`
    - Azure DevOps: `vso.code`
-   These scopes provide read rights to projects and source code, which are necessary for Sigrid to display source code fragments in the UI.
+   These scopes provide read permissions to projects and source code, which are necessary for Sigrid to display source code fragments in the UI.
 
 ## Contact and support
 
