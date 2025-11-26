@@ -102,25 +102,27 @@ Using Shared Variables in Pipelines
 
 Example: Using a GitLab CI/CD template to store shared environment variables:
 ```yaml
+variables:
+  SYSTEM: "$CI_PROJECT_NAME"
 include:
-  - template: 'path/to/your/template.yml'
+  - local: 'path/to/your/template.yml'
 ```
 
-| Variable                       | Required | Shared? | Default   |
-|--------------------------------|----------|---------|-----------|
-| CUSTOMER                       | Yes      | Yes     |           |
-| SYSTEM                         | Yes      | No      |           |
-| SIGRID_CA_CERT                 | No       | Yes     |           |
-| SIGRID_URL                     | Yes      | Yes     |           |
-| SIGRID_CI_TOKEN                | Yes      | Yes     |           |
-| SIGRID_VERSION                 | Yes      | Yes     |           |
-| BUCKET                         | Yes      | Yes     |           |
-| AWS_ENDPOINT_URL               | Yes      | Yes     | (AWS)     |
-| AWS_REGION                     | Yes      | Yes     | us-east-1 |
-| AWS_ACCESS_KEY_ID              | Yes      | Yes     |           |
-| AWS_SECRET_ACCESS_KEY          | Yes      | Yes     |           |
-| AWS_CA_BUNDLE                  | No       | Yes     |           |
-| SIGRID_SOURCES_REGISTRATION_ID | Yes      | Yes     | (auto)    |
+| Variable                       | Required | Shared? | Sensitive | Default   |
+|--------------------------------|----------|---------|-----------|-----------|
+| CUSTOMER                       | Yes      | Yes     | No        |           |
+| SYSTEM                         | Yes      | No      | No        |           |
+| SIGRID_CA_CERT                 | No       | Yes     | Yes       |           |
+| SIGRID_URL                     | Yes      | Yes     | No        |           |
+| SIGRID_CI_TOKEN                | Yes      | Yes     | Yes       |           |
+| SIGRID_VERSION                 | Yes      | Yes     | No        |           |
+| BUCKET                         | Yes      | Yes     | Yes       |           |
+| AWS_ENDPOINT_URL               | Yes      | Yes     | No        | (AWS)     |
+| AWS_REGION                     | Yes      | Yes     | No        | us-east-1 |
+| AWS_ACCESS_KEY_ID              | Yes      | Yes     | Yes       |           |
+| AWS_SECRET_ACCESS_KEY          | Yes      | Yes     | Yes       |           |
+| AWS_CA_BUNDLE                  | No       | Yes     | Yes       |           |
+| SIGRID_SOURCES_REGISTRATION_ID | Yes      | Yes     | No        | (auto)    |
 
 Notes:
 - `CUSTOMER`: this is the name of the Sigrid tenant as set in Sigrid's Helm chart when Sigrid was
