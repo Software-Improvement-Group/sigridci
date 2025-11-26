@@ -112,16 +112,16 @@ include:
 |--------------------------------|----------|---------|-----------|-----------|
 | CUSTOMER                       | Yes      | Yes     | No        |           |
 | SYSTEM                         | Yes      | No      | No        |           |
-| SIGRID_CA_CERT                 | No       | Yes     | Yes       |           |
+| SIGRID_CA_CERT                 | No       | Yes     | No        |           |
 | SIGRID_URL                     | Yes      | Yes     | No        |           |
 | SIGRID_CI_TOKEN                | Yes      | Yes     | Yes       |           |
 | SIGRID_VERSION                 | Yes      | Yes     | No        |           |
-| BUCKET                         | Yes      | Yes     | Yes       |           |
+| BUCKET                         | Yes      | Yes     | No        |           |
 | AWS_ENDPOINT_URL               | Yes      | Yes     | No        | (AWS)     |
 | AWS_REGION                     | Yes      | Yes     | No        | us-east-1 |
 | AWS_ACCESS_KEY_ID              | Yes      | Yes     | Yes       |           |
 | AWS_SECRET_ACCESS_KEY          | Yes      | Yes     | Yes       |           |
-| AWS_CA_BUNDLE                  | No       | Yes     | Yes       |           |
+| AWS_CA_BUNDLE                  | No       | Yes     | No        |           |
 | SIGRID_SOURCES_REGISTRATION_ID | Yes      | Yes     | No        | (auto)    |
 
 Notes:
