@@ -326,11 +326,11 @@ Please provide the following environment variables:
   Example value: `https://github.example.com/api/v3` 
 - **`SOURCES_PROJECT_SLUG`** (required, manual publishing only):  
   Description: The project slug identifies your project within your CI/CD environment. It typically appears in URLs displayed in your browser, representing the part that follows the server address.   
-  Project URL: `https://github.example.com/Software-Improvement-Group/sigridci`
+  Given the project's repository URL: `https://github.example.com/Software-Improvement-Group/sigridci`
   Example value: `Software-Improvement-Group/sigridci`
 - **`SOURCES_REF`** (optional, manual publishing only):  
   Description: The branch name for the source view (defaults to 'main' if not provided).  
-  Ref URL: https://github.example.com/api/v3/repos/Software-Improvement-Group/sigridci/branches/patch_20250123
+  Given the project's repository branch: https://github.example.com/api/v3/repos/Software-Improvement-Group/sigridci/branches/patch_20250123
   Example value: `patch_20250123`
 
 ## Contact and support
