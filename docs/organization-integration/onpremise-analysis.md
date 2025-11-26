@@ -7,10 +7,11 @@ This documentation covers on-premise Sigrid. It is not applicable for cloud-base
 
 Your development platform will need access to the [Sigrid On-Premise Docker containers](onpremise-integration.md#obtaining-sigrid-on-premise).
 
-Each system to be analyzed needs an analysis configuration in the form of a file called
-`sigrid.yaml` in the root directory of the system. Typically, this configuration is maintained by
-the developers responsible for the system and consequently is not discussed here. Developers are
-referred to the [analysis configuration reference](../reference/analysis-scope-configuration.md).
+Each system to be analyzed requires an analysis configuration file named `sigrid.yaml` in the root directory. 
+If no file is provided, this configuration is automatically generated (not stored in Sigrid or the pipeline). 
+Creating a `sigrid.yaml` is only needed when developers want more control over the content of the analysis. 
+Typically, this configuration is maintained by the developers responsible for the system. 
+Developers can refer to the [analysis configuration reference](../reference/analysis-scope-configuration.md).
 
 Sigrid's analyses require access to an S3-compatible object store. This can be Amazon's 
 implementation, or an on-premise equivalent that supports Amazon's S3 API, such as [MinIO](https://min.io) or 
@@ -91,23 +92,37 @@ We distinguish two types of environment variables:
 - Shared: these typically have the same value across different CI/CD projects for the same Sigrid 
   deployment. SIG recommends configuring these as variables managed by the CI/CD environment (often 
   called "secrets").
-- Non-shared: these typically differ across projects.
+- Non-shared: these typically differ between projects and should be configured individually in each pipeline.
 
-| Variable                       | Required | Shared? | Default   |
-|--------------------------------|----------|---------|-----------|
-| CUSTOMER                       | Yes      | Yes     |           |
-| SYSTEM                         | Yes      | No      |           |
-| SIGRID_CA_CERT                 | No       | Yes     |           |
-| SIGRID_URL                     | Yes      | Yes     |           |
-| SIGRID_CI_TOKEN                | Yes      | Yes     |           |
-| SIGRID_VERSION                 | Yes      | Yes     |           |
-| BUCKET                         | Yes      | Yes     |           |
-| AWS_ENDPOINT_URL               | Yes      | Yes     | (AWS)     |
-| AWS_REGION                     | Yes      | Yes     | us-east-1 |
-| AWS_ACCESS_KEY_ID              | Yes      | Yes     |           |
-| AWS_SECRET_ACCESS_KEY          | Yes      | Yes     |           |
-| AWS_CA_BUNDLE                  | No       | Yes     |           |
-| SIGRID_SOURCES_REGISTRATION_ID | Yes      | Yes     | (auto)    |
+Using Shared Variables in Pipelines
+- Using shared variables directly in the pipeline can be cumbersome.  
+  It's easier to either store all shared variables at a higher level in your CI/CD project hierarchy or use a template for them and include it in your pipeline.  
+  **Important:** Even when using templates, **do not put secrets in plain text**. Store sensitive values as project-level variables so they remain masked.  
+  Only the `SYSTEM` variable needs to be defined in the project pipeline itself.
+
+Example: Using a GitLab CI/CD template to store shared environment variables:
+```yaml
+variables:
+  SYSTEM: "$CI_PROJECT_NAME"
+include:
+  - local: 'path/to/your/template.yml'
+```
+
+| Variable                       | Required | Shared? | Sensitive | Default   |
+|--------------------------------|----------|---------|-----------|-----------|
+| CUSTOMER                       | Yes      | Yes     | No        |           |
+| SYSTEM                         | Yes      | No      | No        |           |
+| SIGRID_CA_CERT                 | No       | Yes     | No        |           |
+| SIGRID_URL                     | Yes      | Yes     | No        |           |
+| SIGRID_CI_TOKEN                | Yes      | Yes     | Yes       |           |
+| SIGRID_VERSION                 | Yes      | Yes     | No        |           |
+| BUCKET                         | Yes      | Yes     | No        |           |
+| AWS_ENDPOINT_URL               | Yes      | Yes     | No        | (AWS)     |
+| AWS_REGION                     | Yes      | Yes     | No        | us-east-1 |
+| AWS_ACCESS_KEY_ID              | Yes      | Yes     | Yes       |           |
+| AWS_SECRET_ACCESS_KEY          | Yes      | Yes     | Yes       |           |
+| AWS_CA_BUNDLE                  | No       | Yes     | No        |           |
+| SIGRID_SOURCES_REGISTRATION_ID | Yes      | Yes     | No        | (auto)    |
 
 Notes:
 - `CUSTOMER`: this is the name of the Sigrid tenant as set in Sigrid's Helm chart when Sigrid was
@@ -119,6 +134,8 @@ Notes:
 - `SIGRID_URL`: (sub-)domain where this Sigrid On-Premise deployment is hosted, e.g. 
   `https://sigrid.mycompany.com`.
 - `SIGRID_CI_TOKEN`: a personal access token created in Sigrid's UI.
+- `SIGRID_VERSION`: specifies the version tag of the Sigrid-Multi-Analyzer container.
+  Ensure that the version matches the version used for the Sigrid web application you have deployed in Kubernetes.
 - `BUCKET`: name of the bucket in which analysis results are stored.
 - `AWS_ENDPOINT_URL`: URL at which an S3-compatible object store can be reached. Defaults to Amazon AWS 
   S3 endpoints.
@@ -240,7 +257,7 @@ The `GET /rest/inboundresults/imports/{partner}/{customer}/{system}/{job}` endpo
       "startTime": "2025-01-10T12:00:44Z",
       "reason": null,
       "containerStatus": {
-        "image": "571600876202.dkr.ecr.eu-central-1.amazonaws.com/softwareimprovementgoup/sigrid-multi-importer:1.0.20250603",
+        "image": "571600876202.dkr.ecr.eu-central-1.amazonaws.com/softwareimprovementgroup/sigrid-multi-importer:1.0.20250603",
         "imageID": "...",
         "name": "sigrid-importer",
         "ready": false,
@@ -282,7 +299,7 @@ It is also possible to *manually* start an analysis, and then publish the analys
 We recommend you integrate Sigrid-Multi-Analyzer into your pipeline. This ensures the results you see in Sigrid are always "live", since the analysis will run after every commit. It also allows for developers to receive Sigrid feedback directly in their pull requests. 
 {: .warning }
 
-You can run the analysis and publish the analysis results using the same Docker container. If you run Sigrid-Multi-Analyzer ad-hoc, you will still need to provide the [environment variables](#sigrid-ci-environment-variables). Since there are quite some environment variables, it's easiest to use Docker's `--env-file` option for this. This option is explained in the [Docker documentation](https://docs.docker.com/reference/cli/docker/container/run/).
+You can run the analysis and publish the analysis results using the same Docker container. If you run Sigrid-Multi-Analyzer ad-hoc, you will still need to provide the [Sigrid-Multi-Analyzer environment variables](#sigrid-multi-analyzer-environment-variables). Since there are quite some environment variables, it's easiest to use Docker's `--env-file` option for this. This option is explained in the [Docker documentation](https://docs.docker.com/reference/cli/docker/container/run/).
 
 The following example shows how to start an ad-hoc analysis for a system located in a local `/mysystem` directory:
 
@@ -299,19 +316,24 @@ The version tag (`$SIGRID_VERSION`) should match your version of Sigrid on-premi
 ### Optional: connection to source code repositories
 To set up the Helm charts, please follow the instructions provided [here](onpremise-kubernetes.md#g-optional-connection-to-source-code-repositories).
 
-For manual system publishing, you need to supply additional environment variables beyond those mentioned [here](onpremise-analysis.md#sigrid-ci-environment-variables).
+> **Note:** The following environment variables are only required for manual system publishing and are not part of the standard Sigrid-Multi-Analyzer environment variable table above.  
+> They are used to connect to external source code repositories when publishing a system manually.
+
+For manual system publishing, you need to supply additional environment variables beyond those mentioned [here](onpremise-analysis.md#sigrid-multi-analyzer-environment-variables).
 
 Please provide the following environment variables:
 
-- **`SOURCES_API_BASE_URL`** (required):  
+- **`SOURCES_API_BASE_URL`** (required, manual publishing only):  
   Description: The entry point for the API of the source code repository.  
-  Example: `https://github.example.com/api/v3` 
-- **`SOURCES_PROJECT_SLUG`** (required):  
+  Example value: `https://github.example.com/api/v3` 
+- **`SOURCES_PROJECT_SLUG`** (required, manual publishing only):  
   Description: The project slug identifies your project within your CI/CD environment. It typically appears in URLs displayed in your browser, representing the part that follows the server address.   
-  Example: `Software-Improvement-Group/sigridci`
-- **`SOURCES_REF`** (optional):  
+  Given the project's repository URL: `https://github.example.com/Software-Improvement-Group/sigridci`
+  Example value: `Software-Improvement-Group/sigridci`
+- **`SOURCES_REF`** (optional, manual publishing only):  
   Description: The branch name for the source view (defaults to 'main' if not provided).  
-  Example: `patch_20250123`
+  Given the project's repository branch: https://github.example.com/api/v3/repos/Software-Improvement-Group/sigridci/branches/patch_20250123
+  Example value: `patch_20250123`
 
 ## Contact and support
 
