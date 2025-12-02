@@ -3,6 +3,11 @@ Sigrid release notes
 
 SIG uses [continuous delivery](https://en.wikipedia.org/wiki/Continuous_delivery), meaning that every change to Sigrid or the underlying analysis is released once our development pipeline has completed. On average, we release somewhere between 10 and 20 times per day. This page therefore doesn't list every single change, since that would quickly lead to an excessively long list of small changes. Instead, this page lists Sigrid and analysis changes that we consider noteworthy for the typical Sigrid user.
 
+### December 1, 2025
+
+- **Sigrid CI:** The feedback for Open Source Health has been adapted based on your input. We now explicitly show which vulnerable libraries are part of your objective. Previously, vulnerable libraries not part of your objective were not shown at all, but this could be confusing.
+- **Technology support:** Detection for Postgres database code has been simplified.
+
 ### November 17, 2025
 
 - **Sigrid CI:** Sigrid CI for Open Source Health is now in beta. [Contact us](mailto:support@softwareimprovementgroup.com) if you're interested in joining the beta program. You can find more information in our [new documentation on using Sigrid CI](../sigridci-integration/using-sigridci.md).

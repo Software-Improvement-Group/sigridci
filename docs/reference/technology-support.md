@@ -212,7 +212,6 @@ This page provides an overview of all technologies that can be analyzed by Sigri
 | `plsqlreports`                | Oracle PL/SQL Reports                  | Maintainability                             |
 | `pluk`                        | PLUK                                   | Maintainability, Architecture               |
 | `polymertemplates`            | Polymer Templates                      | Maintainability, Architecture               | [(4)](#notes), [(8)](#notes)                |
-| `postgresql`                  | PostgreSQL                             | Maintainability, Architecture               |
 | `powerbuilder`                | Powerbuilder                           | Maintainability, Architecture               |
 | `powercenter`                 | PowerCenter                            | Maintainability, Architecture               | [(4)](#notes), [(8)](#notes)                |
 | `powerfx`                     | Power Fx (AKA Microsoft Power Apps)    | Maintainability                             |

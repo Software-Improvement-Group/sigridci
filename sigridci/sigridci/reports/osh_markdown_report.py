@@ -38,11 +38,11 @@ class OpenSourceHealthMarkdownReport(Report, MarkdownRenderer):
             f.write(self.renderMarkdown(analysisId, feedback, options))
 
     def renderMarkdown(self, analysisId, feedback, options):
-        libraries = list(self.processor.extractRelevantLibraries(feedback, self.objective))
-        previousLibraries = list(self.processor.extractRelevantLibraries(self.previousFeedback, self.objective))
+        libraries = list(self.processor.extractLibraries(feedback, self.objective))
+        previousLibraries = list(self.processor.extractLibraries(self.previousFeedback, self.objective))
 
-        fixable = [lib for lib in libraries if self.isFixable(lib)]
-        unfixable = [lib for lib in libraries if not self.isFixable(lib)]
+        fixable = [lib for lib in libraries if lib.fixable]
+        unfixable = [lib for lib in libraries if not lib.fixable]
         updated = self.findUpdatedLibraries(previousLibraries, libraries)
 
         details = f"Sigrid compared your code against the baseline of {self.getBaseline(feedback)}.\n\n"
@@ -68,27 +68,30 @@ class OpenSourceHealthMarkdownReport(Report, MarkdownRenderer):
 
     def getSummary(self, feedback, options):
         objectiveDisplayName = f"{Objective.getSeverityObjectiveLabel(self.objective)} open source vulnerabilities"
+        libraries = list(self.processor.extractLibraries(feedback, self.objective))
+        unfixable = [lib for lib in libraries if lib.partOfObjective and not lib.fixable]
+
         if self.isObjectiveSuccess(feedback, options):
             return f"✅  You achieved your objective of having {objectiveDisplayName}."
+        elif len(unfixable) > 0:
+            return f"😑  You did not fail to meet your objective, but there are findings you need to investigate"
         else:
             return f"⚠️  You failed to meet your objective of having {objectiveDisplayName}."
 
     def generateFindingsTable(self, libraries, options):
-        md = "| Vulnerability risk | Library | Latest version | Location(s) |\n"
-        md += "|----|----|----|----|\n"
+        md = "| Vulnerability risk | Part of objective? | Library | Latest version | Location(s) |\n"
+        md += "|----|----|----|----|----|\n"
 
         for library in sorted(libraries, key=lambda lib: self.SORT_RISK.index(lib.risk))[0:self.MAX_FINDINGS]:
             symbol = self.SYMBOLS[library.risk]
+            check = "✅" if Objective.isFindingIncluded(library.risk, self.objective) else "-"
             locations = "<br />".join(self.decorateLink(options, file, file) for file in library.files)
-            md += f"| {symbol} | {library.name} {library.version} | {library.latestVersion} | {locations} |\n"
+            md += f"| {symbol} | {check} | {library.name} {library.version} | {library.latestVersion} | {locations} |\n"
 
         if len(libraries) > self.MAX_FINDINGS:
             md += f"| | ... {len(libraries) - self.MAX_FINDINGS} more vulnerable open source libraries | |\n"
 
         return f"{md}\n"
-
-    def isFixable(self, library):
-        return library.latestVersion and library.version != library.latestVersion
 
     def findUpdatedLibraries(self, previous, current):
         getKey = lambda library: f"{library.name}@{library.version}"
@@ -107,6 +110,6 @@ class OpenSourceHealthMarkdownReport(Report, MarkdownRenderer):
         return os.path.abspath(f"{options.outputDir}/osh-feedback.md")
 
     def isObjectiveSuccess(self, feedback, options):
-        libraries = list(self.processor.extractRelevantLibraries(feedback, self.objective))
-        fixable = [lib for lib in libraries if self.isFixable(lib)]
+        libraries = list(self.processor.extractLibraries(feedback, self.objective))
+        fixable = [lib for lib in libraries if lib.partOfObjective and lib.fixable]
         return len(fixable) == 0

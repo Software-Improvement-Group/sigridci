@@ -827,10 +827,6 @@
   display_name: "Polymer Templates"
   category: templating
 
-- context: postgresql
-  display_name: "PostgreSQL"
-  category: database
-
 - context: powerbuilder
   display_name: "Powerbuilder"
   category: legacy

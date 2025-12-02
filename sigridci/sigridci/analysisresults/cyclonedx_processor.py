@@ -25,11 +25,13 @@ class Library:
     version: str
     latestVersion: str
     files: List[str]
+    fixable: bool
+    partOfObjective: bool
 
 
 class CycloneDXProcessor:
 
-    def extractRelevantLibraries(self, feedback, objective):
+    def extractLibraries(self, feedback, objective):
         if feedback is None:
             return
 
@@ -38,10 +40,13 @@ class CycloneDXProcessor:
             files = list(self.getOccurrenceLocations(component))
             properties = {prop["name"]: prop["value"] for prop in component["properties"]}
             risk = properties["sigrid:risk:vulnerability"]
+            version = component["version"]
             latestVersion = properties.get("sigrid:latest:version", "").replace("?", "")
 
-            if Objective.isFindingIncluded(risk, objective):
-                yield Library(risk, name, component["version"], latestVersion, files)
+            if risk not in ("NONE", "UNKNOWN"):
+                fixable = latestVersion and version != latestVersion
+                partOfObjective = Objective.isFindingIncluded(risk, objective)
+                yield Library(risk, name, version, latestVersion, files, fixable, partOfObjective)
 
     def getOccurrenceLocations(self, component):
         if component.get("evidence") and component["evidence"].get("occurrences"):
