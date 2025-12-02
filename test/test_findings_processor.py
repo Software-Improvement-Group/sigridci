@@ -26,7 +26,7 @@ class FindingsProcessorTest(TestCase):
             feedback = json.load(f)
 
         processor = FindingsProcessor()
-        findings = list(processor.extractAllFindings(feedback))
+        findings = list(processor.extractFindings(feedback, "HIGH"))
 
         self.assertEqual(len(findings), 2)
         self.assertEqual(findings[0].risk, "CRITICAL")
@@ -34,23 +34,12 @@ class FindingsProcessorTest(TestCase):
         self.assertEqual(findings[1].risk, "MEDIUM")
         self.assertEqual(findings[1].description, "Some other finding")
 
-    def testExtractRelevantFindings(self):
-        with open(os.path.dirname(__file__) + "/testdata/security.sarif.json", encoding="utf-8", mode="r") as f:
-            feedback = json.load(f)
-
-        processor = FindingsProcessor()
-        findings = list(processor.extractRelevantFindings(feedback, "HIGH"))
-
-        self.assertEqual(len(findings), 1)
-        self.assertEqual(findings[0].risk, "CRITICAL")
-        self.assertEqual(findings[0].description, "Weak Hash algorithm used")
-
     def testExtractAllFindingsNative(self):
         with open(os.path.dirname(__file__) + "/testdata/security.sig.json", encoding="utf-8", mode="r") as f:
             feedback = json.load(f)
 
         processor = FindingsProcessor()
-        findings = list(processor.extractAllFindings(feedback))
+        findings = list(processor.extractFindings(feedback, "HIGH"))
 
         self.assertEqual(len(findings), 1)
         self.assertEqual(findings[0].fingerprint, "0006d9dd-5288-424a-bf8b-077c98ef00ee")

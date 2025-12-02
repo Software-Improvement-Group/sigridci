@@ -27,13 +27,14 @@ class SecurityTextReport(Report):
 
     def generate(self, analysisId, feedback, options):
         processor = FindingsProcessor()
-        findings = list(processor.extractRelevantFindings(feedback, self.objective))
+        allFindings = list(processor.extractFindings(feedback, self.objective))
+        relevantFindings = [finding for finding in allFindings if finding.partOfObjective]
 
-        if len(findings) > 0:
+        if len(relevantFindings) > 0:
             print("", file=self.output)
             print("Security findings", file=self.output)
             print("", file=self.output)
-            for finding in findings:
+            for finding in relevantFindings:
                 symbol = SecurityMarkdownReport.SEVERITY_SYMBOLS[finding.risk]
                 print(f"    {symbol} {finding.description}", file=self.output)
                 print(f"        In {finding.file} (line {finding.line})", file=self.output)

@@ -43,8 +43,8 @@ class SecurityMarkdownReport(Report, MarkdownRenderer):
             f.write(self.renderMarkdown(analysisId, feedback, options))
 
     def renderMarkdown(self, analysisId, feedback, options):
-        findings = self.processor.extractRelevantFindings(feedback, self.objective)
-        previousFindings = self.processor.extractRelevantFindings(self.previousFeedback, self.objective)
+        findings = self.processor.extractFindings(feedback, self.objective)
+        previousFindings = self.processor.extractFindings(self.previousFeedback, self.objective)
 
         introduced = list(self.getIntroducedFindings(findings, previousFindings))
         fixed = list(self.getFixedFindings(findings, previousFindings))
@@ -78,16 +78,17 @@ class SecurityMarkdownReport(Report, MarkdownRenderer):
         if len(findings) == 0:
             return ""
 
-        md = "| Risk | File | Finding |\n"
-        md += "|------|------|---------|\n"
+        md = "| Risk | Part of objective? | File | Finding |\n"
+        md += "|----|----|----|----|\n"
 
         for finding in findings[0:self.MAX_FINDINGS]:
             symbol = self.SEVERITY_SYMBOLS[finding.risk]
+            check = "✅" if finding.partOfObjective else "-"
             link = self.decorateLink(options, f"{finding.file}:{finding.line}", finding.file, finding.line)
-            md += f"| {symbol} | {link} | {finding.description} |\n"
+            md += f"| {symbol} | {check} | {link} | {finding.description} |\n"
 
         if len(findings) > self.MAX_FINDINGS:
-            md += f"| | ... and {len(findings) - self.MAX_FINDINGS} more findings | |\n"
+            md += f"| | ... and {len(findings) - self.MAX_FINDINGS} more findings | | |\n"
 
         return f"{md}\n"
 
@@ -106,5 +107,6 @@ class SecurityMarkdownReport(Report, MarkdownRenderer):
         return os.path.abspath(f"{options.outputDir}/security-feedback.md")
 
     def isObjectiveSuccess(self, feedback, options):
-        findings = self.processor.extractRelevantFindings(feedback, self.objective)
-        return len(findings) == 0
+        findings = self.processor.extractFindings(feedback, self.objective)
+        relevant = [finding for finding in findings if finding.partOfObjective]
+        return len(relevant) == 0

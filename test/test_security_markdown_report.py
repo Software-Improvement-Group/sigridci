@@ -51,11 +51,12 @@ class SecurityMarkdownReportTest(TestCase):
             
             ## 👎 What could be better?
             
-            > Unfortunately, you introduced **1** security findings.
+            > Unfortunately, you introduced **2** security findings.
             
-            | Risk | File | Finding |
-            |------|------|---------|
-            | 🟣 | [Security.java:33](https://example.com/aap/noot/-/blob/mybranch/Security.java#L33) | Weak Hash algorithm used |
+            | Risk | Part of objective? | File | Finding |
+            |----|----|----|----|
+            | 🟣 | ✅ | [Security.java:33](https://example.com/aap/noot/-/blob/mybranch/Security.java#L33) | Weak Hash algorithm used |
+            | 🟠 | - | [Aap.java:33](https://example.com/aap/noot/-/blob/mybranch/Aap.java#L33) | Some other finding |
             
             If you believe these findings are false positives,
             you can [exclude the rule](https://docs.sigrid-says.com/reference/analysis-scope-configuration.html#excluding-security-rules) in the Sigrid configuration.
@@ -122,17 +123,17 @@ class SecurityMarkdownReportTest(TestCase):
             
             > Unfortunately, you introduced **11** security findings.
             
-            | Risk | File | Finding |
-            |------|------|---------|
-            | 🟣 | Security.java:33 | Weak Hash algorithm used |
-            | 🟣 | Security.java:33 | Weak Hash algorithm used |
-            | 🟣 | Security.java:33 | Weak Hash algorithm used |
-            | 🟣 | Security.java:33 | Weak Hash algorithm used |
-            | 🟣 | Security.java:33 | Weak Hash algorithm used |
-            | 🟣 | Security.java:33 | Weak Hash algorithm used |
-            | 🟣 | Security.java:33 | Weak Hash algorithm used |
-            | 🟣 | Security.java:33 | Weak Hash algorithm used |
-            | | ... and 3 more findings | |
+            | Risk | Part of objective? | File | Finding |
+            |----|----|----|----|
+            | 🟣 | ✅ | Security.java:33 | Weak Hash algorithm used |
+            | 🟣 | ✅ | Security.java:33 | Weak Hash algorithm used |
+            | 🟣 | ✅ | Security.java:33 | Weak Hash algorithm used |
+            | 🟣 | ✅ | Security.java:33 | Weak Hash algorithm used |
+            | 🟣 | ✅ | Security.java:33 | Weak Hash algorithm used |
+            | 🟣 | ✅ | Security.java:33 | Weak Hash algorithm used |
+            | 🟣 | ✅ | Security.java:33 | Weak Hash algorithm used |
+            | 🟣 | ✅ | Security.java:33 | Weak Hash algorithm used |
+            | | ... and 3 more findings | | |
             
             If you believe these findings are false positives,
             you can [exclude the rule](https://docs.sigrid-says.com/reference/analysis-scope-configuration.html#excluding-security-rules) in the Sigrid configuration.
@@ -168,17 +169,17 @@ class SecurityMarkdownReportTest(TestCase):
             
             > You fixed **1** security findings.
             
-            | Risk | File | Finding |
-            |------|------|---------|
-            | 🟣 | [Security.java:33](https://example.com/aap/noot/-/blob/mybranch/Security.java#L33) | This finding has been fixed in the next snapshot. |
+            | Risk | Part of objective? | File | Finding |
+            |----|----|----|----|
+            | 🟣 | ✅ | [Security.java:33](https://example.com/aap/noot/-/blob/mybranch/Security.java#L33) | This finding has been fixed in the next snapshot. |
             
             ## 👎 What could be better?
             
             > Unfortunately, you introduced **1** security findings.
             
-            | Risk | File | Finding |
-            |------|------|---------|
-            | 🟠 | [Aap.java:33](https://example.com/aap/noot/-/blob/mybranch/Aap.java#L33) | Some other finding |
+            | Risk | Part of objective? | File | Finding |
+            |----|----|----|----|
+            | 🟠 | ✅ | [Aap.java:33](https://example.com/aap/noot/-/blob/mybranch/Aap.java#L33) | Some other finding |
             
             If you believe these findings are false positives,
             you can [exclude the rule](https://docs.sigrid-says.com/reference/analysis-scope-configuration.html#excluding-security-rules) in the Sigrid configuration.

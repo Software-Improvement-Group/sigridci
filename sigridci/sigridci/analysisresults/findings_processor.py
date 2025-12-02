@@ -24,26 +24,23 @@ class Finding:
     description: str
     file: str
     line: int
+    partOfObjective: bool
 
 
 class FindingsProcessor:
-    def extractRelevantFindings(self, feedback, objective):
-        findings = self.extractAllFindings(feedback)
-        return [finding for finding in findings if Objective.isFindingIncluded(finding.risk, objective)]
-
-    def extractAllFindings(self, feedback):
+    def extractFindings(self, feedback, objective):
         if feedback is None:
             return []
         elif "runs" in feedback:
             sarifProcessor = SarifProcessor()
-            return list(sarifProcessor.extractAllFindings(feedback))
+            return list(sarifProcessor.extractFindings(feedback, objective))
         else:
             sigridFindingsProcessor = SigridFindingsProcessor()
-            return list(sigridFindingsProcessor.extractAllFindings(feedback))
+            return list(sigridFindingsProcessor.extractFindings(feedback, objective))
 
 
 class SarifProcessor:
-    def extractAllFindings(self, feedback):
+    def extractFindings(self, feedback, objective):
         rules = list(self.getRules(feedback))
 
         for run in feedback["runs"]:
@@ -52,7 +49,8 @@ class SarifProcessor:
                 risk = self.getFindingSeverity(result, rules)
                 file = result["locations"][0]["physicalLocation"]["artifactLocation"]["uri"]
                 line = result["locations"][0]["physicalLocation"]["region"]["startLine"]
-                yield Finding(fingerprint, risk, result["message"]["text"], file, line)
+                partOfObjective = Objective.isFindingIncluded(risk, objective)
+                yield Finding(fingerprint, risk, result["message"]["text"], file, line, partOfObjective)
 
     def getRules(self, feedback):
         for run in feedback["runs"]:
@@ -71,6 +69,8 @@ class SarifProcessor:
 
 
 class SigridFindingsProcessor:
-    def extractAllFindings(self, feedback):
+    def extractFindings(self, feedback, objective):
         for finding in feedback:
-            yield Finding(finding["id"], finding["severity"], finding["type"], finding["filePath"], finding["startLine"])
+            partOfObjective = Objective.isFindingIncluded(finding["severity"], objective)
+            yield Finding(finding["id"], finding["severity"], finding["type"],
+                          finding["filePath"], finding["startLine"], partOfObjective)
