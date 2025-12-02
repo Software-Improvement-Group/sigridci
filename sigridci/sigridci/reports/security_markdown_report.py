@@ -16,6 +16,7 @@ import os
 
 from .report import Report, MarkdownRenderer
 from ..analysisresults.findings_processor import FindingsProcessor
+from ..capability import SECURITY
 from ..objective import Objective
 from ..platform import SECURITY_EXCLUDE_RULE_DOCS, SECURITY_EXCLUDE_FILE_DOCS
 
@@ -99,7 +100,7 @@ class SecurityMarkdownReport(Report, MarkdownRenderer):
         return [finding for finding in previousFindings if finding.fingerprint not in fingerprints]
 
     def getCapability(self):
-        return "Security"
+        return SECURITY
 
     def getMarkdownFile(self, options):
         return os.path.abspath(f"{options.outputDir}/security-feedback.md")

@@ -21,10 +21,11 @@ class Capability:
     displayName: str
     shortName: str
     exitCode: int
+    beta: bool
 
 
-MAINTAINABILITY = Capability("MAINTAINABILITY", "Maintainability", "maintainability", 2)
-OPEN_SOURCE_HEALTH = Capability("OPEN_SOURCE_HEALTH", "Open Source Health", "osh", 4)
-SECURITY = Capability("SECURITY", "Security", "security", 8)
+MAINTAINABILITY = Capability("MAINTAINABILITY", "Maintainability", "maintainability", 2, False)
+OPEN_SOURCE_HEALTH = Capability("OPEN_SOURCE_HEALTH", "Open Source Health", "osh", 4, True)
+SECURITY = Capability("SECURITY", "Security", "security", 8, True)
 
 CAPABILITY_SHORT_NAMES = {cap.shortName: cap for cap in [MAINTAINABILITY, OPEN_SOURCE_HEALTH, SECURITY]}

@@ -85,7 +85,6 @@ When an OIDC compatible Identity Provider is available:
 
 ### (E) Prepare an RSA keypair for the signing of UWT tokens
 
-This part will soon become obsolete in a newer Sigrid release. 
 1. Create a 2048-bit RSA keypair: `openssl genpkey -out uwt_signing_key.pem -algorithm RSA -pkeyopt rsa_keygen_bits:2048`
 2. Store the certificate securely in Kubernetes.
 
@@ -162,7 +161,7 @@ If your deployment is air-gapped, adjust the values below.
 
 ```
 image.registry: ""
-image.repository: ""nginxinc/nginx-unprivileged""
+image.repository: "nginxinc/nginx-unprivileged"
 ```
 Provide full URL to your registry and container image.
 ```
@@ -176,7 +175,7 @@ These values can be retrieved using the GUI or .well-known endpoint of your Iden
 
 ```
 config.oauth2.resourceServer.data.issuer-uri: "https://my-idp.example.com" 
-config.oauth2.resourceServer.data.jwk-set-uri: "https://my-idp.example.com/jwks.json 
+config.oauth2.resourceServer.data.jwk-set-uri: "https://my-idp.example.com/jwks.json" 
 config.oauth2.provider.sigridmfa.issuer-uri: "https://my-idp.example.com" 
 ```
 
@@ -206,7 +205,7 @@ They will work as is but can be modified.
 redis.data.password: "example-password" 
 redis.data.sentinel-password: "example-password" 
 ```
-If you want to use the use a self-provided redis server, also adjust `host: ""`
+If you want to use a self-provided redis server, also adjust `host: ""`
 
 ## Install helm chart
 We assume that your Kubernetes cluster is ready and that you have created a namespace. There are several ways to install a Helm chart. One common method is as follows: `helm upgrade --install <deployment-name> <helm-chart-path> -n <namespace> --values <values-file-path>`
@@ -238,7 +237,8 @@ You can now start inviting more people to Sigrid if so desired.
 - Preferably, set up project secrets based on your use case.  
 *You can also set them up at the organization or group level, but ensure you are not unintentionally overriding any default project variables in the process.*
   - `CUSTOMER: "company_name"`
-  - `SIGRID_CI_TOKEN: "Sigrid Token"BUCKET: "some-bucket"`   
+  - `SIGRID_CI_TOKEN: "Sigrid Token"`  
+  - `BUCKET: "some-bucket"`   
   The name of the bucket you've created.
   - `SIGRID_VERSION: "should match ImageTag from helm global"`
   - `AWS_ENDPOINT_URL: "https://minio.my-company.com"`  
@@ -254,17 +254,8 @@ You can now start inviting more people to Sigrid if so desired.
 - Browse to your test project.
   - For efficient Sigrid setup, use a minimal test project in the CI pipeline. This allows for quicker iterations. Once configured correctly, you can analyze any project size.
 - Create a test-branch.
-- Create an analysis scope.
-  - Create sigrid.yaml in the root of your test project.
-  - Comprehensive documentation can found here: [Analysis-scope-configuration](../reference/analysis-scope-configuration.md)
-  - Example:  
-    ```
-    languages:
-      - name: TypeScript
-      - name: JavaScript
-    ```
 - Create a pipeline.
-  - Example: Where all secrets except SYSTEM can be omitted if already stored as secrets in your e.g. GitLab. Also override image name if you're pulling from your own container registry.
+  - Example: Where all secrets except SYSTEM can be omitted if already templated or stored as secrets in e.g. your GitLab. Also override image name if you're pulling from your own container registry.
     ```
     sigrid-publish:
       image:
@@ -286,6 +277,17 @@ You can now start inviting more people to Sigrid if so desired.
         SIGRID_SOURCES_REGISTRATION_ID: "gitlab-onprem"
       script:
         - "run-analyzers --publish"
+    ```
+- Optional: Create an analysis scope.
+  - By default, a scope file is generated and used for analysis. In many cases, this is sufficient. If you want more control over the analysis results, 
+    for example, to include or exclude certain file extensions or folders, you can define your own scope.
+  - Create a `sigrid.yaml` file in the root of your test project.
+  - Comprehensive documentation can be found here: [Analysis-scope-configuration](../reference/analysis-scope-configuration.md)
+  - Example:
+    ```yaml
+    languages:
+      - name: TypeScript
+      - name: JavaScript
     ```
 - Commit changes to your test project.
 

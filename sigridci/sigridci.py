@@ -108,6 +108,11 @@ if __name__ == "__main__":
         print(f"Invalid system name, system name should match '{PublishOptions.SYSTEM_NAME_PATTERN.pattern}' "
               f", not completely numeric, and be {PublishOptions.SYSTEM_NAME_LENGTH.start} to {maxNameLength} characters long (inclusive).")
         sys.exit(1)
+    
+    if not options.isValidSubSystemName():
+        print(f"Invalid subsystem name, subsystem name should match '{PublishOptions.SUBSYSTEM_NAME_PATTERN.pattern}'"
+              ", must be at least two characters long and not contain consecutive dots or slashes.")
+        sys.exit(1)
 
     UploadLog.log("Starting Sigrid CI")
     runner = SigridCiRunner(options, apiClient)

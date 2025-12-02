@@ -233,11 +233,11 @@ class SigridCiRunnerTest(TestCase):
             "Preparing upload",
             "Sigrid CI analysis ID: 123",
             "Submitting upload",
-            "HTTP Error 500: ",
+            "HTTP Error 503: ",
             "No response headers",
             "No response body",
             "Retrying",
-            "HTTP Error 500: ",
+            "HTTP Error 503: ",
             "No response headers",
             "No response body",
             "Retrying",
@@ -262,23 +262,23 @@ class SigridCiRunnerTest(TestCase):
             "Preparing upload",
             "Sigrid CI analysis ID: 123",
             "Submitting upload",
-            "HTTP Error 500: ",
+            "HTTP Error 503: ",
             "No response headers",
             "No response body",
             "Retrying",
-            "HTTP Error 500: ",
+            "HTTP Error 503: ",
             "No response headers",
             "No response body",
             "Retrying",
-            "HTTP Error 500: ",
+            "HTTP Error 503: ",
             "No response headers",
             "No response body",
             "Retrying",
-            "HTTP Error 500: ",
+            "HTTP Error 503: ",
             "No response headers",
             "No response body",
             "Retrying",
-            "HTTP Error 500: ",
+            "HTTP Error 503: ",
             "No response headers",
             "No response body",
             "S3 is currently unavailable, failed after 5 attempts"
@@ -776,5 +776,5 @@ class MockApiClient(SigridApiClient):
             self.called.append("UPLOAD")
             return True
         else:
-            raise urllib.error.HTTPError("/upload", 500, "", Message(), None)
+            raise urllib.error.HTTPError("/upload", 503, "", Message(), None)
      

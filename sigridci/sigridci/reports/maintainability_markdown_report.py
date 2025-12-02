@@ -16,6 +16,7 @@ import html
 import os
 
 from .report import Report, MarkdownRenderer
+from ..capability import MAINTAINABILITY
 from ..objective import Objective, ObjectiveStatus
 from ..platform import Platform
 
@@ -154,7 +155,7 @@ class MaintainabilityMarkdownReport(Report, MarkdownRenderer):
         return self.decorateLink(options, label, occurrence["filePath"], occurrence.get("startLine", 0))
 
     def getCapability(self):
-        return "Maintainability"
+        return MAINTAINABILITY
 
     def getMarkdownFile(self, options):
         return os.path.abspath(f"{options.outputDir}/feedback.md")

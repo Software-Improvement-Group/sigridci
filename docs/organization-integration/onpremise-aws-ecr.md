@@ -10,12 +10,12 @@ This documentation offers useful examples and context on how to use SIG's Elasti
 - You should have already read the other Sigrid On-Premise documentation.
 - All pre-requisites from our public documentation are met.
 - You have access to Software Improvement Group AWS ECR registry.
-- AWS CLI version 2.x. is available on the client that will pull be used to pull Sigrid's container images and helm chart.
+- AWS CLI version 2.x is available on the client that will be used to pull Sigrid's container images and Helm chart.
 
 
 ## Logging in to AWS ECR and pulling the latest helm chart
 
-The below script provides and example on how to authenticate and download the latest Sigrid Helm Chart from SIG's AWS ECR.
+The below script provides an example on how to authenticate and download the latest Sigrid Helm Chart from SIG's AWS ECR.
 
 ```bash
 SIGRID_DOWNLOAD_REGION="eu-central-1"
@@ -42,7 +42,7 @@ SIGRID_DOWNLOAD_REGISTRY="571600876202.dkr.ecr.${SIGRID_DOWNLOAD_REGION}.amazona
 export AWS_ACCESS_KEY_ID="AKIAEXAMPLE" # Please replace with the one provided by SIG
 export AWS_SECRET_ACCESS_KEY="EXAMPLESECRET" # Please replace with the one provided by SIG
 
-VERSION="1.0.20250603" # Please replace with the desired container image version
+VERSION="1.0.20250603" # Please replace with a valid container image version, which can be found in the AWS ECR repository or by contacting SIG support
 aws ecr get-login-password --region $SIGRID_DOWNLOAD_REGION | docker login --username AWS --password-stdin $SIGRID_DOWNLOAD_REGISTRY
 IMAGES=(
   softwareimprovementgroup/ai-explanation-service
@@ -68,7 +68,7 @@ AWS ECR passwords expire after 12 hours. Therefore, a scheduled refresh can be i
 Note: this is only required when no internal container registry (cache) is used, or to automate the refreshing of images in your internal container registry.
 
 Additional Prerequisites
-- Access credentials for this user stored in a Kubernetes secret. e.g.`sig-customer-access-secret`
+- Access credentials for this user stored in a Kubernetes secret, e.g. `sig-customer-access-secret`
 - Kubernetes cluster with RBAC enabled.
 
 ### Update your deployment's values file to enable the key rotation service
@@ -83,9 +83,9 @@ global:
 
   onPremise:
     ecrRepository:
-          enabled: true
-          sigCustomerAccessSecret:
-            data:
-              AWS_ACCESS_KEY_ID: "AWS_ACCESS_KEY_ID"
-              AWS_SECRET_ACCESS_KEY: "AWS_SECRET_ACCESS_KEY"
+      enabled: true
+      sigCustomerAccessSecret:
+        data:
+          AWS_ACCESS_KEY_ID: "AWS_ACCESS_KEY_ID"
+          AWS_SECRET_ACCESS_KEY: "AWS_SECRET_ACCESS_KEY"
 ```
