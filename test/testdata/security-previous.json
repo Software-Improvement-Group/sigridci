@@ -19,7 +19,7 @@
           "help": {},
           "properties": {
             "tags": [],
-            "severity": "Medium",
+            "severity": "Critical",
             "analyzer": "Google ErrorProne",
             "language": "Java",
             "category": "CORRECTNESS",
