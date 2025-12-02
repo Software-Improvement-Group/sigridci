@@ -27,7 +27,7 @@ class OpenSourceHealthTextReport(Report):
 
     def generate(self, analysisId, feedback, options):
         processor = CycloneDXProcessor()
-        findings = list(processor.extractRelevantLibraries(feedback, self.objective))
+        findings = [lib for lib in processor.extractLibraries(feedback, self.objective) if lib.partOfObjective]
 
         if len(findings) > 0:
             print("", file=self.output)
