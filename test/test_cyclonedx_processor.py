@@ -26,7 +26,7 @@ class CycloneDXProcessorTest(TestCase):
             feedback = json.load(f)
 
         processor = CycloneDXProcessor()
-        libraries = list(processor.extractRelevantLibraries(feedback, "NONE"))
+        libraries = list(processor.extractLibraries(feedback, "NONE"))
 
         self.assertEqual(len(libraries), 4)
         self.assertEqual(libraries[0].risk, "CRITICAL")
@@ -39,8 +39,14 @@ class CycloneDXProcessorTest(TestCase):
             feedback = json.load(f)
 
         processor = CycloneDXProcessor()
-        libraries = list(processor.extractRelevantLibraries(feedback, "HIGH"))
+        libraries = list(processor.extractLibraries(feedback, "HIGH"))
 
-        self.assertEqual(len(libraries), 1)
-        self.assertEqual(libraries[0].risk, "CRITICAL")
+        self.assertEqual(len(libraries), 4)
         self.assertEqual(libraries[0].name, "org.apache.logging.log4j:log4j-core")
+        self.assertEqual(libraries[0].partOfObjective, True)
+        self.assertEqual(libraries[1].name, "commons-io:commons-io")
+        self.assertEqual(libraries[1].partOfObjective, False)
+        self.assertEqual(libraries[2].name, "io.github.classgraph:classgraph")
+        self.assertEqual(libraries[2].partOfObjective, False)
+        self.assertEqual(libraries[3].name, "junit:junit")
+        self.assertEqual(libraries[3].partOfObjective, False)
