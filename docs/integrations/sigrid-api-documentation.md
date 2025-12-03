@@ -21,7 +21,9 @@ The following example shows how to call the Sigrid API using `curl`:
 curl -H 'Authorization: Bearer {SIGRID_CI_TOKEN}' https://sigrid-says.com/rest/analysis-results/api/v1/maintainability/{customer}
 ```
 
-In the example, `{customer}` refers to your company's Sigrid account name (lower case), and `{SIGRID_CI_TOKEN}` refers to your authentication token.
+In the example, `{customer}` refers to your company's Sigrid account name (lower case), and `{SIGRID_CI_TOKEN}` refers to your authentication token. The `{customer}` or Sigrid account name is a text string like `acme` and is not a customer account like `john@acme.com`
+
+
 
 ### Including deactivated and/or excluded systems
 
