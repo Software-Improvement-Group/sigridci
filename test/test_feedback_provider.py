@@ -67,9 +67,10 @@ class FeedbackProviderTest(TestCase):
     def testGetSystemPropertyObjectives(self):
         tempDir = tempfile.mkdtemp()
         options = PublishOptions("aap", "noot", RunMode.FEEDBACK_ONLY, outputDir=tempDir)
-        feedbackProvider = FeedbackProvider(MAINTAINABILITY, options, {"UNIT_SIZE" : 4.0})
+        objectives = {"MAINTAINABILITY_UNIT_SIZE" : 4.0, "UNIT_COMPLEXITY" : 5.0}
+        feedbackProvider = FeedbackProvider(MAINTAINABILITY, options, objectives)
 
-        self.assertEqual({"UNIT_SIZE" : 4.0}, feedbackProvider.objective)
+        self.assertEqual({"UNIT_SIZE" : 4.0, "UNIT_COMPLEXITY" : 5.0}, feedbackProvider.objective)
 
     def testDefaultMaintainabilityObjectiveIfNoneIsSet(self):
         tempDir = tempfile.mkdtemp()

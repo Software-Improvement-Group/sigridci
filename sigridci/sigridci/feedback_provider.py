@@ -50,10 +50,17 @@ class FeedbackProvider:
             raise Exception(f"Unknown capability: {self.capability}")
 
     def filterMaintainabilityObjectives(self, objectives):
-        included = Objective.MAINTAINABILITY_METRICS
-        maintainabilityObjectives = {metric: value for metric, value in objectives.items() if metric in included}
+        maintainabilityObjectives = {}
+
+        for metric in Objective.MAINTAINABILITY_METRICS:
+            if metric in objectives:
+                maintainabilityObjectives[metric] = objectives[metric]
+            elif f"MAINTAINABILITY_{metric}" in objectives:
+                maintainabilityObjectives[metric] = objectives[f"MAINTAINABILITY_{metric}"]
+
         if len(maintainabilityObjectives) == 0:
-            return {"MAINTAINABILITY" : Objective.DEFAULT_RATING_OBJECTIVE}
+            maintainabilityObjectives["MAINTAINABILITY"] = Objective.DEFAULT_RATING_OBJECTIVE
+
         return maintainabilityObjectives
 
     def loadLocalAnalysisResults(self, analysisResultsFile):
