@@ -12,7 +12,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-from datetime import datetime
+from datetime import datetime, timezone
 
 
 class UploadLog:
@@ -20,7 +20,7 @@ class UploadLog:
 
     @staticmethod
     def log(message):
-        timestamp = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+        timestamp = datetime.now(timezone.utc).strftime("%Y-%m-%d %H:%M:%S")
         print(f"{timestamp}  {message}", flush=True)
         UploadLog.history.append(message)
 
