@@ -20,22 +20,6 @@ from ..platform import Platform
 
 
 class Report(ABC):
-    REFACTORING_CANDIDATE_METRICS = [
-        "DUPLICATION",
-        "UNIT_SIZE",
-        "UNIT_COMPLEXITY",
-        "UNIT_INTERFACING",
-        "MODULE_COUPLING"
-    ]
-
-    METRICS = [
-        "VOLUME",
-        *REFACTORING_CANDIDATE_METRICS,
-        "COMPONENT_INDEPENDENCE",
-        "COMPONENT_ENTANGLEMENT",
-        "MAINTAINABILITY"
-    ]
-
     RISK_CATEGORIES = ["VERY_HIGH", "HIGH", "MODERATE", "MEDIUM", "LOW"]
     GOOD_CATEGORIES = ["fixed", "improved"]
     BAD_CATEGORIES = ["introduced", "worsened"]

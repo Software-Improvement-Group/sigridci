@@ -15,6 +15,7 @@
 from xml.dom.minidom import Document
 
 from .report import Report
+from ..objective import Objective
 
 
 class JUnitFormatReport(Report):
@@ -43,7 +44,7 @@ class JUnitFormatReport(Report):
         return dom.toprettyxml(indent="    ")
 
     def getFailures(self, feedback):
-        for metric in self.REFACTORING_CANDIDATE_METRICS:
+        for metric in Objective.REFACTORING_CANDIDATES:
             for rc in self.getRefactoringCandidates(feedback, metric):
                 yield self.formatFinding(rc)
 

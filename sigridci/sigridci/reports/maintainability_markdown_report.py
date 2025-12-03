@@ -33,9 +33,12 @@ class MaintainabilityMarkdownReport(Report, MarkdownRenderer):
         "LOW" : "🟢"
     }
 
-    def __init__(self, objective=3.5):
+    def __init__(self, objectives=None):
         super().__init__()
-        self.objective = objective
+
+        if objectives is None:
+            objectives = {"MAINTAINABILITY" : Objective.DEFAULT_RATING_OBJECTIVE}
+        self.objective = objectives
 
     def generate(self, analysisId, feedback, options):
         with open(self.getMarkdownFile(options), "w", encoding="utf-8") as f:
@@ -43,13 +46,12 @@ class MaintainabilityMarkdownReport(Report, MarkdownRenderer):
             f.write(markdown)
 
     def renderMarkdown(self, analysisId, feedback, options):
-        status = Objective.determineStatus(feedback, self.objective)
         sigridLink = self.getSigridUrl(options)
 
         md = f"# [Sigrid]({sigridLink}) maintainability feedback\n\n"
         md += f"{self.renderSummary(feedback, options)}\n\n"
 
-        if status != ObjectiveStatus.UNKNOWN:
+        if not ObjectiveStatus.UNKNOWN in self.getObjectiveStatuses(feedback):
             if Platform.isHtmlMarkdownSupported():
                 md += "<details><summary>Show details</summary>\n\n"
             md += f"Sigrid compared your code against the baseline of {self.formatBaseline(feedback)}.\n\n"
@@ -68,17 +70,25 @@ class MaintainabilityMarkdownReport(Report, MarkdownRenderer):
         return f"**{self.getSummary(feedback, options)}**"
 
     def getSummary(self, feedback, options):
-        status = Objective.determineStatus(feedback, self.objective)
-        targetText = f"{self.objective:.1f} stars"
+        summaries = [self.getSummaryForObjective(metric, target, feedback) for metric, target in self.objective.items()]
+        return "\n\n".join(summaries)
+
+    def getSummaryForObjective(self, metric, target, feedback):
+        status = Objective.determineStatus(feedback, target, metric)
+        targetText = f"{target:.1f} stars"
+
+        objectiveName = f"{self.formatMetricName(metric)} objective"
+        if len(self.objective) == 1 and metric == "MAINTAINABILITY":
+            objectiveName = "objective"
 
         if status == ObjectiveStatus.ACHIEVED:
-            return f"✅  You wrote maintainable code and achieved your objective of {targetText}"
+            return f"✅  You wrote maintainable code and achieved your {objectiveName} of {targetText}"
         elif status == ObjectiveStatus.IMPROVED:
-            return f"↗️  You improved the maintainability of the code towards your objective of {targetText}"
+            return f"↗️  You improved the maintainability of the code towards your {objectiveName} of {targetText}"
         elif status == ObjectiveStatus.UNCHANGED:
-            return f"⏸️️  Your maintainability remains unchanged and is still below your objective of {targetText}"
+            return f"⏸️️  Your maintainability remains unchanged and is still below your {objectiveName} of {targetText}"
         elif status == ObjectiveStatus.WORSENED:
-            return f"⚠️  Your code did not improve maintainability towards your objective of {targetText}"
+            return f"⚠️  Your code did not improve maintainability towards your {objectiveName} of {targetText}"
         else:
             return "💭️  You did not change any files that are measured by Sigrid"
 
@@ -109,7 +119,7 @@ class MaintainabilityMarkdownReport(Report, MarkdownRenderer):
         md += f"| System property | System on {self.formatBaseline(feedback)} | Before changes | New/changed code |\n"
         md += f"|-----------------|-------------------------------------------|----------------|------------------|\n"
 
-        for metric in self.METRICS:
+        for metric in Objective.SYSTEM_PROPERTIES + ["MAINTAINABILITY"]:
             fmt = "**" if metric == "MAINTAINABILITY" else ""
             metricName = self.formatMetricName(metric)
             baseline = self.formatRating(feedback["baselineRatings"], metric)
@@ -160,6 +170,8 @@ class MaintainabilityMarkdownReport(Report, MarkdownRenderer):
     def getMarkdownFile(self, options):
         return os.path.abspath(f"{options.outputDir}/feedback.md")
 
+    def getObjectiveStatuses(self, feedback):
+        return [Objective.checkMaintainabilityRating(feedback, metric, target) for metric, target in self.objective.items()]
+
     def isObjectiveSuccess(self, feedback, options):
-        status = Objective.determineStatus(feedback, self.objective)
-        return status != ObjectiveStatus.WORSENED
+        return not ObjectiveStatus.WORSENED in self.getObjectiveStatuses(feedback)
