@@ -67,7 +67,8 @@ class MaintainabilityMarkdownReport(Report, MarkdownRenderer):
         return md
 
     def renderSummary(self, feedback, options):
-        return f"**{self.getSummary(feedback, options)}**"
+        summaries = [self.getSummaryForObjective(metric, target, feedback) for metric, target in self.objective.items()]
+        return "\n\n".join(f"**{summary}**" for summary in summaries)
 
     def getSummary(self, feedback, options):
         summaries = [self.getSummaryForObjective(metric, target, feedback) for metric, target in self.objective.items()]
@@ -82,15 +83,15 @@ class MaintainabilityMarkdownReport(Report, MarkdownRenderer):
             objectiveName = "objective"
 
         if status == ObjectiveStatus.ACHIEVED:
-            return f"✅  You wrote maintainable code and achieved your {objectiveName} of {targetText}"
+            return f"✅  You wrote maintainable code and achieved your {objectiveName} of {targetText}."
         elif status == ObjectiveStatus.IMPROVED:
-            return f"↗️  You improved the maintainability of the code towards your {objectiveName} of {targetText}"
+            return f"↗️  You improved your code towards your {objectiveName} of {targetText}."
         elif status == ObjectiveStatus.UNCHANGED:
-            return f"⏸️️  Your maintainability remains unchanged and is still below your {objectiveName} of {targetText}"
+            return f"⏸️️  Your are still below your {objectiveName} of {targetText}."
         elif status == ObjectiveStatus.WORSENED:
-            return f"⚠️  Your code did not improve maintainability towards your {objectiveName} of {targetText}"
+            return f"⚠️  Your code did not improve towards your {objectiveName} of {targetText}."
         else:
-            return "💭️  You did not change any files that are measured by Sigrid"
+            return "💭️  You did not change any files that are measured by Sigrid."
 
     def renderRefactoringCandidates(self, feedback, options):
         good = self.filterRefactoringCandidates(feedback, self.GOOD_CATEGORIES)
