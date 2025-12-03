@@ -167,5 +167,5 @@ class SigridApiClient:
             url = f"{self.options.sigridURL}/usage/matomo.php?idsite=6&rec=1&ca=1&e_c=sigridci.platform&e_a={platformId}"
             request = urllib.request.Request(url)
             urllib.request.urlopen(request)
-        except urllib.error.HTTPError as e:
-            UploadLog.log(f"Failed to log platform information: {e.code}")
+        except:
+            UploadLog.log(f"Failed to log platform information")
