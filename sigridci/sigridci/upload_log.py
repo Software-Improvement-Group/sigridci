@@ -20,7 +20,7 @@ class UploadLog:
 
     @staticmethod
     def log(message):
-        timestamp = datetime.now(timezone.utc).strftime("%Y-%m-%d %H:%M:%S")
+        timestamp = datetime.now(timezone.utc).strftime("%Y-%m-%d %H:%M:%S%Z")
         print(f"{timestamp}  {message}", flush=True)
         UploadLog.history.append(message)
 
