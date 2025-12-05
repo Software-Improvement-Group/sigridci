@@ -17,6 +17,7 @@ import os
 import uuid
 
 from .capability import MAINTAINABILITY, OPEN_SOURCE_HEALTH, SECURITY
+from .objective import Objective
 from .reports.ascii_art_report import AsciiArtReport
 from .reports.azure_pull_request_report import AzurePullRequestReport
 from .reports.gitlab_pull_request_report import GitLabPullRequestReport
@@ -30,9 +31,6 @@ from .reports.static_html_report import StaticHtmlReport
 
 
 class FeedbackProvider:
-    DEFAULT_RATING_OBJECTIVE = 3.5
-    DEFAULT_FINDING_OBJECTIVE = "HIGH"
-
     def __init__(self, capability, options, objectives):
         self.capability = capability
         self.objective = self.getObjective(objectives)
@@ -43,13 +41,27 @@ class FeedbackProvider:
 
     def getObjective(self, objectives):
         if self.capability == MAINTAINABILITY:
-            return objectives.get("MAINTAINABILITY", self.DEFAULT_RATING_OBJECTIVE)
+            return self.filterMaintainabilityObjectives(objectives)
         elif self.capability == OPEN_SOURCE_HEALTH:
-            return objectives.get("OSH_MAX_SEVERITY", self.DEFAULT_FINDING_OBJECTIVE)
+            return objectives.get("OSH_MAX_SEVERITY", Objective.DEFAULT_FINDING_OBJECTIVE)
         elif self.capability == SECURITY:
-            return objectives.get("SECURITY_MAX_SEVERITY", self.DEFAULT_FINDING_OBJECTIVE)
+            return objectives.get("SECURITY_MAX_SEVERITY", Objective.DEFAULT_FINDING_OBJECTIVE)
         else:
             raise Exception(f"Unknown capability: {self.capability}")
+
+    def filterMaintainabilityObjectives(self, objectives):
+        maintainabilityObjectives = {}
+
+        for metric in Objective.MAINTAINABILITY_METRICS:
+            if metric in objectives:
+                maintainabilityObjectives[metric] = objectives[metric]
+            elif f"MAINTAINABILITY_{metric}" in objectives:
+                maintainabilityObjectives[metric] = objectives[f"MAINTAINABILITY_{metric}"]
+
+        if len(maintainabilityObjectives) == 0:
+            maintainabilityObjectives["MAINTAINABILITY"] = Objective.DEFAULT_RATING_OBJECTIVE
+
+        return maintainabilityObjectives
 
     def loadLocalAnalysisResults(self, analysisResultsFile):
         with open(analysisResultsFile, mode="r", encoding="utf-8") as f:

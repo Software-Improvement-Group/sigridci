@@ -15,6 +15,7 @@
 import json
 import os
 import ssl
+import urllib.error
 import urllib.parse
 import urllib.request
 from tempfile import TemporaryDirectory
@@ -167,4 +168,4 @@ class SigridApiClient:
             request = urllib.request.Request(url)
             urllib.request.urlopen(request)
         except:
-            UploadLog.log("Failed to log platform information")
+            UploadLog.log(f"Failed to log platform information")
