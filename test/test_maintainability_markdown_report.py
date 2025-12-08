@@ -242,7 +242,7 @@ class MaintainabilityMarkdownReportTest(TestCase):
         report = MaintainabilityMarkdownReport()
         report.decorateLinks = False
         summary = report.renderSummary(feedback, self.options)
-        expected = "**💭️  You did not change any files that are measured by Sigrid.**"
+        expected = "**💭️  You did not change any files that are analyzed by Sigrid.**"
 
         self.assertEqual(summary, expected)
 
@@ -439,7 +439,7 @@ class MaintainabilityMarkdownReportTest(TestCase):
         expected = """
             # [Sigrid](https://sigrid-says.com/aap/noot) maintainability feedback
 
-            **💭️  You did not change any files that are measured by Sigrid.**
+            **💭️  You did not change any files that are analyzed by Sigrid.**
 
             
             ----
@@ -600,7 +600,7 @@ class MaintainabilityMarkdownReportTest(TestCase):
         expected = """
             # [Sigrid](https://sigrid-says.com/aap/noot) maintainability feedback
             
-            **💭️  You did not change any files that are measured by Sigrid.**
+            **💭️  You did not change any files that are analyzed by Sigrid.**
 
             
             ----

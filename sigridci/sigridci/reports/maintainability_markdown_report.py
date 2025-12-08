@@ -91,7 +91,7 @@ class MaintainabilityMarkdownReport(Report, MarkdownRenderer):
         elif status == ObjectiveStatus.WORSENED:
             return f"⚠️  Your code did not improve towards your {objectiveName} of {targetText}."
         else:
-            return "💭️  You did not change any files that are measured by Sigrid."
+            return "💭️  You did not change any files that are analyzed by Sigrid."
 
     def renderRefactoringCandidates(self, feedback, options):
         good = self.filterRefactoringCandidates(feedback, self.GOOD_CATEGORIES)
