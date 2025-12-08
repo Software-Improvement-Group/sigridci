@@ -406,7 +406,7 @@ class MaintainabilityMarkdownReportTest(TestCase):
         expected = """
             # [Sigrid](https://sigrid-says.com/aap/noot) maintainability feedback
     
-            **💭️  You did not change any files that are measured by Sigrid.**
+            **💭️  You did not change any files that are analyzed by Sigrid.**
 
             
             ----
