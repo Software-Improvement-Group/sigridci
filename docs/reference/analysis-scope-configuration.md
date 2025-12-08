@@ -46,7 +46,7 @@ Since scope files are part of your repository, you can edit them using your pref
 
 ## Excluding files and directories
 
-Sigrid will exclude common patterns by default. For example, directories like `build`, `dist`, and `target` typically contain build output and are not part of the source code. Directories like `node_modules` contain open source libraries and are not part of the application's own source code. Those directories are therefore ignored during the analysis.
+Sigrid will exclude common patterns by default. For example, directories like `build`, `dist`, and `target` typically contain build output and are not part of the source code. Directories like `node_modules` contain open source libraries and are not part of the application's own source code. Those directories are therefore ignored during the analysis. If you want to see a full list of files/directories that are automatically excluded by Sigrid, you can find [the list of default excludes on GitHub](https://github.com/Software-Improvement-Group/sigridci/blob/main/resources/default-excludes.txt).
 
 It is possible to extend this list with project-specific files and directories that should also be excluded. The `exclude` section in the YAML file contains a list of regular expressions for paths to ignore. For example, `.*[.]out[.]js` will exclude all files with a name ending in `.out.js` from the analysis. Adding `.*/simulator/.*` will exclude everything in a path that contains the directory `/simulator/`.
 
