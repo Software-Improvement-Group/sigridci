@@ -167,4 +167,4 @@ class SigridApiClient:
             request = urllib.request.Request(url)
             urllib.request.urlopen(request)
         except:
-            UploadLog.log("Failed to log platform information")
+            UploadLog.log(f"Failed to log platform information")

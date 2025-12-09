@@ -23,9 +23,11 @@ class StaticHtmlReport(Report):
     HTML_STAR_FULL = "&#9733;"
     HTML_STAR_EMPTY = "&#9734;"
 
-    def __init__(self, objective):
+    def __init__(self, objectives):
         super().__init__()
-        self.objective = objective
+        # This report exists only for backward compatibility and is not able to depict
+        # the new fine-grained objectives.
+        self.objective = objectives.get("MAINTAINABILITY", Objective.DEFAULT_RATING_OBJECTIVE)
 
     def generate(self, analysisId, feedback, options):
         with open(os.path.dirname(__file__) + "/sigridci-feedback-template.html", encoding="utf-8", mode="r") as f:
@@ -47,7 +49,7 @@ class StaticHtmlReport(Report):
             "MAINTAINABILITY_PASSED" : self.formatPassed(feedback)
         }
 
-        for metric in self.METRICS:
+        for metric in Objective.MAINTAINABILITY_METRICS:
             placeholders[f"{metric}_OVERALL"] = self.formatRating(feedback.get("baselineRatings", {}), metric)
             placeholders[f"{metric}_NEW"] = self.formatRating(feedback.get("newCodeRatings", {}), metric)
             placeholders[f"{metric}_STARS_OVERALL"] = self.formatHtmlStars(feedback.get("baselineRatings", {}), metric)

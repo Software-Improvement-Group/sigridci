@@ -56,3 +56,25 @@ class FeedbackProviderTest(TestCase):
         securityFeedback.generateReports()
 
         self.assertTrue(os.path.exists(f"{tempDir}/security-feedback.md"))
+
+    def testGetMaintainabilityObjective(self):
+        tempDir = tempfile.mkdtemp()
+        options = PublishOptions("aap", "noot", RunMode.FEEDBACK_ONLY, outputDir=tempDir)
+        feedbackProvider = FeedbackProvider(MAINTAINABILITY, options, {"MAINTAINABILITY" : 4.0})
+
+        self.assertEqual({"MAINTAINABILITY" : 4.0}, feedbackProvider.objective)
+
+    def testGetSystemPropertyObjectives(self):
+        tempDir = tempfile.mkdtemp()
+        options = PublishOptions("aap", "noot", RunMode.FEEDBACK_ONLY, outputDir=tempDir)
+        objectives = {"MAINTAINABILITY_UNIT_SIZE" : 4.0, "UNIT_COMPLEXITY" : 5.0}
+        feedbackProvider = FeedbackProvider(MAINTAINABILITY, options, objectives)
+
+        self.assertEqual({"UNIT_SIZE" : 4.0, "UNIT_COMPLEXITY" : 5.0}, feedbackProvider.objective)
+
+    def testDefaultMaintainabilityObjectiveIfNoneIsSet(self):
+        tempDir = tempfile.mkdtemp()
+        options = PublishOptions("aap", "noot", RunMode.FEEDBACK_ONLY, outputDir=tempDir)
+        feedbackProvider = FeedbackProvider(MAINTAINABILITY, options, {})
+
+        self.assertEqual({"MAINTAINABILITY" : 3.5}, feedbackProvider.objective)
