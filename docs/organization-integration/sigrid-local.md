@@ -79,6 +79,8 @@ Optionally, you can click "show process output" to see the log output. This is p
 After the analysis has completed, you will see the following confirmation message. This indicates Sigrid Local
 has successfully completed its analysis, and has published the analysis results to Sigrid. That means you're done!
 
+<img src="../images/local-runner/done.png" width="300" />
+
 If your analysis results in an error, [notify your support contact](#support) so we can try to help you out.
 
 If you made a mistake, you can use Sigrid Local multiple times. Whenever you use Sigrid Local, the new
