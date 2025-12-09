@@ -7,6 +7,7 @@ SIG uses [continuous delivery](https://en.wikipedia.org/wiki/Continuous_delivery
 
 - **Sigrid CI:** The feedback for Open Source Health has been adapted based on your input. We now explicitly show which vulnerable libraries are part of your objective. Previously, vulnerable libraries not part of your objective were not shown at all, but this could be confusing.
 - **Technology support:** Detection for Postgres database code has been simplified.
+- **Technology support:** Sigrid uses a list of file and directory patterns that are automatically excluded from its maintainability analysis. This [list of default excludes](https://github.com/Software-Improvement-Group/sigridci/blob/main/resources/default-excludes.txt) is now part of the public Sigrid documentation on GitHub.
 
 ### November 17, 2025
 
