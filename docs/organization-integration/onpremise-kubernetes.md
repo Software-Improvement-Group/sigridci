@@ -155,10 +155,10 @@ level. The initialization script creates the following users and roles:
 - `webapp_user`
 - `db_mgmt_user`
 - `import_user`
+- `abstract_customer_role`
 - `auth_db_webapp_user`
 - `auth_db_mgmt_user`
-- `import_user`
-- `abstract_customer_role`
+- `auth_db_abstract_customer_role`
 
 In addition, when first importing a system, Sigrid creates a role called `PARTNER_CUSTOMER_role`,
 where `PARTNER` and `CUSTOMER` are placeholders for the configured partner and customer role. In 
