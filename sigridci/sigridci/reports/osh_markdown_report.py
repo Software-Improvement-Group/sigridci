@@ -19,13 +19,13 @@ from .security_markdown_report import SecurityMarkdownReport
 from ..analysisresults.cyclonedx_processor import CycloneDXProcessor
 from ..capability import OPEN_SOURCE_HEALTH
 from ..objective import Objective
+from ..platform import OSH_EXCLUDE_DOCS
 
 
 class OpenSourceHealthMarkdownReport(Report, MarkdownRenderer):
     MAX_FINDINGS = SecurityMarkdownReport.MAX_FINDINGS
     SYMBOLS = SecurityMarkdownReport.SEVERITY_SYMBOLS
     SORT_RISK = list(SecurityMarkdownReport.SEVERITY_SYMBOLS.keys())
-    DOCS_LINK = "https://docs.sigrid-says.com/reference/analysis-scope-configuration.html#exclude-open-source-health-risks"
 
     def __init__(self, objective = "HIGH"):
         super().__init__()
@@ -56,7 +56,7 @@ class OpenSourceHealthMarkdownReport(Report, MarkdownRenderer):
             details += "> Consider upgrading to a version that no longer contains the vulnerability.\n\n"
             details += self.generateFindingsTable(fixable, options)
             details += "If you believe these findings are false positives, "
-            details += f"you can [exclude them in the Sigrid configuration]({self.DOCS_LINK}).\n\n"
+            details += f"you can [exclude them in the Sigrid configuration]({OSH_EXCLUDE_DOCS}).\n\n"
         if len(unfixable) > 0:
             details += "## 😑 You have findings that you need to investigate in more depth\n\n"
             details += f"> You have **{len(unfixable)}** vulnerable open source libraries without a fix available.  \n"
@@ -84,7 +84,7 @@ class OpenSourceHealthMarkdownReport(Report, MarkdownRenderer):
 
         for library in sorted(libraries, key=lambda lib: self.SORT_RISK.index(lib.risk))[0:self.MAX_FINDINGS]:
             symbol = self.SYMBOLS[library.risk]
-            check = "✅" if Objective.isFindingIncluded(library.risk, self.objective) else "-"
+            check = "✅" if library.partOfObjective else "-"
             locations = "<br />".join(self.decorateLink(options, file, file) for file in library.files)
             md += f"| {symbol} | {check} | {library.name} {library.version} | {library.latestVersion} | {locations} |\n"
 
