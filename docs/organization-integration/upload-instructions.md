@@ -36,13 +36,10 @@ The requirements below must be fulfilled to ensure uploaded files can be process
 ### Supported SFTP file formats
 
 - Regular ZIP files
-- Password-protected ZIP files (with a file name of `*.pzip`)
 - GZIP
 - RAR (v1.5 to v4.0)
 - TAR
 - TAR.GZ
-
-For file formats other than ZIP we do not support password protection. If you want to upload password-protected ZIP files, contact our support at [support@softwareimprovementgroup.com](mailto:support@softwareimprovementgroup.com) to inform us of the password so it can be configured on our side. Your password will be stored in an encrypted format.
 
 ### SFTP key authorization
 
