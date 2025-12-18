@@ -55,6 +55,7 @@ IMAGES=(
   softwareimprovementgroup/sigrid-frontend
   softwareimprovementgroup/sigrid-multi-analyzer
   softwareimprovementgroup/sigrid-multi-importer
+  softwareimprovementgroup/osh-kb-updater
 )
 for IMAGE in "${IMAGES[@]}"; do
   docker pull $SIGRID_DOWNLOAD_REGISTRY/$IMAGE:$VERSION
