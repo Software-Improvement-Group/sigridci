@@ -1,4 +1,4 @@
-# Detailed instructions for accessing and using SIG's AWS ECR
+# Using SIG's Elastic Container Registry
 
 This documentation covers on-premise Sigrid. It is not applicable for cloud-based Sigrid.
 {: .attention }
