@@ -926,7 +926,7 @@
       "properties": [
         {
           "name": "sigrid:transitive",
-          "value": "DIRECT"
+          "value": "TRANSITIVE"
         },
         {
           "name": "sigrid:risk:vulnerability",

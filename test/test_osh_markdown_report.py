@@ -55,7 +55,7 @@ class OpenSourceHealthMarkdownReportTest(TestCase):
             |----|----|----|----|----|
             | 🟣 | ✅ | org.apache.logging.log4j:log4j-core 2.14.1 | 2.25.1 | gradle/libs.versions.toml |
             | 🔴 | - | commons-io:commons-io 2.9.0 | 2.20.0 | gradle/libs.versions.toml |
-            | 🟠 | - | io.github.classgraph:classgraph 4.8.106 | 4.8.181 | gradle/libs.versions.toml |
+            | 🟠 | - | io.github.classgraph:classgraph 4.8.106<br />*(Transitive)* | 4.8.181 | gradle/libs.versions.toml |
             | 🟠 | - | junit:junit  | 4.13.2 | buildSrc/src/main/kotlin/junit4-compatibility.gradle.kts |
             
             If you believe these findings are false positives, you can [exclude them in the Sigrid configuration](https://docs.sigrid-says.com/reference/analysis-scope-configuration.html#exclude-open-source-health-risks).
@@ -90,7 +90,7 @@ class OpenSourceHealthMarkdownReportTest(TestCase):
             |----|----|----|----|----|
             | 🟣 | ✅ | org.apache.logging.log4j:log4j-core 2.14.1 | 2.25.1 | gradle/libs.versions.toml |
             | 🔴 | ✅ | commons-io:commons-io 2.9.0 | 2.20.0 | gradle/libs.versions.toml |
-            | 🟠 | - | io.github.classgraph:classgraph 4.8.106 | 4.8.181 | gradle/libs.versions.toml |
+            | 🟠 | - | io.github.classgraph:classgraph 4.8.106<br />*(Transitive)* | 4.8.181 | gradle/libs.versions.toml |
             | 🟠 | - | junit:junit  | 4.13.2 | buildSrc/src/main/kotlin/junit4-compatibility.gradle.kts |
             
             If you believe these findings are false positives, you can [exclude them in the Sigrid configuration](https://docs.sigrid-says.com/reference/analysis-scope-configuration.html#exclude-open-source-health-risks).
@@ -125,7 +125,7 @@ class OpenSourceHealthMarkdownReportTest(TestCase):
             |----|----|----|----|----|
             | 🟣 | ✅ | org.apache.logging.log4j:log4j-core 2.14.1 | 2.25.1 | gradle/libs.versions.toml |
             | 🔴 | ✅ | commons-io:commons-io 2.9.0 | 2.20.0 | gradle/libs.versions.toml |
-            | 🟠 | ✅ | io.github.classgraph:classgraph 4.8.106 | 4.8.181 | gradle/libs.versions.toml |
+            | 🟠 | ✅ | io.github.classgraph:classgraph 4.8.106<br />*(Transitive)* | 4.8.181 | gradle/libs.versions.toml |
             | 🟠 | ✅ | junit:junit  | 4.13.2 | buildSrc/src/main/kotlin/junit4-compatibility.gradle.kts |
             
             If you believe these findings are false positives, you can [exclude them in the Sigrid configuration](https://docs.sigrid-says.com/reference/analysis-scope-configuration.html#exclude-open-source-health-risks).
@@ -169,7 +169,7 @@ class OpenSourceHealthMarkdownReportTest(TestCase):
             |----|----|----|----|----|
             | 🟣 | ✅ | org.apache.logging.log4j:log4j-core 2.14.1 | 2.25.1 | gradle/libs.versions.toml |
             | 🔴 | ✅ | commons-io:commons-io 2.9.0 | 2.20.0 | gradle/libs.versions.toml |
-            | 🟠 | - | io.github.classgraph:classgraph 4.8.106 | 4.8.181 | gradle/libs.versions.toml |
+            | 🟠 | - | io.github.classgraph:classgraph 4.8.106<br />*(Transitive)* | 4.8.181 | gradle/libs.versions.toml |
             | 🟠 | - | junit:junit  | 4.13.2 | buildSrc/src/main/kotlin/junit4-compatibility.gradle.kts |
             
             If you believe these findings are false positives, you can [exclude them in the Sigrid configuration](https://docs.sigrid-says.com/reference/analysis-scope-configuration.html#exclude-open-source-health-risks).
