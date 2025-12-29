@@ -40,6 +40,27 @@ Key characteristics:
 > **Recommendation**  
 > It is strongly recommended to update the OSH knowledge base container **daily**, if possible.
 
+## Creating the OSH knowledge base user
+
+This step is only necessary when setting up the OSH knowledge base for Sigrid On-Premise deployments completed before 2026. Newer deployments already have this user, as it is created by sigriddb-init during the initial PostgreSQL database setup.
+{: .attention }
+
+Run the following commands on your PostgreSQL database:
+
+```yaml
+CREATE USER osh_kb_updater_user WITH
+    PASSWORD '${OSH_KB_UPDATER_PASSWD}'
+    CREATEROLE
+    NOINHERIT
+    ;
+GRANT CONNECT, TEMP ON DATABASE sigriddb TO osh_kb_updater_user;
+GRANT USAGE ON SCHEMA osh_knowledge_base TO osh_kb_updater_user;
+-- For tables existing in osh_knowledge_base, grant SELECT, INSERT, UPDATE
+GRANT SELECT, INSERT, UPDATE ON ALL TABLES IN SCHEMA osh_knowledge_base TO osh_kb_updater_user;
+-- For sequences existing in osh_knowledge_base, grant SELECT, INSERT, UPDATE
+GRANT USAGE, SELECT ON ALL SEQUENCES IN SCHEMA osh_knowledge_base TO osh_kb_updater_user;
+```
+
 ## Enabling the OSH knowledge base updater
 
 The OSH knowledge base updater is enabled in the global section of your Sigrid On-Premise deployment configuration.
@@ -53,9 +74,11 @@ global:
       enabled: true
       updaterImage:
         repository: softwareimprovementgroup/osh-kb-updater
-        tag: 1.0.20251217 # use latest tag or use e.g. Renovate to update this dated tag regularly
-      pgHost: ""
+        tag: 1.0.20251217 # e.g. use Renovate to update this tag regularly
+      pgHost: "postgres.example.com"
       pgSecretName: "osh-kb-updater-job-postgres-secret" # secret containing the password for the database user
+      pgSecretPasswordKey: "" # 
+      cronJobschedule: "0 9 * * *" # by default the cronjob will trigger at 9:00 UTC
 ```
 
 ## Contact and support
