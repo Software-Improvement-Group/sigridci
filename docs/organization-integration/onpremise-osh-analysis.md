@@ -29,7 +29,7 @@ Sigrid can use this file to determine Maven dependencies for OSH analysis, witho
 > **Important**  
 > For Sigrid On-Premise deployments, Maven OSH analysis is supported **only** via dependency tree files.
 
-This approach is also described in the general [OSH documentation](../capabilities/osh-upload-instruction.md#maven-dependency-tree-files)
+This approach is also described in the general [OSH documentation](../capabilities/osh-upload-instructions.md#maven-dependency-tree-files)
 
 ### Creating the `maven.tree` file
 
