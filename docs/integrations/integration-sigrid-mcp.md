@@ -24,6 +24,8 @@ The currently supported technologies are:
 - Kotlin
 - Progress ABL
 
+Visit the [Technology Support](../reference/technology-support.md#list-of-supported-technologies) page for more details on supported technologies.
+
 ### Setup
 
 - Step 1: Obtain a Sigrid Token — see the Sigrid docs on [authentication tokens](../organization-integration/authentication-tokens.md)
