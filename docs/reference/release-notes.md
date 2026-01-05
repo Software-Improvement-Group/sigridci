@@ -7,7 +7,6 @@ SIG uses [continuous delivery](https://en.wikipedia.org/wiki/Continuous_delivery
 
 - Happy new year from everyone at SIG!
 - **Sigrid CI:** Sigrid CI for Open Source Health is no longer in beta, and is now available to all Sigrid users with an Open Source Health license. This documentation includes [instructions for enabling Open Source Health in your existing Sigrid CI configuration](../sigridci-integration/using-sigridci.md#adding-open-source-health-feedback-to-an-existing-sigrid-ci-configuration).
-- **Sigrid CI:** Open Source Health feedback has been extended to now include feedback on both vulnerability risk and license risk. The latter will only apply if you have defined a [license risk objective](../capabilities/portfolio-objectives.md).
 - **Sigrid CI:** Open Source Health feedback now explicitly marks transitive dependencies, making it easier to differentiate them from direct dependencies.
 
 ### December 15, 2025
