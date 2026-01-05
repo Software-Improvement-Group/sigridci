@@ -3,6 +3,17 @@ Sigrid release notes
 
 SIG uses [continuous delivery](https://en.wikipedia.org/wiki/Continuous_delivery), meaning that every change to Sigrid or the underlying analysis is released once our development pipeline has completed. On average, we release somewhere between 10 and 20 times per day. This page therefore doesn't list every single change, since that would quickly lead to an excessively long list of small changes. Instead, this page lists Sigrid and analysis changes that we consider noteworthy for the typical Sigrid user.
 
+### January 5, 2025
+
+- Happy new year from everyone at SIG!
+- **Sigrid CI:** Sigrid CI for Open Source Health is no longer in beta, and is now available to all Sigrid users with an Open Source Health license. This documentation includes [instructions for enabling Open Source Health in your existing Sigrid CI configuration](../sigridci-integration/using-sigridci.md#adding-open-source-health-feedback-to-an-existing-sigrid-ci-configuration).
+- **Sigrid CI:** Open Source Health feedback now explicitly marks transitive dependencies, making it easier to differentiate them from direct dependencies.
+
+### December 15, 2025
+
+- **Management dashboard:** You can now click on the security process charts to drill-down and see *which* systems and teams are responsible for the findings you see in the charts.
+- **Open Source Health:** Sigrid can [import SBOMs](../integrations/integration-sbom.md). This has been made more tolerant: If you're trying to import libraries from SBOMs without version numbers, Sigrid will still display them in Open Source Health.
+
 ### December 1, 2025
 
 - **Sigrid CI:** The feedback for Open Source Health has been adapted based on your input. We now explicitly show which vulnerable libraries are part of your objective. Previously, vulnerable libraries not part of your objective were not shown at all, but this could be confusing.

@@ -22,6 +22,7 @@ from ..objective import Objective
 class Library:
     risk: str
     name: str
+    transitive: bool
     version: str
     latestVersion: str
     files: List[str]
@@ -40,13 +41,14 @@ class CycloneDXProcessor:
             files = list(self.getOccurrenceLocations(component))
             properties = {prop["name"]: prop["value"] for prop in component["properties"]}
             risk = properties["sigrid:risk:vulnerability"]
+            transitive = properties.get("sigrid:transitive") == "TRANSITIVE"
             version = component["version"]
             latestVersion = properties.get("sigrid:latest:version", "").replace("?", "")
 
             if risk not in ("NONE", "UNKNOWN"):
                 fixable = latestVersion and version != latestVersion
                 partOfObjective = Objective.isFindingIncluded(risk, objective)
-                yield Library(risk, name, version, latestVersion, files, fixable, partOfObjective)
+                yield Library(risk, name, transitive, version, latestVersion, files, fixable, partOfObjective)
 
     def getOccurrenceLocations(self, component):
         if component.get("evidence") and component["evidence"].get("occurrences"):

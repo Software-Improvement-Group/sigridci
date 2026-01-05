@@ -85,8 +85,9 @@ class OpenSourceHealthMarkdownReport(Report, MarkdownRenderer):
         for library in sorted(libraries, key=lambda lib: self.SORT_RISK.index(lib.risk))[0:self.MAX_FINDINGS]:
             symbol = self.SYMBOLS[library.risk]
             check = "✅" if Objective.isFindingIncluded(library.risk, self.objective) else "-"
+            suffix = "<br />*(Transitive)*" if library.transitive else ""
             locations = "<br />".join(self.decorateLink(options, file, file) for file in library.files)
-            md += f"| {symbol} | {check} | {library.name} {library.version} | {library.latestVersion} | {locations} |\n"
+            md += f"| {symbol} | {check} | {library.name} {library.version}{suffix} | {library.latestVersion} | {locations} |\n"
 
         if len(libraries) > self.MAX_FINDINGS:
             md += f"| | ... {len(libraries) - self.MAX_FINDINGS} more vulnerable open source libraries | |\n"
