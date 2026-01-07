@@ -56,6 +56,7 @@ stages:
 variables:
   SIGRID_CI_CUSTOMER: '<example_customer_name>'
   SIGRID_CI_SYSTEM: '<example_system_name>'
+  SIGRID_CI_TOKEN: 'maintainability,osh'
 
 sigridci:
   image: 
