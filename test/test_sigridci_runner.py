@@ -66,7 +66,7 @@ class SigridCiRunnerTest(TestCase):
             "Warning: Upload is very small, source directory might not contain all source code",
             "Preparing upload",
             "Sigrid CI analysis ID: 123",
-            "Submitting upload",
+            "Submitting upload to dummy",
             "Upload successful",
             "Waiting for analysis results"
         ]
@@ -102,7 +102,7 @@ class SigridCiRunnerTest(TestCase):
             "Warning: Upload is very small, source directory might not contain all source code",
             "Preparing upload",
             "Sigrid CI analysis ID: 123",
-            "Publishing upload",
+            "Publishing upload to dummy",
             "Upload successful",
             "Waiting for analysis results"
         ]
@@ -138,7 +138,7 @@ class SigridCiRunnerTest(TestCase):
             "Warning: Upload is very small, source directory might not contain all source code",
             "Preparing upload",
             "Sigrid CI analysis ID: 123",
-            "Publishing upload",
+            "Publishing upload to dummy",
             "Upload successful",
             "Your project's source code has been published to Sigrid"
         ]
@@ -170,7 +170,7 @@ class SigridCiRunnerTest(TestCase):
             "Warning: Upload is very small, source directory might not contain all source code",
             "Preparing upload",
             "Sigrid CI analysis ID: 123",
-            "Submitting upload",
+            "Submitting upload to dummy",
             "Upload successful",
             "System 'noot' has been on-boarded and will appear in Sigrid shortly"
         ]
@@ -232,7 +232,7 @@ class SigridCiRunnerTest(TestCase):
             "Warning: Upload is very small, source directory might not contain all source code",
             "Preparing upload",
             "Sigrid CI analysis ID: 123",
-            "Submitting upload",
+            "Submitting upload to dummy",
             "HTTP Error 503: ",
             "No response headers",
             "No response body",
@@ -261,7 +261,7 @@ class SigridCiRunnerTest(TestCase):
             "Warning: Upload is very small, source directory might not contain all source code",
             "Preparing upload",
             "Sigrid CI analysis ID: 123",
-            "Submitting upload",
+            "Submitting upload to dummy",
             "HTTP Error 503: ",
             "No response headers",
             "No response body",
@@ -315,7 +315,7 @@ class SigridCiRunnerTest(TestCase):
             "Warning: Upload is very small, source directory might not contain all source code",
             "Preparing upload",
             "Sigrid CI analysis ID: 123",
-            "Submitting upload",
+            "Submitting upload to dummy",
             "Upload successful",
             "Waiting for analysis results"
         ]
@@ -449,7 +449,7 @@ class SigridCiRunnerTest(TestCase):
             "Warning: Upload is very small, source directory might not contain all source code",
             "Preparing upload",
             "Sigrid CI analysis ID: 123",
-            "Submitting upload",
+            "Submitting upload to dummy",
             "Upload successful",
             "Waiting for analysis results"
         ]
