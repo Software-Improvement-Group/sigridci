@@ -18,18 +18,18 @@ As a result, Sigrid On-Premise cannot rely on public knowledge sources to determ
 
 To enable OSH in on-premise environments, Sigrid provides a dedicated **Open Source Health knowledge base**.
 
-Accurate OSH results depend on continuously updated vulnerability database. Without access to such knowledge, OSH findings cannot be produced.
+Accurate OSH results depend on a frequently updated vulnerability database. Without access to such knowledge, OSH findings cannot be produced.
 
 ## OSH knowledge base for On-Premise deployments
 
 For Sigrid On-Premise, the vulnerability database is provided through a **local OSH knowledge base**.
 
-The OSH knowledge base is delivered as a **separate, optional container** that maintains a curated set of vulnerability data. During analysis, Sigrid queries this local knowledge base instead of public sources.
+The OSH knowledge base is delivered as a **separate, optional container** that maintains a curated set of vulnerability data. During import of the dependencies that were identified in the analysis, Sigrid queries this local knowledge base instead of public sources.
 
 Key characteristics:
 
 - **Optional component**  
-  The OSH knowledge base is optional, but required if you want OSH findings in an on-premise deployment.
+  The OSH knowledge base is optional, but required if you want Open Source Health findings in an on-premise deployment.
 - **Independent versioning**  
   The OSH knowledge base container does not need to be on the same version as the other Sigrid containers.
 - **Regular updates required**  
@@ -42,7 +42,7 @@ It is strongly recommended to update the OSH knowledge base container daily, if 
 
 ## Creating the OSH knowledge base user
 
-This step is only necessary when setting up the OSH knowledge base for Sigrid On-Premise deployments completed before 2026. Newer deployments already have this user, as it is created by sigriddb-init during the initial PostgreSQL database setup.
+This step is only necessary when setting up the OSH knowledge base for Sigrid On-Premise deployments completed before 2026. Newer deployments already have this user, as it is created by the `sigriddb-init` script during the initial PostgreSQL database setup.
 {: .attention }
 
 Run the following commands on your PostgreSQL database:
