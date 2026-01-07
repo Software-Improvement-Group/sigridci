@@ -37,8 +37,8 @@ Key characteristics:
 - **Standard update process**  
   Updating the OSH knowledge base container follows the same process as updating other containers in the Sigrid deployment.
 
-> **Recommendation**  
-> It is strongly recommended to update the OSH knowledge base container **daily**, if possible.
+It is strongly recommended to update the OSH knowledge base container daily, if possible.
+{: .attention }
 
 ## Creating the OSH knowledge base user
 
