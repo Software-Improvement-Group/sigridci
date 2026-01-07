@@ -19,6 +19,13 @@ AI Static Explanations are integrated throughout the Sigrid platform. The follow
 
 Please note that Sigrid's knowledge base is continuously expanding.
 
+### Which technologies are covered by the AI Static Explanations?
+Technology availability for AI Static Explanations depends on the capability you are evaluating.
+
+- For explanations on the Refactoring Candidates in Maintainability, refer to the [list of supported technologies](../reference/technology-support.md#list-of-supported-technologies) table.
+- For AI Static Explanations on Security, Reliability, Cloud Readiness, and Green Code findings, the availability of explanations depends on whether the capability supports the technology.
+- Open Source Health (License implications) findings are technology-agnostic.
+
 ### What do I do to use the AI Static Explanations?
 No action required. AI Static Explanations are **enabled by default** for all Sigrid users. Since these explanations are generated through our private infrastructure without sharing any client code or data externally, they are safe and ready to use immediately.
 
@@ -56,6 +63,7 @@ We are committed to data governance and will never process your codebase or info
 1. **AI Explanations license** - An additional license that grants access to GenAI Explanations
 2. **AI addendum** - An addendum to your Sigrid contract, specific for AI usage
 
+Contact your account manager or CSM at SIG for more information and to request activation.
 
 ### Discovering GenAI Explanations Across Sigrid Capabilities
 Sigrid GenAI Explanations adapt to each capability they support, providing contextual insights tailored to your specific needs. Currently available across these key areas:
@@ -150,6 +158,10 @@ Perfect for:
 
 For deeper context on open source health, see the [Open Source Health](../../docs/capabilities/system-open-source-health.md) documentation.
 
+### Which technologies are covered by the GenAI Explanations?
+Technology availability for GenAI Explanations depends on the capability you are evaluating.
+- For GenAI explanations in the [Code Explorer](#code-explorer), refer to the [list of supported technologies](../reference/technology-support.md#list-of-supported-technologies);
+- GenAI explanations in the [System Overview](#system-overview), the [Architecture Quality properties](#architecture-quality), and [Open Source Health vulnerabilities](#open-source-health) are technology-agnostic.
 
 ### Data Security and Privacy
 
