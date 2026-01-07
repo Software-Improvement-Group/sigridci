@@ -1,4 +1,4 @@
-# Detailed instructions for accessing and using SIG's AWS ECR
+# Using SIG's Elastic Container Registry
 
 This documentation covers on-premise Sigrid. It is not applicable for cloud-based Sigrid.
 {: .attention }
@@ -55,6 +55,7 @@ IMAGES=(
   softwareimprovementgroup/sigrid-frontend
   softwareimprovementgroup/sigrid-multi-analyzer
   softwareimprovementgroup/sigrid-multi-importer
+  softwareimprovementgroup/osh-kb-updater
 )
 for IMAGE in "${IMAGES[@]}"; do
   docker pull $SIGRID_DOWNLOAD_REGISTRY/$IMAGE:$VERSION
