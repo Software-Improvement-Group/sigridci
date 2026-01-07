@@ -19,6 +19,12 @@ from ..objective import Objective
 
 
 @dataclass
+class LibraryVulnerability:
+    id: str
+    link: str
+
+
+@dataclass
 class Library:
     risk: str
     name: str
@@ -26,6 +32,7 @@ class Library:
     version: str
     latestVersion: str
     files: List[str]
+    vulnerabilities: List[LibraryVulnerability]
     fixable: bool
     partOfObjective: bool
 
@@ -46,11 +53,20 @@ class CycloneDXProcessor:
             latestVersion = properties.get("sigrid:latest:version", "").replace("?", "")
 
             if risk not in ("NONE", "UNKNOWN"):
+                vulnerabilities = list(self.getComponentVulnerabilities(component, feedback))
                 fixable = latestVersion and version != latestVersion
                 partOfObjective = Objective.isFindingIncluded(risk, objective)
-                yield Library(risk, name, transitive, version, latestVersion, files, fixable, partOfObjective)
+                yield Library(risk, name, transitive, version, latestVersion, files, vulnerabilities, fixable, partOfObjective)
 
     def getOccurrenceLocations(self, component):
         if component.get("evidence") and component["evidence"].get("occurrences"):
             for occurrence in component["evidence"]["occurrences"]:
                 yield occurrence["location"]
+
+    def getComponentVulnerabilities(self, component, feedback):
+        for vuln in feedback.get("vulnerabilities", []):
+            affected = [affects["ref"] for affects in vuln["affects"]]
+            if component.get("purl") in affected:
+                link = vuln["source"]["url"] if vuln.get("source") else ""
+                yield LibraryVulnerability(vuln["id"], link)
+

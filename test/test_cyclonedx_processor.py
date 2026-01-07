@@ -50,3 +50,21 @@ class CycloneDXProcessorTest(TestCase):
         self.assertEqual(libraries[2].partOfObjective, False)
         self.assertEqual(libraries[3].name, "junit:junit")
         self.assertEqual(libraries[3].partOfObjective, False)
+
+    def testExtractVulnerabilities(self):
+        with open(os.path.dirname(__file__) + "/testdata/osh-junit.json", encoding="utf-8", mode="r") as f:
+            feedback = json.load(f)
+
+        processor = CycloneDXProcessor()
+        libraries = list(processor.extractLibraries(feedback, "NONE"))
+
+        self.assertEqual(libraries[0].name, "org.apache.logging.log4j:log4j-core")
+        self.assertEqual(len(libraries[0].vulnerabilities), 4)
+        self.assertEqual(libraries[0].vulnerabilities[0].id, "CVE-2021-45046")
+        self.assertEqual(libraries[0].vulnerabilities[0].link, "")
+        self.assertEqual(libraries[0].vulnerabilities[1].id, "CVE-2021-45105")
+        self.assertEqual(libraries[0].vulnerabilities[1].link, "")
+        self.assertEqual(libraries[0].vulnerabilities[2].id, "CVE-2021-44228")
+        self.assertEqual(libraries[0].vulnerabilities[2].link, "https://nvd.nist.gov/vuln/detail/CVE-2021-44228")
+        self.assertEqual(libraries[0].vulnerabilities[3].id, "CVE-2021-44832")
+        self.assertEqual(libraries[0].vulnerabilities[3].link, "")
