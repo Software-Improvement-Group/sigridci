@@ -38,7 +38,7 @@ The dependency tree file must be created **before** running the Sigrid analysis.
 Example command:
 
 ```bash
-mvn dependency:tree -DoutputType=text -DoutputFile=maven.tree
+mvn dependency:tree -DoutputType=text -DoutputFile=maven.tree -DoutputEncoding=UTF-8
 ```
 
 This command resolves dependencies using your configured Maven repositories and writes the dependency tree to `maven.tree` in the project workspace.
@@ -61,7 +61,7 @@ sigrid-publish:
   script:
     - echo $MYSIGRID_CERT > $SIGRID_CA_CERT
     - echo $MY_S3_CERT > $AWS_CA_BUNDLE
-    - mvn dependency:tree -DoutputType=text -DoutputFile=maven.tree
+    - mvn dependency:tree -DoutputType=text -DoutputFile=maven.tree -DoutputEncoding=UTF-8
     - run-analyzers --publish
 ```
 
