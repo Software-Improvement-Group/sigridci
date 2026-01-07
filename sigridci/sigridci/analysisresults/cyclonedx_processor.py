@@ -21,7 +21,7 @@ from ..objective import Objective
 @dataclass
 class LibraryVulnerability:
     id: str
-    link: Optional[str, None]
+    link: Optional[str]
 
 
 @dataclass
