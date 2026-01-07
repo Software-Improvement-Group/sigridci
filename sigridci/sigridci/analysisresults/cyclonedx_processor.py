@@ -13,7 +13,7 @@
 # limitations under the License.
 
 from dataclasses import dataclass
-from typing import List
+from typing import List, Optional
 
 from ..objective import Objective
 
@@ -21,7 +21,7 @@ from ..objective import Objective
 @dataclass
 class LibraryVulnerability:
     id: str
-    link: str
+    link: Optional[str, None]
 
 
 @dataclass
@@ -67,6 +67,6 @@ class CycloneDXProcessor:
         for vuln in feedback.get("vulnerabilities", []):
             affected = [affects["ref"] for affects in vuln["affects"]]
             if component.get("purl") in affected:
-                link = vuln["source"]["url"] if vuln.get("source") else ""
+                link = vuln["source"]["url"] if vuln.get("source") else None
                 yield LibraryVulnerability(vuln["id"], link)
 
