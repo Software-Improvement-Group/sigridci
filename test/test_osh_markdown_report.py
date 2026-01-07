@@ -181,3 +181,47 @@ class OpenSourceHealthMarkdownReportTest(TestCase):
         """
 
         self.assertEqual(markdown.strip(), inspect.cleandoc(expected).strip())
+
+    @mock.patch.dict(os.environ, {"SIGRID_CI_MARKDOWN_HTML" : "false"})
+    def testShowLegalRiskIfObjectiveIsSet(self):
+        report = OpenSourceHealthMarkdownReport("CRITICAL", "MEDIUM")
+        report.decorateLinks = False
+        report.previousFeedback = self.previousFeedback
+        markdown = report.renderMarkdown("1234", self.feedback, self.options)
+
+        expected = """
+            # [Sigrid](https://sigrid-says.com/aap/noot/-/open-source-health) Open Source Health feedback
+            
+            **⚠️  You failed to meet your objective of having no high-severity open source vulnerabilities.**
+            
+            Sigrid compared your code against the baseline of 2025-09-18.
+            
+            ## 👍 What went well?
+            
+            > You updated **1** vulnerable open source libraries.
+            
+            | Vulnerability risk | Part of objective? | Library | Latest version | Location(s) |
+            |----|----|----|----|----|
+            | 🔴 | ✅ | commons-io:commons-other 1.99 | 3.0 | gradle/libs.versions.toml |
+            
+            ## 👎 What could be better?
+            
+            > You have **4** vulnerable open source libraries with a fix available.  
+            > Consider upgrading to a version that no longer contains the vulnerability.
+            
+            | Vulnerability risk | Part of objective? | Library | Latest version | Location(s) |
+            |----|----|----|----|----|
+            | 🟣 | ✅ | org.apache.logging.log4j:log4j-core 2.14.1 | 2.25.1 | gradle/libs.versions.toml |
+            | 🔴 | ✅ | commons-io:commons-io 2.9.0 | 2.20.0 | gradle/libs.versions.toml |
+            | 🟠 | - | io.github.classgraph:classgraph 4.8.106<br />*(Transitive)* | 4.8.181 | gradle/libs.versions.toml |
+            | 🟠 | - | junit:junit  | 4.13.2 | buildSrc/src/main/kotlin/junit4-compatibility.gradle.kts |
+            
+            If you believe these findings are false positives, you can [exclude them in the Sigrid configuration](https://docs.sigrid-says.com/reference/analysis-scope-configuration.html#exclude-open-source-health-risks).
+            
+            
+            ----
+            
+            [**View this system in Sigrid**](https://sigrid-says.com/aap/noot/-/open-source-health)
+        """
+
+        self.assertEqual(markdown.strip(), inspect.cleandoc(expected).strip())

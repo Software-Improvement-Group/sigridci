@@ -27,9 +27,10 @@ class OpenSourceHealthMarkdownReport(Report, MarkdownRenderer):
     SORT_RISK = list(SecurityMarkdownReport.SEVERITY_SYMBOLS.keys())
     DOCS_LINK = "https://docs.sigrid-says.com/reference/analysis-scope-configuration.html#exclude-open-source-health-risks"
 
-    def __init__(self, objective = "HIGH"):
+    def __init__(self, vulnObjective="HIGH", licenseObjective=None):
         super().__init__()
-        self.objective = objective
+        self.vulnObjective = vulnObjective
+        self.licenseObjective = licenseObjective
         self.previousFeedback = None
         self.processor = CycloneDXProcessor()
 
@@ -38,8 +39,8 @@ class OpenSourceHealthMarkdownReport(Report, MarkdownRenderer):
             f.write(self.renderMarkdown(analysisId, feedback, options))
 
     def renderMarkdown(self, analysisId, feedback, options):
-        libraries = list(self.processor.extractLibraries(feedback, self.objective))
-        previousLibraries = list(self.processor.extractLibraries(self.previousFeedback, self.objective))
+        libraries = list(self.processor.extractLibraries(feedback, self.vulnObjective))
+        previousLibraries = list(self.processor.extractLibraries(self.previousFeedback, self.vulnObjective))
 
         fixable = [lib for lib in libraries if lib.fixable]
         unfixable = [lib for lib in libraries if not lib.fixable]
@@ -67,8 +68,8 @@ class OpenSourceHealthMarkdownReport(Report, MarkdownRenderer):
         return self.renderMarkdownTemplate(feedback, options, details, sigridLink)
 
     def getSummary(self, feedback, options):
-        objectiveDisplayName = f"{Objective.getSeverityObjectiveLabel(self.objective)} open source vulnerabilities"
-        libraries = list(self.processor.extractLibraries(feedback, self.objective))
+        objectiveDisplayName = f"{Objective.getSeverityObjectiveLabel(self.vulnObjective)} open source vulnerabilities"
+        libraries = list(self.processor.extractLibraries(feedback, self.vulnObjective))
         unfixable = [lib for lib in libraries if lib.partOfObjective and not lib.fixable]
 
         if self.isObjectiveSuccess(feedback, options):
@@ -84,7 +85,7 @@ class OpenSourceHealthMarkdownReport(Report, MarkdownRenderer):
 
         for library in sorted(libraries, key=lambda lib: self.SORT_RISK.index(lib.risk))[0:self.MAX_FINDINGS]:
             symbol = self.SYMBOLS[library.risk]
-            check = "✅" if Objective.isFindingIncluded(library.risk, self.objective) else "-"
+            check = "✅" if Objective.isFindingIncluded(library.risk, self.vulnObjective) else "-"
             suffix = "<br />*(Transitive)*" if library.transitive else ""
             locations = "<br />".join(self.decorateLink(options, file, file) for file in library.files)
             md += f"| {symbol} | {check} | {library.name} {library.version}{suffix} | {library.latestVersion} | {locations} |\n"
@@ -111,6 +112,6 @@ class OpenSourceHealthMarkdownReport(Report, MarkdownRenderer):
         return os.path.abspath(f"{options.outputDir}/osh-feedback.md")
 
     def isObjectiveSuccess(self, feedback, options):
-        libraries = list(self.processor.extractLibraries(feedback, self.objective))
+        libraries = list(self.processor.extractLibraries(feedback, self.vulnObjective))
         fixable = [lib for lib in libraries if lib.partOfObjective and lib.fixable]
         return len(fixable) == 0
