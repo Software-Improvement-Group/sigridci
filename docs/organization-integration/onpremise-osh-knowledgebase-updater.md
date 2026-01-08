@@ -8,7 +8,7 @@ This documentation covers on-premise Sigrid. It is not applicable for cloud-base
 - You should have already read the other Sigrid On-Premise documentation.
 - All pre-requisites from our public documentation are met.
 
-If you are not pulling the `softwareimprovementgroup/osh-kb-updater` image directly from our ECR and are saving it in your own local container registry, please make sure you download it.
+If you're not pulling `softwareimprovementgroup/osh-kb-updater` directly from our ECR, make sure to pull it from ECR and push it to your local registry for deployment.
 {: .attention }
 
 ## Introduction
