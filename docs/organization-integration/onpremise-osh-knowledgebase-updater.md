@@ -8,6 +8,9 @@ This documentation covers on-premise Sigrid. It is not applicable for cloud-base
 - You should have already read the other Sigrid On-Premise documentation.
 - All pre-requisites from our public documentation are met.
 
+If you are not pulling the `softwareimprovementgroup/osh-kb-updater` image directly from our ECR and are saving it in your own local container registry, please make sure you download it.
+{: .attention }
+
 ## Introduction
 
 Sigrid continuously measures and reports on the quality, security, and maintainability of software systems. Part of this capability is **Open Source Health (OSH)**, which focuses on identifying open source dependencies and assessing whether these dependencies are affected by known vulnerabilities.
