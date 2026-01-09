@@ -80,13 +80,13 @@ class OpenSourceHealthMarkdownReport(Report, MarkdownRenderer):
             return f"⚠️  You failed to meet your objective of having {objectiveDisplayName}."
 
     def generateFindingsTable(self, libraries, options):
-        md = "| Vulnerability risk | Part of objective? | Library | Latest version | Location(s) |\n"
+        md = "| Vulnerability risk | Meets objective? | Library | Latest version | Location(s) |\n"
         md += "|----|----|----|----|----|\n"
 
         for library in sorted(libraries, key=lambda lib: self.SORT_RISK.index(lib.risk))[0:self.MAX_FINDINGS]:
             symbol = self.SYMBOLS[library.risk]
-            check = "✅" if Objective.isFindingIncluded(library.risk, self.vulnObjective) else "-"
-            suffix = "<br />*(Transitive)*" if library.transitive else ""
+            check = "❌" if Objective.isFindingIncluded(library.risk, self.objective) else "✅"
+            suffix = self.formatInfoLine(library)
             locations = "<br />".join(self.decorateLink(options, file, file) for file in library.files)
             md += f"| {symbol} | {check} | {library.name} {library.version}{suffix} | {library.latestVersion} | {locations} |\n"
 
@@ -94,6 +94,13 @@ class OpenSourceHealthMarkdownReport(Report, MarkdownRenderer):
             md += f"| | ... {len(libraries) - self.MAX_FINDINGS} more vulnerable open source libraries | |\n"
 
         return f"{md}\n"
+
+    def formatInfoLine(self, library):
+        info = "(Transitive) " if library.transitive else ""
+        if len(library.vulnerabilities) > 0:
+            formatVulnLink = lambda vuln: f"[{vuln.id}]({vuln.link})" if vuln.link else vuln.id
+            info += ", ".join(formatVulnLink(vuln) for vuln in library.vulnerabilities)
+        return f"<br />*{info}*" if info else ""
 
     def findUpdatedLibraries(self, previous, current):
         getKey = lambda library: f"{library.name}@{library.version}"

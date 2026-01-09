@@ -1,4 +1,4 @@
-# Runbook: Sigrid On-Premise Updating
+# Runbook: Updating Sigrid On-Premise
 
 This documentation covers on-premise Sigrid. It is not applicable for cloud-based Sigrid.
 {: .attention }
