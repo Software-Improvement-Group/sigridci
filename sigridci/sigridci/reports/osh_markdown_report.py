@@ -79,12 +79,12 @@ class OpenSourceHealthMarkdownReport(Report, MarkdownRenderer):
             return f"⚠️  You failed to meet your objective of having {objectiveDisplayName}."
 
     def generateFindingsTable(self, libraries, options):
-        md = "| Vulnerability risk | Part of objective? | Library | Latest version | Location(s) |\n"
+        md = "| Vulnerability risk | Meets objective? | Library | Latest version | Location(s) |\n"
         md += "|----|----|----|----|----|\n"
 
         for library in sorted(libraries, key=lambda lib: self.SORT_RISK.index(lib.risk))[0:self.MAX_FINDINGS]:
             symbol = self.SYMBOLS[library.risk]
-            check = "✅" if Objective.isFindingIncluded(library.risk, self.objective) else "-"
+            check = "❌" if Objective.isFindingIncluded(library.risk, self.objective) else "✅"
             suffix = "<br />*(Transitive)*" if library.transitive else ""
             locations = "<br />".join(self.decorateLink(options, file, file) for file in library.files)
             md += f"| {symbol} | {check} | {library.name} {library.version}{suffix} | {library.latestVersion} | {locations} |\n"
