@@ -66,7 +66,7 @@ class CycloneDXProcessor:
     def getComponentVulnerabilities(self, component, feedback):
         for vuln in feedback.get("vulnerabilities", []):
             affected = [affects["ref"] for affects in vuln["affects"]]
-            if component.get("purl") in affected:
+            if component.get("bom-ref") in affected:
                 link = vuln["source"]["url"] if vuln.get("source") else None
                 yield LibraryVulnerability(vuln["id"], link)
 
