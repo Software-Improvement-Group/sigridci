@@ -15,27 +15,30 @@
 import sys
 
 from .report import Report
-from .security_markdown_report import SecurityMarkdownReport
 from ..analysisresults.cyclonedx_processor import CycloneDXProcessor
 
 
 class OpenSourceHealthTextReport(Report):
 
-    def __init__(self, objective, *, output=sys.stdout):
+    def __init__(self, markdownReport, *, output=sys.stdout):
         self.output = output
-        self.objective = objective
+        self.vulnObjective = markdownReport.vulnObjective
+        self.licenseObjective = markdownReport.licenseObjective
 
     def generate(self, analysisId, feedback, options):
-        processor = CycloneDXProcessor()
-        findings = [lib for lib in processor.extractLibraries(feedback, self.objective) if not lib.meetsObjectives()]
+        processor = CycloneDXProcessor(self.vulnObjective, self.licenseObjective)
+        findings = [lib for lib in processor.extractLibraries(feedback) if not lib.meetsObjectives()]
 
         if len(findings) > 0:
             print("", file=self.output)
-            print("Vulnerable open source libraries", file=self.output)
+            print(f"{len(findings)} open source libraries do not meet your objectives", file=self.output)
             print("", file=self.output)
             for finding in findings:
-                symbol = SecurityMarkdownReport.SEVERITY_SYMBOLS[finding.vulnerabilityRisk.severity]
-                print(f"    {symbol} {finding.name} {finding.version}", file=self.output)
+                vulnCheck = "⚠️" if finding.vulnerabilityRisk.meetsObjective else "❌"
+                licenseCheck = "✅" if finding.licenseRisk.meetsObjective else "❌"
+                print(f"    {finding.name} {finding.version}", file=self.output)
+                print(f"        {vulnCheck} vulnerability objective", file=self.output)
+                print(f"        {licenseCheck} license objective", file=self.output)
                 for file in finding.files:
                     print(f"        Defined in {file}", file=self.output)
             print("", file=self.output)
