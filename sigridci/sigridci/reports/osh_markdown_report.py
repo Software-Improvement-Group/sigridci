@@ -56,9 +56,9 @@ class OpenSourceHealthMarkdownReport(Report, MarkdownRenderer):
             details += "If you believe these findings are false positives, "
             details += f"you can [exclude them in the Sigrid configuration]({self.DOCS_LINK}).\n\n"
         if len(unfixable) > 0:
-            details += "## 😑 You have findings that you need to investigate in more depth\n\n"
-            details += f"> You have **{len(unfixable)}** vulnerable open source libraries without a fix available.  \n"
-            details += "> You need to investigate the security risk, and discuss how to manage it accordingly.\n\n"
+            details += "## 😑 You have findings that need to be investigated\n\n"
+            details += f"> You have **{len(unfixable)}** open source libraries with issues that don't have an easy solution.  \n"
+            details += "> You'll need to investigate the risks, and discuss how to manage them accordingly.\n\n"
             details += self.generateFindingsTable(unfixable, options)
 
         sigridLink = f"{self.getSigridUrl(options)}/-/open-source-health"
