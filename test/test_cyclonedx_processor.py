@@ -29,10 +29,15 @@ class CycloneDXProcessorTest(TestCase):
         libraries = list(processor.extractLibraries(feedback, "NONE"))
 
         self.assertEqual(len(libraries), 4)
-        self.assertEqual(libraries[0].risk, "CRITICAL")
         self.assertEqual(libraries[0].name, "org.apache.logging.log4j:log4j-core")
-        self.assertEqual(libraries[1].risk, "HIGH")
+        self.assertEqual(libraries[0].licenses, [])
+        self.assertEqual(libraries[0].vulnerabilityRisk.severity, "CRITICAL")
+        self.assertEqual(libraries[0].licenseRisk.severity, "UNKNOWN")
+
         self.assertEqual(libraries[1].name, "commons-io:commons-io")
+        self.assertEqual(libraries[1].licenses, ["Apache"])
+        self.assertEqual(libraries[1].vulnerabilityRisk.severity, "HIGH")
+        self.assertEqual(libraries[1].licenseRisk.severity, "NONE")
 
     def testExtractLibrariesMatchingObjective(self):
         with open(os.path.dirname(__file__) + "/testdata/osh-junit.json", encoding="utf-8", mode="r") as f:
@@ -43,13 +48,13 @@ class CycloneDXProcessorTest(TestCase):
 
         self.assertEqual(len(libraries), 4)
         self.assertEqual(libraries[0].name, "org.apache.logging.log4j:log4j-core")
-        self.assertEqual(libraries[0].partOfObjective, True)
+        self.assertEqual(libraries[0].vulnerabilityRisk.meetsObjective, False)
         self.assertEqual(libraries[1].name, "commons-io:commons-io")
-        self.assertEqual(libraries[1].partOfObjective, False)
+        self.assertEqual(libraries[1].vulnerabilityRisk.meetsObjective, True)
         self.assertEqual(libraries[2].name, "io.github.classgraph:classgraph")
-        self.assertEqual(libraries[2].partOfObjective, False)
+        self.assertEqual(libraries[2].vulnerabilityRisk.meetsObjective, True)
         self.assertEqual(libraries[3].name, "junit:junit")
-        self.assertEqual(libraries[3].partOfObjective, False)
+        self.assertEqual(libraries[3].vulnerabilityRisk.meetsObjective, True)
 
     def testExtractVulnerabilities(self):
         with open(os.path.dirname(__file__) + "/testdata/osh-junit.json", encoding="utf-8", mode="r") as f:
@@ -68,3 +73,14 @@ class CycloneDXProcessorTest(TestCase):
         self.assertEqual(libraries[0].vulnerabilities[2].link, "https://nvd.nist.gov/vuln/detail/CVE-2021-44228")
         self.assertEqual(libraries[0].vulnerabilities[3].id, "CVE-2021-44832")
         self.assertEqual(libraries[0].vulnerabilities[3].link, None)
+
+    def testLicenseRisk(self):
+        with open(os.path.dirname(__file__) + "/testdata/osh-junit.json", encoding="utf-8", mode="r") as f:
+            feedback = json.load(f)
+
+        processor = CycloneDXProcessor()
+        jmhcore = next(lib for lib in processor.extractLibraries(feedback, "NONE", "NONE") if lib.name.endswith("jmh-core"))
+
+        self.assertEqual(jmhcore.licenses, ["GNU General Public License (GPL), version 2, with the Classpath exception"])
+        self.assertEqual(jmhcore.licenseRisk.severity, "LOW")
+        self.assertEqual(jmhcore.licenseRisk.meetsObjective, False)

@@ -27,14 +27,14 @@ class OpenSourceHealthTextReport(Report):
 
     def generate(self, analysisId, feedback, options):
         processor = CycloneDXProcessor()
-        findings = [lib for lib in processor.extractLibraries(feedback, self.objective) if lib.partOfObjective]
+        findings = [lib for lib in processor.extractLibraries(feedback, self.objective) if not lib.meetsObjectives()]
 
         if len(findings) > 0:
             print("", file=self.output)
             print("Vulnerable open source libraries", file=self.output)
             print("", file=self.output)
             for finding in findings:
-                symbol = SecurityMarkdownReport.SEVERITY_SYMBOLS[finding.risk]
+                symbol = SecurityMarkdownReport.SEVERITY_SYMBOLS[finding.vulnerabilityRisk.severity]
                 print(f"    {symbol} {finding.name} {finding.version}", file=self.output)
                 for file in finding.files:
                     print(f"        Defined in {file}", file=self.output)

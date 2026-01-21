@@ -25,21 +25,31 @@ class LibraryVulnerability:
 
 
 @dataclass
+class Risk:
+    severity: str
+    meetsObjective: bool
+
+
+@dataclass
 class Library:
-    risk: str
     name: str
     transitive: bool
     version: str
     latestVersion: str
     files: List[str]
     vulnerabilities: List[LibraryVulnerability]
+    licenses: List[str]
+    vulnerabilityRisk: Risk
+    licenseRisk: Risk
     fixable: bool
-    partOfObjective: bool
+
+    def meetsObjectives(self):
+        return self.vulnerabilityRisk.meetsObjective and self.licenseRisk.meetsObjective
 
 
 class CycloneDXProcessor:
 
-    def extractLibraries(self, feedback, objective):
+    def extractLibraries(self, feedback, vulnerabilityObjective, licenseObjective=None):
         if feedback is None:
             return
 
@@ -47,16 +57,19 @@ class CycloneDXProcessor:
             name = f"{component['group']}:{component['name']}" if component.get("group") else component["name"]
             files = list(self.getOccurrenceLocations(component))
             properties = {prop["name"]: prop["value"] for prop in component["properties"]}
-            risk = properties["sigrid:risk:vulnerability"]
             transitive = properties.get("sigrid:transitive") == "TRANSITIVE"
             version = component["version"]
             latestVersion = properties.get("sigrid:latest:version", "").replace("?", "")
+            licenses = [license["license"]["name"] for license in component["licenses"]]
+            vulnerabilities = list(self.getComponentVulnerabilities(component, feedback))
+            fixable = latestVersion and version != latestVersion
 
-            if risk not in ("NONE", "UNKNOWN"):
-                vulnerabilities = list(self.getComponentVulnerabilities(component, feedback))
-                fixable = latestVersion and version != latestVersion
-                partOfObjective = Objective.isFindingIncluded(risk, objective)
-                yield Library(risk, name, transitive, version, latestVersion, files, vulnerabilities, fixable, partOfObjective)
+            vulnerabilityRisk = self.parseRisk(properties["sigrid:risk:vulnerability"], vulnerabilityObjective)
+            licenseRisk = self.parseRisk(properties["sigrid:risk:legal"], licenseObjective)
+
+            if self.isInteresting(vulnerabilityRisk, licenseRisk):
+                yield Library(name, transitive, version, latestVersion, files, vulnerabilities, licenses,
+                    vulnerabilityRisk, licenseRisk, fixable)
 
     def getOccurrenceLocations(self, component):
         if component.get("evidence") and component["evidence"].get("occurrences"):
@@ -70,3 +83,10 @@ class CycloneDXProcessor:
                 link = vuln["source"]["url"] if vuln.get("source") else None
                 yield LibraryVulnerability(vuln["id"], link)
 
+    def parseRisk(self, severity, objective):
+        meetsObjective = objective is None or Objective.meetsFindingObjective([severity], objective)
+        return Risk(severity, meetsObjective)
+
+    def isInteresting(self, vulnerabilityRisk, licenseRisk):
+        return vulnerabilityRisk.severity not in ("UNKNOWN", "NONE") or \
+            not licenseRisk.meetsObjective
