@@ -76,7 +76,7 @@ class OpenSourceHealthMarkdownReport(Report, MarkdownRenderer):
     def getVulnerabilitySummary(self, feedback, options):
         objectiveDisplayName = f"{Objective.getSeverityObjectiveLabel(self.vulnObjective)} open source vulnerabilities"
         libraries = list(self.processor.extractLibraries(feedback, self.vulnObjective))
-        unfixable = [lib for lib in libraries if lib.partOfObjective and not lib.fixable]
+        unfixable = [lib for lib in libraries if lib.meetsObjectives() and not lib.fixable]
 
         if self.isObjectiveSuccess(feedback, options):
             return f"✅  You achieved your objective of having {objectiveDisplayName}."
@@ -92,9 +92,9 @@ class OpenSourceHealthMarkdownReport(Report, MarkdownRenderer):
         md = "| Vulnerability risk | Meets objective? | Library | Latest version | Location(s) |\n"
         md += "|----|----|----|----|----|\n"
 
-        for library in sorted(libraries, key=lambda lib: self.SORT_RISK.index(lib.risk))[0:self.MAX_FINDINGS]:
-            symbol = self.SYMBOLS[library.risk]
-            check = "❌" if Objective.isFindingIncluded(library.risk, self.vulnObjective) else "✅"
+        for library in sorted(libraries, key=lambda lib: self.SORT_RISK.index(lib.vulnerabilityRisk.severity))[0:self.MAX_FINDINGS]:
+            symbol = self.SYMBOLS[library.vulnerabilityRisk.severity]
+            check = "✅" if library.vulnerabilityRisk.meetsObjective else "❌"
             suffix = self.formatInfoLine(library)
             locations = "<br />".join(self.decorateLink(options, file, file) for file in library.files)
             md += f"| {symbol} | {check} | {library.name} {library.version}{suffix} | {library.latestVersion} | {locations} |\n"
@@ -130,4 +130,5 @@ class OpenSourceHealthMarkdownReport(Report, MarkdownRenderer):
     def isObjectiveSuccess(self, feedback, options):
         libraries = list(self.processor.extractLibraries(feedback, self.vulnObjective))
         fixable = [lib for lib in libraries if lib.partOfObjective and lib.fixable]
+        fixable = [lib for lib in libraries if not lib.meetsObjectives() and lib.fixable]
         return len(fixable) == 0
