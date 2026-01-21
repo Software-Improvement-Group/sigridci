@@ -63,7 +63,7 @@ class CycloneDXProcessor:
             transitive = properties.get("sigrid:transitive") == "TRANSITIVE"
             version = component["version"]
             latestVersion = properties.get("sigrid:latest:version", "").replace("?", "")
-            licenses = [license["license"]["name"] for license in component["licenses"]]
+            licenses = [license["license"]["name"] for license in component.get("licenses", [])]
             vulnerabilities = list(self.getComponentVulnerabilities(component, feedback))
             fixable = latestVersion and version != latestVersion
 
