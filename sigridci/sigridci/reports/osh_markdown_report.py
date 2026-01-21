@@ -68,6 +68,12 @@ class OpenSourceHealthMarkdownReport(Report, MarkdownRenderer):
         return self.renderMarkdownTemplate(feedback, options, details, sigridLink)
 
     def getSummary(self, feedback, options):
+        summary = [self.getVulnerabilitySummary(feedback, options)]
+        if self.licenseObjective:
+            summary.append(self.getLicenseSummary(feedback, options))
+        return summary
+
+    def getVulnerabilitySummary(self, feedback, options):
         objectiveDisplayName = f"{Objective.getSeverityObjectiveLabel(self.vulnObjective)} open source vulnerabilities"
         libraries = list(self.processor.extractLibraries(feedback, self.vulnObjective))
         unfixable = [lib for lib in libraries if lib.partOfObjective and not lib.fixable]
@@ -79,13 +85,16 @@ class OpenSourceHealthMarkdownReport(Report, MarkdownRenderer):
         else:
             return f"⚠️  You failed to meet your objective of having {objectiveDisplayName}."
 
+    def getLicenseSummary(self, feedback, options):
+        return "x"
+
     def generateFindingsTable(self, libraries, options):
         md = "| Vulnerability risk | Meets objective? | Library | Latest version | Location(s) |\n"
         md += "|----|----|----|----|----|\n"
 
         for library in sorted(libraries, key=lambda lib: self.SORT_RISK.index(lib.risk))[0:self.MAX_FINDINGS]:
             symbol = self.SYMBOLS[library.risk]
-            check = "❌" if Objective.isFindingIncluded(library.risk, self.objective) else "✅"
+            check = "❌" if Objective.isFindingIncluded(library.risk, self.vulnObjective) else "✅"
             suffix = self.formatInfoLine(library)
             locations = "<br />".join(self.decorateLink(options, file, file) for file in library.files)
             md += f"| {symbol} | {check} | {library.name} {library.version}{suffix} | {library.latestVersion} | {locations} |\n"

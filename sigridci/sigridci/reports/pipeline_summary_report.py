@@ -41,8 +41,7 @@ class PipelineSummaryReport(Report):
     def printConclusionMessage(self, feedback, options):
         success = self.markdownReport.isObjectiveSuccess(feedback, options)
         # Use the same summary text as what we use in the Markdown report.
-        message = self.markdownReport.getSummary(feedback, options)
-
-        asciiArt = AsciiArtReport(self.output, self.ansiColors)
-        color = asciiArt.ANSI_GREEN if success else asciiArt.ANSI_YELLOW
-        asciiArt.printColor(f"** {message} **", asciiArt.ANSI_BOLD + color)
+        for summaryLine in self.markdownReport.getSummary(feedback, options):
+            asciiArt = AsciiArtReport(self.output, self.ansiColors)
+            color = asciiArt.ANSI_GREEN if success else asciiArt.ANSI_YELLOW
+            asciiArt.printColor(f"** {summaryLine} **", asciiArt.ANSI_BOLD + color)

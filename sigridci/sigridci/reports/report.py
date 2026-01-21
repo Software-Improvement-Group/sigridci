@@ -68,7 +68,8 @@ class MarkdownRenderer(ABC):
 
     def renderMarkdownTemplate(self, feedback, options, details, sigridLink):
         md = f"# {self.formatTitle(sigridLink)}\n\n"
-        md += f"**{self.getSummary(feedback, options)}**\n\n"
+        for summaryLine in self.getSummary(feedback, options):
+            md += f"**{summaryLine}**\n\n"
         if len(details) > 0:
             if Platform.isHtmlMarkdownSupported():
                 md += "<details><summary>Show details</summary>\n\n"
