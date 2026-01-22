@@ -43,7 +43,9 @@ The requirements below must be fulfilled to ensure uploaded files can be process
 
 ### SFTP key authorization
 
-You need to generate an SSH authentication key to connect to the upload server. The public part of this key needs to be whitelisted by the upload server. The SSH key you generate can be either an:
+You need to generate an SSH authentication key to connect to the upload server. Please note we do not support the ‘ssh-rsa’ public key signature algorithm. 
+
+The public part of this key needs to be whitelisted by the upload server. The SSH key you generate can be either an:
 
 - RSA key (of at least 2048 bits long)
 - ECDSA key (of at least 256 bits long)
