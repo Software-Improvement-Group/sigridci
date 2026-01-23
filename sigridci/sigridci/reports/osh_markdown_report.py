@@ -99,8 +99,8 @@ class OpenSourceHealthMarkdownReport(Report, MarkdownRenderer):
         md += "|----|----|----|----|----|\n"
 
         for library in sorted(libraries, key=lambda lib: Objective.sortBySeverity(lib.vulnerabilityRisk.severity))[0:self.MAX_FINDINGS]:
-            vulnCheck = "⚠️" if library.vulnerabilityRisk.meetsObjective else "❌"
-            licenseCheck = "✅" if library.licenseRisk.meetsObjective else "❌"
+            vulnCheck = self.getVulnerabilityRiskSymbol(library)
+            licenseCheck = self.getLicenseRiskSymbol(library)
             suffix = self.formatInfoLine(library)
             locations = "<br />".join(self.decorateLink(options, file, file) for file in library.files)
             md += f"| {vulnCheck} | {licenseCheck} | {library.name} {library.version}{suffix} | {library.latestVersion} | {locations} |\n"
@@ -109,6 +109,17 @@ class OpenSourceHealthMarkdownReport(Report, MarkdownRenderer):
             md += f"| | ... {len(libraries) - self.MAX_FINDINGS} more vulnerable open source libraries | |\n"
 
         return f"{md}\n"
+
+    def getVulnerabilityRiskSymbol(self, library):
+        if library.vulnerabilityRisk.severity == "NONE":
+            return "✅"
+        elif library.vulnerabilityRisk.meetsObjective:
+            return "⚠️"
+        else:
+            return "❌"
+
+    def getLicenseRiskSymbol(self, library):
+        return "✅" if library.licenseRisk.meetsObjective else "❌"
 
     def formatInfoLine(self, library):
         info = "(Transitive) " if library.transitive else ""

@@ -239,7 +239,7 @@ class OpenSourceHealthMarkdownReportTest(TestCase):
         | ⚠️ | ✅ | commons-io:commons-io 2.9.0<br />*CVE-2024-47554.* | 2.20.0 | gradle/libs.versions.toml |
         | ⚠️ | ✅ | io.github.classgraph:classgraph 4.8.106<br />*(Transitive) CVE-2021-47621.* | 4.8.181 | gradle/libs.versions.toml |
         | ⚠️ | ✅ | junit:junit <br />*CVE-2020-15250.* | 4.13.2 | buildSrc/src/main/kotlin/junit4-compatibility.gradle.kts |
-        | ⚠️ | ❌ | org.mockito:mockito-junit-jupiter 3.10.0<br />*License: The MIT License.* | 5.19.0 | gradle/libs.versions.toml |
+        | ✅ | ❌ | org.mockito:mockito-junit-jupiter 3.10.0<br />*License: The MIT License.* | 5.19.0 | gradle/libs.versions.toml |
         
         
         ----

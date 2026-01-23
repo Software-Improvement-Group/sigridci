@@ -22,6 +22,7 @@ class OpenSourceHealthTextReport(Report):
 
     def __init__(self, markdownReport, *, output=sys.stdout):
         self.output = output
+        self.markdownReport = markdownReport
         self.vulnerabilityObjective = markdownReport.vulnerabilityObjective
         self.licenseObjective = markdownReport.licenseObjective
 
@@ -34,11 +35,9 @@ class OpenSourceHealthTextReport(Report):
             print(f"{len(findings)} open source libraries do not meet your objectives", file=self.output)
             print("", file=self.output)
             for finding in findings:
-                vulnCheck = "⚠️" if finding.vulnerabilityRisk.meetsObjective else "❌"
-                licenseCheck = "✅" if finding.licenseRisk.meetsObjective else "❌"
                 print(f"    {finding.name} {finding.version}", file=self.output)
-                print(f"        {vulnCheck} vulnerability objective", file=self.output)
-                print(f"        {licenseCheck} license objective", file=self.output)
+                print(f"        {self.markdownReport.getVulnerabilityRiskSymbol(finding)} vulnerability objective", file=self.output)
+                print(f"        {self.markdownReport.getLicenseRiskSymbol(finding)} license objective", file=self.output)
                 for file in finding.files:
                     print(f"        Defined in {file}", file=self.output)
             print("", file=self.output)
