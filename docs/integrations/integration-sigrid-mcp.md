@@ -208,8 +208,7 @@ The prompt above is a starting point. Consider these adjustments:
 - **Direct invocation**: You can also ask the agent directly: "Run Sigrid on these files: ..."
 - **Iterate from experience**: When the agent makes recurring mistakes, add a principle that addresses the pattern.
 
-> **Tip**: Principles let the model apply judgment to novel situations. Avoid rigid rules, they create edge cases that the model can't handle.
-> Weaker models may need more explicit guidance while stronger models benefit from concise principles.
+> **Tip**: Start with concise principles. Add explicit guidance only if the model struggles.
 
 We advise to complement the MCP with Sigrid CI to catch architecture issues, vulnerable dependencies, and cross-file metrics.
 
