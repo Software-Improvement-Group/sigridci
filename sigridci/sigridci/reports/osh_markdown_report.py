@@ -48,9 +48,9 @@ class OpenSourceHealthMarkdownReport(Report, MarkdownRenderer):
         if len(updated + fixable + unfixable) > 0:
             details += "- ❌ means the library has issues that fail your objectives.\n"
             details += "- ⚠️ means the library has issues, but they are not severe enough to fail your objectives.\n"
-            details += "- ✅ means everything is fine.\n"
-            details += "- If you believe these findings are false positives, \n"
-            details += f"  you can [exclude them in the Sigrid configuration]({self.DOCS_LINK}).\n\n"
+            details += "- ✅ means everything is fine.\n\n"
+            details += "If you believe these findings are false positives, you can\n"
+            details += f"[exclude them in the Sigrid configuration]({self.DOCS_LINK}).\n\n"
         if len(updated) > 0:
             details += "## 👍 What went well?\n\n"
             details += f"> You updated **{len(updated)}** open source libraries that previously had issues.\n\n"

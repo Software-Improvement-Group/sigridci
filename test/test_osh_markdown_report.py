@@ -49,8 +49,9 @@ class OpenSourceHealthMarkdownReportTest(TestCase):
             - ❌ means the library has issues that fail your objectives.
             - ⚠️ means the library has issues, but they are not severe enough to fail your objectives.
             - ✅ means everything is fine.
-            - If you believe these findings are false positives, 
-              you can [exclude them in the Sigrid configuration](https://docs.sigrid-says.com/reference/analysis-scope-configuration.html#exclude-open-source-health-risks).
+            
+            If you believe these findings are false positives, you can
+            [exclude them in the Sigrid configuration](https://docs.sigrid-says.com/reference/analysis-scope-configuration.html#exclude-open-source-health-risks).
             
             ## 👎 What could be better?
             
@@ -87,8 +88,9 @@ class OpenSourceHealthMarkdownReportTest(TestCase):
             - ❌ means the library has issues that fail your objectives.
             - ⚠️ means the library has issues, but they are not severe enough to fail your objectives.
             - ✅ means everything is fine.
-            - If you believe these findings are false positives, 
-              you can [exclude them in the Sigrid configuration](https://docs.sigrid-says.com/reference/analysis-scope-configuration.html#exclude-open-source-health-risks).
+            
+            If you believe these findings are false positives, you can
+            [exclude them in the Sigrid configuration](https://docs.sigrid-says.com/reference/analysis-scope-configuration.html#exclude-open-source-health-risks).
             
             ## 👎 What could be better?
             
@@ -125,8 +127,9 @@ class OpenSourceHealthMarkdownReportTest(TestCase):
             - ❌ means the library has issues that fail your objectives.
             - ⚠️ means the library has issues, but they are not severe enough to fail your objectives.
             - ✅ means everything is fine.
-            - If you believe these findings are false positives, 
-              you can [exclude them in the Sigrid configuration](https://docs.sigrid-says.com/reference/analysis-scope-configuration.html#exclude-open-source-health-risks).
+            
+            If you believe these findings are false positives, you can
+            [exclude them in the Sigrid configuration](https://docs.sigrid-says.com/reference/analysis-scope-configuration.html#exclude-open-source-health-risks).
             
             ## 👎 What could be better?
             
@@ -164,8 +167,9 @@ class OpenSourceHealthMarkdownReportTest(TestCase):
             - ❌ means the library has issues that fail your objectives.
             - ⚠️ means the library has issues, but they are not severe enough to fail your objectives.
             - ✅ means everything is fine.
-            - If you believe these findings are false positives, 
-              you can [exclude them in the Sigrid configuration](https://docs.sigrid-says.com/reference/analysis-scope-configuration.html#exclude-open-source-health-risks).
+            
+            If you believe these findings are false positives, you can
+            [exclude them in the Sigrid configuration](https://docs.sigrid-says.com/reference/analysis-scope-configuration.html#exclude-open-source-health-risks).
             
             ## 👍 What went well?
             
@@ -213,8 +217,9 @@ class OpenSourceHealthMarkdownReportTest(TestCase):
         - ❌ means the library has issues that fail your objectives.
         - ⚠️ means the library has issues, but they are not severe enough to fail your objectives.
         - ✅ means everything is fine.
-        - If you believe these findings are false positives, 
-          you can [exclude them in the Sigrid configuration](https://docs.sigrid-says.com/reference/analysis-scope-configuration.html#exclude-open-source-health-risks).
+        
+        If you believe these findings are false positives, you can
+        [exclude them in the Sigrid configuration](https://docs.sigrid-says.com/reference/analysis-scope-configuration.html#exclude-open-source-health-risks).
         
         ## 👍 What went well?
         
