@@ -63,7 +63,7 @@ Proxy (mcp-remote)
 
 ### Configuration Instructions
 
-*Cursor/Github Copilot Plugin*
+#### Cursor/Github Copilot Plugin
 
 - Open IDE
 - Click MCP & Integrations panel (left sidebar)
@@ -72,7 +72,7 @@ Proxy (mcp-remote)
 ```
 {
   "mcpServers": {
-    "SigridCodeAnalyzer": {
+    "SigridCode": {
       "url": "https://sigrid-says.com/mcp",
       "headers": {
         "Authorization": "Bearer <your_sigrid_token>"
@@ -82,7 +82,7 @@ Proxy (mcp-remote)
 }
 ```
 
-*VSCode*
+#### VSCode
 
 - Install Node (needed for the npx package)
 - Install GitHub Copilot extension
@@ -110,7 +110,7 @@ Add:
 
 - Save → Verify server appears in tools list
 
-*Windsurf*
+#### Windsurf
 
 - Install Node
 - Open MCP settings
@@ -134,52 +134,83 @@ Add:
 
 - Restart Windsurf
 
-*IntelliJ/PyCharm/WebStorm (Workaround)*
+#### Claude Code
 
-⚠️ Not natively supported - (Open JetBrains issue)[https://youtrack.jetbrains.com/projects/JUNIE/issues/JUNIE-461/MCP-Remote-Server-Support]
+- To add Sigrid MCP to Claude Code, run the following command:
+
+```bash
+claude mcp add SigridCode -- npx mcp-remote https://sigrid-says.com/mcp --header "Authorization: Bearer TOKEN" --allow-http
+```
+
+Replace `TOKEN` with your actual Sigrid API token.
+
+- Restart Claude Code
+
+#### IntelliJ/PyCharm/WebStorm (Workaround)
+
+> ⚠️ **Not natively supported**: [Open JetBrains issue for MCP remote server Support](https://youtrack.jetbrains.com/projects/JUNIE/issues/JUNIE-461/MCP-Remote-Server-Support)
 
 - Install GitHub Copilot plugin
 - Manually edit: `~/.config/github-copilot/intellij/mcp.json`
 - Use same configuration as Cursor/Github Copilot
 
+### Using Sigrid Quality Gates with AI Coding Agents
 
-### Rules and Policies
+AI-generated code quality varies significantly based on the instructions given. The Sigrid MCP provides guardrails that notify agents when code doesn't meet quality standards without requiring the system to be published to Sigrid first.
 
-When exactly the AI Coding Assistant should reach out to Sigrid to receive feedback on Code Quality and Security can typically be defined as rules or policies in the AI Coding Assistant itself.
-It is up to the user to define these rules and what kind of rules and policies are possible depends on the Coding Assistant that is used.
+We recommend combining two elements:
+1. **Code principles**: brief guidelines that help the agent write good code upfront
+2. **Quality gate**: a mandatory check using Sigrid before completing any task
 
-SIG sees different types of rules being used by users:
-- Some users prefer to add Sigrid MCP into a workflow (e.g. when tagging @Sigrid in the prompt)
-- Others prefer to run Sigrid for each and every piece of code that is generated, but have the AI Coding Assistant only focus on issues within the method they changed
-- Others prefer to run Sigrid for each and every piece of code that is generated and have the AI Coding Assistant fix any issue that comes up in the change or in the vicinity of the change
+#### Recommended Prompt
 
-SIG provides example instructions in its documentation, but it is up to the user (or organisation) to tweak those to the specific needs for a given system or given organisational context.
-Ultimately it is the Large Language Model behind the AI Coding Assistant that based on the defined rules in the coding assistant decides that an MCP integration should be called.
-
-Example Global Rule:
+Add this to your agent instructions (see [Where to Place These Instructions](#where-to-place-these-instructions)):
 
 ```
----
-applyTo: "**"
----
+## Code Principles
 
-# Project code quality and security best practices
+Write maintainable code: single responsibility, small focused functions, clear naming, avoid duplication, simple control flow.
+Write secure code.
 
-- BEFORE finalizing any code change, the AI assistant MUST:
-  - Run the Sigrid Code Quality Guardrails tool on the modified code
-  - Review all findings from the analysis
-  - Address any new or pre-existing security or maintainability issues in the scope of the current change(e.g. within the same method, function or procedure of the changed code)
-  - Document any pre-existing issues that are out of scope
-  - Only after completing these steps, present the final change to the user
-- If any security or maintainability issues are found based on newly introduced or modified code, propose a fix for the issues using the results context from Sigrid.
-- Immediately propose fixes for pre-existing maintainability issues in the scope of the code change with a refactoring to improve code quality, even if that increases the scope of the change.
-- Always rescan the code after fixing the issues to ensure that the issues were fixed and that there are no newly introduced issues.
-- Repeat this process until no issues are found.
-- Always provide a valid code snippet to the Sigrid Code Quality Guardrails tool. For example: Do not just provide a method, but wrap it in a class.
+## MANDATORY: Quality Gate
+
+Before reporting ANY task as complete:
+
+1. Run the Sigrid Code Quality Guardrails tool on all changed production code
+2. Maintainability findings: accept if principles were followed, otherwise refactor
+3. Security findings: fix if straightforward, otherwise flag to user
+
+Do not skip this step.
 ```
 
-Choose a workflow that works for you and your team: Some teams prefer to have every single code snippet analysed, other teams want to manually invoke the MCP server on very specific functions or snippets, some teams want to restrict to Java code, etc.
-Sigrid MCP provides the code quality and security analysis, but it is up to the user, team or organisation to define the preferred interaction model in their Agentic IDE.
+For stricter workflows, add a rescan step: "If fixes were made, rescan to verify no new issues were introduced."
+
+#### Where to Place These Instructions
+
+Most AI coding agents respect instruction files in your repository. Refer to your agent's documentation for specifics.
+
+| File | Supported by |
+|------|--------------|
+| `.cursor/rules/` | Cursor |
+| `.github/copilot-instructions.md` | GitHub Copilot |
+| `.windsurfrules` | Windsurf |
+| `CLAUDE.md` | Claude Code |
+| `AGENTS.md` | Emerging convention (check agent support) |
+
+For tools that support both global and project-level rules, prefer project-level to keep instructions versioned with your code.
+
+#### Customizing for Your Codebase
+
+The prompt above is a starting point. Consider these adjustments:
+
+- **Framework conventions**: If your codebase follows specific design patterns (e.g., hexagonal architecture, Redux patterns), add them to the code principles section.
+- **Check frequency**: You may prefer to run the quality gate with a different frequency, e.g. only before commits rather than after every task.
+- **Direct invocation**: You can also ask the agent directly: "Run Sigrid on these files: ..."
+- **Iterate from experience**: When the agent makes recurring mistakes, add a principle that addresses the pattern.
+
+> **Tip**: Start with concise principles. Add explicit guidance only if the model struggles.
+
+We advise to complement the MCP with Sigrid CI to catch architecture issues, vulnerable dependencies, and cross-file metrics.
 
 ### Troubleshooting
 
