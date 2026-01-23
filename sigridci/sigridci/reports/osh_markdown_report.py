@@ -47,7 +47,7 @@ class OpenSourceHealthMarkdownReport(Report, MarkdownRenderer):
         details = f"Sigrid compared your code against the baseline of {self.getBaseline(feedback)}.\n\n"
         if len(updated + fixable + unfixable) > 0:
             details += "- ❌ means the library has issues that fail your objectives.\n"
-            details += "- ⚠️ means the library has issues, but they are not severe enough to fail your objectives.\n"
+            details += "- ⚠️ means the library has issues, but they are not severe enough to fail your objective.\n"
             details += "- ✅ means everything is fine.\n\n"
             details += "If you believe these findings are false positives, you can\n"
             details += f"[exclude them in the Sigrid configuration]({self.DOCS_LINK}).\n\n"
