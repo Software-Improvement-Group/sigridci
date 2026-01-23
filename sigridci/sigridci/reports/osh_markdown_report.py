@@ -25,12 +25,12 @@ class OpenSourceHealthMarkdownReport(Report, MarkdownRenderer):
     MAX_FINDINGS = SecurityMarkdownReport.MAX_FINDINGS
     DOCS_LINK = "https://docs.sigrid-says.com/reference/analysis-scope-configuration.html#exclude-open-source-health-risks"
 
-    def __init__(self, vulnObjective="HIGH", licenseObjective=None):
+    def __init__(self, vulnerabilityObjective="HIGH", licenseObjective=None):
         super().__init__()
-        self.vulnObjective = vulnObjective
+        self.vulnerabilityObjective = vulnerabilityObjective
         self.licenseObjective = licenseObjective
         self.previousFeedback = None
-        self.processor = CycloneDXProcessor(self.vulnObjective, self.licenseObjective)
+        self.processor = CycloneDXProcessor(self.vulnerabilityObjective, self.licenseObjective)
 
     def generate(self, analysisId, feedback, options):
         with open(self.getMarkdownFile(options), "w", encoding="utf-8") as f:
@@ -46,7 +46,7 @@ class OpenSourceHealthMarkdownReport(Report, MarkdownRenderer):
 
         details = f"Sigrid compared your code against the baseline of {self.getBaseline(feedback)}.\n\n"
         if len(updated + fixable + unfixable) > 0:
-            details += "- ❌ means the library has issues that fail your objectives.\n"
+            details += "- ❌ means the library has issues that fail your objective.\n"
             details += "- ⚠️ means the library has issues, but they are not severe enough to fail your objective.\n"
             details += "- ✅ means everything is fine.\n\n"
             details += "If you believe these findings are false positives, you can\n"
@@ -76,7 +76,7 @@ class OpenSourceHealthMarkdownReport(Report, MarkdownRenderer):
         return summary
 
     def getVulnerabilitySummary(self, libraries):
-        objectiveDisplayName = f"{Objective.getSeverityObjectiveLabel(self.vulnObjective)} open source vulnerabilities"
+        objectiveDisplayName = f"{Objective.getSeverityObjectiveLabel(self.vulnerabilityObjective)} open source vulnerabilities"
         fixable = [lib for lib in libraries if not lib.vulnerabilityRisk.meetsObjective and lib.fixable]
         unfixable = [lib for lib in libraries if not lib.vulnerabilityRisk.meetsObjective and not lib.fixable]
 

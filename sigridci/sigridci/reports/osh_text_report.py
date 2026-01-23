@@ -22,11 +22,11 @@ class OpenSourceHealthTextReport(Report):
 
     def __init__(self, markdownReport, *, output=sys.stdout):
         self.output = output
-        self.vulnObjective = markdownReport.vulnObjective
+        self.vulnerabilityObjective = markdownReport.vulnerabilityObjective
         self.licenseObjective = markdownReport.licenseObjective
 
     def generate(self, analysisId, feedback, options):
-        processor = CycloneDXProcessor(self.vulnObjective, self.licenseObjective)
+        processor = CycloneDXProcessor(self.vulnerabilityObjective, self.licenseObjective)
         findings = [lib for lib in processor.extractLibraries(feedback) if not lib.meetsObjectives()]
 
         if len(findings) > 0:

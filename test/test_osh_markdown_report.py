@@ -46,8 +46,8 @@ class OpenSourceHealthMarkdownReportTest(TestCase):
             
             Sigrid compared your code against the baseline of 2025-09-19.
             
-            - ❌ means the library has issues that fail your objectives.
-            - ⚠️ means the library has issues, but they are not severe enough to fail your objectives.
+            - ❌ means the library has issues that fail your objective.
+            - ⚠️ means the library has issues, but they are not severe enough to fail your objective.
             - ✅ means everything is fine.
             
             If you believe these findings are false positives, you can
@@ -85,8 +85,8 @@ class OpenSourceHealthMarkdownReportTest(TestCase):
             
             Sigrid compared your code against the baseline of 2025-09-19.
             
-            - ❌ means the library has issues that fail your objectives.
-            - ⚠️ means the library has issues, but they are not severe enough to fail your objectives.
+            - ❌ means the library has issues that fail your objective.
+            - ⚠️ means the library has issues, but they are not severe enough to fail your objective.
             - ✅ means everything is fine.
             
             If you believe these findings are false positives, you can
@@ -124,8 +124,8 @@ class OpenSourceHealthMarkdownReportTest(TestCase):
             
             Sigrid compared your code against the baseline of 2025-09-19.
             
-            - ❌ means the library has issues that fail your objectives.
-            - ⚠️ means the library has issues, but they are not severe enough to fail your objectives.
+            - ❌ means the library has issues that fail your objective.
+            - ⚠️ means the library has issues, but they are not severe enough to fail your objective.
             - ✅ means everything is fine.
             
             If you believe these findings are false positives, you can
@@ -164,8 +164,8 @@ class OpenSourceHealthMarkdownReportTest(TestCase):
             
             Sigrid compared your code against the baseline of 2025-09-18.
             
-            - ❌ means the library has issues that fail your objectives.
-            - ⚠️ means the library has issues, but they are not severe enough to fail your objectives.
+            - ❌ means the library has issues that fail your objective.
+            - ⚠️ means the library has issues, but they are not severe enough to fail your objective.
             - ✅ means everything is fine.
             
             If you believe these findings are false positives, you can
@@ -214,8 +214,8 @@ class OpenSourceHealthMarkdownReportTest(TestCase):
         
         Sigrid compared your code against the baseline of 2025-09-18.
         
-        - ❌ means the library has issues that fail your objectives.
-        - ⚠️ means the library has issues, but they are not severe enough to fail your objectives.
+        - ❌ means the library has issues that fail your objective.
+        - ⚠️ means the library has issues, but they are not severe enough to fail your objective.
         - ✅ means everything is fine.
         
         If you believe these findings are false positives, you can

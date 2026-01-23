@@ -104,9 +104,9 @@ class FeedbackProvider:
         if self.capability == MAINTAINABILITY:
             return MaintainabilityMarkdownReport(self.objectives)
         elif self.capability == OPEN_SOURCE_HEALTH:
-            vulnObjective = self.objectives["OSH_MAX_SEVERITY"]
+            vulnerabilityObjective = self.objectives["OSH_MAX_SEVERITY"]
             licenseObjective = self.objectives["OSH_MAX_LICENSE_RISK"]
-            return OpenSourceHealthMarkdownReport(vulnObjective, licenseObjective)
+            return OpenSourceHealthMarkdownReport(vulnerabilityObjective, licenseObjective)
         elif self.capability == SECURITY:
             return SecurityMarkdownReport(self.objectives["SECURITY_MAX_SEVERITY"])
         else:

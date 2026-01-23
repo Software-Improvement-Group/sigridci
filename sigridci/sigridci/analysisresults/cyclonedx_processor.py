@@ -67,8 +67,8 @@ class CycloneDXProcessor:
             vulnerabilities = list(self.getComponentVulnerabilities(component, feedback))
             fixable = latestVersion and version != latestVersion
 
-            vulnerabilityRisk = self.parseRisk(properties["sigrid:risk:vulnerability"], self.vulnerabilityObjective)
-            licenseRisk = self.parseRisk(properties["sigrid:risk:legal"], self.licenseObjective)
+            vulnerabilityRisk = self.parseRisk(properties.get("sigrid:risk:vulnerability", "UNKNOWN"), self.vulnerabilityObjective)
+            licenseRisk = self.parseRisk(properties.get("sigrid:risk:legal", "UNKNOWN"), self.licenseObjective)
 
             if self.isInteresting(vulnerabilityRisk, licenseRisk):
                 yield Library(name, transitive, version, latestVersion, files, vulnerabilities, licenses,
