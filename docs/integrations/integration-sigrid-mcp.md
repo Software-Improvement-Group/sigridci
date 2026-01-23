@@ -148,7 +148,7 @@ Replace `TOKEN` with your actual Sigrid API token.
 
 #### IntelliJ/PyCharm/WebStorm (Workaround)
 
-> ⚠️ **Not natively supported**: [Open JetBrains issue for MCP remote server Ssupport](https://youtrack.jetbrains.com/projects/JUNIE/issues/JUNIE-461/MCP-Remote-Server-Support)
+> ⚠️ **Not natively supported**: [Open JetBrains issue for MCP remote server Support](https://youtrack.jetbrains.com/projects/JUNIE/issues/JUNIE-461/MCP-Remote-Server-Support)
 
 - Install GitHub Copilot plugin
 - Manually edit: `~/.config/github-copilot/intellij/mcp.json`
