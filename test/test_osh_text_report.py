@@ -19,6 +19,7 @@ from io import StringIO
 from unittest import TestCase
 
 from sigridci.sigridci.publish_options import PublishOptions, RunMode
+from sigridci.sigridci.reports.osh_markdown_report import OpenSourceHealthMarkdownReport
 from sigridci.sigridci.reports.osh_text_report import OpenSourceHealthTextReport
 
 
@@ -31,13 +32,15 @@ class OpenSourceHealthTextReportTest(TestCase):
             feedback = json.load(f)
 
         buffer = StringIO()
-        report = OpenSourceHealthTextReport("HIGH", output=buffer)
+        report = OpenSourceHealthTextReport(OpenSourceHealthMarkdownReport("HIGH"), output=buffer)
         report.generate("1234", feedback, options)
 
         expected = """
-            Vulnerable open source libraries
+            1 open source libraries do not meet your objectives
             
-                🟣 org.apache.logging.log4j:log4j-core 2.14.1
+                org.apache.logging.log4j:log4j-core 2.14.1
+                    ❌ vulnerability objective
+                    ✅ license objective
                     Defined in gradle/libs.versions.toml
         """
 

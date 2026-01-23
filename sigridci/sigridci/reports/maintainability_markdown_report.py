@@ -71,8 +71,7 @@ class MaintainabilityMarkdownReport(Report, MarkdownRenderer):
         return "\n\n".join(f"**{summary}**" for summary in summaries)
 
     def getSummary(self, feedback, options):
-        summaries = [self.getSummaryForObjective(metric, target, feedback) for metric, target in self.objective.items()]
-        return "\n\n".join(summaries)
+        return [self.getSummaryForObjective(metric, target, feedback) for metric, target in self.objective.items()]
 
     def getSummaryForObjective(self, metric, target, feedback):
         status = Objective.determineStatus(feedback, target, metric)

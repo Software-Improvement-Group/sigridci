@@ -111,6 +111,12 @@ class ObjectiveTest(TestCase):
         self.assertEqual("no medium-severity", Objective.getSeverityObjectiveLabel("LOW"))
         self.assertEqual("no", Objective.getSeverityObjectiveLabel("NONE"))
 
+    def testSortBySeverity(self):
+        values = ["CRITICAL", "LOW", "HIGH", "AAP"]
+        values.sort(key=Objective.sortBySeverity)
+
+        self.assertEqual(["CRITICAL", "HIGH", "LOW", "AAP"], values)
+
     def mockFeedback(self, baseline, changedBefore, changedAfter, newAndChanged):
         return {
             "baselineRatings" : {

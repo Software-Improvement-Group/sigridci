@@ -25,8 +25,8 @@ class CycloneDXProcessorTest(TestCase):
         with open(os.path.dirname(__file__) + "/testdata/osh-junit.json", encoding="utf-8", mode="r") as f:
             feedback = json.load(f)
 
-        processor = CycloneDXProcessor()
-        libraries = list(processor.extractLibraries(feedback, "NONE"))
+        processor = CycloneDXProcessor("NONE")
+        libraries = list(processor.extractLibraries(feedback))
 
         self.assertEqual(len(libraries), 4)
         self.assertEqual(libraries[0].name, "org.apache.logging.log4j:log4j-core")
@@ -43,8 +43,8 @@ class CycloneDXProcessorTest(TestCase):
         with open(os.path.dirname(__file__) + "/testdata/osh-junit.json", encoding="utf-8", mode="r") as f:
             feedback = json.load(f)
 
-        processor = CycloneDXProcessor()
-        libraries = list(processor.extractLibraries(feedback, "HIGH"))
+        processor = CycloneDXProcessor("HIGH")
+        libraries = list(processor.extractLibraries(feedback))
 
         self.assertEqual(len(libraries), 4)
         self.assertEqual(libraries[0].name, "org.apache.logging.log4j:log4j-core")
@@ -60,8 +60,8 @@ class CycloneDXProcessorTest(TestCase):
         with open(os.path.dirname(__file__) + "/testdata/osh-junit.json", encoding="utf-8", mode="r") as f:
             feedback = json.load(f)
 
-        processor = CycloneDXProcessor()
-        libraries = list(processor.extractLibraries(feedback, "NONE"))
+        processor = CycloneDXProcessor("NONE")
+        libraries = list(processor.extractLibraries(feedback))
 
         self.assertEqual(libraries[0].name, "org.apache.logging.log4j:log4j-core")
         self.assertEqual(len(libraries[0].vulnerabilities), 4)
@@ -78,8 +78,8 @@ class CycloneDXProcessorTest(TestCase):
         with open(os.path.dirname(__file__) + "/testdata/osh-junit.json", encoding="utf-8", mode="r") as f:
             feedback = json.load(f)
 
-        processor = CycloneDXProcessor()
-        jmhcore = next(lib for lib in processor.extractLibraries(feedback, "NONE", "NONE") if lib.name.endswith("jmh-core"))
+        processor = CycloneDXProcessor("NONE", "NONE")
+        jmhcore = next(lib for lib in processor.extractLibraries(feedback) if lib.name.endswith("jmh-core"))
 
         self.assertEqual(jmhcore.licenses, ["GNU General Public License (GPL), version 2, with the Classpath exception"])
         self.assertEqual(jmhcore.licenseRisk.severity, "LOW")

@@ -61,9 +61,9 @@ class SecurityMarkdownReport(Report, MarkdownRenderer):
     def getSummary(self, feedback, options):
         objectiveLabel = Objective.getSeverityObjectiveLabel(self.objective)
         if self.isObjectiveSuccess(feedback, options):
-            return f"✅  You achieved your objective of having {objectiveLabel} security findings"
+            return [f"✅  You achieved your objective of having {objectiveLabel} security findings"]
         else:
-            return f"⚠️  You did not meet your objective of having {objectiveLabel} security findings"
+            return [f"⚠️  You did not meet your objective of having {objectiveLabel} security findings"]
 
     def generateFindingsTable(self, findings, rules, options):
         if len(findings) == 0:
