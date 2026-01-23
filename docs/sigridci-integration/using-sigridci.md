@@ -66,7 +66,7 @@ checks other aspects of using open source libraries, such as freshness (i.e. how
 are not part of Sigrid CI.
 
 So why not give feedback on *all* aspects? In a word: Urgency. People generally security vulnerabilities or
-license issues much more urgent than those other aspects. Updating a library can wait, fixing a vulnerability cannot
+license issues much more urgent than those other aspects. Updating a library can wait (but please not too long), fixing a vulnerability cannot
 wait. Obviously, you should still manage those other aspects, as explained in our
 [guidelines for healthy use of open source libraries](../workflows/best-practices-osh.md).
 
