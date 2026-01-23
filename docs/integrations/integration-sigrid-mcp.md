@@ -63,7 +63,7 @@ Proxy (mcp-remote)
 
 ### Configuration Instructions
 
-*Cursor/Github Copilot Plugin*
+#### Cursor/Github Copilot Plugin
 
 - Open IDE
 - Click MCP & Integrations panel (left sidebar)
@@ -82,7 +82,7 @@ Proxy (mcp-remote)
 }
 ```
 
-*VSCode*
+#### VSCode
 
 - Install Node (needed for the npx package)
 - Install GitHub Copilot extension
@@ -110,7 +110,7 @@ Add:
 
 - Save → Verify server appears in tools list
 
-*Windsurf*
+#### Windsurf
 
 - Install Node
 - Open MCP settings
@@ -134,9 +134,21 @@ Add:
 
 - Restart Windsurf
 
-*IntelliJ/PyCharm/WebStorm (Workaround)*
+#### Claude Code
 
-⚠️ Not natively supported - (Open JetBrains issue)[https://youtrack.jetbrains.com/projects/JUNIE/issues/JUNIE-461/MCP-Remote-Server-Support]
+- To add Sigrid MCP to Claude Code, run the following command:
+
+```bash
+claude mcp add sigrid -- npx mcp-remote https://sigrid-says.com/mcp --header "Authorization: Bearer TOKEN" --allow-http
+```
+
+Replace `TOKEN` with your actual Sigrid API token.
+
+- Restart Claude Code
+
+#### IntelliJ/PyCharm/WebStorm (Workaround)
+
+⚠️ Not natively supported - [Open JetBrains issue](https://youtrack.jetbrains.com/projects/JUNIE/issues/JUNIE-461/MCP-Remote-Server-Support)
 
 - Install GitHub Copilot plugin
 - Manually edit: `~/.config/github-copilot/intellij/mcp.json`
