@@ -116,7 +116,7 @@ class OpenSourceHealthMarkdownReport(Report, MarkdownRenderer):
             formatVulnLink = lambda vuln: f"[{vuln.id}]({vuln.link})" if vuln.link else vuln.id
             info += ", ".join(formatVulnLink(vuln) for vuln in library.vulnerabilities) + "."
         if not library.licenseRisk.meetsObjective:
-            info += ", ".join(library.licenses) + "."
+            info += f"License: {', '.join(library.licenses)}."
         return f"<br />*{info}*" if info else ""
 
     def findUpdatedLibraries(self, previous, current):
