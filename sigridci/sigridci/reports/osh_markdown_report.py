@@ -45,6 +45,12 @@ class OpenSourceHealthMarkdownReport(Report, MarkdownRenderer):
         updated = self.findUpdatedLibraries(previousLibraries, libraries)
 
         details = f"Sigrid compared your code against the baseline of {self.getBaseline(feedback)}.\n\n"
+        if len(updated + fixable + unfixable) > 0:
+            details += "- ❌ means the library has issues that fail your objectives.\n"
+            details += "- ⚠️ means the library has issues, but they are not severe enough to fail your objectives.\n"
+            details += "- ✅ means everything is fine.\n"
+            details += "- If you believe these findings are false positives, \n"
+            details += f"  you can [exclude them in the Sigrid configuration]({self.DOCS_LINK}).\n\n"
         if len(updated) > 0:
             details += "## 👍 What went well?\n\n"
             details += f"> You updated **{len(updated)}** open source libraries that previously had issues.\n\n"
@@ -53,8 +59,6 @@ class OpenSourceHealthMarkdownReport(Report, MarkdownRenderer):
             details += "## 👎 What could be better?\n\n"
             details += f"> You have **{len(fixable)}** open source libraries with issues.\n\n"
             details += self.generateFindingsTable(fixable, options)
-            details += "If you believe these findings are false positives, "
-            details += f"you can [exclude them in the Sigrid configuration]({self.DOCS_LINK}).\n\n"
         if len(unfixable) > 0:
             details += "## 😑 You have findings that need to be investigated\n\n"
             details += f"> You have **{len(unfixable)}** open source libraries with issues that don't have an easy solution.  \n"
@@ -110,7 +114,9 @@ class OpenSourceHealthMarkdownReport(Report, MarkdownRenderer):
         info = "(Transitive) " if library.transitive else ""
         if len(library.vulnerabilities) > 0:
             formatVulnLink = lambda vuln: f"[{vuln.id}]({vuln.link})" if vuln.link else vuln.id
-            info += ", ".join(formatVulnLink(vuln) for vuln in library.vulnerabilities)
+            info += ", ".join(formatVulnLink(vuln) for vuln in library.vulnerabilities) + "."
+        if not library.licenseRisk.meetsObjective:
+            info += ", ".join(library.licenses) + "."
         return f"<br />*{info}*" if info else ""
 
     def findUpdatedLibraries(self, previous, current):

@@ -46,18 +46,22 @@ class OpenSourceHealthMarkdownReportTest(TestCase):
             
             Sigrid compared your code against the baseline of 2025-09-19.
             
+            - ❌ means the library has issues that fail your objectives.
+            - ⚠️ means the library has issues, but they are not severe enough to fail your objectives.
+            - ✅ means everything is fine.
+            - If you believe these findings are false positives, 
+              you can [exclude them in the Sigrid configuration](https://docs.sigrid-says.com/reference/analysis-scope-configuration.html#exclude-open-source-health-risks).
+            
             ## 👎 What could be better?
             
             > You have **4** open source libraries with issues.
             
             | Vulnerabilities | License | Library | Latest version | Location(s) |
             |----|----|----|----|----|
-            | ❌ | ✅ | org.apache.logging.log4j:log4j-core 2.14.1<br />*CVE-2021-45046, CVE-2021-45105, [CVE-2021-44228](https://nvd.nist.gov/vuln/detail/CVE-2021-44228), CVE-2021-44832* | 2.25.1 | gradle/libs.versions.toml |
-            | ⚠️ | ✅ | commons-io:commons-io 2.9.0<br />*CVE-2024-47554* | 2.20.0 | gradle/libs.versions.toml |
-            | ⚠️ | ✅ | io.github.classgraph:classgraph 4.8.106<br />*(Transitive) CVE-2021-47621* | 4.8.181 | gradle/libs.versions.toml |
-            | ⚠️ | ✅ | junit:junit <br />*CVE-2020-15250* | 4.13.2 | buildSrc/src/main/kotlin/junit4-compatibility.gradle.kts |
-            
-            If you believe these findings are false positives, you can [exclude them in the Sigrid configuration](https://docs.sigrid-says.com/reference/analysis-scope-configuration.html#exclude-open-source-health-risks).
+            | ❌ | ✅ | org.apache.logging.log4j:log4j-core 2.14.1<br />*CVE-2021-45046, CVE-2021-45105, [CVE-2021-44228](https://nvd.nist.gov/vuln/detail/CVE-2021-44228), CVE-2021-44832.* | 2.25.1 | gradle/libs.versions.toml |
+            | ⚠️ | ✅ | commons-io:commons-io 2.9.0<br />*CVE-2024-47554.* | 2.20.0 | gradle/libs.versions.toml |
+            | ⚠️ | ✅ | io.github.classgraph:classgraph 4.8.106<br />*(Transitive) CVE-2021-47621.* | 4.8.181 | gradle/libs.versions.toml |
+            | ⚠️ | ✅ | junit:junit <br />*CVE-2020-15250.* | 4.13.2 | buildSrc/src/main/kotlin/junit4-compatibility.gradle.kts |
             
             
             ----
@@ -80,18 +84,22 @@ class OpenSourceHealthMarkdownReportTest(TestCase):
             
             Sigrid compared your code against the baseline of 2025-09-19.
             
+            - ❌ means the library has issues that fail your objectives.
+            - ⚠️ means the library has issues, but they are not severe enough to fail your objectives.
+            - ✅ means everything is fine.
+            - If you believe these findings are false positives, 
+              you can [exclude them in the Sigrid configuration](https://docs.sigrid-says.com/reference/analysis-scope-configuration.html#exclude-open-source-health-risks).
+            
             ## 👎 What could be better?
             
             > You have **4** open source libraries with issues.
             
             | Vulnerabilities | License | Library | Latest version | Location(s) |
             |----|----|----|----|----|
-            | ❌ | ✅ | org.apache.logging.log4j:log4j-core 2.14.1<br />*CVE-2021-45046, CVE-2021-45105, [CVE-2021-44228](https://nvd.nist.gov/vuln/detail/CVE-2021-44228), CVE-2021-44832* | 2.25.1 | gradle/libs.versions.toml |
-            | ❌ | ✅ | commons-io:commons-io 2.9.0<br />*CVE-2024-47554* | 2.20.0 | gradle/libs.versions.toml |
-            | ⚠️ | ✅ | io.github.classgraph:classgraph 4.8.106<br />*(Transitive) CVE-2021-47621* | 4.8.181 | gradle/libs.versions.toml |
-            | ⚠️ | ✅ | junit:junit <br />*CVE-2020-15250* | 4.13.2 | buildSrc/src/main/kotlin/junit4-compatibility.gradle.kts |
-            
-            If you believe these findings are false positives, you can [exclude them in the Sigrid configuration](https://docs.sigrid-says.com/reference/analysis-scope-configuration.html#exclude-open-source-health-risks).
+            | ❌ | ✅ | org.apache.logging.log4j:log4j-core 2.14.1<br />*CVE-2021-45046, CVE-2021-45105, [CVE-2021-44228](https://nvd.nist.gov/vuln/detail/CVE-2021-44228), CVE-2021-44832.* | 2.25.1 | gradle/libs.versions.toml |
+            | ❌ | ✅ | commons-io:commons-io 2.9.0<br />*CVE-2024-47554.* | 2.20.0 | gradle/libs.versions.toml |
+            | ⚠️ | ✅ | io.github.classgraph:classgraph 4.8.106<br />*(Transitive) CVE-2021-47621.* | 4.8.181 | gradle/libs.versions.toml |
+            | ⚠️ | ✅ | junit:junit <br />*CVE-2020-15250.* | 4.13.2 | buildSrc/src/main/kotlin/junit4-compatibility.gradle.kts |
             
             
             ----
@@ -114,18 +122,22 @@ class OpenSourceHealthMarkdownReportTest(TestCase):
             
             Sigrid compared your code against the baseline of 2025-09-19.
             
+            - ❌ means the library has issues that fail your objectives.
+            - ⚠️ means the library has issues, but they are not severe enough to fail your objectives.
+            - ✅ means everything is fine.
+            - If you believe these findings are false positives, 
+              you can [exclude them in the Sigrid configuration](https://docs.sigrid-says.com/reference/analysis-scope-configuration.html#exclude-open-source-health-risks).
+            
             ## 👎 What could be better?
             
             > You have **4** open source libraries with issues.
             
             | Vulnerabilities | License | Library | Latest version | Location(s) |
             |----|----|----|----|----|
-            | ❌ | ✅ | org.apache.logging.log4j:log4j-core 2.14.1<br />*CVE-2021-45046, CVE-2021-45105, [CVE-2021-44228](https://nvd.nist.gov/vuln/detail/CVE-2021-44228), CVE-2021-44832* | 2.25.1 | gradle/libs.versions.toml |
-            | ❌ | ✅ | commons-io:commons-io 2.9.0<br />*CVE-2024-47554* | 2.20.0 | gradle/libs.versions.toml |
-            | ❌ | ✅ | io.github.classgraph:classgraph 4.8.106<br />*(Transitive) CVE-2021-47621* | 4.8.181 | gradle/libs.versions.toml |
-            | ❌ | ✅ | junit:junit <br />*CVE-2020-15250* | 4.13.2 | buildSrc/src/main/kotlin/junit4-compatibility.gradle.kts |
-            
-            If you believe these findings are false positives, you can [exclude them in the Sigrid configuration](https://docs.sigrid-says.com/reference/analysis-scope-configuration.html#exclude-open-source-health-risks).
+            | ❌ | ✅ | org.apache.logging.log4j:log4j-core 2.14.1<br />*CVE-2021-45046, CVE-2021-45105, [CVE-2021-44228](https://nvd.nist.gov/vuln/detail/CVE-2021-44228), CVE-2021-44832.* | 2.25.1 | gradle/libs.versions.toml |
+            | ❌ | ✅ | commons-io:commons-io 2.9.0<br />*CVE-2024-47554.* | 2.20.0 | gradle/libs.versions.toml |
+            | ❌ | ✅ | io.github.classgraph:classgraph 4.8.106<br />*(Transitive) CVE-2021-47621.* | 4.8.181 | gradle/libs.versions.toml |
+            | ❌ | ✅ | junit:junit <br />*CVE-2020-15250.* | 4.13.2 | buildSrc/src/main/kotlin/junit4-compatibility.gradle.kts |
             
             
             ----
@@ -149,6 +161,12 @@ class OpenSourceHealthMarkdownReportTest(TestCase):
             
             Sigrid compared your code against the baseline of 2025-09-18.
             
+            - ❌ means the library has issues that fail your objectives.
+            - ⚠️ means the library has issues, but they are not severe enough to fail your objectives.
+            - ✅ means everything is fine.
+            - If you believe these findings are false positives, 
+              you can [exclude them in the Sigrid configuration](https://docs.sigrid-says.com/reference/analysis-scope-configuration.html#exclude-open-source-health-risks).
+            
             ## 👍 What went well?
             
             > You updated **1** open source libraries that previously had issues.
@@ -163,12 +181,10 @@ class OpenSourceHealthMarkdownReportTest(TestCase):
             
             | Vulnerabilities | License | Library | Latest version | Location(s) |
             |----|----|----|----|----|
-            | ❌ | ✅ | org.apache.logging.log4j:log4j-core 2.14.1<br />*CVE-2021-45046, CVE-2021-45105, [CVE-2021-44228](https://nvd.nist.gov/vuln/detail/CVE-2021-44228), CVE-2021-44832* | 2.25.1 | gradle/libs.versions.toml |
-            | ❌ | ✅ | commons-io:commons-io 2.9.0<br />*CVE-2024-47554* | 2.20.0 | gradle/libs.versions.toml |
-            | ⚠️ | ✅ | io.github.classgraph:classgraph 4.8.106<br />*(Transitive) CVE-2021-47621* | 4.8.181 | gradle/libs.versions.toml |
-            | ⚠️ | ✅ | junit:junit <br />*CVE-2020-15250* | 4.13.2 | buildSrc/src/main/kotlin/junit4-compatibility.gradle.kts |
-            
-            If you believe these findings are false positives, you can [exclude them in the Sigrid configuration](https://docs.sigrid-says.com/reference/analysis-scope-configuration.html#exclude-open-source-health-risks).
+            | ❌ | ✅ | org.apache.logging.log4j:log4j-core 2.14.1<br />*CVE-2021-45046, CVE-2021-45105, [CVE-2021-44228](https://nvd.nist.gov/vuln/detail/CVE-2021-44228), CVE-2021-44832.* | 2.25.1 | gradle/libs.versions.toml |
+            | ❌ | ✅ | commons-io:commons-io 2.9.0<br />*CVE-2024-47554.* | 2.20.0 | gradle/libs.versions.toml |
+            | ⚠️ | ✅ | io.github.classgraph:classgraph 4.8.106<br />*(Transitive) CVE-2021-47621.* | 4.8.181 | gradle/libs.versions.toml |
+            | ⚠️ | ✅ | junit:junit <br />*CVE-2020-15250.* | 4.13.2 | buildSrc/src/main/kotlin/junit4-compatibility.gradle.kts |
             
             
             ----
@@ -194,6 +210,12 @@ class OpenSourceHealthMarkdownReportTest(TestCase):
         
         Sigrid compared your code against the baseline of 2025-09-18.
         
+        - ❌ means the library has issues that fail your objectives.
+        - ⚠️ means the library has issues, but they are not severe enough to fail your objectives.
+        - ✅ means everything is fine.
+        - If you believe these findings are false positives, 
+          you can [exclude them in the Sigrid configuration](https://docs.sigrid-says.com/reference/analysis-scope-configuration.html#exclude-open-source-health-risks).
+        
         ## 👍 What went well?
         
         > You updated **1** open source libraries that previously had issues.
@@ -208,13 +230,11 @@ class OpenSourceHealthMarkdownReportTest(TestCase):
         
         | Vulnerabilities | License | Library | Latest version | Location(s) |
         |----|----|----|----|----|
-        | ⚠️ | ✅ | org.apache.logging.log4j:log4j-core 2.14.1<br />*CVE-2021-45046, CVE-2021-45105, [CVE-2021-44228](https://nvd.nist.gov/vuln/detail/CVE-2021-44228), CVE-2021-44832* | 2.25.1 | gradle/libs.versions.toml |
-        | ⚠️ | ✅ | commons-io:commons-io 2.9.0<br />*CVE-2024-47554* | 2.20.0 | gradle/libs.versions.toml |
-        | ⚠️ | ✅ | io.github.classgraph:classgraph 4.8.106<br />*(Transitive) CVE-2021-47621* | 4.8.181 | gradle/libs.versions.toml |
-        | ⚠️ | ✅ | junit:junit <br />*CVE-2020-15250* | 4.13.2 | buildSrc/src/main/kotlin/junit4-compatibility.gradle.kts |
-        | ⚠️ | ❌ | org.mockito:mockito-junit-jupiter 3.10.0 | 5.19.0 | gradle/libs.versions.toml |
-        
-        If you believe these findings are false positives, you can [exclude them in the Sigrid configuration](https://docs.sigrid-says.com/reference/analysis-scope-configuration.html#exclude-open-source-health-risks).
+        | ⚠️ | ✅ | org.apache.logging.log4j:log4j-core 2.14.1<br />*CVE-2021-45046, CVE-2021-45105, [CVE-2021-44228](https://nvd.nist.gov/vuln/detail/CVE-2021-44228), CVE-2021-44832.* | 2.25.1 | gradle/libs.versions.toml |
+        | ⚠️ | ✅ | commons-io:commons-io 2.9.0<br />*CVE-2024-47554.* | 2.20.0 | gradle/libs.versions.toml |
+        | ⚠️ | ✅ | io.github.classgraph:classgraph 4.8.106<br />*(Transitive) CVE-2021-47621.* | 4.8.181 | gradle/libs.versions.toml |
+        | ⚠️ | ✅ | junit:junit <br />*CVE-2020-15250.* | 4.13.2 | buildSrc/src/main/kotlin/junit4-compatibility.gradle.kts |
+        | ⚠️ | ❌ | org.mockito:mockito-junit-jupiter 3.10.0<br />*The MIT License.* | 5.19.0 | gradle/libs.versions.toml |
         
         
         ----
