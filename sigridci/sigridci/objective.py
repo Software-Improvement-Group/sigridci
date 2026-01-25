@@ -26,7 +26,7 @@ class ObjectiveStatus(Enum):
 class Objective:
     DEFAULT_RATING_OBJECTIVE = 3.5
     DEFAULT_FINDING_OBJECTIVE = "HIGH"
-    SEVERITY_OBJECTIVE = ["CRITICAL", "HIGH", "MEDIUM", "LOW", "NONE"]
+    SEVERITY_OBJECTIVE = ["CRITICAL", "HIGH", "MEDIUM", "LOW", "NONE", "UNKNOWN"]
     REFACTORING_CANDIDATES = ["DUPLICATION", "UNIT_SIZE", "UNIT_COMPLEXITY", "UNIT_INTERFACING", "MODULE_COUPLING"]
     SYSTEM_PROPERTIES = ["VOLUME"] + REFACTORING_CANDIDATES + ["COMPONENT_INDEPENDENCE", "COMPONENT_ENTANGLEMENT"]
     MAINTAINABILITY_METRICS = ["MAINTAINABILITY"] + SYSTEM_PROPERTIES
@@ -102,3 +102,9 @@ class Objective:
             return "no"
         index = Objective.SEVERITY_OBJECTIVE.index(objective)
         return f"no {Objective.SEVERITY_OBJECTIVE[index - 1].lower()}-severity"
+
+    @staticmethod
+    def sortBySeverity(severity):
+        if not severity in Objective.SEVERITY_OBJECTIVE:
+            return 99
+        return Objective.SEVERITY_OBJECTIVE.index(severity)

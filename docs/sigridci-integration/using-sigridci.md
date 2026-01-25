@@ -61,15 +61,17 @@ cleaner than you found it.
 
 ### Open Source Health feedback
 
-Sigrid CI gives feedback on security vulnerabilities in open source libraries. Sigrid also checks other aspects of
-using open source libraries, such as licenses and freshness, but those are not part of Sigrid CI. So why is this
-different? In practice, people find updating open source libraries to address security vulnerabilities much more
-urgent than those other aspects. Obviously, you should still manage those other aspects, as explained in our
-[guidelines for healthy use of open source libraries](../workflows/best-practices-osh.md), but addressing 
-vulnerabilities is something that typically needs to be addressed immediately.
+Sigrid CI gives feedback on security vulnerabilities and license risks in open source libraries. Sigrid also
+checks other aspects of using open source libraries, such as freshness (i.e. how often you update), but those
+are not part of Sigrid CI.
 
-Sigrid CI does not require you to update every single open source library to address every single vulnerability.
-Which vulnerabilities are allowed versus not allowed is decided based on your
+So why not give feedback on *all* aspects? In a word: Urgency. People generally security vulnerabilities or
+license issues much more urgent than those other aspects. Updating a library can wait (but please not too long), fixing a vulnerability cannot
+wait. Obviously, you should still manage those other aspects, as explained in our
+[guidelines for healthy use of open source libraries](../workflows/best-practices-osh.md).
+
+Sigrid CI does not require you to update every single open source library to address every single issues.
+Which vulnerabilities and licenses are "allowed" versus "not allowed" is decided based on your
 [objectives](../capabilities/portfolio-objectives.md). This means you can use a different objectives dependent on
 the (type of) system. For example, you can decide to prevent high or critical severity vulnerabilities in public-facing 
 systems, but only prevent critical vulnerabilities for internal systems.
@@ -77,9 +79,9 @@ systems, but only prevent critical vulnerabilities for internal systems.
 <img src="../images/ci/osh-feedback.png" width="350" />
 
 Unlike the [feedback for maintainability](#maintainability-feedback), you really do need to address every single
-vulnerability that's blocking your objective. This is because of a difference in urgency between maintainability
-and security: Maintainability is more of a "chronic" problem, while security threats are "acute" and really do need
-to be mitigated right away.
+vulnerability and every single license issue that's blocking your objective. This is because of a difference in
+urgency between maintainability and security: Maintainability is more of a "chronic" problem, while security
+threats are "acute" and really do need to be mitigated right away.
 
 Sigrid CI separates vulnerable open source libraries into two categories:
 

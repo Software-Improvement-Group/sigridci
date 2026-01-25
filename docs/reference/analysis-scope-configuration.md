@@ -249,7 +249,7 @@ The open source libraries found in the SBOM are normally *added* to the open sou
         - ".*companyname.*"
       source: sbom
 
-Again, you only need this option if you are importing your own SBOM files, *and* you want Sigrid to only use those SBOM files for Open Source Health.
+Again, you only need this option if you are importing your own SBOM files, *and* you want Sigrid to only use those SBOM files for Open Source Health. Sigrid will still scan for *unmanaged* dependencies when you upload an SBOM. Consequently, you may not only see the libraries from your SBOM, but also the ones discovered by Sigrid as unmanaged dependencies.
 
 ## Security
 

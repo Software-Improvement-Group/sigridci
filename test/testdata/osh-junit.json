@@ -1006,7 +1006,7 @@
         },
         {
           "name": "sigrid:risk:legal",
-          "value": "NONE"
+          "value": "HIGH"
         },
         {
           "name": "sigrid:risk:freshness",

@@ -62,7 +62,7 @@ class FeedbackProviderTest(TestCase):
         options = PublishOptions("aap", "noot", RunMode.FEEDBACK_ONLY, outputDir=tempDir)
         feedbackProvider = FeedbackProvider(MAINTAINABILITY, options, {"MAINTAINABILITY" : 4.0})
 
-        self.assertEqual({"MAINTAINABILITY" : 4.0}, feedbackProvider.objective)
+        self.assertEqual({"MAINTAINABILITY" : 4.0}, feedbackProvider.objectives)
 
     def testGetSystemPropertyObjectives(self):
         tempDir = tempfile.mkdtemp()
@@ -70,11 +70,25 @@ class FeedbackProviderTest(TestCase):
         objectives = {"MAINTAINABILITY_UNIT_SIZE" : 4.0, "UNIT_COMPLEXITY" : 5.0}
         feedbackProvider = FeedbackProvider(MAINTAINABILITY, options, objectives)
 
-        self.assertEqual({"UNIT_SIZE" : 4.0, "UNIT_COMPLEXITY" : 5.0}, feedbackProvider.objective)
+        self.assertEqual({"UNIT_SIZE" : 4.0, "UNIT_COMPLEXITY" : 5.0}, feedbackProvider.objectives)
 
     def testDefaultMaintainabilityObjectiveIfNoneIsSet(self):
         tempDir = tempfile.mkdtemp()
         options = PublishOptions("aap", "noot", RunMode.FEEDBACK_ONLY, outputDir=tempDir)
         feedbackProvider = FeedbackProvider(MAINTAINABILITY, options, {})
 
-        self.assertEqual({"MAINTAINABILITY" : 3.5}, feedbackProvider.objective)
+        self.assertEqual({"MAINTAINABILITY" : 3.5}, feedbackProvider.objectives)
+
+    def testSetDefaultOshVulnerabilityObjective(self):
+        tempDir = tempfile.mkdtemp()
+        options = PublishOptions("aap", "noot", RunMode.FEEDBACK_ONLY, outputDir=tempDir)
+        feedbackProvider = FeedbackProvider(OPEN_SOURCE_HEALTH, options, {})
+
+        self.assertEqual({"OSH_MAX_SEVERITY" : "HIGH", "OSH_MAX_LICENSE_RISK" : None}, feedbackProvider.objectives)
+
+    def testUseOshLicenseObjectiveIfAvailable(self):
+        tempDir = tempfile.mkdtemp()
+        options = PublishOptions("aap", "noot", RunMode.FEEDBACK_ONLY, outputDir=tempDir)
+        feedbackProvider = FeedbackProvider(OPEN_SOURCE_HEALTH, options, {"OSH_MAX_LICENSE_RISK" : "LOW"})
+
+        self.assertEqual({"OSH_MAX_SEVERITY" : "HIGH", "OSH_MAX_LICENSE_RISK" : "LOW"}, feedbackProvider.objectives)
