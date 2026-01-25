@@ -41,15 +41,20 @@ The requirements below must be fulfilled to ensure uploaded files can be process
 - TAR
 - TAR.GZ
 
-### SFTP key authorization
 
-You need to generate an SSH authentication key to connect to the upload server. The public part of this key needs to be whitelisted by the upload server. The SSH key you generate can be either an:
+### SFTP key creation
 
+You need to generate an SSH authentication key to connect to the upload server. The public part of this key needs to be whitelisted by the upload server. You can send it to [SIG's support department](mailto:support@softwareimprovementgroup.com)
+
+The SSH key you generate can be either an:
 - RSA key (of at least 2048 bits long)
 - ECDSA key (of at least 256 bits long)
 - ED25519 key (of at least 256 bits long)
 
-When in doubt, please use RSA.
+ Please note we do not support the 'ssh-rsa' public key signature algorithm. Please use a modern SSH implementation that supports stronger algorithms such as:
+- rsa-sha2-256
+- rsa-sha2-512
+- ssh-ed25519
 
 ### SFTP/SCP upload server details
 
@@ -183,4 +188,4 @@ If you manually exported your Git history and it's not being picked up by Sigrid
 
 ## Contact and support
 
-Feel free to contact [SIG's support department](mailto:support@softwareimprovementgroup.com) for any questions or issues you may have after reading this document, or when using Sigrid or Sigrid CI. Users in Europe can also contact us by phone at +31 20 314 0953.
+Feel free to contact [SIG's support department](mailto:support@softwareimprovementgroup.com) for any questions or issues you may have after reading this document, or when using Sigrid or Sigrid CI.
