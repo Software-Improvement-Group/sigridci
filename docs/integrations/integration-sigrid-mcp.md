@@ -23,6 +23,7 @@ The currently supported technologies are:
 - TypeScript
 - Kotlin
 - Progress ABL
+- PHP
 
 Visit the [Technology Support](../reference/technology-support.md#list-of-supported-technologies) page for more details on supported technologies.
 
