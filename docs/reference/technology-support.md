@@ -462,7 +462,6 @@ Note this section only described *third party* security analysis analyzers. The 
 
 | Display name           | Technologies                      | Notes                                                    |
 |------------------------|-----------------------------------|----------------------------------------------------------|
-| Astrée                 | C, C++                            | Requires *Sigrid Security for Embedded Systems* license. |
 | Bandit                 | Python                            |
 | Checkmarx              | (many)                            | Requires *Sigrid Security Checkmarx* license.            |
 | ErrorProne.NET         | C#                                | Requires compiling code.                                 |
