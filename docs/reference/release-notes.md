@@ -3,6 +3,10 @@ Sigrid release notes
 
 SIG uses [continuous delivery](https://en.wikipedia.org/wiki/Continuous_delivery), meaning that every change to Sigrid or the underlying analysis is released once our development pipeline has completed. On average, we release somewhere between 10 and 20 times per day. This page therefore doesn't list every single change, since that would quickly lead to an excessively long list of small changes. Instead, this page lists Sigrid and analysis changes that we consider noteworthy for the typical Sigrid user.
 
+### February 9, 2026
+
+- **Mendix QSM:** Added support for Mendix design modules. If your Mendix app includes a `themesource` directory, you will now see that directory being analyzed by Sigrid. 
+
 ### January 19, 2026
 
 - **Management dashboard:** You can now click on the technical debt chart to get a more detailed view on *where* in your portfolio technical debt was introduced and/or removed.
