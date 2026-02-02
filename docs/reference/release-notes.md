@@ -5,7 +5,8 @@ SIG uses [continuous delivery](https://en.wikipedia.org/wiki/Continuous_delivery
 
 ### February 9, 2026
 
-- **Mendix QSM:** Added support for Mendix design modules. If your Mendix app includes a `themesource` directory, you will now see that directory being analyzed by Sigrid. 
+- **Mendix QSM:** Added support for Mendix design modules. If your Mendix app includes a `themesource` directory, you will now see that directory being analyzed by Sigrid.
+- **Code Explorer:** When viewing duplication findings, the user interface now more easily allows you to switch between the different locations of the duplicated code.
 
 ### January 19, 2026
 
