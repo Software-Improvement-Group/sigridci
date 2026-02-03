@@ -80,7 +80,9 @@ class OpenSourceHealthMarkdownReport(Report, MarkdownRenderer):
         fixable = [lib for lib in libraries if not lib.vulnerabilityRisk.meetsObjective and lib.fixable]
         unfixable = [lib for lib in libraries if not lib.vulnerabilityRisk.meetsObjective and not lib.fixable]
 
-        if len(fixable) > 0:
+        if len(libraries) == 0:
+            return "💭  Sigrid did not find any open source libraries."
+        elif len(fixable) > 0:
             return f"❌️  You failed to meet your objective of having {objectiveDisplayName}."
         elif len(unfixable) > 0:
             return f"😑  There are vulnerable open source libraries you need to investigate."
