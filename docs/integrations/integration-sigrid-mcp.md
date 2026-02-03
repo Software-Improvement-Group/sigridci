@@ -42,7 +42,7 @@ Visit the [Technology Support](../reference/technology-support.md#list-of-suppor
 | VSCode w/ Github Copilot plugin | HTTP via GitHub Copilot | Agent mode → Tools menu | ✅ Supported |
 | VSCode native | Proxy (mcp-remote) | MCP settings | ✅ Supported |
 | Windsurf | Proxy (mcp-remote) | MCP settings | ✅ Supported |
-| IntelliJ/PyCharm/WebStorm | HTTP via GitHub Copilot | Manual JSON edit | ⚠️ Workaround only |
+| IntelliJ/PyCharm/WebStorm | HTTP via AI Chat | Manual JSON edit | ✅ Supported |
 
 ### Connection Types Explained
 
@@ -147,13 +147,25 @@ Replace `TOKEN` with your actual Sigrid API token.
 
 - Restart Claude Code
 
-#### IntelliJ/PyCharm/WebStorm (Workaround)
+#### IntelliJ/PyCharm/WebStorm
 
-> ⚠️ **Not natively supported**: [Open JetBrains issue for MCP remote server Support](https://youtrack.jetbrains.com/projects/JUNIE/issues/JUNIE-461/MCP-Remote-Server-Support)
+In the IDE, navigate to Tools > AI Assistant > Model Context Protocol (MCP) and add:
 
-- Install GitHub Copilot plugin
-- Manually edit: `~/.config/github-copilot/intellij/mcp.json`
-- Use same configuration as Cursor/Github Copilot
+```
+"mcpServers": {
+    "CodeGuardrails": {
+      "command": "npx",
+      "args": [
+        "mcp-remote",
+        "https://sigrid-says.com/mcp",
+        "--header",
+        "Authorization: Bearer <your_sigrid_token>",
+        "--allow-http"
+      ]
+    }
+```
+
+Then, save the configuration and click the `Reconnect` arrow on the top of the configuration, and, if your Sigrid token is valid, you will be successfully connected to the MCP server.
 
 ### Using Sigrid Quality Gates with AI Coding Agents
 
