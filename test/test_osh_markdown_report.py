@@ -248,3 +248,30 @@ class OpenSourceHealthMarkdownReportTest(TestCase):
         """
 
         self.assertEqual(markdown.strip(), inspect.cleandoc(expected).strip())
+
+    @mock.patch.dict(os.environ, {"SIGRID_CI_MARKDOWN_HTML" : "false"})
+    def testSpecialStatusIfThereAreNoLibraries(self):
+        emptyFeedback = {
+            "metadata": {
+                "timestamp": "2026-02-03"
+            }
+        }
+
+        report = OpenSourceHealthMarkdownReport("CRITICAL")
+        report.decorateLinks = False
+        markdown = report.renderMarkdown("1234", emptyFeedback, self.options)
+
+        expected = """
+            # [Sigrid](https://sigrid-says.com/aap/noot/-/open-source-health) Open Source Health feedback
+    
+            **💭  Sigrid did not find any open source libraries.**
+            
+            Sigrid compared your code against the baseline of 2026-02-03.
+            
+            
+            ----
+            
+            [**View this system in Sigrid**](https://sigrid-says.com/aap/noot/-/open-source-health)
+        """
+
+        self.assertEqual(markdown.strip(), inspect.cleandoc(expected).strip())

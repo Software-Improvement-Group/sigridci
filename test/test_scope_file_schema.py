@@ -161,3 +161,28 @@ class ScopeFileSchemaTest(TestCase):
             self.assertTrue(False, "ValidationError should have been raised")
         except jsonschema.ValidationError as e:
             self.assertTrue("None is not of type 'array'" in e.message)
+
+    def testBlocklistIsNotRequired(self):
+        scope = """
+            languages:
+              - Python
+            dependencychecker:
+              exclude:
+                - ".*aap.*"
+            """
+
+        parsedScope = yaml.load(scope, Loader=yaml.FullLoader)
+        jsonschema.validate(instance=parsedScope, schema=self.schema)
+
+    def testTpfEnabledPropertyIsNotRequired(self):
+        scope = """
+            languages:
+              - Python
+            thirdpartyfindings:
+              exclude:
+                - ".*/scripts/.*[.]sh"
+            """
+
+        parsedScope = yaml.load(scope, Loader=yaml.FullLoader)
+        jsonschema.validate(instance=parsedScope, schema=self.schema)
+

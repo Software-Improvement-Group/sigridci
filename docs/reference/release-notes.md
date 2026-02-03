@@ -3,6 +3,13 @@ Sigrid release notes
 
 SIG uses [continuous delivery](https://en.wikipedia.org/wiki/Continuous_delivery), meaning that every change to Sigrid or the underlying analysis is released once our development pipeline has completed. On average, we release somewhere between 10 and 20 times per day. This page therefore doesn't list every single change, since that would quickly lead to an excessively long list of small changes. Instead, this page lists Sigrid and analysis changes that we consider noteworthy for the typical Sigrid user.
 
+### February 9, 2026
+
+- **Mendix QSM:** Added support for Mendix design modules. If your Mendix app includes a `themesource` directory, you will now see that directory being analyzed by Sigrid.
+- **Open Source Health:** Sigrid only scans for production dependencies, and will ignore your test and development dependencies. Based on this principe, Maven dependencies with "provided" [scope](https://www.baeldung.com/maven-dependency-scopes) are now ignored. In practice, those dependencies are usually not part of an application's production code. They are typically used for compile-time tools such as [Lombok](https://projectlombok.org). Therefore, Sigrid will no longer scan for these dependencies.
+- **Code Explorer:** When viewing duplication findings, the user interface now more easily allows you to switch between the different locations of the duplicated code.
+- **Sigrid CI:** If you're trying to use Sigrid CI for Open Source Health on a system that doesn't actually contain any open source libraries, the feedback will now explicitly state this.
+
 ### January 19, 2026
 
 - **Management dashboard:** You can now click on the technical debt chart to get a more detailed view on *where* in your portfolio technical debt was introduced and/or removed.

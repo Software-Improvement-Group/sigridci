@@ -158,7 +158,7 @@ class SigridCiRunner:
             print("Sigrid metadata for this system:")
             for key, value in metadata.items():
                 if value:
-                    print(f"    {key}:".ljust(20) + str(value))
+                    print(f"    {key}:".ljust(30) + str(value))
 
     def prepareMetadata(self):
         getMetadataValue = lambda field: os.environ.get(field.lower(), "")
