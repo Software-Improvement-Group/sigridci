@@ -209,6 +209,35 @@ An example response leveraging the `GET https://sigrid-says.com/rest/analysis-re
 }
 ```
 
+In the response, different types of refactoring candidates will have slightly different fields:
+
+| Type                                 | Field                       | Description                                                                                              |
+|--------------------------------------|-----------------------------|----------------------------------------------------------------------------------------------------------|
+| **(all)**                            | `id`                        | Unique ID to identify the refactoring candidate.                                                         |
+|                                      | `severity`                  | One of VERY_HIGH, HIGH, MEDIUM, LOW.                                                                     |
+|                                      | `weight`                    | Relative priority of this finding in relation to the system property it covers.                          |
+|                                      | `technology`                | Technology name, for example `java` or `csharp`.                                                         |
+|                                      | `componentName`             | Name of the component in which the finding resides.                                                      |
+|                                      | `filePath`                  | Relative file path in which the finding resides.                                                         |
+|                                      | `status`                    | One of FALSE_POSITIVE, ACCEPTED, FIXEd, RAW, REFINED, WILL_FIX.                                          |
+|                                      | `remark`                    | Optional remark(s) entered via the Sigrid user interface.                                                | 
+| **Duplication**                      | `loc`                       | The number of duplicates lines.                                                                          |
+|                                      | `sameFile`                  | True if the duplicate is within the same file.                                                           |
+|                                      | `sameComponent`             | True if the duplicate is between files within the same component.                                        |
+|                                      | `locations.filePath`        | Relative file path for the duplication occurrence.                                                       |
+|                                      | `locations.startLine`       | First line in the file that is part of the duplicate occurrence.                                         |
+|                                      | `locations.endLine`         | Last line in the file that is part of the duplicate occurrence.                                          |
+| **Unit Size/Complexity/Interfacing** | `unitName`                  | Name of the unit that is the topic of the finding.                                                       |
+|                                      | `startLine`                 | First line within the file that is part of the finding.                                                  |
+|                                      | `endLine`                   | Last line within the file that is part of the finding.                                                   |
+| **Unit Size**                        | `loc`                       | Lines of code within the unit, excluding comments.                                                       |
+| **Unit Complexity**                  | `mcCabe`                    | Decision points within the unit.                                                                         |
+| **Unit Interfacing**                 | `parameters`                | Number of parameters within the unit.                                                                    |
+| **Module Coupling**                  | `loc`                       | Lines of code within the file, excluding comments.                                                       |
+|                                      | `fanIn`                     | Number of incoming dependencies originating from outside the file.                                       |
+| **Component Independence**           | `loc`                       | Lines of code within the file, excluding comments.                                                       | 
+| **Component Entanglement**           | `componentEntanglementType` | One of CYCLIC_DEPENDENCY, INDIRECT_CYCLIC_DEPENDENCY, LAYER_BYPASSING_DEPENDENCY, COMMUNICATION_DENSITY. |
+
 </details>
 
 ### Security and reliability findings
