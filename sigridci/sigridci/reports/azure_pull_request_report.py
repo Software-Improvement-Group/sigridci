@@ -71,6 +71,8 @@ class AzurePullRequestReport(Report):
         return None
 
     def isExistingComment(self, comment):
+        if not comment.get("content"):
+            return False
         header = f"{self.markdownRenderer.getCapability().displayName} feedback".lower()
         return comment["content"].startswith(("# Sigrid", "# [Sigrid]")) and header in comment["content"].lower()
 
