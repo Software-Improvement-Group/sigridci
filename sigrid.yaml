@@ -2,5 +2,3 @@ languages:
   - name: "Python"
 thirdpartyfindings:
   enabled: true
-dependencychecker:
-  blocklist: ["sig"]
