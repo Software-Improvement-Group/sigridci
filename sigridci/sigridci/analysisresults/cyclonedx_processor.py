@@ -61,7 +61,7 @@ class CycloneDXProcessor:
             files = list(self.getOccurrenceLocations(component))
             properties = {prop["name"]: prop["value"] for prop in component["properties"]}
             transitive = properties.get("sigrid:transitive") == "TRANSITIVE"
-            version = component["version"]
+            version = component.get("version", "?")
             latestVersion = properties.get("sigrid:latest:version", "").replace("?", "")
             licenses = [license["license"]["name"] for license in component.get("licenses", [])]
             vulnerabilities = list(self.getComponentVulnerabilities(component, feedback))
