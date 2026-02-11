@@ -7,6 +7,20 @@ SIG uses [continuous delivery](https://en.wikipedia.org/wiki/Continuous_delivery
 
 - **Scope configuration:** If you want to enable Sigrid's [Open Source Health](../capabilities/portfolio-open-source-health.md) or [Security](../capabilities/portfolio-security.md) capabilities, you previously needed to add some mandatory configuration to the [scope configuration file](../reference/analysis-scope-configuration.md). Many people considered this to be a bit cumbersome, so this has been simplified: Open Source Health and Security will now run automatically, as long as you have the corresponding license. This change is backward compatible, so existing scope configuration files will continue to work. 
 
+### February 13, 2026
+
+- **Security:** We've updated Sigrid's security ruleset. As new security vulnerabilities are regularly discovered, it is essential to proactively adapt our checks to ensure robust and up-to-date protection for your software. With this update, Sigrid will introduce additional security checks designed to detect emerging threats more effectively:
+  - `HttpServletRequest.getRequestedSessionId()` should not be used
+  - `null` should not be used with `Optional`
+  - Collections should not be passed as arguments to their own methods
+  - Credentials should not be hard-coded
+  - Dissimilar primitive wrappers should not be used with the ternary operator without explicit casting
+  - Formatting SQL queries is security-sensitive
+  - Loops with at most one iteration should be refactored
+  - Passwords should not be stored in plaintext or with a fast hashing algorithm
+  - Secure random number generators should not output predictable values
+  - Using hardcoded IP addresses is security-sensitive
+
 ### February 9, 2026
 
 - **Mendix QSM:** Added support for Mendix design modules. If your Mendix app includes a `themesource` directory, you will now see that directory being analyzed by Sigrid.
