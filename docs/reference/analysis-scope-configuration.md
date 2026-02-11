@@ -189,9 +189,9 @@ You can customize this by adding a `model` entry to your configuration. For exam
 
 ## Open Source Health
 
-**Note: This requires a [Sigrid license for Open Source Health](https://www.softwareimprovementgroup.com/capabilities/sigrid-open-source-health/). Without this license, you will not be able to see security results in Sigrid.**
-
 Open Source Health allows you to scan all open sources libraries used by your system, and identify risks such as security vulnerabilities or heavily outdated libraries.
+
+Open Source Health will run automatically if you have the corresponding Sigrid license. You can *optionally* add the following section to your scope configuration file to configure the analysis. 
 
     dependencychecker:
       blocklist:
@@ -204,7 +204,7 @@ The `dependencychecker` section supports the following options:
 
 | Option name  | Required? | Description                                                                                    |
 |--------------|-----------|------------------------------------------------------------------------------------------------|
-| `blocklist`  | Yes       | See [defining a blocklist](#defining-a-blocklist).                                             |
+| `blocklist`  | No        | See [defining a blocklist](#defining-a-blocklist).                                             |
 | `transitive` | No        | When true, also scans the dependencies of your dependencies. Defaults to false.                |
 | `exclude`    | No        | See [exclude Open Source Health risks](#exclude-open-source-health-risks).                     |
 | `model`      | No        | SIG Open Source Health model version that should be used for the analysis, defaults to latest. |
@@ -253,7 +253,7 @@ Again, you only need this option if you are importing your own SBOM files, *and*
 
 ## Security
 
-**Note: This requires a [Sigrid license for Software Security](https://www.softwareimprovementgroup.com/solutions/sigrid-software-security/). Without this license, you will not be able to see security results in Sigrid.**
+Security will run automatically if you have the corresponding Sigrid license. You can *optionally* add the following section to your scope configuration file to configure the analysis.
 
 ### Third Party Findings
 
@@ -273,7 +273,7 @@ This `thirdpartyfindings` section in the scope file supports the following optio
 
 | Option name              | Required? | Description                                                                                                            |
 |--------------------------|-----------|------------------------------------------------------------------------------------------------------------------------|
-| `enabled`                | Yes       | Set to `true` to enable security analysis.                                                                             |
+| `enabled`                | No        | Set to `true` to enable security analysis.                                                                             |
 | `exclude`                | No        | See [excluding files and directories from security scanning](#excluding-files-and-directories-from-security-scanning). |
 | `disabled_rules`         | No        | List of rule IDs that should be ignored during analysis.                                                               |
 | `disabled_analyzers`     | No        | List of specific scanning tools that should be ignored during analysis.                                                |
