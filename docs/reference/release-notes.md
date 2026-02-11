@@ -3,6 +3,21 @@ Sigrid release notes
 
 SIG uses [continuous delivery](https://en.wikipedia.org/wiki/Continuous_delivery), meaning that every change to Sigrid or the underlying analysis is released once our development pipeline has completed. On average, we release somewhere between 10 and 20 times per day. This page therefore doesn't list every single change, since that would quickly lead to an excessively long list of small changes. Instead, this page lists Sigrid and analysis changes that we consider noteworthy for the typical Sigrid user.
 
+
+### February 13, 2026
+
+- **Security:** We've updated Sigrid's security ruleset. As new security vulnerabilities are regularly discovered, it is essential to proactively adapt our checks to ensure robust and up-to-date protection for your software. With this update, Sigrid will introduce additional security checks designed to detect emerging threats more effectively:
+  - `HttpServletRequest.getRequestedSessionId()` should not be used
+  - `null` should not be used with `Optional`
+  - Collections should not be passed as arguments to their own methods
+  - Credentials should not be hard-coded
+  - Dissimilar primitive wrappers should not be used with the ternary operator without explicit casting
+  - Formatting SQL queries is security-sensitive
+  - Loops with at most one iteration should be refactored
+  - Passwords should not be stored in plaintext or with a fast hashing algorithm
+  - Secure random number generators should not output predictable values
+  - Using hardcoded IP addresses is security-sensitive
+
 ### February 9, 2026
 
 - **Mendix QSM:** Added support for Mendix design modules. If your Mendix app includes a `themesource` directory, you will now see that directory being analyzed by Sigrid.
