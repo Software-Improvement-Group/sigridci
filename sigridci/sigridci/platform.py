@@ -16,6 +16,13 @@ import os
 import sys
 
 
+DOCS_URL = f"https://docs.sigrid-says.com"
+SCOPE_DOCS = f"{DOCS_URL}/reference/analysis-scope-configuration.html"
+OSH_EXCLUDE_DOCS = f"{SCOPE_DOCS}#exclude-open-source-health-risks"
+SECURITY_EXCLUDE_RULE_DOCS = f"{SCOPE_DOCS}#excluding-security-rules"
+SECURITY_EXCLUDE_FILE_DOCS = f"{SCOPE_DOCS}#excluding-files-and-directories-from-security-scanning"
+
+
 class Platform:
     @staticmethod
     def isGitHub():
