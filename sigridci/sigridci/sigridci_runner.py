@@ -123,10 +123,6 @@ class SigridCiRunner:
                 UploadLog.log("Warning: You cannot provide a scope configuration file for a subsystem, it will be ignored.")
 
             self.validateConfiguration(lambda: self.apiClient.validateScopeFile(scope), "scope configuration file")
-            if OPEN_SOURCE_HEALTH in self.options.capabilities and not "dependencychecker:" in scope:
-                self.showValidationError("scope configuration file", ["Missing required field 'dependencychecker'."])
-            if SECURITY in self.options.capabilities and not "thirdpartyfindings:" in scope:
-                self.showValidationError("scope configuration file", ["Missing required field 'thirdpartyfindings'."])
 
         if scope is None and metadata.get("scopeFileInRepository") and not self.options.subsystem and not self.options.ignoreMissingScopeFile:
             message = {"valid" : False, "notes" : ["Missing sigrid.yaml file", f"See {self.MISSING_SCOPE_URL}"]}
@@ -158,7 +154,7 @@ class SigridCiRunner:
             print("Sigrid metadata for this system:")
             for key, value in metadata.items():
                 if value:
-                    print(f"    {key}:".ljust(30) + str(value))
+                    print(f"    {key}:".ljust(40) + str(value))
 
     def prepareMetadata(self):
         getMetadataValue = lambda field: os.environ.get(field.lower(), "")
