@@ -35,25 +35,34 @@ class OpenSourceHealthMarkdownReportTest(TestCase):
 
     @mock.patch.dict(os.environ, {"SIGRID_CI_MARKDOWN_HTML" : "false"})
     def testIncludeFindingsBasedOnObjectives(self):
-        report = OpenSourceHealthMarkdownReport("CRITICAL")
+        report = OpenSourceHealthMarkdownReport("HIGH")
         report.decorateLinks = False
         markdown = report.renderMarkdown("1234", self.feedback, self.options)
 
         expected = """
             # [Sigrid](https://sigrid-says.com/aap/noot/-/open-source-health) Open Source Health feedback
             
-            **⚠️  You failed to meet your objective of having no critical-severity open source vulnerabilities.**
+            **❌️  You failed to meet your objective of having no critical-severity open source vulnerabilities.**
             
             Sigrid compared your code against the baseline of 2025-09-19.
             
+            - ❌ means the library has issues that fail your objective.
+            - ⚠️ means the library has issues, but they are not severe enough to fail your objective.
+            - ✅ means everything is fine.
+            
+            If you believe these findings are false positives, you can
+            [exclude them in the Sigrid configuration](https://docs.sigrid-says.com/reference/analysis-scope-configuration.html#exclude-open-source-health-risks).
+            
             ## 👎 What could be better?
             
-            > You have **1** vulnerable open source libraries with a fix available.  
-            > Consider upgrading to a version that no longer contains the vulnerability.
+            > You have **4** open source libraries with issues.
             
-            | Vulnerability risk | Library | Latest version | Location(s) |
-            |----|----|----|----|
-            | 🟣 | org.apache.logging.log4j:log4j-core 2.14.1 | 2.25.1 | gradle/libs.versions.toml |
+            | Vulnerabilities | License | Library | Latest version | Location(s) |
+            |----|----|----|----|----|
+            | ❌ | ✅ | org.apache.logging.log4j:log4j-core 2.14.1<br />*CVE-2021-45046, CVE-2021-45105, [CVE-2021-44228](https://nvd.nist.gov/vuln/detail/CVE-2021-44228), CVE-2021-44832.* | 2.25.1 | gradle/libs.versions.toml |
+            | ⚠️ | ✅ | commons-io:commons-io 2.9.0<br />*CVE-2024-47554.* | 2.20.0 | gradle/libs.versions.toml |
+            | ⚠️ | ✅ | io.github.classgraph:classgraph 4.8.106<br />*(Transitive) CVE-2021-47621.* | 4.8.181 | gradle/libs.versions.toml |
+            | ⚠️ | ✅ | junit:junit <br />*CVE-2020-15250.* | 4.13.2 | buildSrc/src/main/kotlin/junit4-compatibility.gradle.kts |
             
             
             ----
@@ -65,26 +74,34 @@ class OpenSourceHealthMarkdownReportTest(TestCase):
 
     @mock.patch.dict(os.environ, {"SIGRID_CI_MARKDOWN_HTML" : "false"})
     def testSortFindingsBasedOnSeverity(self):
-        report = OpenSourceHealthMarkdownReport("HIGH")
+        report = OpenSourceHealthMarkdownReport("MEDIUM")
         report.decorateLinks = False
         markdown = report.renderMarkdown("1234", self.feedback, self.options)
 
         expected = """
             # [Sigrid](https://sigrid-says.com/aap/noot/-/open-source-health) Open Source Health feedback
             
-            **⚠️  You failed to meet your objective of having no high-severity open source vulnerabilities.**
+            **❌️  You failed to meet your objective of having no high-severity open source vulnerabilities.**
             
             Sigrid compared your code against the baseline of 2025-09-19.
             
+            - ❌ means the library has issues that fail your objective.
+            - ⚠️ means the library has issues, but they are not severe enough to fail your objective.
+            - ✅ means everything is fine.
+            
+            If you believe these findings are false positives, you can
+            [exclude them in the Sigrid configuration](https://docs.sigrid-says.com/reference/analysis-scope-configuration.html#exclude-open-source-health-risks).
+            
             ## 👎 What could be better?
             
-            > You have **2** vulnerable open source libraries with a fix available.  
-            > Consider upgrading to a version that no longer contains the vulnerability.
+            > You have **4** open source libraries with issues.
             
-            | Vulnerability risk | Library | Latest version | Location(s) |
-            |----|----|----|----|
-            | 🟣 | org.apache.logging.log4j:log4j-core 2.14.1 | 2.25.1 | gradle/libs.versions.toml |
-            | 🔴 | commons-io:commons-io 2.9.0 | 2.20.0 | gradle/libs.versions.toml |
+            | Vulnerabilities | License | Library | Latest version | Location(s) |
+            |----|----|----|----|----|
+            | ❌ | ✅ | org.apache.logging.log4j:log4j-core 2.14.1<br />*CVE-2021-45046, CVE-2021-45105, [CVE-2021-44228](https://nvd.nist.gov/vuln/detail/CVE-2021-44228), CVE-2021-44832.* | 2.25.1 | gradle/libs.versions.toml |
+            | ❌ | ✅ | commons-io:commons-io 2.9.0<br />*CVE-2024-47554.* | 2.20.0 | gradle/libs.versions.toml |
+            | ⚠️ | ✅ | io.github.classgraph:classgraph 4.8.106<br />*(Transitive) CVE-2021-47621.* | 4.8.181 | gradle/libs.versions.toml |
+            | ⚠️ | ✅ | junit:junit <br />*CVE-2020-15250.* | 4.13.2 | buildSrc/src/main/kotlin/junit4-compatibility.gradle.kts |
             
             
             ----
@@ -103,43 +120,27 @@ class OpenSourceHealthMarkdownReportTest(TestCase):
         expected = """
             # [Sigrid](https://sigrid-says.com/aap/noot/-/open-source-health) Open Source Health feedback
             
-            **⚠️  You failed to meet your objective of having no low-severity open source vulnerabilities.**
+            **❌️  You failed to meet your objective of having no medium-severity open source vulnerabilities.**
             
             Sigrid compared your code against the baseline of 2025-09-19.
             
+            - ❌ means the library has issues that fail your objective.
+            - ⚠️ means the library has issues, but they are not severe enough to fail your objective.
+            - ✅ means everything is fine.
+            
+            If you believe these findings are false positives, you can
+            [exclude them in the Sigrid configuration](https://docs.sigrid-says.com/reference/analysis-scope-configuration.html#exclude-open-source-health-risks).
+            
             ## 👎 What could be better?
             
-            > You have **21** vulnerable open source libraries with a fix available.  
-            > Consider upgrading to a version that no longer contains the vulnerability.
+            > You have **4** open source libraries with issues.
             
-            | Vulnerability risk | Library | Latest version | Location(s) |
-            |----|----|----|----|
-            | 🟣 | org.apache.logging.log4j:log4j-core 2.14.1 | 2.25.1 | gradle/libs.versions.toml |
-            | 🔴 | commons-io:commons-io 2.9.0 | 2.20.0 | gradle/libs.versions.toml |
-            | 🟠 | io.github.classgraph:classgraph 4.8.106 | 4.8.181 | gradle/libs.versions.toml |
-            | 🟠 | junit:junit  | 4.13.2 | buildSrc/src/main/kotlin/junit4-compatibility.gradle.kts |
-            | 🟢 | org.codehaus.groovy:groovy-bom 2.5.14 | 3.0.25 | gradle/libs.versions.toml |
-            | 🟢 | org.opentest4j:opentest4j 1.2.0 | 1.3.0 | gradle/libs.versions.toml |
-            | 🟢 | org.openjdk.jmh:jmh-core 1.32 | 1.37 | gradle/libs.versions.toml |
-            | 🟢 | org.apache.logging.log4j:log4j-jul 2.14.1 | 2.25.1 | gradle/libs.versions.toml |
-            | | ... 13 more vulnerable open source libraries | |
-            
-            ## 😑 You have findings that you need to investigate in more depth
-
-            > You have **13** vulnerable open source libraries without a fix available.  
-            > You need to investigate the security risk, and discuss how to manage it accordingly.
-            
-            | Vulnerability risk | Library | Latest version | Location(s) |
-            |----|----|----|----|
-            | 🟢 | org.gradle:test-retry-gradle-plugin 1.2.1 |  | buildSrc/build.gradle.kts |
-            | 🟢 | HH:mm ss.SSSZ |  | build.gradle.kts |
-            | 🟢 | Xdoclint:none  |  | documentation/documentation.gradle.kts |
-            | 🟢 | -Xlint:-overrides  |  | buildSrc/src/main/kotlin/java-library-conventions.gradle.kts |
-            | 🟢 | gradle.plugin.com.github.jengelman.gradle.plugins:shadow 7.0.0 |  | buildSrc/build.gradle.kts |
-            | 🟢 | com.univocity:univocity-parsers 2.9.1 | 2.9.1 | gradle/libs.versions.toml |
-            | 🟢 | org.apache.servicemix.bundles:org.apache.servicemix.bundles.junit 4.13.2_1 | 4.13.2_1 | buildSrc/src/main/kotlin/junit4-compatibility.gradle.kts |
-            | 🟢 | org.apiguardian:apiguardian-api 1.1.2 | 1.1.2 | gradle/libs.versions.toml |
-            | | ... 5 more vulnerable open source libraries | |
+            | Vulnerabilities | License | Library | Latest version | Location(s) |
+            |----|----|----|----|----|
+            | ❌ | ✅ | org.apache.logging.log4j:log4j-core 2.14.1<br />*CVE-2021-45046, CVE-2021-45105, [CVE-2021-44228](https://nvd.nist.gov/vuln/detail/CVE-2021-44228), CVE-2021-44832.* | 2.25.1 | gradle/libs.versions.toml |
+            | ❌ | ✅ | commons-io:commons-io 2.9.0<br />*CVE-2024-47554.* | 2.20.0 | gradle/libs.versions.toml |
+            | ❌ | ✅ | io.github.classgraph:classgraph 4.8.106<br />*(Transitive) CVE-2021-47621.* | 4.8.181 | gradle/libs.versions.toml |
+            | ❌ | ✅ | junit:junit <br />*CVE-2020-15250.* | 4.13.2 | buildSrc/src/main/kotlin/junit4-compatibility.gradle.kts |
             
             
             ----
@@ -151,7 +152,7 @@ class OpenSourceHealthMarkdownReportTest(TestCase):
 
     @mock.patch.dict(os.environ, {"SIGRID_CI_MARKDOWN_HTML" : "false"})
     def testShowUpdatedLibraries(self):
-        report = OpenSourceHealthMarkdownReport("HIGH")
+        report = OpenSourceHealthMarkdownReport("MEDIUM")
         report.decorateLinks = False
         report.previousFeedback = self.previousFeedback
         markdown = report.renderMarkdown("1234", self.feedback, self.options)
@@ -159,27 +160,113 @@ class OpenSourceHealthMarkdownReportTest(TestCase):
         expected = """
             # [Sigrid](https://sigrid-says.com/aap/noot/-/open-source-health) Open Source Health feedback
             
-            **⚠️  You failed to meet your objective of having no high-severity open source vulnerabilities.**
+            **❌️  You failed to meet your objective of having no high-severity open source vulnerabilities.**
             
             Sigrid compared your code against the baseline of 2025-09-18.
             
+            - ❌ means the library has issues that fail your objective.
+            - ⚠️ means the library has issues, but they are not severe enough to fail your objective.
+            - ✅ means everything is fine.
+            
+            If you believe these findings are false positives, you can
+            [exclude them in the Sigrid configuration](https://docs.sigrid-says.com/reference/analysis-scope-configuration.html#exclude-open-source-health-risks).
+            
             ## 👍 What went well?
             
-            > You updated **1** vulnerable open source libraries.
+            > You updated **1** open source libraries that previously had issues.
             
-            | Vulnerability risk | Library | Latest version | Location(s) |
-            |----|----|----|----|
-            | 🔴 | commons-io:commons-other 1.99 | 3.0 | gradle/libs.versions.toml |
+            | Vulnerabilities | License | Library | Latest version | Location(s) |
+            |----|----|----|----|----|
+            | ❌ | ✅ | commons-io:commons-other 1.99 | 3.0 | gradle/libs.versions.toml |
             
             ## 👎 What could be better?
             
-            > You have **2** vulnerable open source libraries with a fix available.  
-            > Consider upgrading to a version that no longer contains the vulnerability.
+            > You have **4** open source libraries with issues.
             
-            | Vulnerability risk | Library | Latest version | Location(s) |
-            |----|----|----|----|
-            | 🟣 | org.apache.logging.log4j:log4j-core 2.14.1 | 2.25.1 | gradle/libs.versions.toml |
-            | 🔴 | commons-io:commons-io 2.9.0 | 2.20.0 | gradle/libs.versions.toml |
+            | Vulnerabilities | License | Library | Latest version | Location(s) |
+            |----|----|----|----|----|
+            | ❌ | ✅ | org.apache.logging.log4j:log4j-core 2.14.1<br />*CVE-2021-45046, CVE-2021-45105, [CVE-2021-44228](https://nvd.nist.gov/vuln/detail/CVE-2021-44228), CVE-2021-44832.* | 2.25.1 | gradle/libs.versions.toml |
+            | ❌ | ✅ | commons-io:commons-io 2.9.0<br />*CVE-2024-47554.* | 2.20.0 | gradle/libs.versions.toml |
+            | ⚠️ | ✅ | io.github.classgraph:classgraph 4.8.106<br />*(Transitive) CVE-2021-47621.* | 4.8.181 | gradle/libs.versions.toml |
+            | ⚠️ | ✅ | junit:junit <br />*CVE-2020-15250.* | 4.13.2 | buildSrc/src/main/kotlin/junit4-compatibility.gradle.kts |
+            
+            
+            ----
+            
+            [**View this system in Sigrid**](https://sigrid-says.com/aap/noot/-/open-source-health)
+        """
+
+        self.assertEqual(markdown.strip(), inspect.cleandoc(expected).strip())
+
+    @mock.patch.dict(os.environ, {"SIGRID_CI_MARKDOWN_HTML" : "false"})
+    def testShowLegalRiskIfObjectiveIsSet(self):
+        report = OpenSourceHealthMarkdownReport("CRITICAL", "LOW")
+        report.decorateLinks = False
+        report.previousFeedback = self.previousFeedback
+        markdown = report.renderMarkdown("1234", self.feedback, self.options)
+
+        expected = """
+        # [Sigrid](https://sigrid-says.com/aap/noot/-/open-source-health) Open Source Health feedback
+
+        **✅  You achieved your objective of having any open source vulnerabilities.**
+        
+        **❌  You failed to meet your objective of having no open source libraries with license issues.**
+        
+        Sigrid compared your code against the baseline of 2025-09-18.
+        
+        - ❌ means the library has issues that fail your objective.
+        - ⚠️ means the library has issues, but they are not severe enough to fail your objective.
+        - ✅ means everything is fine.
+        
+        If you believe these findings are false positives, you can
+        [exclude them in the Sigrid configuration](https://docs.sigrid-says.com/reference/analysis-scope-configuration.html#exclude-open-source-health-risks).
+        
+        ## 👍 What went well?
+        
+        > You updated **1** open source libraries that previously had issues.
+        
+        | Vulnerabilities | License | Library | Latest version | Location(s) |
+        |----|----|----|----|----|
+        | ⚠️ | ✅ | commons-io:commons-other 1.99 | 3.0 | gradle/libs.versions.toml |
+        
+        ## 👎 What could be better?
+        
+        > You have **5** open source libraries with issues.
+        
+        | Vulnerabilities | License | Library | Latest version | Location(s) |
+        |----|----|----|----|----|
+        | ⚠️ | ✅ | org.apache.logging.log4j:log4j-core 2.14.1<br />*CVE-2021-45046, CVE-2021-45105, [CVE-2021-44228](https://nvd.nist.gov/vuln/detail/CVE-2021-44228), CVE-2021-44832.* | 2.25.1 | gradle/libs.versions.toml |
+        | ⚠️ | ✅ | commons-io:commons-io 2.9.0<br />*CVE-2024-47554.* | 2.20.0 | gradle/libs.versions.toml |
+        | ⚠️ | ✅ | io.github.classgraph:classgraph 4.8.106<br />*(Transitive) CVE-2021-47621.* | 4.8.181 | gradle/libs.versions.toml |
+        | ⚠️ | ✅ | junit:junit <br />*CVE-2020-15250.* | 4.13.2 | buildSrc/src/main/kotlin/junit4-compatibility.gradle.kts |
+        | ✅ | ❌ | org.mockito:mockito-junit-jupiter 3.10.0<br />*License: The MIT License.* | 5.19.0 | gradle/libs.versions.toml |
+        
+        
+        ----
+        
+        [**View this system in Sigrid**](https://sigrid-says.com/aap/noot/-/open-source-health)
+        """
+
+        self.assertEqual(markdown.strip(), inspect.cleandoc(expected).strip())
+
+    @mock.patch.dict(os.environ, {"SIGRID_CI_MARKDOWN_HTML" : "false"})
+    def testSpecialStatusIfThereAreNoLibraries(self):
+        emptyFeedback = {
+            "metadata": {
+                "timestamp": "2026-02-03"
+            }
+        }
+
+        report = OpenSourceHealthMarkdownReport("CRITICAL")
+        report.decorateLinks = False
+        markdown = report.renderMarkdown("1234", emptyFeedback, self.options)
+
+        expected = """
+            # [Sigrid](https://sigrid-says.com/aap/noot/-/open-source-health) Open Source Health feedback
+    
+            **💭  Sigrid did not find any open source libraries.**
+            
+            Sigrid compared your code against the baseline of 2026-02-03.
             
             
             ----

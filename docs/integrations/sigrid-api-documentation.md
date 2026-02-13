@@ -21,7 +21,9 @@ The following example shows how to call the Sigrid API using `curl`:
 curl -H 'Authorization: Bearer {SIGRID_CI_TOKEN}' https://sigrid-says.com/rest/analysis-results/api/v1/maintainability/{customer}
 ```
 
-In the example, `{customer}` refers to your company's Sigrid account name (lower case), and `{SIGRID_CI_TOKEN}` refers to your authentication token.
+In the example, `{customer}` refers to your company's Sigrid account name (lower case), and `{SIGRID_CI_TOKEN}` refers to your authentication token. The `{customer}` or Sigrid account name is a text string like `acme` and is not a customer account like `john@acme.com`
+
+
 
 ### Including deactivated and/or excluded systems
 
@@ -206,6 +208,35 @@ An example response leveraging the `GET https://sigrid-says.com/rest/analysis-re
   ]
 }
 ```
+
+In the response, different types of refactoring candidates will have slightly different fields:
+
+| Type                                 | Field                       | Description                                                                                              |
+|--------------------------------------|-----------------------------|----------------------------------------------------------------------------------------------------------|
+| **(all)**                            | `id`                        | Unique ID to identify the refactoring candidate.                                                         |
+|                                      | `severity`                  | One of VERY_HIGH, HIGH, MEDIUM, LOW.                                                                     |
+|                                      | `weight`                    | Relative priority of this finding in relation to the system property it covers.                          |
+|                                      | `technology`                | Technology name, for example `java` or `csharp`.                                                         |
+|                                      | `componentName`             | Name of the component in which the finding resides.                                                      |
+|                                      | `filePath`                  | Relative file path in which the finding resides.                                                         |
+|                                      | `status`                    | One of FALSE_POSITIVE, ACCEPTED, FIXEd, RAW, REFINED, WILL_FIX.                                          |
+|                                      | `remark`                    | Optional remark(s) entered via the Sigrid user interface.                                                | 
+| **Duplication**                      | `loc`                       | The number of duplicates lines.                                                                          |
+|                                      | `sameFile`                  | True if the duplicate is within the same file.                                                           |
+|                                      | `sameComponent`             | True if the duplicate is between files within the same component.                                        |
+|                                      | `locations.filePath`        | Relative file path for the duplication occurrence.                                                       |
+|                                      | `locations.startLine`       | First line in the file that is part of the duplicate occurrence.                                         |
+|                                      | `locations.endLine`         | Last line in the file that is part of the duplicate occurrence.                                          |
+| **Unit Size/Complexity/Interfacing** | `unitName`                  | Name of the unit that is the topic of the finding.                                                       |
+|                                      | `startLine`                 | First line within the file that is part of the finding.                                                  |
+|                                      | `endLine`                   | Last line within the file that is part of the finding.                                                   |
+| **Unit Size**                        | `loc`                       | Lines of code within the unit, excluding comments.                                                       |
+| **Unit Complexity**                  | `mcCabe`                    | Decision points within the unit.                                                                         |
+| **Unit Interfacing**                 | `parameters`                | Number of parameters within the unit.                                                                    |
+| **Module Coupling**                  | `loc`                       | Lines of code within the file, excluding comments.                                                       |
+|                                      | `fanIn`                     | Number of incoming dependencies originating from outside the file.                                       |
+| **Component Independence**           | `loc`                       | Lines of code within the file, excluding comments.                                                       | 
+| **Component Entanglement**           | `componentEntanglementType` | One of CYCLIC_DEPENDENCY, INDIRECT_CYCLIC_DEPENDENCY, LAYER_BYPASSING_DEPENDENCY, COMMUNICATION_DENSITY. |
 
 </details>
 
@@ -923,22 +954,35 @@ This end point returns the following response:
 
 If you're a typical Sigrid user, you probably already know which licenses you have and therefore probably don't need this end point. However, if you have access to *multiple* Sigrid accounts, you can use this end point to programmatically obtain the licenses for each one.
 
-## Managing user permissions via API
+## User management
 
-In addition to the general usage of the Sigrid API, users also can also perform user management tasks via the API as an alternative to doing these tasks within the web-based user interface of Sigrid itself. This also allows Sigrid administrators to better construct automated processes for managing the access to systems for their users.
+In addition to the general usage of the Sigrid API, users also can also perform user management tasks via the API as an alternative to doing these tasks within the web-based user interface of Sigrid itself. 
+This allows Sigrid administrators to better construct automated processes for managing the access to systems for their users.
 
-* The Sigrid UM API base URL is `https://sigrid-says.com/rest/auth/api`.
-* Authentication for the Sigrid API uses the same [authentication tokens](../organization-integration/authentication-tokens.md) that are used by Sigrid CI.
-* You need to pass the authentication token to each request in the HTTP header: `Authorization: Bearer {SIGRID_PERSONAL_TOKEN}`.
-* All end points will return HTTP status 401 if the token is invalid, expired or revoked.
-* All end points will return HTTP status 403 if the token belongs to an non-admin user.
-* All end points return JSON and therefore return a Content-Type of `application/json`.
+### Creating users
 
-The following example shows how to call the User Management API via `curl`:
+Administrators can use the API to create users in Sigrid. This is suitable for situations where you want to fully automate Sigrid user management based on your internal address book, without needing to rely on Sigrid's user interface for user management. To create a user, you can use the following end point:
 
-```shell
-curl -H 'Authorization: Bearer {SIGRID_PERSONAL_TOKEN}' https://sigrid-says.com/rest/auth/api/user-management/{customer}/users
+    POST https://sigrid-says.com/rest/auth/api/user-management/{customer}/users
+
+The end point requires the following request body:
+
+```json
+{
+  "userInfo": {
+    "firstName": "string",
+    "lastName": "string",
+    "emailAddress": "string"
+  },
+  "isSSO": true
+}
 ```
+
+### Deleting users
+
+Administrators can use the following end point to delete users from Sigrid entirely, without needing to use the user interface:
+
+    DELETE https://sigrid-says.com/rest/auth/api/user-management/{customer}/users/{userId}
 
 ### Managing individual user permissions
 
@@ -1204,4 +1248,4 @@ Successful response format of this request would look like the following, with t
 
 ## Contact and support
 
-Feel free to contact [SIG's support department](mailto:support@softwareimprovementgroup.com) for any questions or issues you may have after reading this document, or when using Sigrid or Sigrid CI. Users in Europe can also contact us by phone at +31 20 314 0953.
+Feel free to contact [SIG's support team](mailto:support@softwareimprovementgroup.com) for any questions or issues you may have after reading this documentation or when using Sigrid.

@@ -41,7 +41,7 @@ Sigrid is able to scan the parent POM, but only if the parent POM is included in
 
 If you want Sigrid to scan your parent POM without having to include its original file in your upload, you can also generate a [Maven dependency report](https://maven.apache.org/plugins/maven-dependency-plugin/tree-mojo.html) and upload that to Sigrid. You can generate this report from the command line, as part of your build pipeline:
 
-    mvn dependency:tree > maven.tree
+    mvn dependency:tree -DoutputType=text -DoutputFile=maven.tree -DoutputEncoding=UTF-8
     
 If Sigrid finds both POM files and the `maven.tree` file in your upload, the `maven.tree` file takes precedence. 
 
@@ -108,4 +108,4 @@ This page provides some additional instructions and explanation for commonly use
 
 ## Contact and support
 
-Feel free to contact [SIG's support department](mailto:support@softwareimprovementgroup.com) for any questions or issues you may have after reading this document, or when using Sigrid or Sigrid CI. Users in Europe can also contact us by phone at +31 20 314 0953.
+Feel free to contact [SIG's support team](mailto:support@softwareimprovementgroup.com) for any questions or issues you may have after reading this documentation or when using Sigrid.

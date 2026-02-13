@@ -15,8 +15,9 @@
 import io
 import urllib.request
 from email.message import Message
+from io import StringIO
 from unittest import TestCase
-from urllib.error import URLError
+from urllib.error import URLError, HTTPError
 
 from sigridci.sigridci.api_caller import ApiCaller
 from sigridci.sigridci.upload_log import UploadLog
@@ -90,9 +91,17 @@ class ApiCallerTest(TestCase):
 
         self.assertEqual(expected, UploadLog.history)
 
+    def testExitOnHttp502(self):
+        api = ApiCaller("Test", 1)
+        with self.assertRaises(SystemExit):
+            api.retryRequest(lambda: self.raiseHttp502(), attempts=1)
+        self.assertEqual(["Sigrid was unable to handle your request (HTTP status 502 for ):\n{body}"], UploadLog.history)
+
     def raiseTimeoutError(self):
         raise TimeoutError()
 
     def raiseUrlError(self):
         raise URLError("some reason")
 
+    def raiseHttp502(self):
+        raise HTTPError("", 502, "", None, StringIO("{body}"))

@@ -25,23 +25,62 @@ class CycloneDXProcessorTest(TestCase):
         with open(os.path.dirname(__file__) + "/testdata/osh-junit.json", encoding="utf-8", mode="r") as f:
             feedback = json.load(f)
 
-        processor = CycloneDXProcessor()
-        libraries = list(processor.extractRelevantLibraries(feedback, "NONE"))
+        processor = CycloneDXProcessor("NONE")
+        libraries = list(processor.extractLibraries(feedback))
 
-        self.assertEqual(len(libraries), 34)
-        self.assertEqual(libraries[0].risk, "NONE")
-        self.assertEqual(libraries[0].name, "org.gradle:test-retry-gradle-plugin")
-        self.assertEqual(libraries[0].version, "1.2.1")
-        self.assertEqual(libraries[0].latestVersion, "")
-        self.assertEqual(libraries[0].files, ["buildSrc/build.gradle.kts"])
+        self.assertEqual(len(libraries), 4)
+        self.assertEqual(libraries[0].name, "org.apache.logging.log4j:log4j-core")
+        self.assertEqual(libraries[0].licenses, [])
+        self.assertEqual(libraries[0].vulnerabilityRisk.severity, "CRITICAL")
+        self.assertEqual(libraries[0].licenseRisk.severity, "UNKNOWN")
+
+        self.assertEqual(libraries[1].name, "commons-io:commons-io")
+        self.assertEqual(libraries[1].licenses, ["Apache"])
+        self.assertEqual(libraries[1].vulnerabilityRisk.severity, "HIGH")
+        self.assertEqual(libraries[1].licenseRisk.severity, "NONE")
 
     def testExtractLibrariesMatchingObjective(self):
         with open(os.path.dirname(__file__) + "/testdata/osh-junit.json", encoding="utf-8", mode="r") as f:
             feedback = json.load(f)
 
-        processor = CycloneDXProcessor()
-        libraries = list(processor.extractRelevantLibraries(feedback, "CRITICAL"))
+        processor = CycloneDXProcessor("HIGH")
+        libraries = list(processor.extractLibraries(feedback))
 
-        self.assertEqual(len(libraries), 1)
-        self.assertEqual(libraries[0].risk, "CRITICAL")
+        self.assertEqual(len(libraries), 4)
         self.assertEqual(libraries[0].name, "org.apache.logging.log4j:log4j-core")
+        self.assertEqual(libraries[0].vulnerabilityRisk.meetsObjective, False)
+        self.assertEqual(libraries[1].name, "commons-io:commons-io")
+        self.assertEqual(libraries[1].vulnerabilityRisk.meetsObjective, True)
+        self.assertEqual(libraries[2].name, "io.github.classgraph:classgraph")
+        self.assertEqual(libraries[2].vulnerabilityRisk.meetsObjective, True)
+        self.assertEqual(libraries[3].name, "junit:junit")
+        self.assertEqual(libraries[3].vulnerabilityRisk.meetsObjective, True)
+
+    def testExtractVulnerabilities(self):
+        with open(os.path.dirname(__file__) + "/testdata/osh-junit.json", encoding="utf-8", mode="r") as f:
+            feedback = json.load(f)
+
+        processor = CycloneDXProcessor("NONE")
+        libraries = list(processor.extractLibraries(feedback))
+
+        self.assertEqual(libraries[0].name, "org.apache.logging.log4j:log4j-core")
+        self.assertEqual(len(libraries[0].vulnerabilities), 4)
+        self.assertEqual(libraries[0].vulnerabilities[0].id, "CVE-2021-45046")
+        self.assertEqual(libraries[0].vulnerabilities[0].link, None)
+        self.assertEqual(libraries[0].vulnerabilities[1].id, "CVE-2021-45105")
+        self.assertEqual(libraries[0].vulnerabilities[1].link, None)
+        self.assertEqual(libraries[0].vulnerabilities[2].id, "CVE-2021-44228")
+        self.assertEqual(libraries[0].vulnerabilities[2].link, "https://nvd.nist.gov/vuln/detail/CVE-2021-44228")
+        self.assertEqual(libraries[0].vulnerabilities[3].id, "CVE-2021-44832")
+        self.assertEqual(libraries[0].vulnerabilities[3].link, None)
+
+    def testLicenseRisk(self):
+        with open(os.path.dirname(__file__) + "/testdata/osh-junit.json", encoding="utf-8", mode="r") as f:
+            feedback = json.load(f)
+
+        processor = CycloneDXProcessor("NONE", "NONE")
+        jmhcore = next(lib for lib in processor.extractLibraries(feedback) if lib.name.endswith("jmh-core"))
+
+        self.assertEqual(jmhcore.licenses, ["GNU General Public License (GPL), version 2, with the Classpath exception"])
+        self.assertEqual(jmhcore.licenseRisk.severity, "LOW")
+        self.assertEqual(jmhcore.licenseRisk.meetsObjective, False)

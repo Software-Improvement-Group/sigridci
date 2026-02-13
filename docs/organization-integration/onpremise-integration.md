@@ -10,7 +10,7 @@ This document covers everything you need to integrate Sigrid On-Premise in your 
 From a deployment perspective, on-premise Sigrid consists of two "parts":
 
 - **Sigrid** is the Sigrid web application, which you access from your browser.
-- **Sigrid CI** runs within your development platform (e.g. GitHub). It performs the analyses and then publishes the results to Sigrid.
+- **Sigrid-Multi-Analyzer** runs within your development platform (e.g. GitHub). It performs the analyses and then publishes the results to Sigrid.
 
 <img src="../images/onpremise-overview.png" width="600" />
 
@@ -56,7 +56,7 @@ As explained above, Sigrid consists of several Docker containers. The container 
 
 ## Installing and configuring on-premise Sigrid
 
-As shown in the high-level overview, the on-premise version of Sigrid consists of two "blocks": The Sigrid application that is deployed within a Kubernetes cluster, and the Sigrid CI Docker container that is integrated within your development platform. 
+As shown in the high-level overview, the on-premise version of Sigrid consists of two "blocks": The Sigrid application that is deployed within a Kubernetes cluster, and the Sigrid-Multi-Analyzer Docker container that is integrated within your development platform. 
 
 Instructions for installing and configuring both parts are provided in the following pages:
 
@@ -75,7 +75,7 @@ This also means SIG does not back-port any changes to older versions: If you wan
 
 ## Updating your environment
 
-In addition to updating Sigrid itself, you will also need to periodicially update your environment in which Sigrid runs. SIG uses the following support policy for infrastructure component versions:
+In addition to updating Sigrid itself, you will also need to periodically update your environment in which Sigrid runs. SIG uses the following support policy for infrastructure component versions:
 
 - For Kubernetes, we support the latest 2 major versions. You can track the Kubernetes version history in [this overview](https://kubernetes.io/releases/).
 - For Postgres, we also support the latest 2 major versions. You can track the Postgres version history in [this overview](https://www.postgresql.org/support/versioning/).
@@ -90,13 +90,10 @@ In addition to updating Sigrid itself, you will also need to periodicially updat
   - Mendix: Set the variable `CONVERT` to `mendix` in your CI pipeline job, and use `Mendixflow` as language when defining the scope.
   - Outsystems: This technology is not supported.
 - Unavailable Features:
-  - Open Source Health - currently work-in-progress
-  - Security: Results for the following tools cannot be generated:
+  - Security: The following tool(s) are currently unsupported in Sigrid On-Premise, and integration is not planned:
     - Checkmarx
-    - Astrée
-  - Green Code
   - Interactive AI Explanations
 
 ## Contact and support
 
-Feel free to contact [SIG's support department](mailto:support@softwareimprovementgroup.com) for any questions or issues you may have after reading this document, or when using Sigrid or Sigrid CI. Users in Europe can also contact us by phone at +31 20 314 0953.
+Feel free to contact [SIG's support team](mailto:support@softwareimprovementgroup.com) for any questions or issues you may have after reading this documentation or when using Sigrid.

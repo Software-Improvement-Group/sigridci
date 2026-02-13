@@ -24,7 +24,7 @@ Sigrid CI reads your Sigrid account credentials from an environment variable cal
 - Select "CI/CD" in the settings menu
 - Locate the section named "Variables"
 - Click the "Add variable" button
-- Add an environment variable `SIGRID_CI_TOKEN` and use your [Sigrid authentication token](../organization-integration/authentication-tokens.md) as the value.
+- Add an environment variable `SIGRID_CI_TOKEN` and use your [Sigrid authentication token](../organization-integration/authentication-tokens.md) as the value. Make sure the checkbox for "protect variable" is *not* checked, otherwise Sigrid CI will not be able to use the token.
 
 <img src="../images/gitlab-env.png" width="400" />
 
@@ -35,6 +35,7 @@ Next, create a token that is allowed to post merge request comments. Sigrid CI w
 - Access your GitLab settings.
 - Select the Access Token menu.
 - Create a new token that has permission to access the API. Sigrid CI needs permission to use the API in order to post comments.
+  - This token needs to have sufficient rights to post merge request comments. What is considered "sufficient" depends on how your GitLab project is configured.
 
 <img src="../images/gitlab-api-token.png" width="700" />
 
@@ -42,7 +43,7 @@ You now need to make this API token available to your pipeline. You can either d
 
 <img src="../images/gitlab-api-token-in-pipeline.png" width="300" />
 
-In your project and/or group settings, navigate to "CI/CD settings" and then pick "variables". Next, add a variable called `SIGRIDCI_GITLAB_COMMENT_TOKEN`, and use the value from the previous step. Once you've added the token as a variable, it will automatically be picked up by Sigrid CI.
+In your project and/or group settings, navigate to "CI/CD settings" and then pick "variables". Next, add a variable called `SIGRIDCI_GITLAB_COMMENT_TOKEN`, and use the value from the previous step. Once you've added the token as a variable, it will automatically be picked up by Sigrid CI. Make sure the checkbox for "protect variable" is *not* checked, otherwise Sigrid CI will not be able to use the token.
 
 *Note: We realize it's a bit cumbersome having to create the token and add it to a variable. There is a [GitLab feature request](https://gitlab.com/gitlab-org/gitlab/-/issues/464591) that would allow integrations like Sigrid CI to post comments without needing their own special token. Once this is implemented in a future version of GitLab, Sigrid CI will be updated to no longer require manual creation of this token.* 
 
@@ -74,7 +75,7 @@ sigridci:
   image:
     name: softwareimprovementgroup/sigridci
   script:
-    - sigridci.py --customer <example_customer_name> --system <example_system_name> --source . 
+    - sigridci.py --customer <example_customer_name> --system <example_system_name> --source . --capability maintainability,osh
   allow_failure: true
   artifacts:
     paths:
@@ -120,7 +121,7 @@ sigridci:
   stage: report
   script:
     - git clone https://github.com/Software-Improvement-Group/sigridci.git sigridci
-    - ./sigridci/sigridci/sigridci.py --customer <example_customer_name> --system <example_system_name> --source .
+    - ./sigridci/sigridci/sigridci.py --customer <example_customer_name> --system <example_system_name> --source . --capability maintainability,osh
   allow_failure: true
   artifacts:
     paths:

@@ -15,6 +15,7 @@
 import sys
 
 from .report import Report
+from ..objective import Objective
 
 
 class AsciiArtReport(Report):
@@ -53,7 +54,7 @@ class AsciiArtReport(Report):
             "New/changed code"
         )
 
-        for metric in self.METRICS:
+        for metric in Objective.SYSTEM_PROPERTIES + ["MAINTAINABILITY"]:
             if metric == "MAINTAINABILITY":
                 self.printSeparator()
 

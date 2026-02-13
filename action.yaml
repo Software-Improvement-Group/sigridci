@@ -13,7 +13,7 @@ inputs:
     required: false
     default: "."
   capability:
-    description: "Comma-separated list of Sigrid capabilities (`maintainability,osh,security`). Default is maintainability.."
+    description: "Comma-separated list of Sigrid capabilities (`maintainability,osh,security`). Default is maintainability."
     required: false
     default: "maintainability"
   publish:
@@ -50,6 +50,10 @@ inputs:
     description: "Output directory for Sigrid CI feedback."
     required: false
     default: "sigrid-ci-output"
+  targetquality:
+    description: "The desired target quality threshold"
+    required: false
+    type: "number"
     
   # Sigrid metadata
   displayname:

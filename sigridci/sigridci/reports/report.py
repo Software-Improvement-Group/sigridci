@@ -20,22 +20,6 @@ from ..platform import Platform
 
 
 class Report(ABC):
-    REFACTORING_CANDIDATE_METRICS = [
-        "DUPLICATION",
-        "UNIT_SIZE",
-        "UNIT_COMPLEXITY",
-        "UNIT_INTERFACING",
-        "MODULE_COUPLING"
-    ]
-
-    METRICS = [
-        "VOLUME",
-        *REFACTORING_CANDIDATE_METRICS,
-        "COMPONENT_INDEPENDENCE",
-        "COMPONENT_ENTANGLEMENT",
-        "MAINTAINABILITY"
-    ]
-
     RISK_CATEGORIES = ["VERY_HIGH", "HIGH", "MODERATE", "MEDIUM", "LOW"]
     GOOD_CATEGORIES = ["fixed", "improved"]
     BAD_CATEGORIES = ["introduced", "worsened"]
@@ -83,18 +67,25 @@ class MarkdownRenderer(ABC):
         pass
 
     def renderMarkdownTemplate(self, feedback, options, details, sigridLink):
-        md = f"# [Sigrid]({sigridLink}) {self.getCapability()} feedback\n\n"
-        md += f"**{self.getSummary(feedback, options)}**\n\n"
+        md = f"# {self.formatTitle(sigridLink)}\n\n"
+        for summaryLine in self.getSummary(feedback, options):
+            md += f"**{summaryLine}**\n\n"
         if len(details) > 0:
             if Platform.isHtmlMarkdownSupported():
                 md += "<details><summary>Show details</summary>\n\n"
             md += details
-            md += self.renderReactionSection(options)
+            if not self.isObjectiveSuccess(feedback, options):
+                md += self.renderReactionSection(options)
             if Platform.isHtmlMarkdownSupported():
                 md += "</details>\n"
         md += "\n----\n\n"
         md += f"[**View this system in Sigrid**]({sigridLink})"
         return md
+
+    def formatTitle(self, sigridLink):
+        capability = self.getCapability()
+        suffix = " *(Beta)*" if capability.beta else ""
+        return f"[Sigrid]({sigridLink}) {capability.displayName} feedback{suffix}"
 
     def renderReactionSection(self, options):
         if not options.feedbackURL:
@@ -109,7 +100,7 @@ class MarkdownRenderer(ABC):
         return md
 
     def getReactionLink(self, options, reaction):
-        featureId = "sigridci." + self.getCapability().lower().replace(" ", "")
+        featureId = f"sigridci.{self.getCapability().shortName}"
         return f"{options.feedbackURL}?feature={featureId}&feedback={reaction}&system={options.getSystemId()}"
 
     @abstractmethod

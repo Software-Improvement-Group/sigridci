@@ -30,21 +30,23 @@ If your deployment is entirely air-gapped or you just want to use your own inter
 1. Pull all container images required:
    From the AWS ECR registry:
    - softwareimprovementgroup/ai-explanation-service
-   - softwareimprovementgroup/auth-api-db-migration
    - softwareimprovementgroup/auth-api
+   - softwareimprovementgroup/auth-api-db-migration
+   - softwareimprovementgroup/inbound-api
    - softwareimprovementgroup/quality-model-service
-   - softwareimprovementgroup/sigrid-api-db-migration
    - softwareimprovementgroup/sigrid-api
+   - softwareimprovementgroup/sigrid-api-db-migration
    - softwareimprovementgroup/sigrid-frontend
    - softwareimprovementgroup/sigrid-multi-analyzer
    - softwareimprovementgroup/sigrid-multi-importer
+   - softwareimprovementgroup/osh-kb-updater
 
    Additionally, the following public images are required:
    - nginxinc/nginx-unprivileged
    - redis:7.2.4-alpine
    - haproxy:2.9.4-alpine
    - aws-cli:2.24.6
-2. Tag the downloaded containers with their tag from AWS ECR registry (e.g. 1.0.20250603).
+2. Tag the downloaded containers with their tag from AWS ECR registry (e.g. 1.0.20260107).
 3. Re-tag and push the containers to your internal image registry.
 
 #### Situation 2: Pulling images directly from SIG's AWS ECR Registry
@@ -84,7 +86,6 @@ When an OIDC compatible Identity Provider is available:
 
 ### (E) Prepare an RSA keypair for the signing of UWT tokens
 
-This part will soon become obsolete in a newer Sigrid release. 
 1. Create a 2048-bit RSA keypair: `openssl genpkey -out uwt_signing_key.pem -algorithm RSA -pkeyopt rsa_keygen_bits:2048`
 2. Store the certificate securely in Kubernetes.
 
@@ -114,7 +115,7 @@ Your copy of example-values.yaml however is enough to get a complete Sigrid depl
 
 #### global:
 ```
-  imageTag: "1.0.20250603"
+  imageTag: "1.0.20260107"
 ```
 Provide the tag of the containers you want to use.
 It is important that the tag matches the tags used in Sigrid's Helm chart: all components of Sigrid must always use the same version.
@@ -161,7 +162,7 @@ If your deployment is air-gapped, adjust the values below.
 
 ```
 image.registry: ""
-image.repository: ""nginxinc/nginx-unprivileged""
+image.repository: "nginxinc/nginx-unprivileged"
 ```
 Provide full URL to your registry and container image.
 ```
@@ -175,7 +176,7 @@ These values can be retrieved using the GUI or .well-known endpoint of your Iden
 
 ```
 config.oauth2.resourceServer.data.issuer-uri: "https://my-idp.example.com" 
-config.oauth2.resourceServer.data.jwk-set-uri: "https://my-idp.example.com/jwks.json 
+config.oauth2.resourceServer.data.jwk-set-uri: "https://my-idp.example.com/jwks.json" 
 config.oauth2.provider.sigridmfa.issuer-uri: "https://my-idp.example.com" 
 ```
 
@@ -205,7 +206,7 @@ They will work as is but can be modified.
 redis.data.password: "example-password" 
 redis.data.sentinel-password: "example-password" 
 ```
-If you want to use the use a self-provided redis server, also adjust `host: ""`
+If you want to use a self-provided redis server, also adjust `host: ""`
 
 ## Install helm chart
 We assume that your Kubernetes cluster is ready and that you have created a namespace. There are several ways to install a Helm chart. One common method is as follows: `helm upgrade --install <deployment-name> <helm-chart-path> -n <namespace> --values <values-file-path>`
@@ -237,7 +238,8 @@ You can now start inviting more people to Sigrid if so desired.
 - Preferably, set up project secrets based on your use case.  
 *You can also set them up at the organization or group level, but ensure you are not unintentionally overriding any default project variables in the process.*
   - `CUSTOMER: "company_name"`
-  - `SIGRID_CI_TOKEN: "Sigrid Token"BUCKET: "some-bucket"`   
+  - `SIGRID_CI_TOKEN: "Sigrid Token"`  
+  - `BUCKET: "some-bucket"`   
   The name of the bucket you've created.
   - `SIGRID_VERSION: "should match ImageTag from helm global"`
   - `AWS_ENDPOINT_URL: "https://minio.my-company.com"`  
@@ -253,17 +255,8 @@ You can now start inviting more people to Sigrid if so desired.
 - Browse to your test project.
   - For efficient Sigrid setup, use a minimal test project in the CI pipeline. This allows for quicker iterations. Once configured correctly, you can analyze any project size.
 - Create a test-branch.
-- Create an analysis scope.
-  - Create sigrid.yaml in the root of your test project.
-  - Comprehensive documentation can found here: [Analysis-scope-configuration](../reference/analysis-scope-configuration.md)
-  - Example:  
-    ```
-    languages:
-      - name: TypeScript
-      - name: JavaScript
-    ```
 - Create a pipeline.
-  - Example: Where all secrets except SYSTEM can be omitted if already stored as secrets in your e.g. GitLab. Also override image name if you're pulling from your own container registry.
+  - Example: Where all secrets except SYSTEM can be omitted if already templated or stored as secrets in e.g. your GitLab. Also override image name if you're pulling from your own container registry.
     ```
     sigrid-publish:
       image:
@@ -286,6 +279,17 @@ You can now start inviting more people to Sigrid if so desired.
       script:
         - "run-analyzers --publish"
     ```
+- Optional: Create an analysis scope.
+  - By default, a scope file is generated and used for analysis. In many cases, this is sufficient. If you want more control over the analysis results, 
+    for example, to include or exclude certain file extensions or folders, you can define your own scope.
+  - Create a `sigrid.yaml` file in the root of your test project.
+  - Comprehensive documentation can be found here: [Analysis-scope-configuration](../reference/analysis-scope-configuration.md)
+  - Example:
+    ```yaml
+    languages:
+      - name: TypeScript
+      - name: JavaScript
+    ```
 - Commit changes to your test project.
 
 ### Verify a successful analysis
@@ -295,4 +299,4 @@ You can now start inviting more people to Sigrid if so desired.
 
 ## Contact and support
 
-Feel free to contact [SIG's support department](mailto:support@softwareimprovementgroup.com) for any questions or issues you may have after reading this document, or when using Sigrid or Sigrid CI. Users in Europe can also contact us by phone at +31 20 314 0953.
+Feel free to contact [SIG's support team](mailto:support@softwareimprovementgroup.com) for any questions or issues you may have after reading this documentation or when using Sigrid.

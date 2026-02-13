@@ -15,6 +15,7 @@
 import os
 import sys
 
+from .capability import OPEN_SOURCE_HEALTH, SECURITY, Capability
 from .feedback_provider import FeedbackProvider
 from .platform import Platform
 from .publish_options import PublishOptions, RunMode
@@ -64,11 +65,13 @@ class SigridCiRunner:
 
         if not systemExists:
             UploadLog.log(f"System '{self.options.system}' has been on-boarded and will appear in Sigrid shortly")
+            return 0
         elif self.options.runMode == RunMode.PUBLISH_ONLY:
             UploadLog.log("Your project's source code has been published to Sigrid")
             self.displayMetadata(metadata)
+            return 0
         else:
-            self.displayFeedback(analysisId, metadata)
+            return self.displayFeedback(analysisId, metadata)
 
     def prepareRun(self):
         # We don't use the options.feedbackURL directly, since that's intended
@@ -88,14 +91,29 @@ class SigridCiRunner:
 
     def displayFeedback(self, analysisId, metadata):
         objectives = self.apiClient.fetchObjectives()
-        feedback = self.apiClient.fetchAnalysisResults(analysisId)
+        exitCode = 0
+
         self.displayMetadata(metadata)
 
         for capability in self.options.capabilities:
+            feedback = self.apiClient.fetchAnalysisResults(analysisId, capability)
             feedbackProvider = FeedbackProvider(capability, self.options, objectives)
             feedbackProvider.analysisId = analysisId
             feedbackProvider.feedback = feedback
-            feedbackProvider.generateReports()
+            feedbackProvider.previousFeedback = self.loadFeedbackBaseline(capability)
+            success = feedbackProvider.generateReports()
+            if not success:
+                exitCode += capability.exitCode
+
+        return exitCode
+
+    def loadFeedbackBaseline(self, capability):
+        if capability == OPEN_SOURCE_HEALTH:
+            return self.apiClient.fetchOpenSourceHealth()
+        elif capability == SECURITY:
+            return self.apiClient.fetchSecurityFindings()
+        else:
+            return None
 
     def validateConfigurationFiles(self, metadata):
         scope = self.options.readScopeFile()
@@ -105,8 +123,12 @@ class SigridCiRunner:
                 UploadLog.log("Warning: You cannot provide a scope configuration file for a subsystem, it will be ignored.")
 
             self.validateConfiguration(lambda: self.apiClient.validateScopeFile(scope), "scope configuration file")
+            if OPEN_SOURCE_HEALTH in self.options.capabilities and not "dependencychecker:" in scope:
+                self.showValidationError("scope configuration file", ["Missing required field 'dependencychecker'."])
+            if SECURITY in self.options.capabilities and not "thirdpartyfindings:" in scope:
+                self.showValidationError("scope configuration file", ["Missing required field 'thirdpartyfindings'."])
 
-        if scope is None and metadata.get("scopeFileInRepository") and not self.options.subsystem:
+        if scope is None and metadata.get("scopeFileInRepository") and not self.options.subsystem and not self.options.ignoreMissingScopeFile:
             message = {"valid" : False, "notes" : ["Missing sigrid.yaml file", f"See {self.MISSING_SCOPE_URL}"]}
             self.validateConfiguration(lambda: message, "scope configuration file")
 
@@ -117,16 +139,18 @@ class SigridCiRunner:
     def validateConfiguration(self, validationCall, configurationName):
         UploadLog.log(f"Validating {configurationName}")
         validationResult = validationCall()
-
         if validationResult["valid"]:
             UploadLog.log("Validation passed")
         else:
-            UploadLog.log("-" * 80)
-            UploadLog.log(f"Invalid {configurationName}:")
-            for note in validationResult["notes"]:
-                UploadLog.log(f"    - {note}")
-            UploadLog.log("-" * 80)
-            sys.exit(1)
+            self.showValidationError(configurationName, validationResult["notes"])
+
+    def showValidationError(self, configurationName, notes):
+        UploadLog.log("-" * 80)
+        UploadLog.log(f"Invalid {configurationName}:")
+        for note in notes:
+            UploadLog.log(f"    - {note}")
+        UploadLog.log("-" * 80)
+        sys.exit(1)
 
     def displayMetadata(self, metadata):
         if self.options.readMetadataFile() == None:
@@ -134,7 +158,7 @@ class SigridCiRunner:
             print("Sigrid metadata for this system:")
             for key, value in metadata.items():
                 if value:
-                    print(f"    {key}:".ljust(20) + str(value))
+                    print(f"    {key}:".ljust(30) + str(value))
 
     def prepareMetadata(self):
         getMetadataValue = lambda field: os.environ.get(field.lower(), "")

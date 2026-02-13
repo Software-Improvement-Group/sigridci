@@ -14,6 +14,7 @@
 
 import json
 import os
+import ssl
 import urllib.request
 
 from .report import Report, MarkdownRenderer
@@ -27,17 +28,23 @@ class GitLabPullRequestReport(Report):
     def __init__(self, markdownRenderer: MarkdownRenderer):
         self.markdownRenderer = markdownRenderer
 
+        certPath = os.getenv("SIGRID_GITLAB_CA_CERT_PATH")
+        self.sslContext = ssl.create_default_context(cafile=certPath) if certPath else None
+
     def generate(self, analysisId, feedback, options):
         if self.isWithinGitLabMergeRequestPipeline(options):
-            existingCommentId = self.findExistingCommentId()
-            body = self.buildRequestBody(self.markdownRenderer.renderMarkdown(analysisId, feedback, options))
+            try:
+                existingCommentId = self.findExistingCommentId()
+                body = self.buildRequestBody(self.markdownRenderer.renderMarkdown(analysisId, feedback, options))
 
-            if existingCommentId is None:
-                self.callAPI("POST", self.buildPostCommentURL(None), body)
-                UploadLog.log(f"Published {self.markdownRenderer.getCapability()} feedback to GitLab")
-            else:
-                self.callAPI("PUT", self.buildPostCommentURL(existingCommentId), body)
-                UploadLog.log(f"Updated existing GitLab {self.markdownRenderer.getCapability()} feedback")
+                if existingCommentId is None:
+                    self.callAPI("POST", self.buildPostCommentURL(None), body)
+                    UploadLog.log(f"Published {self.markdownRenderer.getCapability().displayName} feedback to GitLab")
+                else:
+                    self.callAPI("PUT", self.buildPostCommentURL(existingCommentId), body)
+                    UploadLog.log(f"Updated existing GitLab {self.markdownRenderer.getCapability().displayName} feedback")
+            except SystemExit:
+                print("Failed to publish feedback to Gitab")
 
     def isWithinGitLabMergeRequestPipeline(self, options):
         return "CI_MERGE_REQUEST_IID" in os.environ and \
@@ -50,7 +57,7 @@ class GitLabPullRequestReport(Report):
         request.add_header("PRIVATE-TOKEN", os.environ["SIGRIDCI_GITLAB_COMMENT_TOKEN"])
 
         api = ApiCaller("GitLab", pollInterval=5)
-        return api.retryRequest(lambda: urllib.request.urlopen(request))
+        return api.retryRequest(lambda: urllib.request.urlopen(request, context=self.sslContext))
 
     def buildPostCommentURL(self, existingCommentId):
         baseURL = os.environ["CI_API_V4_URL"]
@@ -79,5 +86,5 @@ class GitLabPullRequestReport(Report):
                     return comment["id"]
 
     def isExistingComment(self, comment):
-        header = f"{self.markdownRenderer.getCapability()} feedback"
+        header = f"{self.markdownRenderer.getCapability().displayName} feedback"
         return comment["body"].startswith(("# Sigrid", "# [Sigrid]")) and header.lower() in comment["body"].lower()

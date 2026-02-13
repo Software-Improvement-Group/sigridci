@@ -16,7 +16,6 @@ import sys
 
 from .ascii_art_report import AsciiArtReport
 from .report import Report
-from ..publish_options import RunMode
 
 
 class PipelineSummaryReport(Report):
@@ -27,21 +26,22 @@ class PipelineSummaryReport(Report):
         self.ansiColors = ansiColors
 
     def generate(self, analysisId, feedback, options):
-        success = self.markdownReport.isObjectiveSuccess(feedback, options)
+        capability = self.markdownReport.getCapability()
+        markdownFile = self.markdownReport.getMarkdownFile(options)
+        sigridLink = self.markdownReport.getSigridUrl(options)
 
         print("", file=self.output)
         self.printConclusionMessage(feedback, options)
-
-        # If you publish(only) we never break the build
-        # We can break the build when running on a branch or pull request.
-        if options.runMode == RunMode.FEEDBACK_ONLY and not success:
-            sys.exit(1)
+        print("", file=self.output)
+        print(f"Sigrid CI {capability.displayName} feedback is available from:\n    {markdownFile}", file=self.output)
+        print("", file=self.output)
+        print(f"View this system in Sigrid:\n    {sigridLink}", file=self.output)
+        print("", file=self.output)
 
     def printConclusionMessage(self, feedback, options):
         success = self.markdownReport.isObjectiveSuccess(feedback, options)
         # Use the same summary text as what we use in the Markdown report.
-        message = self.markdownReport.getSummary(feedback, options)
-
-        asciiArt = AsciiArtReport(self.output, self.ansiColors)
-        color = asciiArt.ANSI_GREEN if success else asciiArt.ANSI_YELLOW
-        asciiArt.printColor(f"** {message} **", asciiArt.ANSI_BOLD + color)
+        for summaryLine in self.markdownReport.getSummary(feedback, options):
+            asciiArt = AsciiArtReport(self.output, self.ansiColors)
+            color = asciiArt.ANSI_GREEN if success else asciiArt.ANSI_YELLOW
+            asciiArt.printColor(f"** {summaryLine} **", asciiArt.ANSI_BOLD + color)

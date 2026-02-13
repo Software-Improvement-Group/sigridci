@@ -50,11 +50,12 @@ stages:
           - checkout: self
             fetchDepth: 0
             clean: true
-          - bash: "sigridci.py --customer <example_customer_name> --system <example_system_name> --source ."
+          - bash: "sigridci.py --customer <example_customer_name> --system <example_system_name> --source . --capability maintainability,osh"
             env:
               SIGRID_CI_TOKEN: $(SIGRID_CI_TOKEN)
               SYSTEM_ACCESSTOKEN: $(System.AccessToken)
               PYTHONIOENCODING: utf8
+              PYTHONUTF8: "1"
             continueOnError: true
       - job: SigridPublish
         pool:
@@ -71,6 +72,7 @@ stages:
               SIGRID_CI_TOKEN: $(SIGRID_CI_TOKEN)
               SYSTEM_ACCESSTOKEN: $(System.AccessToken)
               PYTHONIOENCODING: utf8
+              PYTHONUTF8: "1"
             continueOnError: true
 ```
 
@@ -109,6 +111,7 @@ stages:
             SIGRID_CI_TOKEN: $(SIGRID_CI_TOKEN)
             SYSTEM_ACCESSTOKEN: $(System.AccessToken)
             PYTHONIOENCODING: utf8
+            PYTHONUTF8: "1"
           continueOnError: true
     - job: SigridPublish
       pool:
@@ -131,6 +134,7 @@ stages:
             SIGRID_CI_TOKEN: $(SIGRID_CI_TOKEN)
             SYSTEM_ACCESSTOKEN: $(System.AccessToken)
             PYTHONIOENCODING: utf8
+            PYTHONUTF8: "1"
           continueOnError: true
 ```
 

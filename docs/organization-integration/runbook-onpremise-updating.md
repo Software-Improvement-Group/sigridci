@@ -1,4 +1,4 @@
-# Runbook: Sigrid On-Premise Updating
+# Runbook: Updating Sigrid On-Premise
 
 This documentation covers on-premise Sigrid. It is not applicable for cloud-based Sigrid.
 {: .attention }
@@ -66,8 +66,8 @@ In addition to updating Sigrid components, it's important to maintain other syst
 
 The update frequency for these systems should be determined based on your organization's needs and policies. However, it's crucial to keep these systems up-to-date to ensure optimal performance, security, and compatibility with Sigrid.
 
-Note: Specific update instructions for PostgreSQL and and other systems are not provided here, as they can vary depending on your setup and chosen systems. Please refer to the official documentation of these systems for proper update procedures.
+Note: Specific update instructions for PostgreSQL and other systems are not provided here, as they can vary depending on your setup and chosen systems. Please refer to the official documentation of these systems for proper update procedures.
 
 ## Contact and support
 
-Feel free to contact [SIG's support department](mailto:support@softwareimprovementgroup.com) for any questions or issues you may have after reading this document, or when using Sigrid or Sigrid CI. Users in Europe can also contact us by phone at +31 20 314 0953.
+Feel free to contact [SIG's support team](mailto:support@softwareimprovementgroup.com) for any questions or issues you may have after reading this documentation or when using Sigrid.

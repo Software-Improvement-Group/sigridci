@@ -25,7 +25,7 @@ from sigridci.sigridci.upload_log import UploadLog
 
 
 MOCK_GITLAB_ENV = {
-    "CI_API_V4_URL" : "https://example.com",
+    "CI_API_V4_URL" : "https://nonexistent-example.com",
     "CI_MERGE_REQUEST_PROJECT_ID" : "1234",
     "CI_MERGE_REQUEST_IID" : "5678"
 }
@@ -54,7 +54,7 @@ class GitLabPullRequestReportTest(TestCase):
         gitlab.generate("1234", self.feedback, self.options)
 
         self.assertEqual(["Published Maintainability feedback to GitLab"], UploadLog.history)
-        self.assertEqual(["POST https://example.com/projects/1234/merge_requests/5678/notes"], gitlab.called)
+        self.assertEqual(["POST https://nonexistent-example.com/projects/1234/merge_requests/5678/notes"], gitlab.called)
 
     @mock.patch.dict(os.environ, MOCK_GITLAB_ENV)
     def testUpdateExistingComment(self):
@@ -68,8 +68,8 @@ class GitLabPullRequestReportTest(TestCase):
         ]
 
         expectedCalls = [
-            "POST https://example.com/projects/1234/merge_requests/5678/notes",
-            "PUT https://example.com/projects/1234/merge_requests/5678/notes/1"
+            "POST https://nonexistent-example.com/projects/1234/merge_requests/5678/notes",
+            "PUT https://nonexistent-example.com/projects/1234/merge_requests/5678/notes/1"
         ]
 
         self.assertEqual(expectedLog, UploadLog.history)
@@ -93,6 +93,13 @@ class GitLabPullRequestReportTest(TestCase):
         ]
 
         self.assertEqual(expectedLog, UploadLog.history)
+
+    @mock.patch.dict(os.environ, MOCK_GITLAB_ENV | {"SIGRIDCI_GITLAB_COMMENT_TOKEN" : "1234"})
+    def testDoNotExitOnFailingGitLabRequest(self):
+        gitlab = GitLabPullRequestReport(MaintainabilityMarkdownReport())
+        gitlab.generate("1234", self.feedback, self.options)
+
+        self.assertTrue(message for message in UploadLog.history if any(message.startswith("Error contacting GitLab")))
 
 
 class MockGitLab(GitLabPullRequestReport):

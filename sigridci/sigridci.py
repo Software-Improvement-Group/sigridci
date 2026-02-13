@@ -18,16 +18,15 @@ import os
 import sys
 from argparse import ArgumentParser, SUPPRESS
 
-from sigridci.publish_options import PublishOptions, RunMode, Capability
+from sigridci.capability import MAINTAINABILITY, OPEN_SOURCE_HEALTH
+from sigridci.publish_options import PublishOptions, RunMode
 from sigridci.sigrid_api_client import SigridApiClient
 from sigridci.platform import Platform
 from sigridci.sigridci_runner import SigridCiRunner
 from sigridci.upload_log import UploadLog
 
 
-CAPABILITIES = {
-    "maintainability" : Capability.MAINTAINABILITY,
-}
+CAPABILITIES = {cap.shortName: cap for cap in [MAINTAINABILITY, OPEN_SOURCE_HEALTH]}
 
 
 def parsePublishOptions(args):
@@ -45,7 +44,8 @@ def parsePublishOptions(args):
         includeHistory=True,
         showUploadContents=args.showupload,
         outputDir=args.out,
-        sigridURL=args.sigridurl
+        sigridURL=args.sigridurl,
+        ignoreMissingScopeFile=args.ignore_missing_scope_file
     )
 
 
@@ -75,6 +75,7 @@ def parseCapabilities(names):
 if __name__ == "__main__":
     parser = ArgumentParser(description="Starts a Sigrid CI analysis and provides feedback on the outcomes.")
     parser.add_argument("--partner", type=str, default="sig", help=SUPPRESS)
+    parser.add_argument("--ignore-missing-scope-file", action="store_true", help="File sigrid.yaml is handled separately.")
     parser.add_argument("--customer", type=str, required=True, help="Name of your organization's Sigrid account.")
     parser.add_argument("--system", type=str, required=True, help="Name of your system in Sigrid, letters/digits/hyphens only.")
     parser.add_argument("--subsystem", type=str, default="", help="Publishes your code as a subsystem within a Sigrid system.")
@@ -109,7 +110,14 @@ if __name__ == "__main__":
         print(f"Invalid system name, system name should match '{PublishOptions.SYSTEM_NAME_PATTERN.pattern}' "
               f", not completely numeric, and be {PublishOptions.SYSTEM_NAME_LENGTH.start} to {maxNameLength} characters long (inclusive).")
         sys.exit(1)
+    
+    if not options.isValidSubSystemName():
+        print(f"Invalid subsystem name, subsystem name should match '{PublishOptions.SUBSYSTEM_NAME_PATTERN.pattern}'"
+              ", must be at least two characters long and not contain consecutive dots or slashes.")
+        sys.exit(1)
 
     UploadLog.log("Starting Sigrid CI")
     runner = SigridCiRunner(options, apiClient)
-    runner.run()
+    exitCode = runner.run()
+    if options.runMode == RunMode.FEEDBACK_ONLY:
+        sys.exit(exitCode)

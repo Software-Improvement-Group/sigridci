@@ -21,7 +21,7 @@ from sigridci.sigridci.publish_options import PublishOptions, RunMode
 from sigridci.sigridci.reports.maintainability_markdown_report import MaintainabilityMarkdownReport
 
 
-class MarkdownReportTest(TestCase):
+class MaintainabilityMarkdownReportTest(TestCase):
     maxDiff = None
 
     def setUp(self):
@@ -52,7 +52,7 @@ class MarkdownReportTest(TestCase):
         expected = """
             # [Sigrid](https://sigrid-says.com/aap/noot) maintainability feedback
             
-            **↗️  You improved the maintainability of the code towards your objective of 3.5 stars**
+            **↗️  You improved your code towards your objective of 3.5 stars.**
             
             Sigrid compared your code against the baseline of 2022-01-10.
             
@@ -242,7 +242,7 @@ class MarkdownReportTest(TestCase):
         report = MaintainabilityMarkdownReport()
         report.decorateLinks = False
         summary = report.renderSummary(feedback, self.options)
-        expected = "**💭️  You did not change any files that are measured by Sigrid**"
+        expected = "**💭️  You did not change any files that are analyzed by Sigrid.**"
 
         self.assertEqual(summary, expected)
 
@@ -257,7 +257,7 @@ class MarkdownReportTest(TestCase):
         report = MaintainabilityMarkdownReport()
         report.decorateLinks = False
         summary = report.renderSummary(feedback, self.options)
-        expected = "**✅  You wrote maintainable code and achieved your objective of 3.5 stars**"
+        expected = "**✅  You wrote maintainable code and achieved your objective of 3.5 stars.**"
 
         self.assertEqual(summary, expected)
 
@@ -273,7 +273,7 @@ class MarkdownReportTest(TestCase):
         report = MaintainabilityMarkdownReport()
         report.decorateLinks = False
         summary = report.renderSummary(feedback, self.options)
-        expected = "**↗️  You improved the maintainability of the code towards your objective of 3.5 stars**"
+        expected = "**↗️  You improved your code towards your objective of 3.5 stars.**"
 
         self.assertEqual(summary, expected)
 
@@ -288,7 +288,7 @@ class MarkdownReportTest(TestCase):
         report = MaintainabilityMarkdownReport()
         report.decorateLinks = False
         summary = report.renderSummary(feedback, self.options)
-        expected = "**⚠️  Your code did not improve maintainability towards your objective of 3.5 stars**"
+        expected = "**⚠️  Your code did not improve towards your objective of 3.5 stars.**"
 
         self.assertEqual(summary, expected)
 
@@ -303,7 +303,7 @@ class MarkdownReportTest(TestCase):
         report = MaintainabilityMarkdownReport()
         report.decorateLinks = False
         summary = report.renderSummary(feedback, self.options)
-        expected = "**✅  You wrote maintainable code and achieved your objective of 3.5 stars**"
+        expected = "**✅  You wrote maintainable code and achieved your objective of 3.5 stars.**"
 
         self.assertEqual(summary, expected)
 
@@ -317,7 +317,7 @@ class MarkdownReportTest(TestCase):
         report = MaintainabilityMarkdownReport()
         report.decorateLinks = False
         summary = report.renderSummary(feedback, self.options)
-        expected = "**⏸️️  Your maintainability remains unchanged and is still below your objective of 3.5 stars**"
+        expected = "**⏸️️  Your are still below your objective of 3.5 stars.**"
 
         self.assertEqual(summary, expected)
 
@@ -345,7 +345,7 @@ class MarkdownReportTest(TestCase):
         expected = """
             # [Sigrid](https://sigrid-says.com/aap/noot) maintainability feedback
 
-            **✅  You wrote maintainable code and achieved your objective of 3.5 stars**
+            **✅  You wrote maintainable code and achieved your objective of 3.5 stars.**
             
             Sigrid compared your code against the baseline of 2022-01-10.
             
@@ -406,7 +406,7 @@ class MarkdownReportTest(TestCase):
         expected = """
             # [Sigrid](https://sigrid-says.com/aap/noot) maintainability feedback
     
-            **💭️  You did not change any files that are measured by Sigrid**
+            **💭️  You did not change any files that are analyzed by Sigrid.**
 
             
             ----
@@ -439,7 +439,7 @@ class MarkdownReportTest(TestCase):
         expected = """
             # [Sigrid](https://sigrid-says.com/aap/noot) maintainability feedback
 
-            **💭️  You did not change any files that are measured by Sigrid**
+            **💭️  You did not change any files that are analyzed by Sigrid.**
 
             
             ----
@@ -467,7 +467,7 @@ class MarkdownReportTest(TestCase):
         expected = """
             # [Sigrid](https://sigrid-says.com/aap/noot) maintainability feedback
 
-            **⚠️  Your code did not improve maintainability towards your objective of 3.5 stars**
+            **⚠️  Your code did not improve towards your objective of 3.5 stars.**
             
             Sigrid compared your code against the baseline of N/A.
             
@@ -533,7 +533,7 @@ class MarkdownReportTest(TestCase):
         expected = """
             # [Sigrid](https://sigrid-says.com/aap/noot) maintainability feedback
 
-            **⚠️  Your code did not improve maintainability towards your objective of 3.5 stars**
+            **⚠️  Your code did not improve towards your objective of 3.5 stars.**
             
             <details><summary>Show details</summary>
             
@@ -600,7 +600,7 @@ class MarkdownReportTest(TestCase):
         expected = """
             # [Sigrid](https://sigrid-says.com/aap/noot) maintainability feedback
             
-            **💭️  You did not change any files that are measured by Sigrid**
+            **💭️  You did not change any files that are analyzed by Sigrid.**
 
             
             ----
@@ -670,6 +670,68 @@ class MarkdownReportTest(TestCase):
         """
 
         self.assertEqual(table.strip(), inspect.cleandoc(expected).strip())
+
+    @mock.patch.dict(os.environ, {"GITLAB_CI" : "aap/noot"})
+    def testFeedbackForSystemProperties(self):
+        self.options.feedbackURL = None
+
+        feedback = {
+            "baselineRatings": {"MAINTAINABILITY": 3.0, "UNIT_SIZE": 3.0, "UNIT_COMPLEXITY": 3.0},
+            "changedCodeBeforeRatings" : {"MAINTAINABILITY" : 2.9, "UNIT_SIZE": 3.0, "UNIT_COMPLEXITY": 3.0},
+            "newCodeRatings": {"MAINTAINABILITY": 2.8, "UNIT_SIZE": 2.0, "UNIT_COMPLEXITY": 4.0},
+            "overallRatings": {"MAINTAINABILITY": 3.0, "UNIT_SIZE": 2.5, "UNIT_COMPLEXITY": 4.0},
+            "refactoringCandidates": []
+        }
+
+        report = MaintainabilityMarkdownReport({"UNIT_SIZE": 4.0, "UNIT_COMPLEXITY": 4.0})
+        markdown = report.renderMarkdown("1234", feedback, self.options)
+
+        expected = """
+            # [Sigrid](https://sigrid-says.com/aap/noot) maintainability feedback
+
+            **⚠️  Your code did not improve towards your Unit Size objective of 4.0 stars.**
+            
+            **✅  You wrote maintainable code and achieved your Unit Complexity objective of 4.0 stars.**
+            
+            <details><summary>Show details</summary>
+            
+            Sigrid compared your code against the baseline of N/A.
+            
+            ## 👍 What went well?
+            
+            > You fixed or improved **0** refactoring candidates.
+            
+            
+            ## 👎 What could be better?
+            
+            > You did not introduce any technical debt during your changes, great job!
+            
+            ## 📚 Remaining technical debt
+            
+            > **0** refactoring candidates didn't get better or worse, but are still present in the code you touched.
+            
+            [View this system in Sigrid to explore your technical debt](https://sigrid-says.com/aap/noot)
+            
+            ## ⭐️ Sigrid ratings
+            
+            | System property | System on N/A | Before changes | New/changed code |
+            |-----------------|-------------------------------------------|----------------|------------------|
+            | Volume | N/A | N/A | N/A |
+            | Duplication | N/A | N/A | N/A |
+            | Unit Size | 3.0 | 3.0 | 2.0 |
+            | Unit Complexity | 3.0 | 3.0 | 4.0 |
+            | Unit Interfacing | N/A | N/A | N/A |
+            | Module Coupling | N/A | N/A | N/A |
+            | Component Independence | N/A | N/A | N/A |
+            | Component Entanglement | N/A | N/A | N/A |
+            | **Maintainability** | **3.0** | **2.9** | **2.8** |
+            </details>
+            
+            ----
+            [**View this system in Sigrid**](https://sigrid-says.com/aap/noot)
+        """
+
+        self.assertEqual(markdown.strip(), inspect.cleandoc(expected).strip())
 
     def toRefactoringCandidate(self, subject, category, metric, riskCategory):
         return {

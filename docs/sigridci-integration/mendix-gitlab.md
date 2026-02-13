@@ -15,6 +15,9 @@ This documentation covers cloud-based Sigrid. For on-premise Sigrid, refer to th
 - You have created an [authentication token using Sigrid](../organization-integration/authentication-tokens.md).
 - You have created a Personal access (PAT) token using the [Mendix user settings](https://user-settings.mendix.com/link/developersettings)
 
+This documentation contains instructions for Docker-based runners (recommended) and Linux-based runners. Windows-based runners are not supported.
+{: .attention }
+
 ## On-boarding your system to Sigrid
 
 On-boarding is done automatically when you first run Sigrid CI. As long as you have a valid token, you will receive the message *system has been on-boarded to Sigrid*. Subsequent runs will then be visible in both your CI environment and [sigrid-says.com](https://sigrid-says.com). 
@@ -56,6 +59,7 @@ stages:
 variables:
   SIGRID_CI_CUSTOMER: '<example_customer_name>'
   SIGRID_CI_SYSTEM: '<example_system_name>'
+  SIGRID_CI_TOKEN: 'maintainability,osh'
 
 sigridci:
   image: 
