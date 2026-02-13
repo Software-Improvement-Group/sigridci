@@ -85,7 +85,12 @@ class SigridApiClient:
             uploadUrl = uploadLocation["uploadUrl"]
             analysisId = uploadLocation["ciRunId"]
             UploadLog.log(f"Sigrid CI analysis ID: {analysisId}")
-            UploadLog.log("Submitting upload" if self.options.runMode == RunMode.FEEDBACK_ONLY else "Publishing upload")
+
+            if self.options.runMode == RunMode.FEEDBACK_ONLY:
+                UploadLog.log(f"Submitting upload to {uploadUrl}")
+            else:
+                UploadLog.log(f"Publishing upload to {uploadUrl}")
+
             self.uploadBinaryFile(uploadUrl, upload)
 
             return analysisId
@@ -167,4 +172,4 @@ class SigridApiClient:
             request = urllib.request.Request(url)
             urllib.request.urlopen(request)
         except:
-            UploadLog.log("Failed to log platform information")
+            UploadLog.log(f"Failed to log platform information")

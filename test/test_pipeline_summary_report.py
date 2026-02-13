@@ -43,7 +43,7 @@ class PipelineSummaryReportTest(TestCase):
         report.generate("1234", feedback, self.options)
 
         expected = """
-            ** ⚠️  Your code did not improve maintainability towards your objective of 3.5 stars **
+            ** ⚠️  Your code did not improve towards your objective of 3.5 stars. **
         """
 
         self.assertEqual(buffer.getvalue().strip().split("\n")[0], inspect.cleandoc(expected))
@@ -72,7 +72,7 @@ class PipelineSummaryReportTest(TestCase):
         report.generate("1234", feedback, self.options)
 
         expected = """
-            ** 💭️  You did not change any files that are measured by Sigrid **
+            ** 💭️  You did not change any files that are analyzed by Sigrid. **
         """
 
         self.assertEqual(buffer.getvalue().strip().split("\n")[0], inspect.cleandoc(expected).strip())

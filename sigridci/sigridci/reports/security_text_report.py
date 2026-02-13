@@ -21,9 +21,9 @@ from ..analysisresults.findings_processor import FindingsProcessor
 
 class SecurityTextReport(Report):
 
-    def __init__(self, objective, *, output=sys.stdout):
+    def __init__(self, markdownReport, *, output=sys.stdout):
         self.output = output
-        self.objective = objective
+        self.objective = markdownReport.objective
 
     def generate(self, analysisId, feedback, options):
         processor = FindingsProcessor()

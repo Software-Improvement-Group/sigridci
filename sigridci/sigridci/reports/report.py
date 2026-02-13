@@ -20,22 +20,6 @@ from ..platform import Platform
 
 
 class Report(ABC):
-    REFACTORING_CANDIDATE_METRICS = [
-        "DUPLICATION",
-        "UNIT_SIZE",
-        "UNIT_COMPLEXITY",
-        "UNIT_INTERFACING",
-        "MODULE_COUPLING"
-    ]
-
-    METRICS = [
-        "VOLUME",
-        *REFACTORING_CANDIDATE_METRICS,
-        "COMPONENT_INDEPENDENCE",
-        "COMPONENT_ENTANGLEMENT",
-        "MAINTAINABILITY"
-    ]
-
     RISK_CATEGORIES = ["VERY_HIGH", "HIGH", "MODERATE", "MEDIUM", "LOW"]
     GOOD_CATEGORIES = ["fixed", "improved"]
     BAD_CATEGORIES = ["introduced", "worsened"]
@@ -84,7 +68,8 @@ class MarkdownRenderer(ABC):
 
     def renderMarkdownTemplate(self, feedback, options, details, sigridLink):
         md = f"# {self.formatTitle(sigridLink)}\n\n"
-        md += f"**{self.getSummary(feedback, options)}**\n\n"
+        for summaryLine in self.getSummary(feedback, options):
+            md += f"**{summaryLine}**\n\n"
         if len(details) > 0:
             if Platform.isHtmlMarkdownSupported():
                 md += "<details><summary>Show details</summary>\n\n"

@@ -24,14 +24,23 @@ class ObjectiveStatus(Enum):
 
 
 class Objective:
-    SEVERITY_OBJECTIVE = ["CRITICAL", "HIGH", "MEDIUM", "LOW", "NONE"]
+    DEFAULT_RATING_OBJECTIVE = 3.5
+    DEFAULT_FINDING_OBJECTIVE = "HIGH"
+    SEVERITY_OBJECTIVE = ["CRITICAL", "HIGH", "MEDIUM", "LOW", "NONE", "UNKNOWN"]
+    REFACTORING_CANDIDATES = ["DUPLICATION", "UNIT_SIZE", "UNIT_COMPLEXITY", "UNIT_INTERFACING", "MODULE_COUPLING"]
+    SYSTEM_PROPERTIES = ["VOLUME"] + REFACTORING_CANDIDATES + ["COMPONENT_INDEPENDENCE", "COMPONENT_ENTANGLEMENT"]
+    MAINTAINABILITY_METRICS = ["MAINTAINABILITY"] + SYSTEM_PROPERTIES
 
     @staticmethod
-    def determineStatus(feedback, objective):
-        newAndChangedAfter = feedback.get("newCodeRatings", {}).get("MAINTAINABILITY", None)
-        baseline = feedback.get("baselineRatings", {}).get("MAINTAINABILITY", None)
-        changedCodeBefore = feedback.get("changedCodeBeforeRatings", {}).get("MAINTAINABILITY", None)
-        changedCodeAfter = feedback.get("changedCodeAfterRatings", {}).get("MAINTAINABILITY", None)
+    def checkMaintainabilityRating(feedback, metric, target):
+        return Objective.determineStatus(feedback, target, metric)
+
+    @staticmethod
+    def determineStatus(feedback, objective, metric="MAINTAINABILITY"):
+        newAndChangedAfter = feedback.get("newCodeRatings", {}).get(metric, None)
+        baseline = feedback.get("baselineRatings", {}).get(metric, None)
+        changedCodeBefore = feedback.get("changedCodeBeforeRatings", {}).get(metric, None)
+        changedCodeAfter = feedback.get("changedCodeAfterRatings", {}).get(metric, None)
 
         if newAndChangedAfter is None or objective is None:
             return ObjectiveStatus.UNKNOWN
@@ -93,3 +102,9 @@ class Objective:
             return "no"
         index = Objective.SEVERITY_OBJECTIVE.index(objective)
         return f"no {Objective.SEVERITY_OBJECTIVE[index - 1].lower()}-severity"
+
+    @staticmethod
+    def sortBySeverity(severity):
+        if not severity in Objective.SEVERITY_OBJECTIVE:
+            return 99
+        return Objective.SEVERITY_OBJECTIVE.index(severity)

@@ -24,74 +24,113 @@ from ..platform import OSH_EXCLUDE_DOCS
 
 class OpenSourceHealthMarkdownReport(Report, MarkdownRenderer):
     MAX_FINDINGS = SecurityMarkdownReport.MAX_FINDINGS
-    SYMBOLS = SecurityMarkdownReport.SEVERITY_SYMBOLS
-    SORT_RISK = list(SecurityMarkdownReport.SEVERITY_SYMBOLS.keys())
 
-    def __init__(self, objective = "HIGH"):
+    def __init__(self, vulnerabilityObjective="HIGH", licenseObjective=None):
         super().__init__()
-        self.objective = objective
+        self.vulnerabilityObjective = vulnerabilityObjective
+        self.licenseObjective = licenseObjective
         self.previousFeedback = None
-        self.processor = CycloneDXProcessor()
+        self.processor = CycloneDXProcessor(self.vulnerabilityObjective, self.licenseObjective)
 
     def generate(self, analysisId, feedback, options):
         with open(self.getMarkdownFile(options), "w", encoding="utf-8") as f:
             f.write(self.renderMarkdown(analysisId, feedback, options))
 
     def renderMarkdown(self, analysisId, feedback, options):
-        libraries = list(self.processor.extractLibraries(feedback, self.objective))
-        previousLibraries = list(self.processor.extractLibraries(self.previousFeedback, self.objective))
+        libraries = list(self.processor.extractLibraries(feedback))
+        previousLibraries = list(self.processor.extractLibraries(self.previousFeedback))
 
         fixable = [lib for lib in libraries if lib.fixable]
         unfixable = [lib for lib in libraries if not lib.fixable]
         updated = self.findUpdatedLibraries(previousLibraries, libraries)
 
         details = f"Sigrid compared your code against the baseline of {self.getBaseline(feedback)}.\n\n"
+        if len(updated + fixable + unfixable) > 0:
+            details += "- ❌ means the library has issues that fail your objective.\n"
+            details += "- ⚠️ means the library has issues, but they are not severe enough to fail your objective.\n"
+            details += "- ✅ means everything is fine.\n\n"
+            details += "If you believe these findings are false positives, you can\n"
+            details += f"[exclude them in the Sigrid configuration]({OSH_EXCLUDE_DOCS}).\n\n"
         if len(updated) > 0:
             details += "## 👍 What went well?\n\n"
-            details += f"> You updated **{len(updated)}** vulnerable open source libraries.\n\n"
+            details += f"> You updated **{len(updated)}** open source libraries that previously had issues.\n\n"
             details += self.generateFindingsTable(updated, options)
         if len(fixable) > 0:
             details += "## 👎 What could be better?\n\n"
-            details += f"> You have **{len(fixable)}** vulnerable open source libraries with a fix available.  \n"
-            details += "> Consider upgrading to a version that no longer contains the vulnerability.\n\n"
+            details += f"> You have **{len(fixable)}** open source libraries with issues.\n\n"
             details += self.generateFindingsTable(fixable, options)
-            details += "If you believe these findings are false positives, "
-            details += f"you can [exclude them in the Sigrid configuration]({OSH_EXCLUDE_DOCS}).\n\n"
         if len(unfixable) > 0:
-            details += "## 😑 You have findings that you need to investigate in more depth\n\n"
-            details += f"> You have **{len(unfixable)}** vulnerable open source libraries without a fix available.  \n"
-            details += "> You need to investigate the security risk, and discuss how to manage it accordingly.\n\n"
+            details += "## 😑 You have findings that need to be investigated\n\n"
+            details += f"> You have **{len(unfixable)}** open source libraries with issues that don't have an easy solution.  \n"
+            details += "> You'll need to investigate the risks, and discuss how to manage them accordingly.\n\n"
             details += self.generateFindingsTable(unfixable, options)
 
         sigridLink = f"{self.getSigridUrl(options)}/-/open-source-health"
         return self.renderMarkdownTemplate(feedback, options, details, sigridLink)
 
     def getSummary(self, feedback, options):
-        objectiveDisplayName = f"{Objective.getSeverityObjectiveLabel(self.objective)} open source vulnerabilities"
-        libraries = list(self.processor.extractLibraries(feedback, self.objective))
-        unfixable = [lib for lib in libraries if lib.partOfObjective and not lib.fixable]
+        libraries = list(self.processor.extractLibraries(feedback))
+        summary = [self.getVulnerabilitySummary(libraries)]
+        if self.licenseObjective:
+            summary.append(self.getLicenseSummary(libraries))
+        return summary
 
-        if self.isObjectiveSuccess(feedback, options):
-            return f"✅  You achieved your objective of having {objectiveDisplayName}."
+    def getVulnerabilitySummary(self, libraries):
+        objectiveDisplayName = f"{Objective.getSeverityObjectiveLabel(self.vulnerabilityObjective)} open source vulnerabilities"
+        fixable = [lib for lib in libraries if not lib.vulnerabilityRisk.meetsObjective and lib.fixable]
+        unfixable = [lib for lib in libraries if not lib.vulnerabilityRisk.meetsObjective and not lib.fixable]
+
+        if len(libraries) == 0:
+            return "💭  Sigrid did not find any open source libraries."
+        elif len(fixable) > 0:
+            return f"❌️  You failed to meet your objective of having {objectiveDisplayName}."
         elif len(unfixable) > 0:
-            return f"😑  You did not fail to meet your objective, but there are findings you need to investigate"
+            return f"😑  There are vulnerable open source libraries you need to investigate."
         else:
-            return f"⚠️  You failed to meet your objective of having {objectiveDisplayName}."
+            return f"✅  You achieved your objective of having {objectiveDisplayName}."
+
+    def getLicenseSummary(self, libraries):
+        culprits = [lib for lib in libraries if not lib.licenseRisk.meetsObjective]
+        if len(culprits) == 0:
+            return f"✅  You achieved your objective of having no open source libraries with license issues."
+        else:
+            return f"❌  You failed to meet your objective of having no open source libraries with license issues."
 
     def generateFindingsTable(self, libraries, options):
-        md = "| Vulnerability risk | Part of objective? | Library | Latest version | Location(s) |\n"
+        md = "| Vulnerabilities | License | Library | Latest version | Location(s) |\n"
         md += "|----|----|----|----|----|\n"
 
-        for library in sorted(libraries, key=lambda lib: self.SORT_RISK.index(lib.risk))[0:self.MAX_FINDINGS]:
-            symbol = self.SYMBOLS[library.risk]
-            check = "✅" if library.partOfObjective else "-"
+        for library in sorted(libraries, key=lambda lib: Objective.sortBySeverity(lib.vulnerabilityRisk.severity))[0:self.MAX_FINDINGS]:
+            vulnCheck = self.getVulnerabilityRiskSymbol(library)
+            licenseCheck = self.getLicenseRiskSymbol(library)
+            suffix = self.formatInfoLine(library)
             locations = "<br />".join(self.decorateLink(options, file, file) for file in library.files)
-            md += f"| {symbol} | {check} | {library.name} {library.version} | {library.latestVersion} | {locations} |\n"
+            md += f"| {vulnCheck} | {licenseCheck} | {library.name} {library.version}{suffix} | {library.latestVersion} | {locations} |\n"
 
         if len(libraries) > self.MAX_FINDINGS:
             md += f"| | ... {len(libraries) - self.MAX_FINDINGS} more vulnerable open source libraries | |\n"
 
         return f"{md}\n"
+
+    def getVulnerabilityRiskSymbol(self, library):
+        if library.vulnerabilityRisk.severity == "NONE":
+            return "✅"
+        elif library.vulnerabilityRisk.meetsObjective:
+            return "⚠️"
+        else:
+            return "❌"
+
+    def getLicenseRiskSymbol(self, library):
+        return "✅" if library.licenseRisk.meetsObjective else "❌"
+
+    def formatInfoLine(self, library):
+        info = "(Transitive) " if library.transitive else ""
+        if len(library.vulnerabilities) > 0:
+            formatVulnLink = lambda vuln: f"[{vuln.id}]({vuln.link})" if vuln.link else vuln.id
+            info += ", ".join(formatVulnLink(vuln) for vuln in library.vulnerabilities) + "."
+        if not library.licenseRisk.meetsObjective:
+            info += f"License: {', '.join(library.licenses)}."
+        return f"<br />*{info}*" if info else ""
 
     def findUpdatedLibraries(self, previous, current):
         getKey = lambda library: f"{library.name}@{library.version}"
@@ -110,6 +149,6 @@ class OpenSourceHealthMarkdownReport(Report, MarkdownRenderer):
         return os.path.abspath(f"{options.outputDir}/osh-feedback.md")
 
     def isObjectiveSuccess(self, feedback, options):
-        libraries = list(self.processor.extractLibraries(feedback, self.objective))
-        fixable = [lib for lib in libraries if lib.partOfObjective and lib.fixable]
+        libraries = list(self.processor.extractLibraries(feedback))
+        fixable = [lib for lib in libraries if not lib.meetsObjectives() and lib.fixable]
         return len(fixable) == 0

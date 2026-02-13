@@ -9,6 +9,8 @@ Sigrid Local does the following:
 - Analyze your source code. This is done locally, so the source code will never leave your environment.
 - Publish the analysis results to Sigrid. Your source code is *not* published to Sigrid.
 
+<iframe width="560" height="315" src="https://www.youtube.com/embed/IgPWk603ugk?si=CwtaQ3-24I4SG8H_" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+
 ## Prerequisites
 
 Before you can start using the Sigrid Local, you need the following:
@@ -22,7 +24,8 @@ Before you can start using the Sigrid Local, you need the following:
   Sigrid Local available to you.
 - You will need local access to your source code that you want to analyze using Sigrid Local.
 - In terms of hardware, you will need a laptop with at least 16 GB of memory and 10 GB of disk space.
-  If your system is very large, over a million lines of code, you will need 32 GB of memory.
+  The hardware you need, and how long the analysis will take, depend on the size of your system.
+  See the section on [performance estimates](#performance-estimates) for more information.
 
 ## Installing Sigrid Local
 
@@ -79,6 +82,8 @@ Optionally, you can click "show process output" to see the log output. This is p
 After the analysis has completed, you will see the following confirmation message. This indicates Sigrid Local
 has successfully completed its analysis, and has published the analysis results to Sigrid. That means you're done!
 
+<img src="../images/local-runner/done.png" width="300" />
+
 If your analysis results in an error, [notify your support contact](#support) so we can try to help you out.
 
 If you made a mistake, you can use Sigrid Local multiple times. Whenever you use Sigrid Local, the new
@@ -90,6 +95,20 @@ Sigrid license file is valid.
 Sigrid Local is able to analyze over 250 different technologies. For a full overview, see the 
 [list of supported technologies](../reference/technology-support.md#list-of-supported-technologies)
 and filter the table by "Sigrid Local".
+
+## Performance estimates
+
+Sigrid Local runs on your laptop. The duration of the analysis and the system requirements depend on the 
+size of your codebase. You can use the following table as an estimate on how long the analysis will take.
+
+| Platform | Memory | Code volume | Analysis time |
+|----------|--------|-------------|---------------|
+| MacBook Pro M3 | 16 GB | 3 million lines of code | 32 minutes |
+| MacBook Pro M3 | 16 GB | 500,000 lines of code | 9 minutes |
+
+All of these estimates are for Mac. We do provide a Windows version of Sigrid Local, but Windows laptops
+have much more variety, making it hard to give a concrete estimate that is representative for other
+Windows laptops.
 
 ## Differences between Sigrid Local and cloud-based Sigrid
 

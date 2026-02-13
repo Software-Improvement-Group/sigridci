@@ -926,7 +926,7 @@
       "properties": [
         {
           "name": "sigrid:transitive",
-          "value": "DIRECT"
+          "value": "TRANSITIVE"
         },
         {
           "name": "sigrid:risk:vulnerability",
@@ -1006,7 +1006,7 @@
         },
         {
           "name": "sigrid:risk:legal",
-          "value": "NONE"
+          "value": "HIGH"
         },
         {
           "name": "sigrid:risk:freshness",
@@ -2385,7 +2385,10 @@
         {
           "ref": "pkg:maven/org.apache.logging.log4j/log4j-core@2.14.1"
         }
-      ]
+      ],
+      "source": {
+        "url": "https://nvd.nist.gov/vuln/detail/CVE-2021-44228"
+      }
     },
     {
       "id": "CVE-2021-44832",

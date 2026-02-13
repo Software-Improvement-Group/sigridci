@@ -21,7 +21,9 @@ The following example shows how to call the Sigrid API using `curl`:
 curl -H 'Authorization: Bearer {SIGRID_CI_TOKEN}' https://sigrid-says.com/rest/analysis-results/api/v1/maintainability/{customer}
 ```
 
-In the example, `{customer}` refers to your company's Sigrid account name (lower case), and `{SIGRID_CI_TOKEN}` refers to your authentication token.
+In the example, `{customer}` refers to your company's Sigrid account name (lower case), and `{SIGRID_CI_TOKEN}` refers to your authentication token. The `{customer}` or Sigrid account name is a text string like `acme` and is not a customer account like `john@acme.com`
+
+
 
 ### Including deactivated and/or excluded systems
 
@@ -206,6 +208,35 @@ An example response leveraging the `GET https://sigrid-says.com/rest/analysis-re
   ]
 }
 ```
+
+In the response, different types of refactoring candidates will have slightly different fields:
+
+| Type                                 | Field                       | Description                                                                                              |
+|--------------------------------------|-----------------------------|----------------------------------------------------------------------------------------------------------|
+| **(all)**                            | `id`                        | Unique ID to identify the refactoring candidate.                                                         |
+|                                      | `severity`                  | One of VERY_HIGH, HIGH, MEDIUM, LOW.                                                                     |
+|                                      | `weight`                    | Relative priority of this finding in relation to the system property it covers.                          |
+|                                      | `technology`                | Technology name, for example `java` or `csharp`.                                                         |
+|                                      | `componentName`             | Name of the component in which the finding resides.                                                      |
+|                                      | `filePath`                  | Relative file path in which the finding resides.                                                         |
+|                                      | `status`                    | One of FALSE_POSITIVE, ACCEPTED, FIXEd, RAW, REFINED, WILL_FIX.                                          |
+|                                      | `remark`                    | Optional remark(s) entered via the Sigrid user interface.                                                | 
+| **Duplication**                      | `loc`                       | The number of duplicates lines.                                                                          |
+|                                      | `sameFile`                  | True if the duplicate is within the same file.                                                           |
+|                                      | `sameComponent`             | True if the duplicate is between files within the same component.                                        |
+|                                      | `locations.filePath`        | Relative file path for the duplication occurrence.                                                       |
+|                                      | `locations.startLine`       | First line in the file that is part of the duplicate occurrence.                                         |
+|                                      | `locations.endLine`         | Last line in the file that is part of the duplicate occurrence.                                          |
+| **Unit Size/Complexity/Interfacing** | `unitName`                  | Name of the unit that is the topic of the finding.                                                       |
+|                                      | `startLine`                 | First line within the file that is part of the finding.                                                  |
+|                                      | `endLine`                   | Last line within the file that is part of the finding.                                                   |
+| **Unit Size**                        | `loc`                       | Lines of code within the unit, excluding comments.                                                       |
+| **Unit Complexity**                  | `mcCabe`                    | Decision points within the unit.                                                                         |
+| **Unit Interfacing**                 | `parameters`                | Number of parameters within the unit.                                                                    |
+| **Module Coupling**                  | `loc`                       | Lines of code within the file, excluding comments.                                                       |
+|                                      | `fanIn`                     | Number of incoming dependencies originating from outside the file.                                       |
+| **Component Independence**           | `loc`                       | Lines of code within the file, excluding comments.                                                       | 
+| **Component Entanglement**           | `componentEntanglementType` | One of CYCLIC_DEPENDENCY, INDIRECT_CYCLIC_DEPENDENCY, LAYER_BYPASSING_DEPENDENCY, COMMUNICATION_DENSITY. |
 
 </details>
 
@@ -1217,4 +1248,4 @@ Successful response format of this request would look like the following, with t
 
 ## Contact and support
 
-Feel free to contact [SIG's support department](mailto:support@softwareimprovementgroup.com) for any questions or issues you may have after reading this document, or when using Sigrid or Sigrid CI. Users in Europe can also contact us by phone at +31 20 314 0953.
+Feel free to contact [SIG's support team](mailto:support@softwareimprovementgroup.com) for any questions or issues you may have after reading this documentation or when using Sigrid.

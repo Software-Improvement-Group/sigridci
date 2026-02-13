@@ -46,7 +46,7 @@ Since scope files are part of your repository, you can edit them using your pref
 
 ## Excluding files and directories
 
-Sigrid will exclude common patterns by default. For example, directories like `build`, `dist`, and `target` typically contain build output and are not part of the source code. Directories like `node_modules` contain open source libraries and are not part of the application's own source code. Those directories are therefore ignored during the analysis.
+Sigrid will exclude common patterns by default. For example, directories like `build`, `dist`, and `target` typically contain build output and are not part of the source code. Directories like `node_modules` contain open source libraries and are not part of the application's own source code. Those directories are therefore ignored during the analysis. If you want to see a full list of files/directories that are automatically excluded by Sigrid, you can find [the list of default excludes on GitHub](https://github.com/Software-Improvement-Group/sigridci/blob/main/resources/default-excludes.txt).
 
 It is possible to extend this list with project-specific files and directories that should also be excluded. The `exclude` section in the YAML file contains a list of regular expressions for paths to ignore. For example, `.*[.]out[.]js` will exclude all files with a name ending in `.out.js` from the analysis. Adding `.*/simulator/.*` will exclude everything in a path that contains the directory `/simulator/`.
 
@@ -249,7 +249,7 @@ The open source libraries found in the SBOM are normally *added* to the open sou
         - ".*companyname.*"
       source: sbom
 
-Again, you only need this option if you are importing your own SBOM files, *and* you want Sigrid to only use those SBOM files for Open Source Health.
+Again, you only need this option if you are importing your own SBOM files, *and* you want Sigrid to only use those SBOM files for Open Source Health. Sigrid will still scan for *unmanaged* dependencies when you upload an SBOM. Consequently, you may not only see the libraries from your SBOM, but also the ones discovered by Sigrid as unmanaged dependencies.
 
 ## Security
 
@@ -468,4 +468,4 @@ Once you have decided to create a scope configuration file to customize your Sig
 
 ## Contact and support
 
-Feel free to contact [SIG's support department](mailto:support@softwareimprovementgroup.com) for any questions or issues you may have after reading this document, or when using Sigrid or Sigrid CI. Users in Europe can also contact us by phone at +31 20 314 0953.
+Feel free to contact [SIG's support team](mailto:support@softwareimprovementgroup.com) for any questions or issues you may have after reading this documentation or when using Sigrid.

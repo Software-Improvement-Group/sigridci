@@ -90,11 +90,10 @@ In addition to updating Sigrid itself, you will also need to periodically update
   - Mendix: Set the variable `CONVERT` to `mendix` in your CI pipeline job, and use `Mendixflow` as language when defining the scope.
   - Outsystems: This technology is not supported.
 - Unavailable Features:
-  - Open Source Health - This feature will soon become availabe in Sigrid On-Premise.
   - Security: The following tool(s) are currently unsupported in Sigrid On-Premise, and integration is not planned:
     - Checkmarx
   - Interactive AI Explanations
 
 ## Contact and support
 
-Feel free to contact [SIG's support department](mailto:support@softwareimprovementgroup.com) for any questions or issues you may have after reading this document, or when using Sigrid or Sigrid-Multi-Analyzer. Users in Europe can also contact us by phone at +31 20 314 0953.
+Feel free to contact [SIG's support team](mailto:support@softwareimprovementgroup.com) for any questions or issues you may have after reading this documentation or when using Sigrid.

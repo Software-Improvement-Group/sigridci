@@ -53,7 +53,7 @@ pipelines:
       - step:
           name: Sigrid CI
           script:
-            - "sigridci.py --customer <example_customer_name> --system <example_system_name> --source ."
+            - "sigridci.py --customer <example_customer_name> --system <example_system_name> --source . --capability maintainability,osh"
 ```
 
 Note the branch name `master` in the example. This should refer to your primary branch. In most projects this is called either `master` or `main`, but the default project name could be different for your project.

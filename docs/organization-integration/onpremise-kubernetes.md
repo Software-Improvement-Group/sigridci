@@ -76,6 +76,7 @@ Sigrid On-Premise needs access to the following images published on SIG's privat
 - `softwareimprovementgroup/sigrid-frontend`
 - `softwareimprovementgroup/sigrid-multi-analyzer`
 - `softwareimprovementgroup/sigrid-multi-importer`
+- `softwareimprovementgroup/osh-kb-updater`
 
 In addition, if your deployment is completely air-gapped, please ensure these public images are also published to your internal image registry.
 - `nginxinc/nginx-unprivileged`
@@ -155,10 +156,11 @@ level. The initialization script creates the following users and roles:
 - `webapp_user`
 - `db_mgmt_user`
 - `import_user`
+- `abstract_customer_role`
 - `auth_db_webapp_user`
 - `auth_db_mgmt_user`
-- `import_user`
-- `abstract_customer_role`
+- `auth_db_abstract_customer_role`
+- `osh_kb_updater_user`
 
 In addition, when first importing a system, Sigrid creates a role called `PARTNER_CUSTOMER_role`,
 where `PARTNER` and `CUSTOMER` are placeholders for the configured partner and customer role. In 
@@ -597,4 +599,4 @@ Notes:
 
 ## Contact and support
 
-Feel free to contact [SIG's support department](mailto:support@softwareimprovementgroup.com) for any questions or issues you may have after reading this document, or when using Sigrid or Sigrid-Multi-Analyzer. Users in Europe can also contact us by phone at +31 20 314 0953.
+Feel free to contact [SIG's support team](mailto:support@softwareimprovementgroup.com) for any questions or issues you may have after reading this documentation or when using Sigrid.
