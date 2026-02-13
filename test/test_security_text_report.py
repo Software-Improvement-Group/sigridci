@@ -19,6 +19,7 @@ from io import StringIO
 from unittest import TestCase
 
 from sigridci.sigridci.publish_options import PublishOptions, RunMode
+from sigridci.sigridci.reports.security_markdown_report import SecurityMarkdownReport
 from sigridci.sigridci.reports.security_text_report import SecurityTextReport
 
 
@@ -31,7 +32,7 @@ class SecurityTextReportTest(TestCase):
             feedback = json.load(f)
 
         buffer = StringIO()
-        report = SecurityTextReport("HIGH", output=buffer)
+        report = SecurityTextReport(SecurityMarkdownReport("HIGH"), output=buffer)
         report.generate("1234", feedback, options)
 
         expected = """
