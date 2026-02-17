@@ -3,6 +3,9 @@ Sigrid release notes
 
 SIG uses [continuous delivery](https://en.wikipedia.org/wiki/Continuous_delivery), meaning that every change to Sigrid or the underlying analysis is released once our development pipeline has completed. On average, we release somewhere between 10 and 20 times per day. This page therefore doesn't list every single change, since that would quickly lead to an excessively long list of small changes. Instead, this page lists Sigrid and analysis changes that we consider noteworthy for the typical Sigrid user.
 
+### February 23, 2026
+
+- **Scope configuration:** If you want to enable Sigrid's [Open Source Health](../capabilities/portfolio-open-source-health.md) or [Security](../capabilities/portfolio-security.md) capabilities, you previously needed to add some mandatory configuration to the [scope configuration file](../reference/analysis-scope-configuration.md). Many people considered this to be a bit cumbersome, so this has been simplified: Open Source Health and Security will now run automatically, as long as you have the corresponding license. This change is backward compatible, so existing scope configuration files will continue to work. 
 
 ### February 13, 2026
 

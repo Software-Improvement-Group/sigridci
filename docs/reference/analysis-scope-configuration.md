@@ -14,10 +14,6 @@ The following example shows a minimal `sigrid.yaml` file that should help you to
     languages:
       - name: TypeScript
       - name: JavaScript
-    dependencychecker: 
-      blocklist: ["NONE"]
-    thirdpartyfindings:
-      enabled: true
       
 So what do these options actually do?
 
@@ -26,9 +22,6 @@ So what do these options actually do?
 If you're not sure what technologies you repository is using, and you're using a development platform like GitHub or GitLab, you can find this information on your repository's dashboard page. For example, this GitHub repository would result in the list of technologies used in the example above:
 
 <img src="../images/github-languages-example.png" width="250" />
-
-- The `dependencychecker` option enables Sigrid's [Open Source Health](../capabilities/portfolio-open-source-health.md) page. If you do not use Open Source Health, you don't need this section. The `blocklist` option is explained [later in this page](#open-source-health).
-- The `thirdpartyfindings` option enables Sigrid's [Security](../capabilities/portfolio-security.md). If you're not using Sigrid Security, you don't need this section.
 
 Of course, you can always extend this simple example by adding additional configuration. The remainder of this page describes the various configuration options and how to use them.
 
@@ -189,9 +182,9 @@ You can customize this by adding a `model` entry to your configuration. For exam
 
 ## Open Source Health
 
-**Note: This requires a [Sigrid license for Open Source Health](https://www.softwareimprovementgroup.com/capabilities/sigrid-open-source-health/). Without this license, you will not be able to see security results in Sigrid.**
-
 Open Source Health allows you to scan all open sources libraries used by your system, and identify risks such as security vulnerabilities or heavily outdated libraries.
+
+Open Source Health will run automatically if you have the corresponding Sigrid license. You can *optionally* add the following section to your scope configuration file to configure the analysis. 
 
     dependencychecker:
       blocklist:
@@ -202,13 +195,14 @@ Open Source Health allows you to scan all open sources libraries used by your sy
         
 The `dependencychecker` section supports the following options:
 
-| Option name  | Required? | Description                                                                                    |
-|--------------|-----------|------------------------------------------------------------------------------------------------|
-| `blocklist`  | Yes       | See [defining a blocklist](#defining-a-blocklist).                                             |
-| `transitive` | No        | When true, also scans the dependencies of your dependencies. Defaults to false.                |
-| `exclude`    | No        | See [exclude Open Source Health risks](#exclude-open-source-health-risks).                     |
-| `model`      | No        | SIG Open Source Health model version that should be used for the analysis, defaults to latest. |
-| `source`     | No        | See [configuring SBOM import](#configuring-sbom-import).                                       |
+| Option name  | Required? | Description                                                                                                                                                                           |
+|--------------|-----------|---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| `enabled`    | No        | By default, the Open Source Health analysis will run automatically if you have the corresponding Sigrid license. You can set this option to false to expliciyly disable the analysis. |
+| `blocklist`  | No        | See [defining a blocklist](#defining-a-blocklist).                                                                                                                                    |
+| `transitive` | No        | When true, also scans the dependencies of your dependencies. Defaults to false.                                                                                                       |
+| `exclude`    | No        | See [exclude Open Source Health risks](#exclude-open-source-health-risks).                                                                                                            |
+| `model`      | No        | SIG Open Source Health model version that should be used for the analysis, defaults to latest.                                                                                        |
+| `source`     | No        | See [configuring SBOM import](#configuring-sbom-import).                                                                                                                              |
 
 ### Defining a blocklist
 
@@ -253,14 +247,13 @@ Again, you only need this option if you are importing your own SBOM files, *and*
 
 ## Security
 
-**Note: This requires a [Sigrid license for Software Security](https://www.softwareimprovementgroup.com/solutions/sigrid-software-security/). Without this license, you will not be able to see security results in Sigrid.**
+Security will run automatically if you have the corresponding Sigrid license. You can *optionally* add the following section to your scope configuration file to configure the analysis.
 
 ### Third Party Findings
 
 Sigrid uses a combination of its own security checks and security checks performed by third party tools. It then combines the results, benchmarks them, and reports on the overall results. As an example, the following configuration options are available to include or exclude certain code and/or security analyzers:
 
     thirdpartyfindings:
-      enabled: true
       exclude:
         - ".*/scripts/.*[.]sh"
       disabled_analyzers:
@@ -271,13 +264,13 @@ Sigrid uses a combination of its own security checks and security checks perform
 
 This `thirdpartyfindings` section in the scope file supports the following options:
 
-| Option name              | Required? | Description                                                                                                            |
-|--------------------------|-----------|------------------------------------------------------------------------------------------------------------------------|
-| `enabled`                | Yes       | Set to `true` to enable security analysis.                                                                             |
-| `exclude`                | No        | See [excluding files and directories from security scanning](#excluding-files-and-directories-from-security-scanning). |
-| `disabled_rules`         | No        | List of rule IDs that should be ignored during analysis.                                                               |
-| `disabled_analyzers`     | No        | List of specific scanning tools that should be ignored during analysis.                                                |
-| `enabled_analyzers`      | No        | List of specific scanning tools to enable (if not enabled by default).                                                 |
+| Option name              | Required? | Description                                                                                                                                                                          |
+|--------------------------|-----------|--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| `enabled`                | No        | By default, the security analysis will run automatically if you have the corresponding Sigrid license. You can set this option to false to expliciyly disable the security analysis. |
+| `exclude`                | No        | See [excluding files and directories from security scanning](#excluding-files-and-directories-from-security-scanning).                                                               |
+| `disabled_rules`         | No        | List of rule IDs that should be ignored during analysis.                                                                                                                             |
+| `disabled_analyzers`     | No        | List of specific scanning tools that should be ignored during analysis.                                                                                                              |
+| `enabled_analyzers`      | No        | List of specific scanning tools to enable (if not enabled by default).                                                                                                               |
 
 ### Excluding files and directories from security scanning
 
