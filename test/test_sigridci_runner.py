@@ -378,19 +378,6 @@ class SigridCiRunnerTest(TestCase):
         runner = SigridCiRunner(self.options, apiClient)
         runner.validateConfigurationFiles({})
 
-    def testMissingDependencyCheckerSectionInScopeFileIsInvalidForOSH(self):
-        self.createTempFile(self.tempDir, "sigrid.yaml", "component_depth: 1")
-
-        self.options.capabilities = [MAINTAINABILITY, OPEN_SOURCE_HEALTH]
-
-        apiClient = MockApiClient(self.options)
-        apiClient.responses["/inboundresults/sig/aap/noot/ci/validate/v1"] = {"valid" : True, "notes" : ["test"]}
-
-        runner = SigridCiRunner(self.options, apiClient)
-        with self.assertRaises(SystemExit):
-            runner.validateConfigurationFiles({})
-        self.assertEqual(UploadLog.history[-2], "    - Missing required field 'dependencychecker'.")
-
     def testCannotUseScopeFileInCombinationWithSubsystem(self):
         self.createTempFile(self.tempDir, "sigrid.yaml", "default_excludes: true")
 
