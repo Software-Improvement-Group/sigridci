@@ -21,7 +21,7 @@ from .upload_log import UploadLog
 
 
 class RepositoryHistoryExporter:
-    GIT_LOG_FORMAT = "@@@;%H;%an;%ae;%cd;%s"
+    GIT_LOG_FORMAT = "@@@;%H;%an;%ae;%cn;%ce;%cd;%s"
     CUTOFF_DATE = datetime.now() + timedelta(days=-365)
     LIGHTWEIGHT_HISTORY_EXPORT_FILE = "git.log"
     COMMIT_PREFIXES = ("@@@", "'@@@")
@@ -68,11 +68,18 @@ class RepositoryHistoryExporter:
 
         for line in gitLog.strip().split("\n"):
             if line.startswith(self.COMMIT_PREFIXES):
-                marker, id, name, email, date, message, *rest = line.split(";")
-                name = hashlib.sha256(name.encode("utf8")).hexdigest()
-                email = hashlib.sha256(email.encode("utf8")).hexdigest()
-                anonymized += ";".join([marker, id, name, email, date, message]) + "\n"
+                marker, id, authorName, authorEmail, committerName, committerEmail, date, message, *rest = line.split(";")
+                authorName = self.anonymize(authorName)
+                authorEmail = self.anonymize(authorEmail)
+                committerName = self.anonymize(committerName)
+                committerEmail = self.anonymize(committerEmail)
+                anonymized += ";".join([marker, id, authorName, authorEmail, committerName, committerEmail, date, message]) + "\n"
             else:
                 anonymized += line + "\n"
 
         return anonymized
+
+    def anonymize(self, name):
+        if not name:
+            return ""
+        return hashlib.sha256(name.encode("utf8")).hexdigest()

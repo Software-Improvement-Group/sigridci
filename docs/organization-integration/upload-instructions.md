@@ -150,7 +150,7 @@ Prefer regular ZIP files, and avoid nested ZIP files. The following example can 
 ```
 git clone https://github.com/LeaVerou/awesomplete.git code
 cd code
-git --no-pager log --date=iso --format='@@@;%H;%an;%ae;%cd;%s' --numstat --no-merges > git.log
+git --no-pager log --date=iso --format='@@@;%H;%an;%ae;%cn;%ce;%cd;%s' --numstat --no-merges > git.log
 rm -rf .git
 zip -r your-project.zip .
 ```
@@ -160,7 +160,7 @@ The following example can be used with Windows PowerShell to create a ZIP file:
 ```
 git clone https://github.com/LeaVerou/awesomplete.git code
 cd code
-git --no-pager log --date=iso --format='@@@;%H;%an;%ae;%cd;%s' --numstat --no-merges | Out-File -FilePath git.log -Encoding 'utf8'
+git --no-pager log --date=iso --format='@@@;%H;%an;%ae;%cn;%ce;%cd;%s' --numstat --no-merges | Out-File -FilePath git.log -Encoding 'utf8'
 Remove-Item -Recurse -Force .git
 cd ..
 Compress-Archive -Path code\* -DestinationPath .\your-project.zip
