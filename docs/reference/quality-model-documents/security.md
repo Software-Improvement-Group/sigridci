@@ -57,8 +57,6 @@ as much as possible.
 
 ## Contact and support
 
-Feel free to contact SIG’s support department for any questions or issues 
-you may have after reading this document, or when using Sigrid. 
-Users in Europe can also contact us by phone at +31 20 314 0953.
+Feel free to contact [SIG's support team](mailto:support@softwareimprovementgroup.com) for any questions or issues you may have after reading this documentation or when using Sigrid.
 
 
