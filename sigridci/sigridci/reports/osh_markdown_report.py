@@ -69,14 +69,16 @@ class OpenSourceHealthMarkdownReport(Report, MarkdownRenderer):
         return self.renderMarkdownTemplate(feedback, options, details, sigridLink)
 
     def getSummary(self, feedback, options):
-        libraries = list(self.processor.extractLibraries(feedback))
+        totalLibraryCount = len(feedback.get("components", []))
 
-        if len(libraries) == 0:
+        if totalLibraryCount == 0:
             return ["💭  Sigrid did not find any open source libraries."]
 
-        summary = [self.getVulnerabilitySummary(libraries)]
+        relevantLibraries = list(self.processor.extractLibraries(feedback))
+
+        summary = [self.getVulnerabilitySummary(relevantLibraries)]
         if self.licenseObjective:
-            summary.append(self.getLicenseSummary(libraries))
+            summary.append(self.getLicenseSummary(relevantLibraries))
         return summary
 
     def getVulnerabilitySummary(self, libraries):

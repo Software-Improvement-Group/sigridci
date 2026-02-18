@@ -254,7 +254,8 @@ class OpenSourceHealthMarkdownReportTest(TestCase):
         emptyFeedback = {
             "metadata": {
                 "timestamp": "2026-02-03"
-            }
+            },
+            "components": []
         }
 
         report = OpenSourceHealthMarkdownReport("CRITICAL", "LOW")
@@ -265,6 +266,57 @@ class OpenSourceHealthMarkdownReportTest(TestCase):
             # [Sigrid](https://sigrid-says.com/aap/noot/-/open-source-health) Open Source Health feedback
     
             **💭  Sigrid did not find any open source libraries.**
+            
+            Sigrid compared your code against the baseline of 2026-02-03.
+            
+            
+            ----
+            
+            [**View this system in Sigrid**](https://sigrid-says.com/aap/noot/-/open-source-health)
+        """
+
+        self.assertEqual(markdown.strip(), inspect.cleandoc(expected).strip())
+
+    @mock.patch.dict(os.environ, {"SIGRID_CI_MARKDOWN_HTML" : "false"})
+    def testGreenCheckmarkIfThereAreLibrariesButNoFindings(self):
+        emptyFeedback = {
+            "metadata": {
+                "timestamp": "2026-02-03"
+            },
+            "components": [
+                {
+                    "name": "platform-browser-dynamic",
+                    "purl": "pkg:npm/%40angular/platform-browser-dynamic@21.0.9",
+                    "type": "library",
+                    "group": "@angular",
+                    "bom-ref": "pkg:npm/%40angular/platform-browser-dynamic@21.0.9?package-id=d540fd8750e7344a",
+                    "version": "21.0.9",
+                    "evidence": {},
+                    "licenses": [],
+                    "properties": [
+                        {
+                            "name": "sigrid:risk:vulnerability",
+                            "value": "NONE"
+                        },
+                        {
+                            "name": "sigrid:risk:legal",
+                            "value": "NONE"
+                        }
+                    ]
+                }
+            ]
+        }
+
+        report = OpenSourceHealthMarkdownReport("CRITICAL", "LOW")
+        report.decorateLinks = False
+        markdown = report.renderMarkdown("1234", emptyFeedback, self.options)
+
+        expected = """
+            # [Sigrid](https://sigrid-says.com/aap/noot/-/open-source-health) Open Source Health feedback
+    
+            **✅  You achieved your objective of having any open source vulnerabilities.**
+
+            **✅  You achieved your objective of having no open source libraries with license issues.**
             
             Sigrid compared your code against the baseline of 2026-02-03.
             
