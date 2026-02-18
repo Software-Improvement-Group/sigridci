@@ -5,7 +5,8 @@ SIG uses [continuous delivery](https://en.wikipedia.org/wiki/Continuous_delivery
 
 ### February 23, 2026
 
-- **Scope configuration:** If you want to enable Sigrid's [Open Source Health](../capabilities/portfolio-open-source-health.md) or [Security](../capabilities/portfolio-security.md) capabilities, you previously needed to add some mandatory configuration to the [scope configuration file](../reference/analysis-scope-configuration.md). Many people considered this to be a bit cumbersome, so this has been simplified: Open Source Health and Security will now run automatically, as long as you have the corresponding license. This change is backward compatible, so existing scope configuration files will continue to work. 
+- **Scope configuration:** If you want to enable Sigrid's [Open Source Health](../capabilities/portfolio-open-source-health.md) or [Security](../capabilities/portfolio-security.md) capabilities, you previously needed to add some mandatory configuration to the [scope configuration file](../reference/analysis-scope-configuration.md). Many people considered this to be a bit cumbersome, so this has been simplified: Open Source Health and Security will now run automatically, as long as you have the corresponding license. This change is backward compatible, so existing scope configuration files will continue to work.
+- **Sigrid CI:** Following the change above, Sigrid CI will now automatically give feedback for Maintainability and/or Open Source Health based on your Sigrid license. If you want, you can still choose to explicitly disable certain feedback in [the Sigrid CI configuration](../sigridci-integration/using-sigridci.md). 
 
 ### February 13, 2026
 
