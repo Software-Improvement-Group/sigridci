@@ -257,7 +257,7 @@ class OpenSourceHealthMarkdownReportTest(TestCase):
             }
         }
 
-        report = OpenSourceHealthMarkdownReport("CRITICAL")
+        report = OpenSourceHealthMarkdownReport("CRITICAL", "LOW")
         report.decorateLinks = False
         markdown = report.renderMarkdown("1234", emptyFeedback, self.options)
 
