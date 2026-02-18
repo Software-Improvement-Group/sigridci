@@ -15,7 +15,7 @@ jobs:
       - name: "Run Sigrid CI" 
         env:
           SIGRID_CI_TOKEN: "${{ secrets.SIGRID_CI_TOKEN }}"
-        run: "./sigridci/sigridci.py --customer sig --system sigridci-client --source . --capability maintainability,osh"
+        run: "./sigridci/sigridci.py --customer sig --system sigridci-client --source .
       - name: "Save Sigrid CI results"
         if: always()
         uses: actions/upload-artifact@v4
@@ -44,6 +44,5 @@ jobs:
         with:
           customer: "sig"
           system: "sigridci-client"
-          capability: "maintainability,osh"
         env:
           SIGRID_CI_TOKEN: "${{ secrets.SIGRID_CI_TOKEN }}"
