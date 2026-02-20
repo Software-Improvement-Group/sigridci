@@ -46,7 +46,7 @@ If your deployment is entirely air-gapped or you just want to use your own inter
    - nginxinc/nginx-unprivileged
    - redis:7.2.4-alpine
    - haproxy:2.9.4-alpine
-   - aws-cli:2.24.6
+   - aws-cli:2.31.13 (required only for the ECR pull secret refresher)
 2. Tag the downloaded containers with their tag from AWS ECR registry (e.g. 1.0.20260223).
 3. Re-tag and push the containers to your internal image registry.
 
