@@ -39,7 +39,8 @@ If your deployment is entirely air-gapped or you just want to use your own inter
    - softwareimprovementgroup/sigrid-frontend
    - softwareimprovementgroup/sigrid-multi-analyzer
    - softwareimprovementgroup/sigrid-multi-importer
-   - softwareimprovementgroup/osh-kb-updater
+   - softwareimprovementgroup/osh-kb-updater (required for OSH)
+   - softwareimprovementgroup/sigrid-integrations-onprem (optional)
 
    Additionally, the following public images are required:
    - nginxinc/nginx-unprivileged
