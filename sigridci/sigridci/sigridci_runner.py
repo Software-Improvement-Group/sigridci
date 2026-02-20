@@ -83,10 +83,12 @@ class SigridCiRunner:
     def performLicenseCheck(self):
         licenseData = self.apiClient.fetchLicenses()
         licenses = licenseData.get("licenses", licenseData.get("licences", []))
-        missing = [capability.name for capability in self.options.capabilities if capability.name not in licenses]
-        if len(missing) > 0:
-            UploadLog.log(f"You do not have the Sigrid license for {', '.join(missing)}.")
-            sys.exit(1)
+
+        missingCapabilities = [capability for capability in self.options.capabilities if capability.name not in licenses]
+        self.options.capabilities = [capability for capability in self.options.capabilities if capability.name in licenses]
+
+        for missingCapability in missingCapabilities:
+            UploadLog.log(f"Skipping {missingCapability.displayName}, as your Sigrid license does not include it.")
 
 
     def displayFeedback(self, analysisId, metadata):

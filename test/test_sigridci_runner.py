@@ -32,7 +32,7 @@ class SigridCiRunnerTest(TestCase):
 
     def setUp(self):
         self.tempDir = tempfile.mkdtemp()
-        self.options = PublishOptions("aap", "noot", RunMode.FEEDBACK_ONLY, self.tempDir)
+        self.options = PublishOptions("aap", "noot", RunMode.FEEDBACK_ONLY, self.tempDir, capabilities=[MAINTAINABILITY])
 
         UploadLog.clear()
 
@@ -684,14 +684,15 @@ class SigridCiRunnerTest(TestCase):
         self.assertEqual(UploadLog.history[-1], "No code found to upload, please check the directory used for --source")
 
     def testLicenseCheckFails(self):
+        self.createTempFile(self.tempDir, "a.py", "print(123)")
+
         apiClient = MockApiClient(self.options)
         apiClient.responses["/analysis-results/api/v1/licenses/aap"] = {"licenses" : ["AAP"]}
 
         runner = SigridCiRunner(self.options, apiClient)
-        with self.assertRaises(SystemExit):
-            runner.run()
+        runner.run()
 
-        self.assertEqual(UploadLog.history[-1], "You do not have the Sigrid license for MAINTAINABILITY.")
+        self.assertIn("Skipping Maintainability, as your Sigrid license does not include it.", UploadLog.history)
 
     def testCompareAgainstOpenSourceHealthBaseline(self):
         self.createTempFile(self.tempDir, "a.py", "print(123)")
