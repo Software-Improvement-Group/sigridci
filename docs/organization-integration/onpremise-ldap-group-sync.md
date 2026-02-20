@@ -62,9 +62,12 @@ global:
           data:
             mysigridcert.pem: |
               -----BEGIN CERTIFICATE-----
-              .....
+              ...... INTERMEDIATE CERTIFICATE CONTENT (if any)
               -----END CERTIFICATE-----
-            myldapcert.pem |
+              -----BEGIN CERTIFICATE-----
+              ......
+              -----END CERTIFICATE-----
+            myldapcert.pem: |
               -----BEGIN CERTIFICATE-----
               .....
               -----END CERTIFICATE-----
