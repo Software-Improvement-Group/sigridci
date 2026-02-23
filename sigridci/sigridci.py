@@ -27,6 +27,7 @@ from sigridci.upload_log import UploadLog
 
 
 CAPABILITIES = {cap.shortName: cap for cap in [MAINTAINABILITY, OPEN_SOURCE_HEALTH]}
+DEFAULT_CAPABILITIES = "maintainability,osh"
 
 
 def parsePublishOptions(args):
@@ -81,7 +82,7 @@ if __name__ == "__main__":
     parser.add_argument("--subsystem", type=str, default="", help="Publishes your code as a subsystem within a Sigrid system.")
     parser.add_argument("--convert", type=str, default="", help="Code conversion for specific technologies")
     parser.add_argument("--source", type=str, required=True, help="Path of your project's source code.")
-    parser.add_argument("--capability", type=str, default="maintainability", help=f"Comma-separated Sigrid capabilities ({','.join(CAPABILITIES.keys())}).")
+    parser.add_argument("--capability", type=str, default=DEFAULT_CAPABILITIES, help=f"Comma-separated Sigrid capabilities ({','.join(CAPABILITIES.keys())}).")
     parser.add_argument("--publish", action="store_true", help="Publishes analysis results to Sigrid.")
     parser.add_argument("--publishonly", action="store_true", help="Only publishes to Sigrid without waiting for results.")
     parser.add_argument("--exclude", type=str, default="", help="Comma-separated list of files/directories to exclude.")
