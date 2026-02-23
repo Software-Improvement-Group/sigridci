@@ -12,6 +12,15 @@ This documentation covers on-premise Sigrid. It is not applicable for cloud-base
 If you're not pulling `softwareimprovementgroup/sigrid-integration-onprem` directly from our ECR, make sure to pull it from ECR and push it to your local registry for deployment.
 {: .attention }
 
+## Scenarios
+This integration, once enabled will do the following
+
+- LDAP group exists, not in Sigrid → ✔️ New group is created in Sigrid
+- LDAP group + Sigrid group both exist → 🔁 Membership is synchronized
+- LDAP user in that group not in Sigrid → ✔️ User is created as SSO user
+- LDAP group removed but still in Sigrid → ❌ Group is deleted from Sigrid
+- User removed from LDAP group → ❌ User removed from Sigrid group (via full membership overwrite)
+
 ## Enabling LDAP Group Sync
 The Sigrid LDAP Group Sync is enabled in the global section of your Sigrid On-Premise deployment configuration.
 
