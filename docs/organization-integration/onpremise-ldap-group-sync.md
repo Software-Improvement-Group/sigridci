@@ -15,11 +15,13 @@ If you're not pulling `softwareimprovementgroup/sigrid-integration-onprem` direc
 ## Scenarios
 This integration, once enabled will do the following
 
-- LDAP group exists, not in Sigrid → ✔️ New group is created in Sigrid
 - LDAP group + Sigrid group both exist → 🔁 Membership is synchronized
 - LDAP user in that group not in Sigrid → ✔️ User is created as SSO user
 - LDAP group removed but still in Sigrid → ❌ Group is deleted from Sigrid
 - User removed from LDAP group → ❌ User removed from Sigrid group (via full membership overwrite)
+
+Optional flag `--override-groups`
+- Force-replace all Sigrid user groups with LDAP groups → Replaces all user group memberships with those from LDAP
 
 ## Enabling LDAP Group Sync
 The Sigrid LDAP Group Sync is enabled in the global section of your Sigrid On-Premise deployment configuration.
@@ -57,6 +59,7 @@ global:
         SIGRID_LDAP_GROUP_DN: "dc=example,dc=com"
         SIGRID_CA_CERT: /etc/ssl/certs/custom/mysigridcert.pem
         LDAP_CA_CERT: /etc/ssl/certs/custom/myldapcert.pem
+      #args: ["--override-groups"]
       secrets:
         create: true
         secretName: "ldap-group-sync-secret"
