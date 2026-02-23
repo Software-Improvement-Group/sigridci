@@ -7,7 +7,7 @@ This documentation covers on-premise Sigrid. It is not applicable for cloud-base
 
 - You should have already read the other Sigrid On-Premise documentation.
 - All pre-requisites from our public documentation are met.
-- Make sure you have the latest Sigrid helm chart (>=1.0.20260107)
+- Make sure you have the latest Sigrid helm chart (>=0.4.10)
 
 If you're not pulling `softwareimprovementgroup/osh-kb-updater` directly from our ECR, make sure to pull it from ECR and push it to your local registry for deployment.
 {: .attention }
