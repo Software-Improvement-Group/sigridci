@@ -7,6 +7,7 @@ This documentation covers on-premise Sigrid. It is not applicable for cloud-base
 
 - You should have already read the other Sigrid On-Premise documentation.
 - All pre-requisites from our public documentation are met.
+- Make sure you have the latest Sigrid helm chart (>=1.0.20260107)
 
 If you're not pulling `softwareimprovementgroup/osh-kb-updater` directly from our ECR, make sure to pull it from ECR and push it to your local registry for deployment.
 {: .attention }
@@ -77,7 +78,7 @@ global:
       enabled: true
       updaterImage:
         repository: softwareimprovementgroup/osh-kb-updater
-        tag: 1.0.20260107 # e.g. use Renovate to update this tag regularly
+        tag: 1.0.20260223 # e.g. use Renovate to update this tag regularly
       pgHost: "postgres.example.com"
       pgSecretName: "osh-kb-updater-job-postgres-secret" # secret containing the password for the database user
       pgSecretPasswordKey: "" # 
