@@ -5,7 +5,9 @@ SIG uses [continuous delivery](https://en.wikipedia.org/wiki/Continuous_delivery
 
 ### February 23, 2026
 
-- **Scope configuration:** If you want to enable Sigrid's [Open Source Health](../capabilities/portfolio-open-source-health.md) or [Security](../capabilities/portfolio-security.md) capabilities, you previously needed to add some mandatory configuration to the [scope configuration file](../reference/analysis-scope-configuration.md). Many people considered this to be a bit cumbersome, so this has been simplified: Open Source Health and Security will now run automatically, as long as you have the corresponding license. This change is backward compatible, so existing scope configuration files will continue to work. 
+- **Scope configuration:** If you want to enable Sigrid's [Open Source Health](../capabilities/portfolio-open-source-health.md) or [Security](../capabilities/portfolio-security.md) capabilities, you previously needed to add some mandatory configuration to the [scope configuration file](../reference/analysis-scope-configuration.md). Many people considered this to be a bit cumbersome, so this has been simplified: Open Source Health and Security will now run automatically, as long as you have the corresponding license. This change is backward compatible, so existing scope configuration files will continue to work.
+- **Sigrid API:** It is now possible to retrieve Sigrid findings in [SARIF format](https://sarifweb.azurewebsites.net) using the API. See the [API documentation](../integrations/sigrid-api-documentation.md#security-and-reliability-findings) for more information.
+- **On-premise:** On-premise Sigrid now allows you to automatically synchronize group memberships using LDAP. You can find more information in the [on-premise documentation](../organization-integration/onpremise-ldap-group-sync.md).
 
 ### February 13, 2026
 
