@@ -39,14 +39,15 @@ If your deployment is entirely air-gapped or you just want to use your own inter
    - softwareimprovementgroup/sigrid-frontend
    - softwareimprovementgroup/sigrid-multi-analyzer
    - softwareimprovementgroup/sigrid-multi-importer
-   - softwareimprovementgroup/osh-kb-updater
+   - softwareimprovementgroup/osh-kb-updater (required for OSH)
+   - softwareimprovementgroup/sigrid-integrations-onprem (optional)
 
    Additionally, the following public images are required:
    - nginxinc/nginx-unprivileged
    - redis:7.2.4-alpine
    - haproxy:2.9.4-alpine
-   - aws-cli:2.24.6
-2. Tag the downloaded containers with their tag from AWS ECR registry (e.g. 1.0.20260107).
+   - aws-cli:2.31.13 (required only for the ECR pull secret refresher)
+2. Tag the downloaded containers with their tag from AWS ECR registry (e.g. 1.0.20260223).
 3. Re-tag and push the containers to your internal image registry.
 
 #### Situation 2: Pulling images directly from SIG's AWS ECR Registry
@@ -115,7 +116,7 @@ Your copy of example-values.yaml however is enough to get a complete Sigrid depl
 
 #### global:
 ```
-  imageTag: "1.0.20260107"
+  imageTag: "1.0.20260223"
 ```
 Provide the tag of the containers you want to use.
 It is important that the tag matches the tags used in Sigrid's Helm chart: all components of Sigrid must always use the same version.
