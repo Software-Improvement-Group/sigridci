@@ -46,20 +46,24 @@ class RepositoryHistoryExporterTest(TestCase):
         id = "f59c21c9de5bee332d51cea5caef4b2500ea100e"
         name = "199b4fba40cbc81fd5c7493cba5a7a23c5a8872626d9cb8bec46d7a052bb747e"
         email = "768edd5d023df7cf4dec32fbe7cc00ec5aed4435aecc3721bdb767e1b862f461"
+        committerName = "f911e414cf6bdfc595532ab166b5ba0f63d73c021452fcdacbda363dda6ad8fb"
+        committerEmail = "3c205d8fc749f72977b9331e3179773c315bb1f4860c366de2abe9ec9337730b"
         date = "2023-08-15 13:57:07 +0200"
         message = "Create sigrid-publish.yml"
 
-        self.assertEqual(historyEntries[0], f"'@@@;{id};{name};{email};{date};{message}'")
+        self.assertEqual(historyEntries[0], f"'@@@;{id};{name};{email};{committerName};{committerEmail};{date};{message}'")
 
     def testTolerantParsingOfCommitMessage(self):
-        log = "@@@;1234;John Smith;j.smith@sig.eu;2023-11-29 10:48:32 +0100;a;b;c"
+        log = "@@@;1234;John Smith;j.smith@sig.eu;GitHub;noreply@github.com;2023-11-29 10:48:32 +0100;a;b;c"
         historyExporter = RepositoryHistoryExporter()
         result = historyExporter.anonymizeHistoryEntry(log)
 
-        expectedName = "ef61a579c907bbed674c0dbcbcf7f7af8f851538eef7b8e58c5bee0b8cfdac4a"
-        expectedEmail = "318f8c6a1732a7a6c60e2200ec56edf41780425d81e5eb30aed6fdc025edccab"
+        authorName = "ef61a579c907bbed674c0dbcbcf7f7af8f851538eef7b8e58c5bee0b8cfdac4a"
+        authorEmail = "318f8c6a1732a7a6c60e2200ec56edf41780425d81e5eb30aed6fdc025edccab"
+        committerName = "f911e414cf6bdfc595532ab166b5ba0f63d73c021452fcdacbda363dda6ad8fb"
+        committerEmail = "3c205d8fc749f72977b9331e3179773c315bb1f4860c366de2abe9ec9337730b"
 
-        self.assertEqual(result, f"@@@;1234;{expectedName};{expectedEmail};2023-11-29 10:48:32 +0100;a\n")
+        self.assertEqual(result, f"@@@;1234;{authorName};{authorEmail};{committerName};{committerEmail};2023-11-29 10:48:32 +0100;a\n")
 
     def testWarningWhenHistoryContainsSingleEntry(self):
         tempDir = tempfile.mkdtemp()
@@ -92,4 +96,3 @@ class RepositoryHistoryExporterTest(TestCase):
         self.assertFalse(os.path.exists(f"{tempDir}/git.log"))
         self.assertTrue(os.path.exists(f"{tempDir}/cspacman/git.log"))
         self.assertTrue(os.path.exists(f"{tempDir}/awesomplete/git.log"))
-
