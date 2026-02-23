@@ -18,12 +18,16 @@ import os
 import sys
 from argparse import ArgumentParser, SUPPRESS
 
-from sigridci.capability import CAPABILITY_SHORT_NAMES
+from sigridci.capability import MAINTAINABILITY, OPEN_SOURCE_HEALTH, SECURITY
 from sigridci.publish_options import PublishOptions, RunMode
 from sigridci.sigrid_api_client import SigridApiClient
 from sigridci.platform import Platform
 from sigridci.sigridci_runner import SigridCiRunner
 from sigridci.upload_log import UploadLog
+
+
+CAPABILITIES = {cap.shortName: cap for cap in [MAINTAINABILITY, OPEN_SOURCE_HEALTH, SECURITY]}
+DEFAULT_CAPABILITIES = "maintainability,osh,security"
 
 
 def parsePublishOptions(args):
@@ -63,7 +67,7 @@ def parseTarget(target):
 
 def parseCapabilities(names):
     try:
-        return [CAPABILITY_SHORT_NAMES[name.lower().strip()] for name in names.split(",")]
+        return [CAPABILITIES[name.lower().strip()] for name in names.split(",")]
     except KeyError as e:
         print(f"Invalid value for --capability: {str(e)}")
         sys.exit(1)
@@ -78,8 +82,7 @@ if __name__ == "__main__":
     parser.add_argument("--subsystem", type=str, default="", help="Publishes your code as a subsystem within a Sigrid system.")
     parser.add_argument("--convert", type=str, default="", help="Code conversion for specific technologies")
     parser.add_argument("--source", type=str, required=True, help="Path of your project's source code.")
-    parser.add_argument("--capability", type=str, default="maintainability",
-                        help=f"Comma-separated Sigrid capabilities ({','.join(CAPABILITY_SHORT_NAMES.keys())}).")
+    parser.add_argument("--capability", type=str, default=DEFAULT_CAPABILITIES, help=f"Comma-separated Sigrid capabilities ({','.join(CAPABILITIES.keys())}).")
     parser.add_argument("--publish", action="store_true", help="Publishes analysis results to Sigrid.")
     parser.add_argument("--publishonly", action="store_true", help="Only publishes to Sigrid without waiting for results.")
     parser.add_argument("--exclude", type=str, default="", help="Comma-separated list of files/directories to exclude.")
