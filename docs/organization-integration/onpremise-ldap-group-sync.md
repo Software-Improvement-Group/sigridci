@@ -7,7 +7,7 @@ This documentation covers on-premise Sigrid. It is not applicable for cloud-base
 
 - You should have already read the other Sigrid On-Premise documentation.
 - All pre-requisites from our public documentation are met.
-- Make sure you have the latest Sigrid helm chart (>=0.4.11)
+- Make sure you have the latest Sigrid helm chart (>=0.4.12)
 
 If you're not pulling `softwareimprovementgroup/sigrid-integration-onprem` directly from our ECR, make sure to pull it from ECR and push it to your local registry for deployment.
 {: .attention }
@@ -57,6 +57,8 @@ global:
         SIGRID_LDAP_USER_DN: "dc=example,dc=com"
         SIGRID_LDAP_USER_QUERY: "objectclass=inetOrgPerson"
         SIGRID_LDAP_GROUP_DN: "dc=example,dc=com"
+        SIGRID_LDAP_GROUP_NAME_ATTR: "cn" # default LDAP attribute for group name
+        SIGRID_LDAP_GROUP_MEMBER_ATTR: "uniqueMember" # default LDAP attribute for group member attribute
         SIGRID_CA_CERT: /etc/ssl/certs/custom/mysigridcert.pem
         LDAP_CA_CERT: /etc/ssl/certs/custom/myldapcert.pem
       #args: ["--override-groups"]
