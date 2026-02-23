@@ -18,7 +18,7 @@ from dataclasses import dataclass, field
 from enum import Enum
 from typing import List
 
-from .capability import Capability, MAINTAINABILITY
+from .capability import Capability, OPEN_SOURCE_HEALTH, MAINTAINABILITY
 
 
 class RunMode(Enum):
@@ -43,7 +43,7 @@ class PublishOptions:
     sigridURL: str = "https://sigrid-says.com"
     feedbackURL: str = "https://docs.sigrid-says.com/landing/feedback.html"
     partner: str = "sig"
-    capabilities: List[Capability] = field(default_factory=lambda: [MAINTAINABILITY])
+    capabilities: List[Capability] = field(default_factory=lambda: [MAINTAINABILITY, OPEN_SOURCE_HEALTH])
     ignoreMissingScopeFile: bool = False
 
     SYSTEM_NAME_PATTERN = re.compile("^[a-z0-9]+(-[a-z0-9]+)*$", re.IGNORECASE)
