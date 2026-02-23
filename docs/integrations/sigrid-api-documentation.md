@@ -23,8 +23,6 @@ curl -H 'Authorization: Bearer {SIGRID_CI_TOKEN}' https://sigrid-says.com/rest/a
 
 In the example, `{customer}` refers to your company's Sigrid account name (lower case), and `{SIGRID_CI_TOKEN}` refers to your authentication token. The `{customer}` or Sigrid account name is a text string like `acme` and is not a customer account like `john@acme.com`
 
-
-
 ### Including deactivated and/or excluded systems
 
 In Sigrid's web-based user interface, several portfolio (customer) level dashboards by default 
@@ -291,6 +289,72 @@ Valid model names are:
         ]
     }
 ]
+```
+
+</details>
+
+Adding `?sarif=true` to the URL will return the same findings, but in SARIF format. You can use this option if you want to integrate Sigrid findings with other tools that require SARIF.
+
+- `GET https://sigrid-says.com/rest/analysis-results/api/v1/security-findings/{customer}/{system}?sarif=true`
+
+<details markdown="1">
+  <summary>Example response</summary>
+
+```json
+{
+  "version": "2.1.0",
+  "runs": [
+    {
+      "tool": {
+        "driver": {
+          "name": "KICS",
+          "fullDescription": {
+            "text": "KICS via Sigrid"
+          },
+          "rules": [
+            {
+              "id": "fd54f200-402c-4333-a5a4-36ef6709af2f",
+              "properties": {
+                "tags": ["CWE-266"]
+              }
+            }
+          ]
+        }
+      },
+      "results": [
+        {
+          "ruleId": "fd54f200-402c-4333-a5a4-36ef6709af2f",
+          "level": "error",
+          "message": {
+            "text": "Missing User Instruction"
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "Dockerfile"
+                },
+                "region": {
+                  "startLine": 1,
+                  "endLine": 0
+                }
+              }
+            }
+          ],
+          "fingerprints": {
+            "sigFingerprint/v1": "fingerprint-id-for-this-finding"
+          },
+          "hostedViewerUri": "https://sigrid-says.com/example-url-for-this-finding",
+          "properties": {
+            "tags": ["A4 Insecure Design"],
+            "severity": "HIGH",
+            "status": "RAW"
+          }
+        }
+      ]
+    }
+  ]
+}
 ```
 
 </details>
