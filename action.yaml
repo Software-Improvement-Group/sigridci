@@ -13,7 +13,7 @@ inputs:
     required: false
     default: "."
   capability:
-    description: "Comma-separated list of Sigrid capabilities (`maintainability,osh,security`). Default is maintainability."
+    description: "Comma-separated list of Sigrid capabilities (`maintainability,osh,security`). Default is based on your Sigrid license."
     required: false
     default: "maintainability"
   publish:
