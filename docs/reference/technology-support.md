@@ -293,6 +293,7 @@ This page provides an overview of all technologies that can be analyzed by Sigri
 | `velocity`                    | Velocity                               | Maintainability, Architecture                                            |
 | `vgl`                         | VGL                                    | Maintainability                                                          |
 | `visualforce`                 | VisualForce                            | Maintainability                                                          |
+| `visualfoxpro`                | Visual FoxPro                          | Maintainability                                                          |
 | `visualrpg`                   | Visual RPG                             | Maintainability, Architecture                                            |
 | `visualobjects`               | Visual Objects                         | Maintainability, Architecture                                            |
 | `vue`                         | Vue                                    | Maintainability, Architecture, Security, Static AI, GenAI                | [(2)](#notes)                               |

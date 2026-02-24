@@ -10,6 +10,7 @@ SIG uses [continuous delivery](https://en.wikipedia.org/wiki/Continuous_delivery
 - **Sigrid CI:** The Open Source Health feedback in Sigrid CI now understands [sub-systems](client-script-usage.md#using-subsystems-to-combine-repositories). If you're using the sub-systems feature, Sigrid CI will only give feedback on Open Source Health issues within your sub-system. 
 - **Sigrid API:** It is now possible to retrieve Sigrid findings in [SARIF format](https://sarifweb.azurewebsites.net) using the API. See the [API documentation](../integrations/sigrid-api-documentation.md#security-and-reliability-findings) for more information.
 - **On-premise:** On-premise Sigrid now allows you to automatically synchronize group memberships using LDAP. You can find more information in the [on-premise documentation](../organization-integration/onpremise-ldap-group-sync.md).
+- **Technology support:** Sigrid now supports [Visual FoxPro](https://en.wikipedia.org/wiki/Visual_FoxPro). Even though this technology was discontinued in 2007, we do occasionally receive requests from people working on legacy codebases.
 
 ### February 13, 2026
 
