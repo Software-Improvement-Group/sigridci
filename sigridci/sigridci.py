@@ -18,7 +18,7 @@ import os
 import sys
 from argparse import ArgumentParser, SUPPRESS
 
-from sigridci.capability import MAINTAINABILITY, OPEN_SOURCE_HEALTH
+from sigridci.capability import MAINTAINABILITY, OPEN_SOURCE_HEALTH, SECURITY
 from sigridci.publish_options import PublishOptions, RunMode
 from sigridci.sigrid_api_client import SigridApiClient
 from sigridci.platform import Platform
@@ -26,8 +26,8 @@ from sigridci.sigridci_runner import SigridCiRunner
 from sigridci.upload_log import UploadLog
 
 
-CAPABILITIES = {cap.shortName: cap for cap in [MAINTAINABILITY, OPEN_SOURCE_HEALTH]}
-DEFAULT_CAPABILITIES = "maintainability,osh"
+CAPABILITIES = {cap.shortName: cap for cap in [MAINTAINABILITY, OPEN_SOURCE_HEALTH, SECURITY]}
+DEFAULT_CAPABILITIES = "maintainability,osh,security"
 
 
 def parsePublishOptions(args):

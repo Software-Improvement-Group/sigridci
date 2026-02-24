@@ -461,29 +461,29 @@ These are the supported security analyzers as you may see them in your security 
 
 Note this section only described *third party* security analysis analyzers. The results from these analyzers are then combined with the results from Sigrid's own security ruleset before being displayed.
 
-| Display name           | Technologies                      | Notes                                                    |
-|------------------------|-----------------------------------|----------------------------------------------------------|
-| Bandit                 | Python                            |
-| Checkmarx              | (many)                            | Requires *Sigrid Security Checkmarx* license.            |
-| ErrorProne.NET         | C#                                | Requires compiling code.                                 |
-| ESLint                 | JavaScript, TypeScript            |
-| FB Contrib             | Java                              |
-| FindSecBugs            | Java                              |
-| FlawFinder             | C                                 |
-| Google ErrorProne      | Java                              | Requires compiling code.                                 |
-| Gosec                  | Go                                |
-| KICS                   | Docker, Ansible, Kubernetes, etc. |
-| Microsoft Code Quality | C#                                | Requires compiling code.                                 |
-| MobSF                  | Android                           |
-| MultithreadingAnalyzer | C#                                | Requires compiling code.                                 |
-| NodeJS Scan            | JavaScript, TypeScript            |
-| Puma Security          | C#                                | Requires compiling code.                                 |
-| SecurityCodeScan       | C#                                | Requires compiling code.                                 |
-| SonarQube (C#)         | C#                                | Requires compiling code.                                 |
-| SonarQube (Java)       | Java                              | Requires compiling code.                                 | 
-| SpotBugs               | Java                              |
-| SemGrep                | (many)                            |
-| VMWare CSA             | Java, C#, configuration           | Cloud Suitability Analyzer.                              |
+| Display name           | Technologies                      | Notes                                         | Supports Sigrid CI |
+|------------------------|-----------------------------------|-----------------------------------------------|--------------------|
+| Bandit                 | Python                            |                                               | ✅                  |
+| Checkmarx              | (many)                            | Requires *Sigrid Security Checkmarx* license. | ❌                  |
+| ErrorProne.NET         | C#                                | Requires compiling code.                      | ✅                  |
+| ESLint                 | JavaScript, TypeScript            |                                               | ✅                  |
+| FB Contrib             | Java                              |                                               | ✅                  |
+| FindSecBugs            | Java                              |                                               | ✅                  |
+| FlawFinder             | C                                 |                                               | ✅                  |
+| Google ErrorProne      | Java                              | Requires compiling code.                      | ✅                  |
+| Gosec                  | Go                                |                                               | ✅                  |
+| KICS                   | Docker, Ansible, Kubernetes, etc. |                                               | ✅                  |
+| Microsoft Code Quality | C#                                | Requires compiling code.                      | ✅                  |
+| MobSF                  | Android                           |                                               | ✅                  |
+| MultithreadingAnalyzer | C#                                | Requires compiling code.                      | ✅                  |
+| NodeJS Scan            | JavaScript, TypeScript            |                                               | ✅                  |
+| Puma Security          | C#                                | Requires compiling code.                      | ✅                  |
+| SecurityCodeScan       | C#                                | Requires compiling code.                      | ✅                  |
+| SonarQube (C#)         | C#                                | Requires compiling code.                      | ✅                  |
+| SonarQube (Java)       | Java                              | Requires compiling code.                      | ✅                  | 
+| SpotBugs               | Java                              |                                               | ✅                  |
+| SemGrep                | (many)                            |                                               | ✅                  |
+| VMWare CSA             | Java, C#, configuration           | Cloud Suitability Analyzer.                   | ✅                  |
 
 ## Supported software quality standards
 

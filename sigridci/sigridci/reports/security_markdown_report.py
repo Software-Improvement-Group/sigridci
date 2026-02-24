@@ -15,8 +15,10 @@
 import os
 
 from .report import Report, MarkdownRenderer
+from ..analysisresults.findings_processor import FindingsProcessor
 from ..capability import SECURITY
 from ..objective import Objective
+from ..platform import SECURITY_EXCLUDE_RULE_DOCS, SECURITY_EXCLUDE_FILE_DOCS
 
 
 class SecurityMarkdownReport(Report, MarkdownRenderer):
@@ -30,28 +32,35 @@ class SecurityMarkdownReport(Report, MarkdownRenderer):
         "UNKNOWN" : "⚪️"
     }
 
-    def __init__(self, objective = "HIGH"):
+    def __init__(self, options, objective = "HIGH"):
         super().__init__()
         self.objective = objective
         self.previousFeedback = None
+        self.processor = FindingsProcessor(options, objective)
 
     def generate(self, analysisId, feedback, options):
         with open(self.getMarkdownFile(options), "w", encoding="utf-8") as f:
             f.write(self.renderMarkdown(analysisId, feedback, options))
 
     def renderMarkdown(self, analysisId, feedback, options):
-        rules = list(self.getRules(feedback))
-        introduced = list(self.getIntroducedFindings(feedback, rules))
-        fixed = list(self.getFixedFindings(feedback))
+        findings = self.processor.extractFindings(feedback)
+        previousFindings = self.processor.extractFindings(self.previousFeedback)
+
+        introduced = list(self.getIntroducedFindings(findings, previousFindings))
+        fixed = list(self.getFixedFindings(findings, previousFindings))
 
         details = ""
         details += "## 👍 What went well?\n\n"
         details += f"> You fixed **{len(fixed)}** security findings.\n\n"
-        details += self.generateFindingsTable(fixed, rules, options)
+        details += self.generateFindingsTable(fixed, options)
         details += "## 👎 What could be better?\n\n"
         if len(introduced) > 0:
             details += f"> Unfortunately, you introduced **{len(introduced)}** security findings.\n\n"
-            details += self.generateFindingsTable(introduced, rules, options)
+            details += self.generateFindingsTable(introduced, options)
+            details += "If you believe these findings are false positives,\n"
+            details += f"you can [exclude the rule]({SECURITY_EXCLUDE_RULE_DOCS}) in the Sigrid configuration.\n"
+            details += "If you believe these findings are located in files that should not be scanned, you can also\n"
+            details += f"[exclude the files and/or directories]({SECURITY_EXCLUDE_FILE_DOCS}) in the configuration.\n\n"
         else:
             details += "> You did not introduce any security findings during your changes, great job!\n\n"
 
@@ -65,69 +74,31 @@ class SecurityMarkdownReport(Report, MarkdownRenderer):
         else:
             return [f"⚠️  You did not meet your objective of having {objectiveLabel} security findings"]
 
-    def generateFindingsTable(self, findings, rules, options):
+    def generateFindingsTable(self, findings, options):
         if len(findings) == 0:
             return ""
 
-        md = "| Risk | File | Finding |\n"
-        md += "|------|------|---------|\n"
+        md = "| Risk | Part of objective? | File | Finding |\n"
+        md += "|----|----|----|----|\n"
 
         for finding in findings[0:self.MAX_FINDINGS]:
-            symbol = self.SEVERITY_SYMBOLS[self.getFindingSeverity(finding, rules)]
-            file = finding["locations"][0]["physicalLocation"]["artifactLocation"]["uri"]
-            line = finding["locations"][0]["physicalLocation"]["region"]["startLine"]
-            link = self.decorateLink(options, f"{file}:{line}", file, line)
-            description = finding["message"]["text"]
-            md += f"| {symbol} | {link} | {description} |\n"
+            symbol = self.SEVERITY_SYMBOLS[finding.risk]
+            check = "✅" if finding.partOfObjective else "-"
+            link = self.decorateLink(options, f"{finding.file}:{finding.line}", finding.file, finding.line)
+            md += f"| {symbol} | {check} | {link} | {finding.description} |\n"
 
         if len(findings) > self.MAX_FINDINGS:
-            md += f"| | ... and {len(findings) - self.MAX_FINDINGS} more findings | |\n"
+            md += f"| | ... and {len(findings) - self.MAX_FINDINGS} more findings | | |\n"
 
         return f"{md}\n"
 
-    def getRules(self, feedback):
-        for run in feedback["runs"]:
-            for rule in run.get("rules", []):
-                properties = rule.get("properties", {})
-                if properties.get("severity"):
-                    yield rule
+    def getIntroducedFindings(self, findings, previousFindings):
+        previousFingerprints = [finding.fingerprint for finding in previousFindings]
+        return [finding for finding in findings if finding.fingerprint not in previousFingerprints]
 
-    def getIntroducedFindings(self, feedback, rules):
-        previousFingerprints = self.getFingerprints(self.previousFeedback) if self.previousFeedback else []
-
-        for run in feedback["runs"]:
-            for result in run.get("results", []):
-                severity = self.getFindingSeverity(result, rules)
-                fingerprint = result["fingerprints"]["sigFingerprint/v1"]
-                if Objective.isFindingIncluded(severity, self.objective) and fingerprint not in previousFingerprints:
-                    yield result
-
-    def getFixedFindings(self, feedback):
-        if not self.previousFeedback:
-            return []
-
-        fingerprints = list(self.getFingerprints(feedback))
-        previousRules = list(self.getRules(self.previousFeedback))
-
-        for run in self.previousFeedback["runs"]:
-            for result in run.get("results", []):
-                severity = self.getFindingSeverity(result, previousRules)
-                fingerprint = result["fingerprints"]["sigFingerprint/v1"]
-                if Objective.isFindingIncluded(severity, self.objective) and fingerprint not in fingerprints:
-                    yield result
-
-    def getFindingSeverity(self, result, rules):
-        severity = result.get("properties", {}).get("severity")
-        if not severity:
-            for rule in rules:
-                if rule["id"] == result["ruleId"]:
-                    severity = rule["properties"]["severity"].replace("ERROR", "HIGH").replace("WARNING", "MEDIUM")
-        return severity.upper() if severity else "UNKNOWN"
-
-    def getFingerprints(self, feedback):
-        for run in feedback["runs"]:
-            for result in run.get("results", []):
-                yield result["fingerprints"]["sigFingerprint/v1"]
+    def getFixedFindings(self, findings, previousFindings):
+        fingerprints = [finding.fingerprint for finding in findings]
+        return [finding for finding in previousFindings if finding.fingerprint not in fingerprints]
 
     def getCapability(self):
         return SECURITY
@@ -136,6 +107,6 @@ class SecurityMarkdownReport(Report, MarkdownRenderer):
         return os.path.abspath(f"{options.outputDir}/security-feedback.md")
 
     def isObjectiveSuccess(self, feedback, options):
-        rules = list(self.getRules(feedback))
-        findings = list(self.getIntroducedFindings(feedback, rules))
-        return len(findings) == 0
+        findings = self.processor.extractFindings(feedback)
+        relevant = [finding for finding in findings if finding.partOfObjective]
+        return len(relevant) == 0

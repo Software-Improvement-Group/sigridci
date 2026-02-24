@@ -81,7 +81,7 @@
             }
           ],
           "fingerprints": {
-            "sigFingerprint/v1": "0fe24dfe0b8c90ae48620e02865b9a3b399b49ea4ef5e020d83e9507d614ebcb"
+            "sigFingerprint/v1": "0fe24dfe0b8c90ae48620e02865b9a3b399b49ea4ef5e020d83e9507d614ebcb22"
           },
           "properties": {
             "tags": ["CWE-327"],

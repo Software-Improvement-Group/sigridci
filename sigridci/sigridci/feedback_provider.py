@@ -27,6 +27,7 @@ from .reports.osh_markdown_report import OpenSourceHealthMarkdownReport
 from .reports.osh_text_report import OpenSourceHealthTextReport
 from .reports.pipeline_summary_report import PipelineSummaryReport
 from .reports.security_markdown_report import SecurityMarkdownReport
+from .reports.security_text_report import SecurityTextReport
 from .reports.static_html_report import StaticHtmlReport
 
 
@@ -118,5 +119,7 @@ class FeedbackProvider:
             reports += [AsciiArtReport(), JUnitFormatReport(), StaticHtmlReport(self.objectives)]
         elif self.capability == OPEN_SOURCE_HEALTH:
             reports += [OpenSourceHealthTextReport(markdownReport)]
+        elif self.capability == SECURITY:
+            reports += [SecurityTextReport(markdownReport)]
         reports.append(PipelineSummaryReport(markdownReport))
         return reports
