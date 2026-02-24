@@ -48,7 +48,8 @@ class Library:
 
 
 class CycloneDXProcessor:
-    def __init__(self, vulnerabilityObjective, licenseObjective=None):
+    def __init__(self, options, vulnerabilityObjective, licenseObjective=None):
+        self.options = options
         self.vulnerabilityObjective = vulnerabilityObjective
         self.licenseObjective = licenseObjective
 
@@ -70,7 +71,7 @@ class CycloneDXProcessor:
             vulnerabilityRisk = self.parseRisk(properties.get("sigrid:risk:vulnerability", "UNKNOWN"), self.vulnerabilityObjective)
             licenseRisk = self.parseRisk(properties.get("sigrid:risk:legal", "UNKNOWN"), self.licenseObjective)
 
-            if self.isInteresting(vulnerabilityRisk, licenseRisk):
+            if self.isInteresting(vulnerabilityRisk, licenseRisk) and self.isRelevantSubSystem(files):
                 yield Library(name, transitive, version, latestVersion, files, vulnerabilities, licenses,
                     vulnerabilityRisk, licenseRisk, fixable)
 
@@ -93,3 +94,8 @@ class CycloneDXProcessor:
     def isInteresting(self, vulnerabilityRisk, licenseRisk):
         return vulnerabilityRisk.severity not in ("UNKNOWN", "NONE") or \
             not licenseRisk.meetsObjective
+
+    def isRelevantSubSystem(self, files):
+        if not self.options.subsystem or len(files) == 0:
+            return True
+        return any(file for file in files if file.startswith(f"{self.options.subsystem}/"))
