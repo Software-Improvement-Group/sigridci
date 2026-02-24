@@ -28,15 +28,27 @@ class Finding:
 
 
 class FindingsProcessor:
-    def extractFindings(self, feedback, objective):
+    def __init__(self, options, objective):
+        self.options = options
+        self.objective = objective
+
+    def extractFindings(self, feedback):
         if feedback is None:
             return []
-        elif "runs" in feedback:
+
+        findings = []
+        if "runs" in feedback:
             sarifProcessor = SarifProcessor()
-            return list(sarifProcessor.extractFindings(feedback, objective))
+            findings += list(sarifProcessor.extractFindings(feedback, self.objective))
         else:
             sigridFindingsProcessor = SigridFindingsProcessor()
-            return list(sigridFindingsProcessor.extractFindings(feedback, objective))
+            findings += list(sigridFindingsProcessor.extractFindings(feedback, self.objective))
+
+        return [finding for finding in findings if self.isRelevantSubSystem(finding)]
+
+    def isRelevantSubSystem(self, finding):
+        subsystem = self.options.subsystem
+        return not subsystem or not finding.file or finding.file.startswith(f"{subsystem}/")
 
 
 class SarifProcessor:

@@ -37,7 +37,7 @@ class SecurityMarkdownReportTest(TestCase):
         "CI_COMMIT_REF_NAME" : "mybranch",
     })
     def testCreateTableFromFindings(self):
-        report = SecurityMarkdownReport()
+        report = SecurityMarkdownReport(self.options, "HIGH")
         markdown = report.renderMarkdown("1234", self.feedback, self.options)
 
         expected = """
@@ -76,7 +76,7 @@ class SecurityMarkdownReportTest(TestCase):
         with open(os.path.dirname(__file__) + "/testdata/security-nofindings.json", encoding="utf-8", mode="r") as f:
             noResults = json.load(f)
 
-        report = SecurityMarkdownReport()
+        report = SecurityMarkdownReport(self.options, "HIGH")
         report.decorateLinks = False
         markdown = report.renderMarkdown("1234", noResults, self.options)
 
@@ -106,7 +106,7 @@ class SecurityMarkdownReportTest(TestCase):
         with open(os.path.dirname(__file__) + "/testdata/security-manyfindings.json", encoding="utf-8", mode="r") as f:
             manyResults = json.load(f)
 
-        report = SecurityMarkdownReport()
+        report = SecurityMarkdownReport(self.options, "HIGH")
         report.decorateLinks = False
         markdown = report.renderMarkdown("1234", manyResults, self.options)
 
@@ -155,7 +155,7 @@ class SecurityMarkdownReportTest(TestCase):
         "CI_COMMIT_REF_NAME" : "mybranch",
     })
     def testReportBasedOnDiff(self):
-        report = SecurityMarkdownReport("LOW")
+        report = SecurityMarkdownReport(self.options, "LOW")
         with open(os.path.dirname(__file__) + "/testdata/security-previous.json", encoding="utf-8", mode="r") as f:
             report.previousFeedback = json.load(f)
         markdown = report.renderMarkdown("1234", self.feedback, self.options)

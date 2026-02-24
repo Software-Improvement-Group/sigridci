@@ -20,14 +20,13 @@ from ..analysisresults.findings_processor import FindingsProcessor
 
 
 class SecurityTextReport(Report):
-
     def __init__(self, markdownReport, *, output=sys.stdout):
         self.output = output
         self.objective = markdownReport.objective
 
     def generate(self, analysisId, feedback, options):
-        processor = FindingsProcessor()
-        allFindings = list(processor.extractFindings(feedback, self.objective))
+        processor = FindingsProcessor(options, self.objective)
+        allFindings = list(processor.extractFindings(feedback))
         relevantFindings = [finding for finding in allFindings if finding.partOfObjective]
 
         if len(relevantFindings) > 0:

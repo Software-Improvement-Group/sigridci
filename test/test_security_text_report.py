@@ -32,7 +32,7 @@ class SecurityTextReportTest(TestCase):
             feedback = json.load(f)
 
         buffer = StringIO()
-        report = SecurityTextReport(SecurityMarkdownReport("HIGH"), output=buffer)
+        report = SecurityTextReport(SecurityMarkdownReport(options, "HIGH"), output=buffer)
         report.generate("1234", feedback, options)
 
         expected = """

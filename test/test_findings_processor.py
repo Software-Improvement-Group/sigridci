@@ -17,6 +17,7 @@ import os
 from unittest import TestCase
 
 from sigridci.sigridci.analysisresults.findings_processor import FindingsProcessor
+from sigridci.sigridci.publish_options import PublishOptions, RunMode
 
 
 class FindingsProcessorTest(TestCase):
@@ -25,8 +26,9 @@ class FindingsProcessorTest(TestCase):
         with open(os.path.dirname(__file__) + "/testdata/security.sarif.json", encoding="utf-8", mode="r") as f:
             feedback = json.load(f)
 
-        processor = FindingsProcessor()
-        findings = list(processor.extractFindings(feedback, "HIGH"))
+        options = PublishOptions("aap", "noot", RunMode.FEEDBACK_ONLY)
+        processor = FindingsProcessor(options, "HIGH")
+        findings = list(processor.extractFindings(feedback))
 
         self.assertEqual(len(findings), 2)
         self.assertEqual(findings[0].risk, "CRITICAL")
@@ -38,8 +40,9 @@ class FindingsProcessorTest(TestCase):
         with open(os.path.dirname(__file__) + "/testdata/security.sig.json", encoding="utf-8", mode="r") as f:
             feedback = json.load(f)
 
-        processor = FindingsProcessor()
-        findings = list(processor.extractFindings(feedback, "HIGH"))
+        options = PublishOptions("aap", "noot", RunMode.FEEDBACK_ONLY)
+        processor = FindingsProcessor(options, "HIGH")
+        findings = list(processor.extractFindings(feedback))
 
         self.assertEqual(len(findings), 1)
         self.assertEqual(findings[0].fingerprint, "0006d9dd-5288-424a-bf8b-077c98ef00ee")

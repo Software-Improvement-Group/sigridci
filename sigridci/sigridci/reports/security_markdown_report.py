@@ -32,19 +32,19 @@ class SecurityMarkdownReport(Report, MarkdownRenderer):
         "UNKNOWN" : "⚪️"
     }
 
-    def __init__(self, objective = "HIGH"):
+    def __init__(self, options, objective = "HIGH"):
         super().__init__()
         self.objective = objective
         self.previousFeedback = None
-        self.processor = FindingsProcessor()
+        self.processor = FindingsProcessor(options, objective)
 
     def generate(self, analysisId, feedback, options):
         with open(self.getMarkdownFile(options), "w", encoding="utf-8") as f:
             f.write(self.renderMarkdown(analysisId, feedback, options))
 
     def renderMarkdown(self, analysisId, feedback, options):
-        findings = self.processor.extractFindings(feedback, self.objective)
-        previousFindings = self.processor.extractFindings(self.previousFeedback, self.objective)
+        findings = self.processor.extractFindings(feedback)
+        previousFindings = self.processor.extractFindings(self.previousFeedback)
 
         introduced = list(self.getIntroducedFindings(findings, previousFindings))
         fixed = list(self.getFixedFindings(findings, previousFindings))
@@ -107,6 +107,6 @@ class SecurityMarkdownReport(Report, MarkdownRenderer):
         return os.path.abspath(f"{options.outputDir}/security-feedback.md")
 
     def isObjectiveSuccess(self, feedback, options):
-        findings = self.processor.extractFindings(feedback, self.objective)
+        findings = self.processor.extractFindings(feedback)
         relevant = [finding for finding in findings if finding.partOfObjective]
         return len(relevant) == 0
