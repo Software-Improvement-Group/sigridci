@@ -336,7 +336,7 @@ class OpenSourceHealthMarkdownReportTest(TestCase):
             feedback = json.load(f)
 
         report = OpenSourceHealthMarkdownReport(self.options, "HIGH")
-        report.decorateLinks = True
+        report.decorateLinks = False
         markdown = report.renderMarkdown("1234", feedback, self.options)
 
         expected = """
