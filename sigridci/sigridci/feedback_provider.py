@@ -34,8 +34,8 @@ from .reports.static_html_report import StaticHtmlReport
 class FeedbackProvider:
     def __init__(self, capability, options, objectives):
         self.capability = capability
-        self.objectives = self.prepareObjectives(objectives)
         self.options = options
+        self.objectives = self.prepareObjectives(objectives)
         self.analysisId = "local"
         self.feedback = None
         self.previousFeedback = None
@@ -107,7 +107,7 @@ class FeedbackProvider:
         elif self.capability == OPEN_SOURCE_HEALTH:
             vulnerabilityObjective = self.objectives["OSH_MAX_SEVERITY"]
             licenseObjective = self.objectives["OSH_MAX_LICENSE_RISK"]
-            return OpenSourceHealthMarkdownReport(vulnerabilityObjective, licenseObjective)
+            return OpenSourceHealthMarkdownReport(self.options, vulnerabilityObjective, licenseObjective)
         elif self.capability == SECURITY:
             return SecurityMarkdownReport(self.objectives["SECURITY_MAX_SEVERITY"])
         else:

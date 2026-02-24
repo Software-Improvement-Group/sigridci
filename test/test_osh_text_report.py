@@ -32,7 +32,7 @@ class OpenSourceHealthTextReportTest(TestCase):
             feedback = json.load(f)
 
         buffer = StringIO()
-        report = OpenSourceHealthTextReport(OpenSourceHealthMarkdownReport("HIGH"), output=buffer)
+        report = OpenSourceHealthTextReport(OpenSourceHealthMarkdownReport(options, "HIGH"), output=buffer)
         report.generate("1234", feedback, options)
 
         expected = """

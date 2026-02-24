@@ -25,12 +25,13 @@ from ..platform import OSH_EXCLUDE_DOCS
 class OpenSourceHealthMarkdownReport(Report, MarkdownRenderer):
     MAX_FINDINGS = SecurityMarkdownReport.MAX_FINDINGS
 
-    def __init__(self, vulnerabilityObjective="HIGH", licenseObjective=None):
+    def __init__(self, options, vulnerabilityObjective="HIGH", licenseObjective=None):
         super().__init__()
+        self.options = options
         self.vulnerabilityObjective = vulnerabilityObjective
         self.licenseObjective = licenseObjective
         self.previousFeedback = None
-        self.processor = CycloneDXProcessor(self.vulnerabilityObjective, self.licenseObjective)
+        self.processor = CycloneDXProcessor(options, self.vulnerabilityObjective, self.licenseObjective)
 
     def generate(self, analysisId, feedback, options):
         with open(self.getMarkdownFile(options), "w", encoding="utf-8") as f:

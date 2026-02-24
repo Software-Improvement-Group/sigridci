@@ -35,7 +35,7 @@ class OpenSourceHealthMarkdownReportTest(TestCase):
 
     @mock.patch.dict(os.environ, {"SIGRID_CI_MARKDOWN_HTML" : "false"})
     def testIncludeFindingsBasedOnObjectives(self):
-        report = OpenSourceHealthMarkdownReport("HIGH")
+        report = OpenSourceHealthMarkdownReport(self.options, "HIGH")
         report.decorateLinks = False
         markdown = report.renderMarkdown("1234", self.feedback, self.options)
 
@@ -74,7 +74,7 @@ class OpenSourceHealthMarkdownReportTest(TestCase):
 
     @mock.patch.dict(os.environ, {"SIGRID_CI_MARKDOWN_HTML" : "false"})
     def testSortFindingsBasedOnSeverity(self):
-        report = OpenSourceHealthMarkdownReport("MEDIUM")
+        report = OpenSourceHealthMarkdownReport(self.options, "MEDIUM")
         report.decorateLinks = False
         markdown = report.renderMarkdown("1234", self.feedback, self.options)
 
@@ -113,7 +113,7 @@ class OpenSourceHealthMarkdownReportTest(TestCase):
 
     @mock.patch.dict(os.environ, {"SIGRID_CI_MARKDOWN_HTML" : "false"})
     def testLimitFeedbackWhenTooManyVulnerabilities(self):
-        report = OpenSourceHealthMarkdownReport("LOW")
+        report = OpenSourceHealthMarkdownReport(self.options, "LOW")
         report.decorateLinks = False
         markdown = report.renderMarkdown("1234", self.feedback, self.options)
 
@@ -152,7 +152,7 @@ class OpenSourceHealthMarkdownReportTest(TestCase):
 
     @mock.patch.dict(os.environ, {"SIGRID_CI_MARKDOWN_HTML" : "false"})
     def testShowUpdatedLibraries(self):
-        report = OpenSourceHealthMarkdownReport("MEDIUM")
+        report = OpenSourceHealthMarkdownReport(self.options, "MEDIUM")
         report.decorateLinks = False
         report.previousFeedback = self.previousFeedback
         markdown = report.renderMarkdown("1234", self.feedback, self.options)
@@ -200,7 +200,7 @@ class OpenSourceHealthMarkdownReportTest(TestCase):
 
     @mock.patch.dict(os.environ, {"SIGRID_CI_MARKDOWN_HTML" : "false"})
     def testShowLegalRiskIfObjectiveIsSet(self):
-        report = OpenSourceHealthMarkdownReport("CRITICAL", "LOW")
+        report = OpenSourceHealthMarkdownReport(self.options, "CRITICAL", "LOW")
         report.decorateLinks = False
         report.previousFeedback = self.previousFeedback
         markdown = report.renderMarkdown("1234", self.feedback, self.options)
@@ -258,7 +258,7 @@ class OpenSourceHealthMarkdownReportTest(TestCase):
             "components": []
         }
 
-        report = OpenSourceHealthMarkdownReport("CRITICAL", "LOW")
+        report = OpenSourceHealthMarkdownReport(self.options, "CRITICAL", "LOW")
         report.decorateLinks = False
         markdown = report.renderMarkdown("1234", emptyFeedback, self.options)
 
@@ -307,7 +307,7 @@ class OpenSourceHealthMarkdownReportTest(TestCase):
             ]
         }
 
-        report = OpenSourceHealthMarkdownReport("CRITICAL", "LOW")
+        report = OpenSourceHealthMarkdownReport(self.options, "CRITICAL", "LOW")
         report.decorateLinks = False
         markdown = report.renderMarkdown("1234", emptyFeedback, self.options)
 
@@ -319,6 +319,47 @@ class OpenSourceHealthMarkdownReportTest(TestCase):
             **✅  You achieved your objective of having no open source libraries with license issues.**
             
             Sigrid compared your code against the baseline of 2026-02-03.
+            
+            
+            ----
+            
+            [**View this system in Sigrid**](https://sigrid-says.com/aap/noot/-/open-source-health)
+        """
+
+        self.assertEqual(markdown.strip(), inspect.cleandoc(expected).strip())
+
+    @mock.patch.dict(os.environ, {"SIGRID_CI_MARKDOWN_HTML" : "false"})
+    def testOnlyReportIssuesRelevantToSubSystem(self):
+        self.options.subsystem = "aap"
+
+        with open(os.path.dirname(__file__) + "/testdata/osh-subsystem.json", encoding="utf-8", mode="r") as f:
+            feedback = json.load(f)
+
+        report = OpenSourceHealthMarkdownReport(self.options, "HIGH")
+        report.decorateLinks = False
+        markdown = report.renderMarkdown("1234", feedback, self.options)
+
+        expected = """
+            # [Sigrid](https://sigrid-says.com/aap/noot/-/open-source-health) Open Source Health feedback
+
+            **❌️  You failed to meet your objective of having no critical-severity open source vulnerabilities.**
+            
+            Sigrid compared your code against the baseline of 2025-09-19.
+            
+            - ❌ means the library has issues that fail your objective.
+            - ⚠️ means the library has issues, but they are not severe enough to fail your objective.
+            - ✅ means everything is fine.
+            
+            If you believe these findings are false positives, you can
+            [exclude them in the Sigrid configuration](https://docs.sigrid-says.com/reference/analysis-scope-configuration.html#exclude-open-source-health-risks).
+            
+            ## 👎 What could be better?
+            
+            > You have **1** open source libraries with issues.
+            
+            | Vulnerabilities | License | Library | Latest version | Location(s) |
+            |----|----|----|----|----|
+            | ❌ | ✅ | org.example:example-aap 1.0<br />*CVE-2026-12345.* | 3.0 | aap/build.gradle |
             
             
             ----

@@ -1,0 +1,96 @@
+{
+  "bomFormat": "CycloneDX",
+  "specVersion": "1.6",
+  "version": 1,
+  "metadata": {
+    "timestamp": "2025-09-19T07:28:13Z",
+    "tools": [],
+    "properties": []
+  },
+  "components": [
+    {
+      "type": "library",
+      "bom-ref": "pkg:maven/org.example/example-aap@1.0",
+      "group": "org.example",
+      "name": "example-aap",
+      "version": "1.0",
+      "licenses": [],
+      "purl": "pkg:maven/org.example/example-aap@1.0",
+      "properties": [
+        {
+          "name": "sigrid:risk:vulnerability",
+          "value": "CRITICAL"
+        },
+        {
+          "name": "sigrid:risk:legal",
+          "value": "UNKNOWN"
+        },
+        {
+          "name": "sigrid:latest:version",
+          "value": "3.0"
+        }
+      ],
+      "evidence": {
+        "occurrences": [
+          {
+            "location": "aap/build.gradle"
+          }
+        ]
+      }
+    },
+    {
+      "type": "library",
+      "bom-ref": "pkg:maven/org.example/example-noot@1.0",
+      "group": "org.example",
+      "name": "example-noot",
+      "version": "1.0",
+      "licenses": [],
+      "purl": "pkg:maven/org.example/example-noot@1.0",
+      "properties": [
+        {
+          "name": "sigrid:risk:vulnerability",
+          "value": "CRITICAL"
+        },
+        {
+          "name": "sigrid:risk:legal",
+          "value": "UNKNOWN"
+        },
+        {
+          "name": "sigrid:latest:version",
+          "value": "3.0"
+        }
+      ],
+      "evidence": {
+        "occurrences": [
+          {
+            "location": "noot/build.gradle"
+          }
+        ]
+      }
+    }
+  ],
+  "vulnerabilities": [
+    {
+      "id": "CVE-2026-12345",
+      "ratings": [
+        {
+          "score": 9.0,
+          "severity": "critical",
+          "method": "CVSSv3"
+        }
+      ],
+      "cwes": [
+        502
+      ],
+      "description": "Something bad",
+      "affects": [
+        {
+          "ref": "pkg:maven/org.example/example-aap@1.0"
+        },
+        {
+          "ref": "pkg:maven/org.example/example-noot@1.0"
+        }
+      ]
+    }
+  ]
+}
