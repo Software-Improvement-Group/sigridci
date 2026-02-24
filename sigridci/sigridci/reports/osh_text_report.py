@@ -27,7 +27,7 @@ class OpenSourceHealthTextReport(Report):
         self.licenseObjective = markdownReport.licenseObjective
 
     def generate(self, analysisId, feedback, options):
-        processor = CycloneDXProcessor(self.vulnerabilityObjective, self.licenseObjective)
+        processor = CycloneDXProcessor(options, self.vulnerabilityObjective, self.licenseObjective)
         findings = [lib for lib in processor.extractLibraries(feedback) if not lib.meetsObjectives()]
 
         if len(findings) > 0:

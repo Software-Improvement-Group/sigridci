@@ -17,6 +17,7 @@ import os
 from unittest import TestCase
 
 from sigridci.sigridci.analysisresults.cyclonedx_processor import CycloneDXProcessor
+from sigridci.sigridci.publish_options import PublishOptions, RunMode
 
 
 class CycloneDXProcessorTest(TestCase):
@@ -25,7 +26,8 @@ class CycloneDXProcessorTest(TestCase):
         with open(os.path.dirname(__file__) + "/testdata/osh-junit.json", encoding="utf-8", mode="r") as f:
             feedback = json.load(f)
 
-        processor = CycloneDXProcessor("NONE")
+        options = PublishOptions("aap", "noot", RunMode.FEEDBACK_ONLY)
+        processor = CycloneDXProcessor(options, "NONE")
         libraries = list(processor.extractLibraries(feedback))
 
         self.assertEqual(len(libraries), 4)
@@ -43,7 +45,8 @@ class CycloneDXProcessorTest(TestCase):
         with open(os.path.dirname(__file__) + "/testdata/osh-junit.json", encoding="utf-8", mode="r") as f:
             feedback = json.load(f)
 
-        processor = CycloneDXProcessor("HIGH")
+        options = PublishOptions("aap", "noot", RunMode.FEEDBACK_ONLY)
+        processor = CycloneDXProcessor(options, "HIGH")
         libraries = list(processor.extractLibraries(feedback))
 
         self.assertEqual(len(libraries), 4)
@@ -60,7 +63,8 @@ class CycloneDXProcessorTest(TestCase):
         with open(os.path.dirname(__file__) + "/testdata/osh-junit.json", encoding="utf-8", mode="r") as f:
             feedback = json.load(f)
 
-        processor = CycloneDXProcessor("NONE")
+        options = PublishOptions("aap", "noot", RunMode.FEEDBACK_ONLY)
+        processor = CycloneDXProcessor(options, "NONE")
         libraries = list(processor.extractLibraries(feedback))
 
         self.assertEqual(libraries[0].name, "org.apache.logging.log4j:log4j-core")
@@ -74,11 +78,29 @@ class CycloneDXProcessorTest(TestCase):
         self.assertEqual(libraries[0].vulnerabilities[3].id, "CVE-2021-44832")
         self.assertEqual(libraries[0].vulnerabilities[3].link, None)
 
+    def testFilterOnSubSystem(self):
+        with open(os.path.dirname(__file__) + "/testdata/osh-subsystem.json", encoding="utf-8", mode="r") as f:
+            feedback = json.load(f)
+
+        processor = CycloneDXProcessor(PublishOptions("aap", "noot", RunMode.FEEDBACK_ONLY), "NONE")
+        allSubSystems = list(processor.extractLibraries(feedback))
+
+        processor = CycloneDXProcessor(PublishOptions("aap", "noot", RunMode.FEEDBACK_ONLY, subsystem="aap"), "NONE")
+        oneSubsystem = list(processor.extractLibraries(feedback))
+
+        self.assertEqual(len(allSubSystems), 2)
+        self.assertEqual(allSubSystems[0].name, "org.example:example-aap")
+        self.assertEqual(allSubSystems[1].name, "org.example:example-noot")
+
+        self.assertEqual(len(oneSubsystem), 1)
+        self.assertEqual(oneSubsystem[0].name, "org.example:example-aap")
+
     def testLicenseRisk(self):
         with open(os.path.dirname(__file__) + "/testdata/osh-junit.json", encoding="utf-8", mode="r") as f:
             feedback = json.load(f)
 
-        processor = CycloneDXProcessor("NONE", "NONE")
+        options = PublishOptions("aap", "noot", RunMode.FEEDBACK_ONLY)
+        processor = CycloneDXProcessor(options, "NONE", "NONE")
         jmhcore = next(lib for lib in processor.extractLibraries(feedback) if lib.name.endswith("jmh-core"))
 
         self.assertEqual(jmhcore.licenses, ["GNU General Public License (GPL), version 2, with the Classpath exception"])
