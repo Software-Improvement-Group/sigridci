@@ -196,7 +196,7 @@ auth-api:
           -----END PRIVATE KEY-----
 ```
 
-To enable Sigrid to automatically grant access to uploader for onboarded system, a secret must be created in the auth-api (see also inbound-api).
+A required secret must be created in the auth-api (see also inbound-api). This enables Sigrid to automatically grant access to uploader for the onboarded system. 
 
 ```yaml
 auth-api:
