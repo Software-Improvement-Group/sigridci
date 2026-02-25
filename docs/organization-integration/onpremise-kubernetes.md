@@ -305,21 +305,6 @@ role you will be able to use the Sigrid-UI to give grant other accounts the admi
 Please note that removing email addresses from this list does **NOT** remove the admin role. Use the standard user
 management functionality of Sigrid to add/remove admin accounts after the initial setting up of Sigrid.
 
-### (D.4) Optional: Configure Custom Certificates
-To enable secure communication between services using Sigrid, you may need to add custom certificates. These certificates can be defined in the following three components: `auth-api`, `sigrid-api`, and `inbound-api`. You can configure this using the `customCertificates` option in the Helm chart.
-```yaml
-  customCertificates:
-    enabled: true
-    certificates:
-      create: true
-      name: "sigrid-certificates"
-      data:
-        my_sigrid_cert.pem: |
-          -----BEGIN CERTIFICATE-----
-          MIIDdzCCAl+gAwIBAgIEbF5VOTANBgkqhkiG9w0BAQsFADBvMQswCQYDVQQGEwJV
-          ...
-          -----END CERTIFICATE-----
-```
 
 ## (E) Provide an RSA keypair for signing of unattended workflow tokens.
 
@@ -597,6 +582,22 @@ Notes:
    - GitHub: `repo`
    - Azure DevOps: `vso.code`
    These scopes provide read permissions to projects and source code, which are necessary for Sigrid to display source code fragments in the UI.
+
+### (H) Optional: Configure Custom Certificates
+To enable secure communication between services using Sigrid, you may need to add custom certificates. These certificates can be defined in the following three components: `auth-api`, `sigrid-api`, and `inbound-api`. You can configure this using the `customCertificates` option in the Helm chart.
+```yaml
+  customCertificates:
+    enabled: true
+    certificates:
+      create: true
+      name: "sigrid-certificates"
+      data:
+        my_sigrid_cert.pem: |
+          -----BEGIN CERTIFICATE-----
+          MIIDdzCCAl+gAwIBAgIEbF5VOTANBgkqhkiG9w0BAQsFADBvMQswCQYDVQQGEwJV
+          ...
+          -----END CERTIFICATE-----
+```
 
 ## Contact and support
 

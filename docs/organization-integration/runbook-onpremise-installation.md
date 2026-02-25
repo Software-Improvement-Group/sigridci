@@ -102,6 +102,12 @@ When an OIDC compatible Identity Provider is available:
 1. Register an OAUTH Application on every source code repository (server) you expect to connect to.
 2. Store all relevant information in Kubernetes (client_id, client_secret).
 
+### (H) Optional: Configure Custom Certificates
+1. Add your custom certificates with the `customCertificates` option in the helm chart.
+   1.  auth-api
+   2.  sigrid-api
+   3.  inbound-api.
+
 ## Sigrid Installation
 
 ### Create your deployment's values file
