@@ -312,7 +312,7 @@ You can now start inviting more people to Sigrid if so desired.
         # below would be set globally in the CI/CD environment:
         CUSTOMER: "company_name"
         SYSTEM: "$CI_PROJECT_NAME"
-        SIGRID_URL: "my-sigrid.example.com"
+        SIGRID_URL: "https://my-sigrid.example.com"
         SIGRID_CI_TOKEN: "secret"
         BUCKET: "some-bucket"
         AWS_ENDPOINT_URL: "https://minio.my-company.com"
