@@ -305,8 +305,9 @@ role you will be able to use the Sigrid-UI to give grant other accounts the admi
 Please note that removing email addresses from this list does **NOT** remove the admin role. Use the standard user
 management functionality of Sigrid to add/remove admin accounts after the initial setting up of Sigrid.
 
+## (E) Provision Confidential Credentials for Sigrid API Operations
 
-## (E) Provide an RSA keypair for signing of unattended workflow tokens.
+### (E.1) Generate an RSA Key Pair for Signing Unattended Workflow Tokens
 
 Sigrid provides a [public API](../integrations/sigrid-api-documentation.md) that allows access 
 to Sigrid from scripts. This API is protected by personal access tokens that logged-in users can 
@@ -350,6 +351,31 @@ auth-api:
           MIIEvg ...
           (many lines omitted from the keypair created in step 1)  
           -----END PRIVATE KEY-----
+```
+
+### (E.2) Create a Secret to Authorize Sigrid System Configuration
+
+Sigrid on-premise customers using a helm chart version **before 0.4.13** will need to migrate the following configuration when updating to a newer version.
+{: .warning }
+
+To enable Sigrid to automatically grant the uploading user access to an onboarded system, a secret must be created. This secret can either be provisioned in advance or generated during the onboarding process, as shown in the example below.
+
+```yaml
+auth-api:
+   onboarding:
+    create: true
+    secretName: my-system-onboarding-secret
+    data:
+      secret: "example"
+```
+
+```yaml
+inbound-api:
+  config:
+    authApi:
+      onboarding:
+        create: false
+        secretName: my-system-onboarding-secret
 ```
 
 ## (F) Access to an S3-compatible object store

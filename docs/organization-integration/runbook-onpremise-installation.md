@@ -84,11 +84,12 @@ When an OIDC compatible Identity Provider is available:
 2. Provide redirect URI (also called "login callback URL"). This is always `https://my-sigrid.example.com/rest/auth/login/oauth2/code/sigridmfa`, where `my-sigrid.example.com` is a placeholder for your (sub)domain on which the deployment of Sigrid will be hosted.
 3. Sigrid requires three attribute claims: email, family_name, and given_name. Please add any missing claims manually if not provided by your Identity Provider.
 4. Create a secret and store it securely in Kubernetes.
+5. Bootstrap a Sigrid Admin
 
-### (E) Prepare an RSA keypair for the signing of UWT tokens
-
+### (E) Provision Confidential Credentials for Sigrid API Operations
 1. Create a 2048-bit RSA keypair: `openssl genpkey -out uwt_signing_key.pem -algorithm RSA -pkeyopt rsa_keygen_bits:2048`
-2. Store the certificate securely in Kubernetes.
+2. Create a secret for system-onboarding
+3. Store the confidential credentials securely in Kubernetes.
 
 ### (F) Prepare access to an S3-compatible object store 
 
@@ -195,7 +196,7 @@ auth-api:
           -----END PRIVATE KEY-----
 ```
 
-To enable Sigrid to automatically grant access to systems uploaded by the uploader, a secret must be created in the auth-api (see also inbound-api).
+To enable Sigrid to automatically grant access to uploader for onboarded system, a secret must be created in the auth-api (see also inbound-api).
 
 ```yaml
 auth-api:
@@ -220,7 +221,7 @@ No further context required.
 
 #### inbound-api:
 
-To enable Sigrid to automatically grant access to systems uploaded by the uploader, a secret must be passed to the inbound-api (see also auth-api).
+To enable Sigrid to automatically grant access to uploader for onboarded system, a secret must be passed to the inbound-api (see also auth-api).
 
 ```yaml
 inbound-api:
