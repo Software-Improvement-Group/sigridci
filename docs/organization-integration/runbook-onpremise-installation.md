@@ -115,19 +115,19 @@ Some sections of the values file are self-explanatory, while others may need add
 Your copy of example-values.yaml however is enough to get a complete Sigrid deployment running. What do you need to know?
 
 #### global:
-```
+```yaml
   imageTag: "1.0.20260223"
 ```
 Provide the tag of the containers you want to use.
 It is important that the tag matches the tags used in Sigrid's Helm chart: all components of Sigrid must always use the same version.
-```
+```yaml
   onPremise:
     customer: company
 ```
 Provide a technical shortname for your company/team.
 This will eventually be displayed in the address bar of Sigrid like so `https://YOUR-SIGRID_DOMAIN.COM/company`. 
 At a later stage, it needs to be provided as a "CUSTOMER" environment variable to the analysis job in your CI pipeline. 
-```
+```yaml
   onPremise:
     administrators:
       - admin@company.com
@@ -136,14 +136,14 @@ Provide an email address to bootstrap the very first user in Sigrid.
 The email address should match the user's email in the connected IdP.
 Note that this initial admin user will have full access to the entire portfolio. Once Sigrid is fully configured, you can invite another person as an Admin and, if desired, remove or demote the initial admin user to a regular user.
 
-```
+```yaml
   imagePullSecrets:
     - name: sigrid-ecr-image-pull-secret
 
 ```
 Here we can provide a Kubernetes native secret which contains the credentials for pulling images from AWS ECR registry to your cluster. If you're using your internal container registry, use the corresponding secret for that registry(if it has any). If your environment allows outbound connections and you want to use the SIG AWS ECR directly, use `sigrid-ecr-image-pull-secret`.
 
-```
+```yaml
    onPremise:
      ecrRepository:
            enabled: true
@@ -161,12 +161,12 @@ This service is disabled by default, but if you want to pull images from AWS ECR
 
 If your deployment is air-gapped, adjust the values below.
 
-```
+```yaml
 image.registry: ""
 image.repository: "nginxinc/nginx-unprivileged"
 ```
 Provide full URL to your registry and container image.
-```
+```yaml
 image.tag: "mainline-alpine"
 ```
 Provide the tag you used to push this image to your registry. 
@@ -175,7 +175,7 @@ Provide the tag you used to push this image to your registry.
 
 These values can be retrieved using the GUI or .well-known endpoint of your Identity Provider.
 
-```
+```yaml
 config.oauth2.resourceServer.data.issuer-uri: "https://my-idp.example.com" 
 config.oauth2.resourceServer.data.jwk-set-uri: "https://my-idp.example.com/jwks.json" 
 config.oauth2.provider.sigridmfa.issuer-uri: "https://my-idp.example.com" 
@@ -207,7 +207,7 @@ inbound-api:
 
 The secrets provided below are configured to allow the Sigrid API to communicate with downstream APIs. If these secrets are modified, please ensure that they are updated across all services, as they are associated with a single user.
 
-```
+```yaml
 config.secret.data.username: "example"
 config.secret.data.password: "example" 
 ```
@@ -217,7 +217,7 @@ config.secret.data.password: "example"
 The secrets provided below are configured to allow Sigrid to communicate with Redis. 
 They will work as is but can be modified.
 
-```
+```yaml
 redis.data.password: "example-password" 
 redis.data.sentinel-password: "example-password" 
 ```
@@ -272,7 +272,7 @@ You can now start inviting more people to Sigrid if so desired.
 - Create a test-branch.
 - Create a pipeline.
   - Example: Where all secrets except SYSTEM can be omitted if already templated or stored as secrets in e.g. your GitLab. Also override image name if you're pulling from your own container registry.
-    ```
+    ```yaml
     sigrid-publish:
       image:
         # Pulls from the private part of SIG's registry at DockerHub; you may need to log in first, or replace this with the image name as cached in your internal registry:
