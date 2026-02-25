@@ -81,7 +81,7 @@ You can find the Helm configuration in the Installation section of this page und
 
 When an OIDC compatible Identity Provider is available:
 1. Create an OIDC integration in your Identity Provider.
-2. Provide redirect URI (also called "login callback URL"). This is always `https://YOUR-SIGRID_DOMAIN.COM/rest/auth/login/oauth2/code/sigridmfa`, where `YOUR_SIGRID_DOMAIN.COM` is a placeholder for your (sub)domain on which the deployment of Sigrid will be hosted.
+2. Provide redirect URI (also called "login callback URL"). This is always `https://my-sigrid.example.com/rest/auth/login/oauth2/code/sigridmfa`, where `my-sigrid.example.com` is a placeholder for your (sub)domain on which the deployment of Sigrid will be hosted.
 3. Sigrid requires three attribute claims: email, family_name, and given_name. Please add any missing claims manually if not provided by your Identity Provider.
 4. Create a secret and store it securely in Kubernetes.
 
@@ -125,7 +125,7 @@ It is important that the tag matches the tags used in Sigrid's Helm chart: all c
     customer: company
 ```
 Provide a technical shortname for your company/team.
-This will eventually be displayed in the address bar of Sigrid like so `https://YOUR-SIGRID_DOMAIN.COM/company`. 
+This will eventually be displayed in the address bar of Sigrid like so `https://my-sigrid.example.com/company`. 
 At a later stage, it needs to be provided as a "CUSTOMER" environment variable to the analysis job in your CI pipeline. 
 ```
   onPremise:
@@ -173,6 +173,33 @@ Provide the tag you used to push this image to your registry.
 
 #### auth-api:
 
+To enable Sigrid to generate Sigrid CI tokens, create a 2048-bit RSA key pair (for example, using OpenSSL). The key must be in PEM format.
+
+```yaml
+auth-api:
+  config:
+    unattendedWorkflowTokens:
+      create: true
+      data:
+        issuer-uri: "https://my-sigrid.example.com/rest/auth"
+        private-key: |
+          -----BEGIN PRIVATE KEY-----
+          MIIEvg ...
+          (many lines omitted from the keypair created in step 1)  
+          -----END PRIVATE KEY-----
+```
+
+To enable Sigrid to automatically grant access to systems uploaded by the uploader, a secret must be created in the auth-api (see also inbound-api).
+
+```yaml
+auth-api:
+   onboarding:
+    create: true
+    secretName: my-system-onboarding-secret
+    data:
+      secret: "example"
+```
+
 These values can be retrieved using the GUI or .well-known endpoint of your Identity Provider.
 
 ```
@@ -187,7 +214,16 @@ No further context required.
 
 #### inbound-api:
 
-No further context required.
+To enable Sigrid to automatically grant access to systems uploaded by the uploader, a secret must be passed to the inbound-api (see also auth-api).
+
+```yaml
+inbound-api:
+  config:
+    authApi:
+      onboarding:
+        create: false
+        secretName: my-system-onboarding-secret
+```
 
 ### *-service:
 
@@ -269,7 +305,7 @@ You can now start inviting more people to Sigrid if so desired.
         # below would be set globally in the CI/CD environment:
         CUSTOMER: "company_name"
         SYSTEM: "$CI_PROJECT_NAME"
-        SIGRID_URL: "https://sigrid.my-company.com"
+        SIGRID_URL: "my-sigrid.example.com"
         SIGRID_CI_TOKEN: "secret"
         BUCKET: "some-bucket"
         AWS_ENDPOINT_URL: "https://minio.my-company.com"
