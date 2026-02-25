@@ -187,7 +187,21 @@ No further context required.
 
 #### inbound-api:
 
-No further context required.
+A secret for accessing the object store can be configured like so:
+
+```yaml
+inbound-api:
+  config:
+    importJob:
+      objectStoreSecret:
+        create: true
+        data:
+          AWS_ENDPOINT_URL: "https://minio.my-company.com"
+          AWS_FORCE_PATH_STYLE: true  # Use path-style access to prevent bucket-specific hostnames
+          AWS_REGION: "eu-east-1"
+          AWS_ACCESS_KEY_ID: ""
+          AWS_SECRET_ACCESS_KEY: ""
+```
 
 ### *-service:
 
