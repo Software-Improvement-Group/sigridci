@@ -37,6 +37,7 @@ Docker image, any CI/CD environment that can run Docker containers will do.
 
 The following GitLab job illustrates how to run an analysis:
 
+{% raw %}
 ```yaml
 sigrid-publish:
   image:
@@ -59,6 +60,7 @@ sigrid-publish:
   script:
     - "run-analyzers --publish"
 ```
+{% endraw %}
 
 Note that the image name contains a reference to the Docker image tag (`$SIGRID_VERSION` in this example). 
 It is important that the tag matches the tags used in Sigrid's Helm chart: all components of 
@@ -101,12 +103,14 @@ Using Shared Variables in Pipelines
   Only the `SYSTEM` variable needs to be defined in the project pipeline itself.
 
 Example: Using a GitLab CI/CD template to store shared environment variables:
+{% raw %}
 ```yaml
 variables:
   SYSTEM: "$CI_PROJECT_NAME"
 include:
   - local: 'path/to/your/template.yml'
 ```
+{% endraw %}
 
 | Variable                       | Required | Shared? | Sensitive | Default   |
 |--------------------------------|----------|---------|-----------|-----------|
@@ -151,6 +155,7 @@ Notes:
 
 To use custom certificates in your pipeline, copy them directly into the desired path, define them as string variables, or use CI/CD project variables, then pass their paths to the analyzer image. For example:
 
+{% raw %}
 ```yaml
 sigrid-publish:
   image:
@@ -164,7 +169,7 @@ sigrid-publish:
     - echo $MY_S3_CERT > $AWS_CA_BUNDLE
     - "run-analyzers --publish"
 ```
-
+{% endraw %}
 
 ## Getting import job status and logs
 
@@ -178,23 +183,28 @@ These endpoints are part of [Sigrid's external API](../integrations/sigrid-api-d
 
 Assuming your token is stored in an environment variable called `SIGRID_CI_TOKEN`, the endpoint can be invoked using [`curl`](https://curl.se/) on Linux or MacOS like so:
 
+{% raw %}
 ```shell
 curl -H "Authorization: Bearer $SIGRID_CI_TOKEN" https://sigrid.your-domain.com/rest/inboundresults/imports/{partner}/{customer}/{system}
 ```
+{% endraw %}
 
 where `{partner}`, `{customer}` and `{system}` are placeholders.
 
 Or the equivalent for PowerShell:
 
+{% raw %}
 ```powershell
 Invoke-RestMethod -Headers @{"Authorization" = "Bearer $Env:SIGRID_CI_TOKEN"} -Uri "https://sigrid-onprem.k8s.sig.eu/rest/inboundresults/imports/{partner}/{customer}/{system}" | Format-Table
 ```
+{% endraw %}
 
 The `GET /rest/inboundresults/imports/{partner}/{customer}/{system}` endpoint returns an array of job statuses for the given system, as JSON: 
 
 <details markdown="1">
   <summary>Example response</summary>
 
+{% raw %}
 ```json
 [
   {
@@ -219,6 +229,7 @@ The `GET /rest/inboundresults/imports/{partner}/{customer}/{system}` endpoint re
   }
 ]
 ```
+{% endraw %}
 
 The `name` property of the `metadata` object is the name of the job that can be used to retrieve job details and logs with the `GET /rest/inboundresults/imports/{partner}/{customer}/{system}/{job}` endpoint and `GET /rest/inboundresults/imports/{partner}/{customer}/{system}/{job}/logs` endpoint. The endpoints discussed in this section are thin wrappers around the [equivalent endpoints of the Kubernetes API](https://kubernetes.io/docs/reference/kubernetes-api/workload-resources/job-v1/#JobStatus), see the Kubernetes documentation for a detailed discussion of the response properties. 
 
@@ -229,6 +240,7 @@ The `GET /rest/inboundresults/imports/{partner}/{customer}/{system}/{job}` endpo
 <details markdown="1">
   <summary>Example response</summary>
 
+{% raw %}
 ```json
 {
   "name": "EXAMPLE-NAME",
@@ -286,6 +298,7 @@ The `GET /rest/inboundresults/imports/{partner}/{customer}/{system}/{job}` endpo
   ]
 }
 ```
+{% endraw %}
 
 The endpoints discussed in this section are thin wrappers around the [equivalent endpoints of the Kubernetes API](https://kubernetes.io/docs/reference/kubernetes-api/workload-resources/job-v1/#JobStatus), see the Kubernetes documentation for a detailed discussion of the response properties. 
 

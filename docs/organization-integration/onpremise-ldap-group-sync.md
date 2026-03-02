@@ -30,6 +30,7 @@ Enable `global.onPremise.ldapGroupSync` and provide all required LDAP connection
 
 Below is an example configuration:
 
+{% raw %}
 ```yaml
 global:
   imageRegistry: "my-registry.example.com"
@@ -86,6 +87,7 @@ global:
               .....
               -----END CERTIFICATE-----
 ```
+{% endraw %}
 
 ## Contact and support
 

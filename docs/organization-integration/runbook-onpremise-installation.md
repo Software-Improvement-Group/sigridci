@@ -122,34 +122,43 @@ Some sections of the values file are self-explanatory, while others may need add
 Your copy of example-values.yaml however is enough to get a complete Sigrid deployment running. What do you need to know?
 
 #### global:
+{% raw %}
 ```yaml
   imageTag: "1.0.20260223"
 ```
+{% endraw %}
 Provide the tag of the containers you want to use.
 It is important that the tag matches the tags used in Sigrid's Helm chart: all components of Sigrid must always use the same version.
+{% raw %}
 ```yaml
   onPremise:
     customer: company
 ```
+{% endraw %}
 Provide a technical shortname for your company/team.
 This will eventually be displayed in the address bar of Sigrid like so `https://my-sigrid.example.com/company`. 
 At a later stage, it needs to be provided as a "CUSTOMER" environment variable to the analysis job in your CI pipeline. 
+{% raw %}
 ```yaml
   onPremise:
     administrators:
       - admin@company.com
 ```
+{% endraw %}
 Provide an email address to bootstrap the very first user in Sigrid.
 The email address should match the user's email in the connected IdP.
 Note that this initial admin user will have full access to the entire portfolio. Once Sigrid is fully configured, you can invite another person as an Admin and, if desired, remove or demote the initial admin user to a regular user.
 
+{% raw %}
 ```yaml
   imagePullSecrets:
     - name: sigrid-ecr-image-pull-secret
 
 ```
+{% endraw %}
 Here we can provide a Kubernetes native secret which contains the credentials for pulling images from AWS ECR registry to your cluster. If you're using your internal container registry, use the corresponding secret for that registry(if it has any). If your environment allows outbound connections and you want to use the SIG AWS ECR directly, use `sigrid-ecr-image-pull-secret`.
 
+{% raw %}
 ```yaml
    onPremise:
      ecrRepository:
@@ -159,6 +168,7 @@ Here we can provide a Kubernetes native secret which contains the credentials fo
                AWS_ACCESS_KEY_ID: "AWS_ACCESS_KEY_ID"
                AWS_SECRET_ACCESS_KEY: "AWS_SECRET_ACCESS_KEY"
 ```
+{% endraw %}
 
 This service is disabled by default, but if you want to pull images from AWS ECR registry directly you should enable this service. Please use `AWS_ACCESS_KEY_ID` and `AWS_SECRET_ACCESS_KEY` provided by SIG.
 
@@ -168,20 +178,25 @@ This service is disabled by default, but if you want to pull images from AWS ECR
 
 If your deployment is air-gapped, adjust the values below.
 
+{% raw %}
 ```yaml
 image.registry: ""
 image.repository: "nginxinc/nginx-unprivileged"
 ```
+{% endraw %}
 Provide full URL to your registry and container image.
+{% raw %}
 ```yaml
 image.tag: "mainline-alpine"
 ```
+{% endraw %}
 Provide the tag you used to push this image to your registry. 
 
 #### auth-api:
 
 To enable Sigrid to generate Sigrid CI tokens, create a 2048-bit RSA key pair (for example, using OpenSSL). The key must be in PEM format.
 
+{% raw %}
 ```yaml
 auth-api:
   config:
@@ -195,9 +210,11 @@ auth-api:
           (many lines omitted from the keypair created in step 1)  
           -----END PRIVATE KEY-----
 ```
+{% endraw %}
 
 A required secret must be created in the auth-api (see also inbound-api). This enables Sigrid to automatically grant access to uploader for the onboarded system. 
 
+{% raw %}
 ```yaml
 auth-api:
    onboarding:
@@ -206,14 +223,17 @@ auth-api:
     data:
       secret: "example"
 ```
+{% endraw %}
 
 These values can be retrieved using the GUI or .well-known endpoint of your Identity Provider.
 
+{% raw %}
 ```yaml
 config.oauth2.resourceServer.data.issuer-uri: "https://my-idp.example.com" 
 config.oauth2.resourceServer.data.jwk-set-uri: "https://my-idp.example.com/jwks.json" 
 config.oauth2.provider.sigridmfa.issuer-uri: "https://my-idp.example.com" 
 ```
+{% endraw %}
 
 #### sigrid-api:
 
@@ -223,6 +243,7 @@ No further context required.
 
 To enable Sigrid to automatically grant access to uploader for onboarded system, a secret must be passed to the inbound-api (see also auth-api).
 
+{% raw %}
 ```yaml
 inbound-api:
   config:
@@ -231,9 +252,11 @@ inbound-api:
         create: false
         secretName: my-system-onboarding-secret
 ```
+{% endraw %}
 
 A secret for accessing the object store can be configured as follows.
 
+{% raw %}
 ```yaml
 inbound-api:
   config:
@@ -247,25 +270,30 @@ inbound-api:
           AWS_ACCESS_KEY_ID: ""
           AWS_SECRET_ACCESS_KEY: ""
 ```
+{% endraw %}
 
 ### *-service:
 
 The secrets provided below are configured to allow the Sigrid API to communicate with downstream APIs. If these secrets are modified, please ensure that they are updated across all services, as they are associated with a single user.
 
+{% raw %}
 ```yaml
 config.secret.data.username: "example"
 config.secret.data.password: "example" 
 ```
+{% endraw %}
 
 #### config.redis:
 
 The secrets provided below are configured to allow Sigrid to communicate with Redis. 
 They will work as is but can be modified.
 
+{% raw %}
 ```yaml
 redis.data.password: "example-password" 
 redis.data.sentinel-password: "example-password" 
 ```
+{% endraw %}
 If you want to use a self-provided redis server, also adjust `host: ""`
 
 ## Install helm chart
@@ -317,6 +345,7 @@ You can now start inviting more people to Sigrid if so desired.
 - Create a test-branch.
 - Create a pipeline.
   - Example: Where all secrets except SYSTEM can be omitted if already templated or stored as secrets in e.g. your GitLab. Also override image name if you're pulling from your own container registry.
+    {% raw %}
     ```yaml
     sigrid-publish:
       image:
@@ -339,17 +368,12 @@ You can now start inviting more people to Sigrid if so desired.
       script:
         - "run-analyzers --publish"
     ```
+    {% endraw %}
 - Optional: Create an analysis scope.
   - By default, a scope file is generated and used for analysis. In many cases, this is sufficient. If you want more control over the analysis results, 
     for example, to include or exclude certain file extensions or folders, you can define your own scope.
   - Create a `sigrid.yaml` file in the root of your test project.
   - Comprehensive documentation can be found here: [Analysis-scope-configuration](../reference/analysis-scope-configuration.md)
-  - Example:
-    ```yaml
-    languages:
-      - name: TypeScript
-      - name: JavaScript
-    ```
 - Commit changes to your test project.
 
 ### Verify a successful analysis
