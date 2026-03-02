@@ -3,6 +3,11 @@ Sigrid release notes
 
 SIG uses [continuous delivery](https://en.wikipedia.org/wiki/Continuous_delivery), meaning that every change to Sigrid or the underlying analysis is released once our development pipeline has completed. On average, we release somewhere between 10 and 20 times per day. This page therefore doesn't list every single change, since that would quickly lead to an excessively long list of small changes. Instead, this page lists Sigrid and analysis changes that we consider noteworthy for the typical Sigrid user.
 
+### March 2, 2026
+
+- **User management:** When someone on-boards a new system into Sigrid, that person is now automatically given access to view that system's results in Sigrid. Previously, these was a separate step, where an administrator had to explicitly give that person access. This led to a common situation where someone was allowed to on-board a system and analyze a system, but was not allowed to actually view the results for that same analysis. Many people found this behavior overly rigid, so it has been changed to a more natural model where the "owner" of the system (i.e. the person who initially on-boarded it) is automatically allowed to view its results.
+- **Open Source Health:** Sigrid now supports [CVSS version 4](https://nvd.nist.gov/vuln-metrics/cvss/v4-calculator) to assign severity scores to known vulnerabilities. If a vulnerability publishes both CVSS version 3 and 4 information, Sigrid will prefer CVSS version 4. This change means you might notice some vulnerabilities now receive a different severity score than before. 
+
 ### February 23, 2026
 
 - **Scope configuration:** If you want to enable Sigrid's [Open Source Health](../capabilities/portfolio-open-source-health.md) or [Security](../capabilities/portfolio-security.md) capabilities, you previously needed to add some mandatory configuration to the [scope configuration file](../reference/analysis-scope-configuration.md). Many people considered this to be a bit cumbersome, so this has been simplified: Open Source Health and Security will now run automatically, as long as you have the corresponding license. This change is backward compatible, so existing scope configuration files will continue to work.
