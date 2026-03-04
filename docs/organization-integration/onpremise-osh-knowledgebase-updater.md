@@ -81,7 +81,7 @@ global:
       enabled: true
       updaterImage:
         repository: softwareimprovementgroup/osh-kb-updater
-        tag: 1.0.20260223 # e.g. use Renovate to update this tag regularly
+        tag: 1.0.20260305 # e.g. use Renovate to update this tag regularly
       pgHost: "postgres.example.com"
       pgSecretName: "osh-kb-updater-job-postgres-secret" # secret containing the password for the database user
       pgSecretPasswordKey: "" # 

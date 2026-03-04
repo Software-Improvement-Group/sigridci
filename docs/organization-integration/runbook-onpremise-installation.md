@@ -47,7 +47,7 @@ If your deployment is entirely air-gapped or you just want to use your own inter
    - redis:7.2.4-alpine
    - haproxy:2.9.4-alpine
    - aws-cli:2.31.13 (required only for the ECR pull secret refresher)
-2. Tag the downloaded containers with their tag from AWS ECR registry (e.g. 1.0.20260223).
+2. Tag the downloaded containers with their tag from AWS ECR registry (e.g. 1.0.20260305).
 3. Re-tag and push the containers to your internal image registry.
 
 #### Situation 2: Pulling images directly from SIG's AWS ECR Registry
@@ -124,7 +124,7 @@ Your copy of example-values.yaml however is enough to get a complete Sigrid depl
 #### global:
 {% raw %}
 ```yaml
-  imageTag: "1.0.20260223"
+  imageTag: "1.0.20260305"
 ```
 {% endraw %}
 Provide the tag of the containers you want to use.
