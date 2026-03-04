@@ -50,27 +50,7 @@ Some Sigrid On-Premise features are *optional*:
 
 The Docker containers that form Sigrid On-Premise are distributed via AWS ECR registry. You will receive an account that allows you to access the container registry. 
 
-{% raw %}
-```bash
-+------------------------------------------------------+-------------------------------------------------------------------------------------------------------+
-|                    repositoryName                    |                                             repositoryUri                                             |
-+------------------------------------------------------+-------------------------------------------------------------------------------------------------------+
-|  softwareimprovementgroup/quality-model-service      |  571600876202.dkr.ecr.eu-central-1.amazonaws.com/softwareimprovementgroup/quality-model-service       |
-|  softwareimprovementgroup/sigrid-multi-importer      |  571600876202.dkr.ecr.eu-central-1.amazonaws.com/softwareimprovementgroup/sigrid-multi-importer       |
-|  softwareimprovementgroup/sigrid-api                 |  571600876202.dkr.ecr.eu-central-1.amazonaws.com/softwareimprovementgroup/sigrid-api                  |
-|  softwareimprovementgroup/sigrid-stack               |  571600876202.dkr.ecr.eu-central-1.amazonaws.com/softwareimprovementgroup/sigrid-stack                |
-|  softwareimprovementgroup/sigrid-api-db-migration    |  571600876202.dkr.ecr.eu-central-1.amazonaws.com/softwareimprovementgroup/sigrid-api-db-migration     |
-|  softwareimprovementgroup/ai-explanation-service     |  571600876202.dkr.ecr.eu-central-1.amazonaws.com/softwareimprovementgroup/ai-explanation-service      |
-|  softwareimprovementgroup/auth-api-db-migration      |  571600876202.dkr.ecr.eu-central-1.amazonaws.com/softwareimprovementgroup/auth-api-db-migration       |
-|  softwareimprovementgroup/inbound-api                |  571600876202.dkr.ecr.eu-central-1.amazonaws.com/softwareimprovementgroup/inbound-api                 |
-|  softwareimprovementgroup/osh-kb-updater             |  571600876202.dkr.ecr.eu-central-1.amazonaws.com/softwareimprovementgroup/osh-kb-updater              |
-|  softwareimprovementgroup/auth-api                   |  571600876202.dkr.ecr.eu-central-1.amazonaws.com/softwareimprovementgroup/auth-api                    |
-|  softwareimprovementgroup/sigrid-multi-analyzer      |  571600876202.dkr.ecr.eu-central-1.amazonaws.com/softwareimprovementgroup/sigrid-multi-analyzer       |
-|  softwareimprovementgroup/sigrid-integrations-onprem |  571600876202.dkr.ecr.eu-central-1.amazonaws.com/softwareimprovementgroup/sigrid-integrations-onprem  |
-|  softwareimprovementgroup/sigrid-frontend            |  571600876202.dkr.ecr.eu-central-1.amazonaws.com/softwareimprovementgroup/sigrid-frontend             |
-+------------------------------------------------------+-------------------------------------------------------------------------------------------------------+
-```
-{% endraw %}
+<img src="../images/onpremise-ecr-private-repo.png" width="100%" /> 
 
 As explained above, Sigrid consists of several Docker containers. The container `sigrid-multi-analyzer` runs directly in your development platform's continuous integration pipelines, all other containers are deployed to your Kubernetes cluster. These steps are explained in more detail in the following sections.
 
