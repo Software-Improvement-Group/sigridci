@@ -151,7 +151,7 @@ settings need to be provided:
   the standard port for PostgreSQL (5432).
 - Passwords for various PostgreSQL users: `webapp_user`, `db_mgmt_user`, and `import_user`.
 
-The Helm charts provides SQL scripts to initialize the database. It is the responsibility of the 
+The Helm chart provides SQL scripts to initialize the database. It is the responsibility of the 
 on-premise customer to run these scripts (using `psql`). They are NOT executed by the Helm chart.
 In case of managed PostgreSQL, these scripts might need to be adapted to take care of specifics 
 of the managed PostgreSQL provider. The scripts are in the `sigrid-stack/files` directory, which 
@@ -175,6 +175,9 @@ In addition, when first importing a system, Sigrid creates a role called `PARTNE
 where `PARTNER` and `CUSTOMER` are placeholders for the configured partner and customer role. In 
 case any of these users or roles already exists in the cluster, the initialization script or 
 the first import fails.
+
+Database initialization can now also be performed automatically. If you are interested in using this feature, please refer to the documentation [here](onpremise-automated-database-initialization).
+{: .attention }
 
 ### Kubernetes secrets
 
