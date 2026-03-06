@@ -35,13 +35,8 @@ class BitBucketPullRequestReport(Report):
             try:
                 existingCommentId = self.findExistingCommentId()
                 comment = self.markdownRenderer.renderMarkdown(analysisId, feedback, options)
-
-                if existingCommentId is None:
-                    self.postComment(comment)
-                    UploadLog.log(f"Published {self.markdownRenderer.getCapability().displayName} BitBucket comment")
-                else:
-                    self.updateComment(existingCommentId, comment)
-                    UploadLog.log(f"Updated existing BitBucket {self.markdownRenderer.getCapability().displayName} comment")
+                self.postComment(comment, existingCommentId)
+                UploadLog.log(f"Posted {self.markdownRenderer.getCapability().displayName} BitBucket comment")
             except SystemExit:
                 print("Failed to publish feedback to GitLab")
 
@@ -50,16 +45,21 @@ class BitBucketPullRequestReport(Report):
             and "SIGRIDCI_BITBUCKET_COMMENT_TOKEN" in os.environ \
             and options.runMode == RunMode.FEEDBACK_ONLY
 
-    def postComment(self, comment):
+    def postComment(self, comment, existingCommentId=None):
         baseURL = os.environ.get("BITBUCKET_API_URL", "https://api.bitbucket.org/2.0")
         workspace = os.environ["BITBUCKET_WORKSPACE"]
         slug = os.environ["BITBUCKET_REPO_SLUG"]
         pullRequestId = os.environ["BITBUCKET_PR_ID"]
+
+        method = "POST"
         url = f"{baseURL}/repositories/{workspace}/{slug}/pullrequests/{pullRequestId}/comments"
+        if existingCommentId is not None:
+            method = "PUT"
+            url += f"/{existingCommentId}"
 
         body = {"content" : {"raw" : comment}}
 
-        request = urllib.request.Request(url, json.dumps(body).encode("utf-8"))
+        request = urllib.request.Request(url, json.dumps(body).encode("utf-8"), method=method)
         request.add_header("Content-Type", "application/json")
         request.add_header("Authorization", f"Bearer {os.environ['SIGRIDCI_BITBUCKET_COMMENT_TOKEN']}")
 
