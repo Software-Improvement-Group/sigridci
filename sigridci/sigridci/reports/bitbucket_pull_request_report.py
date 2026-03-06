@@ -52,10 +52,10 @@ class BitBucketPullRequestReport(Report):
 
     def postComment(self, comment):
         baseURL = os.environ.get("BITBUCKET_API_URL", "https://api.bitbucket.org/2.0")
-        projectKey = os.environ["BITBUCKET_PROJECT_KEY"]
+        workspace = os.environ["BITBUCKET_WORKSPACE"]
         slug = os.environ["BITBUCKET_REPO_SLUG"]
         pullRequestId = os.environ["BITBUCKET_PR_ID"]
-        url = f"{baseURL}/api/latest/projects/{projectKey}/repos/{slug}/pull-requests/{pullRequestId}/comments"
+        url = f"{baseURL}/repositories/{workspace}/repos/{slug}/pullrequests/{pullRequestId}/comments"
 
         body = {"content" : {"raw" : comment}}
 
