@@ -1,6 +1,6 @@
 # Importing custom findings into Sigrid using SARIF
 
-Sigrid is capable of combinding findings from multiple sources. In addition to Sigrid's own findings and existing
+Sigrid is capable of combining findings from multiple sources. In addition to Sigrid's own findings and existing
 third party tool integrations, it is also possible to import your own custom findings into Sigrid. This is done using
 the [SARIF](https://sarifweb.azurewebsites.net) format, which is a standard file format commonly used for
 interoperability between tools.
