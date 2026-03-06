@@ -573,6 +573,36 @@ the value of a property it will be missing from the array.
 
 More information on the SBOM format and the various fields is available from the [CycloneDX SBOM specification](https://github.com/CycloneDX/specification).
 
+### Editing findings
+
+You can edit a finding's status and remark by using the following end point:
+
+- `PATCH https://sigrid-says.com/rest/analysis-results/api/v1/finding/{customer}/{system}/{id}`
+
+In addition to the `customer` and `system` path parameters, this end point also requires the finding ID. You can obtain
+this ID from either the Sigrid user interface or from one of the end points that return findings. This end point can
+be used for all types of findings that are shown in Sigrid's [Code Explorer](../capabilities/system-code-explorer.md).
+In other words: The same end point is used to edit maintainability findings and security findings.
+
+This end point requires a request body with `Content-Type: application/json`. The request body can contain the
+following fields:
+
+```json
+{
+  "status": "",
+  "remark": "Add notes or comments for this finding."
+}
+```
+
+The `status` field is an enum. The possible values are `RAW`, `REFINED`, `WILL_FIX`, `FIXED`, 
+`ACCEPTED` (meaning risk accepted), `FALSE_POSITIVE`. These values correspond to the finding status you see in the 
+Sigrid user interface.
+
+All of the fields in the request body are optional. If you do not specify a field, the finding will retain its
+existing value for that field. If you want to explicitly clear a field, you can set it to `null`.
+
+This end point returns HTTP status 204 upon success, there is no response body.
+
 ### Architecture Quality ratings
 
 Arcitecture quality ratings for a given customer are available via two endpoints:

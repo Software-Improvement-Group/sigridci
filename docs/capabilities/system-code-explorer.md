@@ -49,4 +49,8 @@ Findings that you wish to solve later on can be exported as text with static lin
 
 <img src="../images/system-code-explorer-finding-to-planning.png" width="600" />
 
+### Viewing a finding's change history and audit trail
 
+In some cases, you may want to track *who* has made changes to a finding. This can be done by clicking the "show audit trail" button, which will show you an overview of who made changes and when.
+
+<img src="../images/code-explorer-audit-trail.png" width="300" />
