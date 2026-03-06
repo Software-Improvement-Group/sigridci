@@ -55,7 +55,7 @@ class BitBucketPullRequestReport(Report):
         workspace = os.environ["BITBUCKET_WORKSPACE"]
         slug = os.environ["BITBUCKET_REPO_SLUG"]
         pullRequestId = os.environ["BITBUCKET_PR_ID"]
-        url = f"{baseURL}/repositories/{workspace}/repos/{slug}/pullrequests/{pullRequestId}/comments"
+        url = f"{baseURL}/repositories/{workspace}/{slug}/pullrequests/{pullRequestId}/comments"
 
         body = {"content" : {"raw" : comment}}
 
