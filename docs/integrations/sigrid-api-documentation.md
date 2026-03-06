@@ -577,7 +577,7 @@ More information on the SBOM format and the various fields is available from the
 
 You can edit a finding's status and remark by using the following end point:
 
-- `PATCH https://sigrid-says.com/rest/analysis-results/api/v1/finding/{customer}/{system}/{id}`
+- `PATCH https://sigrid-says.com/rest/analysis-results/api/v1/findings/{customer}/{system}/{id}`
 
 In addition to the `customer` and `system` path parameters, this end point also requires the finding ID. You can obtain
 this ID from either the Sigrid user interface or from one of the end points that return findings. This end point can
