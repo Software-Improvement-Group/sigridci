@@ -589,14 +589,23 @@ following fields:
 
 ```json
 {
-  "status": "",
+  "status": "RAW",
   "remark": "Add notes or comments for this finding."
 }
 ```
 
-The `status` field is an enum. The possible values are `RAW`, `REFINED`, `WILL_FIX`, `FIXED`, 
-`ACCEPTED` (meaning risk accepted), `FALSE_POSITIVE`. These values correspond to the finding status you see in the 
-Sigrid user interface.
+The `status` field is an enum. The possible values depend on the type of finding:
+
+| Finding status   | Maintainability findings | Security findings | Reliability findings |
+|------------------|--------------------------|-------------------|----------------------|
+| `RAW`            | ✅                        | ✅                 | ✅                    |
+| `REFINED`        | ❌                        | ✅                 | ✅                    |
+| `WILL_FIX`       | ✅                        | ✅                 | ✅                    |
+| `FIXED`          | ❌                        | ✅                 | ✅                    |
+| `ACCEPTED`       | ✅                        | ✅                 | ✅                    |
+| `FALSE_POSITIVE` | ❌                        | ✅                 | ✅                    |
+
+These values correspond to the finding status you see in the Sigrid user interface.
 
 All of the fields in the request body are optional. If you do not specify a field, the finding will retain its
 existing value for that field. If you want to explicitly clear a field, you can set it to `null`.
