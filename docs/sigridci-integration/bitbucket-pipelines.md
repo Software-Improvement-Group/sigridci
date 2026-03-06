@@ -8,6 +8,7 @@ This documentation covers cloud-based Sigrid. On-premise Sigrid does not support
 
 - You have a [Sigrid](https://sigrid-says.com) user account. 
 - You have created an [authentication token for using Sigrid CI](../organization-integration/authentication-tokens.md).
+- [Python 3.7 or higher](https://www.python.org) needs to be available in the CI environment if you do not use the [Docker image](https://hub.docker.com/r/softwareimprovementgroup/sigridci) published by SIG. The client scripts for Sigrid CI are based on Python.
 
 ## On-boarding your system to Sigrid
 
@@ -19,11 +20,26 @@ On-boarding is done automatically when you first run Sigrid CI. As long as you h
 
 Sigrid CI reads your Sigrid account credentials from an environment variable called `SIGRID_CI_TOKEN`. You can make these environment variables available to BitBucket Pipelines by creating "secrets" in your repository:
 
-- Open "Repository settings" in your project menu
-- Select "Repository variables" located in the section "Pipelines"
+- Open "Repository settings" in your project menu.
+- Navigate to the "Pipelines" section.
+- Navigate to "Repository variables".
 - Create a secret named `SIGRID_CI_TOKEN` and use your [Sigrid authentication token](../organization-integration/authentication-tokens.md) as the value.
 
 <img src="../images/bitbucket-env.png" width="500" />
+
+If you want to receive Sigrid feedback as pull request comments, you will also need to allow Sigrid to post those comments.
+BitBucket supports two different types of tokens: *API tokens* that are associated with a person, and *accesss tokens* that are associated with a repository. Sigrid requires the latter.
+
+You can create an access token by following the steps in the [BitBucket documentation](https://support.atlassian.com/bitbucket-cloud/docs/create-a-repository-access-token/).
+The access token needs to have *write* permission on pull requests, since it will be posting comments. It does not require other permissions.
+You then need to make this access token available to Sigrid in your pipeline:
+
+- Open "Repository settings" in your project menu.
+- Navigate to the "Pipelines" section.
+- Navigate to "Repository variables".
+- Create a secret named `SIGRIDCI_BITBUCKET_COMMENT_TOKEN` and add your BitBucket access token.
+
+If you're using BitBucket Cloud, you're done. However, if you're using BitBucket Data Center, there is one more step: You will need to add another environment variable called `BITBUCKET_API_URL`, which points to the URL of your BitBucket API (i.e. `https://api.bitbucket.org/2.0`). The reason this is needed is because BitBucket does not make this URL available to pipelines as part of its [standard environment variables](https://support.atlassian.com/bitbucket-cloud/docs/variables-and-secrets/), which is why you need to configure this manually.
 
 ### Step 2: Create a BitBucket Pipeline for Sigrid CI
 
@@ -105,11 +121,11 @@ The check will succeed if the code quality meets the specified target, and will 
 
 <img src="../images/bitbucket-commits.png" width="700" />
 
-You can access the results by clicking on the pipeline's success/failure indicator. Sigrid CI provides multiple levels of feedback. The first and fastest type of feedback is directly produced in the CI output, as shown in the following screenshot:
+If you've followed these instructions, you will receive feedback from Sigrid on your merge request:
 
-<img src="../images/feedback-ci-environment.png" width="600" />
+<img src="../images/bitbucket-pull-request-feedback.png" width="750" />
 
-The output consists of the following:
+The feedback consists of the following:
 
 - A list of refactoring candidates that were introduced in your merge request. This allows you to understand what quality issues you caused, which in turn allows you to fix them quickly. Note that quality is obviously important, but you are not expected to always fix every single issue. As long as you meet the target, it's fine.
 - An overview of all ratings, compared against the system as a whole. This allows you to check if your changes improved the system, or accidentally made things worse.
