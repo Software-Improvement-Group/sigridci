@@ -584,7 +584,7 @@ this ID from either the Sigrid user interface or from one of the end points that
 be used for all types of findings that are shown in Sigrid's [Code Explorer](../capabilities/system-code-explorer.md).
 In other words: The same end point is used to edit maintainability findings and security findings.
 
-This end point requires a request body with `Content-Type: application/json`. The request body can contain the
+This end point requires a request body with `Content-Type: application/merge-patch+json`. The request body can contain the
 following fields:
 
 ```json
