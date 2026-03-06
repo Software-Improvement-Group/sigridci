@@ -79,4 +79,5 @@ class BitBucketPullRequestReport(Report):
 
     def isExistingComment(self, comment):
         header = f"{self.markdownRenderer.getCapability().displayName} feedback"
-        return comment["content"].startswith(("# Sigrid", "# [Sigrid]")) and header.lower() in comment["content"].lower()
+        body = comment["content"]["raw"]
+        return body.startswith(("# Sigrid", "# [Sigrid]")) and header.lower() in body.lower()
