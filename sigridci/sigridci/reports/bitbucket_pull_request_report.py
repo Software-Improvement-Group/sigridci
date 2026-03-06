@@ -46,28 +46,37 @@ class BitBucketPullRequestReport(Report):
             and options.runMode == RunMode.FEEDBACK_ONLY
 
     def postComment(self, comment, existingCommentId=None):
-        baseURL = os.environ.get("BITBUCKET_API_URL", "https://api.bitbucket.org/2.0")
-        workspace = os.environ["BITBUCKET_WORKSPACE"]
-        slug = os.environ["BITBUCKET_REPO_SLUG"]
-        pullRequestId = os.environ["BITBUCKET_PR_ID"]
-
         method = "POST"
-        url = f"{baseURL}/repositories/{workspace}/{slug}/pullrequests/{pullRequestId}/comments"
+        url = self.getCommentsURL()
+
         if existingCommentId is not None:
             method = "PUT"
             url += f"/{existingCommentId}"
 
         body = {"content" : {"raw" : comment}}
 
-        request = urllib.request.Request(url, json.dumps(body).encode("utf-8"), method=method)
+        return self.callAPI(method, url, json.dumps(body).encode("utf-8"))
+
+    def callAPI(self, method, url, body):
+        request = urllib.request.Request(url, body, method=method)
         request.add_header("Content-Type", "application/json")
         request.add_header("Authorization", f"Bearer {os.environ['SIGRIDCI_BITBUCKET_COMMENT_TOKEN']}")
-
         api = ApiCaller("BitBucket", pollInterval=5)
         return api.retryRequest(lambda: urllib.request.urlopen(request, context=self.sslContext))
 
-    def updateComment(self, existingCommentId, comment):
-        pass
+    def getCommentsURL(self):
+        baseURL = os.environ.get("BITBUCKET_API_URL", "https://api.bitbucket.org/2.0")
+        workspace = os.environ["BITBUCKET_WORKSPACE"]
+        slug = os.environ["BITBUCKET_REPO_SLUG"]
+        pullRequestId = os.environ["BITBUCKET_PR_ID"]
+        return f"{baseURL}/repositories/{workspace}/{slug}/pullrequests/{pullRequestId}/comments"
 
     def findExistingCommentId(self):
-        return None
+        with self.callAPI("GET", self.getCommentsURL(), None) as f:
+            for comment in json.load(f)["values"]:
+                if self.isExistingComment(comment):
+                    return comment["id"]
+
+    def isExistingComment(self, comment):
+        header = f"{self.markdownRenderer.getCapability().displayName} feedback"
+        return comment["content"].startswith(("# Sigrid", "# [Sigrid]")) and header.lower() in comment["content"].lower()
