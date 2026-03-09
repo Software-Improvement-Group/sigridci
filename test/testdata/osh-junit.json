@@ -54,7 +54,7 @@
       "bom-ref": "pkg:maven/org.gradle/test-retry-gradle-plugin@1.2.1",
       "group": "org.gradle",
       "name": "test-retry-gradle-plugin",
-      "version": "1.2.1",
+      "version": "",
       "licenses": [],
       "purl": "pkg:maven/org.gradle/test-retry-gradle-plugin@1.2.1",
       "properties": [
