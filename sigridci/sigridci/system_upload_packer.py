@@ -24,17 +24,34 @@ from .upload_log import UploadLog
 class SystemUploadPacker:
     MAX_UPLOAD_SIZE_MB = 500
     ALWAYS_INCLUDE = (RepositoryHistoryExporter.LIGHTWEIGHT_HISTORY_EXPORT_FILE)
-    EXCLUDE_EXTENSIONS = (".7z", ".amr", ".avi", ".bil", ".bmp", ".db", ".dmp", ".doc", ".docx", ".exe", ".f4v", ".gif",
-                          ".gz", ".heic", ".ico", ".ipa", ".iso", ".jpeg", ".jpg", ".m4a", ".mda", ".mkv", ".mpeg",
-                          ".mpg", ".mpl", ".mov", ".mp3", ".mp4", ".msi", ".odf", ".odp", ".ods", ".odt", ".otf", ".pdb",
-                          ".pdf", ".png", ".ppt", ".pptx", ".rar", ".rtf", ".sbn", ".shx", ".shp", ".so", ".svg",
-                          ".swf", ".tar", ".tgz", ".tiff", ".ttf", ".wmv", ".woff", ".woff2", ".xls", ".xlsm", ".xlsx", ".zip")
+    EXCLUDE_EXTENSIONS = (".7z",
+                          ".amr", ".avi",
+                          ".bacpac", ".bil", ".bmp",
+                          ".csv",
+                          ".db", ".dmp", ".doc", ".docx", ".ebx",
+                          ".exe",
+                          ".f4v",
+                          ".gif", ".gpkg", ".gz",
+                          ".HEIC", ".hex",
+                          ".ico", ".ihex", ".ipa", ".iso",
+                          ".jfif", ".jpeg", ".jpg",
+                          ".m4a", ".mda", ".mdzip", ".mdxml", ".mkv", ".mpeg", ".mpg", ".mpl", ".mov", ".mp3", ".mp4", ".msi",
+                          ".node",
+                          ".odf", ".odp", ".ods", ".odt", ".otf",
+                          ".pdb", ".pdf", ".png", ".ppt", ".pptx",
+                          ".rar", ".rtf",
+                          ".sbn", ".shx", ".shp", ".so", ".svg", ".swf",
+                          ".tar", ".tgz", ".tif", ".tiff", ".ttf",
+                          ".war", ".wmv", ".woff", ".woff2",
+                          ".xls", ".xlsm", ".xlsx",
+                          ".zip")
 
     DEFAULT_EXCLUDES = [
         "$tf/",
         "coverage/",
         "build/",
         "dist/",
+        "Doxygen/",
         "node_modules/",
         "sigridci/",
         "sigrid-ci-output/",
@@ -48,9 +65,11 @@ class SystemUploadPacker:
         ".m2/",
         "m2/repo/",
         ".mendix-cache/",
+        ".mypy_cache/",
         ".nx/",
         ".pip-cache/",
         ".pip-packages/",
+        ".svn/",
         ".terraform/",
         ".yarn/"
     ]
