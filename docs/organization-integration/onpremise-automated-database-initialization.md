@@ -33,7 +33,7 @@ Below is an example configuration:
 ```yaml
 global:
   imageRegistry: "my-registry.example.com"
-  imageTag: "1.0.20260305"
+  imageTag: "1.0.20260309"
   hosts:
     - host: "my-sigrid.example.com"
       tls:
@@ -47,15 +47,13 @@ global:
       enabled: true
       image:
         repository: "softwareimprovementgroup/sigrid-integrations-onprem"
-        tag: "1.0.20260305"
+        tag: "1.0.20260309"
       secrets:
         create: true
         secretName: "postgres-init-secret"
         data:
-          POSTGRES_PASSWORD: ""    # required for Postgres init, expected by official Postgres containers
-          POSTGRES_USER: postgres  # required for Postgres init
-          POSTGRES_HOST: ""        # required for Postgres init
-          POSTGRES_DB: "postgres"  # required for Postgres init
+          PGPASSWORD: "" # Postgres root password
+          DB_MGMT_USER_PASSWD: ""
           DB_MGMT_USER_PASSWD: ""
           IMPORT_USER_PASSWD: ""
           OSH_KB_UPDATER_PASSWD: ""
