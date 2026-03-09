@@ -51,7 +51,7 @@ class SystemUploadPacker:
         "coverage/",
         "build/",
         "dist/",
-        "Doxygen",
+        "Doxygen/",
         "node_modules/",
         "sigridci/",
         "sigrid-ci-output/",
@@ -69,7 +69,7 @@ class SystemUploadPacker:
         ".nx/",
         ".pip-cache/",
         ".pip-packages/",
-        ".svn",
+        ".svn/",
         ".terraform/",
         ".yarn/"
     ]
