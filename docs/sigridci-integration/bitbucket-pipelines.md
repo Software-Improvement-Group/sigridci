@@ -27,6 +27,9 @@ Sigrid CI reads your Sigrid account credentials from an environment variable cal
 
 <img src="../images/bitbucket-env.png" width="500" />
 
+The following steps only apply to BitBucket Cloud, they do *not* apply to BitBucket Server. 
+{: .attention }
+
 If you want to receive Sigrid feedback as pull request comments, you will also need to allow Sigrid to post those comments.
 BitBucket supports two different types of tokens: *API tokens* that are associated with a person, and *accesss tokens* that are associated with a repository. Sigrid requires the latter.
 
