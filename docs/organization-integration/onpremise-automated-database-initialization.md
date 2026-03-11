@@ -81,7 +81,7 @@ global:
 ```
 {% endraw %}
 
-Note: The certificate filename, in the secret must, exactly match postgres-ca.pem as shown in the example above. Changing this name will prevent the initialization job from loading the certificate correctly.
+Note: The certificate filename must exactly match postgres-ca.pem as shown in the example above. Changing this name will prevent the initialization job from loading the certificate correctly.
 {: .warning }
 
 ## Contact and support
