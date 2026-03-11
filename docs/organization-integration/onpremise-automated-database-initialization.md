@@ -24,7 +24,7 @@ To use this feature, you must provide:
  - The PostgreSQL server hostname
  - Pre-generated passwords for Sigrid's database users
 
-After successful initialization, the initialization job is no longer required and can be disabled again in the Helm values. When leaving the job enabled, it will skip the actual initialization upon subsequent `helm install` or `helm upgrade` commands as it detects the presence of the `sigriddb` daetabase.
+After successful initialization, the initialization job is no longer required and can be disabled again in the Helm values. When leaving the job enabled, it will skip the actual initialization upon subsequent `helm install` or `helm upgrade` commands as it detects the presence of the `sigriddb` database.
 {: .attention }
 
 Below is an example configuration:
@@ -80,6 +80,9 @@ global:
               -----END CERTIFICATE-----
 ```
 {% endraw %}
+
+Note: The certificate filename, in the secret must, exactly match postgres-ca.pem as shown in the example above. Changing this name will prevent the initialization job from loading the certificate correctly.
+{: .warning }
 
 ## Contact and support
 
