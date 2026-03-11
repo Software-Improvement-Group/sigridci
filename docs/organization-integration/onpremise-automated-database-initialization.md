@@ -15,16 +15,16 @@ If you're not pulling `softwareimprovementgroup/sigrid-integration-onprem` direc
 ## Enabling Automated Database Initialization
 This feature enables automated initialization of the Sigrid databases during deployment.
 
-By default, the Helm chart includes the required SQL scripts but does not execute them automatically. In a standard on-premises setup, customers are expected to run these scripts manually using psql. The scripts are located in the sigrid-stack/files directory of the Helm chart and include sigriddb-init and authdb-init.
+By default, the Helm chart includes the required SQL scripts but does not execute them automatically. In a standard on-premises setup, customers are expected to run these scripts manually using psql. The scripts are located in the `sigrid-stack/files` directory of the Helm chart and include `sigriddb-init` and `sigridauthdb-init`.
 
-To automate this process, set global.onPremise.postgresInit to true in your Helm values. When enabled, the initialization service will execute the database setup as part of the deployment.
+To automate this process, set `global.onPremise.postgresInit` to `true` in your Helm values. When enabled, the initialization job will execute the database setup as part of the deployment.
 
 To use this feature, you must provide:
  - PostgreSQL management credentials
  - The PostgreSQL server hostname
- - Pre-generated credentials for Sigrid's database users
+ - Pre-generated passwords for Sigrid's database users
 
-After successful initialization, the initialization service is no longer required and can be disabled again in the Helm values.
+After successful initialization, the initialization job is no longer required and can be disabled again in the Helm values. When leaving the job enabled, it will skip the actual initialization upon subsequent `helm install` or `helm upgrade` commands as it detects the presence of the `sigriddb` daetabase.
 {: .attention }
 
 Below is an example configuration:
@@ -48,6 +48,10 @@ global:
       image:
         repository: "softwareimprovementgroup/sigrid-integrations-onprem"
         tag: "1.0.20260309"
+      config:
+        host: "my-postgres.example.com"
+        sslMode: "verify-full"
+        stopOnError: true  # disabling this can be useful during troubleshooting
       secrets:
         create: true
         secretName: "postgres-init-secret"
@@ -64,21 +68,13 @@ global:
           AUTH_DB_MGMT_USER_PASSWD: ""
           AUTH_DB_READONLY_USER_PASSWD: ""
           AUTH_DB_WEBAPP_USER_PASSWD: ""
-          ## TEAM_SUFFIX: ""
       customCertificates:
         enabled: true
         certificates:
           create: true
-          name: "ldap-group-sync-custom-certs"
+          name: "postgres-init-custom-certs"
           data:
-            mysigridcert.pem: |
-              -----BEGIN CERTIFICATE-----
-              ...... INTERMEDIATE CERTIFICATE CONTENT (if any)
-              -----END CERTIFICATE-----
-              -----BEGIN CERTIFICATE-----
-              ......
-              -----END CERTIFICATE-----
-            myldapcert.pem: |
+            postgres-ca.pem: |  # This should not be changed
               -----BEGIN CERTIFICATE-----
               .....
               -----END CERTIFICATE-----
