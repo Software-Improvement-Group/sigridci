@@ -343,6 +343,7 @@ Sigrid therefore also provides support for framework-specific constructs, for th
 
 Android,
 Angular,
+ASP.NET Core,
 Doctrine,
 Entity Framework,
 Flask,
