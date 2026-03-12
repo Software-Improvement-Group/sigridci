@@ -51,6 +51,7 @@ This step is only necessary when setting up the OSH knowledge base for Sigrid On
 
 Run the following commands on your PostgreSQL database:
 
+{% raw %}
 ```yaml
 CREATE USER osh_kb_updater_user WITH
     PASSWORD '${OSH_KB_UPDATER_PASSWD}'
@@ -64,6 +65,7 @@ GRANT SELECT, INSERT, UPDATE ON ALL TABLES IN SCHEMA osh_knowledge_base TO osh_k
 -- For sequences existing in osh_knowledge_base, grant SELECT, INSERT, UPDATE
 GRANT USAGE, SELECT ON ALL SEQUENCES IN SCHEMA osh_knowledge_base TO osh_kb_updater_user;
 ```
+{% endraw %}
 
 ## Enabling the OSH knowledge base updater
 
@@ -71,6 +73,7 @@ The OSH knowledge base updater is enabled in the global section of your Sigrid O
 
 Add the following configuration to the `global` section:
 
+{% raw %}
 ```yaml
 global:
   onPremise:
@@ -78,12 +81,13 @@ global:
       enabled: true
       updaterImage:
         repository: softwareimprovementgroup/osh-kb-updater
-        tag: 1.0.20260223 # e.g. use Renovate to update this tag regularly
+        tag: 1.0.20260309 # e.g. use Renovate to update this tag regularly
       pgHost: "postgres.example.com"
       pgSecretName: "osh-kb-updater-job-postgres-secret" # secret containing the password for the database user
       pgSecretPasswordKey: "" # 
       cronJobschedule: "0 9 * * *" # by default the cronjob will trigger at 9:00 UTC
 ```
+{% endraw %}
 
 ## Contact and support
 
