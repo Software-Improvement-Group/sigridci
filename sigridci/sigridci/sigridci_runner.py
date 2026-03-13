@@ -112,8 +112,6 @@ class SigridCiRunner:
     def loadFeedbackBaseline(self, capability):
         if capability == OPEN_SOURCE_HEALTH:
             return self.apiClient.fetchOpenSourceHealth()
-        elif capability == SECURITY:
-            return self.apiClient.fetchSecurityFindings()
         else:
             return None
 

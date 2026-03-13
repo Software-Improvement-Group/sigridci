@@ -1,0 +1,104 @@
+# Copyright Software Improvement Group
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#     http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+
+from dataclasses import dataclass
+from enum import Enum
+
+from ..objective import Objective
+
+
+class FindingStatus(Enum):
+    INTRODUCED = "Introduced"
+    FIXED = "Fixed"
+    REMAINING = "Remaining"
+    ACCEPTED = "Accepted"
+
+
+@dataclass
+class Finding:
+    fingerprint: str
+    risk: str
+    description: str
+    file: str
+    line: int
+    partOfObjective: bool
+    status: FindingStatus
+
+
+class SarifProcessor:
+    def __init__(self, options, objective):
+        self.options = options
+        self.objective = objective
+
+    def extractFindings(self, feedback):
+        if feedback is None or not feedback.get("runs"):
+            return []
+
+        rules = list(self.getRules(feedback))
+
+        for run in feedback["runs"]:
+            for result in run.get("results", []):
+                fingerprint = result["fingerprints"]["sigFingerprint/v1"]
+                risk = self.getFindingSeverity(result, rules)
+                file = self.rewriteSubSystem(result["locations"][0]["physicalLocation"]["artifactLocation"]["uri"])
+                line = result["locations"][0]["physicalLocation"]["region"]["startLine"]
+                partOfObjective = Objective.isFindingIncluded(risk, self.objective)
+                status = self.getFindingStatus(result)
+
+                if file is not None and risk in Objective.SEVERITY_OBJECTIVE:
+                    yield Finding(fingerprint, risk, result["message"]["text"], file, line, partOfObjective, status)
+
+    def getRules(self, feedback):
+        for run in feedback["runs"]:
+            for rule in run.get("rules", []):
+                properties = rule.get("properties", {})
+                if properties.get("severity"):
+                    yield rule
+
+    def getFindingSeverity(self, result, rules):
+        severity = result.get("properties", {}).get("severity")
+        if not severity:
+            for rule in rules:
+                if rule["id"] == result["ruleId"]:
+                    severity = rule["properties"]["severity"].replace("ERROR", "HIGH").replace("WARNING", "MEDIUM")
+        return severity.upper() if severity else "UNKNOWN"
+
+    def getFindingStatus(self, result):
+        if result["properties"].get("status") == "ACCEPTED":
+            return FindingStatus.ACCEPTED
+
+        state = result.get("baselineState", "unknown")
+        if state == "absent":
+            return FindingStatus.FIXED
+        elif state == "new":
+            return FindingStatus.INTRODUCED
+        else:
+            return FindingStatus.REMAINING
+
+    def rewriteSubSystem(self, file):
+        if not self.options.subsystem or not file:
+            return file
+
+        prefix = f"{self.options.subsystem}/"
+
+        if file.startswith(f"{self.options.subsystem}/"):
+            return file.removeprefix(prefix)
+        else:
+            return None
+
+    def filterStatus(self, findings, status, *, partOfObjective):
+        result = [finding for finding in findings if finding.status == status]
+        if partOfObjective:
+            result = [finding for finding in result if finding.partOfObjective]
+        return result
