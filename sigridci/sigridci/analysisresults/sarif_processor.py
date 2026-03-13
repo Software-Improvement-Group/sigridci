@@ -13,8 +13,16 @@
 # limitations under the License.
 
 from dataclasses import dataclass
+from enum import Enum
 
 from ..objective import Objective
+
+
+class FindingStatus(Enum):
+    INTRODUCED = "Introduced"
+    FIXED = "Fixed"
+    REMAINING = "Remaining"
+    ACCEPTED = "Accepted"
 
 
 @dataclass
@@ -25,44 +33,31 @@ class Finding:
     file: str
     line: int
     partOfObjective: bool
+    status: FindingStatus
 
 
-class FindingsProcessor:
+class SarifProcessor:
     def __init__(self, options, objective):
         self.options = options
         self.objective = objective
 
     def extractFindings(self, feedback):
-        if feedback is None:
+        if feedback is None or not feedback.get("runs"):
             return []
 
-        findings = []
-        if "runs" in feedback:
-            sarifProcessor = SarifProcessor()
-            findings += list(sarifProcessor.extractFindings(feedback, self.objective))
-        else:
-            sigridFindingsProcessor = SigridFindingsProcessor()
-            findings += list(sigridFindingsProcessor.extractFindings(feedback, self.objective))
-
-        return [finding for finding in findings if self.isRelevantSubSystem(finding)]
-
-    def isRelevantSubSystem(self, finding):
-        subsystem = self.options.subsystem
-        return not subsystem or not finding.file or finding.file.startswith(f"{subsystem}/")
-
-
-class SarifProcessor:
-    def extractFindings(self, feedback, objective):
         rules = list(self.getRules(feedback))
 
         for run in feedback["runs"]:
             for result in run.get("results", []):
                 fingerprint = result["fingerprints"]["sigFingerprint/v1"]
                 risk = self.getFindingSeverity(result, rules)
-                file = result["locations"][0]["physicalLocation"]["artifactLocation"]["uri"]
+                file = self.rewriteSubSystem(result["locations"][0]["physicalLocation"]["artifactLocation"]["uri"])
                 line = result["locations"][0]["physicalLocation"]["region"]["startLine"]
-                partOfObjective = Objective.isFindingIncluded(risk, objective)
-                yield Finding(fingerprint, risk, result["message"]["text"], file, line, partOfObjective)
+                partOfObjective = Objective.isFindingIncluded(risk, self.objective)
+                status = self.getFindingStatus(result)
+
+                if file is not None and risk in Objective.SEVERITY_OBJECTIVE:
+                    yield Finding(fingerprint, risk, result["message"]["text"], file, line, partOfObjective, status)
 
     def getRules(self, feedback):
         for run in feedback["runs"]:
@@ -79,10 +74,31 @@ class SarifProcessor:
                     severity = rule["properties"]["severity"].replace("ERROR", "HIGH").replace("WARNING", "MEDIUM")
         return severity.upper() if severity else "UNKNOWN"
 
+    def getFindingStatus(self, result):
+        if result["properties"].get("status") == "ACCEPTED":
+            return FindingStatus.ACCEPTED
 
-class SigridFindingsProcessor:
-    def extractFindings(self, feedback, objective):
-        for finding in feedback:
-            partOfObjective = Objective.isFindingIncluded(finding["severity"], objective)
-            yield Finding(finding["id"], finding["severity"], finding["type"],
-                          finding["filePath"], finding["startLine"], partOfObjective)
+        state = result.get("baselineState", "unknown")
+        if state == "absent":
+            return FindingStatus.FIXED
+        elif state == "new":
+            return FindingStatus.INTRODUCED
+        else:
+            return FindingStatus.REMAINING
+
+    def rewriteSubSystem(self, file):
+        if not self.options.subsystem or not file:
+            return file
+
+        prefix = f"{self.options.subsystem}/"
+
+        if file.startswith(f"{self.options.subsystem}/"):
+            return file.removeprefix(prefix)
+        else:
+            return None
+
+    def filterStatus(self, findings, status, *, partOfObjective):
+        result = [finding for finding in findings if finding.status == status]
+        if partOfObjective:
+            result = [finding for finding in result if finding.partOfObjective]
+        return result

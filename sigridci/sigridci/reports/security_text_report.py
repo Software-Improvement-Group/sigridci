@@ -16,7 +16,7 @@ import sys
 
 from .report import Report
 from .security_markdown_report import SecurityMarkdownReport
-from ..analysisresults.findings_processor import FindingsProcessor
+from ..analysisresults.sarif_processor import SarifProcessor, FindingStatus
 
 
 class SecurityTextReport(Report):
@@ -25,9 +25,9 @@ class SecurityTextReport(Report):
         self.objective = markdownReport.objective
 
     def generate(self, analysisId, feedback, options):
-        processor = FindingsProcessor(options, self.objective)
+        processor = SarifProcessor(options, self.objective)
         allFindings = list(processor.extractFindings(feedback))
-        relevantFindings = [finding for finding in allFindings if finding.partOfObjective]
+        relevantFindings = processor.filterStatus(allFindings, FindingStatus.INTRODUCED, partOfObjective=True)
 
         if len(relevantFindings) > 0:
             print("", file=self.output)

@@ -15,7 +15,7 @@
 import os
 
 from .report import Report, MarkdownRenderer
-from ..analysisresults.findings_processor import FindingsProcessor
+from ..analysisresults.sarif_processor import SarifProcessor, FindingStatus
 from ..capability import SECURITY
 from ..objective import Objective
 from ..platform import SECURITY_EXCLUDE_RULE_DOCS, SECURITY_EXCLUDE_FILE_DOCS
@@ -29,25 +29,26 @@ class SecurityMarkdownReport(Report, MarkdownRenderer):
         "MEDIUM" : "🟠",
         "LOW" : "🟡",
         "NONE" : "🟢",
+        "INFORMATION" : "🔵",
         "UNKNOWN" : "⚪️"
     }
 
     def __init__(self, options, objective = "HIGH"):
         super().__init__()
         self.objective = objective
-        self.previousFeedback = None
-        self.processor = FindingsProcessor(options, objective)
+        self.processor = SarifProcessor(options, objective)
 
     def generate(self, analysisId, feedback, options):
         with open(self.getMarkdownFile(options), "w", encoding="utf-8") as f:
             f.write(self.renderMarkdown(analysisId, feedback, options))
 
     def renderMarkdown(self, analysisId, feedback, options):
-        findings = self.processor.extractFindings(feedback)
-        previousFindings = self.processor.extractFindings(self.previousFeedback)
-
-        introduced = list(self.getIntroducedFindings(findings, previousFindings))
-        fixed = list(self.getFixedFindings(findings, previousFindings))
+        findings = list(self.processor.extractFindings(feedback))
+        introduced = self.processor.filterStatus(findings, FindingStatus.INTRODUCED, partOfObjective=False)
+        fixed = self.processor.filterStatus(findings, FindingStatus.FIXED, partOfObjective=False)
+        remaining = self.processor.filterStatus(findings, FindingStatus.REMAINING, partOfObjective=False)
+        accepted = self.processor.filterStatus(findings, FindingStatus.ACCEPTED, partOfObjective=False)
+        sigridLink = f"{self.getSigridUrl(options)}/-/security"
 
         details = ""
         details += "## 👍 What went well?\n\n"
@@ -63,8 +64,13 @@ class SecurityMarkdownReport(Report, MarkdownRenderer):
             details += f"[exclude the files and/or directories]({SECURITY_EXCLUDE_FILE_DOCS}) in the configuration.\n\n"
         else:
             details += "> You did not introduce any security findings during your changes, great job!\n\n"
+        if len(remaining) + len(accepted) > 0:
+            details += "## 😑 You have remaining security findings\n\n"
+            details += f"> You have **{len(remaining)}** open security findings"
+            if len(accepted) > 0:
+                details += f" and **{len(accepted)}** security findings for which you have previous accepted the risk"
+            details += f".\n[You can view these findings in Sigrid]({sigridLink}).\n\n"
 
-        sigridLink = f"{self.getSigridUrl(options)}/-/security"
         return self.renderMarkdownTemplate(feedback, options, details, sigridLink)
 
     def getSummary(self, feedback, options):
@@ -78,27 +84,27 @@ class SecurityMarkdownReport(Report, MarkdownRenderer):
         if len(findings) == 0:
             return ""
 
-        md = "| Risk | Part of objective? | File | Finding |\n"
+        md = "| Risk | Meets objective? | File | Finding |\n"
         md += "|----|----|----|----|\n"
 
         for finding in findings[0:self.MAX_FINDINGS]:
-            symbol = self.SEVERITY_SYMBOLS[finding.risk]
-            check = "✅" if finding.partOfObjective else "-"
+            severitySymbol = self.SEVERITY_SYMBOLS[finding.risk]
+            objectiveSymbol = self.formatObjectiveSymbol(finding)
             link = self.decorateLink(options, f"{finding.file}:{finding.line}", finding.file, finding.line)
-            md += f"| {symbol} | {check} | {link} | {finding.description} |\n"
+            md += f"| {severitySymbol} | {objectiveSymbol} | {link} | {finding.description} |\n"
 
         if len(findings) > self.MAX_FINDINGS:
             md += f"| | ... and {len(findings) - self.MAX_FINDINGS} more findings | | |\n"
 
         return f"{md}\n"
 
-    def getIntroducedFindings(self, findings, previousFindings):
-        previousFingerprints = [finding.fingerprint for finding in previousFindings]
-        return [finding for finding in findings if finding.fingerprint not in previousFingerprints]
-
-    def getFixedFindings(self, findings, previousFindings):
-        fingerprints = [finding.fingerprint for finding in findings]
-        return [finding for finding in previousFindings if finding.fingerprint not in fingerprints]
+    def formatObjectiveSymbol(self, finding):
+        if finding.status == FindingStatus.FIXED:
+            return "✅"
+        elif finding.partOfObjective:
+            return "❌"
+        else:
+            return "⚠️"
 
     def getCapability(self):
         return SECURITY
@@ -107,6 +113,6 @@ class SecurityMarkdownReport(Report, MarkdownRenderer):
         return os.path.abspath(f"{options.outputDir}/security-feedback.md")
 
     def isObjectiveSuccess(self, feedback, options):
-        findings = self.processor.extractFindings(feedback)
-        relevant = [finding for finding in findings if finding.partOfObjective]
-        return len(relevant) == 0
+        allFindings = list(self.processor.extractFindings(feedback))
+        relevantFindings = self.processor.filterStatus(allFindings, FindingStatus.INTRODUCED, partOfObjective=True)
+        return len(relevantFindings) == 0

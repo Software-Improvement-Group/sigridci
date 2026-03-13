@@ -21,10 +21,12 @@ The remainder of this page is about **how** Sigrid CI gives feedback.
 
 ## What does Sigrid CI give feedback on?
 
-Sigrid CI gives software quality feedback for multiple quality aspects. Which aspects depends on your Sigrid license:
+Sigrid CI gives software quality feedback for multiple quality aspects. The aspects included in the feeddback depend
+on your Sigrid license:
 
 - [Maintainability feedback](#maintainability-feedback)
 - [Open Source Health feedback](#open-source-health-feedback)
+- [Security feedback](#security-feedback-beta) *(Beta, not enabled by default)*
 
 If you do *not* want feedback for one of these aspects, you can explicitly define the `--capability` option in
 the [Sigrid CI configuration](../reference/client-script-usage.md).
@@ -76,8 +78,8 @@ checks other aspects of using open source libraries, such as freshness (i.e. how
 are not part of Sigrid CI.
 
 So why not give feedback on *all* aspects? In a word: Urgency. People generally security vulnerabilities or
-license issues much more urgent than those other aspects. Updating a library can wait (but please not too long), fixing a vulnerability cannot
-wait. Obviously, you should still manage those other aspects, as explained in our
+license issues much more urgent than those other aspects. Updating a library can wait (but please not too long), 
+fixing a vulnerability cannot wait. Obviously, you should still manage those other aspects, as explained in our
 [guidelines for healthy use of open source libraries](../workflows/best-practices-osh.md).
 
 Sigrid CI does not require you to update every single open source library to address every single issues.
@@ -137,6 +139,12 @@ When you encounter security findings during code reviews, there are three ways h
 
 #### Adding Security feedback to an existing Sigrid CI configuration
 
+Sigrid CI feedback for Security is currently in Beta, and not enabled by default. If you want to enable Security
+feedback, you will need to change your configuration to explicitly enable it.
+
+The Beta version of Sigrid CI feedback for Security requires a Sigrid Security license. 
+{: .attention }
+
 - **All platforms:** You need to add the option `--capability maintainability,osh,security` to the Sigrid CI step in
   your pipeline configuration.
 - **GitHub:** In addition to the above, you need one extra step: In your pipeline configuration, look for the
@@ -166,4 +174,5 @@ pipeline on certain types of objectives. The latter is configured using exit cod
 
 ## Contact and support
 
-Feel free to contact [SIG's support team](mailto:support@softwareimprovementgroup.com) for any questions or issues you may have after reading this documentation or when using Sigrid.
+Feel free to contact [SIG's support team](mailto:support@softwareimprovementgroup.com) for any questions or issues 
+you may have after reading this documentation or when using Sigrid.

@@ -38,8 +38,8 @@ class SecurityTextReportTest(TestCase):
         expected = """
             Security findings
             
-                🟣 Weak Hash algorithm used
-                    In Security.java (line 33)
+                🟣 Puma4
+                    In neutron/neutron/db/sqlalchemytypes.py (line 51)
         """
 
         self.assertEqual(inspect.cleandoc(expected), buffer.getvalue().strip())

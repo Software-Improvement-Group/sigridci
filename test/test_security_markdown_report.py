@@ -47,22 +47,31 @@ class SecurityMarkdownReportTest(TestCase):
             
             ## 👍 What went well?
             
-            > You fixed **0** security findings.
+            > You fixed **1** security findings.
+            
+            | Risk | Meets objective? | File | Finding |
+            |----|----|----|----|
+            | 🟣 | ✅ | [test:1](https://example.com/aap/noot/-/blob/mybranch/test#L1) | Insecure_Randomness |
             
             ## 👎 What could be better?
             
             > Unfortunately, you introduced **2** security findings.
             
-            | Risk | Part of objective? | File | Finding |
+            | Risk | Meets objective? | File | Finding |
             |----|----|----|----|
-            | 🟣 | ✅ | [Security.java:33](https://example.com/aap/noot/-/blob/mybranch/Security.java#L33) | Weak Hash algorithm used |
-            | 🟠 | - | [Aap.java:33](https://example.com/aap/noot/-/blob/mybranch/Aap.java#L33) | Some other finding |
+            | 🟣 | ❌ | [neutron/neutron/db/sqlalchemytypes.py:51](https://example.com/aap/noot/-/blob/mybranch/neutron/neutron/db/sqlalchemytypes.py#L51) | Puma4 |
+            | 🔴 | ⚠️ | [neutron/neutron/ipam/drivers/neutrondb_ipam/driver.py:51](https://example.com/aap/noot/-/blob/mybranch/neutron/neutron/ipam/drivers/neutrondb_ipam/driver.py#L51) | Puma2 |
             
             If you believe these findings are false positives,
             you can [exclude the rule](https://docs.sigrid-says.com/reference/analysis-scope-configuration.html#excluding-security-rules) in the Sigrid configuration.
             If you believe these findings are located in files that should not be scanned, you can also
             [exclude the files and/or directories](https://docs.sigrid-says.com/reference/analysis-scope-configuration.html#excluding-files-and-directories-from-security-scanning) in the configuration.
+            
+            ## 😑 You have remaining security findings
 
+            > You have **0** open security findings and **1** security findings for which you have previous accepted the risk.
+            [You can view these findings in Sigrid](https://sigrid-says.com/aap/noot/-/security).
+            
             
             ----
             
@@ -92,99 +101,6 @@ class SecurityMarkdownReportTest(TestCase):
             ## 👎 What could be better?
             
             > You did not introduce any security findings during your changes, great job!
-            
-            
-            ----
-            
-            [**View this system in Sigrid**](https://sigrid-says.com/aap/noot/-/security)
-        """
-
-        self.assertEqual(markdown.strip(), inspect.cleandoc(expected).strip())
-
-    @mock.patch.dict(os.environ, {"SIGRID_CI_MARKDOWN_HTML" : "false"})
-    def testLimitFindingsIfThereAreTooMany(self):
-        with open(os.path.dirname(__file__) + "/testdata/security-manyfindings.json", encoding="utf-8", mode="r") as f:
-            manyResults = json.load(f)
-
-        report = SecurityMarkdownReport(self.options, "HIGH")
-        report.decorateLinks = False
-        markdown = report.renderMarkdown("1234", manyResults, self.options)
-
-        expected = """
-            # [Sigrid](https://sigrid-says.com/aap/noot/-/security) Security feedback *(Beta)*
-            
-            **⚠️  You did not meet your objective of having no critical-severity security findings**
-            
-            ## 👍 What went well?
-            
-            > You fixed **0** security findings.
-            
-            ## 👎 What could be better?
-            
-            > Unfortunately, you introduced **11** security findings.
-            
-            | Risk | Part of objective? | File | Finding |
-            |----|----|----|----|
-            | 🟣 | ✅ | Security.java:33 | Weak Hash algorithm used |
-            | 🟣 | ✅ | Security.java:33 | Weak Hash algorithm used |
-            | 🟣 | ✅ | Security.java:33 | Weak Hash algorithm used |
-            | 🟣 | ✅ | Security.java:33 | Weak Hash algorithm used |
-            | 🟣 | ✅ | Security.java:33 | Weak Hash algorithm used |
-            | 🟣 | ✅ | Security.java:33 | Weak Hash algorithm used |
-            | 🟣 | ✅ | Security.java:33 | Weak Hash algorithm used |
-            | 🟣 | ✅ | Security.java:33 | Weak Hash algorithm used |
-            | | ... and 3 more findings | | |
-            
-            If you believe these findings are false positives,
-            you can [exclude the rule](https://docs.sigrid-says.com/reference/analysis-scope-configuration.html#excluding-security-rules) in the Sigrid configuration.
-            If you believe these findings are located in files that should not be scanned, you can also
-            [exclude the files and/or directories](https://docs.sigrid-says.com/reference/analysis-scope-configuration.html#excluding-files-and-directories-from-security-scanning) in the configuration.
-            
-            
-            ----
-            
-            [**View this system in Sigrid**](https://sigrid-says.com/aap/noot/-/security)
-        """
-
-        self.assertEqual(markdown.strip(), inspect.cleandoc(expected).strip())
-
-    @mock.patch.dict(os.environ, {
-        "SIGRID_CI_MARKDOWN_HTML" : "false",
-        "CI_SERVER_URL" : "https://example.com",
-        "CI_PROJECT_PATH" : "aap/noot",
-        "CI_COMMIT_REF_NAME" : "mybranch",
-    })
-    def testReportBasedOnDiff(self):
-        report = SecurityMarkdownReport(self.options, "LOW")
-        with open(os.path.dirname(__file__) + "/testdata/security-previous.json", encoding="utf-8", mode="r") as f:
-            report.previousFeedback = json.load(f)
-        markdown = report.renderMarkdown("1234", self.feedback, self.options)
-
-        expected = """
-            # [Sigrid](https://sigrid-says.com/aap/noot/-/security) Security feedback *(Beta)*
-            
-            **⚠️  You did not meet your objective of having no medium-severity security findings**
-
-            ## 👍 What went well?
-            
-            > You fixed **1** security findings.
-            
-            | Risk | Part of objective? | File | Finding |
-            |----|----|----|----|
-            | 🟣 | ✅ | [Security.java:33](https://example.com/aap/noot/-/blob/mybranch/Security.java#L33) | This finding has been fixed in the next snapshot. |
-            
-            ## 👎 What could be better?
-            
-            > Unfortunately, you introduced **1** security findings.
-            
-            | Risk | Part of objective? | File | Finding |
-            |----|----|----|----|
-            | 🟠 | ✅ | [Aap.java:33](https://example.com/aap/noot/-/blob/mybranch/Aap.java#L33) | Some other finding |
-            
-            If you believe these findings are false positives,
-            you can [exclude the rule](https://docs.sigrid-says.com/reference/analysis-scope-configuration.html#excluding-security-rules) in the Sigrid configuration.
-            If you believe these findings are located in files that should not be scanned, you can also
-            [exclude the files and/or directories](https://docs.sigrid-says.com/reference/analysis-scope-configuration.html#excluding-files-and-directories-from-security-scanning) in the configuration.
             
             
             ----
