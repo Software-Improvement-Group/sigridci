@@ -37,9 +37,11 @@ The dependency tree file must be created **before** running the Sigrid analysis.
 
 Example command:
 
+{% raw %}
 ```bash
 mvn dependency:tree -DoutputType=text -DoutputFile=maven.tree -DoutputEncoding=UTF-8
 ```
+{% endraw %}
 
 This command resolves dependencies using your configured Maven repositories and writes the dependency tree to `maven.tree` in the project workspace.
 Once the `maven.tree` file is present in the workspace, it will automatically be picked up by the Sigrid analyzer when publishing results.
@@ -50,6 +52,7 @@ You can either:
 
 Example pipeline job:
 
+{% raw %}
 ```yaml
 sigrid-publish:
   image:
@@ -64,6 +67,7 @@ sigrid-publish:
     - mvn dependency:tree -DoutputType=text -DoutputFile=maven.tree -DoutputEncoding=UTF-8
     - run-analyzers --publish
 ```
+{% endraw %}
 
 As long as the `maven.tree` file is present when `run-analyzers --publish` is executed, Sigrid will use it to determine Maven dependencies for Open Source Health.
 

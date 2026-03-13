@@ -1153,6 +1153,10 @@
   display_name: "VisualForce"
   category: templating
 
+- context: visualfoxpro
+  display_name: "Visual FoxPro"
+  category: legacy
+
 - context: visualrpg
   display_name: "Visual RPG"
   category: legacy
