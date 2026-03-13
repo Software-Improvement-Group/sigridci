@@ -71,6 +71,10 @@ that would not be reasonable. The behavior we're going for is known as
 [the boy scout rule](https://deviq.com/principles/boy-scout-rule), where you should leave your code (or your campsite)
 cleaner than you found it. 
 
+Feedback is based on your [maintainability objective](../capabilities/portfolio-objectives.md). If you have not
+configured an objective, Sigrid CI will use a default target of 3.5 stars, which is what we recommand as a reasonable
+default for modern systems.
+
 ### Open Source Health feedback
 
 Sigrid CI gives feedback on security vulnerabilities and license risks in open source libraries. Sigrid also
@@ -84,7 +88,7 @@ fixing a vulnerability cannot wait. Obviously, you should still manage those oth
 
 Sigrid CI does not require you to update every single open source library to address every single issues.
 Which vulnerabilities and licenses are "allowed" versus "not allowed" is decided based on your
-[objectives](../capabilities/portfolio-objectives.md). This means you can use a different objectives dependent on
+[objectives](../capabilities/portfolio-objectives.md). This means you can use different objectives dependent on
 the (type of) system. For example, you can decide to prevent high or critical severity vulnerabilities in public-facing 
 systems, but only prevent critical vulnerabilities for internal systems.
 
@@ -103,6 +107,10 @@ Sigrid CI separates vulnerable open source libraries into two categories:
   is no obvious solution or mitigation. These cases typically require more discussion on the exact details of the
   vulnerability and possible follow-up actions. This is explained in more detail, also from a process perspective,
   in our [guidelines on using open source](../workflows/best-practices-osh.md#how-to-remediate-vulnerabilities).
+
+Feedback is based on your [Open Source Health objectives](../capabilities/portfolio-objectives.md). If you have not
+configured an objective, Sigrid CI will use a default target of *no critical security vulnerabilities*. You will
+not receive feedback on license issues unless you have explicitly defined an objective for this.
 
 #### Adding Open Source Health feedback to an existing Sigrid CI configuration
 
@@ -135,7 +143,11 @@ When you encounter security findings during code reviews, there are three ways h
   produce findings that are false positives. In those situations, if the pull request author and reviewer agree the
   finding is *actually* a false positive, it's OK to merge the pull request. You can then mark the finding as a false
   positive in Sigrid's [security page](../capabilities/system-security.md). False positives are automatically excluded
-  from future Sigrid CI feedback. 
+  from future Sigrid CI feedback.
+
+Feedback is based on your [security objective](../capabilities/portfolio-objectives.md). If you have not configured
+an objective, Sigrid CI will use a default target of no critical security findings. We believe this to be a reasonable
+default for most systems.
 
 #### Adding Security feedback to an existing Sigrid CI configuration
 
