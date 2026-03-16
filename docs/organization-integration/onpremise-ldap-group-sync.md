@@ -30,10 +30,11 @@ Enable `global.onPremise.ldapGroupSync` and provide all required LDAP connection
 
 Below is an example configuration:
 
+{% raw %}
 ```yaml
 global:
   imageRegistry: "my-registry.example.com"
-  imageTag: "1.0.20260223"
+  imageTag: "1.0.20260309"
   hosts:
     - host: "my-sigrid.example.com"
       tls:
@@ -47,7 +48,7 @@ global:
       enabled: true
       image:
         repository: "softwareimprovementgroup/sigrid-integrations-onprem"
-        tag: "1.0.20260223"
+        tag: "1.0.20260309"
       cronJobschedule: "0 * * * *" # Cronjob schedule in cron format. For example every hour.
       config:
         SIGRID_UM_URL: "https://my-sigrid.example.com"
@@ -86,6 +87,7 @@ global:
               .....
               -----END CERTIFICATE-----
 ```
+{% endraw %}
 
 ## Contact and support
 

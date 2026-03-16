@@ -36,18 +36,22 @@ We update container images daily for immediate improvements. The Helm chart is u
 
 Update the `imageTag` in the `global` section of the Helm chart's values file (usually `custom-values.yaml`):
 
+{% raw %}
 ```bash
    global:
      ImageTag: "<REPLACE-WITH-LATEST-VERSION>"
 ```
+{% endraw %}
 
 ### Apply the updates using Helm
 
 To apply the updates using Helm, you can use the following command. Note how to do this might vary depending on how you deployed Sigrid.
 
+{% raw %}
 ```bash
    helm upgrade --install sigrid-onprem ./sigrid-stack -n sigrid --values ./sigrid-stack/custom-values.yaml
 ```
+{% endraw %}
 
 ## Test Instructions
 
