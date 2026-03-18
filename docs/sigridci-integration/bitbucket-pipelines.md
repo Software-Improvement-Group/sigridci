@@ -31,7 +31,7 @@ The following steps only apply to BitBucket Cloud, they do *not* apply to BitBuc
 {: .attention }
 
 If you want to receive Sigrid feedback as pull request comments, you will also need to allow Sigrid to post those comments.
-BitBucket supports two different types of tokens: *API tokens* that are associated with a person, and *accesss tokens* that are associated with a repository. Sigrid requires the latter.
+BitBucket supports two different types of tokens: *API tokens* that are associated with a person, and *access tokens* that are associated with a repository. Sigrid requires the latter.
 
 You can create an access token by following the steps in the [BitBucket documentation](https://support.atlassian.com/bitbucket-cloud/docs/create-a-repository-access-token/).
 The access token needs to have *write* permission on pull requests, since it will be posting comments. It does not require other permissions.
@@ -41,8 +41,6 @@ You then need to make this access token available to Sigrid in your pipeline:
 - Navigate to the "Pipelines" section.
 - Navigate to "Repository variables".
 - Create a secret named `SIGRIDCI_BITBUCKET_COMMENT_TOKEN` and add your BitBucket access token.
-
-If you're using BitBucket Cloud, you're done. However, if you're using BitBucket Data Center, there is one more step: You will need to add another environment variable called `BITBUCKET_API_URL`, which points to the URL of your BitBucket API (i.e. `https://api.bitbucket.org/2.0`). The reason this is needed is because BitBucket does not make this URL available to pipelines as part of its [standard environment variables](https://support.atlassian.com/bitbucket-cloud/docs/variables-and-secrets/), which is why you need to configure this manually.
 
 ### Step 2: Create a BitBucket Pipeline for Sigrid CI
 
