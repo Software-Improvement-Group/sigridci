@@ -68,6 +68,7 @@ sigridci:
   stage: report
   script: 
     - /usr/local/bin/entrypoint.sh
+  allow_failure: true
   artifacts:
     paths:
       - "sigrid-ci-output/*"
@@ -87,6 +88,7 @@ sigridpublish:
   stage: report
   script:
     - /usr/local/bin/entrypoint.sh
+  allow_failure: true
   artifacts:
     paths:
       - "sigrid-ci-output/*"
