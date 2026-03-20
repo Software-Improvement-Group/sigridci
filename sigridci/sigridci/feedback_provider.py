@@ -20,6 +20,7 @@ from .capability import MAINTAINABILITY, OPEN_SOURCE_HEALTH, SECURITY
 from .objective import Objective
 from .reports.ascii_art_report import AsciiArtReport
 from .reports.azure_pull_request_report import AzurePullRequestReport
+from .reports.bitbucket_pull_request_report import BitBucketPullRequestReport
 from .reports.gitlab_pull_request_report import GitLabPullRequestReport
 from .reports.junit_format_report import JUnitFormatReport
 from .reports.maintainability_markdown_report import MaintainabilityMarkdownReport
@@ -113,10 +114,17 @@ class FeedbackProvider:
             raise Exception(f"Unknown capability: {self.capability}")
 
     def prepareAdditionalReports(self, markdownReport):
-        reports = [markdownReport, GitLabPullRequestReport(markdownReport), AzurePullRequestReport(markdownReport)]
+        reports = [
+            markdownReport,
+            GitLabPullRequestReport(markdownReport),
+            AzurePullRequestReport(markdownReport),
+            BitBucketPullRequestReport(markdownReport)
+        ]
+
         if self.capability == MAINTAINABILITY:
             reports += [AsciiArtReport(), JUnitFormatReport(), StaticHtmlReport(self.objectives)]
         elif self.capability == OPEN_SOURCE_HEALTH:
             reports += [OpenSourceHealthTextReport(markdownReport)]
+
         reports.append(PipelineSummaryReport(markdownReport))
         return reports
