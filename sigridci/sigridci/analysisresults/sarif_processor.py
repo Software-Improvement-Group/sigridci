@@ -37,6 +37,8 @@ class Finding:
 
 
 class SarifProcessor:
+    EXCLUDED_TOOLS = ["SIG Open Source Health"]
+
     def __init__(self, options, objective):
         self.options = options
         self.objective = objective
@@ -48,16 +50,17 @@ class SarifProcessor:
         rules = list(self.getRules(feedback))
 
         for run in feedback["runs"]:
-            for result in run.get("results", []):
-                fingerprint = result["fingerprints"]["sigFingerprint/v1"]
-                risk = self.getFindingSeverity(result, rules)
-                file = self.rewriteSubSystem(result["locations"][0]["physicalLocation"]["artifactLocation"]["uri"])
-                line = result["locations"][0]["physicalLocation"]["region"]["startLine"]
-                partOfObjective = Objective.isFindingIncluded(risk, self.objective)
-                status = self.getFindingStatus(result)
+            if run["tool"]["driver"]["name"] not in self.EXCLUDED_TOOLS:
+                for result in run.get("results", []):
+                    fingerprint = result["fingerprints"]["sigFingerprint/v1"]
+                    risk = self.getFindingSeverity(result, rules)
+                    file = self.rewriteSubSystem(result["locations"][0]["physicalLocation"]["artifactLocation"]["uri"])
+                    line = result["locations"][0]["physicalLocation"]["region"]["startLine"]
+                    partOfObjective = Objective.isFindingIncluded(risk, self.objective)
+                    status = self.getFindingStatus(result)
 
-                if file is not None and risk in Objective.SEVERITY_OBJECTIVE:
-                    yield Finding(fingerprint, risk, result["message"]["text"], file, line, partOfObjective, status)
+                    if file is not None and risk in Objective.SEVERITY_OBJECTIVE:
+                        yield Finding(fingerprint, risk, result["message"]["text"], file, line, partOfObjective, status)
 
     def getRules(self, feedback):
         for run in feedback["runs"]:
