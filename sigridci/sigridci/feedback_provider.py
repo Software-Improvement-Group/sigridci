@@ -77,10 +77,6 @@ class FeedbackProvider:
             self.analysisId = "local"
             self.feedback = json.load(f)
 
-    def loadPreviousAnalysisResults(self, analysisResultsFile):
-        with open(analysisResultsFile, mode="r", encoding="utf-8") as f:
-            self.previousFeedback = json.load(f)
-
     def generateReports(self):
         if self.feedback is None:
             raise Exception("No feedback provided")
@@ -109,7 +105,7 @@ class FeedbackProvider:
             licenseObjective = self.objectives["OSH_MAX_LICENSE_RISK"]
             return OpenSourceHealthMarkdownReport(self.options, vulnerabilityObjective, licenseObjective)
         elif self.capability == SECURITY:
-            return SecurityMarkdownReport(self.objectives["SECURITY_MAX_SEVERITY"])
+            return SecurityMarkdownReport(self.options, self.objectives["SECURITY_MAX_SEVERITY"])
         else:
             raise Exception(f"Unknown capability: {self.capability}")
 

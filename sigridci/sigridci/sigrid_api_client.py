@@ -49,11 +49,12 @@ class SigridApiClient:
             proxyOpener = urllib.request.build_opener(proxyHandler)
             urllib.request.install_opener(proxyOpener)
 
-    def callSigridAPI(self, path, body=None, contentType=None):
+    def callSigridAPI(self, path, body=None, contentType=None, *, accept="application/json"):
         delimiter = "" if path.startswith("/") else "/"
         url = f"{self.baseURL}/rest{delimiter}{path}"
         request = urllib.request.Request(url, body)
-        request.add_header("Accept", "application/json")
+        if accept is not None:
+            request.add_header("Accept", accept)
         request.add_header("Authorization", f"Bearer {self.token}".encode("utf8"))
         if contentType is not None:
             request.add_header("Content-Type", contentType)
@@ -161,6 +162,10 @@ class SigridApiClient:
     def fetchOpenSourceHealth(self):
         path = f"/analysis-results/api/v1/osh-findings/{self.urlCustomerName}/{self.urlSystemName}"
         return self.retry(lambda: self.callSigridAPI(path))
+
+    def fetchSecurityFindings(self):
+        path = f"/analysis-results/api/v1/security-findings/{self.urlCustomerName}/{self.urlSystemName}?sarif=true"
+        return self.retry(lambda: self.callSigridAPI(path, accept=None))
 
     def logPlatformInformation(self, platformId):
         try:

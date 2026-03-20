@@ -60,3 +60,16 @@ class FindingsProcessorTest(TestCase):
         self.assertEqual(findings[1].status, FindingStatus.INTRODUCED)
         self.assertEqual(findings[2].status, FindingStatus.ACCEPTED)
         self.assertEqual(findings[3].status, FindingStatus.FIXED)
+
+    def testLoadFindingsFromOnPremiseSarif(self):
+        with open(os.path.dirname(__file__) + "/testdata/security-onpremise.json", encoding="utf-8", mode="r") as f:
+            feedback = json.load(f)
+
+        options = PublishOptions("aap", "noot", RunMode.FEEDBACK_ONLY)
+        processor = SarifProcessor(options, "HIGH")
+        findings = list(processor.extractFindings(feedback))
+
+        self.assertEqual(len(findings), 1)
+        self.assertEqual(findings[0].risk, "HIGH")
+        self.assertEqual(findings[0].description, "DocumentBuilderFactory being instantiated for XXE vulnerabilities")
+        self.assertEqual(findings[0].file, "SecurityExample.java")
