@@ -47,13 +47,11 @@ class SarifProcessor:
         if feedback is None or not feedback.get("runs"):
             return []
 
-        rules = list(self.getRules(feedback))
-
         for run in feedback["runs"]:
             if run["tool"]["driver"]["name"] not in self.EXCLUDED_TOOLS:
                 for result in run.get("results", []):
                     fingerprint = result["fingerprints"]["sigFingerprint/v1"]
-                    risk = self.getFindingSeverity(result, rules)
+                    risk = result.get("properties", {}).get("severity", "HIGH").upper()
                     file = self.rewriteSubSystem(result["locations"][0]["physicalLocation"]["artifactLocation"]["uri"])
                     line = result["locations"][0]["physicalLocation"]["region"]["startLine"]
                     partOfObjective = Objective.isFindingIncluded(risk, self.objective)
@@ -61,21 +59,6 @@ class SarifProcessor:
 
                     if file is not None and risk in Objective.SEVERITY_OBJECTIVE:
                         yield Finding(fingerprint, risk, result["message"]["text"], file, line, partOfObjective, status)
-
-    def getRules(self, feedback):
-        for run in feedback["runs"]:
-            for rule in run.get("rules", []):
-                properties = rule.get("properties", {})
-                if properties.get("severity"):
-                    yield rule
-
-    def getFindingSeverity(self, result, rules):
-        severity = result.get("properties", {}).get("severity")
-        if not severity:
-            for rule in rules:
-                if rule["id"] == result["ruleId"]:
-                    severity = rule["properties"]["severity"].replace("ERROR", "HIGH").replace("WARNING", "MEDIUM")
-        return severity.upper() if severity else "UNKNOWN"
 
     def getFindingStatus(self, result):
         if result["properties"].get("status") == "ACCEPTED":
