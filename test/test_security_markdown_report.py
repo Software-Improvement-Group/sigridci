@@ -45,6 +45,10 @@ class SecurityMarkdownReportTest(TestCase):
             
             **⚠️  You did not meet your objective of having no critical-severity security findings**
             
+            - ❌ means this finding fails your objective.
+            - ⚠️ means a finding exists, but is not severe enough to fail your objective.
+            - ✅ means everything is fine.
+            
             ## 👍 What went well?
             
             > You fixed **1** security findings.

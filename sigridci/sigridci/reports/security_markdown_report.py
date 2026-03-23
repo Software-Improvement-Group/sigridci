@@ -51,6 +51,10 @@ class SecurityMarkdownReport(Report, MarkdownRenderer):
         sigridLink = f"{self.getSigridUrl(options)}/-/security"
 
         details = ""
+        if len(introduced) + len(fixed) > 0:
+            details += "- ❌ means this finding fails your objective.\n"
+            details += "- ⚠️ means a finding exists, but is not severe enough to fail your objective.\n"
+            details += "- ✅ means everything is fine.\n\n"
         details += "## 👍 What went well?\n\n"
         details += f"> You fixed **{len(fixed)}** security findings.\n\n"
         details += self.generateFindingsTable(fixed, options)
