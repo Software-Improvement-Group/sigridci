@@ -149,6 +149,21 @@ Feedback is based on your [security objective](../capabilities/portfolio-objecti
 an objective, Sigrid CI will use a default target of no critical security findings. We believe this to be a reasonable
 default for most systems.
 
+#### Why does Sigrid CI only give feedback on new security findings?
+
+Sigrid CI's intended workflow is to "shift left": If you catch security issues early in the development process,
+it becomes easier and faster to address them. Therefore, Sigrid CI will give you feedback on *new* security findings,
+in the code that you added/changed. This feedback is intended to be used in the context of a pull request.
+
+Including *all* security findings in the pull request feedback is not a good fit in terms of workflow. It is not
+practical or reasonable to expect people to reuse their pull request to start fixing issues in completely unrelated
+areas in the code. Moreover, this tends to become overwhelming if the system has lots of existing findings. 
+
+If you have a system with a large number of existing security findings, we recommend you use the
+[security dashboard](../capabilities/portfolio-security.md) to make an explicit decision on which findings to
+address right now and which findings can be addressed later. This can then be planned as its own effort. You can
+then use Sigrid CI in parallel to avoid the introduction of new security findings in new code.
+
 #### Adding Security feedback to an existing Sigrid CI configuration
 
 Sigrid CI feedback for Security is currently in Beta, and not enabled by default. If you want to enable Security
