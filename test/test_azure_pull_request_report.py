@@ -82,7 +82,6 @@ class AzurePullRequestReportTest(TestCase):
 
 
 class MockAzure(AzurePullRequestReport):
-
     def __init__(self, response):
         super().__init__(MaintainabilityMarkdownReport())
         self.response = response

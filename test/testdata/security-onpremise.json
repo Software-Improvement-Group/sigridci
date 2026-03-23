@@ -1,0 +1,58 @@
+{
+  "version": "2.1.0",
+  "runs": [
+    {
+      "tool": {
+        "driver": {
+          "name": "Semgrep",
+          "fullDescription": {
+            "text": "Semgrep via Sigrid (Git commit: ee1a7ad)"
+          },
+          "rules": [
+            {
+              "id": "semgrep-community-rules.contrib.owasp.java.xxe.owasp.java.xxe.javax.xml.parsers.DocumentBuilderFactory",
+              "properties": {
+                "tags": [
+                  "CWE-611"
+                ]
+              }
+            }
+          ]
+        }
+      },
+      "results": [
+        {
+          "ruleId": "semgrep-community-rules.contrib.owasp.java.xxe.owasp.java.xxe.javax.xml.parsers.DocumentBuilderFactory",
+          "level": "error",
+          "message": {
+            "text": "DocumentBuilderFactory being instantiated for XXE vulnerabilities"
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "SecurityExample.java"
+                },
+                "region": {
+                  "startLine": 34,
+                  "endLine": 34
+                }
+              }
+            }
+          ],
+          "fingerprints": {
+            "sigFingerprint/v1": "d9a84254c08732980225071664ca6923135c9c689d54a00e28d6484bc4d7ab1e"
+          },
+          "hostedViewerUri": "https://sigrid-says.com/example/example/-/security/66a4dd27-bede-4261-a8a6-6b56a9b9d937",
+          "properties": {
+            "tags": [
+              "A5 Security Misconfiguration"
+            ],
+            "severity": "HIGH",
+            "status": "RAW"
+          }
+        }
+      ]
+    }
+  ]
+}
