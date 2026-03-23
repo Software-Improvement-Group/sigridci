@@ -51,7 +51,7 @@ class SarifProcessor:
             if run["tool"]["driver"]["name"] not in self.EXCLUDED_TOOLS:
                 for result in run.get("results", []):
                     fingerprint = result["fingerprints"]["sigFingerprint/v1"]
-                    risk = result.get("properties", {}).get("severity", "HIGH").upper()
+                    risk = result.get("properties", {}).get("severity") or "UNKNOWN"
                     file = self.rewriteSubSystem(result["locations"][0]["physicalLocation"]["artifactLocation"]["uri"])
                     line = result["locations"][0]["physicalLocation"]["region"]["startLine"]
                     partOfObjective = Objective.isFindingIncluded(risk, self.objective)
