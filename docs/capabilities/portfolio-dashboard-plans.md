@@ -4,7 +4,7 @@ This portfolio overview focuses on overall quality performance trend, acute risk
 2. Where should we prioritize our next actions?
 3. Are we progressing toward our targets?
 
-<img width="1156" height="889" alt="image" src="../images/portfolio-dashboard-overall.png" />
+<img width="1156" alt="image" src="../images/portfolio-dashboard-overall.png" />
 
 The following sections elaborate on how to use and interpret the different elements of the portfolio overview.
 
@@ -14,7 +14,7 @@ At the top of the portfolio, individual tabs for each capability enable you to v
 The key performance indicator cards summarize essential progress information for the selected capability.
 These cards can differ slightly per capability, as different capabilities have different key insights. For the maintainability page the KPI cards look as follows:
 
-<img width="1070" height="145" alt="image" src="../images/portfolio-dashboard-cards.png" />
+<img width="1070" alt="image" src="../images/portfolio-dashboard-cards.png" />
 
 Typical cards across the different capabilties (e.g. Maintainability, Architecture, Security, AI) are:
 * **Quality Rating** shows the overall maintainability score and its recent change;
@@ -27,7 +27,7 @@ Typical cards across the different capabilties (e.g. Maintainability, Architectu
 The treemap (the large graphic with the colored blocks) gives different views into your portfolio. Those different views can be reached via the tabs directly above the treemap, and each highlight important insights about your portfolio, helping you to quickly drill down towards the parts of your portfolio that need attention.
 For each different tab, the meaning of the Area, Color, and Grouping are displayed. This configuration differs for each tab, and can be manually adjusted to receive custom insights.
 
-<img width="1069" height="447" alt="image" src="../images/portfolio-dashboard-treemap.png" />
+<img width="1069" alt="image" src="../images/portfolio-dashboard-treemap.png" />
 
 ### Hotspots
 A **Hotspot** is a system which has seen high development activity during the selected period. Hotspots represent areas of attention, since code changes are where deterioration or improvement of code quality happen. Being on top of these hotspots is essential for being in control of quality and risk trends over time.
@@ -64,7 +64,7 @@ The default treemap configuration in this view is:
 ## 4. System table overview
 The system table towards the bottom of the page provides a less focused, but more comprehensive, overview of the systems in your portfolio. It is useful in case you want to search for a specific system using the search functionality, or if you want to have a quick glance at volume (changes), quality changes, objective progress, and the last analysis moment. The table also enables you to favorite systems, and to sort on any of the columns.
 
-<img width="1067" height="355" alt="image" src="../images/portfolio-dashboard-table.png" />
+<img width="1067" alt="image" src="../images/portfolio-dashboard-table.png" />
 
 ## Contact and support
 
