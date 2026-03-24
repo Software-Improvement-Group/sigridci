@@ -27,7 +27,7 @@ Typical cards across the different capabilties (e.g. Maintainability, Architectu
 The treemap (the large graphic with the colored blocks) gives different views into your portfolio. Those different views can be reached via the tabs directly above the treemap, and each highlight important insights about your portfolio, helping you to quickly drill down towards the parts of your portfolio that need attention.
 For each different tab, the meaning of the Area, Color, and Grouping are displayed. This configuration differs for each tab, and can be manually adjusted to receive custom insights.
 
-<img width="1069" height="447" alt="image" src="../images/portfolio-dashboard-treemap" />
+<img width="1069" height="447" alt="image" src="../images/portfolio-dashboard-treemap.png" />
 
 ### Hotspots
 A **Hotspot** is a system which has seen high development activity during the selected period. Hotspots represent areas of attention, since code changes are where deterioration or improvement of code quality happen. Being on top of these hotspots is essential for being in control of quality and risk trends over time.
@@ -64,7 +64,7 @@ The default treemap configuration in this view is:
 ## 4. System table overview
 The system table towards the bottom of the page provides a less focused, but more comprehensive, overview of the systems in your portfolio. It is useful in case you want to search for a specific system using the search functionality, or if you want to have a quick glance at volume (changes), quality changes, objective progress, and the last analysis moment. The table also enables you to favorite systems, and to sort on any of the columns.
 
-<img width="1067" height="355" alt="image" src="../images/portfolio-dashboard-table" />
+<img width="1067" height="355" alt="image" src="../images/portfolio-dashboard-table.png" />
 
 ## Contact and support
 
