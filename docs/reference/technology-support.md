@@ -432,21 +432,21 @@ This configuration can be managed using the `--convert` [option in Sigrid CI](cl
 
 In addition to supporting 300+ technologies, Sigrid also supports various open source ecosystems for its Open Source Health capability. Note that different projects might use different open source ecosystems, even if they use the same technology. For example, there is no standardized way to manage open source dependencies in Java projects. Some Java projects use Maven, others use Gradle. This is why some technologies are listed multiple times in the table below.
 
-| Open source ecosystem | Common technologies    |
-|-----------------------|------------------------|
+| Open source ecosystem | Common technologies    | Notes                                                                            |
+|-----------------------|------------------------|----------------------------------------------------------------------------------|
 | Bower                 | JavaScript             |
 | Cargo                 | Rust                   |
 | CocoaPods             | Swift, Objective-C     |
 | Composer              | PHP                    |
 | Go Modules            | Go                     |
-| Gradle                | Java, Kotlin, Groovy   |
+| Gradle                | Java, Kotlin, Groovy   | [Instructions for publishing](../capabilities/osh-upload-instructions.md#gradle) |
 | Ivy                   | Java                   |
 | LibMan                | JavaScript             |
-| Maven                 | Java                   |
+| Maven                 | Java                   | [Instructions for publishing](../capabilities/osh-upload-instructions.md#maven)  |
 | NPM                   | JavaScript, TypeScript |
 | NuGet                 | C#                     |
 | PuppetForge           | Puppet                 |
-| Poetry                | Python                 |
+| Poetry                | Python                 | [Instructions for publishing](../capabilities/osh-upload-instructions.md#poetry) |
 | pub.dev               | Dart, Flutter          |
 | PyPi                  | Python                 |
 | RubyGems              | Ruby                   |

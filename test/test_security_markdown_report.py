@@ -91,10 +91,13 @@ class SecurityMarkdownReportTest(TestCase):
 
         report = SecurityMarkdownReport(self.options, "HIGH")
         report.decorateLinks = False
+        report.baseline = "2026-03-20"
         markdown = report.renderMarkdown("1234", noResults, self.options)
 
         expected = """
             # [Sigrid](https://sigrid-says.com/aap/noot/-/security) Security feedback *(Beta)*
+            
+            Sigrid compared your code against the baseline of 2026-03-20.
             
             **✅  You achieved your objective of having no critical-severity security findings**
             

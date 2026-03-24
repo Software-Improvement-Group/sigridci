@@ -14,8 +14,9 @@
 
 import os
 import sys
+from datetime import datetime
 
-from .capability import OPEN_SOURCE_HEALTH, SECURITY, Capability
+from .capability import OPEN_SOURCE_HEALTH, SECURITY
 from .feedback_provider import FeedbackProvider
 from .platform import Platform
 from .publish_options import PublishOptions, RunMode
@@ -99,12 +100,19 @@ class SigridCiRunner:
 
         for capability in self.options.capabilities:
             feedback = self.apiClient.fetchAnalysisResults(analysisId, capability)
+            if capability == SECURITY and not "baseline" in feedback:
+                # The security feedback response does not yet include the
+                # baseline, so we need to add it ourselves. We also need
+                # to reformat the date to ISO 8601.
+                baseline = self.apiClient.fetchSecurityHeaders().get("x-sig-tpf-last-run")
+                feedback["baseline"] = datetime.strptime(baseline, "%a, %d %b %Y %H:%M:%S %Z").strftime("%Y-%m-%d")
+
             feedbackProvider = FeedbackProvider(capability, self.options, objectives)
             feedbackProvider.analysisId = analysisId
             feedbackProvider.feedback = feedback
             feedbackProvider.previousFeedback = self.loadFeedbackBaseline(capability)
-            success = feedbackProvider.generateReports()
-            if not success:
+
+            if not feedbackProvider.generateReports():
                 exitCode += capability.exitCode
 
         return exitCode

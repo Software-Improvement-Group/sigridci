@@ -51,6 +51,8 @@ class SecurityMarkdownReport(Report, MarkdownRenderer):
         sigridLink = f"{self.getSigridUrl(options)}/-/security"
 
         details = ""
+        if feedback.get("baseline"):
+            details += f"Sigrid compared your code against the baseline of {feedback['baseline']}.\n\n"
         if len(introduced) + len(fixed) > 0:
             details += "- ❌ means this finding fails your objective.\n"
             details += "- ⚠️ means a finding exists, but is not severe enough to fail your objective.\n"

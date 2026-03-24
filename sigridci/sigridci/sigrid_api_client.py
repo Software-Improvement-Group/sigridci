@@ -49,10 +49,10 @@ class SigridApiClient:
             proxyOpener = urllib.request.build_opener(proxyHandler)
             urllib.request.install_opener(proxyOpener)
 
-    def callSigridAPI(self, path, body=None, contentType=None, *, accept="application/json"):
+    def callSigridAPI(self, path, body=None, contentType=None, *, method=None, accept="application/json"):
         delimiter = "" if path.startswith("/") else "/"
         url = f"{self.baseURL}/rest{delimiter}{path}"
-        request = urllib.request.Request(url, body)
+        request = urllib.request.Request(url, body, method=method)
         if accept is not None:
             request.add_header("Accept", accept)
         request.add_header("Authorization", f"Bearer {self.token}".encode("utf8"))
@@ -60,15 +60,23 @@ class SigridApiClient:
             request.add_header("Content-Type", contentType)
 
         response = urllib.request.urlopen(request, context=self.sslContext)
+
+        return self.parseResponse(method, response)
+
+    def parseResponse(self, method, response):
+        if method == "HEAD":
+            return response.headers
+
         if response.status == 204:
             return {}
 
         responseBody = response.read().decode("utf8")
+
         if len(responseBody) == 0:
             UploadLog.log("Received empty response")
             return {}
-        else:
-            return json.loads(responseBody)
+
+        return json.loads(responseBody)
 
     def retry(self, operation, *, attempts=5, allow404=False, allowEmpty=True):
         api = ApiCaller("Sigrid", self.POLL_INTERVAL)
@@ -166,6 +174,10 @@ class SigridApiClient:
     def fetchSecurityFindings(self):
         path = f"/analysis-results/api/v1/security-findings/{self.urlCustomerName}/{self.urlSystemName}?sarif=true"
         return self.retry(lambda: self.callSigridAPI(path, accept=None))
+
+    def fetchSecurityHeaders(self):
+        path = f"/analysis-results/api/v1/security-findings/{self.urlCustomerName}/{self.urlSystemName}"
+        return self.retry(lambda: self.callSigridAPI(path, method="HEAD"))
 
     def logPlatformInformation(self, platformId):
         try:
