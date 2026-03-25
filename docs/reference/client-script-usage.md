@@ -84,7 +84,7 @@ the Sigrid CI exit code for this, and you can even make this behavior more nuanc
 - Exit code 1: An error occurred while running Sigrid CI.
 - Exit code 2: You failed your quality objective for Maintainability.
 - Exit code 4: You failed your quality objective for Open Source Health.
-- Exit code 8: You failed your quality objective for Open Source Health.
+- Exit code 8: You failed your quality objective for Security.
 
 These exit codes "stack", so an exit code of 6 means you failed your quality objectives for both Maintainability
 and Open Source Health.
