@@ -36,8 +36,9 @@ For the Hotspots tab, the default treemap configuration is as follows:
 * **Block size:** each block accounts for a system, and the size of the block represents the amount of change in development effort (e.g., code changes/Person Years) the system has received in the selected period. Systems that have not received any changes in the selected period are excluded from the overview.
 * **Grouping:** the systems are grouped together based either deterioration or improvement of the code quality. 
 
-> [!TIP]
-> Use the hotspots to find out: _Which areas in my portfolio require attention to prevent quality decay?_
+Use the hotspots to find out:  
+_Which areas in my portfolio require attention to prevent quality decay?_
+{: .faq }
 
 ### Objective Progress:
 The **Objective Progress** view shifts the focus from general risk discovery (Hotspots) to governance and policy tracking (Objective Progress). In this tab, the treemap presents an easy and visual overview of how the objectives in your portfolio are progressing.
@@ -47,12 +48,12 @@ The default treemap configuration in this view is:
 * **Block size:** the block size represents the relative volume change in a system over the selected period (the amount of code changed compared to the total system volume). This ensures that the systems with the most development activity are most prominent.
 * **Grouping:** In the example, the systems are grouped based on whether a system currently satisfies its assigned policy (e.g., "Meeting criteria" vs. "Not meeting criteria") but if you like, you can chose Team as a grouping.
 
-> [!TIP]
-> Use Objective Progress to find out:
-> _Which "Active" systems are moving away from their target? Is the gap to our target closing?_
+Use Objective Progress to find out:  
+_Which "Active" systems are moving away from their target? Is the gap to our target closing?_
+{: .faq }
 
-> [!NOTE]
-> Remember: an overall objective progress KPI card is displayed at the top of the page, above the treemap. The Objective Progress shows you which teams might require your help to meet these targets.
+Remember: an overall objective progress KPI card is displayed at the top of the page, above the treemap. The Objective Progress shows you which teams might require your help to meet these targets.
+{: .attention }
 
 ### Ratings
 The **Ratings** views provides a quick insight into the current status of the portfolio, when it comes to maintainability rating. It does not visualize change, but rather the current state of the portfolio.
