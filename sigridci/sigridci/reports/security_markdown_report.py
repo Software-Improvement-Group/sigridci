@@ -18,7 +18,7 @@ from .report import Report, MarkdownRenderer
 from ..analysisresults.sarif_processor import SarifProcessor, FindingStatus
 from ..capability import SECURITY
 from ..objective import Objective
-from ..platform import SECURITY_EXCLUDE_RULE_DOCS, SECURITY_EXCLUDE_FILE_DOCS
+from ..platform import SECURITY_EXCLUDE_RULE_DOCS, SECURITY_EXCLUDE_FILE_DOCS, SECURITY_BETA_DOCS
 
 
 class SecurityMarkdownReport(Report, MarkdownRenderer):
@@ -50,7 +50,8 @@ class SecurityMarkdownReport(Report, MarkdownRenderer):
         accepted = self.processor.filterStatus(findings, FindingStatus.ACCEPTED, partOfObjective=False)
         sigridLink = f"{self.getSigridUrl(options)}/-/security"
 
-        details = ""
+        details = f"> Sigrid CI for Security is currently in Beta. [The documentation]({SECURITY_BETA_DOCS}) "
+        details += "contains more information on its current state and known limitations.\n\n"
         if feedback.get("baseline"):
             details += f"Sigrid compared your code against the baseline of {feedback['baseline']}.\n\n"
         if len(introduced) + len(fixed) > 0:

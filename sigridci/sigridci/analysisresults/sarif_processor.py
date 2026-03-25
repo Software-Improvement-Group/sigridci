@@ -38,6 +38,7 @@ class Finding:
 
 class SarifProcessor:
     EXCLUDED_TOOLS = ["SIG Open Source Health"]
+    UNKNOWN_LOCATION = "(unknown location)"
 
     def __init__(self, options, objective):
         self.options = options
@@ -48,17 +49,31 @@ class SarifProcessor:
             return []
 
         for run in feedback["runs"]:
-            if run["tool"]["driver"]["name"] not in self.EXCLUDED_TOOLS:
+            if self.isExcludedTool(run) or not self.isSuccessfulRun(run):
                 for result in run.get("results", []):
                     fingerprint = result["fingerprints"]["sigFingerprint/v1"]
                     risk = result.get("properties", {}).get("severity") or "UNKNOWN"
-                    file = self.rewriteSubSystem(result["locations"][0]["physicalLocation"]["artifactLocation"]["uri"])
-                    line = result["locations"][0]["physicalLocation"]["region"]["startLine"]
+                    location = self.getLocation(result)
+                    file = self.rewriteSubSystem(location.get("artifactLocation", {}).get("uri", self.UNKNOWN_LOCATION))
+                    line = location.get("region", {}).get("startLine", 0)
                     partOfObjective = Objective.isFindingIncluded(risk, self.objective)
                     status = self.getFindingStatus(result)
 
                     if file is not None and risk in Objective.SEVERITY_OBJECTIVE:
                         yield Finding(fingerprint, risk, result["message"]["text"], file, line, partOfObjective, status)
+
+    def isExcludedTool(self, run):
+        return run["tool"]["driver"]["name"] not in self.EXCLUDED_TOOLS
+
+    def isSuccessfulRun(self, run):
+        if not "invocations" in run:
+            return True
+        return run["invocations"]["executionSuccessful"]
+
+    def getLocation(self, result):
+        if not "locations" in result or len(result["locations"]) == 0:
+            return {}
+        return result["locations"][0].get("physicalLocation", {})
 
     def getFindingStatus(self, result):
         if result["properties"].get("status") == "ACCEPTED":

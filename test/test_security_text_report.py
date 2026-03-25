@@ -28,7 +28,7 @@ class SecurityTextReportTest(TestCase):
     def testPrintFindings(self):
         options = PublishOptions("aap", "noot", RunMode.FEEDBACK_ONLY, sourceDir="/aap", feedbackURL="")
 
-        with open(os.path.dirname(__file__) + "/testdata/security.sarif.json", encoding="utf-8", mode="r") as f:
+        with open(os.path.dirname(__file__) + "/testdata/security-sigrid-api-sarif.json", encoding="utf-8", mode="r") as f:
             feedback = json.load(f)
 
         buffer = StringIO()

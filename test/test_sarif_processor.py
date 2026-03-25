@@ -23,7 +23,7 @@ from sigridci.sigridci.publish_options import PublishOptions, RunMode
 class FindingsProcessorTest(TestCase):
 
     def testExtractAllFindingsSarif(self):
-        with open(os.path.dirname(__file__) + "/testdata/security.sarif.json", encoding="utf-8", mode="r") as f:
+        with open(os.path.dirname(__file__) + "/testdata/security-sigrid-api-sarif.json", encoding="utf-8", mode="r") as f:
             feedback = json.load(f)
 
         options = PublishOptions("aap", "noot", RunMode.FEEDBACK_ONLY)
@@ -39,7 +39,7 @@ class FindingsProcessorTest(TestCase):
         self.assertEqual(findings[1].file, "neutron/neutron/ipam/drivers/neutrondb_ipam/driver.py")
 
     def testIgnoreInformationSeverityFindings(self):
-        with open(os.path.dirname(__file__) + "/testdata/security.sarif.json", encoding="utf-8", mode="r") as f:
+        with open(os.path.dirname(__file__) + "/testdata/security-sigrid-api-sarif.json", encoding="utf-8", mode="r") as f:
             feedback = json.load(f)
 
         options = PublishOptions("aap", "noot", RunMode.FEEDBACK_ONLY)
@@ -49,7 +49,7 @@ class FindingsProcessorTest(TestCase):
         self.assertEqual(severities, ["CRITICAL", "HIGH"])
 
     def testDetectFindingStatus(self):
-        with open(os.path.dirname(__file__) + "/testdata/security.sarif.json", encoding="utf-8", mode="r") as f:
+        with open(os.path.dirname(__file__) + "/testdata/security-sigrid-api-sarif.json", encoding="utf-8", mode="r") as f:
             feedback = json.load(f)
 
         options = PublishOptions("aap", "noot", RunMode.FEEDBACK_ONLY)

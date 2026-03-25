@@ -27,7 +27,7 @@ class SecurityMarkdownReportTest(TestCase):
     def setUp(self):
         self.options = PublishOptions("aap", "noot", RunMode.FEEDBACK_ONLY, sourceDir="/tmp", feedbackURL="")
 
-        with open(os.path.dirname(__file__) + "/testdata/security.sarif.json", encoding="utf-8", mode="r") as f:
+        with open(os.path.dirname(__file__) + "/testdata/security-sigrid-api-sarif.json", encoding="utf-8", mode="r") as f:
             self.feedback = json.load(f)
 
     @mock.patch.dict(os.environ, {
@@ -44,6 +44,8 @@ class SecurityMarkdownReportTest(TestCase):
             # [Sigrid](https://sigrid-says.com/aap/noot/-/security) Security feedback *(Beta)*
             
             **⚠️  You did not meet your objective of having no critical-severity security findings**
+            
+            > Sigrid CI for Security is currently in Beta. [The documentation](https://docs.sigrid-says.com/sigridci-integration/using-sigridci.html#security-feedback-beta) contains more information on its current state and known limitations.
             
             - ❌ means this finding fails your objective.
             - ⚠️ means a finding exists, but is not severe enough to fail your objective.
@@ -88,18 +90,55 @@ class SecurityMarkdownReportTest(TestCase):
     def testSpecialMessageWhenYouMeetObjective(self):
         with open(os.path.dirname(__file__) + "/testdata/security-nofindings.json", encoding="utf-8", mode="r") as f:
             noResults = json.load(f)
+            noResults["baseline"] = "2026-03-20"
 
         report = SecurityMarkdownReport(self.options, "HIGH")
         report.decorateLinks = False
-        report.baseline = "2026-03-20"
         markdown = report.renderMarkdown("1234", noResults, self.options)
 
         expected = """
             # [Sigrid](https://sigrid-says.com/aap/noot/-/security) Security feedback *(Beta)*
             
+            **✅  You achieved your objective of having no critical-severity security findings**
+            
+            > Sigrid CI for Security is currently in Beta. [The documentation](https://docs.sigrid-says.com/sigridci-integration/using-sigridci.html#security-feedback-beta) contains more information on its current state and known limitations.
+            
             Sigrid compared your code against the baseline of 2026-03-20.
             
+            ## 👍 What went well?
+            
+            > You fixed **0** security findings.
+            
+            ## 👎 What could be better?
+            
+            > You did not introduce any security findings during your changes, great job!
+            
+            
+            ----
+            
+            [**View this system in Sigrid**](https://sigrid-says.com/aap/noot/-/security)
+        """
+
+        self.assertEqual(markdown.strip(), inspect.cleandoc(expected).strip())
+
+    @mock.patch.dict(os.environ, {"SIGRID_CI_MARKDOWN_HTML" : "false"})
+    def testIgnoreFailedRun(self):
+        with open(os.path.dirname(__file__) + "/testdata/security-failed-run.json", encoding="utf-8", mode="r") as f:
+            noResults = json.load(f)
+            noResults["baseline"] = "2026-03-20"
+
+        report = SecurityMarkdownReport(self.options, "HIGH")
+        report.decorateLinks = False
+        markdown = report.renderMarkdown("1234", noResults, self.options)
+
+        expected = """
+            # [Sigrid](https://sigrid-says.com/aap/noot/-/security) Security feedback *(Beta)*
+            
             **✅  You achieved your objective of having no critical-severity security findings**
+            
+            > Sigrid CI for Security is currently in Beta. [The documentation](https://docs.sigrid-says.com/sigridci-integration/using-sigridci.html#security-feedback-beta) contains more information on its current state and known limitations.
+            
+            Sigrid compared your code against the baseline of 2026-03-20.
             
             ## 👍 What went well?
             

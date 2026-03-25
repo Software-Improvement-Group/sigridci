@@ -125,8 +125,8 @@ Adding the asterisk allows you to get feedback on *all* Sigrid capabilities, not
 ### Security feedback (Beta)
 
 Sigrid CI provides security feedback based on your [objectives](../capabilities/portfolio-objectives.md).
-As with [open source vulnerabilities](#open-source-health-feedback-beta), you do need to fix every single
-security finding that does not meet your objective.
+This helps you to "shift left" by reporting security findings early in the development process, making it easier
+and faster to address those findings. 
 
 <img src="../images/ci/security-feedback.png" width="350" />
 
@@ -141,9 +141,10 @@ When you encounter security findings during code reviews, there are three ways h
   [Security dashboard](../capabilities/portfolio-security.md), where it can be tracked.
 - **Merge the pull request, mark the finding as a false positive in Sigrid:** Like any automated check, Sigrid can
   produce findings that are false positives. In those situations, if the pull request author and reviewer agree the
-  finding is *actually* a false positive, it's OK to merge the pull request. You can then mark the finding as a false
-  positive in Sigrid's [security page](../capabilities/system-security.md). False positives are automatically excluded
-  from future Sigrid CI feedback.
+  finding is *actually* a false positive, it's OK to merge the pull request. After your changes have been merged and
+  Sigrid has been updated, you can mark the finding as a false positive in Sigrid's 
+  [security page](../capabilities/system-security.md). False positives are automatically excluded from future
+  Sigrid CI feedback.
 
 Feedback is based on your [security objective](../capabilities/portfolio-objectives.md). If you have not configured
 an objective, Sigrid CI will use a default target of no critical security findings. We believe this to be a reasonable
@@ -163,6 +164,13 @@ If you have a system with a large number of existing security findings, we recom
 [security dashboard](../capabilities/portfolio-security.md) to make an explicit decision on which findings to
 address right now and which findings can be addressed later. This can then be planned as its own effort. You can
 then use Sigrid CI in parallel to avoid the introduction of new security findings in new code.
+
+During the Beta phase, Sigrid CI will give feedback on *all* new findings. That might include situations where your
+code is not new, but new security findings have been discovered in existing code. We will decide on the final behavior
+based on feedback we get during the Beta phase, because arguments go both ways: (A) People prefer to only receive
+feedback on things they did, but (B) new security threats are continuously discovered, and we need to make people
+aware.
+{: .warning }
 
 #### Adding Security feedback to an existing Sigrid CI configuration
 
