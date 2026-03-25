@@ -105,7 +105,7 @@ class SigridCiRunner:
                 # baseline, so we need to add it ourselves. We also need
                 # to reformat the date to ISO 8601.
                 baseline = self.apiClient.fetchSecurityHeaders().get("x-sig-tpf-last-run")
-                feedback["baseline"] = datetime.strptime(baseline, "%a, %d %b %Y %H:%M:%S %Z").strftime("%Y-%m-%d")
+                feedback["baseline"] = datetime.strptime(baseline, "%a, %d %b %Y %H:%M:%S %Z").strftime("%Y-%m-%d %H:%M")
 
             feedbackProvider = FeedbackProvider(capability, self.options, objectives)
             feedbackProvider.analysisId = analysisId

@@ -53,7 +53,7 @@ class SecurityMarkdownReport(Report, MarkdownRenderer):
         details = f"> Sigrid CI for Security is currently in Beta. [The documentation]({SECURITY_BETA_DOCS}) "
         details += "contains more information on its current state and known limitations.\n\n"
         if feedback.get("baseline"):
-            details += f"Sigrid compared your code against the baseline of {feedback['baseline']}.\n\n"
+            details += f"Sigrid compared your code against the baseline of {feedback['baseline']} UTC.\n\n"
         if len(introduced) + len(fixed) > 0:
             details += "- ❌ means this finding fails your objective.\n"
             details += "- ⚠️ means a finding exists, but is not severe enough to fail your objective.\n"

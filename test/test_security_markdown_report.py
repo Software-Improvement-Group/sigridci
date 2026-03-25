@@ -90,7 +90,7 @@ class SecurityMarkdownReportTest(TestCase):
     def testSpecialMessageWhenYouMeetObjective(self):
         with open(os.path.dirname(__file__) + "/testdata/security-nofindings.json", encoding="utf-8", mode="r") as f:
             noResults = json.load(f)
-            noResults["baseline"] = "2026-03-20"
+            noResults["baseline"] = "2026-03-20 12:00"
 
         report = SecurityMarkdownReport(self.options, "HIGH")
         report.decorateLinks = False
@@ -103,7 +103,7 @@ class SecurityMarkdownReportTest(TestCase):
             
             > Sigrid CI for Security is currently in Beta. [The documentation](https://docs.sigrid-says.com/sigridci-integration/using-sigridci.html#security-feedback-beta) contains more information on its current state and known limitations.
             
-            Sigrid compared your code against the baseline of 2026-03-20.
+            Sigrid compared your code against the baseline of 2026-03-20 12:00 UTC.
             
             ## 👍 What went well?
             
@@ -125,7 +125,6 @@ class SecurityMarkdownReportTest(TestCase):
     def testIgnoreFailedRun(self):
         with open(os.path.dirname(__file__) + "/testdata/security-failed-run.json", encoding="utf-8", mode="r") as f:
             noResults = json.load(f)
-            noResults["baseline"] = "2026-03-20"
 
         report = SecurityMarkdownReport(self.options, "HIGH")
         report.decorateLinks = False
@@ -137,8 +136,6 @@ class SecurityMarkdownReportTest(TestCase):
             **✅  You achieved your objective of having no critical-severity security findings**
             
             > Sigrid CI for Security is currently in Beta. [The documentation](https://docs.sigrid-says.com/sigridci-integration/using-sigridci.html#security-feedback-beta) contains more information on its current state and known limitations.
-            
-            Sigrid compared your code against the baseline of 2026-03-20.
             
             ## 👍 What went well?
             
