@@ -52,3 +52,4 @@ Sigrid communicates results as benchmarked star ratings. You can find more infor
 ## Contact and support
 
 Feel free to contact [SIG's support team](mailto:support@softwareimprovementgroup.com) for any questions or issues you may have after reading this documentation or when using Sigrid.
+
