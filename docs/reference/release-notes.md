@@ -3,6 +3,14 @@ Sigrid release notes
 
 SIG uses [continuous delivery](https://en.wikipedia.org/wiki/Continuous_delivery), meaning that every change to Sigrid or the underlying analysis is released once our development pipeline has completed. On average, we release somewhere between 10 and 20 times per day. This page therefore doesn't list every single change, since that would quickly lead to an excessively long list of small changes. Instead, this page lists Sigrid and analysis changes that we consider noteworthy for the typical Sigrid user.
 
+### March 23, 2026
+
+- **IDE integratins:** Beta versions of the Sigrid IDE integrations for [Mendix Studio Pro](https://github.com/Software-Improvement-Group/sigrid-mendix-studio-pro) and [Visual Studio Code](https://github.com/Software-Improvement-Group/sigrid-vscode-extension) are now available from GitHub. We would love to hear your feedback and ideas! After the beta phase, we will publish the IDE integrations to their respective marketplace.
+- **Open Source Health:** Sigrid now supports [Yarn version catalogs](https://yarnpkg.com/features/catalogs). Dependency version information is now extracted from the version catalogs, and shown alongside other dependencies in Sigrid's Open Source Health views. 
+- **Sigrid CI:** Sigrid CI can now post feedback as comments for BitBucket pull requests. This feature was already available for the integrations with GitHub, GitLab, and Azure DevOps, but not yet for BitBucket. If you're using BitBucket, you can follow [the instructions for the BitBucket integration](../sigridci-integration/bitbucket-pipelines.md) to set this up.
+- **On-premise:** Database initialization for on-premise Sigrid can now also be performed automatically. If you are interested in using this feature, please refer to the [on-premise documentation](../organization-integration/onpremise-automated-database-initialization.md).
+- **Integrations:** We have added a number of more [advanced Excel exports](https://github.com/Software-Improvement-Group/sigrid-integrations/tree/main/excel-exports) to the Sigrid Integrations on GitHub. These Excel exports are intended for (automated) integrations, which is why they are available an integration on GitHub instead of from the Sigrid user interface. One use case how you can use this data is an "hygiene report", which you can use to track various operational tasks (e.g. did all teams enter their metadata). 
+
 ### March 9, 2026
 
 - **Sigrid API:** It is now possible to edit a finding's status and/or remark using the API. See the [API documentation](../integrations/sigrid-api-documentation.md#editing-findings) for how to use this new end point.
