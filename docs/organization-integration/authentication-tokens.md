@@ -12,7 +12,7 @@ Using Sigrid CI or the Sigrid API requires an *authentication token*. You can cr
 
 First, sign into [sigrid-says.com](https://sigrid-says.com) using your regular Sigrid user account. If you do not have a Sigrid user account, contact your organization's Sigrid administrator, or contact SIG support at [support@softwareimprovementgroup.com](mailto:support@softwareimprovementgroup.com).
 
-After signing in, navigate to your user settings page using the menu in the top-right corner.
+After signing in, navigate to your user settings page using the menu in the bottom-left.
 
 <img src="../images/token-account-settings.png" width="200" />
 
