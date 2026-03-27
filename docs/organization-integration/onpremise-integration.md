@@ -92,6 +92,7 @@ In addition to updating Sigrid itself, you will also need to periodically update
   - Security: The following tool(s) are currently unsupported in Sigrid On-Premise, and integration is not planned:
     - Checkmarx
   - Interactive AI Explanations
+  - [Sigrid MCP Integrations](../docs/integrations/integration-sigrid-mcp)
 
 ## Contact and support
 
