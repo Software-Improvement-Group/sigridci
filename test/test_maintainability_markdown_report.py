@@ -617,7 +617,8 @@ class MaintainabilityMarkdownReportTest(TestCase):
     @mock.patch.dict(os.environ, {
         "CI_SERVER_URL" : "https://example.com",
         "CI_PROJECT_PATH" : "aap/noot",
-        "CI_COMMIT_REF_NAME" : "mybranch"
+        "CI_COMMIT_REF_NAME" : "mybranch",
+        "SIGRID_CI_MARKDOWN_HTML" : "false"
     })
     def testMakeLinksForDuplicationOccurrences(self):
         rc = self.toRefactoringCandidate(f"aap", "introduced", "DUPLICATION", "VERY_HIGH")
@@ -637,7 +638,8 @@ class MaintainabilityMarkdownReportTest(TestCase):
     @mock.patch.dict(os.environ, {
         "CI_SERVER_URL" : "https://example.com",
         "CI_PROJECT_PATH" : "aap/noot",
-        "CI_COMMIT_REF_NAME" : "mybranch"
+        "CI_COMMIT_REF_NAME" : "mybranch",
+        "SIGRID_CI_MARKDOWN_HTML" : "false"
     })
     def testMakeLinksForUnitMetrics(self):
         rc = self.toRefactoringCandidate(f"aap.py::noot", "introduced", "UNIT_SIZE", "VERY_HIGH")
@@ -657,7 +659,8 @@ class MaintainabilityMarkdownReportTest(TestCase):
     @mock.patch.dict(os.environ, {
         "CI_SERVER_URL" : "https://example.com",
         "CI_PROJECT_PATH" : "aap/noot",
-        "CI_COMMIT_REF_NAME" : "mybranch"
+        "CI_COMMIT_REF_NAME" : "mybranch",
+        "SIGRID_CI_MARKDOWN_HTML" : "false"
     })
     def testNormalizeLinksForSubsystems(self):
         rc = self.toRefactoringCandidate(f"boom/aap.py::noot", "introduced", "UNIT_SIZE", "VERY_HIGH")
