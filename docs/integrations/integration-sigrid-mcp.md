@@ -34,14 +34,16 @@ Visit the [Technology Support](../reference/technology-support.md#list-of-suppor
 - Step 3: Tune agent instructions rules or policies for Sigrid MCP Guardrails to your needs
 - Step 4: Pick a LLM with support for MCP tools (recommended: GPT-5, Claude 4 series, Gemini 2.5 series or higher)
 
-### Configuration by IDE
+### Configuration by Tool/IDE
 
-| IDE | Connection Type | Configuration Method | Status |
+| Tool | Connection Type | Configuration Method | Status |
 | --- | --- | --- | --- |
 | Cursor | Direct HTTP | MCP & Integrations panel | ✅ Fully Supported |
 | VSCode w/ Github Copilot plugin | HTTP via GitHub Copilot | Agent mode → Tools menu | ✅ Supported |
 | VSCode native | Proxy (mcp-remote) | MCP settings | ✅ Supported |
 | Windsurf | Proxy (mcp-remote) | MCP settings | ✅ Supported |
+| Claude Code | Proxy (mcp-remote) | CLI command | ✅ Supported |
+| OpenCode | Direct HTTP | opencode.json | ✅ Supported |
 | IntelliJ/PyCharm/WebStorm | HTTP via AI Chat | Manual JSON edit | ✅ Supported |
 
 ### Connection Types Explained
@@ -147,6 +149,27 @@ Replace `TOKEN` with your actual Sigrid API token.
 
 - Restart Claude Code
 
+#### OpenCode
+
+- Create or edit `opencode.json` in your project root
+- Add the following configuration:
+
+```
+{
+  "mcp": {
+    "SigridCode": {
+      "type": "remote",
+      "url": "https://sigrid-says.com/mcp",
+      "headers": {
+        "Authorization": "Bearer <your_sigrid_token>"
+      }
+    }
+  }
+}
+```
+
+- Restart OpenCode
+
 #### IntelliJ/PyCharm/WebStorm
 
 In the IDE, navigate to Tools > AI Assistant > Model Context Protocol (MCP) and add:
@@ -208,7 +231,7 @@ Most AI coding agents respect instruction files in your repository. Refer to you
 | `.github/copilot-instructions.md` | GitHub Copilot |
 | `.windsurfrules` | Windsurf |
 | `CLAUDE.md` | Claude Code |
-| `AGENTS.md` | Emerging convention (check agent support) |
+| `AGENTS.md` | OpenCode, emerging convention (check agent support) |
 
 For tools that support both global and project-level rules, prefer project-level to keep instructions versioned with your code.
 
