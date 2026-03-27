@@ -16,7 +16,7 @@ From a deployment perspective, on-premise Sigrid consists of two "parts":
 
 - Sigrid On-Premise is based on [Docker containers](https://en.wikipedia.org/wiki/Docker_%28software%29). There are two types of containers:
   - Application containers that should be deployed permanently in a [Kubernetes](https://en.wikipedia.org/wiki/Kubernetes) cluster, based on a [Helm chart](https://helm.sh) that is provided by SIG.
-  - Analysis containers that run from a build pipeline within your development platform. These analysis containers may also be started on Kubernetes, but that is not a requirement. Supported development platforms are listed in [development platform integration](#development-platform-integration).
+  - Analysis containers that run from a build pipeline within your development platform.
 - SIG provides the necessary images through a container registry. The section [obtaining Sigrid on-premise](#obtaining-sigrid-on-premise) contains more information on how you can obtain and update these Docker containers.
 - Authentication is based on your identity provider, using [OpenID Connect](https://openid.net/developers/how-connect-works/). Alternatively, [SAML](https://en.wikipedia.org/wiki/SAML_2.0) or [LDAP](https://en.wikipedia.org/wiki/Lightweight_Directory_Access_Protocol) are also supported, through [Dex](https://dexidp.io/).
 - Analyses are triggered from a build pipeline. The analysis results are then imported into a Postgres database, so they can be viewed in Sigrid.
@@ -24,7 +24,7 @@ From a deployment perspective, on-premise Sigrid consists of two "parts":
 
 Some Sigrid On-Premise features are *optional*:
 
-- The Open Source Health feature requires outbound internet access. Sigrid needs to connect to external sources to check for the latest vulnerability data for open source libraries. If you do not allow outbound internet access, the Open Source Health feature is not available. The rest of Sigrid is unaffected.
+- The Open Source Health feature requires enabling the OSH knowledge base updater cronjob on Sigrid (see [here](onpremise-osh-knowledgebase-updater.md)). This service imports vulnerability data from the OSH knowledge base Docker container into Sigrid. The rest of Sigrid remains fully functional even if OSH is not enabled.
 - When viewing detailed analysis results, Sigrid displays relevant source code files within Sigrid. For this to work, a web-accessible code storage needs to be available. This integrates with Sigrid via [OAuth](https://oauth.net/2/). For this to work, the identity provider used for Sigrid authentication and for the code storage needs to be the same. For viewing source code within Sigrid, you need to provide a development platform that is integrated with the same identity provider as Sigrid itself. The view source functionality is optional, without this integration the rest of Sigrid is unaffected.
 
 ## Requirements
@@ -44,7 +44,6 @@ Some Sigrid On-Premise features are *optional*:
 - All required services, including Postgres, the CI/CD platform, identity provider, S3-compatible object store, and container registry, must either be within the same network as the Sigrid deployment or be able to establish reliable inbound and outbound connections with it. This ensures seamless communication and data transfer between components.
 - You have read this documentation, and your support/platform team has the required technology knowledge (Kubernetes, Docker, Postgres, GitHub/GitLab/Azure DevOps, OpenID Connect) to integrate Sigrid into your environment.
 - You allow remote desktop or screen sharing or similar functionality for troubleshooting.
-- (Required for Open Source Health feature) You allow outbound internet traffic.
 
 ## Obtaining Sigrid on-premise
 
@@ -80,19 +79,28 @@ In addition to updating Sigrid itself, you will also need to periodically update
 - For Kubernetes, we support the latest 2 major versions. You can track the Kubernetes version history in [this overview](https://kubernetes.io/releases/).
 - For Postgres, we also support the latest 2 major versions. You can track the Postgres version history in [this overview](https://www.postgresql.org/support/versioning/).
 
-## Functional/Technical Differences in Sigrid On-Premise
+## Functional Differences and Limitations in Sigrid On-Premise
 
-- Single-Tenant Architecture: The on-premise Sigrid distribution is single-tenant, meaning you cannot create your own "tenants." All systems and analyses will be consolidated into your portfolio. However, you can still utilize Sigrid's user management to define access permissions for different users to various systems.
-- Source Code Publishing: You are required to use the [development platform integration](#development-platform-integration) to publish your source code to Sigrid. SFTP uploads and manual uploads are not supported.
-- Multi-Repo Systems: [Multi-repo systems](systems.md#sigrid-view-is-based-on-business-applications) are not supported. You are responsible for publishing source code from your development platform to Sigrid.
-- View Source Feature: The "view source" feature will display the *current* state of the file in your development platform, which may differ from the version of the file that was analyzed by Sigrid.
+- Functional Differences:
+  - Single-Tenant Architecture: The on-premise Sigrid distribution is single-tenant, which means you cannot create multiple "tenants." All systems and analyses are consolidated into a single portfolio. You can still use Sigrid's user management to assign access permissions to different users for specific systems, and organize users and system access by creating teams.
+  - Source Code Publishing: You are required to run the analysis container in a development pipeline (or another Docker-capable environment) to publish your source code to Sigrid. SFTP uploads and manual uploads are not supported. For more details, read [here](onpremise-analysis.md).
+  - Multi-Repo Systems: [Multi-repo systems](systems.md#sigrid-view-is-based-on-business-applications) are not supported. You are responsible for publishing source code from your development platform to Sigrid.
+  - View Source Feature: The "view source" feature displays the current state of the file in your development platform, which may differ from the version that was analyzed by Sigrid.
+
 - Technology Support Differences:
-  - Mendix: Set the variable `CONVERT` to `mendix` in your CI pipeline job, and use `Mendixflow` as language when defining the scope.
-  - Outsystems: This technology is not supported.
+  - Supported technologies:
+    - Outsystems: This technology is not supported.
+  - Technology conversion configuration:
+    - Mendix: Set the variable `CONVERT` to `mendix` in your CI pipeline job, and use `Mendixflow` as the language when defining the scope.
+  - Open Source ecosystems support (for Open Source Health):
+    - Maven: For most on-premise setups the use of Maven dependency tree files is required to effectively use OSH, for more details see [here](onpremise-osh-analysis.md)
+  - Security analyzers:
+    - Checkmarx: This security tool is not supported.
+
 - Unavailable Features:
-  - Security: The following tool(s) are currently unsupported in Sigrid On-Premise, and integration is not planned:
-    - Checkmarx
-  - Interactive AI Explanations
+  - AI-based features: The following features are not available in Sigrid On-Premise, as they depend on AI services hosted within SIG infrastructure and are not part of, or accessible from, the on-premise deployment:
+    - [Interactive AI Explanations](../reference/ai-explanations.md#genai-explanations)
+    - [Sigrid MCP Integrations](../integrations/integration-sigrid-mcp.md)
 
 ## Contact and support
 
