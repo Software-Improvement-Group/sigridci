@@ -24,7 +24,7 @@ From a deployment perspective, on-premise Sigrid consists of two "parts":
 
 Some Sigrid On-Premise features are *optional*:
 
-- The Open Source Health feature requires outbound internet access. Sigrid needs to connect to external sources to check for the latest vulnerability data for open source libraries. If you do not allow outbound internet access, the Open Source Health feature is not available. The rest of Sigrid is unaffected.
+- The Open Source Health feature requires enabling the `oshKbUpdater` (see [here](onpremise-osh-knowledgebase-updater) )service on Sigrid. This service imports vulnerability data from OSH knowledge base container into Sigrid. The rest of Sigrid remains fully functional even if OSH is not enabled.
 - When viewing detailed analysis results, Sigrid displays relevant source code files within Sigrid. For this to work, a web-accessible code storage needs to be available. This integrates with Sigrid via [OAuth](https://oauth.net/2/). For this to work, the identity provider used for Sigrid authentication and for the code storage needs to be the same. For viewing source code within Sigrid, you need to provide a development platform that is integrated with the same identity provider as Sigrid itself. The view source functionality is optional, without this integration the rest of Sigrid is unaffected.
 
 ## Requirements
@@ -44,7 +44,6 @@ Some Sigrid On-Premise features are *optional*:
 - All required services, including Postgres, the CI/CD platform, identity provider, S3-compatible object store, and container registry, must either be within the same network as the Sigrid deployment or be able to establish reliable inbound and outbound connections with it. This ensures seamless communication and data transfer between components.
 - You have read this documentation, and your support/platform team has the required technology knowledge (Kubernetes, Docker, Postgres, GitHub/GitLab/Azure DevOps, OpenID Connect) to integrate Sigrid into your environment.
 - You allow remote desktop or screen sharing or similar functionality for troubleshooting.
-- (Required for Open Source Health feature) You allow outbound internet traffic.
 
 ## Obtaining Sigrid on-premise
 
@@ -82,7 +81,7 @@ In addition to updating Sigrid itself, you will also need to periodically update
 
 ## Functional/Technical Differences in Sigrid On-Premise
 
-- Single-Tenant Architecture: The on-premise Sigrid distribution is single-tenant, meaning you cannot create your own "tenants." All systems and analyses will be consolidated into your portfolio. However, you can still utilize Sigrid's user management to define access permissions for different users to various systems.
+- Single-Tenant Architecture: The on-premise Sigrid distribution is single-tenant, which means you cannot create multiple "tenants." All systems and analyses are consolidated into a single portfolio. You can still use Sigrid's user management to assign access permissions to different users for specific systems, and you can organize users and system access by creating teams.
 - Source Code Publishing: You are required to use the [development platform integration](#development-platform-integration) to publish your source code to Sigrid. SFTP uploads and manual uploads are not supported.
 - Multi-Repo Systems: [Multi-repo systems](systems.md#sigrid-view-is-based-on-business-applications) are not supported. You are responsible for publishing source code from your development platform to Sigrid.
 - View Source Feature: The "view source" feature will display the *current* state of the file in your development platform, which may differ from the version of the file that was analyzed by Sigrid.
