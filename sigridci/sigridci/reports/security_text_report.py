@@ -17,23 +17,25 @@ import sys
 from .report import Report
 from .security_markdown_report import SecurityMarkdownReport
 from ..analysisresults.sarif_processor import SarifProcessor, FindingStatus
+from ..objective import Objective
 
 
 class SecurityTextReport(Report):
     def __init__(self, markdownReport, *, output=sys.stdout):
         self.output = output
+        self.markdownReport = markdownReport
         self.objective = markdownReport.objective
 
     def generate(self, analysisId, feedback, options):
-        processor = SarifProcessor(options, self.objective)
-        allFindings = list(processor.extractFindings(feedback))
+        allFindings = self.markdownReport.extractFindings(feedback)
+        processor = self.markdownReport.processor
         relevantFindings = processor.filterStatus(allFindings, FindingStatus.INTRODUCED, partOfObjective=True)
 
         if len(relevantFindings) > 0:
             print("", file=self.output)
             print("Security findings", file=self.output)
             print("", file=self.output)
-            for finding in relevantFindings:
+            for finding in sorted(relevantFindings, key=lambda f: Objective.sortBySeverity(f.risk)):
                 symbol = SecurityMarkdownReport.SEVERITY_SYMBOLS[finding.risk]
                 print(f"    {symbol} {finding.description}", file=self.output)
                 print(f"        In {finding.file} (line {finding.line})", file=self.output)

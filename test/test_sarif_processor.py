@@ -71,8 +71,8 @@ class FindingsProcessorTest(TestCase):
 
         self.assertEqual(len(findings), 1)
         self.assertEqual(findings[0].risk, "HIGH")
-        self.assertEqual(findings[0].description, "DocumentBuilderFactory being instantiated for XXE vulnerabilities")
-        self.assertEqual(findings[0].file, "SecurityExample.java")
+        self.assertEqual(findings[0].description, "InterruptedException and ThreadDeath should not be ignored")
+        self.assertEqual(findings[0].file, "Aap.java")
 
     def testFilterOshFindingsFromSecurityFeedbackInOnPremise(self):
         with open(os.path.dirname(__file__) + "/testdata/security-onpremise-osh.json", encoding="utf-8", mode="r") as f:

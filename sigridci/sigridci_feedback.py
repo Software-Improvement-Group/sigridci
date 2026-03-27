@@ -81,7 +81,6 @@ if __name__ == "__main__":
     feedbackProvider.loadLocalAnalysisResults(args.analysisresults)
     if args.previousresults:
         feedbackProvider.previousFeedback = loadPreviousAnalysisResults(capability, options, args.previousresults)
-        print(feedbackProvider.previousFeedback)
     success = feedbackProvider.generateReports()
 
     sys.exit(0 if success else feedbackProvider.capability.exitCode)

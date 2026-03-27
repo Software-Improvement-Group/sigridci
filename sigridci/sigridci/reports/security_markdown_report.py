@@ -37,13 +37,14 @@ class SecurityMarkdownReport(Report, MarkdownRenderer):
         super().__init__()
         self.objective = objective
         self.processor = SarifProcessor(options, objective)
+        self.previousFeedback = None
 
     def generate(self, analysisId, feedback, options):
         with open(self.getMarkdownFile(options), "w", encoding="utf-8") as f:
             f.write(self.renderMarkdown(analysisId, feedback, options))
 
     def renderMarkdown(self, analysisId, feedback, options):
-        findings = list(self.processor.extractFindings(feedback))
+        findings = self.extractFindings(feedback)
         introduced = self.processor.filterStatus(findings, FindingStatus.INTRODUCED, partOfObjective=False)
         fixed = self.processor.filterStatus(findings, FindingStatus.FIXED, partOfObjective=False)
         remaining = self.processor.filterStatus(findings, FindingStatus.REMAINING, partOfObjective=False)
@@ -94,7 +95,7 @@ class SecurityMarkdownReport(Report, MarkdownRenderer):
         md = "| Risk | Meets objective? | File | Finding |\n"
         md += "|----|----|----|----|\n"
 
-        for finding in findings[0:self.MAX_FINDINGS]:
+        for finding in sorted(findings, key=lambda f: Objective.sortBySeverity(f.risk))[0:self.MAX_FINDINGS]:
             severitySymbol = self.SEVERITY_SYMBOLS[finding.risk]
             objectiveSymbol = self.formatObjectiveSymbol(finding)
             link = self.decorateLink(options, f"{finding.file}:{finding.line}", finding.file, finding.line)
@@ -120,6 +121,21 @@ class SecurityMarkdownReport(Report, MarkdownRenderer):
         return os.path.abspath(f"{options.outputDir}/security-feedback.md")
 
     def isObjectiveSuccess(self, feedback, options):
-        allFindings = list(self.processor.extractFindings(feedback))
+        allFindings = self.extractFindings(feedback)
         relevantFindings = self.processor.filterStatus(allFindings, FindingStatus.INTRODUCED, partOfObjective=True)
         return len(relevantFindings) == 0
+
+    def extractFindings(self, feedback):
+        findings = list(self.processor.extractFindings(feedback))
+
+        if self.previousFeedback is not None:
+            # For on-premise Sigrid we need to check for new findings ourselves,
+            # since we don't have an end point to perform that logic.
+            previousFindings = list(self.processor.extractFindings(self.previousFeedback))
+            previousFingerprints = [finding.fingerprint for finding in previousFindings]
+
+            for finding in findings:
+                if finding.status == FindingStatus.REMAINING and finding.fingerprint not in previousFingerprints:
+                    finding.status = FindingStatus.INTRODUCED
+
+        return findings

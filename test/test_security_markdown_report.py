@@ -152,3 +152,51 @@ class SecurityMarkdownReportTest(TestCase):
         """
 
         self.assertEqual(markdown.strip(), inspect.cleandoc(expected).strip())
+
+    @mock.patch.dict(os.environ, {"SIGRID_CI_MARKDOWN_HTML" : "false"})
+    def testIgnoreFailedRun(self):
+        with open(os.path.dirname(__file__) + "/testdata/security-onpremise-osh.json", encoding="utf-8", mode="r") as f:
+            previousFeedback = json.load(f)
+        with open(os.path.dirname(__file__) + "/testdata/security-onpremise.json", encoding="utf-8", mode="r") as f:
+            feedback = json.load(f)
+
+        report = SecurityMarkdownReport(self.options, "HIGH")
+        report.decorateLinks = False
+        report.previousFeedback = previousFeedback
+        markdown = report.renderMarkdown("1234", feedback, self.options)
+
+        expected = """
+            # [Sigrid](https://sigrid-says.com/aap/noot/-/security) Security feedback *(Beta)*
+    
+            **✅  You achieved your objective of having no critical-severity security findings**
+            
+            > Sigrid CI for Security is currently in Beta. [The documentation](https://docs.sigrid-says.com/sigridci-integration/using-sigridci.html#security-feedback-beta) contains more information on its current state and known limitations.
+            
+            - ❌ means this finding fails your objective.
+            - ⚠️ means a finding exists, but is not severe enough to fail your objective.
+            - ✅ means everything is fine.
+            
+            ## 👍 What went well?
+            
+            > You fixed **0** security findings.
+            
+            ## 👎 What could be better?
+            
+            > Unfortunately, you introduced **1** security findings.
+            
+            | Risk | Meets objective? | File | Finding |
+            |----|----|----|----|
+            | 🔴 | ⚠️ | Aap.java:86 | InterruptedException and ThreadDeath should not be ignored |
+            
+            If you believe these findings are false positives,
+            you can [exclude the rule](https://docs.sigrid-says.com/reference/analysis-scope-configuration.html#excluding-security-rules) in the Sigrid configuration.
+            If you believe these findings are located in files that should not be scanned, you can also
+            [exclude the files and/or directories](https://docs.sigrid-says.com/reference/analysis-scope-configuration.html#excluding-files-and-directories-from-security-scanning) in the configuration.
+            
+            
+            ----
+            
+            [**View this system in Sigrid**](https://sigrid-says.com/aap/noot/-/security)
+        """
+
+        self.assertEqual(markdown.strip(), inspect.cleandoc(expected).strip())

@@ -52,7 +52,7 @@ class SarifProcessor:
             if self.isExcludedTool(run) or not self.isSuccessfulRun(run):
                 for result in run.get("results", []):
                     fingerprint = result["fingerprints"]["sigFingerprint/v1"]
-                    risk = result.get("properties", {}).get("severity") or "UNKNOWN"
+                    risk = (result.get("properties", {}).get("severity") or "UNKNOWN").upper()
                     location = self.getLocation(result)
                     file = self.rewriteSubSystem(location.get("artifactLocation", {}).get("uri", self.UNKNOWN_LOCATION))
                     line = location.get("region", {}).get("startLine", 0)
