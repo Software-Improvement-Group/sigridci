@@ -79,20 +79,28 @@ In addition to updating Sigrid itself, you will also need to periodically update
 - For Kubernetes, we support the latest 2 major versions. You can track the Kubernetes version history in [this overview](https://kubernetes.io/releases/).
 - For Postgres, we also support the latest 2 major versions. You can track the Postgres version history in [this overview](https://www.postgresql.org/support/versioning/).
 
-## Functional/Technical Differences in Sigrid On-Premise
+## Functional Differences and Limitations in Sigrid On-Premise
 
-- Single-Tenant Architecture: The on-premise Sigrid distribution is single-tenant, which means you cannot create multiple "tenants." All systems and analyses are consolidated into a single portfolio. You can still use Sigrid's user management to assign access permissions to different users for specific systems, and you can organize users and system access by creating teams.
-- Source Code Publishing: You are required to run the analysis container in a development pipeline (or another Docker-capable environment) to publish your source code to Sigrid. SFTP uploads and manual uploads are not supported. For more details, read [here](onpremise-analysis.md).
-- Multi-Repo Systems: [Multi-repo systems](systems.md#sigrid-view-is-based-on-business-applications) are not supported. You are responsible for publishing source code from your development platform to Sigrid.
-- View Source Feature: The "view source" feature will display the *current* state of the file in your development platform, which may differ from the version of the file that was analyzed by Sigrid.
+- Functional Differences:
+  - Single-Tenant Architecture: The on-premise Sigrid distribution is single-tenant, which means you cannot create multiple "tenants." All systems and analyses are consolidated into a single portfolio. You can still use Sigrid's user management to assign access permissions to different users for specific systems, and organize users and system access by creating teams.
+  - Source Code Publishing: You are required to run the analysis container in a development pipeline (or another Docker-capable environment) to publish your source code to Sigrid. SFTP uploads and manual uploads are not supported. For more details, read [here](onpremise-analysis.md).
+  - Multi-Repo Systems: [Multi-repo systems](systems.md#sigrid-view-is-based-on-business-applications) are not supported. You are responsible for publishing source code from your development platform to Sigrid.
+  - View Source Feature: The "view source" feature displays the current state of the file in your development platform, which may differ from the version that was analyzed by Sigrid.
+
 - Technology Support Differences:
-  - Mendix: Set the variable `CONVERT` to `mendix` in your CI pipeline job, and use `Mendixflow` as language when defining the scope.
-  - Outsystems: This technology is not supported.
+  - Supported technologies:
+    - Outsystems: This technology is not supported.
+  - Technology conversion configuration:
+    - Mendix: Set the variable `CONVERT` to `mendix` in your CI pipeline job, and use `Mendixflow` as the language when defining the scope.
+  - Open Source ecosystems support (for Open Source Health):
+    - Maven: For most on-premise setups the use of Maven dependency tree files is required to effectively use OSH, for more details see [here](onpremise-osh-analysis.md)
+  - Security analyzers:
+    - Checkmarx: This security tool is not supported.
+
 - Unavailable Features:
-  - Security: The following tool(s) are currently unsupported in Sigrid On-Premise, and integration is not planned:
-    - Checkmarx
-  - [Interactive AI Explanations](../reference/ai-explanations.md#genai-explanations)
-  - [Sigrid MCP Integrations](../integrations/integration-sigrid-mcp.md)
+  - AI-based features: The following features are not available in Sigrid On-Premise, as they depend on AI services hosted within SIG infrastructure and are not part of, or accessible from, the on-premise deployment:
+    - [Interactive AI Explanations](../reference/ai-explanations.md#genai-explanations)
+    - [Sigrid MCP Integrations](../integrations/integration-sigrid-mcp.md)
 
 ## Contact and support
 
