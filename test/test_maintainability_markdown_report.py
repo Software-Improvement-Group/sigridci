@@ -97,6 +97,7 @@ class MaintainabilityMarkdownReportTest(TestCase):
 
         self.assertEqual(markdown.strip(), inspect.cleandoc(expected).strip())
 
+    @mock.patch.dict(os.environ, {"SIGRID_CI_MARKDOWN_HTML" : "false"})
     def testCustomOuputDirectory(self):
         tempDir = tempfile.mkdtemp()
         self.options.outputDir = tempDir
@@ -125,6 +126,7 @@ class MaintainabilityMarkdownReportTest(TestCase):
             contents = f.read()
         self.assertEqual(contents.strip(), markdown.strip())
 
+    @mock.patch.dict(os.environ, {"SIGRID_CI_MARKDOWN_HTML" : "false"})
     def testSortRefactoringCandidatesTableBySeverity(self):
         feedback = {
             "refactoringCandidates" : [
@@ -149,6 +151,7 @@ class MaintainabilityMarkdownReportTest(TestCase):
 
         self.assertEqual(table.strip(), inspect.cleandoc(expected).strip())
 
+    @mock.patch.dict(os.environ, {"SIGRID_CI_MARKDOWN_HTML" : "false"})
     def testShowFixedRefactoringCandidatesInWhatWentWellSection(self):
         feedback = {
             "refactoringCandidates" : [
@@ -185,6 +188,7 @@ class MaintainabilityMarkdownReportTest(TestCase):
 
         self.assertEqual(markdown.strip(), inspect.cleandoc(expected).strip())
 
+    @mock.patch.dict(os.environ, {"SIGRID_CI_MARKDOWN_HTML" : "false"})
     def testLimitRefactoringCandidatesTableWhenThereAreTooMany(self):
         findings = [self.toRefactoringCandidate(f"aap-{i}", "introduced", "UNIT_SIZE", "HIGH") for i in range(1, 100)]
 
@@ -208,6 +212,7 @@ class MaintainabilityMarkdownReportTest(TestCase):
 
         self.assertEqual(table.strip(), inspect.cleandoc(expected).strip())
 
+    @mock.patch.dict(os.environ, {"SIGRID_CI_MARKDOWN_HTML" : "false"})
     def testLimitDuplicatesWithTooManyOccurrences(self):
         rc = self.toRefactoringCandidate(f"aap", "introduced", "DUPLICATION", "VERY_HIGH")
         rc["occurrences"] = [self.toOccurrence(f"aap-{i}", i, i) for i in range(1, 10)]
