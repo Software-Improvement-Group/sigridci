@@ -16,7 +16,7 @@ From a deployment perspective, on-premise Sigrid consists of two "parts":
 
 - Sigrid On-Premise is based on [Docker containers](https://en.wikipedia.org/wiki/Docker_%28software%29). There are two types of containers:
   - Application containers that should be deployed permanently in a [Kubernetes](https://en.wikipedia.org/wiki/Kubernetes) cluster, based on a [Helm chart](https://helm.sh) that is provided by SIG.
-  - Analysis containers that run from a build pipeline within your development platform. These analysis containers may also be started on Kubernetes, but that is not a requirement. Supported development platforms are listed in [development platform integration](#development-platform-integration).
+  - Analysis containers that run from a build pipeline within your development platform.
 - SIG provides the necessary images through a container registry. The section [obtaining Sigrid on-premise](#obtaining-sigrid-on-premise) contains more information on how you can obtain and update these Docker containers.
 - Authentication is based on your identity provider, using [OpenID Connect](https://openid.net/developers/how-connect-works/). Alternatively, [SAML](https://en.wikipedia.org/wiki/SAML_2.0) or [LDAP](https://en.wikipedia.org/wiki/Lightweight_Directory_Access_Protocol) are also supported, through [Dex](https://dexidp.io/).
 - Analyses are triggered from a build pipeline. The analysis results are then imported into a Postgres database, so they can be viewed in Sigrid.
@@ -82,7 +82,7 @@ In addition to updating Sigrid itself, you will also need to periodically update
 ## Functional/Technical Differences in Sigrid On-Premise
 
 - Single-Tenant Architecture: The on-premise Sigrid distribution is single-tenant, which means you cannot create multiple "tenants." All systems and analyses are consolidated into a single portfolio. You can still use Sigrid's user management to assign access permissions to different users for specific systems, and you can organize users and system access by creating teams.
-- Source Code Publishing: You are required to use the [development platform integration](#development-platform-integration) to publish your source code to Sigrid. SFTP uploads and manual uploads are not supported.
+- Source Code Publishing: You are required to run the analysis container in a development pipeline (or another Docker-capable environment) to publish your source code to Sigrid. SFTP uploads and manual uploads are not supported. For more details, read [here](onpremise-analysis.md).
 - Multi-Repo Systems: [Multi-repo systems](systems.md#sigrid-view-is-based-on-business-applications) are not supported. You are responsible for publishing source code from your development platform to Sigrid.
 - View Source Feature: The "view source" feature will display the *current* state of the file in your development platform, which may differ from the version of the file that was analyzed by Sigrid.
 - Technology Support Differences:
