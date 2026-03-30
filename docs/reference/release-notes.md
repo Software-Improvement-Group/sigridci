@@ -10,6 +10,8 @@ SIG uses [continuous delivery](https://en.wikipedia.org/wiki/Continuous_delivery
   - Track objectives, grouped by team or policy.
   - View your landscape's current state, which is the "classic" dashboard you're used to, and which is still around.
 - **Sigrid CI:** Sigrid CI feedback for Security is now in beta. This allows you to get feedback on security findings during your code review process, allowing you to triage or address these findings before they are merged. You can find out more in the [Sigrid CI documentation](../sigridci-integration/using-sigridci.md). This includes instructions for [adding security feedback to your existing Sigrid CI configuration](../sigridci-integration/using-sigridci.md#adding-security-feedback-to-an-existing-sigrid-ci-configuration).
+- **IDE extensions:** Initial documentation is now available for the Sigrid IDE extensions for [Visual Studio Code](../integrations/vscode-extension.md) and [Mendix Studio Pro](../integrations/mendix-studio-pro-extension.md). Both extensions are currently in Beta, with the first release expected in April.
+- **Technology support:** The analyses for HTML, Angular Templates, and Django Templates have all been merged into a single `html` analysis. Sigrid will now automatically figure out which dialect of HTML you're using, without needing to configure this manually. This makes the configuration a bit simpler and easier to manage. As usual, this change is backward compatible, so existing configurations will continue to work.
 
 ### March 23, 2026
 
