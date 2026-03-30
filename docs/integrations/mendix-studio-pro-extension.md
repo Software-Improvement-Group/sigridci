@@ -37,7 +37,7 @@ Before you can use the extension, you will first need to provide your QSM creden
 - In the top menu, select "extensions".
 - Select "QSM".
 - Select "QSM settings".
-- Enter your QSM customer namd and system name.
+- Enter your QSM customer name and system name.
 - You will also need to add your [authentication token](../organization-integration/authentication-tokens.md).
 
 <img src="../images/ide/vscode-settings.png" width="450" />
