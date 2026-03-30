@@ -3,6 +3,11 @@ Sigrid release notes
 
 SIG uses [continuous delivery](https://en.wikipedia.org/wiki/Continuous_delivery), meaning that every change to Sigrid or the underlying analysis is released once our development pipeline has completed. On average, we release somewhere between 10 and 20 times per day. This page therefore doesn't list every single change, since that would quickly lead to an excessively long list of small changes. Instead, this page lists Sigrid and analysis changes that we consider noteworthy for the typical Sigrid user.
 
+### March 30, 2026
+
+- **IDE extensions:** Initial documentation is now available for the Sigrid IDE extensions for [Visual Studio Code](../integrations/vscode-extension.md) and [Mendix Studio Pro](../integrations/mendix-studio-pro-extension.md). Both extensions are currently in Beta, with the first release expected in April.
+- **Technology support:** The analyses for HTML, Angular Templates, and Django Templates have all been merged into a single `html` analysis. Sigrid will now automatically figure out which dialect of HTML you're using, without needing to configure this manually. This makes the configuration a bit simpler and easier to manage. As usual, this change is backward compatible, so existing configurations will continue to work.
+
 ### March 23, 2026
 
 - **IDE integratins:** Beta versions of the Sigrid IDE integrations for [Mendix Studio Pro](https://github.com/Software-Improvement-Group/sigrid-mendix-studio-pro) and [Visual Studio Code](https://github.com/Software-Improvement-Group/sigrid-vscode-extension) are now available from GitHub. We would love to hear your feedback and ideas! After the beta phase, we will publish the IDE integrations to their respective marketplace.

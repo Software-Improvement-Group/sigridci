@@ -51,10 +51,6 @@
   display_name: "Altova UML"
   category: customization
 
-- context: angularjstemplate
-  display_name: "Angular Templates"
-  category: templating
-
 - context: ansible
   display_name: "Ansible"
   category: dsl
@@ -303,10 +299,6 @@
 - context: deltacobol
   display_name: "Delta/Cobol"
   category: mainframe
-
-- context: djangotemplates
-  display_name: "Django Templates"
-  category: templating
 
 - context: docker
   display_name: "Docker"
