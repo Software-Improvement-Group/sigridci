@@ -49,7 +49,7 @@ class SarifProcessor:
             return []
 
         for run in feedback["runs"]:
-            if self.isExcludedTool(run) or not self.isSuccessfulRun(run):
+            if not self.isExcludedTool(run) or not self.isSuccessfulRun(run):
                 for result in run.get("results", []):
                     fingerprint = result["fingerprints"]["sigFingerprint/v1"]
                     risk = (result.get("properties", {}).get("severity") or "UNKNOWN").upper()
@@ -63,7 +63,7 @@ class SarifProcessor:
                         yield Finding(fingerprint, risk, result["message"]["text"], file, line, partOfObjective, status)
 
     def isExcludedTool(self, run):
-        return run["tool"]["driver"]["name"] not in self.EXCLUDED_TOOLS
+        return run["tool"]["driver"]["name"] in self.EXCLUDED_TOOLS
 
     def isSuccessfulRun(self, run):
         if not "invocations" in run:

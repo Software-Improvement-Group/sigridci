@@ -177,7 +177,7 @@ class SigridApiClient:
 
     def fetchSecurityHeaders(self):
         path = f"/analysis-results/api/v1/security-findings/{self.urlCustomerName}/{self.urlSystemName}"
-        return self.retry(lambda: self.callSigridAPI(path, method="HEAD"))
+        return self.retry(lambda: self.callSigridAPI(path, method="HEAD", accept=None))
 
     def logPlatformInformation(self, platformId):
         try:
