@@ -47,6 +47,8 @@ Before you can use the extension, you will first need to provide your Sigrid cre
 - In the extensions sub-menu, select "Sigrid".
 - Enter your Sigrid customer namd and system name.
 - You will also need to add your [authentication token](../organization-integration/authentication-tokens.md).
+- If you are using on-premise Sigrid, you will also need to enter your on-premise URL. If you are using
+  cloud-based Sigrid, this is not needed.
 
 <img src="../images/ide/vscode-settings.png" width="450" />
 
