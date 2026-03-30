@@ -45,7 +45,7 @@ Before you can use the extension, you will first need to provide your Sigrid cre
 - Open the settings menu in Visual Studio Code.
 - In the list of settings, select "Extensions".
 - In the extensions sub-menu, select "Sigrid".
-- Enter your Sigrid customer namd and system name.
+- Enter your Sigrid customer name and system name.
 - You will also need to add your [authentication token](../organization-integration/authentication-tokens.md).
 - If you are using on-premise Sigrid, you will also need to enter your on-premise URL. If you are using
   cloud-based Sigrid, this is not needed.
