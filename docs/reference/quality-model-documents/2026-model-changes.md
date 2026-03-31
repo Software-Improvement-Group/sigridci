@@ -56,7 +56,22 @@ volume (in person years) across Sigrid. It will just not affect the maintainabil
 {: .faq }
 
 Along with removing the Volume system property, we also changed **how system properties are aggregated to the
-overall rating**.  
+overall rating**. We used a "normal" mean in previous versions of the model, but we are switching the
+[geometric mean](https://en.wikipedia.org/wiki/Geometric_mean). What this means in practice: Previously,
+a single high rating for a single system property would "pull up" the overall rating. The following screenshot
+shows this in action:
+
+<img src="../../images/models/aggregation-example.png" width="400" />
+
+The overall rating of 3.2 stars seems extremely generous. Firstly, the system is small, so it's automatically
+receiving a 5-star Volume rating. This will change with the removal of the Volume system property, which will make
+the maintainability model more strict for (very) small systems and more lenient for large systems.
+
+However, even with the removal of Volume, you still get an effect where a single high rating (like Module Coupling
+in this example) pulls the overall rating towards 3 stars. This is a known effect referred to as
+[regression towards the mean](https://en.wikipedia.org/wiki/Regression_toward_the_mean). Changing the aggregation
+will lead to overall ratings that are less affected by a single outlier, and more in line with the general pattern
+of *all* system properties.
 
 ## Changes in the 2026 SIG architecture model
 
