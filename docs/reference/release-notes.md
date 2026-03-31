@@ -3,6 +3,10 @@ Sigrid release notes
 
 SIG uses [continuous delivery](https://en.wikipedia.org/wiki/Continuous_delivery), meaning that every change to Sigrid or the underlying analysis is released once our development pipeline has completed. On average, we release somewhere between 10 and 20 times per day. This page therefore doesn't list every single change, since that would quickly lead to an excessively long list of small changes. Instead, this page lists Sigrid and analysis changes that we consider noteworthy for the typical Sigrid user.
 
+### April 7, 2026
+
+- **Open Source Health:** You are now able to exclude freshness risk and management risk for open source libraries [in your configuration](../reference/analysis-scope-configuration.md#exclude-open-source-health-risks). This means that every type of open source issue is now customizable, which is helpful to avoid Sigrid reporting unfixable issues over and over again.   
+
 ### March 30, 2026
 
 - **IDE extensions:** Initial documentation is now available for the Sigrid IDE extensions for [Visual Studio Code](../integrations/vscode-extension.md) and [Mendix Studio Pro](../integrations/mendix-studio-pro-extension.md). Both extensions are currently in Beta, with the first release expected in April.
