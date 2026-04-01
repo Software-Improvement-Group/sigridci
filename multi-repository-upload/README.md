@@ -6,9 +6,9 @@ The script clones each repository into a temporary directory, bundles them toget
 
 ## Requirements
 
-- Python 3.10+
+- Python 3.9+
 - `git` available on `PATH`
-- A valid Sigrid CI token
+- A valid [Sigrid CI token](https://docs.sigrid-says.com/organization-integration/authentication-tokens.html)
 
 No additional Python packages are needed — only standard library modules are used.
 

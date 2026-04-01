@@ -30,6 +30,7 @@ import subprocess
 import sys
 import tempfile
 from pathlib import Path
+from typing import List, Optional
 
 DEFAULT_SIGRIDCI_SCRIPT = Path(__file__).resolve().parent.parent / "sigridci" / "sigridci.py"
 
@@ -92,9 +93,9 @@ def _resolve_optional_file(path_str: str, label: str) -> Path:
     return path
 
 
-def _find_duplicate_names(git_urls: list[str]) -> list[str]:
-    seen: set[str] = set()
-    duplicates: list[str] = []
+def _find_duplicate_names(git_urls: List[str]) -> List[str]:
+    seen: set = set()
+    duplicates: List[str] = []
     for name in (_repo_name_from_url(u) for u in git_urls):
         if name in seen:
             duplicates.append(name)
@@ -104,9 +105,9 @@ def _find_duplicate_names(git_urls: list[str]) -> list[str]:
 
 def _prepare_source_dir(
     source_dir: str,
-    git_urls: list[str],
-    sigrid_yaml: Path | None,
-    sigrid_metadata_yaml: Path | None,
+    git_urls: List[str],
+    sigrid_yaml: Optional[Path],
+    sigrid_metadata_yaml: Optional[Path],
 ) -> None:
     os.makedirs(source_dir)
     if sigrid_yaml:
@@ -121,7 +122,7 @@ def _prepare_source_dir(
         print(f"  + {repo_name}/")
 
 
-def _resolve_sigridci_script(sigridci_path: str | None) -> Path:
+def _resolve_sigridci_script(sigridci_path: Optional[str]) -> Path:
     if sigridci_path:
         sigridci_dir = Path(sigridci_path).resolve()
         if not sigridci_dir.exists():
