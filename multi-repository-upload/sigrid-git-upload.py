@@ -12,7 +12,7 @@ Usage:
         [--token <Sigrid CI token>] \\
         [--sigrid-yaml path/to/sigrid.yaml] \\
         [--sigrid-metadata-yaml path/to/sigrid-metadata.yaml] \\
-        [--sigridci-path path/to/sigridci] - you can retrieve the latest version from https://github.com/Software-Improvement-Group/sigridci.git \\
+        [--sigridci-path path/to/sigridci] \\
         https://git.example.com/org/repo1.git \\
         https://git.example.com/org/repo2.git
     
@@ -31,7 +31,7 @@ import sys
 import tempfile
 from pathlib import Path
 
-SIGRIDCI_REPO_URL = "https://github.com/Software-Improvement-Group/sigridci.git"
+DEFAULT_SIGRIDCI_SCRIPT = Path(__file__).resolve().parent.parent / "sigridci" / "sigridci.py"
 
 
 def _repo_name_from_url(git_url: str) -> str:
@@ -74,7 +74,7 @@ def _build_arg_parser() -> argparse.ArgumentParser:
     parser.add_argument("--sigrid-metadata-yaml", metavar="PATH",
                         help="Path to the sigrid-metadata.yaml file.")
     parser.add_argument("--sigridci-path", metavar="PATH",
-                        help="Path to local sigridci directory (if not provided, will clone from GitHub).")
+                        help="Path to the sigridci directory. Defaults to the sigridci/ directory in this repository.")
     parser.add_argument("--sigrid-url", default="https://sigrid-says.com", metavar="URL",
                         help="Sigrid base URL (default: https://sigrid-says.com).")
     parser.add_argument("--token", metavar="TOKEN",
@@ -121,9 +121,8 @@ def _prepare_source_dir(
         print(f"  + {repo_name}/")
 
 
-def _resolve_sigridci_script(tmp_dir: str, sigridci_path: str | None) -> Path:
+def _resolve_sigridci_script(sigridci_path: str | None) -> Path:
     if sigridci_path:
-        print("[2/3] Using local sigridci …")
         sigridci_dir = Path(sigridci_path).resolve()
         if not sigridci_dir.exists():
             print(f"ERROR: sigridci path not found: {sigridci_dir}", file=sys.stderr)
@@ -132,19 +131,12 @@ def _resolve_sigridci_script(tmp_dir: str, sigridci_path: str | None) -> Path:
         if not script.exists():
             print(f"ERROR: sigridci.py not found at: {script}", file=sys.stderr)
             sys.exit(1)
-        print(f"  Using: {sigridci_dir}")
     else:
-        print("[2/3] Cloning sigridci …")
-        sigridci_dir_path = os.path.join(tmp_dir, "sigridci")
-        result = subprocess.run(
-            ["git", "clone", "--depth=1", SIGRIDCI_REPO_URL, sigridci_dir_path],
-            capture_output=True,
-            text=True,
-        )
-        if result.returncode != 0:
-            print(f"ERROR: Failed to clone sigridci:\n{result.stderr}", file=sys.stderr)
+        script = DEFAULT_SIGRIDCI_SCRIPT
+        if not script.exists():
+            print(f"ERROR: sigridci.py not found at the default location: {script}", file=sys.stderr)
             sys.exit(1)
-        script = Path(sigridci_dir_path) / "sigridci" / "sigridci.py"
+    print(f"[2/3] Using sigridci: {script}")
     print()
     return script
 
@@ -198,7 +190,7 @@ def main() -> None:
         _prepare_source_dir(source_dir, args.git_urls, sigrid_yaml, sigrid_metadata_yaml)
         print()
 
-        sigridci_script = _resolve_sigridci_script(tmp_dir, args.sigridci_path)
+        sigridci_script = _resolve_sigridci_script(args.sigridci_path)
         _run_sigridci(sigridci_script, args.customer, args.system, source_dir, args.sigrid_url, token)
 
     print(
