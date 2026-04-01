@@ -36,7 +36,7 @@ python sigrid-git-upload.py \
 | `--token` | No | Sigrid CI token. Overrides the `SIGRID_CI_TOKEN` environment variable. |
 | `--sigrid-yaml` | No | Path to a `sigrid.yaml` scope configuration file to include at the root. |
 | `--sigrid-metadata-yaml` | No | Path to a `sigrid-metadata.yaml` file to include at the root. |
-| `--sigridci-path` | No | Path to a local `sigridci` checkout. If omitted, the latest version is cloned from GitHub automatically. |
+| `--sigridci-path` | No | Path to a local `sigridci` directory. Defaults to the `sigridci/` directory in this repository. |
 | `--sigrid-url` | No | Sigrid base URL. Defaults to `https://sigrid-says.com`. |
 
 ## Environment variables
@@ -66,7 +66,7 @@ This produces a single Sigrid system called `my-platform` containing all three r
 ## How it works
 
 1. **Clone** — each repository is cloned into its own subdirectory inside a temporary directory. `core.longpaths=true` is set to handle repositories with deeply nested paths on Windows.
-2. **Resolve sigridci** — if `--sigridci-path` is not provided, the latest `sigridci` is cloned from GitHub.
+2. **Resolve sigridci** — uses the `sigridci/` directory bundled in this repository. Override with `--sigridci-path` if needed.
 3. **Publish** — `sigridci.py --publishonly` is invoked with the combined source directory, uploading it to Sigrid.
 
 ## Notes
