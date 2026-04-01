@@ -28,6 +28,7 @@ from .reports.osh_markdown_report import OpenSourceHealthMarkdownReport
 from .reports.osh_text_report import OpenSourceHealthTextReport
 from .reports.pipeline_summary_report import PipelineSummaryReport
 from .reports.security_markdown_report import SecurityMarkdownReport
+from .reports.security_text_report import SecurityTextReport
 from .reports.static_html_report import StaticHtmlReport
 
 
@@ -77,10 +78,6 @@ class FeedbackProvider:
             self.analysisId = "local"
             self.feedback = json.load(f)
 
-    def loadPreviousAnalysisResults(self, analysisResultsFile):
-        with open(analysisResultsFile, mode="r", encoding="utf-8") as f:
-            self.previousFeedback = json.load(f)
-
     def generateReports(self):
         if self.feedback is None:
             raise Exception("No feedback provided")
@@ -109,7 +106,7 @@ class FeedbackProvider:
             licenseObjective = self.objectives["OSH_MAX_LICENSE_RISK"]
             return OpenSourceHealthMarkdownReport(self.options, vulnerabilityObjective, licenseObjective)
         elif self.capability == SECURITY:
-            return SecurityMarkdownReport(self.objectives["SECURITY_MAX_SEVERITY"])
+            return SecurityMarkdownReport(self.options, self.objectives["SECURITY_MAX_SEVERITY"])
         else:
             raise Exception(f"Unknown capability: {self.capability}")
 
@@ -125,6 +122,9 @@ class FeedbackProvider:
             reports += [AsciiArtReport(), JUnitFormatReport(), StaticHtmlReport(self.objectives)]
         elif self.capability == OPEN_SOURCE_HEALTH:
             reports += [OpenSourceHealthTextReport(markdownReport)]
+        elif self.capability == SECURITY:
+            reports += [SecurityTextReport(markdownReport)]
 
         reports.append(PipelineSummaryReport(markdownReport))
         return reports
+

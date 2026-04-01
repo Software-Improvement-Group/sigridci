@@ -28,7 +28,7 @@ The script takes a limited number of mandatory arguments. However, Sigrid CI's b
 | `--system`                    | Yes      | examplesystemname   | Name of your system in Sigrid. Contact SIG support if you are not sure about this. [2]                                            |
 | `--subsystem `                | No       | frontend            | Used to map between repository directory structure versus the one known by Sigrid. [5]                                            |
 | `--source`                    | No       | .                   | Path of your project's source code. Use "." for current directory.                                                                |
-| `--capability`                | No       | maintainability,osh | Comma-separated list of Sigrid capabilities (e.g. `maintainability,osh`). Default is based on your Sigrid license.                |
+| `--capability`                | No       | maintainability     | Comma-separated list of Sigrid capabilities (`maintainability,osh,security`). Default is based on your Sigrid license.            |
 | `--publish`                   | No       | N/A                 | Automatically publishes analysis results to Sigrid. [1]                                                                           |
 | `--publishonly`               | No       | N/A                 | Publishes analysis results to Sigrid, but *does not* provide feedback in the CI environment itself. [3]                           |
 | `--exclude`                   | No       | /build/,.png        | Comma-separated list of file and/or directory names that should be excluded from the upload. [4, 7]                               |
@@ -84,7 +84,7 @@ the Sigrid CI exit code for this, and you can even make this behavior more nuanc
 - Exit code 1: An error occurred while running Sigrid CI.
 - Exit code 2: You failed your quality objective for Maintainability.
 - Exit code 4: You failed your quality objective for Open Source Health.
-- Exit code 8: You failed your quality objective for Open Source Health.
+- Exit code 8: You failed your quality objective for Security.
 
 These exit codes "stack", so an exit code of 6 means you failed your quality objectives for both Maintainability
 and Open Source Health.
