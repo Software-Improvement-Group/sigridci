@@ -66,9 +66,9 @@ class SarifProcessor:
         return run["tool"]["driver"]["name"] in self.EXCLUDED_TOOLS
 
     def isSuccessfulRun(self, run):
-        if not "invocations" in run:
+        if not "invocations" in run or len(run["invocations"]) == 0:
             return True
-        return run["invocations"]["executionSuccessful"]
+        return run["invocations"][0].get("executionSuccessful", True)
 
     def getLocation(self, result):
         if not "locations" in result or len(result["locations"]) == 0:

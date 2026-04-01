@@ -86,3 +86,16 @@ class FindingsProcessorTest(TestCase):
         self.assertEqual(findings[0].risk, "HIGH")
         self.assertEqual(findings[0].description, "DocumentBuilderFactory being instantiated for XXE vulnerabilities")
         self.assertEqual(findings[0].file, "SecurityExample.java")
+
+    def testHandleAbsentInvocationsList(self):
+        with open(os.path.dirname(__file__) + "/testdata/security-sigrid-api-sarif.json", encoding="utf-8", mode="r") as f:
+            feedback = json.load(f)
+
+        for run in feedback["runs"]:
+            run["invocations"] = []
+
+        options = PublishOptions("aap", "noot", RunMode.FEEDBACK_ONLY)
+        processor = SarifProcessor(options, "HIGH")
+        findings = list(processor.extractFindings(feedback))
+
+        self.assertEqual(len(findings), 4)
