@@ -427,21 +427,21 @@ This configuration can be managed using the `--convert` [option in Sigrid CI](cl
 
 In addition to supporting 300+ technologies, Sigrid also supports various open source ecosystems for its Open Source Health capability. Note that different projects might use different open source ecosystems, even if they use the same technology. For example, there is no standardized way to manage open source dependencies in Java projects. Some Java projects use Maven, others use Gradle. This is why some technologies are listed multiple times in the table below.
 
-| Open source ecosystem | Common technologies    |
-|-----------------------|------------------------|
+| Open source ecosystem | Common technologies    | Notes                                                                            |
+|-----------------------|------------------------|----------------------------------------------------------------------------------|
 | Bower                 | JavaScript             |
 | Cargo                 | Rust                   |
 | CocoaPods             | Swift, Objective-C     |
 | Composer              | PHP                    |
 | Go Modules            | Go                     |
-| Gradle                | Java, Kotlin, Groovy   |
+| Gradle                | Java, Kotlin, Groovy   | [Instructions for publishing](../capabilities/osh-upload-instructions.md#gradle) |
 | Ivy                   | Java                   |
 | LibMan                | JavaScript             |
-| Maven                 | Java                   |
+| Maven                 | Java                   | [Instructions for publishing](../capabilities/osh-upload-instructions.md#maven)  |
 | NPM                   | JavaScript, TypeScript |
 | NuGet                 | C#                     |
 | PuppetForge           | Puppet                 |
-| Poetry                | Python                 |
+| Poetry                | Python                 | [Instructions for publishing](../capabilities/osh-upload-instructions.md#poetry) |
 | pub.dev               | Dart, Flutter          |
 | PyPi                  | Python                 |
 | RubyGems              | Ruby                   |
@@ -458,29 +458,29 @@ These are the supported security analyzers as you may see them in your security 
 
 Note this section only described *third party* security analysis analyzers. The results from these analyzers are then combined with the results from Sigrid's own security ruleset before being displayed.
 
-| Display name           | Technologies                      | Notes                                                    |
-|------------------------|-----------------------------------|----------------------------------------------------------|
-| Bandit                 | Python                            |
-| Checkmarx              | (many)                            | Requires *Sigrid Security Checkmarx* license.            |
-| ErrorProne.NET         | C#                                | Requires compiling code.                                 |
-| ESLint                 | JavaScript, TypeScript            |
-| FB Contrib             | Java                              |
-| FindSecBugs            | Java                              |
-| FlawFinder             | C                                 |
-| Google ErrorProne      | Java                              | Requires compiling code.                                 |
-| Gosec                  | Go                                |
-| KICS                   | Docker, Ansible, Kubernetes, etc. |
-| Microsoft Code Quality | C#                                | Requires compiling code.                                 |
-| MobSF                  | Android                           |
-| MultithreadingAnalyzer | C#                                | Requires compiling code.                                 |
-| NodeJS Scan            | JavaScript, TypeScript            |
-| Puma Security          | C#                                | Requires compiling code.                                 |
-| SecurityCodeScan       | C#                                | Requires compiling code.                                 |
-| SonarQube (C#)         | C#                                | Requires compiling code.                                 |
-| SonarQube (Java)       | Java                              | Requires compiling code.                                 | 
-| SpotBugs               | Java                              |
-| SemGrep                | (many)                            |
-| VMWare CSA             | Java, C#, configuration           | Cloud Suitability Analyzer.                              |
+| Display name           | Technologies                      | Notes                                         | Supports Sigrid CI |
+|------------------------|-----------------------------------|-----------------------------------------------|--------------------|
+| Bandit                 | Python                            |                                               | ✅                  |
+| Checkmarx              | (many)                            | Requires *Sigrid Security Checkmarx* license. | ❌                  |
+| ErrorProne.NET         | C#                                | Requires compiling code.                      | ✅                  |
+| ESLint                 | JavaScript, TypeScript            |                                               | ✅                  |
+| FB Contrib             | Java                              |                                               | ✅                  |
+| FindSecBugs            | Java                              |                                               | ✅                  |
+| FlawFinder             | C                                 |                                               | ✅                  |
+| Google ErrorProne      | Java                              | Requires compiling code.                      | ✅                  |
+| Gosec                  | Go                                |                                               | ✅                  |
+| KICS                   | Docker, Ansible, Kubernetes, etc. |                                               | ✅                  |
+| Microsoft Code Quality | C#                                | Requires compiling code.                      | ✅                  |
+| MobSF                  | Android                           |                                               | ✅                  |
+| MultithreadingAnalyzer | C#                                | Requires compiling code.                      | ✅                  |
+| NodeJS Scan            | JavaScript, TypeScript            |                                               | ✅                  |
+| Puma Security          | C#                                | Requires compiling code.                      | ✅                  |
+| SecurityCodeScan       | C#                                | Requires compiling code.                      | ✅                  |
+| SonarQube (C#)         | C#                                | Requires compiling code.                      | ✅                  |
+| SonarQube (Java)       | Java                              | Requires compiling code.                      | ✅                  | 
+| SpotBugs               | Java                              |                                               | ✅                  |
+| SemGrep                | (many)                            |                                               | ✅                  |
+| VMWare CSA             | Java, C#, configuration           | Cloud Suitability Analyzer.                   | ✅                  |
 
 ## Supported software quality standards
 
