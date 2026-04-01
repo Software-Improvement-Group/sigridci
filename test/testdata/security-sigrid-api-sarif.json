@@ -1,0 +1,158 @@
+{
+  "version" : "2.1.0",
+  "runs" : [ {
+    "tool" : {
+      "driver" : {
+        "name" : "Puma Security",
+        "fullDescription" : {
+          "text" : "Puma Security via Sigrid (Git commit: fb366ff)"
+        },
+        "rules" : [ ]
+      }
+    },
+    "results" : [ {
+      "ruleId" : "S4036",
+      "level" : "note",
+      "message" : {
+        "text" : "Puma4"
+      },
+      "locations" : [ {
+        "physicalLocation" : {
+          "artifactLocation" : {
+            "uri" : "neutron/neutron/db/sqlalchemytypes.py"
+          },
+          "region" : {
+            "startLine" : 51,
+            "endLine" : 51
+          }
+        }
+      } ],
+      "fingerprints" : {
+        "sigFingerprint/v1" : "jetFingerprint"
+      },
+      "baselineState" : "new",
+      "properties" : {
+        "tags" : [ ],
+        "severity" : "CRITICAL",
+        "status" : "RAW"
+      }
+    }, {
+      "ruleId" : "S4036",
+      "level" : "note",
+      "message" : {
+        "text" : "Puma2"
+      },
+      "locations" : [ {
+        "physicalLocation" : {
+          "artifactLocation" : {
+            "uri" : "neutron/neutron/ipam/drivers/neutrondb_ipam/driver.py"
+          },
+          "region" : {
+            "startLine" : 51,
+            "endLine" : 51
+          }
+        }
+      } ],
+      "fingerprints" : {
+        "sigFingerprint/v1" : "wimFingerprint"
+      },
+      "baselineState" : "new",
+      "properties" : {
+        "tags" : [ ],
+        "severity" : "HIGH",
+        "status" : "RAW"
+      }
+    } ]
+  }, {
+    "tool" : {
+      "driver" : {
+        "name" : "SpotBugs",
+        "fullDescription" : {
+          "text" : "SpotBugs via Sigrid (Git commit: fb366ff)"
+        },
+        "rules" : [ ]
+      }
+    },
+    "results" : [ {
+      "ruleId" : "S4036",
+      "level" : "note",
+      "message" : {
+        "text" : "Spotbugs2"
+      },
+      "locations" : [ {
+        "physicalLocation" : {
+          "artifactLocation" : {
+            "uri" : "neutron/neutron/common/utils.py"
+          },
+          "region" : {
+            "startLine" : 51,
+            "endLine" : 51
+          }
+        }
+      } ],
+      "fingerprints" : {
+        "sigFingerprint/v1" : "nootFingerprint"
+      },
+      "baselineState" : "new",
+      "properties" : {
+        "tags" : [ ],
+        "severity" : "INFORMATION",
+        "status" : "RAW"
+      }
+    }, {
+      "level" : "note",
+      "message" : {
+        "text" : "Insecure_Randomness"
+      },
+      "locations" : [ {
+        "physicalLocation" : {
+          "artifactLocation" : {
+            "uri" : "test"
+          },
+          "region" : {
+            "startLine" : 1,
+            "endLine" : 2
+          }
+        }
+      } ],
+      "fingerprints" : {
+        "sigFingerprint/v1" : "aapFingerprint"
+      },
+      "suppressions" : [ {
+        "kind" : "external",
+        "justification" : "Finding 9f7f9ed5-4d58-40cb-86cf-a25fcf8f29c3 (fingerprint: aapFingerprint)"
+      } ],
+      "baselineState" : "updated",
+      "properties" : {
+        "tags" : [ ],
+        "severity" : "CRITICAL",
+        "status" : "ACCEPTED"
+      }
+    }, {
+      "level" : "note",
+      "message" : {
+        "text" : "Insecure_Randomness"
+      },
+      "locations" : [ {
+        "physicalLocation" : {
+          "artifactLocation" : {
+            "uri" : "test"
+          },
+          "region" : {
+            "startLine" : 1,
+            "endLine" : 2
+          }
+        }
+      } ],
+      "fingerprints" : {
+        "sigFingerprint/v1" : "zusFingerprint"
+      },
+      "baselineState" : "absent",
+      "properties" : {
+        "tags" : [ ],
+        "severity" : "CRITICAL",
+        "status" : "RAW"
+      }
+    } ]
+  } ]
+}

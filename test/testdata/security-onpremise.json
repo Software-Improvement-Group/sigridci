@@ -1,0 +1,44 @@
+{
+  "version": "2.1.0",
+  "runs": [
+    {
+      "tool": {
+        "driver": {
+          "name": "Semgrep",
+          "fullDescription": {
+            "text": "Semgrep via Sigrid (Git commit: ee1a7ad)"
+          },
+          "rules": []
+        }
+      },
+      "results": [
+        {
+          "ruleId": "S2142",
+          "message": {
+            "text": "InterruptedException and ThreadDeath should not be ignored"
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "Aap.java"
+                },
+                "region": {
+                  "startLine": 86,
+                  "endLine": 86
+                }
+              }
+            }
+          ],
+          "fingerprints": {
+            "sigFingerprint/v1": "aacf9da8965c34eafce2d7e6748e54e70124cecbb2ae3eab7525a66cbef442e3"
+          },
+          "properties": {
+            "tags": ["CWE-391"],
+            "severity": "High"
+          }
+        }
+      ]
+    }
+  ]
+}

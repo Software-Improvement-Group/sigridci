@@ -81,7 +81,7 @@ class GitLabPullRequestReportTest(TestCase):
         gitlab.generate("1234", self.feedback, self.options)
         gitlab.generate("1234", self.feedback, self.options)
 
-        other = MockGitLab(SecurityMarkdownReport())
+        other = MockGitLab(SecurityMarkdownReport(self.options))
         other.generate("1234", {"runs" : []}, self.options)
         other.generate("1234", {"runs" : []}, self.options)
 
