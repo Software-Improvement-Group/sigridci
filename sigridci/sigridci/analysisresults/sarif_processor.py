@@ -49,7 +49,7 @@ class SarifProcessor:
             return []
 
         for run in feedback["runs"]:
-            if not self.isExcludedTool(run) or not self.isSuccessfulRun(run):
+            if self.isSuccessfulRun(run) and not self.isExcludedTool(run):
                 for result in run.get("results", []):
                     fingerprint = result["fingerprints"]["sigFingerprint/v1"]
                     risk = (result.get("properties", {}).get("severity") or "UNKNOWN").upper()

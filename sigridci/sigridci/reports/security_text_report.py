@@ -21,6 +21,8 @@ from ..objective import Objective
 
 
 class SecurityTextReport(Report):
+    MAX_SHOWN = 10
+
     def __init__(self, markdownReport, *, output=sys.stdout):
         self.output = output
         self.markdownReport = markdownReport
@@ -28,15 +30,21 @@ class SecurityTextReport(Report):
 
     def generate(self, analysisId, feedback, options):
         allFindings = self.markdownReport.extractFindings(feedback)
+        self.printFindings(allFindings)
+
+    def printFindings(self, allFindings):
         processor = self.markdownReport.processor
         relevantFindings = processor.filterStatus(allFindings, FindingStatus.INTRODUCED, partOfObjective=True)
+        displayedFindings = sorted(relevantFindings, key=lambda f: Objective.sortBySeverity(f.risk))[0:self.MAX_SHOWN]
 
-        if len(relevantFindings) > 0:
+        if len(displayedFindings) > 0:
             print("", file=self.output)
             print("Security findings", file=self.output)
             print("", file=self.output)
-            for finding in sorted(relevantFindings, key=lambda f: Objective.sortBySeverity(f.risk)):
+            for finding in displayedFindings:
                 symbol = SecurityMarkdownReport.SEVERITY_SYMBOLS[finding.risk]
                 print(f"    {symbol} {finding.description}", file=self.output)
                 print(f"        In {finding.file} (line {finding.line})", file=self.output)
+            if len(relevantFindings) > len(displayedFindings):
+                print(f"    ... and {len(relevantFindings) - len(displayedFindings)} more findings", file=self.output)
             print("", file=self.output)
