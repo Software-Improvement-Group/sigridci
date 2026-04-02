@@ -1,4 +1,4 @@
-# Sigrid on-premise: Helm Chart configuration
+# Sigrid On-Premise: Kubernetes Deployment with Helm
 
 This documentation covers on-premise Sigrid. It is not applicable for cloud-based Sigrid.
 {: .attention }
