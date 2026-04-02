@@ -41,13 +41,7 @@ Before deploying Sigrid On-Premise, ensure your environment meets the following 
 ### Container & Network Access
 - You allow outbound connections to pull Sigrid container images from an AWS ECR registry.
   - Images can be pulled directly or mirrored into your own container registry.
-- All required services must be reachable from the Sigrid deployment, including:
-  - PostgreSQL
-  - CI/CD platform
-  - Identity provider
-  - Object storage
-  - Container registry  
-- These services must support reliable inbound and outbound connectivity.
+- All required services, including Postgres, the CI/CD platform, identity provider, S3-compatible object store, and container registry, must either be within the same network as the Sigrid deployment or be able to establish reliable inbound and outbound connections with it. This ensures seamless communication and data transfer between components.
 
 ### CI/CD Integration
 - You use one of the following CI/CD platforms:
