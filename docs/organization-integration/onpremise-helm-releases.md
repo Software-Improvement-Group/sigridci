@@ -72,6 +72,6 @@ For required configuration changes, see [the OSH knowledge base updater instruct
 
 ---
 
-## Contact and Support
+## Contact and support
 
 Feel free to contact [SIG's support team](mailto:support@softwareimprovementgroup.com) for any questions or issues you may have after reading this documentation or when using Sigrid.
