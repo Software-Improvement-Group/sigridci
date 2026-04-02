@@ -1,4 +1,4 @@
-# Sigrid On-Premise integration
+# Sigrid On-Premise Integration
 
 This documentation covers on-premise Sigrid. It is not applicable for cloud-based Sigrid.
 {: .attention }
@@ -27,23 +27,58 @@ Some Sigrid On-Premise features are *optional*:
 - The Open Source Health feature requires enabling the OSH knowledge base updater cronjob on Sigrid (see [here](onpremise-osh-knowledgebase-updater.md)). This service imports vulnerability data from the OSH knowledge base Docker container into Sigrid. The rest of Sigrid remains fully functional even if OSH is not enabled.
 - When viewing detailed analysis results, Sigrid displays relevant source code files within Sigrid. For this to work, a web-accessible code storage needs to be available. This integrates with Sigrid via [OAuth](https://oauth.net/2/). For this to work, the identity provider used for Sigrid authentication and for the code storage needs to be the same. For viewing source code within Sigrid, you need to provide a development platform that is integrated with the same identity provider as Sigrid itself. The view source functionality is optional, without this integration the rest of Sigrid is unaffected.
 
-## Requirements
+## Prerequisites
 
-- Your infrastructure needs to support running applications on Kubernetes.
-- You need to allow outbound connections to pull the latest Sigrid container images from AWS ECR registry.
-  - You can pull them directly into your Kubernetes or use your own container registry.
-  - You are prepared to update Sigrid regularly, at minimum monthly.
-- You need to support and manage a Postgres database service.
-  - You are prepared to update Postgres regularly, based on the version policy in this documentation.
-  - Sigrid requires PostgreSQL, including some well-known PostgreSQL extensions.
-  - Several Linux distributions distribute PostgreSQL extensions in a separate package, even the extensions listed in the official PostgreSQL documentation. For that reason, we require that you install the PostgreSQL extensions as well; typically by installing a package named postgresql-contrib via your package manager.
-- You need to have a continuous integration pipeline in one of the following platforms, since Sigrid will integrate with this pipeline: GitHub, GitLab, Azure DevOps (Cloud version only).
-  - Your CI/CD should be able to support running Docker containers to run Sigrid analyses.
-- You need to have an identity provider supporting one of the following protocols, since Sigrid will integrate with this for authentication: OpenID Connect, SAML, LDAP.
-- You need to have an S3-compatible object store, since Sigrid will import analyses from there into the Sigrid Postgres database.
-- All required services, including Postgres, the CI/CD platform, identity provider, S3-compatible object store, and container registry, must either be within the same network as the Sigrid deployment or be able to establish reliable inbound and outbound connections with it. This ensures seamless communication and data transfer between components.
-- You have read this documentation, and your support/platform team has the required technology knowledge (Kubernetes, Docker, Postgres, GitHub/GitLab/Azure DevOps, OpenID Connect) to integrate Sigrid into your environment.
-- You allow remote desktop or screen sharing or similar functionality for troubleshooting.
+Before deploying Sigrid On-Premise, ensure your environment meets the following prerequisites.
+
+### Platform & Infrastructure
+- Your infrastructure supports running applications on **Kubernetes**.
+- You can run and manage a **PostgreSQL** database service.
+  - Sigrid requires PostgreSQL, including a set of standard PostgreSQL extensions.
+  - Several Linux distributions distribute PostgreSQL extensions in a separate package, even the extensions listed in the official PostgreSQL documentation. For that reason, we require that you install the PostgreSQL extensions as well; typically by installing a package named `postgresql-contrib` via your package manager.
+  - You are able to maintain and update PostgreSQL according to the version policy in this documentation.
+
+### Container & Network Access
+- You allow outbound connections to pull Sigrid container images from an AWS ECR registry.
+  - Images can be pulled directly or mirrored into your own container registry.
+- All required services must be reachable from the Sigrid deployment, including:
+  - PostgreSQL
+  - CI/CD platform
+  - Identity provider
+  - Object storage
+  - Container registry  
+- These services must support reliable inbound and outbound connectivity.
+
+### CI/CD Integration
+- You use one of the following CI/CD platforms:
+  - GitHub
+  - GitLab
+  - Azure DevOps (cloud version only)
+- Your CI/CD environment supports running Docker containers for Sigrid analyses.
+
+### Identity & Access Management
+- You have an identity provider supporting one of the following protocols:
+  - OpenID Connect
+  - SAML
+  - LDAP
+
+### Object Storage
+- You can provide an **S3-compatible object store**.
+  - Sigrid uses this object store as an intermediate storage layer for analysis results.
+  - Analysis jobs (running in your CI/CD pipeline) upload their results to this storage.
+  - The Sigrid platform then retrieves and imports these results into the PostgreSQL database for processing and visualization.
+
+### Operations & Maintenance
+- You are prepared to update Sigrid regularly (at least monthly).
+- You can provide remote access (e.g. screen sharing) or share logs for troubleshooting if needed.
+
+### Knowledge & Ownership
+- Your platform/support team has working knowledge of:
+  - Kubernetes
+  - Docker
+  - PostgreSQL
+  - CI/CD platforms (GitHub, GitLab, or Azure DevOps)
+  - Identity protocols (e.g. OpenID Connect)
 
 ## Obtaining Sigrid on-premise
 
