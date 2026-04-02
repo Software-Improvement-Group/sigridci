@@ -155,7 +155,7 @@ The Helm chart provides SQL scripts to initialize the database. It is the respon
 on-premise customer to run these scripts (using `psql`). They are NOT executed by the Helm chart.
 In case of managed PostgreSQL, these scripts might need to be adapted to take care of specifics 
 of the managed PostgreSQL provider. The scripts are in the `sigrid-stack/files` directory, which 
-can be obtained by pulling the Helm chart. The relevant files are `sigriddb-init` and `authdb-init`. 
+can be obtained by pulling the Helm chart. The relevant files are `sigriddb-init` and `sigridauthdb-init`. 
 
 IMPORTANT: When running the init scripts, take care to first replace the password placeholders with 
 real passwords.
