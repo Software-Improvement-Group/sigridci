@@ -17,8 +17,6 @@ For a complete overview of functional changes, features, and bug fixes in Sigrid
 
 This page focuses specifically on deployment-relevant changes, including required actions for upgrades.
 
----
-
 ## Helm Chart Release Notes
 
 The Helm chart is published under the name `sigrid-stack`.
@@ -69,8 +67,6 @@ End users are recommended to also read the [on-premise OSH analysis guide](../or
 
 **Actions:** Update the Sigrid Helm chart and configuration to enable this feature.  
 For required configuration changes, see [the OSH knowledge base updater instructions](../organization-integration/onpremise-osh-knowledgebase-updater.md).
-
----
 
 ## Contact and support
 

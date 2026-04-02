@@ -126,7 +126,7 @@ In addition to updating Sigrid itself, you will also need to periodically update
   - Supported technologies:
     - Outsystems: This technology is not supported.
   - Technology conversion configuration:
-    - Mendix: Set the variable `CONVERT` to `mendix` in your CI pipeline job, and use `Mendixflow` as the language when defining the scope.
+    - Mendix: Set the variable `CONVERT` to `mendix` in your CI pipeline job, and use `Mendixflow` as the language when manually defining a scope.
   - Open Source ecosystems support (for Open Source Health):
     - Maven: For most on-premise setups the use of Maven dependency tree files is required to effectively use OSH, for more details see [here](onpremise-osh-analysis.md)
   - Security analyzers:
