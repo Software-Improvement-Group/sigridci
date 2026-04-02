@@ -32,7 +32,7 @@ If you are interested in using this feature, please refer to the [feature page](
 
 **Actions:** Update the Sigrid Helm chart and configuration to enable this new feature.
 
-### Release 0.4.13 (1.0.20260225) ⚠️ Breaking change
+### Release 0.4.13 (1.0.20260225) - BREAKING CHANGE
 
 **Change:** Newly onboarded systems now automatically grant access to the uploader. Previously, access had to be granted manually. After updating the Helm chart and container images, this step is handled automatically.  
 
@@ -61,7 +61,7 @@ If you are interested in using this feature, please refer to the [feature page](
 
 ### Release 0.4.10 (1.0.20251222)
 
-**New:** Open Source Health (OSH) is now available for Sigrid On-Premise! 🎉  
+**New:** Open Source Health (OSH) is now available for Sigrid On-Premise!
 This feature has been available on Sigrid SaaS and is now also supported on-premise. For an overview of its capabilities, see the [system features page](../capabilities/system-open-source-health.md).  
 End users are recommended to also read the [on-premise OSH analysis guide](../organization-integration/onpremise-osh-analysis.md).
 
