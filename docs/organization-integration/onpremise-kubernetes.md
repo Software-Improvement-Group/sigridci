@@ -378,7 +378,7 @@ auth-api:
 
 ### (E.2) Create a Secret to Authorize Sigrid System Configuration
 
-Sigrid on-premise customers using a helm chart version **before 0.4.13** will need to migrate the following configuration when updating to a newer version.
+Sigrid on-premise customers using a helm chart version **before 0.4.13** will need to update the following configuration when updating to a newer version.
 {: .warning }
 
 To enable Sigrid to automatically grant the uploading user access to an onboarded system, a secret must be created. This secret can either be provisioned in advance or generated during the onboarding process, as shown in the example below.
