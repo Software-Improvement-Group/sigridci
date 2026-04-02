@@ -21,13 +21,13 @@ For deployment, configuration, and operations, refer to the Sigrid On-Premise do
 The correct deployment model depends on how your Mendix platform is hosted:
 
 1. **Mendix Cloud**  
-   → Use QSM SaaS (Sigrid)
+   → Use QSM Cloud (Sigrid)
 
 2. **Mendix Cloud Dedicated**  
-   → Use QSM SaaS (Sigrid)
+   → Use QSM Cloud (Sigrid)
 
 3. **Mendix Customer On-Premise (COP)**  
-   → Use QSM SaaS (Sigrid) if outbound connectivity is allowed  
+   → Use QSM Cloud (Sigrid) if outbound connectivity is allowed  
    → Use QSM On-Premise if required (e.g., restricted environments)
 
 4. **Private Mendix Platform (PMP)**  
@@ -36,11 +36,11 @@ The correct deployment model depends on how your Mendix platform is hosted:
 
 <img src="../images/onpremise-qsm-use-cases.png" width="600" />
 
-## How QSM On-Premise differs from QSM SaaS
+## How QSM On-Premise differs from QSM Cloud
 
 QSM On-Premise **does not connect to the Mendix Team Server**. Mendix application artifacts must be stored in a CI/CD platform such as GitLab, GitHub, or Azure DevOps, where analysis is executed.
 
-Unlike QSM SaaS, which connects to the Mendix Team Server for conversion and analysis, QSM On-Premise performs a **local conversion** before analyzing your Mendix application.
+Unlike QSM Cloud, which connects to the Mendix Team Server for conversion and analysis, QSM On-Premise performs a **local conversion** before analyzing your Mendix application.
 
 To support this, your pipeline must be configured accordingly:
 - Set the variable `CONVERT` to `mendix` in your CI pipeline job, and use `Mendixflow` as the language when manually defining a scope.
