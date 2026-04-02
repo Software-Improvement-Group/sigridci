@@ -21,7 +21,7 @@ This page focuses specifically on deployment-relevant changes, including require
 
 The Helm chart is published under the name `sigrid-stack`.
 
-### Release 0.4.14 (1.0.20260309)
+### Release 0.4.14
 
 **Added:** Database initialization can now also be performed automatically.  
 If you are interested in using this feature, please refer to the [feature page](../organization-integration/onpremise-automated-database-initialization.md).  
@@ -30,7 +30,7 @@ If you are interested in using this feature, please refer to the [feature page](
 
 **Actions:** Update the Sigrid Helm chart and configuration to enable this new feature.
 
-### Release 0.4.13 (1.0.20260225) - BREAKING CHANGE
+### Release 0.4.13 - BREAKING CHANGE
 
 **Change:** Newly onboarded systems now automatically grant access to the uploader. Previously, access had to be granted manually. After updating the Helm chart and container images, this step is handled automatically.  
 
@@ -39,7 +39,7 @@ If you are interested in using this feature, please refer to the [feature page](
 **Actions:** Update the Sigrid Helm chart and configuration before deploying Sigrid and Sigrid-Multi-Analyzer.  
 For required configuration changes, see [these instructions](../organization-integration/onpremise-kubernetes.md#e2-create-a-secret-to-authorize-sigrid-system-configuration).
 
-### Release 0.4.12 (1.0.20260224)
+### Release 0.4.12
 
 **Enhanced:** LDAP group synchronization now allows the group membership attribute to be configured.  
 If you are interested in using this feature, please refer to the [feature page](../organization-integration/onpremise-ldap-group-sync.md).  
@@ -48,7 +48,7 @@ If you are interested in using this feature, please refer to the [feature page](
 
 **Actions:** Update the Sigrid Helm chart and configuration to enable this feature.
 
-### Release 0.4.11 (1.0.20260223)
+### Release 0.4.11
 
 **Added:** Sigrid now allows you to automatically synchronize group memberships using LDAP.  
 If you are interested in using this feature, please refer to the [feature page](../organization-integration/onpremise-ldap-group-sync.md).  
@@ -57,7 +57,7 @@ If you are interested in using this feature, please refer to the [feature page](
 
 **Actions:** Update the Sigrid Helm chart and configuration to enable this new feature.
 
-### Release 0.4.10 (1.0.20251222)
+### Release 0.4.10
 
 **New:** Open Source Health (OSH) is now available for Sigrid On-Premise!
 This feature has been available on Sigrid SaaS and is now also supported on-premise. For an overview of its capabilities, see the [system features page](../capabilities/system-open-source-health.md).  
