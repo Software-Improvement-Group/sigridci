@@ -1,4 +1,2 @@
 languages:
   - name: "Python"
-thirdpartyfindings:
-  enabled: true

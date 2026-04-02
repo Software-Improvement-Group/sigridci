@@ -296,7 +296,7 @@ summary {
     font-size: 10px;
     background-color: var(--sig-orange);
     margin-left: 12px;
-    padding: 4px 8px 1px 8px;
+    padding: 2px 8px 2px 8px;
     border-radius: 8px;
     color: var(--sig-white);
 }

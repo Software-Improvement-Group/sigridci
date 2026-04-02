@@ -1,0 +1,112 @@
+{
+  "version": "2.1.0",
+  "runs": [
+    {
+      "tool": {
+        "driver": {
+          "name": "SIG Open Source Health",
+          "fullDescription": {
+            "text": "SIG Open Source Health via Sigrid (Git commit: ee1a7ad)"
+          },
+          "rules": [
+            {
+              "id": "OSH",
+              "properties": {
+                "tags": [
+                  "CWE-20"
+                ]
+              }
+            }
+          ]
+        }
+      },
+      "results": [
+        {
+          "ruleId": "OSH",
+          "message": {
+            "text": "Gradle dependency org.apache.logging.log4j:log4j-core contains 2 vulnerabilities"
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "build.gradle"
+                },
+                "region": {
+                  "startLine": 1,
+                  "endLine": 0
+                }
+              }
+            }
+          ],
+          "fingerprints": {
+            "sigFingerprint/v1": "b2d1bab8d20c45f640321fb5b167cd8e63d68769705f5cf5f7c478f5039fc752"
+          },
+          "hostedViewerUri": "https://sigrid-says.com/example/example/-/security/ff8ff3da-0960-4910-a791-572a36aa06a1",
+          "properties": {
+            "tags": [
+              "A7 Identification and Authentication Failures",
+              "A6 Vulnerable and Outdated Components",
+              "A3 Injection"
+            ],
+            "severity": "MEDIUM",
+            "status": "RAW"
+          }
+        }
+      ]
+    },
+    {
+      "tool": {
+        "driver": {
+          "name": "Semgrep",
+          "fullDescription": {
+            "text": "Semgrep via Sigrid (Git commit: ee1a7ad)"
+          },
+          "rules": [
+            {
+              "id": "semgrep-community-rules.contrib.owasp.java.xxe.owasp.java.xxe.javax.xml.parsers.DocumentBuilderFactory",
+              "properties": {
+                "tags": [
+                  "CWE-611"
+                ]
+              }
+            }
+          ]
+        }
+      },
+      "results": [
+        {
+          "ruleId": "semgrep-community-rules.contrib.owasp.java.xxe.owasp.java.xxe.javax.xml.parsers.DocumentBuilderFactory",
+          "level": "error",
+          "message": {
+            "text": "DocumentBuilderFactory being instantiated for XXE vulnerabilities"
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "SecurityExample.java"
+                },
+                "region": {
+                  "startLine": 34,
+                  "endLine": 34
+                }
+              }
+            }
+          ],
+          "fingerprints": {
+            "sigFingerprint/v1": "d9a84254c08732980225071664ca6923135c9c689d54a00e28d6484bc4d7ab1e"
+          },
+          "hostedViewerUri": "https://sigrid-says.com/example/example/-/security/66a4dd27-bede-4261-a8a6-6b56a9b9d937",
+          "properties": {
+            "tags": [
+              "A5 Security Misconfiguration"
+            ],
+            "severity": "HIGH",
+            "status": "RAW"
+          }
+        }
+      ]
+    }
+  ]
+}
