@@ -23,8 +23,6 @@ Analysis workloads may exhibit memory and disk usage spikes. Avoid strict limits
 
 During analysis, intermediate results are written to local disk before being uploaded to S3-compatible object storage.
 
----
-
 ### 2. Kubernetes (Node)
 
 While Kubernetes itself has minimal requirements, worker nodes must be sized to support the workloads.
@@ -45,8 +43,6 @@ Node sizing must account for the largest schedulable workload (e.g. CI jobs requ
 
 Analysis jobs run in CI/CD, not in the cluster, unless CI/CD runners are deployed in the same cluster.
 
----
-
 ### 3. Application (Sigrid)
 
 Resource requirements are defined per container/pod in the Helm configuration.  
@@ -54,6 +50,7 @@ You can start with the defaults, but these can always be overridden.
 
 Example
 
+{% raw %}
 ```yaml
 auth-api:
   image:
@@ -67,6 +64,8 @@ auth-api:
     requests:
       cpu: 500m
       memory: 2Gi
+```
+{% endraw %}
 
 ## Contact and support
 
