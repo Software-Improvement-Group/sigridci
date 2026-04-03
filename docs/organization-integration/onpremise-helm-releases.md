@@ -21,6 +21,16 @@ This page focuses specifically on deployment-relevant changes, including require
 
 The Helm chart is published under the name `sigrid-stack`.
 
+### Release 0.4.15 - BREAKING CHANGE
+
+**Added:** Sigrid-Multi-Analyzer no longer connects directly to S3-compatible object storage. This simplifies the pipeline job but requires updates to the Helm configuration.
+
+**Breaking:** This feature requires Sigrid and Sigrid-Multi-Analyzer version 1.0.202604xx or later.
+
+**Actions:**  
+- Update the Sigrid Helm chart and configuration before deploying Sigrid and Sigrid-Multi-Analyzer.  
+- For required configuration changes, see [Kubernetes deployment](../organization-integration/onpremise-kubernetes.md#title_in_document) and [Installation runbook](../organization-integration/runbooks-onpremise-installation.md#title_in_document).
+
 ### Release 0.4.14
 
 **Added:** Database initialization can now also be performed automatically.  
