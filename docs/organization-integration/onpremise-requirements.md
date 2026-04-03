@@ -7,7 +7,7 @@ This document defines compute and storage resource requirements for:
 - CI/CD workloads (e.g. static analysis jobs)
 - Application workloads running on Kubernetes
 
-### 1. Analysis (Sigrid-Multi-Analzyer)
+### 1. Analysis (Sigrid-Multi-Analyzer)
 
 Sigrid-Multi-Analyzer is the most resource-intensive component and must be sized accordingly.
 
@@ -42,7 +42,8 @@ This allows:
 For clusters running only Sigrid application components (API/frontend), lower disk sizes may be sufficient. Actual sizing depends on whether CI/CD workloads or other applications share the same nodes.
 
 Node sizing must account for the largest schedulable workload (e.g. CI jobs requiring up to 16 GB RAM), not just average application usage.
-Analaysis jobs run on CI/CD, not in the cluster, unless you choose to have CI/CD runners in the same cluster.
+
+Analysis jobs run in CI/CD, not in the cluster, unless CI/CD runners are deployed in the same cluster.
 
 ---
 
@@ -66,10 +67,6 @@ auth-api:
     requests:
       cpu: 500m
       memory: 2Gi
-
-```
-
-Actual resource usage depends on traffic, concurrency, and autoscaling configuration.
 
 ## Contact and support
 
