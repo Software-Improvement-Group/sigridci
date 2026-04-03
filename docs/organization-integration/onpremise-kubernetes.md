@@ -1,4 +1,4 @@
-# Sigrid on-premise: Helm Chart configuration
+# Sigrid On-Premise: Kubernetes Deployment with Helm
 
 This documentation covers on-premise Sigrid. It is not applicable for cloud-based Sigrid.
 {: .attention }
@@ -155,7 +155,7 @@ The Helm chart provides SQL scripts to initialize the database. It is the respon
 on-premise customer to run these scripts (using `psql`). They are NOT executed by the Helm chart.
 In case of managed PostgreSQL, these scripts might need to be adapted to take care of specifics 
 of the managed PostgreSQL provider. The scripts are in the `sigrid-stack/files` directory, which 
-can be obtained by pulling the Helm chart. The relevant files are `sigriddb-init` and `authdb-init`. 
+can be obtained by pulling the Helm chart. The relevant files are `sigriddb-init` and `sigridauthdb-init`. 
 
 IMPORTANT: When running the init scripts, take care to first replace the password placeholders with 
 real passwords.
@@ -378,7 +378,7 @@ auth-api:
 
 ### (E.2) Create a Secret to Authorize Sigrid System Configuration
 
-Sigrid on-premise customers using a helm chart version **before 0.4.13** will need to migrate the following configuration when updating to a newer version.
+Sigrid on-premise customers using a helm chart version **before 0.4.13** will need to update the following configuration when updating to a newer version.
 {: .warning }
 
 To enable Sigrid to automatically grant the uploading user access to an onboarded system, a secret must be created. This secret can either be provisioned in advance or generated during the onboarding process, as shown in the example below.
