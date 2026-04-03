@@ -1,11 +1,13 @@
-## Infrastructure & Resource Requirements
+## Infrastructure & Resource Requirements for Sigrid Components
 
 This documentation covers on-premise Sigrid. It is not applicable for cloud-based Sigrid.
 {: .attention }
 
-This document defines compute and storage resource requirements for:
+This document defines compute and storage resource requirements for Sigrid components only, including:
 - CI/CD workloads (e.g. static analysis jobs)
 - Application workloads running on Kubernetes
+
+It does **not** cover prequisites such as PostgreSQL, S3-compatible object storage, or container registries.
 
 ### 1. Analysis (Sigrid-Multi-Analyzer)
 
