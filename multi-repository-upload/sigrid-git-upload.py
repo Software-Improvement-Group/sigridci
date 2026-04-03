@@ -1,6 +1,19 @@
 #!/usr/bin/env python3
+# Copyright 2024 Software Improvement Group
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#     http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
 """
-sigrid_git_upload.py - Upload multiple git repositories to Sigrid as a single system.
+sigrid-git-upload.py - Upload multiple git repositories to Sigrid as a single system.
 
 Clones multiple git repositories into subdirectories, creates a directory structure
 with sigrid.yaml at the root, then uses sigridci to create zip and upload to Sigrid.
@@ -128,7 +141,7 @@ def _resolve_sigridci_script(sigridci_path: Optional[str]) -> Path:
         if not sigridci_dir.exists():
             print(f"ERROR: sigridci path not found: {sigridci_dir}", file=sys.stderr)
             sys.exit(1)
-        script = sigridci_dir / "sigridci" / "sigridci.py"
+        script = sigridci_dir / "sigridci.py"
         if not script.exists():
             print(f"ERROR: sigridci.py not found at: {script}", file=sys.stderr)
             sys.exit(1)
