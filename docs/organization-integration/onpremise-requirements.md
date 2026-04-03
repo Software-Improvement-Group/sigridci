@@ -4,14 +4,14 @@ This documentation covers on-premise Sigrid. It is not applicable for cloud-base
 {: .attention }
 
 This document defines compute and storage resource requirements for Sigrid components only, including:
-- CI/CD workloads (e.g. static analysis jobs)
+- CI/CD workloads (e.g. static analysis jobs running in your existing CI/CD system)
 - Application workloads running on Kubernetes
 
-It does **not** cover prequisites such as PostgreSQL, S3-compatible object storage, or container registries.
+It does **not** cover prerequisites such as PostgreSQL, S3-compatible object storage, or container registries.
 
 ### 1. Analysis (Sigrid-Multi-Analyzer)
 
-Sigrid-Multi-Analyzer is the most resource-intensive component and must be sized accordingly.
+Sigrid-Multi-Analyzer is the most resource-intensive component and runs as jobs in your **existing CI/CD tool** (e.g. GitLab, GitHub Actions, Azure DevOps).
 
 **Requirements:**
 - **Memory:**
@@ -19,9 +19,9 @@ Sigrid-Multi-Analyzer is the most resource-intensive component and must be sized
   - Recommended: 16 GB RAM (depending on repository size)
 - **CPU:** 2-4 vCPU
 - **Storage:**: 5 GB (depending on repository size)
-- **Environment:** Containerized job (e.g. GitLab CI/CD runner)
+- **Environment:** Containerized job in your CI/CD system
 
-Analysis workloads may exhibit memory and disk usage spikes. Avoid strict limits close to the minimum requirements to prevent job failures.
+Analysis workloads may exhibit memory and disk usage spikes. Avoid setting limits too close to the minimum requirements to prevent job failures.
 
 During analysis, intermediate results are written to local disk before being uploaded to S3-compatible object storage.
 
@@ -47,10 +47,13 @@ Analysis jobs run in CI/CD, not in the cluster, unless CI/CD runners are deploye
 
 ### 3. Application (Sigrid)
 
-Resource requirements are defined per container/pod in the Helm configuration.  
+Resource requirements are defined per pod in the Helm configuration.  
 You can start with the defaults, but these can always be overridden.
 
-Example
+- Memory request = memory limit for pods to prevent memory contention  
+- Changing CPU limits is not recommended, as they can have negative effects
+
+Example:
 
 {% raw %}
 ```yaml
