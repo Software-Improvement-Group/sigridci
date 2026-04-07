@@ -76,7 +76,7 @@ that are less affected by a single outlier, and more in line with the general pa
 The **Knowledge Distribution** metric has been split into two metrics that both originate in SIG research, 
 each of which describes a different "part" of knowledge distribution: 
 
-- **Knowledge Awareness** tells you who owns a component and how concentrated that ownership is.
+- **Knowledge Awareness** tells you who actively maintains a component and how concentrated that ownership is.
 - **Team Stability** tells you whether those owners are consistently showing up over time.
 
 Together, these metrics give you the full picture on knowledge distribution. Both metrics are explained in more
@@ -90,13 +90,13 @@ two years ago is not the same as ownership from last month, so Knowledge Awarene
 giving more weight to recent work and less to older activity. The result is a picture of who genuinely understands 
 each component today, and how concentrated or shared that understanding is.
 
-The score is based on the Gini coefficient, which measures inequality of contributions across developers. 
-A low score means knowledge is healthy and spread across a core team. A high score means it has concentrated into 
-too few people, or even a single developer, creating a risk that is easy to overlook until it is too late. As a 
-rule of thumb: one developer holding close to 100% of a component's ownership is a single point of failure. 
-Roughly equal shares across several developers is the ideal.
+The rating is based on the (in)equality of contributions across developers. A high rating means knowledge is healthy
+and spread across a core team. A low rating means it has concentrated into too few people, or even a single developer,
+creating a risk that is easy to overlook until it is too late. As a rule of thumb: one developer holding close to
+100% of a component's ownership is a single point of failure. Roughly equal shares across several developers is the
+ideal.
 
-When a component scores poorly, the right response is to actively spread context through pair programming, 
+When a component rates poorly, the right response is to actively spread context through pair programming, 
 shared code reviews, and documentation. The goal is not just to have more contributors, but to have contributors 
 who genuinely understand the component and keep that understanding current.
 
@@ -113,37 +113,29 @@ something, the how that only comes from having worked on it for a long time. Tha
 unexpected defects, and maintenance that takes longer than it should.
 
 Team Stability measures how consistently the core developers who own a component remain active contributors over time.
-It complements Knowledge Awareness (Knowledge Distribution? placeholder), which tells you who owns a component today, 
-Team Stability tells you whether those contributors are showing up reliably and predictably. A high score means 
-ownership is steady and the component is in reliable hands. A low score means ownership is erratic, fading, or 
-concentrated in people who are becoming less engaged.
+It complements Knowledge Awareness, which tells you who owns a component today, Team Stability tells you whether those
+contributors are showing up reliably and predictably.
 
-To calculate it, we take each developer's weekly contribution share from for a component over the past year 
-from Knowledge Awareness, and measure how volatile that pattern is using the Gini coefficient. Those volatility 
-scores are weighted by each developer's ownership share, so instability from a core contributor has more impact 
-than instability from a peripheral one. The result is a score between 0 and 1, where higher means steadier.
+Team Stability is calculated by taking each developer's weekly contribution share for a component over the past year,
+then determining how volatile that pattern is. Those volatility numbers are weighted by each developer's ownership
+share, so instability from a core contributor has more impact than instability from a peripheral one. 
 
 A high score means core contributors are showing up consistently and knowledge is active and the component is 
 maintainable. A low score means contributions are fragmented or unpredictable, increasing the risk of knowledge loss, 
 slower delivery, and harder maintenance when the component needs to change.
 
 When you identify components with low Team Stability, based on the context, effective responses are to assign a 
-clear backup owner, require reviews from other contributors to spread context, and document the parts of the component.
+clear backup owner and/or require reviews from other contributors to spread context.
 
 ## Changes in the 2026 SIG Open Source Health model
 
 The Open Source Health model recalibration for 2026 returns a benchmark set which yields stricter thresholds, 
 especially with respect to the license property. Practitioners should expect a slight rating deterioration when 
-the new 2026 model is released. Speculating, one explanation could be that the market is starting to adopt healthy 
-third-party management, where having visibility and comparison with the market motivates practitioners to act on 
-findings.
+the new 2026 model is released. This is caused by the market starting to adopt more active third-party management,
+especially when it relates to more acute concerns like open source vulnerabilities  and license risks.
 
-Coming to the details, the 2026 license property will rate a 4-star system one having at most two low-risk 
-dependencies. In the 2025 release, a 4-star rating for this property was a system having at most three dependencies 
-associated with low-risk licenses.
-
-For other properties, the recalibration yields stricter thresholds, but results for individual metrics do not 
-distance themselves excessively when compared with the 2025 release.
+For other properties beyond license risk, the recalibration yields stricter thresholds, but results for individual
+metrics do not distance themselves excessively when compared with the 2025 release.
 
 ## Contact and support
 
