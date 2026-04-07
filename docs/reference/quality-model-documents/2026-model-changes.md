@@ -28,7 +28,7 @@ you can find a full overview of each model in the [quality model documentation](
 
 ## Changes in the 2026 SIG maintainability model
 
-**The Volume system property has been removed from the maintainability model.** The volume system property was 
+**The Volume system property has been removed from the maintainability model.** The volume system property 
 has been part of the maintainability model since its introduction in 2008. The original reason for including it is
 that system volume is an indicator for project size, and project size is in turn an indicator for project risk.
 
