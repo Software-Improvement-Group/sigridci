@@ -3,7 +3,7 @@ Sigrid release notes
 
 SIG uses [continuous delivery](https://en.wikipedia.org/wiki/Continuous_delivery), meaning that every change to Sigrid or the underlying analysis is released once our development pipeline has completed. On average, we release somewhere between 10 and 20 times per day. This page therefore doesn't list every single change, since that would quickly lead to an excessively long list of small changes. Instead, this page lists Sigrid and analysis changes that we consider noteworthy for the typical Sigrid user.
 
-### March 30, 2026
+### April 7, 2026
 
 - **Portfolio overview:** The new [portfolio overview dashboard](../capabilities/portfolio-dashboard-plans.md) has different tabs for different use cases:
   - Prioritize which systems require your attention.
