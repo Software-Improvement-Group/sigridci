@@ -70,7 +70,7 @@ the maintainability model more strict for (very) small systems and more lenient 
 However, even with the removal of Volume, you still get an effect where a single high rating (like Module Coupling
 in this example) pulls the overall rating towards 3 stars. This is a known effect referred to as
 [regression towards the mean](https://en.wikipedia.org/wiki/Regression_toward_the_mean). Changing the aggregation
-will lead to overall ratings that are less affected by a single outlier, and more in line with the general pattern
+will lead to overall ratings that are more in line with the general pattern
 of *all* system properties.
 
 ## Changes in the 2026 SIG architecture model
