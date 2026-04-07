@@ -20,7 +20,7 @@ from email.message import Message
 from io import BytesIO
 from unittest import TestCase
 
-from sigridci.sigridci.capability import MAINTAINABILITY, OPEN_SOURCE_HEALTH
+from sigridci.sigridci.capability import MAINTAINABILITY, OPEN_SOURCE_HEALTH, SECURITY
 from sigridci.sigridci.publish_options import PublishOptions, RunMode
 from sigridci.sigridci.sigrid_api_client import SigridApiClient
 from sigridci.sigridci.sigridci_runner import SigridCiRunner
@@ -720,6 +720,31 @@ class SigridCiRunnerTest(TestCase):
 
         self.assertEqual(apiClient.called, expectedCalls)
 
+    def testDoNotCrashIfBaselineHeaderIsMissing(self):
+        self.createTempFile(self.tempDir, "a.py", "print(123)")
+
+        self.options.capabilities = [SECURITY]
+
+        apiClient = MockApiClient(self.options)
+        apiClient.responses["/analysis-results/api/v1/licenses/aap"]["licenses"].append("SECURITY")
+        apiClient.responses["/analysis-results/api/v1/security-findings/aap/noot?sarif=true"] = {}
+
+        runner = SigridCiRunner(self.options, apiClient)
+        runner.run()
+
+        expectedCalls = [
+            "/analysis-results/api/v1/licenses/aap",
+            "/analysis-results/sigridci/aap/noot/v1/ci",
+            "/analysis-results/api/v1/system-metadata/aap/noot",
+            "/inboundresults/sig/aap/noot/ci/uploads/v1",
+            "UPLOAD",
+            "/analysis-results/api/v1/objectives/aap/noot/config",
+            "/analysis-results/sigridci/aap/noot/v1/ci/results/123?type=SECURITY",
+            "/analysis-results/api/v1/security-findings/aap/noot"
+        ]
+
+        self.assertEqual(apiClient.called, expectedCalls)
+
     def createTempFile(self, dir, name, contents):
         with open(f"{dir}/{name}", "w") as fileRef:
             fileRef.write(contents)
@@ -742,7 +767,7 @@ class MockApiClient(SigridApiClient):
             "/analysis-results/api/v1/licenses/aap" : {"licenses" : ["MAINTAINABILITY"]}
         }
 
-    def callSigridAPI(self, path, body=None, contentType=None):
+    def callSigridAPI(self, path, body=None, contentType=None, *, method=None, accept=None):
         self.called.append(path)
         if body and contentType == "application/json":
             self.received[path] = json.loads(body)
