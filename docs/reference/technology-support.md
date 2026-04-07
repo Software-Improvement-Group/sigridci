@@ -169,6 +169,7 @@ This page provides an overview of all technologies that can be analyzed by Sigri
 | `mustache`                    | Mustache (includes Handlebars)         | Maintainability, Architecture                                           |
 | `mysql`                       | MySQL                                  | Maintainability, Architecture, GenAI                                    |
 | `nabsic`                      | Nabsic                                 | Maintainability, Architecture                                           | [(4)](#notes), [(8)](#notes)                |
+| `navascript`                  | NavaScript                             | Maintainability                                                         |
 | `naviscript`                  | Naviscript                             | Maintainability, Architecture                                           |
 | `navision`                    | Navision (AKA Dynamics NAV, AL)        | Maintainability, Architecture                                           |
 | `netiqidmpolicy`              | NetIQ IDM Policy                       | Maintainability                                                         | [(4)](#notes), [(8)](#notes)                |
