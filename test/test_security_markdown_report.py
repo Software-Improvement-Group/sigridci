@@ -107,10 +107,6 @@ class SecurityMarkdownReportTest(TestCase):
             
             ## 👍 What went well?
             
-            > You fixed **0** security findings.
-            
-            ## 👎 What could be better?
-            
             > You did not introduce any security findings during your changes, great job!
             
             
@@ -175,10 +171,6 @@ class SecurityMarkdownReportTest(TestCase):
             - ❌ means this finding fails your objective.
             - ⚠️ means a finding exists, but is not severe enough to fail your objective.
             - ✅ means everything is fine.
-            
-            ## 👍 What went well?
-            
-            > You fixed **0** security findings.
             
             ## 👎 What could be better?
             
