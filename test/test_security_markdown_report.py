@@ -172,10 +172,6 @@ class SecurityMarkdownReportTest(TestCase):
             - ⚠️ means a finding exists, but is not severe enough to fail your objective.
             - ✅ means everything is fine.
             
-            ## 👍 What went well?
-            
-            > You fixed **0** security findings.
-            
             ## 👎 What could be better?
             
             > Unfortunately, you introduced **1** security findings.
