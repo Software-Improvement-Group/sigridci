@@ -107,10 +107,6 @@ class SecurityMarkdownReportTest(TestCase):
             
             ## 👍 What went well?
             
-            > You fixed **0** security findings.
-            
-            ## 👎 What could be better?
-            
             > You did not introduce any security findings during your changes, great job!
             
             
