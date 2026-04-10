@@ -176,11 +176,10 @@ class EndToEndTest(unittest.TestCase):
             origin = _make_local_git_repo(tmp, "my-service")
             assertions_made = {}
 
-            def fake_run_sigridci(sigridci_script, customer, system, source_dir, sigrid_url, token):
+            def fake_run_sigridci(sigridci_script, customer, system, source_dir, sigrid_url):
                 assertions_made["customer"] = customer
                 assertions_made["system"] = system
                 assertions_made["sigrid_url"] = sigrid_url
-                assertions_made["token"] = token
                 assertions_made["has_repo_dir"] = os.path.isdir(os.path.join(source_dir, "my-service"))
 
             env = {"SIGRID_CI_TOKEN": "test-token"}
@@ -193,7 +192,6 @@ class EndToEndTest(unittest.TestCase):
             self.assertEqual("acme", assertions_made["customer"])
             self.assertEqual("platform", assertions_made["system"])
             self.assertEqual("https://sigrid-says.com", assertions_made["sigrid_url"])
-            self.assertEqual("test-token", assertions_made["token"])
             self.assertTrue(assertions_made["has_repo_dir"])
 
     def test_full_flow_exits_without_token(self):

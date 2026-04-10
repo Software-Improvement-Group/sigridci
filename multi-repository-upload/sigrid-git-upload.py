@@ -156,8 +156,7 @@ def main() -> None:
     sigrid_yaml = _resolve_optional_file(args.sigrid_yaml, "sigrid.yaml") if args.sigrid_yaml else None
     sigrid_metadata_yaml = _resolve_optional_file(args.sigrid_metadata_yaml, "sigrid-metadata.yaml") if args.sigrid_metadata_yaml else None
 
-    token = os.environ.get("SIGRID_CI_TOKEN", "").strip()
-    if not token:
+    if not os.environ.get("SIGRID_CI_TOKEN", "").strip():
         print("ERROR: set the SIGRID_CI_TOKEN environment variable.", file=sys.stderr)
         sys.exit(1)
 
@@ -174,7 +173,7 @@ def main() -> None:
         print()
 
         sigridci_script = _resolve_sigridci_script(args.sigridci_path)
-        _run_sigridci(sigridci_script, args.customer, args.system, source_dir, args.sigrid_url, token)
+        _run_sigridci(sigridci_script, args.customer, args.system, source_dir, args.sigrid_url)
 
     print(
         f"\nDone. '{args.system}' has been published to Sigrid.\n"
