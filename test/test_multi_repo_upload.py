@@ -14,11 +14,12 @@
 
 import importlib.util
 import os
+import subprocess
 import sys
 import tempfile
 import unittest
 from pathlib import Path
-from unittest.mock import patch
+from unittest.mock import MagicMock, patch
 
 # Load the script as a module without executing __main__
 _SCRIPT = Path(__file__).resolve().parent.parent / "multi-repository-upload" / "sigrid-git-upload.py"
@@ -29,6 +30,25 @@ _spec.loader.exec_module(_mod)
 _repo_name_from_url = _mod._repo_name_from_url
 _find_duplicate_names = _mod._find_duplicate_names
 _resolve_sigridci_script = _mod._resolve_sigridci_script
+_prepare_source_dir = _mod._prepare_source_dir
+_run_sigridci = _mod._run_sigridci
+
+
+def _make_local_git_repo(parent_dir: str, name: str) -> str:
+    """Create a minimal local git repository and return its path."""
+    repo_path = os.path.join(parent_dir, name)
+    os.makedirs(repo_path)
+    subprocess.run(["git", "init", repo_path], capture_output=True, check=True)
+    subprocess.run(["git", "-C", repo_path, "config", "user.email", "test@example.com"],
+                   capture_output=True, check=True)
+    subprocess.run(["git", "-C", repo_path, "config", "user.name", "Test"],
+                   capture_output=True, check=True)
+    readme = os.path.join(repo_path, "README.md")
+    Path(readme).write_text(f"# {name}\n")
+    subprocess.run(["git", "-C", repo_path, "add", "."], capture_output=True, check=True)
+    subprocess.run(["git", "-C", repo_path, "commit", "-m", "init"],
+                   capture_output=True, check=True)
+    return repo_path
 
 
 class RepoNameFromUrlTest(unittest.TestCase):
@@ -107,6 +127,99 @@ class ResolveSigridciScriptTest(unittest.TestCase):
         with tempfile.TemporaryDirectory() as tmp:
             with self.assertRaises(SystemExit):
                 _resolve_sigridci_script(tmp)
+
+
+class PrepareSourceDirTest(unittest.TestCase):
+    """Test _prepare_source_dir by cloning real local git repositories."""
+
+    def test_clones_single_repo_into_named_subdirectory(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            origin = _make_local_git_repo(tmp, "origin-repo")
+            source_dir = os.path.join(tmp, "source")
+            _prepare_source_dir(source_dir, [origin], None, None)
+            self.assertTrue(os.path.isdir(os.path.join(source_dir, "origin-repo")))
+            self.assertTrue(os.path.isfile(os.path.join(source_dir, "origin-repo", "README.md")))
+
+    def test_clones_multiple_repos_into_separate_subdirectories(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            origin_a = _make_local_git_repo(tmp, "repo-a")
+            origin_b = _make_local_git_repo(tmp, "repo-b")
+            source_dir = os.path.join(tmp, "source")
+            _prepare_source_dir(source_dir, [origin_a, origin_b], None, None)
+            self.assertTrue(os.path.isdir(os.path.join(source_dir, "repo-a")))
+            self.assertTrue(os.path.isdir(os.path.join(source_dir, "repo-b")))
+
+    def test_copies_sigrid_yaml_to_root(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            origin = _make_local_git_repo(tmp, "repo")
+            sigrid_yaml = Path(tmp) / "sigrid.yaml"
+            sigrid_yaml.write_text("component_depth: 1\n")
+            source_dir = os.path.join(tmp, "source")
+            _prepare_source_dir(source_dir, [origin], sigrid_yaml, None)
+            self.assertTrue(os.path.isfile(os.path.join(source_dir, "sigrid.yaml")))
+
+    def test_copies_sigrid_metadata_yaml_to_root(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            origin = _make_local_git_repo(tmp, "repo")
+            metadata_yaml = Path(tmp) / "sigrid-metadata.yaml"
+            metadata_yaml.write_text("display_name: Test\n")
+            source_dir = os.path.join(tmp, "source")
+            _prepare_source_dir(source_dir, [origin], None, metadata_yaml)
+            self.assertTrue(os.path.isfile(os.path.join(source_dir, "sigrid-metadata.yaml")))
+
+
+class EndToEndTest(unittest.TestCase):
+    """Test the full main() flow with local git repos and a mocked sigridci call."""
+
+    def test_full_flow_calls_sigridci_with_correct_arguments(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            origin = _make_local_git_repo(tmp, "my-service")
+            assertions_made = {}
+
+            def fake_run_sigridci(sigridci_script, customer, system, source_dir, sigrid_url, token):
+                assertions_made["customer"] = customer
+                assertions_made["system"] = system
+                assertions_made["sigrid_url"] = sigrid_url
+                assertions_made["token"] = token
+                assertions_made["has_repo_dir"] = os.path.isdir(os.path.join(source_dir, "my-service"))
+
+            env = {"SIGRID_CI_TOKEN": "test-token"}
+            argv = ["sigrid-git-upload.py", "--customer", "acme", "--system", "platform", origin]
+            with patch.dict(os.environ, env), \
+                 patch.object(sys, "argv", argv), \
+                 patch.object(_mod, "_run_sigridci", side_effect=fake_run_sigridci):
+                _mod.main()
+
+            self.assertEqual("acme", assertions_made["customer"])
+            self.assertEqual("platform", assertions_made["system"])
+            self.assertEqual("https://sigrid-says.com", assertions_made["sigrid_url"])
+            self.assertEqual("test-token", assertions_made["token"])
+            self.assertTrue(assertions_made["has_repo_dir"])
+
+    def test_full_flow_exits_without_token(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            origin = _make_local_git_repo(tmp, "my-service")
+            env_without_token = {k: v for k, v in os.environ.items() if k != "SIGRID_CI_TOKEN"}
+            argv = ["sigrid-git-upload.py", "--customer", "acme", "--system", "platform", origin]
+            with patch.dict(os.environ, env_without_token, clear=True), \
+                 patch.object(sys, "argv", argv):
+                with self.assertRaises(SystemExit):
+                    _mod.main()
+
+    def test_full_flow_exits_on_duplicate_repo_names(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            origin_a = _make_local_git_repo(tmp, "origins-a")
+            origin_b = _make_local_git_repo(tmp, "origins-b")
+            # Rename origins-b so it produces the same last-segment name as origins-a
+            # by cloning both under the same bare name via file URLs
+            url_a = f"file://{origin_a}"
+            url_b = f"file://{origin_a}"  # intentional: same URL → same name
+            argv = ["sigrid-git-upload.py", "--customer", "acme", "--system", "platform",
+                    url_a, url_b]
+            with patch.dict(os.environ, {"SIGRID_CI_TOKEN": "tok"}), \
+                 patch.object(sys, "argv", argv):
+                with self.assertRaises(SystemExit):
+                    _mod.main()
 
 
 if __name__ == "__main__":
