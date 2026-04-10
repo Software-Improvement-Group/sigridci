@@ -5,7 +5,10 @@ SIG uses [continuous delivery](https://en.wikipedia.org/wiki/Continuous_delivery
 
 ### April 10, 2026
 
+- As we do every year, SIG will update its quality models based on industry trends. This year, we are communicating key changes *before* the new model is introduced. We have added [an overview of key changes in the 2026 model](../reference/quality-model-documents/2026-model-changes.md), and we have already updated [the quality model documentation](../reference/sig-quality-models.md). Having information in advance might be helpful to understand and prepare for these changes, and makes sure there are no surprised when the new models are introduced.
 - **Management dashboard:** The management dashboard used the concepts of technical debt and maintenance effort ambiguously, and in some cases incorrectly. This has been corrected so that the management dashboard now clearly displays maintenance effort insights. Wherever the maintenance effort has a relevant correlation to technical debt, explanations have been clarified as well.
+- **Open Source Health:** You are now able to exclude freshness risk and management risk for open source libraries [in your configuration](../reference/analysis-scope-configuration.md#exclude-open-source-health-risks). This means that every type of open source issue is now customizable, which is helpful to avoid Sigrid reporting unfixable issues over and over again.
+- **Technology support:** Added support for the NavaScript programming language.
 
 ### April 7, 2026
 
