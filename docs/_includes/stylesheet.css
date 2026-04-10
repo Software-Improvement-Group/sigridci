@@ -185,7 +185,7 @@ aside, .attention {
 aside::before, .attention::before {
     content: "Attention";
     display: block;
-    font-weight: 400;
+    font-weight: 600;
     color: #1296f3;
 }
 
@@ -202,7 +202,7 @@ aside::before, .attention::before {
 .faq::before {
     content: "FAQ";
     display: block;
-    font-weight: 400;
+    font-weight: 600;
     color: #b501e4;
 }
 
@@ -219,7 +219,7 @@ aside::before, .attention::before {
 .warning::before {
     content: "Warning";
     display: block;
-    font-weight: 400;
+    font-weight: 600;
     color: #df4949;
 }
 
