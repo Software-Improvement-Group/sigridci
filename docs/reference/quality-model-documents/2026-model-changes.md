@@ -26,6 +26,18 @@ This page only covers key changes since the 2025 model. If you want to know more
 you can find a full overview of each model in the [quality model documentation](../sig-quality-models.md).
 {: .attention }
 
+## How to update to the 2026 model
+
+The 2026 model will be released on May 1, 2026. If you are using the default configuration, your portfolio will
+automatically migrate to the 2026 model on this date.
+
+It is possible to explicitly manage the version of the model you are using, via the scope configuration file.
+If you are using this option, your systems will **not** automatically migrate to the 2026 model. In this situation,
+you will need to manually migrate the systems by changing the
+[model version configuration option](../../reference/analysis-scope-configuration.md#configuring-the-sig-maintainability-model-version)
+in the scope configuration file.
+{: .attention }
+
 ## Changes in the 2026 SIG maintainability model
 
 **The Volume system property has been removed from the maintainability model.** The volume system property 
