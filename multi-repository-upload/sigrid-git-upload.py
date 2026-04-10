@@ -12,29 +12,7 @@
 # WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 # See the License for the specific language governing permissions and
 # limitations under the License.
-"""
-sigrid-git-upload.py - Upload multiple git repositories to Sigrid as a single system.
-
-Clones multiple git repositories into subdirectories, creates a directory structure
-with sigrid.yaml at the root, then uses sigridci to create zip and upload to Sigrid.
-
-Usage:
-    python sigrid-git-upload.py \\
-        --customer <customer> \\
-        --system   <system>   \\
-        [--token <Sigrid CI token>] \\
-        [--sigrid-yaml path/to/sigrid.yaml] \\
-        [--sigrid-metadata-yaml path/to/sigrid-metadata.yaml] \\
-        [--sigridci-path path/to/sigridci] \\
-        https://git.example.com/org/repo1.git \\
-        https://git.example.com/org/repo2.git
-    
-
-Optional environment variables:
-    SIGRID_CI_TOKEN     Bearer token for Sigrid API authentication. Only required if --token is not provided.
-    SIGRID_CI_PROXY_URL Path of an HTTP/HTTPS proxy  (e.g. http://proxy:8080)
-    SIGRID_CA_CERT      Path to a custom CA certificate bundle for TLS verification.
-"""
+"""sigrid-git-upload.py - Upload multiple git repositories to Sigrid as a single system."""
 
 import argparse
 import os
@@ -50,9 +28,7 @@ DEFAULT_SIGRIDCI_SCRIPT = Path(__file__).resolve().parent.parent / "sigridci" / 
 
 def _repo_name_from_url(git_url: str) -> str:
     """Derive a filesystem-safe folder name from a git clone URL."""
-    name = git_url.rstrip("/")
-    if name.endswith(".git"):
-        name = name[:-4]
+    name = git_url.rstrip("/").removesuffix(".git")
     return name.split("/")[-1]
 
 
@@ -76,8 +52,6 @@ def _build_arg_parser() -> argparse.ArgumentParser:
             "sigrid.yaml scope file, and publish the result to Sigrid using "
             "the sigridci script."
         ),
-        formatter_class=argparse.RawDescriptionHelpFormatter,
-        epilog=__doc__,
     )
     parser.add_argument("--customer", required=True,
                         help="Name of your organization's Sigrid account.")
@@ -91,8 +65,6 @@ def _build_arg_parser() -> argparse.ArgumentParser:
                         help="Path to the sigridci directory. Defaults to the sigridci/ directory in this repository.")
     parser.add_argument("--sigrid-url", default="https://sigrid-says.com", metavar="URL",
                         help="Sigrid base URL (default: https://sigrid-says.com).")
-    parser.add_argument("--token", metavar="TOKEN",
-                        help="Sigrid CI token (overrides the SIGRID_CI_TOKEN environment variable).")
     parser.add_argument("git_urls", nargs="+", metavar="GIT_URL",
                         help="One or more git repository URLs to include.")
     return parser
@@ -187,9 +159,9 @@ def main() -> None:
     sigrid_yaml = _resolve_optional_file(args.sigrid_yaml, "sigrid.yaml") if args.sigrid_yaml else None
     sigrid_metadata_yaml = _resolve_optional_file(args.sigrid_metadata_yaml, "sigrid-metadata.yaml") if args.sigrid_metadata_yaml else None
 
-    token = (args.token or os.environ.get("SIGRID_CI_TOKEN", "")).strip()
+    token = os.environ.get("SIGRID_CI_TOKEN", "").strip()
     if not token:
-        print("ERROR: provide --token or set the SIGRID_CI_TOKEN environment variable.", file=sys.stderr)
+        print("ERROR: set the SIGRID_CI_TOKEN environment variable.", file=sys.stderr)
         sys.exit(1)
 
     duplicates = _find_duplicate_names(args.git_urls)

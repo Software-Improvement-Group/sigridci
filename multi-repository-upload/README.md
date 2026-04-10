@@ -1,4 +1,4 @@
-# sigrid-git-upload
+# Upload multiple Git repositories to Sigrid
 
 Upload one or more git repositories to Sigrid as a single combined system. This script is only designed for manual upload runs and not to be used in a pipeline upload. It doesn't include any pull-request feedback.
 
@@ -15,10 +15,9 @@ No additional Python packages are needed — only standard library modules are u
 ## Usage
 
 ```
-python sigrid-git-upload.py \
+./sigrid-git-upload.py \
     --customer <customer> \
     --system   <system>   \
-    [--token <token>] \
     [--sigrid-yaml path/to/sigrid.yaml] \
     [--sigrid-metadata-yaml path/to/sigrid-metadata.yaml] \
     [--sigridci-path path/to/sigridci] \
@@ -26,14 +25,15 @@ python sigrid-git-upload.py \
     https://git.example.com/org/repo2.git
 ```
 
+On Windows, use `python sigrid-git-upload.py` instead of `./sigrid-git-upload.py`.
+
 ## Arguments
 
 | Argument | Required | Description |
 |---|---|---|
-| `GIT_URL ...` | Yes | One or more git repository URLs to include. |
+| `GIT_URL ...` | Yes | One or more git repository URLs to include. Both HTTPS and SSH URLs are supported. |
 | `--customer` | Yes | Name of your organization's Sigrid account. |
 | `--system` | Yes | Name of the system in Sigrid (letters, digits, hyphens). |
-| `--token` | No | Sigrid CI token. Overrides the `SIGRID_CI_TOKEN` environment variable. |
 | `--sigrid-yaml` | No | Path to a `sigrid.yaml` scope configuration file to include at the root. |
 | `--sigrid-metadata-yaml` | No | Path to a `sigrid-metadata.yaml` file to include at the root. |
 | `--sigridci-path` | No | Path to a local `sigridci` directory. Defaults to the `sigridci/` directory in this repository. |
@@ -43,7 +43,7 @@ python sigrid-git-upload.py \
 
 | Variable | Description |
 |---|---|
-| `SIGRID_CI_TOKEN` | Bearer token for Sigrid API authentication. Required unless `--token` is passed. |
+| `SIGRID_CI_TOKEN` | Bearer token for Sigrid API authentication. **Required.** |
 | `SIGRID_CI_PROXY_URL` | HTTP/HTTPS proxy URL (e.g. `http://proxy:8080`). |
 | `SIGRID_CA_CERT` | Path to a custom CA certificate bundle for TLS verification. |
 
@@ -52,7 +52,7 @@ python sigrid-git-upload.py \
 ```bash
 export SIGRID_CI_TOKEN=your-token-here
 
-python sigrid-git-upload.py \
+./sigrid-git-upload.py \
     --customer acme \
     --system my-platform \
     --sigrid-yaml ./sigrid.yaml \
