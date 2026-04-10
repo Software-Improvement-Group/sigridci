@@ -174,7 +174,7 @@ def main() -> None:
         print()
 
         sigridci_script = _resolve_sigridci_script(args.sigridci_path)
-        _run_sigridci(sigridci_script, args.customer, args.system, source_dir, args.sigrid_url)
+        _run_sigridci(sigridci_script, args.customer, args.system, source_dir, args.sigrid_url, token)
 
     print(
         f"\nDone. '{args.system}' has been published to Sigrid.\n"
