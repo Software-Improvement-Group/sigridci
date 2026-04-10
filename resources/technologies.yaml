@@ -633,6 +633,10 @@
   display_name: "Nabsic"
   category: dsl
 
+- context: navascript
+  display_name: "NavaScript"
+  category: customization
+
 - context: naviscript
   display_name: "Naviscript"
   category: customization

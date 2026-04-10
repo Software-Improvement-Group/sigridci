@@ -27,7 +27,7 @@ from sigridci.upload_log import UploadLog
 
 
 CAPABILITIES = {cap.shortName: cap for cap in [MAINTAINABILITY, OPEN_SOURCE_HEALTH, SECURITY]}
-DEFAULT_CAPABILITIES = "maintainability,osh,security"
+DEFAULT_CAPABILITIES = "maintainability,osh"
 
 
 def parsePublishOptions(args):
