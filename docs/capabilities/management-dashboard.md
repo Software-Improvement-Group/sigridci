@@ -65,15 +65,15 @@ Switching to the quality tab, we see a similar layout to the security tab, but h
 maintainability and architecture. The top section compares your portfolio to benchmarks and estimates the impact 
 of technical debt on your teams' development speed.
 
-### Effort focus and optimization
+### Maintenance effort focus and optimization
 
 The charts break down development activity by month. The chart on the left illustrates how development effort was 
 allocated based on the business-criticality of your systems.
 
-<img src="../images/management-dashboard-effort.png" width="600" />
+<img src="../images/management-dashboard-technical-debt.png" width="600" />
 
-The char on the right illustrates the amount of technical debt introduced and resolved per month, measured in 
-Person Years of development. To understand how technical debt is measured please consult
+The chart on the right illustrates with which amount the maintenance effort has increased or decreased, measured in
+Person Years of effort that needs to be spent per year on maintenance. To understand how technical debt is measured please consult
 [this paper](https://www.researchgate.net/publication/228684782_An_Empirical_Model_of_Technical_Debt_and_Interest).
 
 ### Long term trend and progress
