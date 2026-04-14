@@ -113,6 +113,15 @@ Add:
 
 - Save → Verify server appears in tools list
 
+#### Visual Studio
+
+- Connect your GitHub account and open GitHub Copilot
+- At the bottom left, below the chat box, select "Agent" mode
+- Click on the + button to add a new MCP server
+- When prompted, enter the name, "SigridCode", and then add the URL as `https://sigrid-says.com/mcp`
+- Choose "Additional headers" and add: `Authorization: Bearer <your_sigrid_token>`
+- After saving/closing the window, if the token is valid, verify server appears in tools list and you will be able to use the MCP server inside Copilot
+  
 #### Windsurf
 
 - Install Node
