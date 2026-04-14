@@ -39,7 +39,7 @@ Sigrid visualizes your software landscape according to various technical quality
 
 <img src="images/objectives-overview.png" width="600" />
 
-The screenshot above shows an example on how Sigrid can help you to define and track [objectives](capabilities/portfolio-objectives.md) for various quality aspects. You can do this for every system in your portfolio. For more context on the relation between systems and their repositories, see [systems](organization-integration/systems.md).
+The screenshot above shows an example on how Sigrid can help you to define and track [objectives](capabilities/portfolio-objectives.md) on system level for various quality aspects. You can do this for every system in your portfolio. For more context on the relation between systems and their repositories, see [maping repositories to Sigrid systems](organization-integration/systems.md).
 
 ## How does Sigrid work?
 
