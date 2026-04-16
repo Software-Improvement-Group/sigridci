@@ -22,12 +22,11 @@ support older versions.
 
 ## Installing the extension
 
-During the Beta phase, you will need to install the extension from GitHub. Once the extension is released, you
-will be able to install the extension from the Mendix Marketplace.
-{: .attention }
+You can find the QSM extension for Mendix Studio Pro in the
+[Mendix Marketplace](https://marketplace.mendix.com/link/component/260132). You can use the blue "Use in Studio Pro"
+button to install it.
 
-- You can find the Beta version of the extension [on GitHub](https://github.com/Software-Improvement-Group/QSM-mendix-studio-pro).
-- Follow the instructions on GitHub to build and install the extension.
+<img src="../images/ide/mendix-marketplace.png" width="450" />
 
 ## Configuring the extension
 
@@ -58,6 +57,12 @@ When opened, the QSM extension contains multiple tabs, one for each QSM capabili
 - Using the "open" icon in the right-hand side will open the corresponding QSM finding detail page in your
   default browser.
 - The pencil icon allows you to edit a finding's status and add remarks.
+
+## Contributing to the extension
+
+The QSM extension for Mendix Studio Pro is open source. The
+[GitHub project](https://github.com/Software-Improvement-Group/QSM-mendix-studio-pro) contains information on how
+you can build and install the extension locally.
 
 ## Contact and support
 
