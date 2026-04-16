@@ -39,7 +39,7 @@ Before you can use the extension, you will first need to provide your QSM creden
 - Enter your QSM customer name and system name.
 - You will also need to add your [authentication token](../organization-integration/authentication-tokens.md).
 
-<img src="../images/ide/vscode-settings.png" width="450" />
+<img src="../images/ide/mendix-settings.png" width="450" />
 
 ## Using the extension
 
@@ -51,7 +51,7 @@ The QSM extension is not visible by default. You can open it using the following
 
 When opened, the QSM extension contains multiple tabs, one for each QSM capability.
 
-<img src="../images/ide/vscode-tab.png" width="500" />
+<img src="../images/ide/mendix-tab.png" width="500" />
 
 - Double-clicking on a finding will navigate you to the location of that finding in the code.
 - Using the "open" icon in the right-hand side will open the corresponding QSM finding detail page in your
