@@ -16,8 +16,8 @@ In summary, this view helps you maintain secure and standardized open source pol
 
 ## When to use the library management overview
 
-- **Rapid incident response:** When a new vulnerability (like Log4Shell) is announced, use the “Inventory”
-  search to immediately identify every system in your organization that is at risk.
+- **Rapid incident response:** When a new vulnerability (like Log4Shell) is announced, use this page
+  to immediately identify every system in your organization that is at risk.
 - **Tech stack standardization:** Monitor open source usage to identify systems lagging behind or not adhering to
   your organization’s open source usage policies.
 - **Audit readiness:** Export the information, either from the dashboard or
