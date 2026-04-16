@@ -45,18 +45,20 @@ Before you can use the extension, you will first need to provide your QSM creden
 
 The QSM extension is not visible by default. You can open it using the following steps:
 
-- In the top menu, select "extensions".
+- In the top menu, select "Extensions".
 - Select "QSM".
 - Select "Show QSM findings".
 
 When opened, the QSM extension contains multiple tabs, one for each QSM capability.
 
-<img src="../images/ide/mendix-tab.png" width="500" />
+<img src="../images/ide/mendix-tab.png" width="750" />
 
-- Double-clicking on a finding will navigate you to the location of that finding in the code.
-- Using the "open" icon in the right-hand side will open the corresponding QSM finding detail page in your
-  default browser.
-- The pencil icon allows you to edit a finding's status and add remarks.
+- Scope selector allows you to filter findings between the Entire system or the Selected file currently open in Studio Pro.
+- Clicking the folder (📂) icon on a finding opens and focuses the corresponding document in Studio Pro. For non-navigatable findings, a clipboard (📋) icon is shown instead, which displays the full file path.
+- The pencil (✏️) icon opens the edit dialog, where you can update a finding's status and add a remark. Changes are saved to Sigrid automatically.
+- For Security findings, clicking the link (🔗) icon opens the selected finding in Sigrid in your browser.
+- The New scan request button can be used to trigger an on-demand QSM scan for the system.
+- The Reload data button can be used to refresh findings from Sigrid.
 
 ## Contributing to the extension
 
