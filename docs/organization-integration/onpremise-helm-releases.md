@@ -29,7 +29,7 @@ From now on, we no longer use semantic versioning (e.g. `0.4.14`) for Helm chart
 
 **Breaking:** This change requires Sigrid and Sigrid-Multi-Analyzer version `1.0.20260421` or later and requires the actions below.
 
-**Actions**
+**Actions:**
 - Update the Sigrid Helm chart and configuration before deploying Sigrid and Sigrid-Multi-Analyzer.
   1. Update Sigrid Helm chart.
   2. Update Helm configuration.
