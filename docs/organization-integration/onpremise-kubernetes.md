@@ -388,7 +388,6 @@ To enable Sigrid to automatically grant the uploading user access to an onboarde
 auth-api:
    onboarding:
     create: true
-    secretName: my-system-onboarding-secret
     data:
       secret: "example"
 ```
@@ -416,37 +415,42 @@ In the Helm chart, two things need to be configured:
 - (F.1) A secret to allow access to the object store.
 - (F.2) Configuration for the Kubernetes jobs that import analysis results.
 
-### (F.1) Secret to allow access to the object store
+### (F.1) Configure the object store
 
-A secret for accessing the object store can be configured in the usual way:
+The object store can be configured this way:
 
 {% raw %}
 ```yaml
-inbound-api:
-  config:
-    importJob:
-      objectStoreSecret:
-        create: true
-        data:
-          AWS_ENDPOINT_URL: "https://minio.my-company.com"
-          AWS_FORCE_PATH_STYLE: true  # Use path-style access to prevent bucket-specific hostnames
-          AWS_REGION: "eu-east-1"
-          AWS_ACCESS_KEY_ID: ""
-          AWS_SECRET_ACCESS_KEY: ""
+global:
+  onPremise:
+	objectStore:
+	  bucketName: "example-bucket"
+	  forcePathStyle: "true"  # Use path-style access to prevent bucket-specific hostnames
+	  endpoint: "https://minio.my-company.com"
+	  region: "us-east-1"
+	  secret:
+      create: true
+      data:
+        AWS_ACCESS_KEY_ID: ""
+        AWS_SECRET_ACCESS_KEY: ""
 ```
 {% endraw %}
 
-As usual, the Helm chart creates the secret if you set `inbound-api.config.importJob.objectStoreSecret.create`
+As usual, the Helm chart creates the secret if you set `global.onPremise.objectStore.secret.create`
 to true. Alternatively, you can provide the secret yourself, in which case the configuration should look like:
 
 {% raw %}
 ```yaml
-inbound-api:
-  config:
-    importJob:
-      objectStoreSecret:
-        create: false
-        secretName: "example name"
+global:
+  onPremise:
+	objectStore:
+	  bucketName: "example-bucket"
+	  forcePathStyle: "true" # Use path-style access to prevent bucket-specific hostnames
+	  endpoint: "https://minio.my-company.com"
+	  region: "us-east-1"
+	  secret:
+	    create: false
+	    secretName: sigrid-onprem-object-store-credentials
 ```
 {% endraw %}
 
