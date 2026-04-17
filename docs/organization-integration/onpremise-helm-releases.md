@@ -21,15 +21,32 @@ This page focuses specifically on deployment-relevant changes, including require
 
 The Helm chart is published under the name `sigrid-stack`.
 
-### Release 0.4.15 - BREAKING CHANGE
+### Release 1.0.20260421 - BREAKING CHANGE
+
+From now on, we no longer use semantic versioning (e.g. `0.4.14`) for Helm chart releases. Helm charts and container images now follow a unified date-based versioning scheme. All future releases use the format `1.0.YYYYMMDD`, aligned with the Sigrid container release versioning.
 
 **Added:** Sigrid-Multi-Analyzer no longer connects directly to S3-compatible object storage. This simplifies the pipeline job but requires updates to the Helm configuration.
 
-**Breaking:** This feature requires Sigrid and Sigrid-Multi-Analyzer version 1.0.202604xx or later.
+**Breaking:** This change requires Sigrid and Sigrid-Multi-Analyzer version `1.0.20260421` or later and requires the actions below.
 
-**Actions:**  
-- Update the Sigrid Helm chart and configuration before deploying Sigrid and Sigrid-Multi-Analyzer.  
-- For required configuration changes, see [Kubernetes deployment](../organization-integration/onpremise-kubernetes.md#title_in_document) and [Installation runbook](../organization-integration/runbooks-onpremise-installation.md#title_in_document).
+**Actions**
+- Update the Sigrid Helm chart and configuration before deploying Sigrid and Sigrid-Multi-Analyzer.
+  1. Update Sigrid Helm chart.
+  2. Update Helm configuration.
+     - For the expected configuration, see [Kubernetes deployment](../organization-integration/onpremise-kubernetes.md#f1-configure-the-object-store).
+     - Update the object store secret to only include `AWS_ACCESS_KEY_ID` and `AWS_SECRET_ACCESS_KEY`.
+       - These keys are no longer required: `AWS_FORCE_PATH_STYLE`, `AWS_REGION`.
+     - Remove deprecated configuration from Helm values: `inbound-api.config.importJob`.
+     - Update `global.imageTag` or `image.tag` for individual services.
+  3. Clean up pipeline job configuration.
+     - Update `$SIGRID_VERSION`.
+     - Remove all legacy object store settings from the Sigrid pipeline job, including:
+       - `BUCKET`
+       - `AWS_FORCE_PATH_STYLE`
+       - `AWS_REGION`
+       - `AWS_ACCESS_KEY_ID`
+       - `AWS_SECRET_ACCESS_KEY`
+       - `AWS_CA_BUNDLE`
 
 ### Release 0.4.14
 
