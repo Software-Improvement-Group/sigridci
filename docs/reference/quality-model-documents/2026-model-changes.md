@@ -5,7 +5,7 @@ Every year, SIG updates its quality models to reflect industry trends. SIG's qua
 best practices, but best practices may change over time. Therefore, the quality models are updated every year,
 based on the 30,000 systems in the SIG benchmark.
 
-<img src="../../images/models/saw.png" width="450" />
+<iframe width="560" height="315" src="https://www.youtube.com/embed/aGUADy_VEE4?si=BLeB0lr2LHxPEptg" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
 
 Model changes consist of three categories:
 
@@ -18,6 +18,8 @@ Model changes consist of three categories:
 - **Improve metric actionability based on modern best practices:** The goal of the quality models isn't just to
   measure, it's also to help people to improve their software. This makes it important to connect each metric
   to actionable insights.
+
+<img src="../../images/models/saw.png" width="450" />
 
 This page contains an overview of key changes in the 2026 SIG quality models, which are used across Sigrid.
 
