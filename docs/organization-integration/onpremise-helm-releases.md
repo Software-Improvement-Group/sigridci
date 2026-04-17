@@ -29,24 +29,23 @@ From now on, we no longer use semantic versioning (e.g. `0.4.14`) for Helm chart
 
 **Breaking:** This change requires Sigrid and Sigrid-Multi-Analyzer version `1.0.20260421` or later and requires the actions below.
 
-**Actions:**
-- Update the Sigrid Helm chart and configuration before deploying Sigrid and Sigrid-Multi-Analyzer.
-  1. Update Sigrid Helm chart.
-  2. Update Helm configuration.
-     - For the expected configuration, see [Kubernetes deployment](../organization-integration/onpremise-kubernetes.md#f1-configure-the-object-store).
-     - Update the object store secret to only include `AWS_ACCESS_KEY_ID` and `AWS_SECRET_ACCESS_KEY`.
-       - These keys are no longer required: `AWS_FORCE_PATH_STYLE`, `AWS_REGION`.
-     - Remove deprecated configuration from Helm values: `inbound-api.config.importJob`.
-     - Update `global.imageTag` or `image.tag` for individual services.
-  3. Clean up pipeline job configuration.
-     - Update `$SIGRID_VERSION`.
-     - Remove all legacy object store settings from the Sigrid pipeline job, including:
-       - `BUCKET`
-       - `AWS_FORCE_PATH_STYLE`
-       - `AWS_REGION`
-       - `AWS_ACCESS_KEY_ID`
-       - `AWS_SECRET_ACCESS_KEY`
-       - `AWS_CA_BUNDLE`
+**Actions:** Update the Sigrid Helm chart and configuration before deploying Sigrid and Sigrid-Multi-Analyzer.
+1. Update Sigrid Helm chart.
+2. Update Helm configuration.
+   - For the expected configuration, see [Kubernetes deployment](../organization-integration/onpremise-kubernetes.md#f1-configure-the-object-store).
+   - Update the object store secret to only include `AWS_ACCESS_KEY_ID` and `AWS_SECRET_ACCESS_KEY`.
+     - These keys are no longer required: `AWS_FORCE_PATH_STYLE`, `AWS_REGION`.
+   - Remove deprecated configuration from Helm values: `inbound-api.config.importJob`.
+   - Update `global.imageTag` or `image.tag` for individual services.
+3. Clean up pipeline job configuration.
+   - Update `$SIGRID_VERSION`.
+   - Remove all legacy object store settings from the Sigrid pipeline job, including:
+     - `BUCKET`
+     - `AWS_FORCE_PATH_STYLE`
+     - `AWS_REGION`
+     - `AWS_ACCESS_KEY_ID`
+     - `AWS_SECRET_ACCESS_KEY`
+     - `AWS_CA_BUNDLE`
 
 ### Release 0.4.14
 
