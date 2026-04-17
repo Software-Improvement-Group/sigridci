@@ -576,10 +576,10 @@ are used for both cpu/memory requests and cpu/memory limits.
 When using a self-signed certificate for the S3-compatible storage we also have to tell inbound-api which cert specifically should be used for S3 so that it can also share it with the importer jobs it starts.
 {% raw %}
 ```yaml
-inbound-api:
-  config:
-    importJob:
-      objectStoreCertificate:
+global:
+  onPremise:
+    objectStore:
+      certificate:
         # -- If the object-storage (S3) requires a custom certificate configure the custom certificates section. Then
         # set key to the filename of the specific S3 certificate.
         key: my-object-store-cert.pem
@@ -658,6 +658,7 @@ Notes:
 
 ### (H) Optional: Configure Custom Certificates
 To enable secure communication between services using Sigrid, you may need to add custom certificates. These certificates can be defined in the following three components: `auth-api`, `sigrid-api`, and `inbound-api`. You can configure this using the `customCertificates` option in the Helm chart.
+#TODO `inbound-api` cert will move to objectStore global (?)
 {% raw %}
 ```yaml
   customCertificates:
