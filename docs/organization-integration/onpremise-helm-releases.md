@@ -35,9 +35,7 @@ From now on, we're aligning the version number of Helm chart releases with conta
 1. Update Sigrid Helm chart to version 1.0.20260421, or greater.
 2. Update Helm configuration.
    - For the expected configuration, see [Kubernetes deployment](../organization-integration/onpremise-kubernetes.md#f1-configure-the-object-store).
-   - Update the object store secret to only include `AWS_ACCESS_KEY_ID` and `AWS_SECRET_ACCESS_KEY`.
-     - These keys are no longer required: `AWS_FORCE_PATH_STYLE`, `AWS_REGION`.
-   - Remove deprecated configuration from Helm values: `inbound-api.config.importJob`.
+   - Remove deprecated configuration from Helm values: `inbound-api.config.importJob.objectStoreSecret`.
    - Update `global.imageTag` or `image.tag` for individual services.
 3. Clean up pipeline job configuration.
    - Update `$SIGRID_VERSION`.

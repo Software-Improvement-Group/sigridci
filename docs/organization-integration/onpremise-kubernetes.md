@@ -388,6 +388,7 @@ To enable Sigrid to automatically grant the uploading user access to an onboarde
 auth-api:
    onboarding:
     create: true
+    secretName: my-system-onboarding-secret
     data:
       secret: "example"
 ```
