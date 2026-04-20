@@ -7,7 +7,7 @@ High-level overviews of the software landscape’s composition and quality help 
 
 To get started with Sigrid, you may want to begin by exploring the dashboard of the [Management Dashboard](../capabilities/management-dashboard.md). From here, the view will take you through your portfolio quality status on landscape level.
 
-<img src="images/management-dashboard.png" width="700" />
+<img src="../images/management-dashboard.png" width="700" />
 
 To look into the workflows that Sigrid offers you as an executive/portfolio manager, you can read the dedicated [workflows section](../workflows/manager.md).
 
