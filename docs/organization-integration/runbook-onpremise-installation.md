@@ -149,7 +149,7 @@ Provide an email address to bootstrap the very first user in Sigrid.
 The email address should match the user's email in the connected IdP.
 Note that this initial admin user will have full access to the entire portfolio. Once Sigrid is fully configured, you can invite another person as an Admin and, if desired, remove or demote the initial admin user to a regular user.
 
-A secret for accessing the object store can be configured as follows.
+A secret for accessing the object store, and the necessary configuration settings, can be configured as follows.
 
 {% raw %}
 ```yaml

@@ -429,10 +429,13 @@ global:
 	  endpoint: "https://minio.my-company.com"
 	  region: "us-east-1"
 	  secret:
-      create: true
-      data:
-        AWS_ACCESS_KEY_ID: ""
-        AWS_SECRET_ACCESS_KEY: ""
+        create: true
+        data:
+          AWS_ENDPOINT_URL: "https://minio.my-company.com"
+          AWS_FORCE_PATH_STYLE: true  # Use path-style access to prevent bucket-specific hostnames
+          AWS_REGION: "eu-east-1"
+          AWS_ACCESS_KEY_ID: ""
+          AWS_SECRET_ACCESS_KEY: ""
 ```
 {% endraw %}
 
@@ -658,7 +661,6 @@ Notes:
 
 ### (H) Optional: Configure Custom Certificates
 To enable secure communication between services using Sigrid, you may need to add custom certificates. These certificates can be defined in the following three components: `auth-api`, `sigrid-api`, and `inbound-api`. You can configure this using the `customCertificates` option in the Helm chart.
-#TODO `inbound-api` cert will move to objectStore global (?)
 {% raw %}
 ```yaml
   customCertificates:
