@@ -5,7 +5,9 @@ Sigrid is aimed at organizational roles that deal with concerns around system he
 ## Role: Executive/portfolio manager for portfolio/trend views
 High-level overviews of the software landscape’s composition and quality help you take inventory of your landscape’s *health*, or *risk profile*. This gives direction to future plans. 
 
-To get started with Sigrid, you may want to begin by exploring the dashboard of the [portfolio overview](../capabilities/portfolio-overview.md). From here, [the maintainability details on portfolio level](../capabilities/portfolio-maintainability.md) will take you through system maintainability on the landscape level.
+To get started with Sigrid, you may want to begin by exploring the dashboard of the [Management Dashboard](../capabilities/management-dashboard.md). From here, the view will take you through your portfolio quality status on landscape level.
+
+<img src="images/management-dashboard.png" width="700" />
 
 To look into the workflows that Sigrid offers you as an executive/portfolio manager, you can read the dedicated [workflows section](../workflows/manager.md).
 
