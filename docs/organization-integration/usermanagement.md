@@ -20,6 +20,7 @@ With this module, a Sigrid administrator can perform all the basic authenticatio
 ### Note
 - That your users will need to set a password.
 - Sigrid support can make the use of MFA (multi-factor authentication) mandatory for your users.
+- MFA is based on time-based one-time passwords (TOTP), not SMS or email.
 - You will need to actively revoke access for users that have left your company by deleting them from user management.
 
 ### Sigrid administrator tasks
