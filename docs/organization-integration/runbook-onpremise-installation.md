@@ -165,7 +165,7 @@ global:
       data:
         AWS_ENDPOINT_URL: "https://minio.my-company.com"
         AWS_FORCE_PATH_STYLE: true  # Use path-style access to prevent bucket-specific hostnames
-        AWS_REGION: "eu-east-1"
+        AWS_REGION: "us-east-1"
         AWS_ACCESS_KEY_ID: ""
         AWS_SECRET_ACCESS_KEY: ""
 ```
