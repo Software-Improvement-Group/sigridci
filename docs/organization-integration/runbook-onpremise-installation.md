@@ -277,6 +277,24 @@ inbound-api:
 ```
 {% endraw %}
 
+A secret for accessing the object store can be configured as follows.
+
+{% raw %}
+```yaml
+inbound-api:
+  config:
+    importJob:
+      objectStoreSecret:
+        create: true
+        data:
+          AWS_ENDPOINT_URL: "https://minio.my-company.com"
+          AWS_FORCE_PATH_STYLE: true  # Use path-style access to prevent bucket-specific hostnames
+          AWS_REGION: "us-east-1"
+          AWS_ACCESS_KEY_ID: ""
+          AWS_SECRET_ACCESS_KEY: ""
+```
+{% endraw %}
+
 ### *-service:
 
 The secrets provided below are configured to allow the Sigrid API to communicate with downstream APIs. If these secrets are modified, please ensure that they are updated across all services, as they are associated with a single user.

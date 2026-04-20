@@ -7,3 +7,8 @@ Since SIG's quality models are based on the ISO 25010 standard, documents are av
 * [Application security model](https://softwareimprovementgroup.com/wp-content/uploads/SIG-Evaluation-Criteria-Security.pdf) describing best practices against which application security is assessed in manual assessments, partly based on this [scientific paper on security](https://softwareimprovementgroup.com/wp-content/uploads/APracticalModelForSoftwareSecurity.pdf).
 * [Architecture Quality Guidance for Producers](https://www.softwareimprovementgroup.com/wp-content/uploads/Guidance-for-producers-Architecture-Quality-Model.pdf).
 * [Open Source Health Guidance for Producers](quality-model-documents/open-source-health.md).
+
+## Contact and support
+
+Feel free to contact [SIG's support team](mailto:support@softwareimprovementgroup.com) for any questions or issues
+you may have after reading this documentation or when using Sigrid.

@@ -22,12 +22,11 @@ support older versions.
 
 ## Installing the extension
 
-During the Beta phase, you will need to install the extension from GitHub. Once the extension is released, you
-will be able to install the extension from the Mendix Marketplace.
-{: .attention }
+You can find the QSM extension for Mendix Studio Pro in the
+[Mendix Marketplace](https://marketplace.mendix.com/link/component/260132). You can use the blue "Use in Studio Pro"
+button to install it.
 
-- You can find the Beta version of the extension [on GitHub](https://github.com/Software-Improvement-Group/QSM-mendix-studio-pro).
-- Follow the instructions on GitHub to build and install the extension.
+<img src="../images/ide/mendix-marketplace.png" width="450" />
 
 ## Configuring the extension
 
@@ -40,24 +39,32 @@ Before you can use the extension, you will first need to provide your QSM creden
 - Enter your QSM customer name and system name.
 - You will also need to add your [authentication token](../organization-integration/authentication-tokens.md).
 
-<img src="../images/ide/vscode-settings.png" width="450" />
+<img src="../images/ide/mendix-settings.png" width="450" />
 
 ## Using the extension
 
 The QSM extension is not visible by default. You can open it using the following steps:
 
-- In the top menu, select "extensions".
+- In the top menu, select "Extensions".
 - Select "QSM".
 - Select "Show QSM findings".
 
 When opened, the QSM extension contains multiple tabs, one for each QSM capability.
 
-<img src="../images/ide/vscode-tab.png" width="500" />
+<img src="../images/ide/mendix-tab.png" width="750" />
 
-- Double-clicking on a finding will navigate you to the location of that finding in the code.
-- Using the "open" icon in the right-hand side will open the corresponding QSM finding detail page in your
-  default browser.
-- The pencil icon allows you to edit a finding's status and add remarks.
+- Scope selector allows you to filter findings between the Entire system or the Selected file currently open in Studio Pro.
+- Clicking the folder (📂) icon on a finding opens and focuses the corresponding document in Studio Pro. For non-navigatable findings, a clipboard (📋) icon is shown instead, which displays the full file path.
+- The pencil (✏️) icon opens the edit dialog, where you can update a finding's status and add a remark. Changes are saved to Sigrid automatically.
+- For Security findings, clicking the link (🔗) icon opens the selected finding in Sigrid in your browser.
+- The New scan request button can be used to trigger an on-demand QSM scan for the system.
+- The Reload data button can be used to refresh findings from Sigrid.
+
+## Contributing to the extension
+
+The QSM extension for Mendix Studio Pro is open source. The
+[GitHub project](https://github.com/Software-Improvement-Group/QSM-mendix-studio-pro) contains information on how
+you can build and install the extension locally.
 
 ## Contact and support
 

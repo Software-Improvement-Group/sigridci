@@ -3,7 +3,16 @@ Sigrid release notes
 
 SIG uses [continuous delivery](https://en.wikipedia.org/wiki/Continuous_delivery), meaning that every change to Sigrid or the underlying analysis is released once our development pipeline has completed. On average, we release somewhere between 10 and 20 times per day. This page therefore doesn't list every single change, since that would quickly lead to an excessively long list of small changes. Instead, this page lists Sigrid and analysis changes that we consider noteworthy for the typical Sigrid user.
 
-### March 30, 2026
+### April 20, 2026
+
+- As we do every year, SIG will update its quality models based on industry trends. This year, we are communicating key changes *before* the new model is introduced. We have added [an overview of key changes in the 2026 model](../reference/quality-model-documents/2026-model-changes.md), and we have already updated [the quality model documentation](../reference/sig-quality-models.md). Having information in advance might be helpful to understand and prepare for these changes, and makes sure there are no surprised when the new models are introduced.
+- **Open Source Health:** Sigrid now includes a new [library management overview page](../capabilities/portfolio-library-management.md). This dashboard allows you to quickly identify where in your portfolio a certain open source library is used, and which versions are being used where.
+- **Management dashboard:** The management dashboard used the concepts of technical debt and maintenance effort ambiguously, and in some cases incorrectly. This has been corrected so that the management dashboard now clearly displays maintenance effort insights. Wherever the maintenance effort has a relevant correlation to technical debt, explanations have been clarified as well.
+- **Open Source Health:** You are now able to exclude freshness risk and management risk for open source libraries [in your configuration](../reference/analysis-scope-configuration.md#exclude-open-source-health-risks). This means that every type of open source issue is now customizable, which is helpful to avoid Sigrid reporting unfixable issues over and over again.
+- **Technology support:** Added support for the NavaScript programming language.
+- **Mendix QSM:** The QSM extension for Mendix Studio Pro is now available from [Mendix Marketplace](https://marketplace.mendix.com/link/component/260132). More information on using this extension is available from its [documentation](../integrations/mendix-studio-pro-extension.md).
+
+### April 7, 2026
 
 - **Portfolio overview:** The new [portfolio overview dashboard](../capabilities/portfolio-dashboard-plans.md) has different tabs for different use cases:
   - Prioritize which systems require your attention.

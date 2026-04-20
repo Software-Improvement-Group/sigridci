@@ -227,6 +227,8 @@ In certain situations you can decide to [exclude Open Source Health risks](../ca
         - vulnerability: "CVE-2024-12345" # Excludes all vulnerabilities with the specified identifier.
         - license: "iTextSharp" # Excludes license risks for the specified library.
         - activity: "com.github.tomas-langer:chalk" # Excludes activity risks for the specified library.
+        - fresness: "javafx.*" # Excludes freshness risks for all libraries matching the regular expression.
+        - management: "jquery" # Excludes library management risks.
 
 Libraries and/or findings that are excluded using this option will not count towards the Open Source Health star rating, and will not be marked as risks in Sigrid.
 
