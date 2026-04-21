@@ -36,9 +36,10 @@ class DocumentationTest(TestCase):
     def testDocumentationDoesNotContainDeadImages(self):
         for file, contents in self.readDocumentationPages():
             for match in self.IMAGE.finditer(contents):
-                parentDir = os.path.dirname(file)
-                linkedFile = os.path.join(parentDir, match.group(1))
-                self.assertTrue(os.path.exists(linkedFile), f"Dead image in {file} to {linkedFile}")
+                if not match.group(1).startswith("https://"):
+                    parentDir = os.path.dirname(file)
+                    linkedFile = os.path.join(parentDir, match.group(1))
+                    self.assertTrue(os.path.exists(linkedFile), f"Dead image in {file} to {linkedFile}")
                 
     def testMenuDoesNotContainDeadLinks(self):
         with open("docs/_includes/menu.html", "r") as f:
