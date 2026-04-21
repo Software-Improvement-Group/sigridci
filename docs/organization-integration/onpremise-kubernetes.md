@@ -416,16 +416,20 @@ In the Helm chart, two things need to be configured:
 - (F.1) A secret to allow access to the object store.
 - (F.2) Configuration for the Kubernetes jobs that import analysis results.
 
-### (F.1) Secret to allow access to the object store
+### (F.1) Configure the object store
 
-A secret for accessing the object store can be configured in the usual way:
+The object store can be configured this way:
 
 {% raw %}
 ```yaml
-inbound-api:
-  config:
-    importJob:
-      objectStoreSecret:
+global:
+  onPremise:
+	objectStore:
+	  bucketName: "example-bucket"
+	  forcePathStyle: "true"  # Use path-style access to prevent bucket-specific hostnames
+	  endpoint: "https://minio.my-company.com"
+	  region: "us-east-1"
+	  secret:
         create: true
         data:
           AWS_ENDPOINT_URL: "https://minio.my-company.com"
@@ -436,17 +440,21 @@ inbound-api:
 ```
 {% endraw %}
 
-As usual, the Helm chart creates the secret if you set `inbound-api.config.importJob.objectStoreSecret.create`
+As usual, the Helm chart creates the secret if you set `global.onPremise.objectStore.secret.create`
 to true. Alternatively, you can provide the secret yourself, in which case the configuration should look like:
 
 {% raw %}
 ```yaml
-inbound-api:
-  config:
-    importJob:
-      objectStoreSecret:
-        create: false
-        secretName: "example name"
+global:
+  onPremise:
+	objectStore:
+	  bucketName: "example-bucket"
+	  forcePathStyle: "true" # Use path-style access to prevent bucket-specific hostnames
+	  endpoint: "https://minio.my-company.com"
+	  region: "us-east-1"
+	  secret:
+	    create: false
+	    secretName: sigrid-onprem-object-store-credentials
 ```
 {% endraw %}
 
@@ -572,10 +580,10 @@ are used for both cpu/memory requests and cpu/memory limits.
 When using a self-signed certificate for the S3-compatible storage we also have to tell inbound-api which cert specifically should be used for S3 so that it can also share it with the importer jobs it starts.
 {% raw %}
 ```yaml
-inbound-api:
-  config:
-    importJob:
-      objectStoreCertificate:
+global:
+  onPremise:
+    objectStore:
+      certificate:
         # -- If the object-storage (S3) requires a custom certificate configure the custom certificates section. Then
         # set key to the filename of the specific S3 certificate.
         key: my-object-store-cert.pem
