@@ -3,9 +3,28 @@ Sigrid release notes
 
 SIG uses [continuous delivery](https://en.wikipedia.org/wiki/Continuous_delivery), meaning that every change to Sigrid or the underlying analysis is released once our development pipeline has completed. On average, we release somewhere between 10 and 20 times per day. This page therefore doesn't list every single change, since that would quickly lead to an excessively long list of small changes. Instead, this page lists Sigrid and analysis changes that we consider noteworthy for the typical Sigrid user.
 
+### April 20, 2026
+
+- As we do every year, SIG will update its quality models based on industry trends. This year, we are communicating key changes *before* the new model is introduced. We have added [an overview of key changes in the 2026 model](../reference/quality-model-documents/2026-model-changes.md), and we have already updated [the quality model documentation](../reference/sig-quality-models.md). Having information in advance might be helpful to understand and prepare for these changes, and makes sure there are no surprised when the new models are introduced.
+- **Open Source Health:** Sigrid now includes a new [library management overview page](../capabilities/portfolio-library-management.md). This dashboard allows you to quickly identify where in your portfolio a certain open source library is used, and which versions are being used where.
+- **Management dashboard:** The management dashboard used the concepts of technical debt and maintenance effort ambiguously, and in some cases incorrectly. This has been corrected so that the management dashboard now clearly displays maintenance effort insights. Wherever the maintenance effort has a relevant correlation to technical debt, explanations have been clarified as well.
+- **Open Source Health:** You are now able to exclude freshness risk and management risk for open source libraries [in your configuration](../reference/analysis-scope-configuration.md#exclude-open-source-health-risks). This means that every type of open source issue is now customizable, which is helpful to avoid Sigrid reporting unfixable issues over and over again.
+- **Technology support:** Added support for the NavaScript programming language.
+- **Mendix QSM:** The QSM extension for Mendix Studio Pro is now available from [Mendix Marketplace](https://marketplace.mendix.com/link/component/260132). More information on using this extension is available from its [documentation](../integrations/mendix-studio-pro-extension.md).
+
+### April 7, 2026
+
+- **Portfolio overview:** The new [portfolio overview dashboard](../capabilities/portfolio-dashboard-plans.md) has different tabs for different use cases:
+  - Prioritize which systems require your attention.
+  - Track objectives, grouped by team or policy.
+  - View your landscape's current state, which is the "classic" dashboard you're used to, and which is still around.
+- **Sigrid CI:** Sigrid CI feedback for Security is now in beta. This allows you to get feedback on security findings during your code review process, allowing you to triage or address these findings before they are merged. You can find out more in the [Sigrid CI documentation](../sigridci-integration/using-sigridci.md). This includes instructions for [adding security feedback to your existing Sigrid CI configuration](../sigridci-integration/using-sigridci.md#adding-security-feedback-to-an-existing-sigrid-ci-configuration).
+- **IDE extensions:** Initial documentation is now available for the Sigrid IDE extensions for [Visual Studio Code](../integrations/vscode-extension.md) and [Mendix Studio Pro](../integrations/mendix-studio-pro-extension.md). Both extensions are currently in Beta, with the first release expected in April.
+- **Technology support:** The analyses for HTML, Angular Templates, and Django Templates have all been merged into a single `html` analysis. Sigrid will now automatically figure out which dialect of HTML you're using, without needing to configure this manually. This makes the configuration a bit simpler and easier to manage. As usual, this change is backward compatible, so existing configurations will continue to work.
+
 ### March 23, 2026
 
-- **IDE integratins:** Beta versions of the Sigrid IDE integrations for [Mendix Studio Pro](https://github.com/Software-Improvement-Group/sigrid-mendix-studio-pro) and [Visual Studio Code](https://github.com/Software-Improvement-Group/sigrid-vscode-extension) are now available from GitHub. We would love to hear your feedback and ideas! After the beta phase, we will publish the IDE integrations to their respective marketplace.
+- **IDE integrations:** Beta versions of the Sigrid IDE integrations for [Mendix Studio Pro](https://github.com/Software-Improvement-Group/sigrid-mendix-studio-pro) and [Visual Studio Code](https://github.com/Software-Improvement-Group/sigrid-vscode-extension) are now available from GitHub. We would love to hear your feedback and ideas! After the beta phase, we will publish the IDE integrations to their respective marketplace.
 - **Open Source Health:** Sigrid now supports [Yarn version catalogs](https://yarnpkg.com/features/catalogs). Dependency version information is now extracted from the version catalogs, and shown alongside other dependencies in Sigrid's Open Source Health views. 
 - **Sigrid CI:** Sigrid CI can now post feedback as comments for BitBucket pull requests. This feature was already available for the integrations with GitHub, GitLab, and Azure DevOps, but not yet for BitBucket. If you're using BitBucket, you can follow [the instructions for the BitBucket integration](../sigridci-integration/bitbucket-pipelines.md) to set this up.
 - **On-premise:** Database initialization for on-premise Sigrid can now also be performed automatically. If you are interested in using this feature, please refer to the [on-premise documentation](../organization-integration/onpremise-automated-database-initialization.md).

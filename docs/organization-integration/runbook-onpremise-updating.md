@@ -3,7 +3,12 @@
 This documentation covers on-premise Sigrid. It is not applicable for cloud-based Sigrid.
 {: .attention }
 
-This documentation offers useful context on how to keep on-premise Sigrid up-to-date, making it an excellent starting point for ongoing maintenance.
+This runbook explains how to keep your on-premise Sigrid deployment up-to-date. It is an excellent starting point for ongoing maintenance and ensures you follow a safe, repeatable update process.
+
+> **Important:** Before updating, always review the [Helm Chart Release Notes](onpremise-helm-releases.md) to check for:
+> - New features you may want to enable
+> - Required changes in your Helm configuration
+> - Breaking changes that require special attention
 
 ## Prerequisites
 
@@ -13,33 +18,30 @@ This documentation offers useful context on how to keep on-premise Sigrid up-to-
 
 ## Update Frequency
 
-We update container images daily for immediate improvements. The Helm chart is updated less frequently, only when new features or significant changes are released. This ensures you get rapid updates while maintaining chart stability.
-
-- Sigrid Docker containers: Monthly at minimum, ideally with each release.
-- Sigrid Helm chart: Quarterly, preferred bi-weekly, ideally whenever a new version is available.
+- **Sigrid Docker containers:** Monthly at minimum, ideally with each release
+- **Sigrid Helm chart:** Only when new features or significant changes are released, preferably following each published chart version
 
 ## Update Instructions
 
-1. Update Helm Chart
-2. Update Container
-3. Update ImageTag
-4. Apply the updates using Helm
+1. Review the [Helm Chart Release Notes](onpremise-helm-releases.md) for relevant changes.
+2. Update Helm Chart
+3. Update Container images
+4. Update the `imageTag` in the Helm chart configuration
+5. Apply the updates using Helm
 
 ### Update Containers
 
-- Situation 1: Using your own container registry, see [Detailed instructions for accessing and using SIG's AWS ECR](onpremise-aws-ecr.md).
-  - Pull the latest Docker containers.
-- Situation 2: Pulling images directly from SIG's AWS ECR Registry.
-  - When this is already set up, you don't need to take any action for this step.
+Pull the latest Sigrid Docker images from SIG's AWS ECR registry or from your own container registry, depending on your setup.  
+See [accessing SIG's AWS ECR](onpremise-aws-ecr.md) for detailed instructions if needed.
 
 ### Update image tag (Sigrid version)
 
-Update the `imageTag` in the `global` section of the Helm chart's values file (usually `custom-values.yaml`):
+Update the `imageTag` in the `global` section of the Helm chart values file (`custom-values.yaml`):
 
 {% raw %}
-```bash
-   global:
-     ImageTag: "<REPLACE-WITH-LATEST-VERSION>"
+```yaml
+global:
+  imageTag: "<REPLACE-WITH-LATEST-VERSION>"
 ```
 {% endraw %}
 
@@ -55,7 +57,7 @@ To apply the updates using Helm, you can use the following command. Note how to 
 
 ## Test Instructions
 
-1. After updating, verify that all pods are running:
+1. Verify that all pods are running
 2. Check the logs of key services for any errors
 3. Access the Sigrid frontend and perform basic operations to ensure functionality.
 4. Run a test analysis on a sample project to verify the entire pipeline is working correctly.

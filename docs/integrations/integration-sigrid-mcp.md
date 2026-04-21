@@ -113,6 +113,15 @@ Add:
 
 - Save → Verify server appears in tools list
 
+#### Visual Studio
+
+- Connect your GitHub account and open GitHub Copilot
+- At the bottom left, below the chat box, select "Agent" mode
+- Click on the + button to add a new MCP server
+- When prompted, enter the name, "SigridCode", and then add the URL as `https://sigrid-says.com/mcp`
+- Choose "Additional headers" and add: `Authorization: Bearer <your_sigrid_token>`
+- After saving/closing the window, if the token is valid, verify server appears in tools list and you will be able to use the MCP server inside Copilot
+  
 #### Windsurf
 
 - Install Node
@@ -142,10 +151,14 @@ Add:
 - To add Sigrid MCP to Claude Code, run the following command:
 
 ```bash
-claude mcp add SigridCode -- npx mcp-remote https://sigrid-says.com/mcp --header "Authorization: Bearer TOKEN" --allow-http
+claude mcp add --transport http SigridCode https://sigrid-says.com/mcp --header "Authorization: Bearer <your_sigrid_token>"
+```
+Alternatively, you might need to use a proxy in some cases:
+```bash
+claude mcp add SigridCode -- npx mcp-remote https://sigrid-says.com/mcp --header "Authorization: Bearer <your_sigrid_token>" --allow-http
 ```
 
-Replace `TOKEN` with your actual Sigrid API token.
+Replace `<your_sigrid_token>` with your actual Sigrid API token.
 
 - Restart Claude Code
 
@@ -188,7 +201,27 @@ In the IDE, navigate to Tools > AI Assistant > Model Context Protocol (MCP) and 
     }
 ```
 
-Then, save the configuration and click the `Reconnect` arrow on the top of the configuration, and, if your Sigrid token is valid, you will be successfully connected to the MCP server.
+#### IBM Bob
+In the IDE, navigate to the Settings (the cogwheel icon inside the Bob chat window) > MCP. Then, you can configure a global MCP server or an MCP server that's specific to a given project. On either of the configuration JSON files that appear, add:
+
+```
+{
+    "mcpServers":
+    {
+        "CodeGuardrails": {
+            "type": "streamable-http",
+            "url": "https://sigrid-says.com/mcp",
+            "headers": {
+              "Authorization": "Bearer <your_sigrid_token>"
+            }
+        }
+    }
+}
+```
+
+Then, save the configuration and navigate to the original settings page. If your Sigrid token is valid, you will now see the connection to the MCP server established successfully.
+
+Do note the **extra** outer brackets in the configuration snippet above, which are needed for the configuration to be validated successfully.
 
 ### Using Sigrid Quality Gates with AI Coding Agents
 

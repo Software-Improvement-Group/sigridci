@@ -216,7 +216,6 @@ In the response, different types of refactoring candidates will have slightly di
 |                                      | `weight`                    | Relative priority of this finding in relation to the system property it covers.                          |
 |                                      | `technology`                | Technology name, for example `java` or `csharp`.                                                         |
 |                                      | `componentName`             | Name of the component in which the finding resides.                                                      |
-|                                      | `filePath`                  | Relative file path in which the finding resides.                                                         |
 |                                      | `status`                    | One of FALSE_POSITIVE, ACCEPTED, FIXEd, RAW, REFINED, WILL_FIX.                                          |
 |                                      | `remark`                    | Optional remark(s) entered via the Sigrid user interface.                                                | 
 | **Duplication**                      | `loc`                       | The number of duplicates lines.                                                                          |
@@ -225,16 +224,23 @@ In the response, different types of refactoring candidates will have slightly di
 |                                      | `locations.filePath`        | Relative file path for the duplication occurrence.                                                       |
 |                                      | `locations.startLine`       | First line in the file that is part of the duplicate occurrence.                                         |
 |                                      | `locations.endLine`         | Last line in the file that is part of the duplicate occurrence.                                          |
-| **Unit Size/Complexity/Interfacing** | `unitName`                  | Name of the unit that is the topic of the finding.                                                       |
+| **Unit Size/Complexity/Interfacing** | `unit`                  | Name of the unit that is the topic of the finding.                                                       |
+|                                      | `file`                  | Relative file path in which the finding resides.                                                         |
 |                                      | `startLine`                 | First line within the file that is part of the finding.                                                  |
 |                                      | `endLine`                   | Last line within the file that is part of the finding.                                                   |
 | **Unit Size**                        | `loc`                       | Lines of code within the unit, excluding comments.                                                       |
+|                                      | `file`                  | Relative file path in which the finding resides.                                                         |
 | **Unit Complexity**                  | `mcCabe`                    | Decision points within the unit.                                                                         |
+|                                      | `file`                  | Relative file path in which the finding resides.                                                         |
 | **Unit Interfacing**                 | `parameters`                | Number of parameters within the unit.                                                                    |
+|                                      | `filePath`                  | Relative file path in which the finding resides.                                                         |
 | **Module Coupling**                  | `loc`                       | Lines of code within the file, excluding comments.                                                       |
+|                                      | `file`                  | Relative file path in which the finding resides.                                                         |
 |                                      | `fanIn`                     | Number of incoming dependencies originating from outside the file.                                       |
 | **Component Independence**           | `loc`                       | Lines of code within the file, excluding comments.                                                       | 
+|                                      | `file`                  | Relative file path in which the finding resides.                                                         |
 | **Component Entanglement**           | `componentEntanglementType` | One of CYCLIC_DEPENDENCY, INDIRECT_CYCLIC_DEPENDENCY, LAYER_BYPASSING_DEPENDENCY, COMMUNICATION_DENSITY. |
+|                                      | `file`                  | Relative file path in which the finding resides.                                                         |
 
 </details>
 
@@ -1157,7 +1163,7 @@ Upon succesful request of the above endpoint for a user with id `d987c69d-464f-4
   "isAdmin": false,
   "accessToAll": false,
   "systems": [
-	  {
+    {
       "systemName": "system-a"
     },
     {
@@ -1345,7 +1351,7 @@ Successful response format of this request would look like the following, with t
     }
   ],
   "updatedAt": "2024-03-07T17:41:59.278Z",
-  "updatedByUser": "3fa85f64-5717-4562-b3fc-2c963f66afa6"	
+  "updatedByUser": "3fa85f64-5717-4562-b3fc-2c963f66afa6"
 }
 ```
 

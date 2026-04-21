@@ -19,11 +19,11 @@ from .security_markdown_report import SecurityMarkdownReport
 from ..analysisresults.cyclonedx_processor import CycloneDXProcessor
 from ..capability import OPEN_SOURCE_HEALTH
 from ..objective import Objective
+from ..platform import OSH_EXCLUDE_DOCS
 
 
 class OpenSourceHealthMarkdownReport(Report, MarkdownRenderer):
     MAX_FINDINGS = SecurityMarkdownReport.MAX_FINDINGS
-    DOCS_LINK = "https://docs.sigrid-says.com/reference/analysis-scope-configuration.html#exclude-open-source-health-risks"
 
     def __init__(self, options, vulnerabilityObjective="HIGH", licenseObjective=None):
         super().__init__()
@@ -51,7 +51,7 @@ class OpenSourceHealthMarkdownReport(Report, MarkdownRenderer):
             details += "- ⚠️ means the library has issues, but they are not severe enough to fail your objective.\n"
             details += "- ✅ means everything is fine.\n\n"
             details += "If you believe these findings are false positives, you can\n"
-            details += f"[exclude them in the Sigrid configuration]({self.DOCS_LINK}).\n\n"
+            details += f"[exclude them in the Sigrid configuration]({OSH_EXCLUDE_DOCS}).\n\n"
         if len(updated) > 0:
             details += "## 👍 What went well?\n\n"
             details += f"> You updated **{len(updated)}** open source libraries that previously had issues.\n\n"

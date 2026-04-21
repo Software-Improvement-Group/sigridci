@@ -72,9 +72,9 @@ You can find the Helm configuration in the Installation section of this page und
 
 ### (C) Prepare PostgreSQL
 
-1. In the helm chart directory `sigrid-stack/files`, there are two initialization scripts called `sigriddb-init` and `authdb-init`.
+1. In the helm chart directory `sigrid-stack/files`, there are two initialization scripts called `sigriddb-init` and `sigridauthdb-init`.
 2. Replace passwords in the init scripts with ones you want to use and store them. You will need to provide them in the Helm charts at a later stage. 
-3. Using `psql`, run the two database initialization scripts in the exact following order: `sigriddb-init` and then `authdb-init`.
+3. Using `psql`, run the two database initialization scripts in the exact following order: `sigriddb-init` and then `sigridauthdb-init`.
 4. Store the passwords securely in Kubernetes.
 
 ### (D) Prepare Identity Provider
@@ -149,11 +149,33 @@ Provide an email address to bootstrap the very first user in Sigrid.
 The email address should match the user's email in the connected IdP.
 Note that this initial admin user will have full access to the entire portfolio. Once Sigrid is fully configured, you can invite another person as an Admin and, if desired, remove or demote the initial admin user to a regular user.
 
+A secret for accessing the object store, and the necessary configuration settings, can be configured as follows.
+
+{% raw %}
+```yaml
+global:
+  onPremise:
+  objectStore:
+    bucketName: "example-bucket"
+    forcePathStyle: "true" # Use path-style access to prevent bucket-specific hostnames
+    endpoint: "https://minio.my-company.com"
+    region: "us-east-1"
+    secret:
+      create: true
+      data:
+        AWS_ENDPOINT_URL: "https://minio.my-company.com"
+        AWS_FORCE_PATH_STYLE: true  # Use path-style access to prevent bucket-specific hostnames
+        AWS_REGION: "us-east-1"
+        AWS_ACCESS_KEY_ID: ""
+        AWS_SECRET_ACCESS_KEY: ""
+```
+{% endraw %}
+
+
 {% raw %}
 ```yaml
   imagePullSecrets:
     - name: sigrid-ecr-image-pull-secret
-
 ```
 {% endraw %}
 Here we can provide a Kubernetes native secret which contains the credentials for pulling images from AWS ECR registry to your cluster. If you're using your internal container registry, use the corresponding secret for that registry(if it has any). If your environment allows outbound connections and you want to use the SIG AWS ECR directly, use `sigrid-ecr-image-pull-secret`.
@@ -266,7 +288,7 @@ inbound-api:
         data:
           AWS_ENDPOINT_URL: "https://minio.my-company.com"
           AWS_FORCE_PATH_STYLE: true  # Use path-style access to prevent bucket-specific hostnames
-          AWS_REGION: "eu-east-1"
+          AWS_REGION: "us-east-1"
           AWS_ACCESS_KEY_ID: ""
           AWS_SECRET_ACCESS_KEY: ""
 ```
@@ -327,17 +349,7 @@ You can now start inviting more people to Sigrid if so desired.
 *You can also set them up at the organization or group level, but ensure you are not unintentionally overriding any default project variables in the process.*
   - `CUSTOMER: "company_name"`
   - `SIGRID_CI_TOKEN: "Sigrid Token"`  
-  - `BUCKET: "some-bucket"`   
-  The name of the bucket you've created.
   - `SIGRID_VERSION: "should match ImageTag from helm global"`
-  - `AWS_ENDPOINT_URL: "https://minio.my-company.com"`  
-  URL to your Object Store.
-  - `AWS_ACCESS_KEY_ID: "some-id"`  
-  The name of the Object Store user.
-  - `AWS_SECRET_ACCESS_KEY: "also-secret"`  
-  The password/secret to connect to Object Store user.
-  - `AWS_REGION: "us-east-1"`  
-  Override if you're using another region in your Object Store.
   - `SIGRID_SOURCES_REGISTRATION_ID: "gitlab-onprem"`  
   The name of your source code repository as configured in the helm chart.
 - Browse to your test project.
@@ -359,11 +371,6 @@ You can now start inviting more people to Sigrid if so desired.
         SYSTEM: "$CI_PROJECT_NAME"
         SIGRID_URL: "https://my-sigrid.example.com"
         SIGRID_CI_TOKEN: "secret"
-        BUCKET: "some-bucket"
-        AWS_ENDPOINT_URL: "https://minio.my-company.com"
-        AWS_ACCESS_KEY_ID: "some-id"
-        AWS_SECRET_ACCESS_KEY: "also-secret"
-        AWS_REGION: "us-east-1"
         SIGRID_SOURCES_REGISTRATION_ID: "gitlab-onprem"
       script:
         - "run-analyzers --publish"
