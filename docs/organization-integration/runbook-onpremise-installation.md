@@ -155,12 +155,12 @@ A secret for accessing the object store, and the necessary configuration setting
 ```yaml
 global:
   onPremise:
-	objectStore:
-	  bucketName: "example-bucket"
-	  forcePathStyle: "true" # Use path-style access to prevent bucket-specific hostnames
-	  endpoint: "https://minio.my-company.com"
-	  region: "us-east-1"
-	  secret:
+  objectStore:
+    bucketName: "example-bucket"
+    forcePathStyle: "true" # Use path-style access to prevent bucket-specific hostnames
+    endpoint: "https://minio.my-company.com"
+    region: "us-east-1"
+    secret:
       create: true
       data:
         AWS_ENDPOINT_URL: "https://minio.my-company.com"
@@ -176,7 +176,6 @@ global:
 ```yaml
   imagePullSecrets:
     - name: sigrid-ecr-image-pull-secret
-
 ```
 {% endraw %}
 Here we can provide a Kubernetes native secret which contains the credentials for pulling images from AWS ECR registry to your cluster. If you're using your internal container registry, use the corresponding secret for that registry(if it has any). If your environment allows outbound connections and you want to use the SIG AWS ECR directly, use `sigrid-ecr-image-pull-secret`.
