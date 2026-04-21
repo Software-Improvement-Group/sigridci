@@ -3,6 +3,11 @@ Sigrid release notes
 
 SIG uses [continuous delivery](https://en.wikipedia.org/wiki/Continuous_delivery), meaning that every change to Sigrid or the underlying analysis is released once our development pipeline has completed. On average, we release somewhere between 10 and 20 times per day. This page therefore doesn't list every single change, since that would quickly lead to an excessively long list of small changes. Instead, this page lists Sigrid and analysis changes that we consider noteworthy for the typical Sigrid user.
 
+### May 1, 2026
+
+- The SIG model update 2026 is now live! Each year, SIG updates its quality models to reflect evolving industry trends and best practices. These updates are based on insights from the 30,000 systems in the SIG benchmark, helping ensure that our models remain current and relevant. You can read more in the [announcement](../reference/quality-model-documents/2026-model-changes.md).
+- **Technology support:** Sigrid now supports [PNPM](https://pnpm.io) for Open Source Health, including support for [version catalogs](https://pnpm.io/catalogs) and [lock files](https://pnpm.io/git).
+
 ### April 20, 2026
 
 - As we do every year, SIG will update its quality models based on industry trends. This year, we are communicating key changes *before* the new model is introduced. We have added [an overview of key changes in the 2026 model](../reference/quality-model-documents/2026-model-changes.md), and we have already updated [the quality model documentation](../reference/sig-quality-models.md). Having information in advance might be helpful to understand and prepare for these changes, and makes sure there are no surprised when the new models are introduced.
