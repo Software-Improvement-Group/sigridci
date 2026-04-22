@@ -54,7 +54,7 @@ For IDEs other than Claude Code, configure the MCP server manually:
 - Used by: VSCode, IntelliJ family
 
 **Proxy (mcp-remote)**
-- Uses npx and mcp-remote package (install if needed: `npm install mcp-remote`)
+- Uses `npx mcp-remote` (install globally first if needed: `npm install -g mcp-remote`)
 - Required when direct HTTP not supported
 - Used by: Windsurf, VSCode
 
