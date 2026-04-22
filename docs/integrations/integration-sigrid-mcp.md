@@ -1,40 +1,35 @@
 # Sigrid MCP Integrations
 
-Sigrid MCP integrations can be used to leverage Sigrid's capabilities from AI Coding Assistants, Agents and other MCP-based LLM tools.
+Sigrid MCP integrations let AI coding tools use Sigrid's analysis while you work — catching security and quality issues as they're introduced, and driving down technical debt through guided refactoring.
 
-- *Sigrid Guardrails MCP*: Leverage Sigrid's code analysis to safe guard AI Coding Assistants from introducing security and other quality issues
-- *Sigrid Modernization Recipes MCP*: Use data from Sigrid to let AI Coding Agents perform large scale modernization tasks (coming soon)
+- **[Sigrid Guardrails MCP](sigrid-mcp/guardrails.md)**: Leverage Sigrid's code analysis to safeguard AI Coding Assistants from introducing security and other quality issues
+- **[Sigrid Modernization Recipes MCP](sigrid-mcp/recipes.md)**: Use data from Sigrid to let AI Coding Agents perform large-scale modernization tasks
 
-## Sigrid Guardrails MCP
+## Installation
 
-The Sigrid Guardrails MCP integration enables AI coding assistants and LLMs to leverage Sigrid's comprehensive code analysis capabilities during code generation. By embedding Sigrid directly into the AI agent workflow, this integration ensures that both newly generated and existing code is automatically evaluated for security vulnerabilities and quality issues.
+### Claude Code plugin (recommended)
 
-This proactive approach allows AI coding agents to autonomously identify and resolve code issues in real-time, preventing quality problems at the point of generation rather than discovering them later in the development cycle through build pipeline failures or downstream processes.
+The [Sigrid AI Toolkit](https://github.com/Software-Improvement-Group/sigrid-ai-toolkit) is a Claude Code plugin that automatically configures both the Sigrid MCP server and the associated skills. This is the easiest way to get started.
 
-### Supported Technology List for MCP
+```
+/plugin marketplace add Software-Improvement-Group/sigrid-ai-toolkit
+/plugin install sigrid@sigrid-ai-toolkit
+```
 
-The currently supported technologies are:
-
-- Java
-- Python
-- C/C++
-- C#
-- JavaScript
-- TypeScript
-- Kotlin
-- Progress ABL
-- PHP
-
-Visit the [Technology Support](../reference/technology-support.md#list-of-supported-technologies) page for more details on supported technologies.
-
-### Setup
+The installer will prompt for your Sigrid API token and store it securely in the system keychain.
 
 - Step 1: Obtain a Sigrid Token — see the Sigrid docs on [authentication tokens](../organization-integration/authentication-tokens.md)
-- Step 2: Configure MCP tool in your IDE or AI Coding Assistant
-- Step 3: Tune agent instructions rules or policies for Sigrid MCP Guardrails to your needs
-- Step 4: Pick a LLM with support for MCP tools (recommended: GPT-5, Claude 4 series, Gemini 2.5 series or higher)
+- Step 2: Run the two commands above in Claude Code
+- Step 3: Follow the installer prompts
 
-### Configuration by Tool/IDE
+### Manual configuration (other IDEs)
+
+For IDEs other than Claude Code, configure the MCP server manually:
+
+- Step 1: Obtain a Sigrid Token — see the Sigrid docs on [authentication tokens](../organization-integration/authentication-tokens.md)
+- Step 2: Configure the MCP tool in your IDE or AI Coding Assistant using the instructions below
+
+#### Supported IDEs
 
 | Tool | Connection Type | Configuration Method | Status |
 | --- | --- | --- | --- |
@@ -46,33 +41,30 @@ Visit the [Technology Support](../reference/technology-support.md#list-of-suppor
 | OpenCode | Direct HTTP | opencode.json | ✅ Supported |
 | IntelliJ/PyCharm/WebStorm | HTTP via AI Chat | Manual JSON edit | ✅ Supported |
 
-### Connection Types Explained
+#### Connection types explained
 
-Direct HTTP
-
+**Direct HTTP**
 - Simplest configuration
 - IDE connects directly to MCP server
 - Used by: Cursor
 
-HTTP via GitHub Copilot Extension
+**HTTP via GitHub Copilot Extension**
 - Requires GitHub Copilot plugin
 - Configuration through extension UI
 - Used by: VSCode, IntelliJ family
 
-Proxy (mcp-remote)
-- Uses npx and mcp-remote package (install if needed through terminal with the command: npm install mcp-remote)
+**Proxy (mcp-remote)**
+- Uses `npx mcp-remote` (install globally first if needed: `npm install -g mcp-remote`)
 - Required when direct HTTP not supported
 - Used by: Windsurf, VSCode
 
-### Configuration Instructions
-
-#### Cursor/Github Copilot Plugin
+#### Cursor / GitHub Copilot Plugin
 
 - Open IDE
 - Click MCP & Integrations panel (left sidebar)
 - Paste configuration:
 
-```
+```json
 {
   "mcpServers": {
     "SigridCode": {
@@ -94,7 +86,7 @@ Proxy (mcp-remote)
 - Click MCP Servers. If prompted to create a new file, say "Yes"
 
 Add:
-```
+```json
 {
   "servers": {
     "SigridCode": {
@@ -118,16 +110,17 @@ Add:
 - Connect your GitHub account and open GitHub Copilot
 - At the bottom left, below the chat box, select "Agent" mode
 - Click on the + button to add a new MCP server
-- When prompted, enter the name, "SigridCode", and then add the URL as `https://sigrid-says.com/mcp`
+- When prompted, enter the name "SigridCode", then add the URL as `https://sigrid-says.com/mcp`
 - Choose "Additional headers" and add: `Authorization: Bearer <your_sigrid_token>`
-- After saving/closing the window, if the token is valid, verify server appears in tools list and you will be able to use the MCP server inside Copilot
-  
+- After saving/closing the window, if the token is valid, verify server appears in tools list
+
 #### Windsurf
 
 - Install Node
 - Open MCP settings
 - Add configuration:
-```
+
+```json
 {
   "mcpServers": {
     "SigridCode": {
@@ -146,28 +139,24 @@ Add:
 
 - Restart Windsurf
 
-#### Claude Code
-
-- To add Sigrid MCP to Claude Code, run the following command:
+#### Claude Code (manual)
 
 ```bash
 claude mcp add --transport http SigridCode https://sigrid-says.com/mcp --header "Authorization: Bearer <your_sigrid_token>"
 ```
-Alternatively, you might need to use a proxy in some cases:
+
+Alternatively, using a proxy:
 ```bash
 claude mcp add SigridCode -- npx mcp-remote https://sigrid-says.com/mcp --header "Authorization: Bearer <your_sigrid_token>" --allow-http
 ```
 
-Replace `<your_sigrid_token>` with your actual Sigrid API token.
-
-- Restart Claude Code
+Replace `<your_sigrid_token>` with your actual Sigrid API token. Restart Claude Code after adding.
 
 #### OpenCode
 
-- Create or edit `opencode.json` in your project root
-- Add the following configuration:
+- Create or edit `opencode.json` in your project root:
 
-```
+```json
 {
   "mcp": {
     "SigridCode": {
@@ -183,11 +172,11 @@ Replace `<your_sigrid_token>` with your actual Sigrid API token.
 
 - Restart OpenCode
 
-#### IntelliJ/PyCharm/WebStorm
+#### IntelliJ / PyCharm / WebStorm
 
-In the IDE, navigate to Tools > AI Assistant > Model Context Protocol (MCP) and add:
+Navigate to Tools > AI Assistant > Model Context Protocol (MCP) and add:
 
-```
+```json
 "mcpServers": {
     "CodeGuardrails": {
       "command": "npx",
@@ -202,9 +191,10 @@ In the IDE, navigate to Tools > AI Assistant > Model Context Protocol (MCP) and 
 ```
 
 #### IBM Bob
-In the IDE, navigate to the Settings (the cogwheel icon inside the Bob chat window) > MCP. Then, you can configure a global MCP server or an MCP server that's specific to a given project. On either of the configuration JSON files that appear, add:
 
-```
+Navigate to Settings (the cogwheel icon inside the Bob chat window) > MCP. Configure a global or project-specific MCP server:
+
+```json
 {
     "mcpServers":
     {
@@ -219,67 +209,16 @@ In the IDE, navigate to the Settings (the cogwheel icon inside the Bob chat wind
 }
 ```
 
-Then, save the configuration and navigate to the original settings page. If your Sigrid token is valid, you will now see the connection to the MCP server established successfully.
+Note the **extra** outer brackets required for the configuration to validate successfully. Save the configuration and verify the connection on the settings page.
 
-Do note the **extra** outer brackets in the configuration snippet above, which are needed for the configuration to be validated successfully.
+## Available tools reference
 
-### Using Sigrid Quality Gates with AI Coding Agents
+| Tool | Product | Description |
+| --- | --- | --- |
+| `code_quality_guardrails` | [Guardrails MCP](sigrid-mcp/guardrails.md) | Checks code for maintainability issues and security vulnerabilities |
+| `sigrid_refactoring_candidates` | [Modernization Recipes MCP](sigrid-mcp/recipes.md) | Retrieves ranked refactoring candidates for a given maintainability property |
+| `edit_sigrid_finding_status` | [Modernization Recipes MCP](sigrid-mcp/recipes.md) | Updates the status and remarks of a Sigrid finding |
 
-AI-generated code quality varies significantly based on the instructions given. The Sigrid MCP provides guardrails that notify agents when code doesn't meet quality standards without requiring the system to be published to Sigrid first.
-
-We recommend combining two elements:
-1. **Code principles**: brief guidelines that help the agent write good code upfront
-2. **Quality gate**: a mandatory check using Sigrid before completing any task
-
-#### Recommended Prompt
-
-Add this to your agent instructions (see [Where to Place These Instructions](#where-to-place-these-instructions)):
-
-```
-## Code Principles
-
-Write maintainable code: single responsibility, small focused functions, clear naming, avoid duplication, simple control flow.
-Write secure code.
-
-## MANDATORY: Quality Gate
-
-Before reporting ANY task as complete:
-
-1. Run the Sigrid Code Quality Guardrails tool on all changed production code
-2. Maintainability findings: accept if principles were followed, otherwise refactor
-3. Security findings: fix if straightforward, otherwise flag to user
-
-Do not skip this step.
-```
-
-For stricter workflows, add a rescan step: "If fixes were made, rescan to verify no new issues were introduced."
-
-#### Where to Place These Instructions
-
-Most AI coding agents respect instruction files in your repository. Refer to your agent's documentation for specifics.
-
-| File | Supported by |
-|------|--------------|
-| `.cursor/rules/` | Cursor |
-| `.github/copilot-instructions.md` | GitHub Copilot |
-| `.windsurfrules` | Windsurf |
-| `CLAUDE.md` | Claude Code |
-| `AGENTS.md` | OpenCode, emerging convention (check agent support) |
-
-For tools that support both global and project-level rules, prefer project-level to keep instructions versioned with your code.
-
-#### Customizing for Your Codebase
-
-The prompt above is a starting point. Consider these adjustments:
-
-- **Framework conventions**: If your codebase follows specific design patterns (e.g., hexagonal architecture, Redux patterns), add them to the code principles section.
-- **Check frequency**: You may prefer to run the quality gate with a different frequency, e.g. only before commits rather than after every task.
-- **Direct invocation**: You can also ask the agent directly: "Run Sigrid on these files: ..."
-- **Iterate from experience**: When the agent makes recurring mistakes, add a principle that addresses the pattern.
-
-> **Tip**: Start with concise principles. Add explicit guidance only if the model struggles.
-
-We advise to complement the MCP with Sigrid CI to catch architecture issues, vulnerable dependencies, and cross-file metrics.
 
 ### Troubleshooting
 
