@@ -424,12 +424,12 @@ The object store can be configured this way:
 ```yaml
 global:
   onPremise:
-	objectStore:
-	  bucketName: "example-bucket"
-	  forcePathStyle: "true"  # Use path-style access to prevent bucket-specific hostnames
-	  endpoint: "https://minio.my-company.com"
-	  region: "us-east-1"
-	  secret:
+    objectStore:
+      bucketName: "example-bucket"
+      forcePathStyle: "true"  # Use path-style access to prevent bucket-specific hostnames
+      endpoint: "https://minio.my-company.com"
+      region: "us-east-1"
+      secret:
         create: true
         data:
           AWS_ENDPOINT_URL: "https://minio.my-company.com"
@@ -447,14 +447,14 @@ to true. Alternatively, you can provide the secret yourself, in which case the c
 ```yaml
 global:
   onPremise:
-	objectStore:
-	  bucketName: "example-bucket"
-	  forcePathStyle: "true" # Use path-style access to prevent bucket-specific hostnames
-	  endpoint: "https://minio.my-company.com"
-	  region: "us-east-1"
-	  secret:
-	    create: false
-	    secretName: sigrid-onprem-object-store-credentials
+    objectStore:
+      bucketName: "example-bucket"
+      forcePathStyle: "true" # Use path-style access to prevent bucket-specific hostnames
+      endpoint: "https://minio.my-company.com"
+      region: "us-east-1"
+      secret:
+        create: false
+        secretName: sigrid-onprem-object-store-credentials
 ```
 {% endraw %}
 

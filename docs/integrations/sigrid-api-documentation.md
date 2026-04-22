@@ -1163,7 +1163,7 @@ Upon succesful request of the above endpoint for a user with id `d987c69d-464f-4
   "isAdmin": false,
   "accessToAll": false,
   "systems": [
-	  {
+    {
       "systemName": "system-a"
     },
     {
@@ -1351,7 +1351,7 @@ Successful response format of this request would look like the following, with t
     }
   ],
   "updatedAt": "2024-03-07T17:41:59.278Z",
-  "updatedByUser": "3fa85f64-5717-4562-b3fc-2c963f66afa6"	
+  "updatedByUser": "3fa85f64-5717-4562-b3fc-2c963f66afa6"
 }
 ```
 

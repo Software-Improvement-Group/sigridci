@@ -35,7 +35,7 @@ The following examples shows an example of a `sigrid-metadata.yaml` file:
 {% raw %}
 ```yaml
 metadata:
-  displayName: "MyBank back-end"
+    displayName: "MyBank back-end"
   externalDisplayName: "MyBank component"
   divisionName: "My division"
   teamNames:
