@@ -12,7 +12,7 @@ Sigrid MCP integrations let AI coding tools use Sigrid's analysis while you work
 The [Sigrid AI Toolkit](https://github.com/Software-Improvement-Group/sigrid-ai-toolkit) is a Claude Code plugin that automatically configures both the Sigrid MCP server and the associated skills. This is the easiest way to get started.
 
 ```
-/plugin marketplace add git@github.com:Software-Improvement-Group/sigrid-ai-toolkit.git
+/plugin marketplace add Software-Improvement-Group/sigrid-ai-toolkit
 /plugin install sigrid@sigrid-ai-toolkit
 ```
 
