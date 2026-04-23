@@ -9,6 +9,10 @@ See [Sigrid Security: Frequently Asked Questions](faq-security.md).
 
 See [Sigrid Architecture Quality: Frequently Asked Questions](faq-architecture.md).
 
+### Sigrid AI Code Governance
+
+See [Sigrid AI Code Governance: Frequently Asked Questions](faq-ai-code-governance.md).
+
 ## Usage questions
 
 ### Do you support pull request integration?

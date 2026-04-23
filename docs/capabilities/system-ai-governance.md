@@ -116,3 +116,11 @@ Support for new models happens quarterly.
 **AI Technology Detection**
 
 Sigrid supports over 300 checks to identify AI technologies in Python, Java and C#.
+
+## Frequently asked questions
+
+See [AI Code Governance: frequently asked questions](faq-ai-code-governance.md) for more detailed information on Sigrid's AI Generated Code Detection functionality.
+
+## Contact and support
+
+Feel free to contact [SIG's support team](mailto:support@softwareimprovementgroup.com) for any questions or issues you may have after reading this documentation or when using Sigrid.
