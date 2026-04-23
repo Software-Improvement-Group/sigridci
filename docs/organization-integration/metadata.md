@@ -32,9 +32,10 @@ As an alternative to using the API, you can also create a YAML file called `sigr
 
 The following examples shows an example of a `sigrid-metadata.yaml` file:
 
-```
+{% raw %}
+```yaml
 metadata:
-  displayName: "MyBank back-end"
+    displayName: "MyBank back-end"
   externalDisplayName: "MyBank component"
   divisionName: "My division"
   teamNames:
@@ -52,14 +53,17 @@ metadata:
   isDevelopmentOnly: false
   remark: "Some notes"
 ```
+{% endraw %}
 
 The [Sigrid API documentation](../integrations/sigrid-api-documentation.md#system-metadata) contains descriptions of the various fields. Note that the semantics are the same: only fields present in `sigrid-metadata.yaml` are updated, others are left as-is. For example, the following `sigrid-metadata.yaml` file would _update_ the external ID and remove the current remark:
 
-```
+{% raw %}
+```yaml
 metadata:
   externalID: "ab12345"
   remark: null
 ```
+{% endraw %}
 
 The contents of the YAML file will be used to update the metadata whenever you publish your system to Sigrid. If you run Sigrid CI *without* publishing, i.e. when you run it for a branch or pull request, the metadata does *not* get updated. This ensures that publishing code and publishing metadata behave in a consistent way.
 

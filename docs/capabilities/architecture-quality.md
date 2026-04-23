@@ -144,7 +144,7 @@ At the moment, we have a single role users can designate a component as, a `Util
 There are many cases where design decisions result in higher-than-average coupling to centralized abstractions (interfaces) or even discrete code (libraries, utils), but from the engineering team's perspective this is intentional and can be deemed acceptable and preferred. The `Utility` role attempts to reflect this by allowing expected coupling to be deemed as acceptable and not influence the overall rating.
 
 You can define component roles in the [configuration](../reference/analysis-scope-configuration.md#labeling-components-to-communicate-their-role-in-the-architecture). 
- 
+
  **NOTE: This label is inherited by all child artifacts/sub-components found within the specified parent component.**
 
 Labeling a component as `Utility` has the following affects:

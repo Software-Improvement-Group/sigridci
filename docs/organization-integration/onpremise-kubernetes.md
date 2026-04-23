@@ -1,4 +1,4 @@
-# Sigrid on-premise: Helm Chart configuration
+# Sigrid On-Premise: Kubernetes Deployment with Helm
 
 This documentation covers on-premise Sigrid. It is not applicable for cloud-based Sigrid.
 {: .attention }
@@ -40,6 +40,7 @@ Upon becoming a SIG on-premise customer, users get credentials to access the pri
 
 It is possible to directly pull from this registry by specifying it globally:
 
+{% raw %}
 ```yaml
 global:
   imageRegistry: "571600876202.dkr.ecr.eu-central-1.amazonaws.com/softwareimprovementgroup"
@@ -48,6 +49,7 @@ global:
     - name: "Name of kubernetes secret created from automated ECR login password refresh(see https://docs.sigrid-says.com/organization-integration/onpremise-aws-ecr.html#pulling-images-directly-from-sigs-aws-ecr-registry-using-automated-ecr-login-password-refresh)"
   # Needed because pod needs to authenticate with AWS ECR registry to pull images:
 ```
+{% endraw %}
 The Helm chart gives precedence to the values for registry and repository set specifically for each
 component and falls back to the global `imageRegistry` if needed. Keep in mind that some 
 sub-charts behave in a different way, or do not honor `imageRegistry` at all. 
@@ -57,6 +59,7 @@ internal image registry first; the (air-gapped) Kubernetes cluster then pulls fr
 In this case, it is best to point the global `imageRegistry` setting to the internal image registry.
 It is, however, always possible to set the registry per component of Sigrid by using one or more 
 of the following settings:
+{% raw %}
 ```yaml
 sigrid-api:
   image:
@@ -64,6 +67,7 @@ sigrid-api:
     repository: "alternative-image-name"
     tag: "some-tag"
 ```
+{% endraw %}
 
 Sigrid On-Premise needs access to the following images published on SIG's private AWS ECR registry:
 
@@ -93,6 +97,7 @@ It just serves pre-computed explanations.
 Sigrid needs a (sub-)domain to run on, e.g. `sigrid.example.com`. This (sub-)domain needs to be 
 configured using global configuration options:
 
+{% raw %}
 ```yaml
 global:
   hosts:
@@ -101,6 +106,7 @@ global:
         enabled: true
         secretName: "SOME-NAME"
 ```
+{% endraw %}
 
 In this fragment, `SOME-NAME` is the name of a Kubernetes secret containing the TLS certificate
 of the provided (sub-)domain. The Helm chart creates one `Ingress` resource which routes traffic 
@@ -133,9 +139,11 @@ and reachable from the Kubernetes cluster.
 We recommend reviewing PostgreSQL configuration parameters, e.g. in [`postgresql.conf`](https://www.postgresql.org/docs/current/runtime-config.html). 
 In particular, set the following to avoid connection issues during concurrent analysis imports:
 
+{% raw %}
 ```conf
 max_connections = 500
 ```
+{% endraw %}
 
 In the Helm chart configuration, a number of mandatory 
 settings need to be provided:
@@ -143,11 +151,11 @@ settings need to be provided:
   the standard port for PostgreSQL (5432).
 - Passwords for various PostgreSQL users: `webapp_user`, `db_mgmt_user`, and `import_user`.
 
-The Helm charts provides SQL scripts to initialize the database. It is the responsibility of the 
+The Helm chart provides SQL scripts to initialize the database. It is the responsibility of the 
 on-premise customer to run these scripts (using `psql`). They are NOT executed by the Helm chart.
 In case of managed PostgreSQL, these scripts might need to be adapted to take care of specifics 
 of the managed PostgreSQL provider. The scripts are in the `sigrid-stack/files` directory, which 
-can be obtained by pulling the Helm chart. The relevant files are `sigriddb-init` and `authdb-init`. 
+can be obtained by pulling the Helm chart. The relevant files are `sigriddb-init` and `sigridauthdb-init`. 
 
 IMPORTANT: When running the init scripts, take care to first replace the password placeholders with 
 real passwords.
@@ -168,6 +176,9 @@ where `PARTNER` and `CUSTOMER` are placeholders for the configured partner and c
 case any of these users or roles already exists in the cluster, the initialization script or 
 the first import fails.
 
+Database initialization can now also be performed automatically. If you are interested in using this feature, please refer to the documentation [here](onpremise-automated-database-initialization).
+{: .attention }
+
 ### Kubernetes secrets
 
 Various parts of Sigrid need credentials to be able to connect to other parts. For instance,
@@ -182,6 +193,7 @@ A concrete example is provided in the next section.
 One of the components that needs access to PostgreSQL is AuthAPI, which expects that it can get
 database access credentials via a Kubernetes secret. One way to configure this is as follows:
 
+{% raw %}
 ```yaml
 auth-api:
   config:
@@ -191,6 +203,7 @@ auth-api:
         username: "webapp-user"
         password: "S3cr3t"
 ```
+{% endraw %}
 
 The above configuration results in the Helm chart rendering a Kubernetes secret containing the
 JDBC connection string, username and password. Obviously, a `values.yaml` should not contain a 
@@ -200,6 +213,7 @@ cleartext password, typically setting the password interactively using the Helm 
 The other option is to create a Kubernetes secret elsewhere and reference it. Suppose the name of
 this secret is `postgresql-sigridauthdb`, then the configuration is:
 
+{% raw %}
 ```yaml
 auth-api:
   config:
@@ -207,6 +221,7 @@ auth-api:
       create: false
       secretName: postgresql-sigridauthdb
 ```
+{% endraw %}
 
 The secret created elsewhere needs to use the same keys as the secret that the Helm chart would 
 create (in the above example: keys `url`, `username` and `password`). The `example-values.yaml` 
@@ -251,6 +266,7 @@ If you are utilizing Dex as your IdP bridge, the redirect URI should be set to `
 For `auth-api`, the OIDC client needs to be configured. This is covered by 
 the `oauth2` tree in `values.yaml`:
 
+{% raw %}
 ```yaml
 global:
   hosts:
@@ -276,6 +292,7 @@ auth-api:
         sigridmfa:
           issuer-uri: "https://my-idp.example.com"
 ```
+{% endraw %}
 
 Notes:
 1. The first `host` from `global.hosts` is used for the redirect URI: if the redirect URI isn't 
@@ -293,35 +310,23 @@ Notes:
 
 Sigrid limits which users have access to which systems. To be able to configure user permissions you will need a user 
 that has the admin role. You can configure the first admin user by configuring the Helm chart:
+{% raw %}
 ```yaml
 global:
   onPremise:
     administrators: 
       - "email@customer.com" 
 ```
+{% endraw %}
 Upon login the user with the matching email account will be granted the admin role. Once you have a user with the admin
 role you will be able to use the Sigrid-UI to give grant other accounts the admin permission as well.
 
 Please note that removing email addresses from this list does **NOT** remove the admin role. Use the standard user
 management functionality of Sigrid to add/remove admin accounts after the initial setting up of Sigrid.
 
-### (D.4) Optional: Configure Custom Certificates
-To enable secure communication between services using Sigrid, you may need to add custom certificates. These certificates can be defined in the following three components: `auth-api`, `sigrid-api`, and `inbound-api`. You can configure this using the `customCertificates` option in the Helm chart.
-```yaml
-  customCertificates:
-    enabled: true
-    certificates:
-      create: true
-      name: "sigrid-certificates"
-      data:
-        my_sigrid_cert.pem: |
-          -----BEGIN CERTIFICATE-----
-          MIIDdzCCAl+gAwIBAgIEbF5VOTANBgkqhkiG9w0BAQsFADBvMQswCQYDVQQGEwJV
-          ...
-          -----END CERTIFICATE-----
-```
+## (E) Provision Confidential Credentials for Sigrid API Operations
 
-## (E) Provide an RSA keypair for signing of unattended workflow tokens.
+### (E.1) Generate an RSA Key Pair for Signing Unattended Workflow Tokens
 
 Sigrid provides a [public API](../integrations/sigrid-api-documentation.md) that allows access 
 to Sigrid from scripts. This API is protected by personal access tokens that logged-in users can 
@@ -343,6 +348,7 @@ secret yourself and reference it in your `values.yaml`, or let the Helm chart cr
 If you create the secret yourself, say with name `uwt-secret`, the configuration in your `values.
 yaml` is:
 
+{% raw %}
 ```yaml
 auth-api:
   config:
@@ -350,9 +356,11 @@ auth-api:
       create: false
       secretName: "uwt-secret"
 ```
+{% endraw %}
 
 If you choose to let the Helm chart create the secret, the configuration in your `values.yaml` is:
 
+{% raw %}
 ```yaml
 auth-api:
   config:
@@ -366,6 +374,36 @@ auth-api:
           (many lines omitted from the keypair created in step 1)  
           -----END PRIVATE KEY-----
 ```
+{% endraw %}
+
+### (E.2) Create a Secret to Authorize Sigrid System Configuration
+
+Sigrid on-premise customers using a helm chart version **before 0.4.13** will need to update the following configuration when updating to a newer version.
+{: .warning }
+
+To enable Sigrid to automatically grant the uploading user access to an onboarded system, a secret must be created. This secret can either be provisioned in advance or generated during the onboarding process, as shown in the example below.
+
+{% raw %}
+```yaml
+auth-api:
+   onboarding:
+    create: true
+    secretName: my-system-onboarding-secret
+    data:
+      secret: "example"
+```
+{% endraw %}
+
+{% raw %}
+```yaml
+inbound-api:
+  config:
+    authApi:
+      onboarding:
+        create: false
+        secretName: my-system-onboarding-secret
+```
+{% endraw %}
 
 ## (F) Access to an S3-compatible object store
 
@@ -378,15 +416,20 @@ In the Helm chart, two things need to be configured:
 - (F.1) A secret to allow access to the object store.
 - (F.2) Configuration for the Kubernetes jobs that import analysis results.
 
-### (F.1) Secret to allow access to the object store
+### (F.1) Configure the object store
 
-A secret for accessing the object store can be configured in the usual way:
+The object store can be configured this way:
 
+{% raw %}
 ```yaml
-inbound-api:
-  config:
-    importJob:
-      objectStoreSecret:
+global:
+  onPremise:
+    objectStore:
+      bucketName: "example-bucket"
+      forcePathStyle: "true"  # Use path-style access to prevent bucket-specific hostnames
+      endpoint: "https://minio.my-company.com"
+      region: "us-east-1"
+      secret:
         create: true
         data:
           AWS_ENDPOINT_URL: "https://minio.my-company.com"
@@ -395,18 +438,25 @@ inbound-api:
           AWS_ACCESS_KEY_ID: ""
           AWS_SECRET_ACCESS_KEY: ""
 ```
+{% endraw %}
 
-As usual, the Helm chart creates the secret if you set `inbound-api.config.importJob.objectStoreSecret.create`
+As usual, the Helm chart creates the secret if you set `global.onPremise.objectStore.secret.create`
 to true. Alternatively, you can provide the secret yourself, in which case the configuration should look like:
 
+{% raw %}
 ```yaml
-inbound-api:
-  config:
-    importJob:
-      objectStoreSecret:
+global:
+  onPremise:
+    objectStore:
+      bucketName: "example-bucket"
+      forcePathStyle: "true" # Use path-style access to prevent bucket-specific hostnames
+      endpoint: "https://minio.my-company.com"
+      region: "us-east-1"
+      secret:
         create: false
-        secretName: "example name"
+        secretName: sigrid-onprem-object-store-credentials
 ```
+{% endraw %}
 
 Note that this secret is not mandatory. In case authentication is already provided through other means (e.g. 
 Pod/Workload Identity, IAM roles for service accounts, etc.), no secret is needed at all.
@@ -422,6 +472,7 @@ trigger from a CI/CD pipeline.
 These jobs are created from a template that is configurable in the Helm chart, using the 
 following configuration:
 
+{% raw %}
 ```yaml
 inbound-api:
   config:
@@ -447,6 +498,7 @@ inbound-api:
           username: ""
           password: ""
 ```
+{% endraw %}
 
 With this configuration, whenever triggered, Sigrid tries 3 times to create a and successfully 
 run an import job. Successful runs are automatically removed from the cluster 
@@ -474,6 +526,7 @@ Sigrid offers three ways to configure resource requests/limits:
 3. **Dynamic resources**: Resource requests/limits set through the API when triggering an analysis results import. 
 
 Method 1 and method 2 can be configured by admins using the Helm chart when installing or upgrading Sigrid:
+{% raw %}
 ```yaml
 inbound-api:
   config:
@@ -500,11 +553,13 @@ inbound-api:
           limits:
             memory: 15Gi
 ```
+{% endraw %}
 Sigrid performs a merge overwrite on resources which means that system specific resource requests/limits 
 are merged with the defaults and overwrite any already present cpu/memory requests/limits.
 
 Method 3 reduces the need for an admin to set system specific overwrites but must be explicitly enabled. To prevent
 runaway resource consumption a maximum amount of cpu/memory that is requested through the API can be configured.
+{% raw %}
 ```yaml
 inbound-api:
   config:
@@ -517,21 +572,25 @@ inbound-api:
         cpu: 1000m
         memory: 10Gi
 ```
+{% endraw %}
 In the above example no more than `1000m` cpu and `10Gi` memory may be dynamically allocated using the API. The values 
 are used for both cpu/memory requests and cpu/memory limits.
 
 ### (F.3) Optional: Configure Custom Certificates
 When using a self-signed certificate for the S3-compatible storage we also have to tell inbound-api which cert specifically should be used for S3 so that it can also share it with the importer jobs it starts.
+{% raw %}
 ```yaml
-inbound-api:
-  config:
-    importJob:
-      objectStoreCertificate:
+global:
+  onPremise:
+    objectStore:
+      certificate:
         # -- If the object-storage (S3) requires a custom certificate configure the custom certificates section. Then
         # set key to the filename of the specific S3 certificate.
         key: my-object-store-cert.pem
 ```
+{% endraw %}
 Taking this as an example where my-object-store-cert.pem is the cert used for the object store:
+{% raw %}
 ```yaml
   customCertificates:
     certificates:
@@ -542,6 +601,7 @@ Taking this as an example where my-object-store-cert.pem is the cert used for th
           ...
           -----END CERTIFICATE-----
 ```
+{% endraw %}
 
 ## (G) Optional: connection to source code repositories
 
@@ -559,6 +619,7 @@ configure the code repository as an OAuth2 provider:
 
 The newly created client registration can then be configured in the Helm chart like so:
 
+{% raw %}
 ```yaml
 sigrid-api:
   config:
@@ -582,6 +643,7 @@ sigrid-api:
             redirect-uri: https://sigrid.yourdomain.com/rest/analysis-results/repositories/login/oauth/code/gitlab-onprem
             provider: gitlab-onprem                                 <-- Note 5
 ```
+{% endraw %}
 
 Notes:
 1. In this example, source code is stored in an on-premise Gitlab instance, which is the 
@@ -597,6 +659,24 @@ Notes:
    - GitHub: `repo`
    - Azure DevOps: `vso.code`
    These scopes provide read permissions to projects and source code, which are necessary for Sigrid to display source code fragments in the UI.
+
+### (H) Optional: Configure Custom Certificates
+To enable secure communication between services using Sigrid, you may need to add custom certificates. These certificates can be defined in the following three components: `auth-api`, `sigrid-api`, and `inbound-api`. You can configure this using the `customCertificates` option in the Helm chart.
+{% raw %}
+```yaml
+  customCertificates:
+    enabled: true
+    certificates:
+      create: true
+      name: "sigrid-certificates"
+      data:
+        my_sigrid_cert.pem: |
+          -----BEGIN CERTIFICATE-----
+          MIIDdzCCAl+gAwIBAgIEbF5VOTANBgkqhkiG9w0BAQsFADBvMQswCQYDVQQGEwJV
+          ...
+          -----END CERTIFICATE-----
+```
+{% endraw %}
 
 ## Contact and support
 

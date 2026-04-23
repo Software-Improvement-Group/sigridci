@@ -180,6 +180,24 @@ the analysis, the analysis results are published to Sigrid, but the source code 
 You can find more information in the [Local Runner documentation](../organization-integration/sigrid-local.md).
 The Sigrid Local Runner is *only* available for one-off assessments, and cannot be used for Sigrid subscriptions.
 
+## Uploading multiple Git repositories as a single Sigrid system
+
+If you need to combine several Git repositories into one Sigrid system for a one-off upload, you can use the `sigrid-git-upload.py` script provided in this repository. The script clones each repository into a temporary directory, bundles them together, and publishes the result to Sigrid.
+
+This upload channel is designed for manual runs only and does not include pull-request feedback. For automated pipeline uploads, use [Sigrid CI](../sigridci-integration/development-workflows.md) instead.
+
+```bash
+export SIGRID_CI_TOKEN=your-token-here
+
+./multi-repository-upload/sigrid-git-upload.py \
+    --customer <customer> \
+    --system   <system>   \
+    https://git.example.com/org/repo1.git \
+    https://git.example.com/org/repo2.git
+```
+
+See the [multi-repository-upload README](../../multi-repository-upload/README.md) for the full list of options and requirements.
+
 ## What if something went wrong?
 
 We recommend using Sigrid CI to publish your source code to Sigrid CI, since this approach is automated and therefore less error prone. If you run into issues while publishing your code it's best to [contact SIG's support team directly](#contact-and-support).

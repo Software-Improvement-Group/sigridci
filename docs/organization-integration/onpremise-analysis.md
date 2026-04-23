@@ -17,18 +17,6 @@ Sigrid's analyses require access to an S3-compatible object store. This can be A
 implementation, or an on-premise equivalent that supports Amazon's S3 API, such as [MinIO](https://min.io) or 
 [Ceph](https://ceph.com).
 
-Sigrid's analysis image includes [s5cmd](https://github.com/peak/s5cmd) to access 
-the object store, which is based on the official Amazon S3 SDK. Because it is based on the 
-official Amazon S3 SDK, it supports all authentication methods that Amazon provides. Typically, 
-in a CI/CD environment, the AWS S3 SDK uses [environment variables](https://docs.aws.amazon.
-com/cli/latest/userguide/cli-configure-envvars.html) 
-to hold an access key. Consequently, typically the following environment variables need to be set:
-
-- `AWS_ACCESS_KEY_ID`
-- `AWS_SECRET_ACCESS_KEY`
-- `AWS_REGION`
-- `AWS_ENDPOINT_URL` (when using a private S3-compatible object store)
-
 ## Configuring pipeline jobs
 
 For on-premise solutions, we expect that source code is analyzed in a job in a CI/CD pipeline. 
@@ -37,6 +25,7 @@ Docker image, any CI/CD environment that can run Docker containers will do.
 
 The following GitLab job illustrates how to run an analysis:
 
+{% raw %}
 ```yaml
 sigrid-publish:
   image:
@@ -50,15 +39,12 @@ sigrid-publish:
     SYSTEM: "$CI_PROJECT_NAME"
     SIGRID_URL: "https://sigrid.my-company.com"
     SIGRID_CI_TOKEN: "secret"
-    BUCKET: "some-bucket"
-    AWS_ENDPOINT_URL: "https://minio.my-company.com"
-    AWS_ACCESS_KEY_ID: "some-id"
-    AWS_SECRET_ACCESS_KEY: "also-secret"
-    AWS_REGION: "us-east-1"
+    SIGRID_CA_CERT: my_sigrid_cert.pem
     SIGRID_SOURCES_REGISTRATION_ID: "gitlab-onprem"
   script:
     - "run-analyzers --publish"
 ```
+{% endraw %}
 
 Note that the image name contains a reference to the Docker image tag (`$SIGRID_VERSION` in this example). 
 It is important that the tag matches the tags used in Sigrid's Helm chart: all components of 
@@ -85,8 +71,7 @@ set exit code).
 Sigrid-Multi-Analyzer is configured with environment variables. The following table lists all 
 environment variables with their defaults, if any. When provided with a default, you can override 
 them, but you're not required to do so unless needed in your situation. All variables are required 
-except `SIGRID_CA_CERT` and `AWS_CA_BUNDLE`, which are only required when using custom certificates 
-for Sigrid and S3 bucket storage.
+except `SIGRID_CA_CERT`, which is required when Sigrid uses a custom or non-public CA for TLS certificate validation.
 
 We distinguish two types of environment variables:
 - Shared: these typically have the same value across different CI/CD projects for the same Sigrid 
@@ -101,12 +86,14 @@ Using Shared Variables in Pipelines
   Only the `SYSTEM` variable needs to be defined in the project pipeline itself.
 
 Example: Using a GitLab CI/CD template to store shared environment variables:
+{% raw %}
 ```yaml
 variables:
   SYSTEM: "$CI_PROJECT_NAME"
 include:
   - local: 'path/to/your/template.yml'
 ```
+{% endraw %}
 
 | Variable                       | Required | Shared? | Sensitive | Default   |
 |--------------------------------|----------|---------|-----------|-----------|
@@ -116,12 +103,6 @@ include:
 | SIGRID_URL                     | Yes      | Yes     | No        |           |
 | SIGRID_CI_TOKEN                | Yes      | Yes     | Yes       |           |
 | SIGRID_VERSION                 | Yes      | Yes     | No        |           |
-| BUCKET                         | Yes      | Yes     | No        |           |
-| AWS_ENDPOINT_URL               | Yes      | Yes     | No        | (AWS)     |
-| AWS_REGION                     | Yes      | Yes     | No        | us-east-1 |
-| AWS_ACCESS_KEY_ID              | Yes      | Yes     | Yes       |           |
-| AWS_SECRET_ACCESS_KEY          | Yes      | Yes     | Yes       |           |
-| AWS_CA_BUNDLE                  | No       | Yes     | No        |           |
 | SIGRID_SOURCES_REGISTRATION_ID | Yes      | Yes     | No        | (auto)    |
 
 Notes:
@@ -130,27 +111,19 @@ Notes:
 - `SYSTEM`: the name of this system (a lowercase string matching `[a-z][a-z0-9-]`). The default is 
   the project name of the current CI/CD project (e.g., the pre-configured `$CI_PROJECT_NAME` 
   variable in GitLab).
-- `SIGRID_CA_CERT`: Path to Sigrid's certificate `my_sigrid_cert.pem`.
+- `SIGRID_CA_CERT`: Path to custom CA certificate used to validate TLS connections to Sigrid, e.g. `my_sigrid_cert.pem`
 - `SIGRID_URL`: (sub-)domain where this Sigrid On-Premise deployment is hosted, e.g. 
   `https://sigrid.mycompany.com`.
 - `SIGRID_CI_TOKEN`: a personal access token created in Sigrid's UI.
 - `SIGRID_VERSION`: specifies the version tag of the Sigrid-Multi-Analyzer container.
   Ensure that the version matches the version used for the Sigrid web application you have deployed in Kubernetes.
-- `BUCKET`: name of the bucket in which analysis results are stored.
-- `AWS_ENDPOINT_URL`: URL at which an S3-compatible object store can be reached. Defaults to Amazon AWS 
-  S3 endpoints.
-- `AWS_REGION`: the region in which the bucket with name `S3_BUCKET` is located. For MinIO, this 
-  is `us-east-1` unless a different region is configured in MinIO.
-- `AWS_ACCESS_KEY_ID`: ID of the access key to authenticate to the S3-compatible object store. 
-  This key should give access to the bucket named by `S3_BUCKET`.
-- `AWS_SECRET_ACCESS_KEY`: the key whose ID is `AWS_ACCESS_KEY_ID`.
-- `AWS_CA_BUNDLE`: Path to your S3 Bucket's certificate `my_s3bucket_cert.pem`.
 - `SIGRID_SOURCES_REGISTRATION_ID`: the ID of the OAuth client registration provided in `values.yaml` of Sigrid's Helm chart.
 
 #### Using Custom Certificates in Your Pipeline
 
 To use custom certificates in your pipeline, copy them directly into the desired path, define them as string variables, or use CI/CD project variables, then pass their paths to the analyzer image. For example:
 
+{% raw %}
 ```yaml
 sigrid-publish:
   image:
@@ -158,13 +131,11 @@ sigrid-publish:
   variables:
     SYSTEM: "$CI_PROJECT_NAME"
     SIGRID_CA_CERT: "my_sigrid_cert.pem"
-    AWS_CA_BUNDLE: "my_s3bucket_cert.pem"
   script:
     - echo $MYSIGRID_CERT > $SIGRID_CA_CERT
-    - echo $MY_S3_CERT > $AWS_CA_BUNDLE
     - "run-analyzers --publish"
 ```
-
+{% endraw %}
 
 ## Getting import job status and logs
 
@@ -178,23 +149,28 @@ These endpoints are part of [Sigrid's external API](../integrations/sigrid-api-d
 
 Assuming your token is stored in an environment variable called `SIGRID_CI_TOKEN`, the endpoint can be invoked using [`curl`](https://curl.se/) on Linux or MacOS like so:
 
+{% raw %}
 ```shell
 curl -H "Authorization: Bearer $SIGRID_CI_TOKEN" https://sigrid.your-domain.com/rest/inboundresults/imports/{partner}/{customer}/{system}
 ```
+{% endraw %}
 
 where `{partner}`, `{customer}` and `{system}` are placeholders.
 
 Or the equivalent for PowerShell:
 
+{% raw %}
 ```powershell
 Invoke-RestMethod -Headers @{"Authorization" = "Bearer $Env:SIGRID_CI_TOKEN"} -Uri "https://sigrid-onprem.k8s.sig.eu/rest/inboundresults/imports/{partner}/{customer}/{system}" | Format-Table
 ```
+{% endraw %}
 
 The `GET /rest/inboundresults/imports/{partner}/{customer}/{system}` endpoint returns an array of job statuses for the given system, as JSON: 
 
 <details markdown="1">
   <summary>Example response</summary>
 
+{% raw %}
 ```json
 [
   {
@@ -219,6 +195,7 @@ The `GET /rest/inboundresults/imports/{partner}/{customer}/{system}` endpoint re
   }
 ]
 ```
+{% endraw %}
 
 The `name` property of the `metadata` object is the name of the job that can be used to retrieve job details and logs with the `GET /rest/inboundresults/imports/{partner}/{customer}/{system}/{job}` endpoint and `GET /rest/inboundresults/imports/{partner}/{customer}/{system}/{job}/logs` endpoint. The endpoints discussed in this section are thin wrappers around the [equivalent endpoints of the Kubernetes API](https://kubernetes.io/docs/reference/kubernetes-api/workload-resources/job-v1/#JobStatus), see the Kubernetes documentation for a detailed discussion of the response properties. 
 
@@ -229,6 +206,7 @@ The `GET /rest/inboundresults/imports/{partner}/{customer}/{system}/{job}` endpo
 <details markdown="1">
   <summary>Example response</summary>
 
+{% raw %}
 ```json
 {
   "name": "EXAMPLE-NAME",
@@ -257,7 +235,7 @@ The `GET /rest/inboundresults/imports/{partner}/{customer}/{system}/{job}` endpo
       "startTime": "2025-01-10T12:00:44Z",
       "reason": null,
       "containerStatus": {
-        "image": "571600876202.dkr.ecr.eu-central-1.amazonaws.com/softwareimprovementgroup/sigrid-multi-importer:1.0.20260223",
+        "image": "571600876202.dkr.ecr.eu-central-1.amazonaws.com/softwareimprovementgroup/sigrid-multi-importer:1.0.20260309",
         "imageID": "...",
         "name": "sigrid-importer",
         "ready": false,
@@ -286,6 +264,7 @@ The `GET /rest/inboundresults/imports/{partner}/{customer}/{system}/{job}` endpo
   ]
 }
 ```
+{% endraw %}
 
 The endpoints discussed in this section are thin wrappers around the [equivalent endpoints of the Kubernetes API](https://kubernetes.io/docs/reference/kubernetes-api/workload-resources/job-v1/#JobStatus), see the Kubernetes documentation for a detailed discussion of the response properties. 
 

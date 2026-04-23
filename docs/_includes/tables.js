@@ -28,11 +28,13 @@ document.addEventListener("DOMContentLoaded", () => {
     const technologySupportLinks = document.querySelectorAll(".technologySupportCategories a");
     const table = document.querySelector(".technologySupportTable");
 
-    if (table && technologySupportLinks.length === 3) {
-        technologySupportLinks[0].addEventListener("click", e => toggleRowVisibility(table, 0, ""));
-        technologySupportLinks[1].addEventListener("click", e => toggleRowVisibility(table, 1, "(1)"));
-        technologySupportLinks[2].addEventListener("click", e => toggleRowVisibility(table, 2, "(4)"));
-    }
+    if (table) {
+        if (technologySupportLinks.length === 3) {
+            technologySupportLinks[0].addEventListener("click", e => toggleRowVisibility(table, 0, ""));
+            technologySupportLinks[1].addEventListener("click", e => toggleRowVisibility(table, 1, "(1)"));
+            technologySupportLinks[2].addEventListener("click", e => toggleRowVisibility(table, 2, "(4)"));
+        }
 
-    toggleRowVisibility(table, 0, "");
+        toggleRowVisibility(table, 0, "");
+    }
 });

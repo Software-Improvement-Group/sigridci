@@ -27,7 +27,7 @@ class SecurityMarkdownReportTest(TestCase):
     def setUp(self):
         self.options = PublishOptions("aap", "noot", RunMode.FEEDBACK_ONLY, sourceDir="/tmp", feedbackURL="")
 
-        with open(os.path.dirname(__file__) + "/testdata/security.json", encoding="utf-8", mode="r") as f:
+        with open(os.path.dirname(__file__) + "/testdata/security-sigrid-api-sarif.json", encoding="utf-8", mode="r") as f:
             self.feedback = json.load(f)
 
     @mock.patch.dict(os.environ, {
@@ -37,7 +37,7 @@ class SecurityMarkdownReportTest(TestCase):
         "CI_COMMIT_REF_NAME" : "mybranch",
     })
     def testCreateTableFromFindings(self):
-        report = SecurityMarkdownReport()
+        report = SecurityMarkdownReport(self.options, "HIGH")
         markdown = report.renderMarkdown("1234", self.feedback, self.options)
 
         expected = """
@@ -45,17 +45,38 @@ class SecurityMarkdownReportTest(TestCase):
             
             **⚠️  You did not meet your objective of having no critical-severity security findings**
             
+            > Sigrid CI for Security is currently in Beta. [The documentation](https://docs.sigrid-says.com/sigridci-integration/using-sigridci.html#security-feedback-beta) contains more information on its current state and known limitations.
+            
+            - ❌ means this finding fails your objective.
+            - ⚠️ means a finding exists, but is not severe enough to fail your objective.
+            - ✅ means everything is fine.
+            
             ## 👍 What went well?
             
-            > You fixed **0** security findings.
+            > You fixed **1** security findings.
+            
+            | Risk | Meets objective? | File | Finding |
+            |----|----|----|----|
+            | 🟣 | ✅ | [test:1](https://example.com/aap/noot/-/blob/mybranch/test#L1) | Insecure_Randomness |
             
             ## 👎 What could be better?
             
-            > Unfortunately, you introduced **1** security findings.
+            > Unfortunately, you introduced **2** security findings.
             
-            | Risk | File | Finding |
-            |------|------|---------|
-            | 🟣 | [Security.java:33](https://example.com/aap/noot/-/blob/mybranch/Security.java#L33) | Weak Hash algorithm used |
+            | Risk | Meets objective? | File | Finding |
+            |----|----|----|----|
+            | 🟣 | ❌ | [neutron/neutron/db/sqlalchemytypes.py:51](https://example.com/aap/noot/-/blob/mybranch/neutron/neutron/db/sqlalchemytypes.py#L51) | Puma4 |
+            | 🔴 | ⚠️ | [neutron/neutron/ipam/drivers/neutrondb_ipam/driver.py:51](https://example.com/aap/noot/-/blob/mybranch/neutron/neutron/ipam/drivers/neutrondb_ipam/driver.py#L51) | Puma2 |
+            
+            If you believe these findings are false positives,
+            you can [exclude the rule](https://docs.sigrid-says.com/reference/analysis-scope-configuration.html#excluding-security-rules) in the Sigrid configuration.
+            If you believe these findings are located in files that should not be scanned, you can also
+            [exclude the files and/or directories](https://docs.sigrid-says.com/reference/analysis-scope-configuration.html#excluding-files-and-directories-from-security-scanning) in the configuration.
+            
+            ## 😑 You have remaining security findings
+
+            > You have **0** open security findings and **1** security findings for which you have previous accepted the risk.
+            [You can view these findings in Sigrid](https://sigrid-says.com/aap/noot/-/security).
             
             
             ----
@@ -69,8 +90,9 @@ class SecurityMarkdownReportTest(TestCase):
     def testSpecialMessageWhenYouMeetObjective(self):
         with open(os.path.dirname(__file__) + "/testdata/security-nofindings.json", encoding="utf-8", mode="r") as f:
             noResults = json.load(f)
+            noResults["baseline"] = "2026-03-20 12:00"
 
-        report = SecurityMarkdownReport()
+        report = SecurityMarkdownReport(self.options, "HIGH")
         report.decorateLinks = False
         markdown = report.renderMarkdown("1234", noResults, self.options)
 
@@ -78,6 +100,38 @@ class SecurityMarkdownReportTest(TestCase):
             # [Sigrid](https://sigrid-says.com/aap/noot/-/security) Security feedback *(Beta)*
             
             **✅  You achieved your objective of having no critical-severity security findings**
+            
+            > Sigrid CI for Security is currently in Beta. [The documentation](https://docs.sigrid-says.com/sigridci-integration/using-sigridci.html#security-feedback-beta) contains more information on its current state and known limitations.
+            
+            Sigrid compared your code against the baseline of 2026-03-20 12:00 UTC.
+            
+            ## 👍 What went well?
+            
+            > You did not introduce any security findings during your changes, great job!
+            
+            
+            ----
+            
+            [**View this system in Sigrid**](https://sigrid-says.com/aap/noot/-/security)
+        """
+
+        self.assertEqual(markdown.strip(), inspect.cleandoc(expected).strip())
+
+    @mock.patch.dict(os.environ, {"SIGRID_CI_MARKDOWN_HTML" : "false"})
+    def testIgnoreFailedRun(self):
+        with open(os.path.dirname(__file__) + "/testdata/security-failed-run.json", encoding="utf-8", mode="r") as f:
+            noResults = json.load(f)
+
+        report = SecurityMarkdownReport(self.options, "HIGH")
+        report.decorateLinks = False
+        markdown = report.renderMarkdown("1234", noResults, self.options)
+
+        expected = """
+            # [Sigrid](https://sigrid-says.com/aap/noot/-/security) Security feedback *(Beta)*
+            
+            **✅  You achieved your objective of having no critical-severity security findings**
+            
+            > Sigrid CI for Security is currently in Beta. [The documentation](https://docs.sigrid-says.com/sigridci-integration/using-sigridci.html#security-feedback-beta) contains more information on its current state and known limitations.
             
             ## 👍 What went well?
             
@@ -96,80 +150,41 @@ class SecurityMarkdownReportTest(TestCase):
         self.assertEqual(markdown.strip(), inspect.cleandoc(expected).strip())
 
     @mock.patch.dict(os.environ, {"SIGRID_CI_MARKDOWN_HTML" : "false"})
-    def testLimitFindingsIfThereAreTooMany(self):
-        with open(os.path.dirname(__file__) + "/testdata/security-manyfindings.json", encoding="utf-8", mode="r") as f:
-            manyResults = json.load(f)
+    def testIgnoreFailedRun(self):
+        with open(os.path.dirname(__file__) + "/testdata/security-onpremise-osh.json", encoding="utf-8", mode="r") as f:
+            previousFeedback = json.load(f)
+        with open(os.path.dirname(__file__) + "/testdata/security-onpremise.json", encoding="utf-8", mode="r") as f:
+            feedback = json.load(f)
 
-        report = SecurityMarkdownReport()
+        report = SecurityMarkdownReport(self.options, "HIGH")
         report.decorateLinks = False
-        markdown = report.renderMarkdown("1234", manyResults, self.options)
+        report.previousFeedback = previousFeedback
+        markdown = report.renderMarkdown("1234", feedback, self.options)
 
         expected = """
             # [Sigrid](https://sigrid-says.com/aap/noot/-/security) Security feedback *(Beta)*
+    
+            **✅  You achieved your objective of having no critical-severity security findings**
             
-            **⚠️  You did not meet your objective of having no critical-severity security findings**
+            > Sigrid CI for Security is currently in Beta. [The documentation](https://docs.sigrid-says.com/sigridci-integration/using-sigridci.html#security-feedback-beta) contains more information on its current state and known limitations.
             
-            ## 👍 What went well?
+            - ❌ means this finding fails your objective.
+            - ⚠️ means a finding exists, but is not severe enough to fail your objective.
+            - ✅ means everything is fine.
             
-            > You fixed **0** security findings.
-            
-            ## 👎 What could be better?
-            
-            > Unfortunately, you introduced **11** security findings.
-            
-            | Risk | File | Finding |
-            |------|------|---------|
-            | 🟣 | Security.java:33 | Weak Hash algorithm used |
-            | 🟣 | Security.java:33 | Weak Hash algorithm used |
-            | 🟣 | Security.java:33 | Weak Hash algorithm used |
-            | 🟣 | Security.java:33 | Weak Hash algorithm used |
-            | 🟣 | Security.java:33 | Weak Hash algorithm used |
-            | 🟣 | Security.java:33 | Weak Hash algorithm used |
-            | 🟣 | Security.java:33 | Weak Hash algorithm used |
-            | 🟣 | Security.java:33 | Weak Hash algorithm used |
-            | | ... and 3 more findings | |
-            
-            
-            ----
-            
-            [**View this system in Sigrid**](https://sigrid-says.com/aap/noot/-/security)
-        """
-
-        self.assertEqual(markdown.strip(), inspect.cleandoc(expected).strip())
-
-    @mock.patch.dict(os.environ, {
-        "SIGRID_CI_MARKDOWN_HTML" : "false",
-        "CI_SERVER_URL" : "https://example.com",
-        "CI_PROJECT_PATH" : "aap/noot",
-        "CI_COMMIT_REF_NAME" : "mybranch",
-    })
-    def testReportBasedOnDiff(self):
-        report = SecurityMarkdownReport("LOW")
-        with open(os.path.dirname(__file__) + "/testdata/security-previous.json", encoding="utf-8", mode="r") as f:
-            report.previousFeedback = json.load(f)
-        markdown = report.renderMarkdown("1234", self.feedback, self.options)
-
-        expected = """
-            # [Sigrid](https://sigrid-says.com/aap/noot/-/security) Security feedback *(Beta)*
-            
-            **⚠️  You did not meet your objective of having no medium-severity security findings**
-            
-            ## 👍 What went well?
-            
-            > You fixed **1** security findings.
-            
-            | Risk | File | Finding |
-            |------|------|---------|
-            | 🟣 | [Security.java:33](https://example.com/aap/noot/-/blob/mybranch/Security.java#L33) | This finding has been fixed in the next snapshot. |
-
             ## 👎 What could be better?
             
             > Unfortunately, you introduced **1** security findings.
             
-            | Risk | File | Finding |
-            |------|------|---------|
-            | 🟠 | [Aap.java:33](https://example.com/aap/noot/-/blob/mybranch/Aap.java#L33) | Some other finding |
-
+            | Risk | Meets objective? | File | Finding |
+            |----|----|----|----|
+            | 🔴 | ⚠️ | Aap.java:86 | InterruptedException and ThreadDeath should not be ignored |
+            
+            If you believe these findings are false positives,
+            you can [exclude the rule](https://docs.sigrid-says.com/reference/analysis-scope-configuration.html#excluding-security-rules) in the Sigrid configuration.
+            If you believe these findings are located in files that should not be scanned, you can also
+            [exclude the files and/or directories](https://docs.sigrid-says.com/reference/analysis-scope-configuration.html#excluding-files-and-directories-from-security-scanning) in the configuration.
+            
             
             ----
             

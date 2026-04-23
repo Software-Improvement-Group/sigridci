@@ -21,10 +21,12 @@ The remainder of this page is about **how** Sigrid CI gives feedback.
 
 ## What does Sigrid CI give feedback on?
 
-Sigrid CI gives software quality feedback for multiple quality aspects. Which aspects depends on your Sigrid license:
+Sigrid CI gives software quality feedback for multiple quality aspects. The aspects included in the feeddback depend
+on your Sigrid license:
 
 - [Maintainability feedback](#maintainability-feedback)
 - [Open Source Health feedback](#open-source-health-feedback)
+- [Security feedback](#security-feedback-beta) *(Beta, not enabled by default)*
 
 If you do *not* want feedback for one of these aspects, you can explicitly define the `--capability` option in
 the [Sigrid CI configuration](../reference/client-script-usage.md).
@@ -69,20 +71,24 @@ that would not be reasonable. The behavior we're going for is known as
 [the boy scout rule](https://deviq.com/principles/boy-scout-rule), where you should leave your code (or your campsite)
 cleaner than you found it. 
 
+Feedback is based on your [maintainability objective](../capabilities/portfolio-objectives.md). If you have not
+configured an objective, Sigrid CI will use a default target of 3.5 stars, which is what we recommand as a reasonable
+default for modern systems.
+
 ### Open Source Health feedback
 
 Sigrid CI gives feedback on security vulnerabilities and license risks in open source libraries. Sigrid also
 checks other aspects of using open source libraries, such as freshness (i.e. how often you update), but those
 are not part of Sigrid CI.
 
-So why not give feedback on *all* aspects? In a word: Urgency. People generally security vulnerabilities or
-license issues much more urgent than those other aspects. Updating a library can wait (but please not too long), fixing a vulnerability cannot
-wait. Obviously, you should still manage those other aspects, as explained in our
+So why not give feedback on *all* aspects? In a word: Urgency. People generally deem security vulnerabilities or
+license issues much more urgent than those other aspects. Updating a library can wait (but please not too long), 
+fixing a vulnerability cannot wait. Obviously, you should still manage those other aspects, as explained in our
 [guidelines for healthy use of open source libraries](../workflows/best-practices-osh.md).
 
 Sigrid CI does not require you to update every single open source library to address every single issues.
 Which vulnerabilities and licenses are "allowed" versus "not allowed" is decided based on your
-[objectives](../capabilities/portfolio-objectives.md). This means you can use a different objectives dependent on
+[objectives](../capabilities/portfolio-objectives.md). This means you can use different objectives dependent on
 the (type of) system. For example, you can decide to prevent high or critical severity vulnerabilities in public-facing 
 systems, but only prevent critical vulnerabilities for internal systems.
 
@@ -102,6 +108,10 @@ Sigrid CI separates vulnerable open source libraries into two categories:
   vulnerability and possible follow-up actions. This is explained in more detail, also from a process perspective,
   in our [guidelines on using open source](../workflows/best-practices-osh.md#how-to-remediate-vulnerabilities).
 
+Feedback is based on your [Open Source Health objectives](../capabilities/portfolio-objectives.md). If you have not
+configured an objective, Sigrid CI will use a default target of *no critical security vulnerabilities*. You will
+not receive feedback on license issues unless you have explicitly defined an objective for this.
+
 #### Adding Open Source Health feedback to an existing Sigrid CI configuration
 
 If your Sigrid license includes Open Source Health, Sigrid CI will automatically give feedback on both Maintainability
@@ -111,6 +121,70 @@ you can explicitly add `--capability maintainability` to *only* receive feedback
 **If you use GitHub** you need one extra step: In your pipeline configuration, look for the
 line `message-path: sigrid-ci-output/feedback.md`, and change this to `message-path: sigrid-ci-output/*feedback.md`.
 Adding the asterisk allows you to get feedback on *all* Sigrid capabilities, not just maintainability.
+
+### Security feedback (Beta)
+
+Sigrid CI provides security feedback based on your [objectives](../capabilities/portfolio-objectives.md).
+This helps you to "shift left" by reporting security findings early in the development process, making it easier
+and faster to address those findings. 
+
+<img src="../images/ci/security-feedback.png" width="350" />
+
+When you encounter security findings during code reviews, there are three ways how you can deal with them:
+
+- **Address the finding in the pull request:** It's always the best course of action to just address the finding
+  within the pull request. This prevents the finding from ever going into the main/master branch, which is generally
+  considered a best practice in [shift-left thinking](https://en.wikipedia.org/wiki/Shift-left_testing). 
+- **Merge the pull request, manage the finding via Sigrid:** In some cases, the pull request author and reviewer might
+  agree it's not feasible to address the finding right now. In those situations, it's OK to merge the pull request.
+  This will cause the security finding to appear in Sigrid's
+  [Security dashboard](../capabilities/portfolio-security.md), where it can be tracked.
+- **Merge the pull request, mark the finding as a false positive in Sigrid:** Like any automated check, Sigrid can
+  produce findings that are false positives. In those situations, if the pull request author and reviewer agree the
+  finding is *actually* a false positive, it's OK to merge the pull request. After your changes have been merged and
+  Sigrid has been updated, you can mark the finding as a false positive in Sigrid's 
+  [security page](../capabilities/system-security.md). False positives are automatically excluded from future
+  Sigrid CI feedback.
+
+Feedback is based on your [security objective](../capabilities/portfolio-objectives.md). If you have not configured
+an objective, Sigrid CI will use a default target of no critical security findings. We believe this to be a reasonable
+default for most systems.
+
+#### Why does Sigrid CI only give feedback on new security findings?
+
+Sigrid CI's intended workflow is to "shift left": If you catch security issues early in the development process,
+it becomes easier and faster to address them. Therefore, Sigrid CI will give you feedback on *new* security findings,
+in the code that you added/changed. This feedback is intended to be used in the context of a pull request.
+
+Including *all* security findings in the pull request feedback is not a good fit in terms of workflow. It is not
+practical or reasonable to expect people to reuse their pull request to start fixing issues in completely unrelated
+areas in the code. Moreover, this tends to become overwhelming if the system has lots of existing findings. 
+
+If you have a system with a large number of existing security findings, we recommend you use the
+[security dashboard](../capabilities/portfolio-security.md) to make an explicit decision on which findings to
+address right now and which findings can be addressed later. This can then be planned as its own effort. You can
+then use Sigrid CI in parallel to avoid the introduction of new security findings in new code.
+
+During the Beta phase, Sigrid CI will give feedback on *all* new findings. That might include situations where your
+code is not new, but new security findings have been discovered in existing code. We will decide on the final behavior
+based on feedback we get during the Beta phase, because arguments go both ways: (A) People prefer to only receive
+feedback on things they did, but (B) new security threats are continuously discovered, and we need to make people
+aware.
+{: .warning }
+
+#### Adding Security feedback to an existing Sigrid CI configuration
+
+Sigrid CI feedback for Security is currently in Beta, and not enabled by default. If you want to enable Security
+feedback, you will need to change your configuration to explicitly enable it.
+
+The Beta version of Sigrid CI feedback for Security requires a Sigrid Security license. 
+{: .attention }
+
+- **All platforms:** You need to add the option `--capability maintainability,osh,security` to the Sigrid CI step in
+  your pipeline configuration.
+- **GitHub:** In addition to the above, you need one extra step: In your pipeline configuration, look for the
+  line `message-path: sigrid-ci-output/feedback.md`, and change this to `message-path: sigrid-ci-output/*feedback.md`.
+  Adding the asterisk allows you to get feedback on *all* Sigrid capabilities, not just maintainability.
 
 ## How do you deal with feedback from Sigrid CI?
 
@@ -135,4 +209,5 @@ pipeline on certain types of objectives. The latter is configured using exit cod
 
 ## Contact and support
 
-Feel free to contact [SIG's support team](mailto:support@softwareimprovementgroup.com) for any questions or issues you may have after reading this documentation or when using Sigrid.
+Feel free to contact [SIG's support team](mailto:support@softwareimprovementgroup.com) for any questions or issues 
+you may have after reading this documentation or when using Sigrid.

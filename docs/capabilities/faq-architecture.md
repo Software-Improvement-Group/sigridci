@@ -7,7 +7,16 @@ This FAQ specifically covers Sigrid's Architecture Quality functionality. Also c
 
 Architecture Quality is available by default. Once you've published your system, you will automatically see an "Architecture" tab appear when you view your system in Sigrid.
 
-You can us the [scope documentation](../reference/analysis-scope-configuration.md) to customize the Architecture Quality analysis for this system, if necessary.
+You can use the [scope documentation](../reference/analysis-scope-configuration.md) to customize the Architecture Quality analysis for this system, if necessary.
+
+### Which data is used for Architecture Quality?
+
+During the analysis, Sigrid combines architecture information which is extracted from multiple sources:
+
+- **Source code:** The system's code structure and dependencies. This includes cross-language dependencies, e.g. calls from C# to Visual Basic .NET and vice versa, and also includes interface dependencies, e.g. REST API calls.
+- **Repository history:** The changes made to the code over time. [This section](#what-information-does-sig-use-for-the-change-history-analysis-) contains more information.
+- **Build scripts:** Used to extract information about the system structure that is not available from the source code.
+- **Configuration files:** Used for information that is not available from the source code, such as the location of databases and external services.
   
 ### How do I enable the change history analysis?
 

@@ -92,6 +92,8 @@ class ScopeFileSchemaTest(TestCase):
                 - vulnerability: "CVE-123"
                 - license: "mies"
                 - activity: "boom"
+                - management: "jan"
+                - freshness: "henk:.*"
             """
             
         parsedScope = yaml.load(scope, Loader=yaml.FullLoader)
@@ -185,4 +187,3 @@ class ScopeFileSchemaTest(TestCase):
 
         parsedScope = yaml.load(scope, Loader=yaml.FullLoader)
         jsonschema.validate(instance=parsedScope, schema=self.schema)
-

@@ -1,60 +1,71 @@
-# Why we're changing the Sigrid dashboard
+# The Portfolio Overview
+This portfolio overview focuses on overall quality performance trend, acute risks, and progress toward objectives across systems. These insights help users prioritize which systems need to be improved. In short, the portfolio overview answers the following questions:
+1. Where should we give attention and investigate further? 
+2. Where should we prioritize our next actions?
+3. Are we progressing toward our targets?
 
-If you've been using Sigrid for a while, you're probably very used to seeing this dashboard right after you sign in:
+<img width="1156" alt="image" src="../images/portfolio-overview-overall.png" />
 
-<img src="../images/portfolio-risk-dashboard/old-risk-dashboard.png" width="500" />
+The following sections elaborate on how to use and interpret the different elements of the portfolio overview.
 
-The dashboard's headline calls it "portfolio overview", but it's more commonly referred to as "the risk dashboard".
-Sigrid is moving into a direction where we provide different dashboards for different roles.
+## 1\. Capability tabs
+At the top of the portfolio, individual tabs for each capability enable you to view your portfolio insights for a selected capability. Selecting a specific capability affects all the insights displayed below it, on the rest of the page.
+## 2\. KPI cards
+The key performance indicator cards summarize essential progress information for the selected capability.
+These cards can differ slightly per capability, as different capabilities have different key insights. For the maintainability page the KPI cards look as follows:
 
-- The **management dashboard**, which was introduced earlier this year, focuses on a perspective suitable for
-  IT management concerns. It has a strong focus on process and trend, and less focus on individual systems.
-- The **risk dashboard** will remain, and will have a stronger focus on the needs of tech leads and architects.
-  In this page, we'll take you through our plans for this dashboard.
+<img width="1070" alt="image" src="../images/portfolio-overview-cards.png" />
 
-## Risk dashboard goals
+Typical cards across the different capabilties (e.g. Maintainability, Architecture, Security, AI) are:
+* **Quality Rating** shows the overall maintainability score and its recent change;
+* **Acute Risk** highlights how many systems with open acute (critical and high) risk your portfolio has, if there are more systems with acute risk;
+* **Improving/Declining Systems** highlights how many systems are getting better, compared to the number of systems that is declining;
+* **Objectives Completion** indicates progress towards defined objectives across the portfolio;
+* **Volume** shows the change of code volume (and therefore development activity) across portfolio.
 
-As we've [learned in interviewing 70+ enterprise architects](https://www.youtube.com/watch?v=TZZ-J2H5wJ8),
-these people mainly want to coach their teams and work towards shared goals. This requires them to track what's
-happening across their software landscape, both in terms of activity and in terms of progress towards those goals. 
+## 3\. Treemap tabs
+The treemap (the large graphic with the colored blocks) gives different views into your portfolio. Those different views can be reached via the tabs directly above the treemap, and each highlight important insights about your portfolio, helping you to quickly drill down towards the parts of your portfolio that need attention.
+For each different tab, the meaning of the Area, Color, and Grouping are displayed. This configuration differs for each tab, and can be manually adjusted to receive custom insights.
 
-The current risk dashboard is very much an assessment view, it only shows the current state of each system. That's
-not a great fit if you're mainly interested in recent changes. Over the coming months, we're going to slowly expand
-the risk dashboard. It's good to know that *no existing functionality will be removed from the dashboard*. These 
-changes are all about *extending* the risk dashboard, but if you're happy with the current version of the dashboard,
-you'll still have access to that information.
+<img width="1069" alt="image" src="../images/portfolio-overview-treemap.png" />
 
-### Phase 1: Focus on trend
+### Hotspots
+A **Hotspot** is a system which has seen high development activity during the selected period. Hotspots represent areas of attention, since code changes are where deterioration or improvement of code quality happen. Being on top of these hotspots is essential for being in control of quality and risk trends over time.
+For the Hotspots tab, the default treemap configuration is as follows:
+* **Block color:** the color of the blocks represents the quality delta of the system as a whole (as a result of the code changes), comparing the current system rating against the previous quality rating of the system at the start of the selected period. The colour intensity scale is dynamic, and is based on the largest deterioration/improvement in the selected period. 
+* **Block size:** each block accounts for a system, and the size of the block represents the amount of change in development effort (e.g., code changes/Person Years) the system has received in the selected period. Systems that have not received any changes in the selected period are excluded from the overview.
+* **Grouping:** the systems are grouped together based either deterioration or improvement of the code quality. 
 
-<img src="../images/portfolio-risk-dashboard/hotspots.png" width="600" />
+Use the hotspots to find out:  
+_Which areas in my portfolio require attention to prevent quality decay?_
+{: .faq }
 
-Adding the trend information will affect both the tree map visualization and the list of systems. Selecting the 
-time period works the same as any other page in Sigrid that contains trend information: You can select the period
-using the time picker in the top-right of the page.
+### Objective Progress:
+The **Objective Progress** view shifts the focus from general risk discovery (Hotspots) to governance and policy tracking (Objective Progress). In this tab, the treemap presents an easy and visual overview of how the objectives in your portfolio are progressing.
 
-The list of systems is similar to what you see today, with the main difference of trend information being added
-for the metrics. The list now also contains information about [objectives](portfolio-objectives.md), instead of 
-requiring you to visit a separate dashboard to get that information.
+The default treemap configuration in this view is:
+* **Block color:** Benchmarked progress toward a specific target. Deep green means the goal is nearly achieved while a red color indicates that a system has a low achievement percentage for its objectives.
+* **Block size:** the block size represents the relative volume change in a system over the selected period (the amount of code changed compared to the total system volume). This ensures that the systems with the most development activity are most prominent.
+* **Grouping:** In the example, the systems are grouped based on whether a system currently satisfies its assigned policy (e.g., "Meeting criteria" vs. "Not meeting criteria") but if you like, you can chose Team as a grouping.
 
-The most prominent visual change is in the tree map. Currently, the tree map emphasizes your largest systems, and
-it emphasizes the systems with the worst quality. This makes perfect sense for an assessment, but if you're using 
-Sigrid on a regular basis you probably *already know* this information, as it doesn't really change on a regular 
-basis.
+Use Objective Progress to find out:  
+_Which "Active" systems are moving away from their target? Is the gap to our target closing?_
+{: .faq }
 
-Therefore, the tabs displayed directly above the tree map will control what is depicted. The new default tab is
-called "hotspots", and focus on systems that improved the most versus worsened the most within your selected time
-period. This makes it easier to find out what happened within that period. 
+Remember: an overall objective progress KPI card is displayed at the top of the page, above the treemap. The Objective Progress shows you which teams might require your help to meet these targets.
+{: .attention }
 
-### Phase 2: Overall tab
+### Ratings
+The **Ratings** views provides a quick insight into the current status of the portfolio, when it comes to maintainability rating. It does not visualize change, but rather the current state of the portfolio.
+The default treemap configuration in this view is:
+* **Block color:** the color of the system blocks represents their current maintainability rating, benchmarked against the SIG maintainability benchmark.
+* **Block size:** the size of the system blocks represents the current system volume (counted as rebuild volume in Person Years). Rebuild Volume is a normalized system volume indication which enables comparing system sizes across different technologies.
+* **Grouping:** by default, the systems in the portfolio are grouped by team. This gives actionable insights in which teams might need help.
 
-Phase 1 makes the risk dashboard a lot more dynamic, but it retains one issue: It only shows one quality aspect
-at a time. That means you'll still need to check multiple tabs if you want to have a full overview of how every
-team and every system is doing. 
+## 4. System table overview
+The system table towards the bottom of the page provides a less focused, but more comprehensive, overview of the systems in your portfolio. It is useful in case you want to search for a specific system using the search functionality, or if you want to have a quick glance at volume (changes), quality changes, objective progress, and the last analysis moment. The table also enables you to favorite systems, and to sort on any of the columns.
 
-Therefore, the risk dashboard will gain an "overall" tab, similar to how the
-[system overview dashboard](system-overview.md) also provides an overall perspective. This overall tab is currently
-in the design process. We'd love to have you involved in this process, so feel free to
-[reach out](mailto:support@softwareimprovementgroup.com) if you're reading this would like to share your thoughts.
+<img width="1067" alt="image" src="../images/portfolio-overview-table.png" />
 
 ## Contact and support
 

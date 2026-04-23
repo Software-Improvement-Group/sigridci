@@ -2,7 +2,7 @@
 
 [Sigrid](https://www.softwareimprovementgroup.com/solutions/sigrid-software-assurance-platform/) helps you to improve your software by measuring your system's code quality, and then compares the results against a benchmark of 25,000 industry systems to give you concrete advice on areas where you can improve.
 
-<img src="images/overall-portfolio-dashboard.png" width="700" />
+<img src="images/portfolio-overview-26.png" width="700" />
 
 Sigrid performs code quality checks that have been designed by the [Software Improvement Group](https://www.softwareimprovementgroup.com/), which have been used by thousands of development teams over the past 20 years to help improve their software. SIG's approach is based on the [ISO 25010 standard for software quality](https://www.iso.org/standard/35733.html), and has been accredited to ensure alignment with the standard.
 
@@ -39,7 +39,7 @@ Sigrid visualizes your software landscape according to various technical quality
 
 <img src="images/objectives-overview.png" width="600" />
 
-The screenshot above shows an example on how Sigrid can help you to define and track [objectives](capabilities/portfolio-objectives.md) for various quality aspects. You can do this for every system in your portfolio. For more context on the relation between systems and their repositories, see [systems](organization-integration/systems.md).
+The screenshot above shows an example on how Sigrid can help you to define and track [objectives](capabilities/portfolio-objectives.md) on system level for various quality aspects. You can do this for every system in your portfolio. For more context on the relation between systems and their repositories, see [maping repositories to Sigrid systems](organization-integration/systems.md).
 
 ## How does Sigrid work?
 
