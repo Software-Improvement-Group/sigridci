@@ -37,14 +37,16 @@ class RepositoryHistoryExporter:
             UploadLog.log("No repository history found")
 
     def exportGitHistory(self, repoDir):
-        gitCommand = ["git", "-C", repoDir, "--no-pager", "log", "--date=iso", f"--format='{self.GIT_LOG_FORMAT}'",
-                      "--numstat", "--no-merges", f"--after={self.CUTOFF_DATE.strftime('%Y-%m-%d')}"]
+        commandPrefix = ["git", "-C", repoDir, "--no-pager", "log", "--date=iso", f"--format='{self.GIT_LOG_FORMAT}'"]
+        commitsCommand = commandPrefix + ["--numstat", "--no-merges", f"--after={self.CUTOFF_DATE.strftime('%Y-%m-%d')}"]
+        mergesCommand = commandPrefix + ["--merges", f"--after={self.CUTOFF_DATE.strftime('%Y-%m-%d')}"]
 
         try:
-            output = subprocess.run(gitCommand, stdout=subprocess.PIPE)
-            if output.returncode == 0:
+            commitsOutput = subprocess.run(commitsCommand, stdout=subprocess.PIPE)
+            mergesOutput = subprocess.run(mergesCommand, stdout=subprocess.PIPE)
+            if commitsOutput.returncode == 0 and mergesOutput.returncode == 0:
                 UploadLog.log("Including repository history in upload")
-                history = output.stdout.decode("utf8", "ignore")
+                history = commitsOutput.stdout.decode("utf8", "ignore") + "\n" + mergesOutput.stdout.decode("utf8", "ignore")
                 self.createHistoryExportFile(history, f"{repoDir}/{self.LIGHTWEIGHT_HISTORY_EXPORT_FILE}")
             else:
                 UploadLog.log("Exporting repository history failed")
