@@ -43,7 +43,7 @@ Provides an estimate on the relative amount of AI generated code currently in a 
 trend information indicating if the use of AI Coding Assistants is increasing or decreasing.
 From this tile it is possible to navigate to the Code Explorer to inspect the detected AI generated code in the system.
 
-<img src="../images/ai-governance-system-treemap.png" width="600" />
+<img src="../images/ai-generated-code-treemap.png" width="600" />
 
 The treemap visualizes the amount of AI generated code in architecture components within the system. This helps 
 with understanding AI Code hotspots at the architecture level.
