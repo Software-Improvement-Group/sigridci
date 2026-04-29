@@ -21,7 +21,6 @@ from .upload_log import UploadLog
 
 
 class RepositoryHistoryExporter:
-    GIT_LOG_FORMAT = "@@@;%H;%an;%ae;%cn;%ce;%cd;%s"
     CUTOFF_DATE = datetime.now() + timedelta(days=-365)
     LIGHTWEIGHT_HISTORY_EXPORT_FILE = "git.log"
     COMMIT_PREFIXES = ("@@@", "'@@@")
@@ -37,9 +36,10 @@ class RepositoryHistoryExporter:
             UploadLog.log("No repository history found")
 
     def exportGitHistory(self, repoDir):
-        commandPrefix = ["git", "-C", repoDir, "--no-pager", "log", "--date=iso", f"--format='{self.GIT_LOG_FORMAT}'"]
-        commitsCommand = commandPrefix + ["--numstat", "--no-merges", f"--after={self.CUTOFF_DATE.strftime('%Y-%m-%d')}"]
-        mergesCommand = commandPrefix + ["--merges", f"--after={self.CUTOFF_DATE.strftime('%Y-%m-%d')}"]
+        cutOff = self.CUTOFF_DATE.strftime("%Y-%m-%d")
+        commandPrefix = ["git", "-C", repoDir, "--no-pager", "log", "--date=iso", f"--after={cutOff}"]
+        commitsCommand = commandPrefix + ["--format='@@@;%H;%an;%ae;%cn;%ce;%cd;%s'", "--numstat", "--no-merges"]
+        mergesCommand = commandPrefix + ["--format='@@@MERGE;%H;%an;%ae;%cn;%ce;%cd;%s'", "--merges"]
 
         try:
             commitsOutput = subprocess.run(commitsCommand, stdout=subprocess.PIPE)
