@@ -7,7 +7,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: "Check out repository"
-        uses: actions/checkout@v4
+        uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
         with:
           fetch-depth: 0
       - name: "Special case: We use Sigrid CI on itself, so if we want its own code to be analyzed we need a copy"
@@ -24,7 +24,7 @@ jobs:
           retention-days: 7
           if-no-files-found: ignore
       - name: "Sigrid pull request feedback"
-        uses: mshick/add-pr-comment@v2
+        uses: mshick/add-pr-comment@8e4927817251f1ff60c001f04568532b38e0b4a0 # v3.11.0
         if: always()
         with:
           message-id: sigrid
@@ -35,7 +35,7 @@ jobs:
     if: github.repository_owner == 'Software-Improvement-Group' && github.actor != 'dependabot[bot]'
     steps:
       - name: "Check out repository"
-        uses: actions/checkout@v4
+        uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
       - name: "Special case: We use Sigrid CI on itself, so if we want its own code to be analyzed we need a copy"
         run: "cp -r sigridci/sigridci src && cp sigridci/*.py src"
       - name: "Run Sigrid CI in Docker"
