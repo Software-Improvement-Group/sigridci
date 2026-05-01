@@ -106,14 +106,15 @@ picture in the previous section.
 | snapshot.date                       | Date/time in ISO 8601 format, corresponding to the version of the code that was analyzed.                      |                       
 | systemElement.id                    | ID based on the system element's fingerprint. System elements will retain the same ID across subsequent scans. |
 | systemElement.name                  | Full/long name. Not unqiue.                                                                                    |
-| systemElement.shortName [4]         | Short/display name. Not unique. Optional field, use `name` when not specified                                  |
+| systemElement.shortName [5]         | Short/display name. Not unique. Optional field, use `name` when not specified                                  |
 | systemElement.type                  | See the [list of system element types](#system-element-types) below.                                           |
 | systemElement.measurementValues     | Maps metric names to numerical metric values, for metrics based on source code analysis.                       |
 | systemElement.measurementTimeSeries | Maps metric names to time series, for metrics based on change history.                                         |
-| systemElement.observationType       | See the list of [architecture observations](#architecture-observations) below. Optional field. [1]             |
-| systemElement.technology            | Indicates this is a technology-specific system element. Optional field. [2]                                    |
-| systemElement.annotation            | Text description that provides information for system elements. Optional field, defined in configuration. [3]  |
+| systemElement.observationType [1]   | See the list of [architecture observations](#architecture-observations) below. Optional field.                 |
+| systemElement.technology [2]        | Indicates this is a technology-specific system element. Optional field.                                        |
+| systemElement.annotation [3]        | Text description that provides information for system elements. Optional field, defined in configuration.      |
 | systemElement.roles                 | List of [role labels](#component-role-labels). Optional field.                                                 |
+| systemElement.authorTimeSeries [4]  | Anonymized authors over time. Only used to track team stability, not used to track individual authors.         |
 | dependency.id                       | ID based on the dependency's fingerprint. Dependencies will retain the same ID across subsequent scans.        |
 | dependency.sourceElementId          | Refers to one of the entries in `systemElements`.                                                              |
 | dependency.targetElementId          | Refers to one of the entries in `systemElements`.                                                              |
@@ -129,7 +130,8 @@ Notes:
 1. Only available for system elements of type `OBSERVATION`.  
 2. Only available for system elements of type `FILE`.
 3. Only available for system elements of type `GROUPING`.
-4. For components, the `shortName` field is intended to be used as the display name.
+4. Only available for system elements of type `SYSTEM`.
+5. For components, the `shortName` field is intended to be used as the display name.
 
 ## System element types
 

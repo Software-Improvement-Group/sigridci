@@ -14,8 +14,10 @@
 
 import os
 import re
+import subprocess
 import yaml
 from bs4 import BeautifulSoup
+from datetime import datetime
 from unittest import TestCase
 
 
@@ -36,9 +38,10 @@ class DocumentationTest(TestCase):
     def testDocumentationDoesNotContainDeadImages(self):
         for file, contents in self.readDocumentationPages():
             for match in self.IMAGE.finditer(contents):
-                parentDir = os.path.dirname(file)
-                linkedFile = os.path.join(parentDir, match.group(1))
-                self.assertTrue(os.path.exists(linkedFile), f"Dead image in {file} to {linkedFile}")
+                if not match.group(1).startswith("https://"):
+                    parentDir = os.path.dirname(file)
+                    linkedFile = os.path.join(parentDir, match.group(1))
+                    self.assertTrue(os.path.exists(linkedFile), f"Dead image in {file} to {linkedFile}")
                 
     def testMenuDoesNotContainDeadLinks(self):
         with open("docs/_includes/menu.html", "r") as f:
@@ -86,6 +89,13 @@ class DocumentationTest(TestCase):
         for tech in technologyList:
             if tech["context"] not in [row[0] for row in supportTable] and tech["context"] != "unknown":
                 self.fail(f"Technology '{tech['context']}' is not defined in technology support table")
+
+    def testPublicRoadmapIsPeriodicallyUpdated(self):
+        command = ["git", "log", "-1", "--pretty=\"%ci\"", "resources/roadmap.png"]
+        output = subprocess.run(command, stdout=subprocess.PIPE).stdout.decode("utf8", "ignore")
+        lastCommitDate = datetime.strptime(output.replace("\"", "").strip()[0:10], "%Y-%m-%d")
+        ageInDays = (datetime.now() - lastCommitDate).days
+        self.assertTrue(ageInDays <= 42, f"Public roadmap is {ageInDays} days old")
 
     def readDocumentationPages(self):
         with open("README.md", "r") as fileRef:
