@@ -3,5 +3,5 @@
 
 beautifulsoup4==4.13.4
 importchecker==3.0
-jsonschema==4.24.0
+jsonschema==4.26.0
 pyyaml==6.0.2
