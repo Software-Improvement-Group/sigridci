@@ -16,8 +16,8 @@ This page shows the high-level product roadmap for Sigrid. In practice, SIG deve
 
 - <span style="color: #c6ffc6;">⬤</span> Released
 - <span style="color: #ffefcd;">⬤</span> In Beta
-- <span style="color: #b5c4ff;">⬤</span> In Progress
-- <span style="color: #DBE1FF;">⬤</span> Upcoming
+- <span style="color: #B5C4FF;">⬤</span> In Progress
+- <span style="color: #FFECF6;">⬤</span> Upcoming
 
 ## Contact and support
 
