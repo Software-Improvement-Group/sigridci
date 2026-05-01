@@ -322,7 +322,7 @@ class MaintainabilityMarkdownReportTest(TestCase):
         report = MaintainabilityMarkdownReport()
         report.decorateLinks = False
         summary = report.renderSummary(feedback, self.options)
-        expected = "**⏸️️  Your are still below your objective of 3.5 stars.**"
+        expected = "**⏸️️  You are still below your objective of 3.5 stars.**"
 
         self.assertEqual(summary, expected)
 
@@ -537,6 +537,13 @@ class MaintainabilityMarkdownReportTest(TestCase):
 
         expected = """
             # [Sigrid](https://sigrid-says.com/aap/noot) maintainability feedback
+            
+            ----
+
+            🔒**Enable security insights in your CI pipeline to detect vulnerabilities early.  
+            Start using Sigrid CI for Security today. [Learn more](https://docs.sigrid-says.com/sigridci-integration/using-sigridci.html#security-feedback-beta).**
+
+            ----
 
             **⚠️  Your code did not improve towards your objective of 3.5 stars.**
             
@@ -696,6 +703,13 @@ class MaintainabilityMarkdownReportTest(TestCase):
 
         expected = """
             # [Sigrid](https://sigrid-says.com/aap/noot) maintainability feedback
+            
+            ----
+
+            🔒**Enable security insights in your CI pipeline to detect vulnerabilities early.  
+            Start using Sigrid CI for Security today. [Learn more](https://docs.sigrid-says.com/sigridci-integration/using-sigridci.html#security-feedback-beta).**
+
+            ----
 
             **⚠️  Your code did not improve towards your Unit Size objective of 4.0 stars.**
             
