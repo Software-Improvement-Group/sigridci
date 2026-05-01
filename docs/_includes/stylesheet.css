@@ -536,4 +536,5 @@ sig-toc .h4 {
 .roadmapExport {
     margin-top: 30px;
     margin-bottom: 30px;
+    border: none;
 }
