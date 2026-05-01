@@ -32,7 +32,7 @@ jobs:
           password: ${{ secrets.dockerhub-token }}
 
       - name: Build and push Docker image
-        uses: docker/build-push-action@v6
+        uses: docker/build-push-action@v7
         with:
           file: ${{ inputs.docker-file }}
           platforms: linux/amd64,linux/arm64
