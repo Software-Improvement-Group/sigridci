@@ -393,6 +393,7 @@ class MaintainabilityMarkdownReportTest(TestCase):
 
         self.assertEqual(markdown.strip(), inspect.cleandoc(expected).strip())
 
+    @mock.patch.dict(os.environ, {"SIGRID_CI_MARKDOWN_HTML" : "false"})
     def testKeepMarkdownSimpleIfThereAreNoCodeChanges(self):
         feedback = {
             "baseline": "20220110",
