@@ -24,7 +24,7 @@ The Helm chart is published under the name `sigrid-stack`.
 ### Release 1.0.20260512
 
 **Enhanced:** LDAP group synchronization now removes Sigrid users that are no longer present in LDAP by default.  
-This behavior is controlled by the new `--remove-users` flag, which is now enabled by default alongside `--override-groups`. It can be disabled by removing it from the `args` list in the Helm configuration.  
+This behavior is controlled by the new `--remove-users` flag, which is now enabled by default alongside `--override-groups`. It can be disabled by overriding the `args` list in the Helm configuration values.  
 If you are interested in this feature, please refer to the [feature page](../organization-integration/onpremise-ldap-group-sync.md).
 
 **Actions:** Update the Sigrid Helm chart. No configuration changes are required, but review the default `args` if you want to opt out of automatic user removal.
