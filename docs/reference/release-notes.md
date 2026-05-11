@@ -3,6 +3,10 @@ Sigrid release notes
 
 SIG uses [continuous delivery](https://en.wikipedia.org/wiki/Continuous_delivery), meaning that every change to Sigrid or the underlying analysis is released once our development pipeline has completed. On average, we release somewhere between 10 and 20 times per day. This page therefore doesn't list every single change, since that would quickly lead to an excessively long list of small changes. Instead, this page lists Sigrid and analysis changes that we consider noteworthy for the typical Sigrid user.
 
+### May 12, 2026
+
+- **On-premise:** The LDAP group sync integration now removes Sigrid users that are no longer present in LDAP by default. You can find more information in the [on-premise documentation](../organization-integration/onpremise-ldap-group-sync.md).
+
 ### May 1, 2026
 
 - The SIG model update 2026 is now live! Each year, SIG updates its quality models to reflect evolving industry trends and best practices. These updates are based on insights from the 30,000 systems in the SIG benchmark, helping ensure that our models remain current and relevant. You can read more in the [announcement](../reference/quality-model-documents/2026-model-changes.md).
