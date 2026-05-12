@@ -148,7 +148,7 @@ SIG uses [continuous delivery](https://en.wikipedia.org/wiki/Continuous_delivery
 - **Open Source Health:** Sigrid now supports [additional upload options for Gradle dependencies](../capabilities/osh-upload-instructions.md#gradle-dependency-tree-files).
 - **Open Source Health:** Sigrid now also detects licenses embedded as plain text in [Maven POM files](https://maven.apache.org/guides/introduction/introduction-to-the-pom.html). This allows Sigrid to determine the license for such libraries, even if they did not "offically" register their license with Maven Central.
 - **Open Source Health:** The [configuration options to exclude license risk and activity risk](../reference/analysis-scope-configuration.md#exclude-open-source-health-risks) now support regular expressions.
-- **Report Generator:** A report based on [Sigrid objectives](../capabilities/portfolio-objectives.md) has been added to the [Report Generator](https://github.com/Software-Improvement-Group/sigrid-integrations/tree/main/report-generator). This report contains the overall trend as well as a breakdown into teams.
+- **Report Generator:** A report based on [Sigrid objectives](../capabilities/portfolio-objectives.md) has been added to the [Report Generator](https://github.com/Software-Improvement-Group/sigrid-report-generator). This report contains the overall trend as well as a breakdown into teams.
 
 ### July 28, 2025
 
@@ -160,7 +160,7 @@ SIG uses [continuous delivery](https://en.wikipedia.org/wiki/Continuous_delivery
 
 - **Maintainability:** The [maintainability benchmark view](../capabilities/portfolio-maintainability.md#maintainability-benchmark) is now available in Sigrid. This visualization is used often in SIG consultancy and the Report Generator, but is now also available from Sigrid itself.
 - **Open Source Health:** Sigrid now recognizes open source libraries with "and"/"or" licenses, which are commonly used in the [SPDX license ID](https://spdx.dev/learn/handling-license-info/). The license risk is then based on the most permissive part of the license.
-- **Report Generator:** The Report Generator can now also generate the [system maintainability one-pager](https://github.com/Software-Improvement-Group/sigrid-integrations/tree/main/report-generator#generating-standard-reports). This is a "classic" SIG report that, as the name implies, focuses on the maintainability trend for an single system.
+- **Report Generator:** The Report Generator can now also generate the [system maintainability one-pager](https://github.com/Software-Improvement-Group/sigrid-report-generator#generating-standard-reports). This is a "classic" SIG report that, as the name implies, focuses on the maintainability trend for an single system.
 - **Technology support:** In Kotlin, [single expression functions](https://medium.com/@husayn.fakher/understanding-single-expression-functions-in-kotlin-10-questions-answered-09bacf6789e8) are now considered as units by Sigrid. This will result in feedback that is both more fair and more actionable.
 
 ### June 30, 2025
@@ -193,7 +193,7 @@ SIG uses [continuous delivery](https://en.wikipedia.org/wiki/Continuous_delivery
 
 - **Technology support:** Sigrid now recognizes [inject dependencies in Angular](https://angular.dev/api/core/inject). If you are using these dependencies in your Angular systems, you will start seeing them across Sigrid.
 - **Integrations:** The integration between [Sigrid and Siemens Polarion](https://github.com/Software-Improvement-Group/sigrid-integrations/tree/main/polarion-integration) has been extended. In addition to Open Source Health and SBOM information, the integration now also provides data on security findings and on Sigrid ratings to Polarion.
-- **Report Generator:** You can now [generate modernization reports using the Report Generator](https://github.com/Software-Improvement-Group/sigrid-integrations/tree/main/report-generator). This report acts as input for your modernization plan, and shows information such as the estimated modernization effort. This information helps your organization to determine which modernization initiatives provide the best return-on-investment from a technical perspective.
+- **Report Generator:** You can now [generate modernization reports using the Report Generator](https://github.com/Software-Improvement-Group/sigrid-report-generator). This report acts as input for your modernization plan, and shows information such as the estimated modernization effort. This information helps your organization to determine which modernization initiatives provide the best return-on-investment from a technical perspective.
 - **Sigrid API:** You can now obtain the "raw" maintainability analysis results via the Sigrid API. This feature is intended for power users, that want to perform custom analyses. You can find more information in the [API documentation](../integrations/sigrid-api-documentation.md#maintainability-data).
 
 ### May 19, 2025
