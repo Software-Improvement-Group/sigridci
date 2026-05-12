@@ -5,6 +5,8 @@ The AI ecosystem is rapidly evolving, with new models, tools and frameworks beco
 One of the challenges large enterprises face while adopting AI technologies is the lack of visibility into where AI is used within the Software Landscape.
 Sigrid's AI Governance module helps with identifying the use of AI across the portfolio.
 
+<img src="../images/ai-code-governance-notification-1.png" width="600" />
+
 ## Use Cases
 
 ### Visibility and Adoption
@@ -63,6 +65,8 @@ selected timeframe. This metric provides insights into the extent to which AI Co
 
 Provides a quick summary indicating what kind of AI technologies are used in this system. Examples of AI Technologies that would be reported are the use (or training) of a Machine Learning model, invocations of Large Language Models or use of AI Cloud Infrastructure (such as Google Vertex, Azure AI Foundry, AWS Bedrock).
 From this tile it is possible to navigate to the AI Technologies page that allows for drilling down to the code level to inspect the use of AI in a system.
+
+<img src="../images/ai-code-governance-notification-2.png" width="600" />
 
 The AI Technologies page categorizes AI according to the following classification:
 
