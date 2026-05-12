@@ -11,21 +11,34 @@ You need:
 - A Sigrid account with at least one system that has maintainability results
 - The Sigrid MCP server connected to your AI coding agent (see [installation](../integration-sigrid-mcp.md))
 - A local checkout of the system's repository
-- Your Sigrid customer and system identifiers. Pass them in your prompt or add them to your agent's context file (e.g. `CLAUDE.md`, `.cursor/rules/`)
+- Your Sigrid customer and system identifiers — these are visible in the Sigrid URL: `sigrid-says.com/<customer>/<system>`
+
+Pass them in your prompt or add them to your agent's context file (e.g. `CLAUDE.md`, `.cursor/rules/`).
 
 ## Tools
 
-Two MCP tools drive the workflow:
+Five MCP tools drive the workflow:
 
-**`sigrid_refactoring_candidates`** retrieves a ranked list of refactoring candidates from Sigrid for a given [maintainability property](../../reference/sig-quality-models.md). You can filter by technology and limit the number of results.
+**`refactoring_candidates`** retrieves a ranked list of refactoring candidates from Sigrid for a given [maintainability property](../../reference/sig-quality-models.md). Available properties: `duplication`, `unitSize`, `unitComplexity`, `unitInterfacing`, `moduleCoupling`, `componentIndependence`, `componentEntanglement`. You can filter by technology and limit the number of results.
 
-**`edit_sigrid_finding_status`** updates the status of a finding. Use it to mark findings as planned for fixing, accepted as-is, or resolved, so Sigrid reflects the decisions the agent made.
+**`maintainability_ratings`** returns the current maintainability ratings for a system on a 0.5–5.5 star scale (3.0 = market average, 4.0 = target for new development). Optionally returns per-component or per-technology breakdowns. Use it to identify which areas need attention before fetching specific findings.
+
+**`list_security_findings`** returns open security findings for a system, ranked by severity and exploitability. Findings include CWE identifiers and affected file locations. You can filter by minimum severity (LOW, MEDIUM, HIGH, CRITICAL) and triage status. An optional `model` parameter selects the security model — valid values include `ow10` (OWASP Top-10, default), `sigsec`, `5055sec`, `c25`, `pci4`, `owasvs4c`, `owasvs4s`, `lcnc10`.
+
+**`list_reliability_findings`** returns open reliability findings for a system, ranked by severity and exploitability. Covers issues like error handling, concurrency, resource management, and inter-process communication risks. Same filtering options as security findings. An optional `model` parameter selects the reliability model — valid values: `sigrel` (SIG Code Reliability Top-10, default), `5055rel`.
+
+**`edit_finding_status`** updates the status of a finding. Use it to mark findings as planned for fixing, accepted as-is, or resolved, so Sigrid reflects the decisions the agent made. Valid statuses depend on finding type:
+
+- Maintainability findings: `RAW`, `WILL_FIX`, `ACCEPTED`
+- Security/reliability findings: `RAW`, `REFINED`, `WILL_FIX`, `FIXED`, `ACCEPTED`, `FALSE_POSITIVE`
+
+You can also attach a remark explaining the rationale.
 
 ## Workflow
 
 The basic loop:
 
-1. The agent fetches refactoring candidates for a maintainability property
+1. The agent fetches findings (refactoring candidates, security issues, or reliability risks)
 2. It reads the code, assesses each finding, and decides what to do: fix, refactor, or accept the risk
 3. For findings it can fix, it implements the change
 4. It updates the finding status in Sigrid to reflect what happened
@@ -67,9 +80,33 @@ What to include in your prompt:
 - What you're looking for (worst offenders, clusters of related issues, recurring patterns)
 - How to present the results (ranked list, grouped by module, suggested next steps)
 
-**Example:**
+**Example — maintainability overview:**
+```
+How maintainable is the codebase? Are there any technical debt hotspots?
+```
+
+**Example — refactoring strategy:**
 ```
 Get maintainability findings for [customer]/[system]. What patterns do you see? Suggest a refactoring strategy before making changes.
+```
+
+### Security and reliability triage
+
+The agent fetches security or reliability findings, investigates each one in the code, and either fixes it or triages it with a rationale.
+
+What to include in your prompt:
+- Minimum severity level to focus on
+- Your risk tolerance (e.g. "fix all HIGH and CRITICAL, triage MEDIUM on a case-by-case basis")
+- Whether to fix in place or just triage and report
+
+**Example — security findings:**
+```
+Find high severity security findings in the codebase for [customer]/[system]. Assess each one: is it exploitable given the context? Fix what you can, mark false positives with a justification.
+```
+
+**Example — reliability risks:**
+```
+Get reliability findings for [customer]/[system] with severity HIGH or above. Focus on error handling and concurrency issues. Fix straightforward ones and flag complex ones for manual review.
 ```
 
 ### Triage and execute
@@ -83,7 +120,25 @@ Get the top 100 duplication findings for [customer]/[system]. We accept duplicat
 
 **Example — execute after triage:**
 ```
-Get duplication findings for [customer]/[system] with status will-fix. Fix them and update the status.
+Get duplication findings for [customer]/[system]. Fix the ones I've previously marked as will-fix and update their status.
 ```
 
+Note: the `refactoring_candidates` tool returns all findings regardless of status. The agent filters by status after retrieving results.
+
 These compose: run discovery first, triage the results, then execute on the will-fix items. Or skip to autonomous fixing if you trust the criteria.
+
+## Examples in action
+
+The following screenshots show Claude Code using Modernization Recipes to work through real codebases.
+
+**Security findings triage** — The agent retrieves high-severity security findings (CWE-502, CWE-130, CWE-266) and assesses their real-world impact in context:
+
+<img src="../../images/mcp/recipes/security-findings-triage.png" width="600" />
+
+**Coupling triage with accept decisions** — The agent investigates module coupling findings, determines that high fan-in is by design in a core utility package, and marks all 8 findings as accepted with a rationale:
+
+<img src="../../images/mcp/recipes/coupling-triage-accepted.png" width="600" />
+
+**Maintainability overview and hotspot discovery** — The agent queries overall maintainability ratings and identifies technical debt hotspots (duplication at 1.3 stars) with specific refactoring targets:
+
+<img src="../../images/mcp/recipes/maintainability-overview.png" width="600" />

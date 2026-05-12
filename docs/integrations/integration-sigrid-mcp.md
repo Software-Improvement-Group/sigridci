@@ -216,8 +216,11 @@ Note the **extra** outer brackets required for the configuration to validate suc
 | Tool | Product | Description |
 | --- | --- | --- |
 | `code_quality_guardrails` | [Guardrails MCP](sigrid-mcp/guardrails.md) | Checks code for maintainability issues and security vulnerabilities |
-| `sigrid_refactoring_candidates` | [Modernization Recipes MCP](sigrid-mcp/recipes.md) | Retrieves ranked refactoring candidates for a given maintainability property |
-| `edit_sigrid_finding_status` | [Modernization Recipes MCP](sigrid-mcp/recipes.md) | Updates the status and remarks of a Sigrid finding |
+| `refactoring_candidates` | [Modernization Recipes MCP](sigrid-mcp/recipes.md) | Retrieves ranked refactoring candidates for a given maintainability property |
+| `maintainability_ratings` | [Modernization Recipes MCP](sigrid-mcp/recipes.md) | Returns current maintainability ratings for a system |
+| `list_security_findings` | [Modernization Recipes MCP](sigrid-mcp/recipes.md) | Returns open security findings ranked by severity |
+| `list_reliability_findings` | [Modernization Recipes MCP](sigrid-mcp/recipes.md) | Returns open reliability findings ranked by severity |
+| `edit_finding_status` | [Modernization Recipes MCP](sigrid-mcp/recipes.md) | Updates the status and remarks of a Sigrid finding |
 
 
 ### Troubleshooting
