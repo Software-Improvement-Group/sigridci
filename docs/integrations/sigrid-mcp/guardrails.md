@@ -82,4 +82,4 @@ Pair the MCP with Sigrid CI to also catch architecture issues, vulnerable depend
 
 The following screenshot shows Claude Code implementing a new method, then running the Sigrid quality guardrails automatically. The guardrails flag maintainability issues, and the agent refactors in response — extracting a helper method to reduce complexity and unit length:
 
-<img src="../../images/mcp/guardrails/guardrails-refactoring-loop.png" width="900" alt="Claude Code implementing a method, running Sigrid guardrails that flag maintainability issues, then refactoring by extracting a helper method" />
+<a href="../../images/mcp/guardrails/guardrails-refactoring-loop.png" target="_blank"><img src="../../images/mcp/guardrails/guardrails-refactoring-loop.png" width="800" alt="Claude Code implementing a method, running Sigrid guardrails that flag maintainability issues, then refactoring by extracting a helper method" /></a>
