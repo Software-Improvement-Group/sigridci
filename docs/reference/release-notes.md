@@ -5,7 +5,7 @@ SIG uses [continuous delivery](https://en.wikipedia.org/wiki/Continuous_delivery
 
 ### May 18, 2026
 
-- **AI Code Governance:** See where AI-generated code and AI technologies live, from portfolio level down to each system, directly in Sigrid. You can find more information in the [AI Code Governance documentation](https://docs.sigrid-says.com/capabilities/system-ai-governance.html).
+- **AI Code Governance:** See where AI-generated code and AI technologies live, from portfolio level down to each system, directly in Sigrid. You can find more information in the [AI Code Governance documentation](../capabilities/system-ai-governance.md).
 
 ### May 12, 2026
 
