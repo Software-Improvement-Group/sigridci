@@ -16,9 +16,9 @@ import html
 import os
 
 from .report import Report, MarkdownRenderer
-from ..capability import MAINTAINABILITY
+from ..capability import MAINTAINABILITY, SECURITY
 from ..objective import Objective, ObjectiveStatus
-from ..platform import Platform
+from ..platform import Platform, SECURITY_BETA_DOCS
 
 
 class MaintainabilityMarkdownReport(Report, MarkdownRenderer):
@@ -49,6 +49,13 @@ class MaintainabilityMarkdownReport(Report, MarkdownRenderer):
         sigridLink = self.getSigridUrl(options)
 
         md = f"# [Sigrid]({sigridLink}) maintainability feedback\n\n"
+
+        if not SECURITY in options.capabilities and Platform.isHtmlMarkdownSupported():
+            md += "----\n\n"
+            md += "🔒**Enable security insights in your CI pipeline to detect vulnerabilities early.  \n"
+            md += f"Start using Sigrid CI for Security today. [Learn more]({SECURITY_BETA_DOCS}).**\n\n"
+            md += "----\n\n"
+
         md += f"{self.renderSummary(feedback, options)}\n\n"
 
         if not ObjectiveStatus.UNKNOWN in self.getObjectiveStatuses(feedback):
@@ -86,7 +93,7 @@ class MaintainabilityMarkdownReport(Report, MarkdownRenderer):
         elif status == ObjectiveStatus.IMPROVED:
             return f"↗️  You improved your code towards your {objectiveName} of {targetText}."
         elif status == ObjectiveStatus.UNCHANGED:
-            return f"⏸️️  Your are still below your {objectiveName} of {targetText}."
+            return f"⏸️️  You are still below your {objectiveName} of {targetText}."
         elif status == ObjectiveStatus.WORSENED:
             return f"⚠️  Your code did not improve towards your {objectiveName} of {targetText}."
         else:
@@ -140,7 +147,7 @@ class MaintainabilityMarkdownReport(Report, MarkdownRenderer):
         for rc in refactoringCandidates[0:self.MAX_SHOWN_FINDINGS]:
             symbol = self.RISK_CATEGORY_SYMBOLS[rc["riskCategory"]]
             metricName = self.formatMetricName(rc["metric"])
-            metricInfo = f"**{metricName}**<br />({rc['category'].title()})"
+            metricInfo = f"**{metricName}**{self.tableLineSeparator}({rc['category'].title()})"
             location = self.formatRefactoringCandidateLocation(rc, options)
             md += f"| {symbol} | {metricInfo} | {location} |\n"
 
@@ -150,13 +157,13 @@ class MaintainabilityMarkdownReport(Report, MarkdownRenderer):
         return md + "\n"
 
     def formatRefactoringCandidateLocation(self, rc, options):
-        label = html.escape(rc["subject"]).replace("::", "<br />")
+        label = html.escape(rc["subject"]).replace("::", self.tableLineSeparator)
         if not rc.get("occurrences"):
             return label
         occurrences = rc["occurrences"][0:self.MAX_OCCURRENCES]
-        md = "<br />".join(self.formatRefactoringCandidateOccurrence(options, label, rc, occ) for occ in occurrences)
+        md = self.tableLineSeparator.join(self.formatRefactoringCandidateOccurrence(options, label, rc, occ) for occ in occurrences)
         if len(rc["occurrences"]) > self.MAX_OCCURRENCES:
-            md += f"<br />+ {len(rc['occurrences']) - self.MAX_OCCURRENCES} occurrences"
+            md += f"{self.tableLineSeparator}+ {len(rc['occurrences']) - self.MAX_OCCURRENCES} occurrences"
         return md
 
     def formatRefactoringCandidateOccurrence(self, options, label, rc, occurrence):

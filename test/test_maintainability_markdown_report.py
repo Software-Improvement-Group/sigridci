@@ -67,8 +67,8 @@ class MaintainabilityMarkdownReportTest(TestCase):
             
             | Risk | System property | Location |
             |------|-----------------|----------|
-            | 🟠 | **Unit Size**<br />(Introduced) | aap |
-            | 🟡 | **Unit Size**<br />(Worsened) | noot |
+            | 🟠 | **Unit Size** • (Introduced) | aap |
+            | 🟡 | **Unit Size** • (Worsened) | noot |
             
             
             ## 📚 Remaining technical debt
@@ -97,6 +97,7 @@ class MaintainabilityMarkdownReportTest(TestCase):
 
         self.assertEqual(markdown.strip(), inspect.cleandoc(expected).strip())
 
+    @mock.patch.dict(os.environ, {"SIGRID_CI_MARKDOWN_HTML" : "false"})
     def testCustomOuputDirectory(self):
         tempDir = tempfile.mkdtemp()
         self.options.outputDir = tempDir
@@ -125,6 +126,7 @@ class MaintainabilityMarkdownReportTest(TestCase):
             contents = f.read()
         self.assertEqual(contents.strip(), markdown.strip())
 
+    @mock.patch.dict(os.environ, {"SIGRID_CI_MARKDOWN_HTML" : "false"})
     def testSortRefactoringCandidatesTableBySeverity(self):
         feedback = {
             "refactoringCandidates" : [
@@ -142,13 +144,14 @@ class MaintainabilityMarkdownReportTest(TestCase):
         expected = """
             | Risk | System property | Location |
             |------|-----------------|----------|
-            | 🔴 | **Unit Complexity**<br />(Introduced) | mies |
-            | 🟠 | **Unit Size**<br />(Introduced) | aap |
-            | 🟡 | **Unit Size**<br />(Introduced) | noot |
+            | 🔴 | **Unit Complexity** • (Introduced) | mies |
+            | 🟠 | **Unit Size** • (Introduced) | aap |
+            | 🟡 | **Unit Size** • (Introduced) | noot |
         """
 
         self.assertEqual(table.strip(), inspect.cleandoc(expected).strip())
 
+    @mock.patch.dict(os.environ, {"SIGRID_CI_MARKDOWN_HTML" : "false"})
     def testShowFixedRefactoringCandidatesInWhatWentWellSection(self):
         feedback = {
             "refactoringCandidates" : [
@@ -168,8 +171,8 @@ class MaintainabilityMarkdownReportTest(TestCase):
             
             | Risk | System property | Location |
             |------|-----------------|----------|
-            | 🔴 | **Unit Size**<br />(Fixed) | noot |
-            | 🟠 | **Unit Size**<br />(Improved) | aap |
+            | 🔴 | **Unit Size** • (Fixed) | noot |
+            | 🟠 | **Unit Size** • (Improved) | aap |
             
             
             ## 👎 What could be better?
@@ -185,6 +188,7 @@ class MaintainabilityMarkdownReportTest(TestCase):
 
         self.assertEqual(markdown.strip(), inspect.cleandoc(expected).strip())
 
+    @mock.patch.dict(os.environ, {"SIGRID_CI_MARKDOWN_HTML" : "false"})
     def testLimitRefactoringCandidatesTableWhenThereAreTooMany(self):
         findings = [self.toRefactoringCandidate(f"aap-{i}", "introduced", "UNIT_SIZE", "HIGH") for i in range(1, 100)]
 
@@ -195,19 +199,20 @@ class MaintainabilityMarkdownReportTest(TestCase):
         expected = """
             | Risk | System property | Location |
             |------|-----------------|----------|
-            | 🟠 | **Unit Size**<br />(Introduced) | aap-1 |
-            | 🟠 | **Unit Size**<br />(Introduced) | aap-2 |
-            | 🟠 | **Unit Size**<br />(Introduced) | aap-3 |
-            | 🟠 | **Unit Size**<br />(Introduced) | aap-4 |
-            | 🟠 | **Unit Size**<br />(Introduced) | aap-5 |
-            | 🟠 | **Unit Size**<br />(Introduced) | aap-6 |
-            | 🟠 | **Unit Size**<br />(Introduced) | aap-7 |
-            | 🟠 | **Unit Size**<br />(Introduced) | aap-8 |
+            | 🟠 | **Unit Size** • (Introduced) | aap-1 |
+            | 🟠 | **Unit Size** • (Introduced) | aap-2 |
+            | 🟠 | **Unit Size** • (Introduced) | aap-3 |
+            | 🟠 | **Unit Size** • (Introduced) | aap-4 |
+            | 🟠 | **Unit Size** • (Introduced) | aap-5 |
+            | 🟠 | **Unit Size** • (Introduced) | aap-6 |
+            | 🟠 | **Unit Size** • (Introduced) | aap-7 |
+            | 🟠 | **Unit Size** • (Introduced) | aap-8 |
             | ⚫️ | | + 91 more |
         """
 
         self.assertEqual(table.strip(), inspect.cleandoc(expected).strip())
 
+    @mock.patch.dict(os.environ, {"SIGRID_CI_MARKDOWN_HTML" : "false"})
     def testLimitDuplicatesWithTooManyOccurrences(self):
         rc = self.toRefactoringCandidate(f"aap", "introduced", "DUPLICATION", "VERY_HIGH")
         rc["occurrences"] = [self.toOccurrence(f"aap-{i}", i, i) for i in range(1, 10)]
@@ -219,7 +224,7 @@ class MaintainabilityMarkdownReportTest(TestCase):
         expected = """
             | Risk | System property | Location |
             |------|-----------------|----------|
-            | 🔴 | **Duplication**<br />(Introduced) | aap-1 line 1-1<br />aap-2 line 2-2<br />aap-3 line 3-3<br />+ 6 occurrences |
+            | 🔴 | **Duplication** • (Introduced) | aap-1 line 1-1 • aap-2 line 2-2 • aap-3 line 3-3 • + 6 occurrences |
         """
 
         self.assertEqual(table.strip(), inspect.cleandoc(expected).strip())
@@ -317,7 +322,7 @@ class MaintainabilityMarkdownReportTest(TestCase):
         report = MaintainabilityMarkdownReport()
         report.decorateLinks = False
         summary = report.renderSummary(feedback, self.options)
-        expected = "**⏸️️  Your are still below your objective of 3.5 stars.**"
+        expected = "**⏸️️  You are still below your objective of 3.5 stars.**"
 
         self.assertEqual(summary, expected)
 
@@ -355,7 +360,7 @@ class MaintainabilityMarkdownReportTest(TestCase):
             
             | Risk | System property | Location |
             |------|-----------------|----------|
-            | 🟠 | **Unit Size**<br />(Improved) | aap |
+            | 🟠 | **Unit Size** • (Improved) | aap |
             
             
             ## 👎 What could be better?
@@ -388,6 +393,7 @@ class MaintainabilityMarkdownReportTest(TestCase):
 
         self.assertEqual(markdown.strip(), inspect.cleandoc(expected).strip())
 
+    @mock.patch.dict(os.environ, {"SIGRID_CI_MARKDOWN_HTML" : "false"})
     def testKeepMarkdownSimpleIfThereAreNoCodeChanges(self):
         feedback = {
             "baseline": "20220110",
@@ -532,6 +538,13 @@ class MaintainabilityMarkdownReportTest(TestCase):
 
         expected = """
             # [Sigrid](https://sigrid-says.com/aap/noot) maintainability feedback
+            
+            ----
+
+            🔒**Enable security insights in your CI pipeline to detect vulnerabilities early.  
+            Start using Sigrid CI for Security today. [Learn more](https://docs.sigrid-says.com/sigridci-integration/using-sigridci.html#security-feedback-beta).**
+
+            ----
 
             **⚠️  Your code did not improve towards your objective of 3.5 stars.**
             
@@ -612,7 +625,8 @@ class MaintainabilityMarkdownReportTest(TestCase):
     @mock.patch.dict(os.environ, {
         "CI_SERVER_URL" : "https://example.com",
         "CI_PROJECT_PATH" : "aap/noot",
-        "CI_COMMIT_REF_NAME" : "mybranch"
+        "CI_COMMIT_REF_NAME" : "mybranch",
+        "SIGRID_CI_MARKDOWN_HTML" : "false"
     })
     def testMakeLinksForDuplicationOccurrences(self):
         rc = self.toRefactoringCandidate(f"aap", "introduced", "DUPLICATION", "VERY_HIGH")
@@ -624,7 +638,7 @@ class MaintainabilityMarkdownReportTest(TestCase):
         expected = """
             | Risk | System property | Location |
             |------|-----------------|----------|
-            | 🔴 | **Duplication**<br />(Introduced) | [aap-1 line 1-1](https://example.com/aap/noot/-/blob/mybranch/aap-1#L1)<br />[aap-2 line 2-2](https://example.com/aap/noot/-/blob/mybranch/aap-2#L2) |
+            | 🔴 | **Duplication** • (Introduced) | [aap-1 line 1-1](https://example.com/aap/noot/-/blob/mybranch/aap-1#L1) • [aap-2 line 2-2](https://example.com/aap/noot/-/blob/mybranch/aap-2#L2) |
         """
 
         self.assertEqual(table.strip(), inspect.cleandoc(expected).strip())
@@ -632,7 +646,8 @@ class MaintainabilityMarkdownReportTest(TestCase):
     @mock.patch.dict(os.environ, {
         "CI_SERVER_URL" : "https://example.com",
         "CI_PROJECT_PATH" : "aap/noot",
-        "CI_COMMIT_REF_NAME" : "mybranch"
+        "CI_COMMIT_REF_NAME" : "mybranch",
+        "SIGRID_CI_MARKDOWN_HTML" : "false"
     })
     def testMakeLinksForUnitMetrics(self):
         rc = self.toRefactoringCandidate(f"aap.py::noot", "introduced", "UNIT_SIZE", "VERY_HIGH")
@@ -644,7 +659,7 @@ class MaintainabilityMarkdownReportTest(TestCase):
         expected = """
             | Risk | System property | Location |
             |------|-----------------|----------|
-            | 🔴 | **Unit Size**<br />(Introduced) | [aap.py<br />noot](https://example.com/aap/noot/-/blob/mybranch/aap.py#L0) |
+            | 🔴 | **Unit Size** • (Introduced) | [aap.py • noot](https://example.com/aap/noot/-/blob/mybranch/aap.py#L0) |
         """
 
         self.assertEqual(table.strip(), inspect.cleandoc(expected).strip())
@@ -652,7 +667,8 @@ class MaintainabilityMarkdownReportTest(TestCase):
     @mock.patch.dict(os.environ, {
         "CI_SERVER_URL" : "https://example.com",
         "CI_PROJECT_PATH" : "aap/noot",
-        "CI_COMMIT_REF_NAME" : "mybranch"
+        "CI_COMMIT_REF_NAME" : "mybranch",
+        "SIGRID_CI_MARKDOWN_HTML" : "false"
     })
     def testNormalizeLinksForSubsystems(self):
         rc = self.toRefactoringCandidate(f"boom/aap.py::noot", "introduced", "UNIT_SIZE", "VERY_HIGH")
@@ -666,7 +682,7 @@ class MaintainabilityMarkdownReportTest(TestCase):
         expected = """
             | Risk | System property | Location |
             |------|-----------------|----------|
-            | 🔴 | **Unit Size**<br />(Introduced) | [boom/aap.py<br />noot](https://example.com/aap/noot/-/blob/mybranch/aap.py#L0) |
+            | 🔴 | **Unit Size** • (Introduced) | [boom/aap.py • noot](https://example.com/aap/noot/-/blob/mybranch/aap.py#L0) |
         """
 
         self.assertEqual(table.strip(), inspect.cleandoc(expected).strip())
@@ -688,6 +704,13 @@ class MaintainabilityMarkdownReportTest(TestCase):
 
         expected = """
             # [Sigrid](https://sigrid-says.com/aap/noot) maintainability feedback
+            
+            ----
+
+            🔒**Enable security insights in your CI pipeline to detect vulnerabilities early.  
+            Start using Sigrid CI for Security today. [Learn more](https://docs.sigrid-says.com/sigridci-integration/using-sigridci.html#security-feedback-beta).**
+
+            ----
 
             **⚠️  Your code did not improve towards your Unit Size objective of 4.0 stars.**
             

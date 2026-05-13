@@ -53,6 +53,28 @@ class RepositoryHistoryExporterTest(TestCase):
 
         self.assertEqual(historyEntries[0], f"'@@@;{id};{name};{email};{committerName};{committerEmail};{date};{message}'")
 
+    def testIncludeMergeCommitsInExport(self):
+        tempDir = tempfile.mkdtemp()
+        output = subprocess.run(["git", "clone", "https://github.com/BetterCodeHubTraining/cspacman.git", tempDir])
+        output.check_returncode()
+
+        historyExporter = RepositoryHistoryExporter()
+        historyExporter.CUTOFF_DATE = datetime.strptime("2023-07-01", "%Y-%m-%d")
+        historyExporter.exportHistory(tempDir)
+
+        with open(f"{tempDir}/git.log", "r", encoding="utf-8") as f:
+            lines = f.read().strip().split("\n")
+            commitMessages = [line.split(";")[-1].rstrip("'") for line in lines if line.startswith(("@@@", "'@@@"))]
+
+        expected = [
+            "Create sigrid-publish.yml",
+            "Delete github/workflows directory",
+            "Create sigrid-publish.yml",
+            "Merge pull request #1 from MichielCuijpers/MichielCuijpers-patch-1"
+        ]
+
+        self.assertEqual(commitMessages, expected)
+
     def testTolerantParsingOfCommitMessage(self):
         log = "@@@;1234;John Smith;j.smith@sig.eu;GitHub;noreply@github.com;2023-11-29 10:48:32 +0100;a;b;c"
         historyExporter = RepositoryHistoryExporter()

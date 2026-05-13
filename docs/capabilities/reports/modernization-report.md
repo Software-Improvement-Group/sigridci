@@ -19,7 +19,7 @@ balancing functional progress with modernization initiatives.
 
 ## The Sigrid modernization report
 
-The [Sigrid Report Generator](https://github.com/Software-Improvement-Group/sigrid-integrations/tree/main/report-generator)
+The [Sigrid Report Generator](https://github.com/Software-Improvement-Group/sigrid-report-generator)
 allows you to generate a management report that contains information that can be used to discuss and prioritize
 modernization initiatives. 
 

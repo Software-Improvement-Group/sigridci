@@ -61,6 +61,7 @@ class Report(ABC):
 class MarkdownRenderer(ABC):
     def __init__(self):
         self.decorateLinks = True
+        self.tableLineSeparator = "<br />" if Platform.isHtmlMarkdownSupported() else " • "
 
     @abstractmethod
     def renderMarkdown(self, analysisId, feedback, options):

@@ -5,7 +5,7 @@ time period. The contents of this report are similar to what you can find in Sig
 be used in a reporting scenario where the recipients of the report don't use Sigrid.
 
 You can create this report using the
-[Sigrid Report Generator](https://github.com/Software-Improvement-Group/sigrid-integrations/tree/main/report-generator).
+[Sigrid Report Generator](https://github.com/Software-Improvement-Group/sigrid-report-generator).
 
 ## Report contents
 

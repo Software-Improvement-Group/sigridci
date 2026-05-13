@@ -109,7 +109,7 @@ class OpenSourceHealthMarkdownReport(Report, MarkdownRenderer):
             vulnCheck = self.getVulnerabilityRiskSymbol(library)
             licenseCheck = self.getLicenseRiskSymbol(library)
             suffix = self.formatInfoLine(library)
-            locations = "<br />".join(self.decorateLink(options, file, file) for file in library.files)
+            locations = self.tableLineSeparator.join(self.decorateLink(options, file, file) for file in library.files)
             md += f"| {vulnCheck} | {licenseCheck} | {library.name} {library.version}{suffix} | {library.latestVersion} | {locations} |\n"
 
         if len(libraries) > self.MAX_FINDINGS:
@@ -135,7 +135,7 @@ class OpenSourceHealthMarkdownReport(Report, MarkdownRenderer):
             info += ", ".join(formatVulnLink(vuln) for vuln in library.vulnerabilities) + "."
         if not library.licenseRisk.meetsObjective:
             info += f"License: {', '.join(library.licenses)}."
-        return f"<br />*{info}*" if info else ""
+        return f"{self.tableLineSeparator}*{info}*" if info else ""
 
     def findUpdatedLibraries(self, previous, current):
         getKey = lambda library: f"{library.name}@{library.version}"

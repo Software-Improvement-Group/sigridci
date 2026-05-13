@@ -23,15 +23,10 @@ Model changes consist of three categories:
 
 This page contains an overview of key changes in the 2026 SIG quality models, which are used across Sigrid.
 
-**The 2026 models have not yet been released.** The purpose of this page is to inform you of upcoming changes.
-This page only covers key changes since the 2025 model. If you want to know more about the SIG quality models,
-you can find a full overview of each model in the [quality model documentation](../sig-quality-models.md).
-{: .attention }
-
 ## How to update to the 2026 model
 
-The 2026 model will be released on May 1, 2026. If you are using the default configuration, your portfolio will
-automatically migrate to the 2026 model on this date.
+The 2026 model was released on May 1, 2026. If you are using the default configuration, your portfolio was
+automatically migrated to the 2026 model on this date.
 
 It is possible to explicitly manage the version of the model you are using, via the scope configuration file.
 If you are using this option, your systems will **not** automatically migrate to the 2026 model. In this situation,
