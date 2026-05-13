@@ -5,6 +5,8 @@ Sigrid MCP integrations let AI coding tools use Sigrid's analysis while you work
 - **[Sigrid Guardrails MCP](sigrid-mcp/guardrails.md)**: Leverage Sigrid's code analysis to safeguard AI Coding Assistants from introducing security and other quality issues
 - **[Sigrid Modernization Recipes MCP](sigrid-mcp/recipes.md)**: Use data from Sigrid to let AI Coding Agents perform large-scale modernization tasks
 
+Start with Guardrails for automatic quality checks on new code. Add Recipes when you're ready to tackle existing technical debt.
+
 ## Installation
 
 ### Claude Code plugin (recommended)

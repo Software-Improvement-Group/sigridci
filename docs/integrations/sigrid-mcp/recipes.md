@@ -15,41 +15,9 @@ You need:
 
 Pass them in your prompt or add them to your agent's context file (e.g. `CLAUDE.md`, `.cursor/rules/`).
 
-## Tools
+## Workflows
 
-Five MCP tools drive the workflow:
-
-**`refactoring_candidates`** retrieves a ranked list of refactoring candidates from Sigrid for a given [maintainability property](../../reference/sig-quality-models.md). Available properties: `duplication`, `unitSize`, `unitComplexity`, `unitInterfacing`, `moduleCoupling`, `componentIndependence`, `componentEntanglement`. You can filter by technology and limit the number of results.
-
-**`maintainability_ratings`** returns the current maintainability ratings for a system on a 0.5–5.5 star scale (3.0 = market average, 4.0 = target for new development). Optionally returns per-component or per-technology breakdowns. Use it to identify which areas need attention before fetching specific findings.
-
-**`list_security_findings`** returns open security findings for a system, ranked by severity and exploitability. Findings include CWE identifiers and affected file locations. You can filter by minimum severity (LOW, MEDIUM, HIGH, CRITICAL) and triage status. An optional `model` parameter selects the security model — valid values include `ow10` (OWASP Top-10, default), `sigsec`, `5055sec`, `c25`, `pci4`, `owasvs4c`, `owasvs4s`, `lcnc10`.
-
-**`list_reliability_findings`** returns open reliability findings for a system, ranked by severity and exploitability. Covers issues like error handling, concurrency, resource management, and inter-process communication risks. Same filtering options as security findings. An optional `model` parameter selects the reliability model — valid values: `sigrel` (SIG Code Reliability Top-10, default), `5055rel`.
-
-**`edit_finding_status`** updates the status of a finding. Use it to mark findings as planned for fixing, accepted as-is, or resolved, so Sigrid reflects the decisions the agent made. Valid statuses depend on finding type:
-
-- Maintainability findings: `RAW`, `WILL_FIX`, `ACCEPTED`
-- Security/reliability findings: `RAW`, `REFINED`, `WILL_FIX`, `FIXED`, `ACCEPTED`, `FALSE_POSITIVE`
-
-You can also attach a remark explaining the rationale.
-
-## Workflow
-
-The basic loop:
-
-1. The agent fetches findings (refactoring candidates, security issues, or reliability risks)
-2. It reads the code, assesses each finding, and decides what to do: fix, refactor, or accept the risk
-3. For findings it can fix, it implements the change
-4. It updates the finding status in Sigrid to reflect what happened
-
-The agent doesn't have to fix everything blindly. It can prioritize by impact, spot patterns across findings, group related issues into one refactoring, or accept findings where the current code is justified. Think of it as working through a backlog: some items get fixed, some get triaged.
-
-> **Beta:** Modernization Recipes is in early access. The current tools cover the core refactoring workflow. We're actively adding more.
-
-## Getting started
-
-A few workflows to try. Adapt the prompts to your codebase, combine them, or do something different entirely.
+A few patterns for using Recipes with your AI agent. Adapt the prompts to your codebase, combine them, or do something different entirely.
 
 ### Autonomous fixing
 
@@ -71,6 +39,8 @@ Get unit size findings for [customer]/[system] in Java. Refactor the longest met
 Get module coupling findings for [customer]/[system]. For each module, check whether it follows single responsibility. If it doesn't, split it into focused files. If it already has a clear single purpose and is small, mark as accepted. Update finding statuses to reflect your decisions.
 ```
 
+<img src="../../images/mcp/recipes/coupling-triage-accepted.png" width="600" />
+
 ### Discovery and prioritization
 
 The agent fetches findings, reads the surrounding code, and reports back without changing anything. Useful when you want an overview or a shortlist for ticket creation.
@@ -89,6 +59,8 @@ How maintainable is the codebase? Are there any technical debt hotspots?
 ```
 Get maintainability findings for [customer]/[system]. What patterns do you see? Suggest a refactoring strategy before making changes.
 ```
+
+<img src="../../images/mcp/recipes/maintainability-overview.png" width="600" />
 
 ### Security and reliability triage
 
@@ -109,6 +81,8 @@ Find high severity security findings in the codebase for [customer]/[system]. As
 Get reliability findings for [customer]/[system] with severity HIGH or above. Focus on error handling and concurrency issues. Fix straightforward ones and flag complex ones for manual review.
 ```
 
+<img src="../../images/mcp/recipes/security-findings-triage.png" width="600" />
+
 ### Triage and execute
 
 Split the work into two steps: triage findings first (mark as will-fix or accepted), then pick up the will-fix items and fix them. Both steps can happen in one session, or you triage now and execute later.
@@ -127,18 +101,23 @@ Note: the `refactoring_candidates` tool returns all findings regardless of statu
 
 These compose: run discovery first, triage the results, then execute on the will-fix items. Or skip to autonomous fixing if you trust the criteria.
 
-## Examples in action
+> **Beta:** Modernization Recipes is in early access. The current tools cover the core refactoring workflow. We're actively adding more.
 
-The following screenshots show Claude Code using Modernization Recipes to work through real codebases.
+## Tools reference
 
-**Security findings triage** — The agent retrieves high-severity security findings (CWE-502, CWE-130, CWE-266) and assesses their real-world impact in context:
+Five MCP tools drive the workflows above.
 
-<img src="../../images/mcp/recipes/security-findings-triage.png" width="600" />
+**`refactoring_candidates`** retrieves a ranked list of refactoring candidates from Sigrid for a given [maintainability property](../../reference/sig-quality-models.md). Available properties: `duplication`, `unitSize`, `unitComplexity`, `unitInterfacing`, `moduleCoupling`, `componentIndependence`, `componentEntanglement`. You can filter by technology and limit the number of results.
 
-**Coupling triage with accept decisions** — The agent investigates module coupling findings, determines that high fan-in is by design in a core utility package, and marks all 8 findings as accepted with a rationale:
+**`maintainability_ratings`** returns the current maintainability ratings for a system on a 0.5–5.5 star scale (3.0 = market average, 4.0 = target for new development). Optionally returns per-component or per-technology breakdowns.
 
-<img src="../../images/mcp/recipes/coupling-triage-accepted.png" width="600" />
+**`list_security_findings`** returns open security findings for a system, ranked by severity and exploitability. Findings include CWE identifiers and affected file locations. You can filter by minimum severity (LOW, MEDIUM, HIGH, CRITICAL) and triage status. An optional `model` parameter selects the security model — valid values include `ow10` (OWASP Top-10, default), `sigsec`, `5055sec`, `c25`, `pci4`, `owasvs4c`, `owasvs4s`, `lcnc10`.
 
-**Maintainability overview and hotspot discovery** — The agent queries overall maintainability ratings and identifies technical debt hotspots (duplication at 1.3 stars) with specific refactoring targets:
+**`list_reliability_findings`** returns open reliability findings for a system, ranked by severity and exploitability. Covers issues like error handling, concurrency, resource management, and inter-process communication risks. Same filtering options as security findings. An optional `model` parameter selects the reliability model — valid values: `sigrel` (SIG Code Reliability Top-10, default), `5055rel`.
 
-<img src="../../images/mcp/recipes/maintainability-overview.png" width="600" />
+**`edit_finding_status`** updates the status of a finding. Use it to mark findings as planned for fixing, accepted as-is, or resolved, so Sigrid reflects the decisions the agent made. Valid statuses depend on finding type:
+
+- Maintainability findings: `RAW`, `WILL_FIX`, `ACCEPTED`
+- Security/reliability findings: `RAW`, `REFINED`, `WILL_FIX`, `FIXED`, `ACCEPTED`, `FALSE_POSITIVE`
+
+You can also attach a remark explaining the rationale.
