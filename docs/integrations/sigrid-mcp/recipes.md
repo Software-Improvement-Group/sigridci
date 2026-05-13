@@ -4,6 +4,8 @@ Modernization Recipes gives AI agents a prioritized list of refactoring targets 
 
 For installation instructions, see the [MCP overview page](../integration-sigrid-mcp.md).
 
+> **Beta:** Modernization Recipes is in early access. The current tools cover core refactoring workflows. We're actively adding more.
+
 ## Before you start
 
 You need:
@@ -25,7 +27,7 @@ Give the agent a target property and your decision criteria, and let it work thr
 
 What to include in your prompt:
 - Which maintainability property and technology to target
-- Your coding principles and framework conventions (e.g. "methods should have a single responsibility", "we use the repository pattern for data access")
+- Your coding principles and framework conventions (e.g. "we use the repository pattern for data access"). It is best practice to include these in your agent's context file.
 - When to fix vs. when to accept (e.g. "if the module is small and follows single responsibility, mark as accepted")
 - That it should update finding statuses as it goes
 
@@ -68,7 +70,7 @@ The agent fetches security or reliability findings, investigates each one in the
 
 What to include in your prompt:
 - Minimum severity level to focus on
-- Your risk tolerance (e.g. "fix all HIGH and CRITICAL, triage MEDIUM on a case-by-case basis")
+- Your risk tolerance 
 - Whether to fix in place or just triage and report
 
 **Example — security findings:**
@@ -96,28 +98,23 @@ Get the top 100 duplication findings for [customer]/[system]. We accept duplicat
 ```
 Get duplication findings for [customer]/[system]. Fix the ones I've previously marked as will-fix and update their status.
 ```
-
-Note: the `refactoring_candidates` tool returns all findings regardless of status. The agent filters by status after retrieving results.
-
 These compose: run discovery first, triage the results, then execute on the will-fix items. Or skip to autonomous fixing if you trust the criteria.
-
-> **Beta:** Modernization Recipes is in early access. The current tools cover the core refactoring workflow. We're actively adding more.
 
 ## Tools reference
 
 Five MCP tools drive the workflows above.
 
-**`refactoring_candidates`** retrieves a ranked list of refactoring candidates from Sigrid for a given [maintainability property](../../reference/sig-quality-models.md). Available properties: `duplication`, `unitSize`, `unitComplexity`, `unitInterfacing`, `moduleCoupling`, `componentIndependence`, `componentEntanglement`. You can filter by technology and limit the number of results.
+| Tool | Description | Key parameters                                                                                                                                   |
+| --- | --- |--------------------------------------------------------------------------------------------------------------------------------------------------|
+| `refactoring_candidates` | Ranked refactoring candidates for a [maintainability property](../../reference/sig-quality-models.md) | `property`, optional: `technology`, `limit`                                                                                                      |
+| `maintainability_ratings` | Current maintainability ratings on a 0.5–5.5 star scale (3.0 = market average, 4.0 = target for new development) | Optional: `component`, `technology` breakdowns                                                                                                   |
+| `list_security_findings` | Open security findings ranked by severity and exploitability, with CWE identifiers and file locations | `severity`: `LOW`, `MEDIUM`, `HIGH`, `CRITICAL`. `model`: `ow10` (default), `sigsec`, `5055sec`, `c25`, `pci4`, `owasvs4c`, `owasvs4s`, `lcnc10` |
+| `list_reliability_findings` | Open reliability findings (error handling, concurrency, resource management, IPC) ranked by severity | Same filters as security. `model`: `sigrel` (default), `5055rel`                                                                                 |
+| `edit_finding_status` | Updates the status of a finding so Sigrid reflects the agent's decisions | `status` — see below. Optional: `remark`                                                                                                         |
 
-**`maintainability_ratings`** returns the current maintainability ratings for a system on a 0.5–5.5 star scale (3.0 = market average, 4.0 = target for new development). Optionally returns per-component or per-technology breakdowns.
+**Valid statuses for `edit_finding_status`:**
 
-**`list_security_findings`** returns open security findings for a system, ranked by severity and exploitability. Findings include CWE identifiers and affected file locations. You can filter by minimum severity (LOW, MEDIUM, HIGH, CRITICAL) and triage status. An optional `model` parameter selects the security model — valid values include `ow10` (OWASP Top-10, default), `sigsec`, `5055sec`, `c25`, `pci4`, `owasvs4c`, `owasvs4s`, `lcnc10`.
-
-**`list_reliability_findings`** returns open reliability findings for a system, ranked by severity and exploitability. Covers issues like error handling, concurrency, resource management, and inter-process communication risks. Same filtering options as security findings. An optional `model` parameter selects the reliability model — valid values: `sigrel` (SIG Code Reliability Top-10, default), `5055rel`.
-
-**`edit_finding_status`** updates the status of a finding. Use it to mark findings as planned for fixing, accepted as-is, or resolved, so Sigrid reflects the decisions the agent made. Valid statuses depend on finding type:
-
-- Maintainability findings: `RAW`, `WILL_FIX`, `ACCEPTED`
-- Security/reliability findings: `RAW`, `REFINED`, `WILL_FIX`, `FIXED`, `ACCEPTED`, `FALSE_POSITIVE`
-
-You can also attach a remark explaining the rationale.
+| Finding type | Valid statuses |
+| --- | --- |
+| Maintainability | `RAW`, `WILL_FIX`, `ACCEPTED` |
+| Security / Reliability | `RAW`, `REFINED`, `WILL_FIX`, `FIXED`, `ACCEPTED`, `FALSE_POSITIVE` |
