@@ -41,7 +41,7 @@ Get unit size findings for [customer]/[system] in Java. Refactor the longest met
 Get module coupling findings for [customer]/[system]. For each module, check whether it follows single responsibility. If it doesn't, split it into focused files. If it already has a clear single purpose and is small, mark as accepted. Update finding statuses to reflect your decisions.
 ```
 
-<img src="../../images/mcp/recipes/coupling-triage-accepted.png" width="600" alt="Claude Code investigating module coupling findings, determining high fan-in is by design, and marking all 8 findings as accepted in Sigrid" />
+<a href="../../images/mcp/recipes/coupling-triage-accepted.png" target="_blank"><img src="../../images/mcp/recipes/coupling-triage-accepted.png" width="600" alt="Claude Code investigating module coupling findings, determining high fan-in is by design, and marking all 8 findings as accepted in Sigrid" /></a>
 
 ### Discovery and prioritization
 
@@ -62,7 +62,7 @@ How maintainable is the codebase? Are there any technical debt hotspots?
 Get maintainability findings for [customer]/[system]. What patterns do you see? Suggest a refactoring strategy before making changes.
 ```
 
-<img src="../../images/mcp/recipes/maintainability-overview.png" width="600" alt="Claude Code querying maintainability ratings, showing a 3.3 star overview with duplication at 1.3 stars identified as the key technical debt hotspot" />
+<a href="../../images/mcp/recipes/maintainability-overview.png" target="_blank"><img src="../../images/mcp/recipes/maintainability-overview.png" width="600" alt="Claude Code querying maintainability ratings, showing a 3.3 star overview with duplication at 1.3 stars identified as the key technical debt hotspot" /></a>
 
 ### Security and reliability triage
 
@@ -83,7 +83,7 @@ Find high severity security findings in the codebase for [customer]/[system]. As
 Get reliability findings for [customer]/[system] with severity HIGH or above. Focus on error handling and concurrency issues. Fix straightforward ones and flag complex ones for manual review.
 ```
 
-<img src="../../images/mcp/recipes/security-findings-triage.png" width="600" alt="Claude Code retrieving high-severity security findings and assessing their real-world exploitability in context" />
+<a href="../../images/mcp/recipes/security-findings-triage.png" target="_blank"><img src="../../images/mcp/recipes/security-findings-triage.png" width="600" alt="Claude Code retrieving high-severity security findings and assessing their real-world exploitability in context" /></a>
 
 ### Triage and execute
 
