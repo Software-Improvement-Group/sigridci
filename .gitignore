@@ -10,3 +10,4 @@ docs/_site/
 docs/.jekyll-cache/
 .venv
 .DS_Store
+/.claude/settings.local.json

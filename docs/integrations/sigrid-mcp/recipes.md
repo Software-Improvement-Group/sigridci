@@ -4,6 +4,8 @@ Modernization Recipes gives AI agents a prioritized list of refactoring targets 
 
 For installation instructions, see the [MCP overview page](../integration-sigrid-mcp.md).
 
+> **Beta:** Modernization Recipes is in early access. The current tools cover core refactoring workflows. We're actively adding more.
+
 ## Before you start
 
 You need:
@@ -11,32 +13,13 @@ You need:
 - A Sigrid account with at least one system that has maintainability results
 - The Sigrid MCP server connected to your AI coding agent (see [installation](../integration-sigrid-mcp.md))
 - A local checkout of the system's repository
-- Your Sigrid customer and system identifiers. Pass them in your prompt or add them to your agent's context file (e.g. `CLAUDE.md`, `.cursor/rules/`)
+- Your Sigrid customer and system identifiers — these are visible in the Sigrid URL: `sigrid-says.com/<customer>/<system>`
 
-## Tools
+Pass them in your prompt or add them to your agent's context file (e.g. `CLAUDE.md`, `.cursor/rules/`).
 
-Two MCP tools drive the workflow:
+## Workflows
 
-**`sigrid_refactoring_candidates`** retrieves a ranked list of refactoring candidates from Sigrid for a given [maintainability property](../../reference/sig-quality-models.md). You can filter by technology and limit the number of results.
-
-**`edit_sigrid_finding_status`** updates the status of a finding. Use it to mark findings as planned for fixing, accepted as-is, or resolved, so Sigrid reflects the decisions the agent made.
-
-## Workflow
-
-The basic loop:
-
-1. The agent fetches refactoring candidates for a maintainability property
-2. It reads the code, assesses each finding, and decides what to do: fix, refactor, or accept the risk
-3. For findings it can fix, it implements the change
-4. It updates the finding status in Sigrid to reflect what happened
-
-The agent doesn't have to fix everything blindly. It can prioritize by impact, spot patterns across findings, group related issues into one refactoring, or accept findings where the current code is justified. Think of it as working through a backlog: some items get fixed, some get triaged.
-
-> **Beta:** Modernization Recipes is in early access. The current tools cover the core refactoring workflow. We're actively adding more.
-
-## Getting started
-
-A few workflows to try. Adapt the prompts to your codebase, combine them, or do something different entirely.
+A few patterns for using Recipes with your AI agent. Adapt the prompts to your codebase, combine them, or do something different entirely.
 
 ### Autonomous fixing
 
@@ -44,7 +27,7 @@ Give the agent a target property and your decision criteria, and let it work thr
 
 What to include in your prompt:
 - Which maintainability property and technology to target
-- Your coding principles and framework conventions (e.g. "methods should have a single responsibility", "we use the repository pattern for data access")
+- Your coding principles and framework conventions (e.g. "we use the repository pattern for data access"). It is best practice to include these in your agent's context file.
 - When to fix vs. when to accept (e.g. "if the module is small and follows single responsibility, mark as accepted")
 - That it should update finding statuses as it goes
 
@@ -58,6 +41,8 @@ Get unit size findings for [customer]/[system] in Java. Refactor the longest met
 Get module coupling findings for [customer]/[system]. For each module, check whether it follows single responsibility. If it doesn't, split it into focused files. If it already has a clear single purpose and is small, mark as accepted. Update finding statuses to reflect your decisions.
 ```
 
+<img src="../../images/mcp/recipes/coupling-triage-accepted.png" width="600" alt="Claude Code investigating module coupling findings, determining high fan-in is by design, and marking all 8 findings as accepted in Sigrid" />
+
 ### Discovery and prioritization
 
 The agent fetches findings, reads the surrounding code, and reports back without changing anything. Useful when you want an overview or a shortlist for ticket creation.
@@ -67,10 +52,38 @@ What to include in your prompt:
 - What you're looking for (worst offenders, clusters of related issues, recurring patterns)
 - How to present the results (ranked list, grouped by module, suggested next steps)
 
-**Example:**
+**Example — maintainability overview:**
+```
+How maintainable is the codebase? Are there any technical debt hotspots?
+```
+
+**Example — refactoring strategy:**
 ```
 Get maintainability findings for [customer]/[system]. What patterns do you see? Suggest a refactoring strategy before making changes.
 ```
+
+<img src="../../images/mcp/recipes/maintainability-overview.png" width="600" alt="Claude Code querying maintainability ratings, showing a 3.3 star overview with duplication at 1.3 stars identified as the key technical debt hotspot" />
+
+### Security and reliability triage
+
+The agent fetches security or reliability findings, investigates each one in the code, and either fixes it or triages it with a rationale.
+
+What to include in your prompt:
+- Minimum severity level to focus on
+- Your risk tolerance 
+- Whether to fix in place or just triage and report
+
+**Example — security findings:**
+```
+Find high severity security findings in the codebase for [customer]/[system]. Assess each one: is it exploitable given the context? Fix what you can, mark false positives with a justification.
+```
+
+**Example — reliability risks:**
+```
+Get reliability findings for [customer]/[system] with severity HIGH or above. Focus on error handling and concurrency issues. Fix straightforward ones and flag complex ones for manual review.
+```
+
+<img src="../../images/mcp/recipes/security-findings-triage.png" width="600" alt="Claude Code retrieving high-severity security findings and assessing their real-world exploitability in context" />
 
 ### Triage and execute
 
@@ -83,7 +96,25 @@ Get the top 100 duplication findings for [customer]/[system]. We accept duplicat
 
 **Example — execute after triage:**
 ```
-Get duplication findings for [customer]/[system] with status will-fix. Fix them and update the status.
+Get duplication findings for [customer]/[system]. Fix the ones I've previously marked as will-fix and update their status.
 ```
-
 These compose: run discovery first, triage the results, then execute on the will-fix items. Or skip to autonomous fixing if you trust the criteria.
+
+## Tools reference
+
+Five MCP tools drive the workflows above.
+
+| Tool | Description | Key parameters                                                                                                                                   |
+| --- | --- |--------------------------------------------------------------------------------------------------------------------------------------------------|
+| `refactoring_candidates` | Ranked refactoring candidates for a [maintainability property](../../reference/sig-quality-models.md) | `property`, optional: `technology`, `limit`                                                                                                      |
+| `maintainability_ratings` | Current maintainability ratings on a 0.5–5.5 star scale (3.0 = market average, 4.0 = target for new development) | Optional: `component`, `technology` breakdowns                                                                                                   |
+| `list_security_findings` | Open security findings ranked by severity and exploitability, with CWE identifiers and file locations | `severity`: `LOW`, `MEDIUM`, `HIGH`, `CRITICAL`. `model`: `ow10` (default), `sigsec`, `5055sec`, `c25`, `pci4`, `owasvs4c`, `owasvs4s`, `lcnc10` |
+| `list_reliability_findings` | Open reliability findings (error handling, concurrency, resource management, IPC) ranked by severity | Same filters as security. `model`: `sigrel` (default), `5055rel`                                                                                 |
+| `edit_finding_status` | Updates the status of a finding so Sigrid reflects the agent's decisions | `status` — see below. Optional: `remark`                                                                                                         |
+
+**Valid statuses for `edit_finding_status`:**
+
+| Finding type | Valid statuses |
+| --- | --- |
+| Maintainability | `RAW`, `WILL_FIX`, `ACCEPTED` |
+| Security / Reliability | `RAW`, `REFINED`, `WILL_FIX`, `FIXED`, `ACCEPTED`, `FALSE_POSITIVE` |
