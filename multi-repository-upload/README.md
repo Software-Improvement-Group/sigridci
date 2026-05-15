@@ -38,6 +38,7 @@ On Windows, use `python sigrid-git-upload.py` instead of `./sigrid-git-upload.py
 | `--sigrid-metadata-yaml` | No | Path to a `sigrid-metadata.yaml` file to include at the root. |
 | `--sigridci-path` | No | Path to a local `sigridci` directory. Defaults to the `sigridci/` directory in this repository. |
 | `--sigrid-url` | No | Sigrid base URL. Defaults to `https://sigrid-says.com`. |
+| `--keep-temp` | No | Keep the temporary working directory after the run and print its location. |
 
 ## Environment variables
 

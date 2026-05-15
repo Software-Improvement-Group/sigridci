@@ -120,6 +120,8 @@ def _build_arg_parser() -> argparse.ArgumentParser:
                         help="Path to the sigridci directory. Defaults to the sigridci/ directory in this repository.")
     parser.add_argument("--sigrid-url", default="https://sigrid-says.com", metavar="URL",
                         help="Sigrid base URL (default: https://sigrid-says.com).")
+    parser.add_argument("--keep-temp", action="store_true",
+                        help="Keep the temporary working directory after the run and print its location.")
     parser.add_argument("sources", nargs="+", metavar="SOURCE",
                         help="One or more git repository URLs or local folder paths to include.")
     return parser
@@ -225,7 +227,10 @@ def main() -> None:
         print("Rename the conflicting repos or use different URLs/paths.", file=sys.stderr)
         sys.exit(1)
 
-    with tempfile.TemporaryDirectory() as tmp_dir:
+    tmp_dir = tempfile.mkdtemp()
+    try:
+        if args.keep_temp:
+            print(f"  (temporary files will be kept at: {tmp_dir})")
         print(f"\n[1/3] Processing {len(args.sources)} source(s) …")
         source_dir = os.path.join(tmp_dir, "source")
         _prepare_source_dir(source_dir, args.sources, sigrid_yaml, sigrid_metadata_yaml)
@@ -233,6 +238,11 @@ def main() -> None:
 
         sigridci_script = _resolve_sigridci_script(args.sigridci_path)
         _run_sigridci(sigridci_script, args.customer, args.system, source_dir, args.sigrid_url)
+    finally:
+        if args.keep_temp:
+            print(f"\nTemporary files kept at: {tmp_dir}")
+        else:
+            shutil.rmtree(tmp_dir, ignore_errors=True)
 
     print(
         f"\nDone. '{args.system}' has been published to Sigrid.\n"
