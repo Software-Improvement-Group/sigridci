@@ -12,13 +12,15 @@
 # WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 # See the License for the specific language governing permissions and
 # limitations under the License.
-"""sigrid-git-upload.py - Upload multiple git repositories to Sigrid as a single system."""
+"""sigrid-git-upload.py - Upload multiple git repositories or local folders to Sigrid as a single system."""
 
 import argparse
+import io
 import os
 import shutil
 import subprocess
 import sys
+import tarfile
 import tempfile
 from pathlib import Path
 from typing import List, Optional
@@ -26,10 +28,17 @@ from typing import List, Optional
 DEFAULT_SIGRIDCI_SCRIPT = Path(__file__).resolve().parent.parent / "sigridci" / "sigridci.py"
 
 
-def _repo_name_from_url(git_url: str) -> str:
-    """Derive a filesystem-safe folder name from a git clone URL."""
-    name = git_url.rstrip("/").removesuffix(".git")
-    return name.split("/")[-1]
+def _is_remote_url(source: str) -> bool:
+    """Return True if source is a remote git URL rather than a local path."""
+    return source.startswith(("http://", "https://", "ssh://", "git@", "git://"))
+
+
+def _repo_name_from_source(source: str) -> str:
+    """Derive a filesystem-safe folder name from a git URL or local path."""
+    if _is_remote_url(source):
+        name = source.rstrip("/").removesuffix(".git")
+        return name.split("/")[-1]
+    return Path(source).resolve().name
 
 
 def _clone_repo_to_directory(git_url: str, target_dir: str) -> None:
@@ -43,6 +52,52 @@ def _clone_repo_to_directory(git_url: str, target_dir: str) -> None:
     if result.returncode != 0:
         print(f"  ERROR cloning {git_url}:\n{result.stderr}", file=sys.stderr)
         sys.exit(1)
+
+
+def _is_git_repo(directory: str) -> bool:
+    """Return True if directory is inside a git repository."""
+    result = subprocess.run(
+        ["git", "-C", directory, "rev-parse", "--git-dir"],
+        capture_output=True,
+        text=True
+    )
+    return result.returncode == 0
+
+
+def _copy_local_source(source: str, target_dir: str) -> None:
+    """Copy a local directory to target_dir.
+
+    If the directory is a git repository, uses ``git archive`` so that only
+    tracked files are included (node_modules, build outputs, etc. are
+    excluded automatically via .gitignore / not being tracked).
+    Falls back to a plain directory copy for non-git directories.
+    """
+    source_path = Path(source).resolve()
+    if not source_path.exists():
+        print(f"  ERROR: local path not found: {source_path}", file=sys.stderr)
+        sys.exit(1)
+    if not source_path.is_dir():
+        print(f"  ERROR: not a directory: {source_path}", file=sys.stderr)
+        sys.exit(1)
+
+    print(f"  Adding local folder {source_path} …")
+
+    if _is_git_repo(str(source_path)):
+        os.makedirs(target_dir, exist_ok=True)
+        result = subprocess.run(
+            ["git", "-C", str(source_path), "archive", "HEAD"],
+            capture_output=True
+        )
+        if result.returncode != 0:
+            print(
+                f"  ERROR running git archive on {source_path}:\n{result.stderr.decode()}",
+                file=sys.stderr
+            )
+            sys.exit(1)
+        with tarfile.open(fileobj=io.BytesIO(result.stdout)) as tar:
+            tar.extractall(target_dir)
+    else:
+        shutil.copytree(str(source_path), target_dir)
 
 
 def _build_arg_parser() -> argparse.ArgumentParser:
@@ -65,8 +120,8 @@ def _build_arg_parser() -> argparse.ArgumentParser:
                         help="Path to the sigridci directory. Defaults to the sigridci/ directory in this repository.")
     parser.add_argument("--sigrid-url", default="https://sigrid-says.com", metavar="URL",
                         help="Sigrid base URL (default: https://sigrid-says.com).")
-    parser.add_argument("git_urls", nargs="+", metavar="GIT_URL",
-                        help="One or more git repository URLs to include.")
+    parser.add_argument("sources", nargs="+", metavar="SOURCE",
+                        help="One or more git repository URLs or local folder paths to include.")
     return parser
 
 
@@ -78,10 +133,10 @@ def _resolve_optional_file(path_str: str, label: str) -> Path:
     return path
 
 
-def _find_duplicate_names(git_urls: List[str]) -> List[str]:
+def _find_duplicate_names(sources: List[str]) -> List[str]:
     seen: set = set()
     duplicates: List[str] = []
-    for name in (_repo_name_from_url(u) for u in git_urls):
+    for name in (_repo_name_from_source(s) for s in sources):
         if name in seen:
             duplicates.append(name)
         seen.add(name)
@@ -90,7 +145,7 @@ def _find_duplicate_names(git_urls: List[str]) -> List[str]:
 
 def _prepare_source_dir(
     source_dir: str,
-    git_urls: List[str],
+    sources: List[str],
     sigrid_yaml: Optional[Path],
     sigrid_metadata_yaml: Optional[Path],
 ) -> None:
@@ -101,9 +156,13 @@ def _prepare_source_dir(
     if sigrid_metadata_yaml:
         shutil.copy2(sigrid_metadata_yaml, os.path.join(source_dir, "sigrid-metadata.yaml"))
         print("  + sigrid-metadata.yaml")
-    for git_url in git_urls:
-        repo_name = _repo_name_from_url(git_url)
-        _clone_repo_to_directory(git_url, os.path.join(source_dir, repo_name))
+    for source in sources:
+        repo_name = _repo_name_from_source(source)
+        target_dir = os.path.join(source_dir, repo_name)
+        if _is_remote_url(source):
+            _clone_repo_to_directory(source, target_dir)
+        else:
+            _copy_local_source(source, target_dir)
         print(f"  + {repo_name}/")
 
 
@@ -160,16 +219,16 @@ def main() -> None:
         print("ERROR: set the SIGRID_CI_TOKEN environment variable.", file=sys.stderr)
         sys.exit(1)
 
-    duplicates = _find_duplicate_names(args.git_urls)
+    duplicates = _find_duplicate_names(args.sources)
     if duplicates:
         print(f"ERROR: duplicate repository name(s): {', '.join(duplicates)}", file=sys.stderr)
-        print("Rename the conflicting repos or use different URLs.", file=sys.stderr)
+        print("Rename the conflicting repos or use different URLs/paths.", file=sys.stderr)
         sys.exit(1)
 
     with tempfile.TemporaryDirectory() as tmp_dir:
-        print(f"\n[1/3] Cloning {len(args.git_urls)} repository(ies) …")
+        print(f"\n[1/3] Processing {len(args.sources)} source(s) …")
         source_dir = os.path.join(tmp_dir, "source")
-        _prepare_source_dir(source_dir, args.git_urls, sigrid_yaml, sigrid_metadata_yaml)
+        _prepare_source_dir(source_dir, args.sources, sigrid_yaml, sigrid_metadata_yaml)
         print()
 
         sigridci_script = _resolve_sigridci_script(args.sigridci_path)
