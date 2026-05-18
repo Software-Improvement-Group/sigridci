@@ -145,6 +145,12 @@ def _find_duplicate_names(sources: List[str]) -> List[str]:
     return duplicates
 
 
+def _copy_yaml_file(src: Path, dest: str) -> None:
+    """Copy a YAML file to dest, stripping a UTF-8 BOM if present."""
+    content = src.read_text(encoding="utf-8-sig")
+    Path(dest).write_text(content, encoding="utf-8")
+
+
 def _prepare_source_dir(
     source_dir: str,
     sources: List[str],
@@ -153,10 +159,10 @@ def _prepare_source_dir(
 ) -> None:
     os.makedirs(source_dir)
     if sigrid_yaml:
-        shutil.copy2(sigrid_yaml, os.path.join(source_dir, "sigrid.yaml"))
+        _copy_yaml_file(sigrid_yaml, os.path.join(source_dir, "sigrid.yaml"))
         print("  + sigrid.yaml")
     if sigrid_metadata_yaml:
-        shutil.copy2(sigrid_metadata_yaml, os.path.join(source_dir, "sigrid-metadata.yaml"))
+        _copy_yaml_file(sigrid_metadata_yaml, os.path.join(source_dir, "sigrid-metadata.yaml"))
         print("  + sigrid-metadata.yaml")
     for source in sources:
         repo_name = _repo_name_from_source(source)
