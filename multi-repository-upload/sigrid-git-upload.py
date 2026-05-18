@@ -122,6 +122,8 @@ def _build_arg_parser() -> argparse.ArgumentParser:
                         help="Sigrid base URL (default: https://sigrid-says.com).")
     parser.add_argument("--keep-temp", action="store_true",
                         help="Keep the temporary working directory after the run and print its location.")
+    parser.add_argument("--temp-path", metavar="PATH",
+                        help="Directory in which to create the temporary working folder. Defaults to the system temp directory.")
     parser.add_argument("sources", nargs="+", metavar="SOURCE",
                         help="One or more git repository URLs or local folder paths to include.")
     return parser
@@ -233,7 +235,7 @@ def main() -> None:
         print("Rename the conflicting repos or use different URLs/paths.", file=sys.stderr)
         sys.exit(1)
 
-    tmp_dir = tempfile.mkdtemp()
+    tmp_dir = tempfile.mkdtemp(dir=args.temp_path if args.temp_path else None)
     try:
         if args.keep_temp:
             print(f"  (temporary files will be kept at: {tmp_dir})")

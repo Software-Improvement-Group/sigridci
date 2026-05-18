@@ -39,6 +39,7 @@ On Windows, use `python sigrid-git-upload.py` instead of `./sigrid-git-upload.py
 | `--sigridci-path` | No | Path to a local `sigridci` directory. Defaults to the `sigridci/` directory in this repository. |
 | `--sigrid-url` | No | Sigrid base URL. Defaults to `https://sigrid-says.com`. |
 | `--keep-temp` | No | Keep the temporary working directory after the run and print its location. |
+| `--temp-path` | No | Directory in which to create the temporary working folder. Defaults to the system temp directory. Useful on Windows when the default temp path is long and would cause total path lengths to exceed the 260-character limit. |
 
 ## Environment variables
 
@@ -76,4 +77,4 @@ This produces a single Sigrid system called `my-platform` containing all three r
 ## Notes
 
 - Two sources with the same name (folder name or last path segment of a URL) cannot be combined — the script will exit with an error listing the duplicates.
-- On Windows, file paths exceeding 260 characters require an administrator to enable long path support: `HKLM\SYSTEM\CurrentControlSet\Control\FileSystem\LongPathsEnabled = 1`.
+- On Windows, file paths exceeding 260 characters require an administrator to enable long path support (`HKLM\SYSTEM\CurrentControlSet\Control\FileSystem\LongPathsEnabled = 1`), or use `--temp-path` to place the working directory closer to the filesystem root (e.g. `--temp-path C:\tmp`).
