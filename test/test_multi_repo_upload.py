@@ -27,7 +27,7 @@ _spec = importlib.util.spec_from_file_location("sigrid_git_upload", _SCRIPT)
 _mod = importlib.util.module_from_spec(_spec)
 _spec.loader.exec_module(_mod)
 
-_repo_name_from_url = _mod._repo_name_from_url
+_repo_name_from_source = _mod._repo_name_from_source
 _find_duplicate_names = _mod._find_duplicate_names
 _resolve_sigridci_script = _mod._resolve_sigridci_script
 _prepare_source_dir = _mod._prepare_source_dir
@@ -51,26 +51,29 @@ def _make_local_git_repo(parent_dir: str, name: str) -> str:
     return repo_path
 
 
-class RepoNameFromUrlTest(unittest.TestCase):
+class RepoNameFromSourceTest(unittest.TestCase):
 
     def test_https_url_with_git_suffix(self):
-        self.assertEqual("myrepo", _repo_name_from_url("https://github.com/org/myrepo.git"))
+        self.assertEqual("myrepo", _repo_name_from_source("https://github.com/org/myrepo.git"))
 
     def test_https_url_without_git_suffix(self):
-        self.assertEqual("myrepo", _repo_name_from_url("https://github.com/org/myrepo"))
+        self.assertEqual("myrepo", _repo_name_from_source("https://github.com/org/myrepo"))
 
     def test_ssh_url_with_git_suffix(self):
-        self.assertEqual("myrepo", _repo_name_from_url("git@github.com:org/myrepo.git"))
+        self.assertEqual("myrepo", _repo_name_from_source("git@github.com:org/myrepo.git"))
 
     def test_ssh_url_without_git_suffix(self):
-        self.assertEqual("myrepo", _repo_name_from_url("git@github.com:org/myrepo"))
+        self.assertEqual("myrepo", _repo_name_from_source("git@github.com:org/myrepo"))
 
     def test_trailing_slash_is_ignored(self):
-        self.assertEqual("myrepo", _repo_name_from_url("https://github.com/org/myrepo/"))
+        self.assertEqual("myrepo", _repo_name_from_source("https://github.com/org/myrepo/"))
 
     def test_url_ending_in_git_without_dot(self):
         # A repo actually named "mygit" should not be stripped
-        self.assertEqual("mygit", _repo_name_from_url("https://github.com/org/mygit"))
+        self.assertEqual("mygit", _repo_name_from_source("https://github.com/org/mygit"))
+
+    def test_local_path(self):
+        self.assertEqual("myrepo", _repo_name_from_source("/some/path/myrepo"))
 
 
 class FindDuplicateNamesTest(unittest.TestCase):
