@@ -24,7 +24,7 @@ findings from within your IDE. In particular, it lets you do the following:
 - **Filter and search findings.** Narrow down a large list of findings by risk level or status, or search across all findings using the search bar.
 - **Create Jira issues from findings.** Select one or more findings and create a Jira issue directly from your IDE, without leaving VS Code.
 
-<img src="../images/ide/VS-Code-Screenshot.png" width="650" />
+<img src="../images/ide/VS-Code-Screenshot.png" width="500" />
 
 ## Installing the extension
 
@@ -108,7 +108,7 @@ on Mac, `Ctrl+,` on Windows), search for "Sigrid", and scroll down to fill in th
 | **Jira Token** | Your Jira personal access token | *(keep this private)* |
 | **Jira Space Key** | The key of the Jira project where issues will be created | `AAP` |
 
-<img src="../images/ide/VS-Code-Jira-setting.png" width="500" />
+<img src="../images/ide/VS-Code-Jira-setting.png" width="450" />
 
 
 ### Creating an issue
