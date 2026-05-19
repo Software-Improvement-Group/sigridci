@@ -21,8 +21,10 @@ findings from within your IDE. In particular, it lets you do the following:
   more convenient when you need quickly triage large numbers of findings.
 - **Jump back-and-forth between Sigrid and your IDE.** When needed, you can quickly jump from the finding information
   in your IDE to viewing the finding details in Sigrid.
+- **Filter and search findings.** Narrow down a large list of findings by risk level or status, or search across all findings using the search bar.
+- **Create Jira issues from findings.** Select one or more findings and create a Jira issue directly from your IDE, without leaving VS Code.
 
-<img src="../images/ide/vscode-screenshot.png" width="600" />
+![](images/ide/VS-Code-Screenshot.png){:width="500px"}
 
 ## Installing the extension
 
@@ -50,7 +52,7 @@ Before you can use the extension, you will first need to provide your Sigrid cre
 - If you are using on-premise Sigrid, you will also need to enter your on-premise URL. If you are using
   cloud-based Sigrid, this is not needed.
 
-<img src="../images/ide/vscode-settings.png" width="450" />
+<img src="../images/ide/VS-Code-Screenshot.png" width="450" />
 
 ## Using the extension
 
@@ -63,6 +65,65 @@ When opened, the Sigrid extension contains multiple tabs, one for each Sigrid ca
 - Using the "open" icon in the right-hand side will open the corresponding Sigrid finding detail page in your
   default browser.
 - The pencil icon allows you to edit a finding's status and add remarks.
+
+## Filtering and searching findings
+
+When working with a large number of findings it can be hard to focus on what matters most. You can narrow
+down the findings list using the filter controls and the search bar at the top of the panel.
+
+**To filter by risk level**, click the filter icon (▽) next to the **Risk** column header. A dropdown appears
+with the following options:
+
+- Very High
+- High
+- Medium
+- Low
+
+Select one or more risk levels to show only findings that match. Deselect to remove the filter.
+
+**To filter by status**, click the filter icon (▽) next to the **Status** column header. A dropdown appears
+with the available statuses, such as Raw, Accepted, and False Positive.
+
+**To search across all findings**, use the **search bar** in the top-right corner of the panel. The list
+updates in real time as you type.
+
+You can combine risk, status, and search filters at the same time.
+
+## Creating Jira issues from findings
+
+You can create Jira issues directly from Sigrid findings without leaving Visual Studio Code. This is especially useful if your Jira instance is behind a firewall and cannot be reached from Sigrid directly, because the request is made from your IDE, it uses your own network access.
+
+### Setting up Jira integration
+
+Before you can create issues, you need to configure your Jira credentials. Open VS Code settings (`Cmd+,`
+on Mac, `Ctrl+,` on Windows), search for "Sigrid", and scroll down to fill in the following fields:
+
+| Setting | Description | Example |
+|---|---|---|
+| **Jira Base URL** | The root URL of your Jira instance | `https://jira.example.com` |
+| **Jira User** | Your Jira username or email address | `j.smith@example.com` |
+| **Jira Token** | Your Jira personal access token | *(keep this private)* |
+| **Jira Space Key** | The key of the Jira project where issues will be created | `AAP` |
+
+![](images/ide/VS-Code-Jira-setting.png){:width="600px"}
+
+
+### Creating an issue
+
+In the findings list, **check one or more findings** using the checkboxes on the left of each row.
+   You can select findings across different tabs (for example, a mix of Maintainability and Security findings). Once at least one finding is selected, a tooltip appears confirming your selection and the
+   **"Create Jira issue"** button becomes active above the list.
+
+![](images/ide/VS-Code-Jira-Issue-create.png){:width="600px"}
+
+Click the button. A **"Create JIRA Issue"** dialog appears where you can enter a title for the issue.
+   The dialog also shows how many findings are selected.
+
+![](images/ide/VS-Code-Jira-Issue.png){:width="600px"}
+
+Click **Create Issue**. The extension calls your Jira instance and creates the issue. A confirmation notification appears at the bottom-right of the panel showing the issue ID (for example, *"JIRA issue created: SCRUM-5"*) with an **"Open in Browser"** button to view it directly in Jira.
+
+![](images/ide/VS-Code-Jira.png){:width="600px"}
 
 ## Contact and support
 
