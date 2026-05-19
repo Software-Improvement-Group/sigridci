@@ -88,9 +88,7 @@ Select one or more risk levels to show only findings that match. Deselect to rem
 with the available statuses, such as Raw, Accepted, and False Positive.
 
 **To search across all findings**, use the **search bar** in the top-right corner of the panel. The list
-updates in real time as you type.
-
-You can combine risk, status, and search filters at the same time.
+updates in real time as you type.You can combine risk, status, and search filters at the same time.
 
 ## Creating Jira issues from findings
 
