@@ -80,6 +80,7 @@ with the following options:
 - Low
 - None
 
+A dropdown appears with the risk levels available in your current findings — for example Very High, High, or Medium. Only options that exist in the active findings table are shown.
 Select one or more risk levels to show only findings that match. Deselect to remove the filter.
 
 <img src="../images/ide/VS-Code-Finding.png" width="500" />
