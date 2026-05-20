@@ -71,16 +71,7 @@ When opened, the Sigrid extension contains multiple tabs, one for each Sigrid ca
 When working with a large number of findings it can be hard to focus on what matters most. You can narrow
 down the findings list using the filter controls and the search bar at the top of the panel.
 
-**To filter by risk level**, click the filter icon (▽) next to the **Risk** column header. A dropdown appears
-with the following options:
-
-- Very High
-- High
-- Medium
-- Low
-- None
-
-A dropdown appears with the risk levels available in your current findings — for example Very High, High, or Medium. Only options that exist in the active findings table are shown.
+**To filter by risk level**, click the filter icon (▽) next to the **Risk** column header. A dropdown appears with the risk levels available in your current findings — for example Very High, High, or Medium. Only options that exist in the active findings table are shown.
 Select one or more risk levels to show only findings that match. Deselect to remove the filter.
 
 <img src="../images/ide/VS-Code-Finding.png" width="500" />
