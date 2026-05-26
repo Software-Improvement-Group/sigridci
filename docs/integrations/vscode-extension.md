@@ -28,17 +28,14 @@ findings from within your IDE. In particular, it lets you do the following:
 
 ## Installing the extension
 
-During the Beta phase, you will need to install the extension from GitHub. Once the extension is released, you
-will be able to install the extension from the Marketplace.
-{: .attention }
+You can install the Sigrid extension directly from the Visual Studio Code Marketplace.
 
-- You can find the Beta version of the extension [on GitHub](https://github.com/Software-Improvement-Group/sigrid-vscode-extension).
-- Download the latest Beta release from the GitHub project's releases section.
-- In Visual Studio Code, select the "Extensions" screen in the left-hand menu.
-- Click the "..." button located in the top-right of the menu called "extensions". This button is located above
-  the search field marked "search extensions in marketplace".
-- Click "install from VSIX".
-- Select the file you downloaded from GitHub.
+- Open Visual Studio Code.
+- Click the **Extensions** icon in the left-hand menu.
+- Search for **"Sigrid"** in the search bar.
+- Click **Install**.
+
+Alternatively, you can install it directly from the [Sigrid extension page](https://marketplace.visualstudio.com/items?itemName=softwareimprovementgroup.sigrid-vscode) in the Visual Studio Code Marketplace.
 
 ## Configuring the extension
 
