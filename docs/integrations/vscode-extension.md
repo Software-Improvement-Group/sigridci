@@ -29,7 +29,7 @@ findings from within your IDE. In particular, it lets you do the following:
 ## Installing the extension
 
 You can install the Sigrid extension directly from the Visual Studio Code Marketplace.
-<img src="../images/ide/vs-code-marketplace.png" width="500" />
+<img src="../images/ide/vs-code-in-marketplace.png" width="500" />
 
 - Open Visual Studio Code.
 - Click the **Extensions** icon in the left-hand menu.
