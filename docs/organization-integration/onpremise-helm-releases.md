@@ -25,8 +25,6 @@ The Helm chart is published under the name `sigrid-stack`.
 
 **Fixed:** Sigrid Multi-Analyzer now respects analyzer enabled/disabled flags in `sigrid.yaml`. DependencyChecker properly receives scope settings for blocklist enforcement.
 
-**Added:** PyYAML library added to sigrid-multi-analyzer image for YAML configuration parsing.
-
 **Actions:** Update the Sigrid Helm chart and sigrid-multi-analyzer image. No configuration changes required.
 
 ### Release 1.0.20260518
