@@ -3,9 +3,13 @@ Sigrid release notes
 
 SIG uses [continuous delivery](https://en.wikipedia.org/wiki/Continuous_delivery), meaning that every change to Sigrid or the underlying analysis is released once our development pipeline has completed. On average, we release somewhere between 10 and 20 times per day. This page therefore doesn't list every single change, since that would quickly lead to an excessively long list of small changes. Instead, this page lists Sigrid and analysis changes that we consider noteworthy for the typical Sigrid user.
 
+### May 29, 2026
+
+- **Multi-analysis import:** Fixed analyzer configuration to respect `sigrid.yaml` enabled/disabled flags. DependencyChecker now properly receives scope settings.
+
 ### May 18, 2026
 
-- **On-premise:** Fixed console errors in on-premises deployments caused by missing Matomo analytics stub. A default Matomo location stub is now provided for on-prem deployments. For installations that want to configure Matomo, this can be customized via `nginx.config.fragment.location.matomo` in the Helm values. This change is fully backward compatible with existing production deployments.
+- **On-premise:** Fixed console errors caused by missing Matomo analytics stub in on-premises deployments. See [Helm chart release notes](../organization-integration/onpremise-helm-releases.md) for details.
 - **AI Code Governance:** See where AI-generated code and AI technologies live, from portfolio level down to each system, directly in Sigrid. You can find more information in the [AI Code Governance documentation](../capabilities/system-ai-governance.md).
 
 ### May 12, 2026
