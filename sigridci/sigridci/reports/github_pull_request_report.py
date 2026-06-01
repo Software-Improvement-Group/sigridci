@@ -15,6 +15,7 @@
 import json
 import os
 import ssl
+import urllib.parse
 import urllib.request
 
 from .report import Report, MarkdownRenderer
@@ -60,11 +61,17 @@ class GitHubPullRequestReport(Report):
         api = ApiCaller("GitHub", pollInterval=5)
         return api.retryRequest(lambda: urllib.request.urlopen(request, context=self.sslContext))
 
+    def getPullRequestNumber(self):
+        # GITHUB_REF format for pull requests: refs/pull/{number}/merge
+        parts = os.environ["GITHUB_REF"].split("/")
+        if len(parts) < 3 or not parts[2].isdigit():
+            raise ValueError(f"Could not extract PR number from GITHUB_REF: {os.environ['GITHUB_REF']}")
+        return parts[2]
+
     def buildCommentsURL(self):
         baseURL = os.environ.get("GITHUB_API_URL", "https://api.github.com")
         repo = os.environ["GITHUB_REPOSITORY"]
-        pr = os.environ["GITHUB_REF"].split("/")[2]
-        return f"{baseURL}/repos/{repo}/issues/{pr}/comments"
+        return f"{baseURL}/repos/{repo}/issues/{self.getPullRequestNumber()}/comments"
 
     def buildCommentURL(self, commentId):
         baseURL = os.environ.get("GITHUB_API_URL", "https://api.github.com")
