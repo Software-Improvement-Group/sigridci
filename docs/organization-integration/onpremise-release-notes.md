@@ -31,7 +31,7 @@ The Helm chart is published under the name `sigrid-stack`.
 
 ### Release 1.0.20260512
 
-**Added:** The LDAP group sync integration now removes Sigrid users that are no longer present in LDAP by default. See the [on-premise documentation](../organization-integration/onpremise-ldap-group-sync.md) for more information.
+**Updated:** The LDAP group sync integration now removes Sigrid users that are no longer present in LDAP by default. See the [on-premise documentation](../organization-integration/onpremise-ldap-group-sync.md) for more information.
 
 **Note:** This behavior is controlled by the new `--remove-users` flag, which is now enabled by default alongside `--override-groups`. It can be disabled by overriding the `args` list in the Helm configuration values.
 
@@ -65,7 +65,7 @@ From now on, we're aligning the version number of Helm chart releases with conta
 
 ### Release 0.4.14
 
-**New:** Database initialization for on-premise Sigrid can now also be performed automatically.
+**Added:** Database initialization for on-premise Sigrid can now also be performed automatically.
 If you are interested in using this feature, please refer to the [feature page](../organization-integration/onpremise-automated-database-initialization.md).
 
 **Note:** This feature requires Sigrid and Sigrid-Multi-Analyzer version 1.0.20260309 or later; newer versions can be used, but the feature won't work on earlier releases.
@@ -83,7 +83,7 @@ For required configuration changes, see [these instructions](../organization-int
 
 ### Release 0.4.12
 
-**Enhanced:** LDAP group synchronization now allows the group membership attribute to be configured.
+**Updated:** LDAP group synchronization now allows the group membership attribute to be configured.
 If you are interested in using this feature, please refer to the [feature page](../organization-integration/onpremise-ldap-group-sync.md).
 
 **Note:** This enhancement requires Sigrid and Sigrid-Multi-Analyzer version 1.0.20260224 or later; newer versions can be used, but the feature won't work on earlier releases.
@@ -92,7 +92,7 @@ If you are interested in using this feature, please refer to the [feature page](
 
 ### Release 0.4.11
 
-**New:** On-premise Sigrid now supports automatic LDAP group synchronization. See the [on-premise documentation](../organization-integration/onpremise-ldap-group-sync.md) for more information.
+**Added:** On-premise Sigrid now supports automatic LDAP group synchronization. See the [on-premise documentation](../organization-integration/onpremise-ldap-group-sync.md) for more information.
 
 **Note:** This feature requires Sigrid and Sigrid-Multi-Analyzer version 1.0.20260223 or later; newer versions can be used, but the feature won't work on earlier releases.
 
@@ -100,7 +100,7 @@ If you are interested in using this feature, please refer to the [feature page](
 
 ### Release 0.4.10
 
-**New:** Open Source Health is now available in on-premise Sigrid. See the [on-premise instructions](../organization-integration/onpremise-osh-knowledgebase-updater.md) for how to set this up.
+**Added:** Open Source Health is now available in on-premise Sigrid. See the [on-premise instructions](../organization-integration/onpremise-osh-knowledgebase-updater.md) for how to set this up.
 
 **Note:** This feature requires Sigrid and Sigrid-Multi-Analyzer version 1.0.20251222 or later; newer versions can be used, but the feature won't work on earlier releases.
 For an overview of OSH capabilities, see the [system features page](../capabilities/system-open-source-health.md).
