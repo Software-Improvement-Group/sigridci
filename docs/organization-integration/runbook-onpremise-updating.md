@@ -5,7 +5,7 @@ This documentation covers on-premise Sigrid. It is not applicable for cloud-base
 
 This runbook explains how to keep your on-premise Sigrid deployment up-to-date. It is an excellent starting point for ongoing maintenance and ensures you follow a safe, repeatable update process.
 
-> **Important:** Before updating, always review the [Helm Chart Release Notes](onpremise-helm-releases.md) to check for:
+> **Important:** Before updating, always review the [On-Premise Release Notes](onpremise-release-notes.md) to check for:
 > - New features you may want to enable
 > - Required changes in your Helm configuration
 > - Breaking changes that require special attention
@@ -23,7 +23,7 @@ This runbook explains how to keep your on-premise Sigrid deployment up-to-date. 
 
 ## Update Instructions
 
-1. Review the [Helm Chart Release Notes](onpremise-helm-releases.md) for relevant changes.
+1. Review the [On-Premise Release Notes](onpremise-release-notes.md) for relevant changes.
 2. Update Helm Chart
 3. Update Container images
 4. Update the `imageTag` in the Helm chart configuration
