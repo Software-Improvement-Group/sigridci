@@ -106,6 +106,8 @@ Please send an email to [SIG's support department](mailto:support@softwareimprov
 The `App federation MetadataURL` of your authentication app.
 The information will include your app's identifier, redirectURL etc.
 
+We recommend sending us a Metadata URL, if your SAML provider has a public endpoint. That way, SAML metadata can be refreshed automatically every 6 hours, and there is no need to send a new certificate when it rotates at your provider. If you cannot send us a Metadata URL, a file can be sent instead. However, this file contains an X.509 certificate which has an expiry date (typically several years after creation), so this should be replaced before the X.509 certificate expires, by sending us a new Metadata file.
+
 | IdP | App federation MetadataURL |
 | ---------- | ---------- |
 | Azure/Entra ID | `https://login.microsoftonline.com/<tenant_id>/federationmetadata/2007-06/federationmetadata.xml?appid=<app_id>` |

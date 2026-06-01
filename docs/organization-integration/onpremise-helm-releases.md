@@ -21,6 +21,22 @@ This page focuses specifically on deployment-relevant changes, including require
 
 The Helm chart is published under the name `sigrid-stack`.
 
+### Release 1.0.20260529
+
+**Fixed:** Sigrid Multi-Analyzer now respects analyzer enabled/disabled flags in `sigrid.yaml`. DependencyChecker properly receives scope settings for blocklist enforcement.
+
+**Actions:** Update the Sigrid Helm chart and sigrid-multi-analyzer image. No configuration changes required.
+
+### Release 1.0.20260518
+
+**Fixed:** Sigrid frontend dynamically loads matomo.js for analytics. In on-premises deployments without a Matomo instance, this caused console 404 errors. A default Matomo stub location is now provided for on-prem deployments.
+
+**Added:** New Helm value `nginx.config.fragment.location.matomo` allows custom Matomo configuration for on-prem deployments that want to set up their own Matomo instance.
+
+**Note:** This fix is transparent to existing deployments. No configuration changes are required. Deployments with `onPremise.enabled: true` will automatically benefit from the fix.
+
+**Actions:** Update the Sigrid Helm chart. No configuration changes required.
+
 ### Release 1.0.20260512
 
 **Enhanced:** LDAP group synchronization now removes Sigrid users that are no longer present in LDAP by default.  

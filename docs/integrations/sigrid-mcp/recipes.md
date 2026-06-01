@@ -41,7 +41,7 @@ Get unit size findings for [customer]/[system] in Java. Refactor the longest met
 Get module coupling findings for [customer]/[system]. For each module, check whether it follows single responsibility. If it doesn't, split it into focused files. If it already has a clear single purpose and is small, mark as accepted. Update finding statuses to reflect your decisions.
 ```
 
-<img src="../../images/mcp/recipes/coupling-triage-accepted.png" width="600" alt="Claude Code investigating module coupling findings, determining high fan-in is by design, and marking all 8 findings as accepted in Sigrid" />
+<a href="../../images/mcp/recipes/coupling-triage-accepted.png" target="_blank"><img src="../../images/mcp/recipes/coupling-triage-accepted.png" width="600" alt="Claude Code investigating module coupling findings, determining high fan-in is by design, and marking all 8 findings as accepted in Sigrid" /></a>
 
 ### Discovery and prioritization
 
@@ -62,7 +62,7 @@ How maintainable is the codebase? Are there any technical debt hotspots?
 Get maintainability findings for [customer]/[system]. What patterns do you see? Suggest a refactoring strategy before making changes.
 ```
 
-<img src="../../images/mcp/recipes/maintainability-overview.png" width="600" alt="Claude Code querying maintainability ratings, showing a 3.3 star overview with duplication at 1.3 stars identified as the key technical debt hotspot" />
+<a href="../../images/mcp/recipes/maintainability-overview.png" target="_blank"><img src="../../images/mcp/recipes/maintainability-overview.png" width="600" alt="Claude Code querying maintainability ratings, showing a 3.3 star overview with duplication at 1.3 stars identified as the key technical debt hotspot" /></a>
 
 ### Security and reliability triage
 
@@ -83,7 +83,7 @@ Find high severity security findings in the codebase for [customer]/[system]. As
 Get reliability findings for [customer]/[system] with severity HIGH or above. Focus on error handling and concurrency issues. Fix straightforward ones and flag complex ones for manual review.
 ```
 
-<img src="../../images/mcp/recipes/security-findings-triage.png" width="600" alt="Claude Code retrieving high-severity security findings and assessing their real-world exploitability in context" />
+<a href="../../images/mcp/recipes/security-findings-triage.png" target="_blank"><img src="../../images/mcp/recipes/security-findings-triage.png" width="600" alt="Claude Code retrieving high-severity security findings and assessing their real-world exploitability in context" /></a>
 
 ### Triage and execute
 
@@ -108,8 +108,8 @@ Five MCP tools drive the workflows above.
 | --- | --- |--------------------------------------------------------------------------------------------------------------------------------------------------|
 | `refactoring_candidates` | Ranked refactoring candidates for a [maintainability property](../../reference/sig-quality-models.md) | `property`, optional: `technology`, `limit`                                                                                                      |
 | `maintainability_ratings` | Current maintainability ratings on a 0.5–5.5 star scale (3.0 = market average, 4.0 = target for new development) | Optional: `component`, `technology` breakdowns                                                                                                   |
-| `list_security_findings` | Open security findings ranked by severity and exploitability, with CWE identifiers and file locations | `severity`: `LOW`, `MEDIUM`, `HIGH`, `CRITICAL`. `model`: `ow10` (default), `sigsec`, `5055sec`, `c25`, `pci4`, `owasvs4c`, `owasvs4s`, `lcnc10` |
-| `list_reliability_findings` | Open reliability findings (error handling, concurrency, resource management, IPC) ranked by severity | Same filters as security. `model`: `sigrel` (default), `5055rel`                                                                                 |
+| `list_security_findings` | Open security findings ranked by severity and exploitability, with CWE identifiers and file locations | `severity`: `LOW`, `MEDIUM`, `HIGH`, `CRITICAL`. `model`: `ow10` (default), `sigsec`, `5055sec`, `c25`, `pci4`, `owasvs4c`, `owasvs4s`, `lcnc10`. `path_prefix`: filter by file path prefix (use long, specific prefixes) |
+| `list_reliability_findings` | Open reliability findings (error handling, concurrency, resource management, IPC) ranked by severity | Same filters as security. `model`: `sigrel` (default), `5055rel`. `path_prefix`: filter by file path prefix (use long, specific prefixes)                                                                                 |
 | `edit_finding_status` | Updates the status of a finding so Sigrid reflects the agent's decisions | `status` — see below. Optional: `remark`                                                                                                         |
 
 **Valid statuses for `edit_finding_status`:**
