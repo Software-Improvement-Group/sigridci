@@ -37,8 +37,8 @@ class BitBucketPullRequestReport(Report):
                 comment = self.markdownRenderer.renderMarkdown(analysisId, feedback, options)
                 self.postComment(comment, existingCommentId)
                 UploadLog.log(f"Posted {self.markdownRenderer.getCapability().displayName} BitBucket comment")
-            except SystemExit:
-                print("Failed to publish feedback to GitLab")
+            except SystemExit as e:
+                print(f"Failed to publish feedback to Bitbucket: {e}")
 
     def shouldPostComment(self, options):
         return "BITBUCKET_PR_ID" in os.environ \
