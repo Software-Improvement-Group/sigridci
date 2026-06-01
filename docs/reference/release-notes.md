@@ -5,11 +5,11 @@ SIG uses [continuous delivery](https://en.wikipedia.org/wiki/Continuous_delivery
 
 ### May 29, 2026
 
-- **Multi-analysis import:** Fixed analyzer configuration to respect `sigrid.yaml` enabled/disabled flags. DependencyChecker now properly receives scope settings.
+- **On-premise:** Fixed analyzer configuration to respect `sigrid.yaml` enabled/disabled flags. DependencyChecker now properly receives scope settings.
 
 ### May 18, 2026
 
-- **On-premise:** Fixed console errors caused by missing Matomo analytics stub in on-premises deployments. See [Helm chart release notes](../organization-integration/onpremise-helm-releases.md) for details.
+- **On-premise:** Fixed console errors caused by missing Matomo analytics stub in on-premises deployments. See [On-premise release notes](../organization-integration/onpremise-release-notes.md) for details.
 - **AI Code Governance:** See where AI-generated code and AI technologies live, from portfolio level down to each system, directly in Sigrid. You can find more information in the [AI Code Governance documentation](../capabilities/system-ai-governance.md).
 
 ### May 12, 2026
