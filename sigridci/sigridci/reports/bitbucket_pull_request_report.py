@@ -27,7 +27,7 @@ class BitBucketPullRequestReport(Report):
     def __init__(self, markdownRenderer: MarkdownRenderer):
         self.markdownRenderer = markdownRenderer
 
-        certPath = os.getenv("SIGRID_GITLAB_CA_CERT_PATH")
+        certPath = os.getenv("SIGRID_BITBUCKET_CA_CERT_PATH")
         self.sslContext = ssl.create_default_context(cafile=certPath) if certPath else None
 
     def generate(self, analysisId, feedback, options):
