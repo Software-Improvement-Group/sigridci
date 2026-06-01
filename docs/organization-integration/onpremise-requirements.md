@@ -29,7 +29,7 @@ During analysis, intermediate results are written to local disk before being upl
 
 Sigrid-Multi-Analyzer runs as a job inside your CI/CD system (GitLab CI, GitHub Actions, Azure DevOps). The runners or agents that execute those jobs can be hosted anywhere, which affects your Kubernetes sizing:
 
-- **Runners hosted outside the Sigrid cluster** (dedicated VMs, cloud agents, self-hosted agents): Analyzer memory spikes are fully isolated from Sigrid workloads. No additional Kubernetes capacity needed.
+- **Runners hosted outside the Sigrid cluster** (dedicated VMs, self-hosted agents): Analyzer memory spikes are fully isolated from Sigrid workloads. No additional Kubernetes capacity needed.
 - **Runners hosted inside the Sigrid cluster**: The Kubernetes node pool must be sized to absorb analyzer memory overhead on top of the Sigrid services. Monitor memory pressure during peak CI/CD activity and size node pools conservatively.
 
 #### Memory by Codebase Size
