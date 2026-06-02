@@ -16,7 +16,7 @@ The content is intended for platform and operations teams and focuses on practic
 
 - [Runbook: Sigrid On-Premise Installation](runbook-onpremise-installation.md)
 - [Runbook: Sigrid On-Premise Updating](runbook-onpremise-updating.md)
-- [Helm Chart Releases](onpremise-helm-releases.md)
+- [On-Premise Release Notes](onpremise-release-notes.md)
 
 ## Contact and support
 
