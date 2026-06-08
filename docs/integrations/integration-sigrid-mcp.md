@@ -126,7 +126,7 @@ Add:
   "mcpServers": {
     "SigridCode": {
       "serverUrl": "https://sigrid-says.com/mcp",
-        "headers": {
+      "headers": {
         "Authorization": "Bearer <your_sigrid_token>"
       }
     }
