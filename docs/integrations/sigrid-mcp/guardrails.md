@@ -62,7 +62,7 @@ Most AI coding agents respect instruction files in your repository. Refer to you
 |------|--------------|
 | `.cursor/rules/` | Cursor |
 | `.github/copilot-instructions.md` | GitHub Copilot |
-| `.windsurfrules` | Windsurf |
+| `global_rules.md` | Devin Desktop |
 | `CLAUDE.md` | Claude Code |
 | `AGENTS.md` | OpenCode, emerging convention (check agent support) |
 
