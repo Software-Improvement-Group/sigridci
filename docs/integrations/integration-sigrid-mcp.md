@@ -26,7 +26,7 @@ The installer will prompt for your Sigrid API token and store it securely in the
 
 ### Manual configuration (other IDEs)
 
-For IDEs other than Claude Code, configure the MCP server manually:
+Follow instructions below to configure the MCP server manually:
 
 - Step 1: Obtain a Sigrid Token — see the Sigrid docs on [authentication tokens](../organization-integration/authentication-tokens.md)
 - Step 2: Configure the MCP tool in your IDE or AI Coding Assistant using the instructions below
