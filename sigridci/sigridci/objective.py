@@ -26,7 +26,7 @@ class ObjectiveStatus(Enum):
 class Objective:
     DEFAULT_RATING_OBJECTIVE = 3.5
     DEFAULT_FINDING_OBJECTIVE = "HIGH"
-    SEVERITY_OBJECTIVE = ["CRITICAL", "HIGH", "MEDIUM", "LOW", "INFORMATION", "NONE", "UNKNOWN"]
+    SEVERITY_OBJECTIVE = ["CRITICAL", "HIGH", "MEDIUM", "LOW", "NONE", "UNKNOWN"]
     REFACTORING_CANDIDATES = ["DUPLICATION", "UNIT_SIZE", "UNIT_COMPLEXITY", "UNIT_INTERFACING", "MODULE_COUPLING"]
     SYSTEM_PROPERTIES = ["VOLUME"] + REFACTORING_CANDIDATES + ["COMPONENT_INDEPENDENCE", "COMPONENT_ENTANGLEMENT"]
     MAINTAINABILITY_METRICS = ["MAINTAINABILITY"] + SYSTEM_PROPERTIES
@@ -96,6 +96,8 @@ class Objective:
         # findings are allowed, but critical-severity findings are not allowed.
         # In the feedback, we want to phrase this in terms of goal, i.e. the
         # "least-worst" severity that is *not* allowed.
+        if objective == "INFORMATION":
+            return "no low-severity"
         if objective == "CRITICAL" or objective not in Objective.SEVERITY_OBJECTIVE:
             return "any"
         if objective == "NONE":
