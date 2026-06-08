@@ -38,8 +38,8 @@ For IDEs other than Claude Code, configure the MCP server manually:
 | Cursor | Direct HTTP | MCP & Integrations panel | ✅ Fully Supported |
 | VSCode w/ Github Copilot plugin | HTTP via GitHub Copilot | Agent mode → Tools menu | ✅ Supported |
 | VSCode native | Proxy (mcp-remote) | MCP settings | ✅ Supported |
-| Windsurf | Proxy (mcp-remote) | MCP settings | ✅ Supported |
-| Claude Code | Proxy (mcp-remote) | CLI command | ✅ Supported |
+| Devin Desktop | Direct HTTP | MCP settings | ✅ Fully Supported |
+| Claude Code | Direct HTTP | CLI command | ✅ Supported |
 | OpenCode | Direct HTTP | opencode.json | ✅ Supported |
 | IntelliJ/PyCharm/WebStorm | HTTP via AI Chat | Manual JSON edit | ✅ Supported |
 
@@ -58,7 +58,7 @@ For IDEs other than Claude Code, configure the MCP server manually:
 **Proxy (mcp-remote)**
 - Uses `npx mcp-remote` (install globally first if needed: `npm install -g mcp-remote`)
 - Required when direct HTTP not supported
-- Used by: Windsurf, VSCode
+- Used by: VSCode
 
 #### Cursor / GitHub Copilot Plugin
 
@@ -116,9 +116,8 @@ Add:
 - Choose "Additional headers" and add: `Authorization: Bearer <your_sigrid_token>`
 - After saving/closing the window, if the token is valid, verify server appears in tools list
 
-#### Windsurf
+#### Devin Desktop
 
-- Install Node
 - Open MCP settings
 - Add configuration:
 
@@ -126,30 +125,23 @@ Add:
 {
   "mcpServers": {
     "SigridCode": {
-      "command": "npx",
-      "args": [
-        "mcp-remote",
-        "https://sigrid-says.com/mcp",
-        "--header",
-        "Authorization: Bearer <your_sigrid_token>",
-        "--allow-http"
-      ]
+      "serverUrl": "https://sigrid-says.com/mcp",
+        "headers": {
+        "Authorization": "Bearer <your_sigrid_token>"
+      }
     }
   }
 }
 ```
 
-- Restart Windsurf
+Note that the url key must be `serverUrl`.
+
+- Restart Devin Desktop
 
 #### Claude Code (manual)
 
 ```bash
 claude mcp add --transport http SigridCode https://sigrid-says.com/mcp --header "Authorization: Bearer <your_sigrid_token>"
-```
-
-Alternatively, using a proxy:
-```bash
-claude mcp add SigridCode -- npx mcp-remote https://sigrid-says.com/mcp --header "Authorization: Bearer <your_sigrid_token>" --allow-http
 ```
 
 Replace `<your_sigrid_token>` with your actual Sigrid API token. Restart Claude Code after adding.
