@@ -35,10 +35,10 @@ For IDEs other than Claude Code, configure the MCP server manually:
 
 | Tool | Connection Type | Configuration Method | Status |
 | --- | --- | --- | --- |
-| Cursor | Direct HTTP | MCP & Integrations panel | ✅ Fully Supported |
+| Cursor | Direct HTTP | MCP & Integrations panel | ✅ Supported |
 | VSCode w/ Github Copilot plugin | HTTP via GitHub Copilot | Agent mode → Tools menu | ✅ Supported |
 | VSCode native | Proxy (mcp-remote) | MCP settings | ✅ Supported |
-| Devin Desktop | Direct HTTP | MCP settings | ✅ Fully Supported |
+| Devin Desktop | Direct HTTP | MCP settings | ✅ Supported |
 | Claude Code | Direct HTTP | CLI command | ✅ Supported |
 | OpenCode | Direct HTTP | opencode.json | ✅ Supported |
 | IntelliJ/PyCharm/WebStorm | HTTP via AI Chat | Manual JSON edit | ✅ Supported |
