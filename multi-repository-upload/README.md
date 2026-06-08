@@ -1,8 +1,8 @@
 # Upload multiple Git repositories to Sigrid
 
-Upload one or more git repositories to Sigrid as a single combined system. This script is only designed for manual upload runs and not to be used in a pipeline upload. It doesn't include any pull-request feedback.
+Upload one or more git repositories or local source folders to Sigrid as a single combined system. This script is only designed for manual upload runs and not to be used in a pipeline upload. It doesn't include any pull-request feedback.
 
-The script clones each repository into a temporary directory, bundles them together (optionally with a `sigrid.yaml` scope file and metadata), and publishes the result to Sigrid using `sigridci`.
+The script accepts remote git URLs (which it clones) and/or local folder paths, bundles them together (optionally with a `sigrid.yaml` scope file and metadata), and publishes the result to Sigrid using `sigridci`.
 
 ## Requirements
 
@@ -22,7 +22,7 @@ No additional Python packages are needed — only standard library modules are u
     [--sigrid-metadata-yaml path/to/sigrid-metadata.yaml] \
     [--sigridci-path path/to/sigridci] \
     https://git.example.com/org/repo1.git \
-    https://git.example.com/org/repo2.git
+    /path/to/local/repo2
 ```
 
 On Windows, use `python sigrid-git-upload.py` instead of `./sigrid-git-upload.py`.
@@ -31,13 +31,15 @@ On Windows, use `python sigrid-git-upload.py` instead of `./sigrid-git-upload.py
 
 | Argument | Required | Description |
 |---|---|---|
-| `GIT_URL ...` | Yes | One or more git repository URLs to include. Both HTTPS and SSH URLs are supported. |
+| `SOURCE ...` | Yes | One or more sources to include: remote git URLs (HTTPS/SSH) or local folder paths. |
 | `--customer` | Yes | Name of your organization's Sigrid account. |
 | `--system` | Yes | Name of the system in Sigrid (letters, digits, hyphens). |
 | `--sigrid-yaml` | No | Path to a `sigrid.yaml` scope configuration file to include at the root. |
 | `--sigrid-metadata-yaml` | No | Path to a `sigrid-metadata.yaml` file to include at the root. |
 | `--sigridci-path` | No | Path to a local `sigridci` directory. Defaults to the `sigridci/` directory in this repository. |
 | `--sigrid-url` | No | Sigrid base URL. Defaults to `https://sigrid-says.com`. |
+| `--keep-temp` | No | Keep the temporary working directory after the run and print its location. |
+| `--temp-path` | No | Directory in which to create the temporary working folder. Defaults to the system temp directory. Useful on Windows when the default temp path is long and would cause total path lengths to exceed the 260-character limit. |
 
 ## Environment variables
 
@@ -58,18 +60,21 @@ export SIGRID_CI_TOKEN=your-token-here
     --sigrid-yaml ./sigrid.yaml \
     https://github.com/acme/backend.git \
     https://github.com/acme/frontend.git \
-    https://github.com/acme/shared-lib.git
+    /path/to/local/shared-lib
 ```
 
 This produces a single Sigrid system called `my-platform` containing all three repositories as subdirectories.
 
 ## How it works
 
-1. **Clone** — each repository is cloned into its own subdirectory inside a temporary directory. `core.longpaths=true` is set to handle repositories with deeply nested paths on Windows.
+1. **Process sources** — each source is handled based on its type:
+   - **Remote URL** — the repository is cloned into a temporary subdirectory. `core.longpaths=true` is set to handle deeply nested paths on Windows.
+   - **Local git repository** — `git archive HEAD` is used to export only tracked files, automatically excluding untracked files such as `node_modules`, build outputs, and any other files ignored by git.
+   - **Local non-git folder** — the folder is copied as-is.
 2. **Resolve sigridci** — uses the `sigridci/` directory bundled in this repository. Override with `--sigridci-path` if needed.
 3. **Publish** — `sigridci.py --publishonly` is invoked with the combined source directory, uploading it to Sigrid.
 
 ## Notes
 
-- Two repositories with the same name (last path segment of the URL) cannot be combined — the script will exit with an error listing the duplicates.
-- On Windows, file paths exceeding 260 characters require an administrator to enable long path support: `HKLM\SYSTEM\CurrentControlSet\Control\FileSystem\LongPathsEnabled = 1`.
+- Two sources with the same name (folder name or last path segment of a URL) cannot be combined — the script will exit with an error listing the duplicates.
+- On Windows, file paths exceeding 260 characters require an administrator to enable long path support (`HKLM\SYSTEM\CurrentControlSet\Control\FileSystem\LongPathsEnabled = 1`), or use `--temp-path` to place the working directory closer to the filesystem root (e.g. `--temp-path C:\tmp`).
