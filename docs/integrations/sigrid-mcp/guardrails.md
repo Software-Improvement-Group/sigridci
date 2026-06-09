@@ -24,9 +24,7 @@ Visit the [Technology Support](../../reference/technology-support.md#list-of-sup
 
 AI-generated code quality varies significantly based on the instructions given. The Sigrid MCP provides guardrails that notify agents when code doesn't meet quality standards without requiring the system to be published to Sigrid first.
 
-We recommend combining two elements:
-1. **Code principles**: brief guidelines that help the agent write good code upfront
-2. **Quality gate**: a mandatory check using Sigrid before completing any task
+The prompt below combines two elements: brief **code principles** that guide the agent upfront, and a mandatory **quality gate** using Sigrid before completing any task.
 
 ### Recommended prompt
 
@@ -35,21 +33,26 @@ Add this to your agent instructions (see [where to place these instructions](#wh
 ```
 ## Code Principles
 
-Write maintainable code: single responsibility, small focused functions, clear naming, avoid duplication, simple control flow.
-Write secure code.
+Write maintainable, self-documenting code: single responsibility, small focused
+functions, clear naming, avoid duplication, simple control flow.
 
 ## MANDATORY: Quality Gate
 
 Before reporting ANY task as complete:
 
-1. Run the Sigrid Code Quality Guardrails tool on all changed production code
-2. Maintainability findings: accept if principles were followed, otherwise refactor
-3. Security findings: fix if straightforward, otherwise flag to user
+1. Run the Sigrid Code Quality Guardrails tool on all files you changed
+2. Maintainability findings: fix every finding in files you touched, new or
+   pre-existing, judged against the principles above. Leave one only if the code
+   already honors the principles, or the fix cascades outside task scope
+   (don't get stuck). Say which, and why.
+3. Security findings: fix if contained, otherwise flag to user
 
-Do not skip this step.
+Only skip if the tool is unavailable and say so if you do.
 ```
 
-For stricter workflows, add a rescan step: "If fixes were made, rescan to verify no new issues were introduced."
+> The quality gate applies the [Boy Scout Rule](https://www.oreilly.com/library/view/97-things-every/9780596809515/ch08.html) — leaving each file touched cleaner than it was found.
+
+**Adapting the code principles**: if your codebase follows specific design patterns (e.g., hexagonal architecture, Redux patterns), add them to the Code Principles section. When the agent makes recurring mistakes, add a principle that addresses the pattern.
 
 ### Where to place these instructions
 
@@ -59,22 +62,16 @@ Most AI coding agents respect instruction files in your repository. Refer to you
 |------|--------------|
 | `.cursor/rules/` | Cursor |
 | `.github/copilot-instructions.md` | GitHub Copilot |
-| `.windsurfrules` | Windsurf |
+| `global_rules.md` | Devin Desktop |
 | `CLAUDE.md` | Claude Code |
 | `AGENTS.md` | OpenCode, emerging convention (check agent support) |
 
 For tools that support both global and project-level rules, prefer project-level to keep instructions versioned with your code.
 
-### Customizing for your codebase
+### Other adjustments
 
-The prompt above is a starting point. Consider these adjustments:
-
-- **Framework conventions**: If your codebase follows specific design patterns (e.g., hexagonal architecture, Redux patterns), add them to the code principles section.
-- **Check frequency**: You may prefer to run the quality gate with a different frequency, e.g. only before commits rather than after every task.
+- **Check frequency**: You may prefer to run the quality gate only before commits rather than after every task.
 - **Direct invocation**: You can also ask the agent directly: "Run Sigrid on these files: ..."
-- **Iterate from experience**: When the agent makes recurring mistakes, add a principle that addresses the pattern.
-
-> **Tip**: Start with concise principles. Add explicit guidance only if the model struggles.
 
 Pair the MCP with Sigrid CI to also catch architecture issues, vulnerable dependencies, and cross-file metrics.
 

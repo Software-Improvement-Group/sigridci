@@ -96,6 +96,8 @@ class Objective:
         # findings are allowed, but critical-severity findings are not allowed.
         # In the feedback, we want to phrase this in terms of goal, i.e. the
         # "least-worst" severity that is *not* allowed.
+        if objective == "INFORMATION":
+            return "no low-severity"
         if objective == "CRITICAL" or objective not in Objective.SEVERITY_OBJECTIVE:
             return "any"
         if objective == "NONE":

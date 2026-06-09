@@ -155,19 +155,19 @@ A secret for accessing the object store, and the necessary configuration setting
 ```yaml
 global:
   onPremise:
-  objectStore:
-    bucketName: "example-bucket"
-    forcePathStyle: "true" # Use path-style access to prevent bucket-specific hostnames
-    endpoint: "https://minio.my-company.com"
-    region: "us-east-1"
-    secret:
-      create: true
-      data:
-        AWS_ENDPOINT_URL: "https://minio.my-company.com"
-        AWS_FORCE_PATH_STYLE: true  # Use path-style access to prevent bucket-specific hostnames
-        AWS_REGION: "us-east-1"
-        AWS_ACCESS_KEY_ID: ""
-        AWS_SECRET_ACCESS_KEY: ""
+    objectStore:
+      bucketName: "example-bucket"
+      forcePathStyle: "true" # Use path-style access to prevent bucket-specific hostnames
+      endpoint: "https://minio.my-company.com"
+      region: "us-east-1"
+      secret:
+        create: true
+        data:
+          AWS_ENDPOINT_URL: "https://minio.my-company.com"
+          AWS_FORCE_PATH_STYLE: true  # Use path-style access to prevent bucket-specific hostnames
+          AWS_REGION: "us-east-1"
+          AWS_ACCESS_KEY_ID: ""
+          AWS_SECRET_ACCESS_KEY: ""
 ```
 {% endraw %}
 
