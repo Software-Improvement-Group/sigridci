@@ -17,7 +17,7 @@ The overall maintainability rating is expressed as a star rating from 1 to 5.
 
 Below is an example Maintainability overview from the open-source system Hadoop.
 
-<img width="1000" alt="Maintainability rating example" src="../images/partners/rating-example.png" />
+<img width="1000" alt="Maintainability rating example" src="../images/techdd/rating-example.png" />
 
 
 ### Key points
