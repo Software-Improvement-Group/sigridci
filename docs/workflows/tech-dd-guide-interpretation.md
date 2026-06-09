@@ -23,7 +23,7 @@ Below is an example Maintainability overview from the open-source system Hadoop.
 ### Key points
 
 - The rating is always relative to the SIG benchmark — a database of thousands of real-world systems. A three-star system is not "bad"; it is in line with the market average. Four stars is the typical goal for new, modern systems.
-- 5% of systems in the benchmark score one star, and 5% score five stars. Two-, three-, and four-star system categories each make up 30% of the benchmark. As such, five-star systems are rare and may not be desirable as this may indicate “gold-plating” (achieving high ratings with diminishing returns regarding practical benefits).
+- 5% of systems in the benchmark score one star, and 5% score five stars. Two-, three-, and four-star system categories each make up 30% of the benchmark. As such, five-star systems are rare and may not be desirable as this may indicate "gold-plating" (achieving high ratings with diminishing returns regarding practical benefits).
 - Ratings are always truncated and then rounded to whole stars. Example: a system or system property rating of 3.4 stars would be ★★★☆☆. A rating of 2.7 is also ★★★☆☆. In dialogue, the first digit after the comma is often used to discuss trends over time and compare changes with earlier measurements.
 
 ### How to read Maintainability measurement results
@@ -93,11 +93,11 @@ The amount of decision points can further complicate a unit’s understandabilit
 
 #### Unit Interfacing
 
-Units, in most technologies, require certain inputs. These are called “parameters”. Units take their input parameters, perform logic with these, and output results. Units with many parameters are harder to understand and use for developers working elsewhere in the system. They are also less reusable because having more parameters means higher specialization of a given unit.
+Units, in most technologies, require certain inputs. These are called "parameters". Units take their input parameters, perform logic with these, and output results. Units with many parameters are harder to understand and use for developers working elsewhere in the system. They are also less reusable because having more parameters means higher specialization of a given unit.
 
 #### Module Coupling
 
-Communication in software systems occurs at various levels, including the file level (called “modules” in the SIG Maintainability model). High amounts of dependencies on a file/module make that module highly responsible for other parts of the system. It is a maintenance risk. There are good reasons to accept many incoming dependencies for certain files (e.g., for common functionality such as logging or authorization checks). However, it can also be a sign of a lack of division of responsibilities and other maintenance issues.
+Communication in software systems occurs at various levels, including the file level (called "modules" in the SIG Maintainability model). High amounts of dependencies on a file/module make that module highly responsible for other parts of the system. It is a maintenance risk. There are good reasons to accept many incoming dependencies for certain files (e.g., for common functionality such as logging or authorization checks). However, it can also be a sign of a lack of division of responsibilities and other maintenance issues.
 
 **Questions to ask:**
 
