@@ -4,7 +4,7 @@
 
 Sigrid enables users, usually consultancy partners, to deliver high-quality Tech Due Diligence assessments. This documentation contains guidance on how to run Sigrid, interpret the results, and create a report. At a high level there are three steps:
 
-<img width="1000" alt="ITDD process" src="../images/partners/itdd-process.png" />
+<img width="1000" alt="ITDD process" src="../images/techdd/itdd-process.png" />
 
 ## 1. Setting up Sigrid (Local) and running an analysis
 This guide assumes that you are using Sigrid Local for technical analysis, which means that an employee from the system under analysis will run the Sigrid Local tool, and send analysis results straight to Sigrid. Once the SIG partner/customer  requests a new analysis, a new ~portfolio~ will be set up by SIG support. The designated technical admin of the partner will receive access to the portfolio. 
