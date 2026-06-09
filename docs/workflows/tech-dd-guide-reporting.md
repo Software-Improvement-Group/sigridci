@@ -15,7 +15,7 @@ Since the target audience is typically a buy-side investing party that takes dea
 - Cost implications of identified risks
 - Prioritized recommendations
 
-**Guideline:** ensure the report is centered around deal relevance. Every finding that is included should answer implicitly to _“what does this mean for the acquisition or investment?”_.
+**Guideline:** ensure the report is centered around deal relevance. Every finding that is included should answer implicitly to _what does this mean for the acquisition or investment?_.
 
 A typical pitfall is to get into the role of consulting or advising the target company’s development team. Instead, be an independent advisor to the buyer (the client). Maintain this perspective throughout the report.
 
