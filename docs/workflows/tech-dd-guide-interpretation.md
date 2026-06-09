@@ -9,9 +9,9 @@ Currently, this guide covers the following topics:
 - Maintainability
 - Open-Source Health
 
-## ISO/IEC 25010 SIG/TÜViT Maintainability
+## ISO/IEC 25010 SIG/TÜV NORD CERT Maintainability
 
-Sigrid measures maintainability using the SIG/TÜViT Evaluation Criteria, which are based on the ISO 25010 quality standard. The goal is to assess how easy a system is to understand, change, test, and transfer to new developers.
+Sigrid measures maintainability using the SIG/TÜV NORD CERT Evaluation Criteria, which are based on the ISO 25010 quality standard. The goal is to assess how easy a system is to understand, change, test, and transfer to new developers.
 
 The overall maintainability rating is expressed as a star rating from 1 to 5.
 
