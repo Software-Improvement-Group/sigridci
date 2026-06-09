@@ -74,8 +74,8 @@ Since reports are likely used in deal negotiations, avoid both overstating and u
 
 ### Prefer
 
-- _“Sigrid’s analysis indicates that x% of the codebase has elevated maintenance costs”_
-- _“Based on the benchmark, …”_
+- _Sigrid’s analysis indicates that x% of the codebase has elevated maintenance costs_
+- _Based on the benchmark, ..._
 
 ## Confidentiality
 
