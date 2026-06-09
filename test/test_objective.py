@@ -109,6 +109,7 @@ class ObjectiveTest(TestCase):
         self.assertEqual("no critical-severity", Objective.getSeverityObjectiveLabel("HIGH"))
         self.assertEqual("no high-severity", Objective.getSeverityObjectiveLabel("MEDIUM"))
         self.assertEqual("no medium-severity", Objective.getSeverityObjectiveLabel("LOW"))
+        self.assertEqual("no low-severity", Objective.getSeverityObjectiveLabel("INFORMATION"))
         self.assertEqual("no", Objective.getSeverityObjectiveLabel("NONE"))
 
     def testSortBySeverity(self):
