@@ -432,18 +432,25 @@ Mimetype: `application/vnd.cyclonedx+json`
     "version": 1,
     "metadata": {
         "timestamp": "2022-03-17T09:58:34Z",
-        "tools": [
-            {
-                "vendor": "Software Improvement Group",
-                "name": "Sigrid",
-                "externalReferences": [
-                    {
-                        "type": "other",
-                        "url": "https://sigrid-says.com/my-sigrid-account-name/my-system-id/-/open-source-health"
-                    }
+        "tools" : {
+            "components" : [
+              {
+                "type" : "application",
+                "manufacturer" : {
+                  "name" : "Software Improvement Group"
+                },
+                "name" : "Sigrid",
+                "version" : "2026",
+                "externalReferences" : [
+                  {
+                    "type" : "other",
+                    "url" : "https://sigrid-says.com/my-sigrid-account-name/my-system-id/-/open-source-health"
+                  }
                 ]
-            }
-        ],
+              }
+          ]
+    },
+
         "properties" : [
           {
             "name" : "sigrid:ratings:system",
