@@ -214,6 +214,8 @@ Note the **extra** outer brackets required for the configuration to validate suc
 | `maintainability_ratings` | [Modernization Recipes MCP](sigrid-mcp/recipes.md) | Returns current maintainability ratings for a system |
 | `list_security_findings` | [Modernization Recipes MCP](sigrid-mcp/recipes.md) | Returns open security findings ranked by severity |
 | `list_reliability_findings` | [Modernization Recipes MCP](sigrid-mcp/recipes.md) | Returns open reliability findings ranked by severity |
+| `list_open_source_risks` | [Modernization Recipes MCP](sigrid-mcp/recipes.md) | Returns open source dependency risks across vulnerability, freshness, legal, activity, stability, and management |
+| `list_open_source_vulnerabilities` | [Modernization Recipes MCP](sigrid-mcp/recipes.md) | Returns known CVEs in open source dependencies ranked by CVSS score |
 | `edit_finding_status` | [Modernization Recipes MCP](sigrid-mcp/recipes.md) | Updates the status and remarks of a Sigrid finding |
 
 
