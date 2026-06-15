@@ -217,6 +217,26 @@ Note the **extra** outer brackets required for the configuration to validate suc
 | `edit_finding_status` | [Modernization Recipes MCP](sigrid-mcp/recipes.md) | Updates the status and remarks of a Sigrid finding |
 
 
+### Tool selection
+
+Only tools for your enabled Sigrid models are available. For example, if your organization has Maintainability and Security enabled, you will only see tools related to those capabilities.
+
+To further restrict which tools are visible in a session, pass the `X-Enabled-Tools` header with a comma-separated list of tool names:
+
+```json
+{
+  "mcpServers": {
+    "SigridCode": {
+      "url": "https://sigrid-says.com/mcp",
+      "headers": {
+        "Authorization": "Bearer <your_sigrid_token>",
+        "X-Enabled-Tools": "code_quality_guardrails, list_security_findings"
+      }
+    }
+  }
+}
+```
+
 ### Troubleshooting
 
 | Issue | Solution |
