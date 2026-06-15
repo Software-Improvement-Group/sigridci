@@ -15,6 +15,18 @@ For a complete overview of all Sigrid changes, refer to the [general release not
 
 The Helm chart is published under the name `sigrid-stack`.
 
+### Release 1.0.20260616
+
+**Fixed:** The Sigrid Multi-Analyzer now validates your Sigrid credentials and configuration *before* starting an analysis. The pipeline job now fails fast with a clear message when the `SIGRID_CI_TOKEN` is missing or incomplete, when the configured system name is invalid, or when the token does not have access to the system (HTTP 401/403). When the system does not exist in Sigrid yet, the job clearly reports that it will be on-boarded on the first analysis, instead of failing with a confusing error.
+
+**Actions:** Update the Sigrid Helm chart, Sigrid deployment images, and Sigrid-Multi-Analyzer image. No configuration changes required.
+
+### Release 1.0.20260613
+
+**Fixed:** The support page in the Sigrid UI now shows the Sigrid version number for on-premise deployments. Previously only a commit SHA was shown.
+
+**Actions:** Update the Sigrid Helm chart, Sigrid deployment images, and Sigrid-Multi-Analyzer image. No configuration changes required.
+
 ### Release 1.0.20260529
 
 **Fixed:** Sigrid Multi-Analyzer now respects analyzer enabled/disabled flags in `sigrid.yaml`. DependencyChecker properly receives scope settings for blocklist enforcement.
