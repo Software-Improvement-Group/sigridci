@@ -10,7 +10,7 @@ For installation instructions, see the [MCP overview page](../integration-sigrid
 
 You need:
 
-- A Sigrid account with at least one system that has maintainability results
+- A Sigrid account with at least one system
 - The Sigrid MCP server connected to your AI coding agent (see [installation](../integration-sigrid-mcp.md))
 - A local checkout of the system's repository
 - Your Sigrid customer and system identifiers — these are visible in the Sigrid URL: `sigrid-says.com/<customer>/<system>`
@@ -85,6 +85,20 @@ Get reliability findings for [customer]/[system] with severity HIGH or above. Fo
 
 <a href="../../images/mcp/recipes/security-findings-triage.png" target="_blank"><img src="../../images/mcp/recipes/security-findings-triage.png" width="600" alt="Claude Code retrieving high-severity security findings and assessing their real-world exploitability in context" /></a>
 
+### Open source health
+
+The agent queries your open source dependencies for risks. Unlike security and reliability findings, open source health results are informational: there is no status to update, so the workflow is discover, prioritize, and report.
+
+**Example — component risk overview:**
+```
+List open source components with high risk for [customer]/[system]. Which risk dimensions are causing the most concern? Group by dimension and suggest priorities.
+```
+
+**Example — vulnerability triage:**
+```
+Get critical and high severity vulnerabilities in our dependencies for [customer]/[system]. Which ones are in components we actively use? Suggest upgrade paths or alternatives.
+```
+
 ### Triage and execute
 
 Split the work into two steps: triage findings first (mark as will-fix or accepted), then pick up the will-fix items and fix them. Both steps can happen in one session, or you triage now and execute later.
@@ -102,7 +116,7 @@ These compose: run discovery first, triage the results, then execute on the will
 
 ## Tools reference
 
-Five MCP tools drive the workflows above.
+Seven MCP tools drive the workflows above.
 
 | Tool | Description | Key parameters                                                                                                                                   |
 | --- | --- |--------------------------------------------------------------------------------------------------------------------------------------------------|
@@ -110,6 +124,8 @@ Five MCP tools drive the workflows above.
 | `maintainability_ratings` | Current maintainability ratings on a 0.5–5.5 star scale (3.0 = market average, 4.0 = target for new development) | Optional: `component`, `technology` breakdowns                                                                                                   |
 | `list_security_findings` | Open security findings ranked by severity and exploitability, with CWE identifiers and file locations | `severity`: `LOW`, `MEDIUM`, `HIGH`, `CRITICAL`. `model`: `ow10` (default), `sigsec`, `5055sec`, `c25`, `pci4`, `owasvs4c`, `owasvs4s`, `lcnc10`. `path_prefix`: filter by file path prefix (use long, specific prefixes) |
 | `list_reliability_findings` | Open reliability findings (error handling, concurrency, resource management, IPC) ranked by severity | Same filters as security. `model`: `sigrel` (default), `5055rel`. `path_prefix`: filter by file path prefix (use long, specific prefixes)                                                                                 |
+| `list_open_source_risks` | Open source dependency risks across vulnerability, freshness, legal, activity, stability, and management — default tool for any open-source health question | `risk_dimension`: filter dimensions. `risk_min`: `NONE`, `LOW`, `MEDIUM` (default), `HIGH`, `CRITICAL`. `limit` |
+| `list_open_source_vulnerabilities` | Known CVEs in open-source dependencies ranked by CVSS score | `severity_min`: `LOW`, `MEDIUM` (default), `HIGH`, `CRITICAL`. `limit` |
 | `edit_finding_status` | Updates the status of a finding so Sigrid reflects the agent's decisions | `status` — see below. Optional: `remark`                                                                                                         |
 
 **Valid statuses for `edit_finding_status`:**
