@@ -20,7 +20,9 @@ What you can do with it:
 
 The plugin works with the following JetBrains IDEs, version **2026.1 or later**:
 
-IntelliJ IDEA (Community & Ultimate), PyCharm (Community & Professional), WebStorm, GoLand, PhpStorm, RubyMine, CLion, Rider, Android Studio, and Aqua.
+IntelliJ IDEA (Community & Ultimate), PyCharm (Community & Professional), WebStorm, GoLand, PhpStorm, RubyMine, CLion, Rider, Android Studio, and Aquua.
+
+<img src="../images/ide/jetbrains-tools.png" width="500" />
 
 You'll also need a Sigrid account with API access.
 
@@ -39,7 +41,7 @@ Go to **Settings → Tools → Sigrid** and fill in your **API Key** and **Custo
 
 For the system name, go one level deeper to **Settings → Tools → Sigrid → Project** and fill in the **System** field. This tells the plugin which codebase to load findings for.
 
-<!-- screenshot: settings panel with API key, customer, and system fields filled in -->
+<img src="../images/ide/jetbrains-key.png" width="700" />
 
 ## Opening the plugin
 
@@ -47,7 +49,7 @@ Once configured, look for the **Sigrid** tab at the bottom of your IDE. If you d
 
 The panel has three tabs — **Maintainability**, **Security**, and **Open Source Health** — each showing the findings Sigrid has for your system.
 
-<!-- screenshot: Sigrid tool window open at the bottom of IntelliJ with findings loaded -->
+<img src="../images/ide/jetbrains-maintainability.png" width="700" />
 
 ## Navigating findings
 
@@ -67,7 +69,7 @@ When working with a large number of findings it can be hard to focus on what mat
 
 You can combine the active file filter, risk, status, and search filters at the same time.
 
-<!-- screenshot: findings list with filters active -->
+<img src="../images/ide/jetbrains-open-ource-health.png" width="700" />
 
 ## Editing findings
 
