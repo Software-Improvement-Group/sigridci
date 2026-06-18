@@ -14,6 +14,7 @@
 
 import os
 import sys
+import urllib.parse
 
 
 DOCS_URL = f"https://docs.sigrid-says.com"
@@ -70,25 +71,33 @@ class Platform:
 
     @staticmethod
     def createPullRequestFileURL(file, line=0):
+        # SCM-supplied values such as the branch name are untrusted (a fork PR
+        # controls them), so we URL-encode them to keep them confined to the URL
+        # and prevent breaking out of the surrounding Markdown link. We keep "/"
+        # in path segments since branches and file paths may legitimately
+        # contain it, but encode it in query parameters.
+        encodePath = lambda value: urllib.parse.quote(value, safe="/")
+        encodeParam = lambda value: urllib.parse.quote(value, safe="")
+
         # GitLab
         if Platform.hasEnv("CI_SERVER_URL", "CI_PROJECT_PATH", "CI_COMMIT_REF_NAME"):
             server = os.environ["CI_SERVER_URL"]
-            project = os.environ["CI_PROJECT_PATH"]
-            branch = os.environ["CI_COMMIT_REF_NAME"]
-            return f"{server}/{project}/-/blob/{branch}/{file}#L{line}"
+            project = encodePath(os.environ["CI_PROJECT_PATH"])
+            branch = encodePath(os.environ["CI_COMMIT_REF_NAME"])
+            return f"{server}/{project}/-/blob/{branch}/{encodePath(file)}#L{line}"
 
         # GitHub
         if Platform.hasEnv("GITHUB_SERVER_URL", "GITHUB_REPOSITORY", "GITHUB_HEAD_REF"):
             server = os.environ["GITHUB_SERVER_URL"]
-            repo = os.environ["GITHUB_REPOSITORY"]
-            branch = os.environ["GITHUB_HEAD_REF"]
-            return f"{server}/{repo}/blob/{branch}/{file}#L{line}"
+            repo = encodePath(os.environ["GITHUB_REPOSITORY"])
+            branch = encodePath(os.environ["GITHUB_HEAD_REF"])
+            return f"{server}/{repo}/blob/{branch}/{encodePath(file)}#L{line}"
 
         # Azure DevOps
         if Platform.hasEnv("SYSTEM_PULLREQUEST_SOURCEREPOSITORYURI", "SYSTEM_PULLREQUEST_SOURCEBRANCH"):
             repo = os.environ["SYSTEM_PULLREQUEST_SOURCEREPOSITORYURI"]
-            branch = os.environ["SYSTEM_PULLREQUEST_SOURCEBRANCH"].split("/")[-1]
-            return f"{repo}?path={file}&version=GB{branch}&line={line}"
+            branch = encodeParam(os.environ["SYSTEM_PULLREQUEST_SOURCEBRANCH"].split("/")[-1])
+            return f"{repo}?path={encodeParam(file)}&version=GB{branch}&line={line}"
 
         return None
 
