@@ -105,8 +105,7 @@ include:
 | SIGRID_CI_TOKEN                | Yes      | Yes     | Yes       |           |
 | SIGRID_VERSION                 | Yes      | Yes     | No        |           |
 | SIGRID_SOURCES_REGISTRATION_ID | Yes      | Yes     | No        | (auto)    |
-| SIGRIDCI_GITLAB_COMMENT_TOKEN  | No       | Yes     | Yes       |           |
-| SIGRIDCI_GITHUB_COMMENT_TOKEN  | No       | Yes     | Yes       |           |
+| CICD_COMMENT_TOKEN             | No       | Yes     | Yes       |           |
 
 Notes:
 - `CUSTOMER`: this is the name of the Sigrid tenant as set in Sigrid's Helm chart when Sigrid was
@@ -122,8 +121,9 @@ Notes:
 - `SIGRID_VERSION`: specifies the version tag of the Sigrid-Multi-Analyzer container.
   Ensure that the version matches the version used for the Sigrid web application you have deployed in Kubernetes.
 - `SIGRID_SOURCES_REGISTRATION_ID`: the ID of the OAuth client registration provided in `values.yaml` of Sigrid's Helm chart.
-- `SIGRIDCI_GITLAB_COMMENT_TOKEN`: GitLab personal access token with `api` scope, used to post Sigrid feedback as merge request comments. See [PR comment feedback](#pull-request-comment-feedback) below.
-- `SIGRIDCI_GITHUB_COMMENT_TOKEN`: GitHub personal access token with `pull-requests: write` permission, used to post Sigrid feedback as pull request comments. See [PR comment feedback](#pull-request-comment-feedback) below.
+- `CICD_COMMENT_TOKEN`: Token used to post Sigrid feedback as a merge/pull request comment on your CI/CD platform.
+  GitLab: personal access token with `api` scope. GitHub: personal access token with `pull-requests: write` permission.
+  Not needed for Azure DevOps, which uses the built-in pipeline token. See [PR comment feedback](#pull-request-comment-feedback) below.
 
 #### Using Custom Certificates in Your Pipeline
 
@@ -330,7 +330,7 @@ Set the following variables in your pipeline:
 
 | Variable                      | Description |
 |-------------------------------|-------------|
-| `SIGRIDCI_GITLAB_COMMENT_TOKEN` | GitLab personal access token with `api` scope |
+| `CICD_COMMENT_TOKEN` | GitLab personal access token with `api` scope |
 
 Sigrid will automatically detect merge request pipelines via the `CI_MERGE_REQUEST_IID` variable set by GitLab CI and post or update a comment on the merge request.
 
@@ -340,7 +340,7 @@ Set the following variables in your pipeline:
 
 | Variable                      | Description |
 |-------------------------------|-------------|
-| `SIGRIDCI_GITHUB_COMMENT_TOKEN` | GitHub personal access token (classic) or fine-grained token with `pull-requests: write` permission |
+| `CICD_COMMENT_TOKEN` | GitHub personal access token (classic) or fine-grained token with `pull-requests: write` permission |
 
 Sigrid will automatically detect pull request pipelines via the `GITHUB_EVENT_NAME` variable set by GitHub Actions and post or update a comment on the pull request. The `GITHUB_API_URL` variable set by GitHub Actions is used as the API endpoint, so this works for both github.com and GitHub Enterprise Server without extra configuration.
 
