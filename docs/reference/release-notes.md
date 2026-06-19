@@ -3,6 +3,11 @@ Sigrid release notes
 
 SIG uses [continuous delivery](https://en.wikipedia.org/wiki/Continuous_delivery), meaning that every change to Sigrid or the underlying analysis is released once our development pipeline has completed. On average, we release somewhere between 10 and 20 times per day. This page therefore doesn't list every single change, since that would quickly lead to an excessively long list of small changes. Instead, this page lists Sigrid and analysis changes that we consider noteworthy for the typical Sigrid user.
 
+### June 22, 2026
+
+- **Sigrid CI:** PR feedback comments can now be posted directly using the built-in `GITHUB_TOKEN`, making the `mshick/add-pr-comment` action optional. No additional configuration is required.
+- **On-premise:** The Sigrid Multi-Analyzer now fails early when a system has been deactivated in the Sigrid system settings page. See the [On-premise release notes](../organization-integration/onpremise-release-notes.md) for details.
+
 ### June 16, 2026
 
 - **On-premise:** The Sigrid Multi-Analyzer now validates your Sigrid credentials and configuration before starting an analysis, so pipeline jobs fail fast with a clear message when the `SIGRID_CI_TOKEN` is missing, invalid, or lacks access to the system. Systems that have not been on-boarded yet are now reported clearly instead of failing with a confusing error. See the [On-premise release notes](../organization-integration/onpremise-release-notes.md) for details.
