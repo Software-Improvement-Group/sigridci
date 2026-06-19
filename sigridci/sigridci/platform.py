@@ -71,11 +71,6 @@ class Platform:
 
     @staticmethod
     def createPullRequestFileURL(file, line=0):
-        # SCM-supplied values such as the branch name are untrusted (a fork PR
-        # controls them), so we URL-encode them to keep them confined to the URL
-        # and prevent breaking out of the surrounding Markdown link. We keep "/"
-        # in path segments since branches and file paths may legitimately
-        # contain it, but encode it in query parameters.
         encodePath = lambda value: urllib.parse.quote(value, safe="/")
         encodeParam = lambda value: urllib.parse.quote(value, safe="")
 
