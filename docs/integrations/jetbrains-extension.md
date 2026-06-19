@@ -44,7 +44,7 @@ At the project level (**Settings → Tools → Sigrid → Project**), you need t
 
 You can leave **API Key**, **Portfolio Name**, and **Sigrid URL** blank at the project level — the plugin automatically falls back to your global settings, so you don't have to repeat them for every project. You'd only override them here if you have a separate Sigrid account for this specific project, which is rare.
 
-<img src="../images/ide/jetbrains-key.png" width="700" />
+
 
 ## Opening the plugin
 
