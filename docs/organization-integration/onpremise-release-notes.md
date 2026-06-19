@@ -19,6 +19,8 @@ The Helm chart is published under the name `sigrid-stack`.
 
 **Fixed:** The Sigrid Multi-Analyzer now fails early when a system has been deactivated in the Sigrid system settings page, instead of proceeding with the analysis and failing with a confusing error.
 
+**Fixed:** Custom CA certificates were not being passed through to the feedback step, causing TLS failures when posting PR/MR comments on platforms configured with a custom certificate.  The `SIGRID_CA_CERT` value (or the new `CICD_CA_CERT` if set) is now forwarded correctly. A dedicated `CICD_CA_CERT` variable is now available if your CI/CD platform uses a different certificate than Sigrid itself.
+
 <details markdown="1">
 <summary>Details</summary>
 

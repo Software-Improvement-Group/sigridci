@@ -6,7 +6,8 @@ SIG uses [continuous delivery](https://en.wikipedia.org/wiki/Continuous_delivery
 ### June 22, 2026
 
 - **Sigrid CI:** PR feedback comments can now be posted directly using the built-in `GITHUB_TOKEN`, making the `mshick/add-pr-comment` action optional. No additional configuration is required.
-- **On-premise:** The Sigrid Multi-Analyzer now fails early when a system has been deactivated in the Sigrid system settings page. See the [On-premise release notes](../organization-integration/onpremise-release-notes.md) for details.
+- **On-premise:** The Sigrid Multi-Analyzer now fails early when a system has been deactivated in the Sigrid system settings page.
+- **On-premise:** Fixed custom CA certificates not being passed through when posting PR/MR feedback comments. See the [On-premise release notes](../organization-integration/onpremise-release-notes.md) for details.
 
 ### June 16, 2026
 
