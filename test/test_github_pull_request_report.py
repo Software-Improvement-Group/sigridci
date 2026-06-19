@@ -102,6 +102,28 @@ class GitHubPullRequestReportTest(TestCase):
 
         self.assertTrue(message for message in UploadLog.history if any(message.startswith("Error contacting GitHub")))
 
+    @mock.patch.dict(os.environ, MOCK_GITHUB_ENV | {"SIGRIDCI_GITHUB_COMMENT_TOKEN" : "1234", "GITHUB_REF" : "refs/heads/main"})
+    def testNotInPipelineWhenRefIsNotAPullRequest(self):
+        github = GitHubPullRequestReport(MaintainabilityMarkdownReport())
+
+        self.assertFalse(github.isWithinGitHubPullRequestPipeline(self.options))
+        self.assertIsNone(github.getPullRequestNumber())
+
+    @mock.patch.dict(os.environ, MOCK_GITHUB_ENV)
+    def testPullRequestNumberOnlyParsedFromActualPullRefs(self):
+        github = GitHubPullRequestReport(MaintainabilityMarkdownReport())
+        cases = {
+            "refs/pull/5678/merge": "5678",   # real PR ref
+            "refs/heads/123": None,           # digit-named branch, not a PR
+            "refs/tags/v1": None,
+            "refs/pull/abc/merge": None,      # non-numeric PR number
+            "refs/pull": None,                # truncated
+            "": None,                         # missing
+        }
+        for ref, expected in cases.items():
+            with mock.patch.dict(os.environ, {"GITHUB_REF": ref}):
+                self.assertEqual(expected, github.getPullRequestNumber(), ref)
+
 
 class MockGitHub(GitHubPullRequestReport):
 

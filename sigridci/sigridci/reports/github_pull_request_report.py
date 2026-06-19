@@ -49,8 +49,9 @@ class GitHubPullRequestReport(Report):
 
     def isWithinGitHubPullRequestPipeline(self, options):
         return os.environ.get("GITHUB_EVENT_NAME") == "pull_request" and \
+            options.runMode == RunMode.FEEDBACK_ONLY and \
             "SIGRIDCI_GITHUB_COMMENT_TOKEN" in os.environ and \
-            options.runMode == RunMode.FEEDBACK_ONLY
+            self.getPullRequestNumber() is not None
 
     def callAPI(self, method, url, body):
         request = urllib.request.Request(url, body, method=method)
@@ -63,10 +64,12 @@ class GitHubPullRequestReport(Report):
 
     def getPullRequestNumber(self):
         # GITHUB_REF format for pull requests: refs/pull/{number}/merge
-        parts = os.environ["GITHUB_REF"].split("/")
-        if len(parts) < 3 or not parts[2].isdigit():
-            raise ValueError(f"Could not extract PR number from GITHUB_REF: {os.environ['GITHUB_REF']}")
-        return parts[2]
+        ref = os.environ.get("GITHUB_REF", "")
+        parts = ref.split("/")
+        if len(parts) >= 3 and parts[0] == "refs" and parts[1] == "pull" and parts[2].isdigit():
+            return parts[2]
+        UploadLog.log(f"Could not extract pull request number from GITHUB_REF '{ref}'; skipping pull request comment")
+        return None
 
     def buildCommentsURL(self):
         baseURL = os.environ.get("GITHUB_API_URL", "https://api.github.com")
