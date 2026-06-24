@@ -50,6 +50,8 @@ class PublishOptions:
     SYSTEM_NAME_LENGTH = range(2, 65)
     SUBSYSTEM_NAME_PATTERN = re.compile(r'^[A-Za-z0-9][A-Za-z0-9._\-/]*[A-Za-z0-9]$')
     SUBSYSTEM_CONSECUTIVE_PATTERN = re.compile(r'[./]{2,}')
+    SCOPE_FILE_NAMES = ["sigrid.yaml", "sigrid.yml"]
+    METADATA_FILE_NAMES = ["sigrid-metadata.yaml", "sigrid-metadata.yml"]
 
     def getSystemId(self):
         return f"{self.partner}-{self.customer}-{self.system}"
@@ -67,10 +69,10 @@ class PublishOptions:
             not bool(self.SUBSYSTEM_CONSECUTIVE_PATTERN.search(self.subsystem))
 
     def readScopeFile(self):
-        return self.locateFile(["sigrid.yaml", "sigrid.yml"])
+        return self.locateFile(self.SCOPE_FILE_NAMES)
 
     def readMetadataFile(self):
-        return self.locateFile(["sigrid-metadata.yaml", "sigrid-metadata.yml"])
+        return self.locateFile(self.METADATA_FILE_NAMES)
 
     def locateFile(self, possibleFileNames):
         for file in possibleFileNames:
