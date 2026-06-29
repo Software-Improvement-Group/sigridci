@@ -17,7 +17,7 @@ The Helm chart is published under the name `sigrid-stack`.
 
 ### Release 1.0.20260630 - BREAKING CHANGE
 
-**Change:** The bundled Bitnami `postgresql` subchart has been removed from `sigrid-stack`. The standard PostgreSQL setup, as described in [the on-premise Kubernetes documentation](onpremise-kubernetes.md#c-postgresql), is unchanged: provide your own PostgreSQL (managed service, in-cluster operator/StatefulSet, or anything reachable) and initialize it either manually with `psql` or automatically via [`global.onPremise.postgresInit`](onpremise-automated-database-initialization.md).
+**Change:** The bundled Bitnami `postgresql` subchart has been removed from `sigrid-stack`. The standard PostgreSQL setup, as described in [the on-premise Kubernetes documentation](onpremise-kubernetes.md#c-postgresql), is unchanged: provide your own PostgreSQL and initialize it either manually with `psql` or automatically via [`global.onPremise.postgresInit`](onpremise-automated-database-initialization.md).
 
 <details markdown="1">
 <summary>Details</summary>
