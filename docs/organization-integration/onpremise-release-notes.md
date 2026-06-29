@@ -15,6 +15,18 @@ For a complete overview of all Sigrid changes, refer to the [general release not
 
 The Helm chart is published under the name `sigrid-stack`.
 
+### Release 1.0.20260629 - BREAKING CHANGE
+
+**Change:** The bundled Bitnami `postgresql` subchart has been removed from `sigrid-stack`. The standard PostgreSQL setup, as described in [the on-premise Kubernetes documentation](onpremise-kubernetes.md#c-postgresql), is unchanged: provide your own PostgreSQL (managed service, in-cluster operator/StatefulSet, or anything reachable) and initialize it either manually with `psql` or automatically via [`global.onPremise.postgresInit`](onpremise-automated-database-initialization.md).
+
+<details markdown="1">
+<summary>Details</summary>
+
+**Breaking:** Only impactful if your deployment had `postgresql.enabled: true` (the bundled demo Postgres). Any `postgresql:` block in your values.yaml will now be ignored and can be removed.
+
+**Actions:** If you were relying on the bundled subchart, provision a PostgreSQL instance reachable from the cluster and point the application database URLs at it.
+</details>
+
 ### Release 1.0.20260622
 
 **Fixed:** The Sigrid Multi-Analyzer now fails early when a system has been deactivated in the Sigrid system settings page, instead of proceeding with the analysis and failing with a confusing error.
