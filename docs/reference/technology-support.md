@@ -430,29 +430,30 @@ In addition to supporting 300+ technologies, Sigrid also supports various open s
 
 | Open source ecosystem | Common technologies    | Vulnerability risk | License risk | Freshness risk | Transitive dependencies | Notes                                                                            |
 |-----------------------|------------------------|--------------------|--------------|----------------|-------------------------|----------------------------------------------------------------------------------|
-| Bower                 | JavaScript             | ✅                  | ✅            | ✅              | ❌                       |
-| Cargo                 | Rust                   | ✅                  | ✅            | ✅              | ✅                       |
+| Bower                 | JavaScript             | ✅                  | ✅            | ✅              | ❌                       |                                                                                  |
+| Cargo                 | Rust                   | ✅                  | ✅            | ✅              | ✅                       |                                                                                  |
 | CocoaPods             | Swift, Objective-C     | ❌                  | ❌            | ❌              | ❌                       | End-of-life, as CocoaPods itself is shutting down.                               |
-| Composer              | PHP                    | ✅                  | ✅            | ✅              | ✅                       |
-| Go Modules            | Go                     | ✅                  | ✅            | ✅              | ✅                       |
+| Composer              | PHP                    | ✅                  | ✅            | ✅              | ✅                       |                                                                                  |
+| Go Modules            | Go                     | ✅                  | ✅            | ✅              | ✅                       |                                                                                  |
 | Gradle                | Java, Kotlin, Groovy   | ✅                  | ✅            | ✅              | ✅                       | [Instructions for publishing](../capabilities/osh-upload-instructions.md#gradle) |
-| Ivy                   | Java                   | ✅                  | ✅            | ✅              | ✅                       |
-| LibMan                | JavaScript             | ✅                  | ✅            | ✅              | ❌                       |
+| Hex                   | Erlang, Elixir         | ❌                  | ❌            | ❌              | ✅                       |                                                                                  |
+| Ivy                   | Java                   | ✅                  | ✅            | ✅              | ✅                       |                                                                                  |
+| LibMan                | JavaScript             | ✅                  | ✅            | ✅              | ❌                       |                                                                                  |
 | Maven                 | Java                   | ✅                  | ✅            | ✅              | ✅                       | [Instructions for publishing](../capabilities/osh-upload-instructions.md#maven)  |
-| NPM                   | JavaScript, TypeScript | ✅                  | ✅            | ✅              | ✅                       |
-| NuGet                 | C#                     | ✅                  | ✅            | ✅              | ✅                       |
-| PNPM                  | JavaScript, TypeScript | ✅                  | ✅            | ✅              | ✅                       |
+| NPM                   | JavaScript, TypeScript | ✅                  | ✅            | ✅              | ✅                       |                                                                                  |
+| NuGet                 | C#                     | ✅                  | ✅            | ✅              | ✅                       |                                                                                  |
+| PNPM                  | JavaScript, TypeScript | ✅                  | ✅            | ✅              | ✅                       |                                                                                  |
 | Poetry                | Python                 | ✅                  | ✅            | ✅              | ✅                       | [Instructions for publishing](../capabilities/osh-upload-instructions.md#poetry) |
-| pub.dev               | Dart, Flutter          | ✅                  | ❌            | ✅              | ❌                       |
-| PuppetForge           | Puppet                 | ❌                  | ✅            | ✅              | ❌                       |
-| PyPi                  | Python                 | ✅                  | ✅            | ✅              | ✅                       |
-| RubyGems              | Ruby                   | ✅                  | ✅            | ✅              | ✅                       |
-| SBT                   | Scala                  | ✅                  | ✅            | ✅              | ✅                       |
-| SwiftPM               | Swift                  | ❌                  | ✅            | ✅              | ❌                       |
-| UV                    | Python                 | ✅                  | ✅            | ✅              | ✅                       | 
-| Unmanaged JAR files   | Java                   |
-| Unmanaged DLL files   | C#                     | 
-| Unmanaged JS files    | JavaScript             |
+| pub.dev               | Dart, Flutter          | ✅                  | ❌            | ✅              | ❌                       |                                                                                  |
+| PuppetForge           | Puppet                 | ❌                  | ✅            | ✅              | ❌                       |                                                                                  |
+| PyPi                  | Python                 | ✅                  | ✅            | ✅              | ✅                       |                                                                                  |
+| RubyGems              | Ruby                   | ✅                  | ✅            | ✅              | ✅                       |                                                                                  |
+| SBT                   | Scala                  | ✅                  | ✅            | ✅              | ✅                       |                                                                                  |
+| SwiftPM               | Swift                  | ❌                  | ✅            | ✅              | ❌                       |                                                                                  |
+| UV                    | Python                 | ✅                  | ✅            | ✅              | ✅                       |                                                                                  |
+| Unmanaged JAR files   | Java                   |                    |              |                |                         |                                                                                  |
+| Unmanaged DLL files   | C#                     |                    |              |                |                         |                                                                                  |
+| Unmanaged JS files    | JavaScript             |                    |              |                |                         |                                                                                  |
 
 ## Supported security analyzers
 
