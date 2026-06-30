@@ -15,14 +15,14 @@ For a complete overview of all Sigrid changes, refer to the [general release not
 
 The Helm chart is published under the name `sigrid-stack`.
 
-### Release 1.0.20260630 - BREAKING CHANGE
+### Release 1.0.20260701 - BREAKING CHANGE
 
 **Change:** The bundled Bitnami `postgresql` subchart has been removed from `sigrid-stack`. **Only impactful if your deployment had `postgresql.enabled: true`** — the standard PostgreSQL setup ([your own database](onpremise-kubernetes.md#c-postgresql), initialized manually with `psql` or automatically via [`global.onPremise.postgresInit`](onpremise-automated-database-initialization.md)) is unchanged.
 
 <details markdown="1">
 <summary>Details</summary>
 
-**Breaking:** On `helm upgrade`, the bundled Postgres pod and Service are torn down; the data volume is left behind but no longer attached to anything.
+**Breaking:** On `helm upgrade`, the bundled Postgres pod and Service are torn down, _if_ you had this enabled; the data volume is left behind but no longer attached to anything.
 
 **Actions:** Before upgrading, provide your own PostgreSQL, migrate the data, and update the application database URLs.
 </details>
