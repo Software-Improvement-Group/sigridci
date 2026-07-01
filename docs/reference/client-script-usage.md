@@ -35,6 +35,7 @@ The script takes a limited number of mandatory arguments. However, Sigrid CI's b
 | `--include`                   | No       | /build/,.png        | Comma-separated list of file and/or directory names that should be included in the upload. [6, 7]                                 |
 | `--showupload`                | No       | N/A                 | Logs the contents of the upload before submitting it to Sigrid.                                                                   |
 | `--convert`                   | No       | beinformed          | Used for some technologies. See [technology conversion configuration](technology-support.md#technology-conversion-configuration). |
+| `--detaillevel`               | No       | all                 | Detail level for how much feedback to provide. Either 'default' or 'full'.                                                        | 
 | `--out`                       | No       | /tmp                | Output directory for Sigrid CI feedback, default is `sigrid-ci-output`.                                                           |
 | `--ignore-missing-scope-file` | No       | N/A                 | Don't fail if the `sigrid.yaml` scope file is missing (e.g. if it's provided through a different repository).                     |
 

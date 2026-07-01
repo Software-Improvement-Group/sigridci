@@ -22,7 +22,6 @@ from ..platform import Platform, SECURITY_BETA_DOCS
 
 
 class MaintainabilityMarkdownReport(Report, MarkdownRenderer):
-    MAX_SHOWN_FINDINGS = 8
     MAX_OCCURRENCES = 3
 
     RISK_CATEGORY_SYMBOLS = {
@@ -144,15 +143,15 @@ class MaintainabilityMarkdownReport(Report, MarkdownRenderer):
         md += "| Risk | System property | Location |\n"
         md += "|------|-----------------|----------|\n"
 
-        for rc in refactoringCandidates[0:self.MAX_SHOWN_FINDINGS]:
+        for rc in refactoringCandidates[0:options.getMaxShownFindings()]:
             symbol = self.RISK_CATEGORY_SYMBOLS[rc["riskCategory"]]
             metricName = self.formatMetricName(rc["metric"])
             metricInfo = f"**{metricName}**{self.tableLineSeparator}({rc['category'].title()})"
             location = self.formatRefactoringCandidateLocation(rc, options)
             md += f"| {symbol} | {metricInfo} | {location} |\n"
 
-        if len(refactoringCandidates) > self.MAX_SHOWN_FINDINGS:
-            md += f"| ⚫️ | | + {len(refactoringCandidates) - self.MAX_SHOWN_FINDINGS} more |"
+        if len(refactoringCandidates) > options.getMaxShownFindings():
+            md += f"| ⚪️ | | + {len(refactoringCandidates) - options.getMaxShownFindings()} more |"
 
         return md + "\n"
 

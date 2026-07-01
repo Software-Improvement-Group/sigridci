@@ -192,3 +192,60 @@ class SecurityMarkdownReportTest(TestCase):
         """
 
         self.assertEqual(markdown.strip(), inspect.cleandoc(expected).strip())
+
+    @mock.patch.dict(os.environ, {"SIGRID_CI_MARKDOWN_HTML" : "false"})
+    def testLimitNumberOfFindingsByDetault(self):
+        report = SecurityMarkdownReport(self.options, "HIGH")
+        report.decorateLinks = False
+        originalFindings = report.extractFindings(self.feedback)
+        manyFindings = originalFindings + originalFindings + originalFindings + originalFindings
+        markdown = report.generateFindingsTable(manyFindings, self.options)
+
+        expected = """
+            | Risk | Meets objective? | File | Finding |
+            |----|----|----|----|
+            | 🟣 | ❌ | neutron/neutron/db/sqlalchemytypes.py:51 | Puma4 |
+            | 🟣 | ❌ | test:1 | Insecure_Randomness |
+            | 🟣 | ✅ | test:1 | Insecure_Randomness |
+            | 🟣 | ❌ | neutron/neutron/db/sqlalchemytypes.py:51 | Puma4 |
+            | 🟣 | ❌ | test:1 | Insecure_Randomness |
+            | 🟣 | ✅ | test:1 | Insecure_Randomness |
+            | 🟣 | ❌ | neutron/neutron/db/sqlalchemytypes.py:51 | Puma4 |
+            | 🟣 | ❌ | test:1 | Insecure_Randomness |
+            | | ... and 8 more findings | | |
+        """
+
+        self.assertEqual(markdown.strip(), inspect.cleandoc(expected).strip())
+
+    @mock.patch.dict(os.environ, {"SIGRID_CI_MARKDOWN_HTML" : "false"})
+    def testShowFullListOfFindingsBasedOnOption(self):
+        self.options.detailLevel = "full"
+
+        report = SecurityMarkdownReport(self.options, "HIGH")
+        report.decorateLinks = False
+        originalFindings = report.extractFindings(self.feedback)
+        manyFindings = originalFindings + originalFindings + originalFindings + originalFindings
+        markdown = report.generateFindingsTable(manyFindings, self.options)
+
+        expected = """
+            | Risk | Meets objective? | File | Finding |
+            |----|----|----|----|
+            | 🟣 | ❌ | neutron/neutron/db/sqlalchemytypes.py:51 | Puma4 |
+            | 🟣 | ❌ | test:1 | Insecure_Randomness |
+            | 🟣 | ✅ | test:1 | Insecure_Randomness |
+            | 🟣 | ❌ | neutron/neutron/db/sqlalchemytypes.py:51 | Puma4 |
+            | 🟣 | ❌ | test:1 | Insecure_Randomness |
+            | 🟣 | ✅ | test:1 | Insecure_Randomness |
+            | 🟣 | ❌ | neutron/neutron/db/sqlalchemytypes.py:51 | Puma4 |
+            | 🟣 | ❌ | test:1 | Insecure_Randomness |
+            | 🟣 | ✅ | test:1 | Insecure_Randomness |
+            | 🟣 | ❌ | neutron/neutron/db/sqlalchemytypes.py:51 | Puma4 |
+            | 🟣 | ❌ | test:1 | Insecure_Randomness |
+            | 🟣 | ✅ | test:1 | Insecure_Randomness |
+            | 🔴 | ⚠️ | neutron/neutron/ipam/drivers/neutrondb_ipam/driver.py:51 | Puma2 |
+            | 🔴 | ⚠️ | neutron/neutron/ipam/drivers/neutrondb_ipam/driver.py:51 | Puma2 |
+            | 🔴 | ⚠️ | neutron/neutron/ipam/drivers/neutrondb_ipam/driver.py:51 | Puma2 |
+            | 🔴 | ⚠️ | neutron/neutron/ipam/drivers/neutrondb_ipam/driver.py:51 | Puma2 |
+        """
+
+        self.assertEqual(markdown.strip(), inspect.cleandoc(expected).strip())

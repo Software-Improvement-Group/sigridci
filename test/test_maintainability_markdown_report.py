@@ -207,7 +207,7 @@ class MaintainabilityMarkdownReportTest(TestCase):
             | 🟠 | **Unit Size** • (Introduced) | aap-6 |
             | 🟠 | **Unit Size** • (Introduced) | aap-7 |
             | 🟠 | **Unit Size** • (Introduced) | aap-8 |
-            | ⚫️ | | + 91 more |
+            | ⚪️ | | + 91 more |
         """
 
         self.assertEqual(table.strip(), inspect.cleandoc(expected).strip())

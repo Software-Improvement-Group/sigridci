@@ -22,7 +22,6 @@ from ..platform import SECURITY_EXCLUDE_RULE_DOCS, SECURITY_EXCLUDE_FILE_DOCS, S
 
 
 class SecurityMarkdownReport(Report, MarkdownRenderer):
-    MAX_FINDINGS = 8
     SEVERITY_SYMBOLS = {
         "CRITICAL" : "🟣",
         "HIGH" : "🔴",
@@ -101,14 +100,14 @@ class SecurityMarkdownReport(Report, MarkdownRenderer):
         md = "| Risk | Meets objective? | File | Finding |\n"
         md += "|----|----|----|----|\n"
 
-        for finding in sorted(findings, key=lambda f: Objective.sortBySeverity(f.risk))[0:self.MAX_FINDINGS]:
+        for finding in sorted(findings, key=lambda f: Objective.sortBySeverity(f.risk))[0:options.getMaxShownFindings()]:
             severitySymbol = self.SEVERITY_SYMBOLS[finding.risk]
             objectiveSymbol = self.formatObjectiveSymbol(finding)
             link = self.decorateLink(options, f"{finding.file}:{finding.line}", finding.file, finding.line)
             md += f"| {severitySymbol} | {objectiveSymbol} | {link} | {finding.description} |\n"
 
-        if len(findings) > self.MAX_FINDINGS:
-            md += f"| | ... and {len(findings) - self.MAX_FINDINGS} more findings | | |\n"
+        if len(findings) > options.getMaxShownFindings():
+            md += f"| | ... and {len(findings) - options.getMaxShownFindings()} more findings | | |\n"
 
         return f"{md}\n"
 
