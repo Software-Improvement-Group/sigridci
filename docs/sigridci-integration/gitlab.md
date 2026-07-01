@@ -8,7 +8,7 @@ This documentation covers cloud-based Sigrid. For on-premise Sigrid, refer to th
 
 - You have a [Sigrid](https://sigrid-says.com) user account. 
 - You have created an [authentication token for using Sigrid CI](../organization-integration/authentication-tokens.md).
-- [Python 3.7 or higher](https://www.python.org) needs to be available in the CI environment if you do not use the [Docker image](https://hub.docker.com/r/softwareimprovementgroup/sigridci) published by SIG. The client scripts for Sigrid CI are based on Python.
+- [Python 3.9 or higher](https://www.python.org) needs to be available in the CI environment if you do not use the [Docker image](https://hub.docker.com/r/softwareimprovementgroup/sigridci) published by SIG. The client scripts for Sigrid CI are based on Python.
 
 ## On-boarding your system to Sigrid
 
