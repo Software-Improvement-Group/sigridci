@@ -82,7 +82,7 @@ class SecurityMarkdownReport(Report, MarkdownRenderer):
             details += "## 😑 You have remaining security findings\n\n"
             details += f"> You have **{len(remaining)}** open security findings"
             if len(accepted) > 0:
-                details += f" and **{len(accepted)}** security findings for which you have previous accepted the risk"
+                details += f" and **{len(accepted)}** security findings for which you have previously accepted the risk"
             details += f".\n[You can view these findings in Sigrid]({sigridLink}).\n\n"
 
         return self.renderMarkdownTemplate(feedback, options, details, sigridLink)

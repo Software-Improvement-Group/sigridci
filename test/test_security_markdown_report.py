@@ -75,7 +75,7 @@ class SecurityMarkdownReportTest(TestCase):
             
             ## 😑 You have remaining security findings
 
-            > You have **0** open security findings and **1** security findings for which you have previous accepted the risk.
+            > You have **0** open security findings and **1** security findings for which you have previously accepted the risk.
             [You can view these findings in Sigrid](https://sigrid-says.com/aap/noot/-/security).
             
             
