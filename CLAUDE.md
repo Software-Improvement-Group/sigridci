@@ -17,7 +17,7 @@ Sigrid CI is used across a variety of enterprise environments. Some people use t
 run the code natively. This makes portability the top concern:
 
 - Do not update the required Python version. We need to be very conservative to ensure portability.
-- Do not depend on libraries in production code. 
+- Do not depend on any external library in production code. Limit yourself to Python's standard library ONLY. 
 - It's OK to depend on libraries in test code.
 
 ## Architecture
