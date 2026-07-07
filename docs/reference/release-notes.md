@@ -3,6 +3,10 @@ Sigrid release notes
 
 SIG uses [continuous delivery](https://en.wikipedia.org/wiki/Continuous_delivery), meaning that every change to Sigrid or the underlying analysis is released once our development pipeline has completed. On average, we release somewhere between 10 and 20 times per day. This page therefore doesn't list every single change, since that would quickly lead to an excessively long list of small changes. Instead, this page lists Sigrid and analysis changes that we consider noteworthy for the typical Sigrid user.
 
+### July 13, 2026
+
+- **Sigrid CI:** By default, Sigrid CI will only point out the top issues in its feedback, to avoid overwhelming people with huge lists of findings. But some people *do* want to see all findings. We have added [an option to configure how detailed Sigrid CI feedback should be](client-script-usage.md#command-line-options). If you add `--detaillevel full`, Sigrid CI will point out every single finding in its feedback. 
+
 ### June 29, 2026
 
 - **Code Explorer:** The user interface within the Code Explorer has been expanded to be more flexible. You can now choose to collapse the source code, giving you more space to browse the list of findings. The [Code Explorer documentation](../capabilities/system-code-explorer.md) has been updated accordingly. 

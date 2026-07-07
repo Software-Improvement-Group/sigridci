@@ -16,7 +16,7 @@ import os
 import re
 from dataclasses import dataclass, field
 from enum import Enum
-from typing import List
+from typing import List, Literal
 
 from .capability import Capability, OPEN_SOURCE_HEALTH, MAINTAINABILITY
 
@@ -39,6 +39,7 @@ class PublishOptions:
     includeHistory: bool = False
     showUploadContents: bool = False
     convert: str = None
+    detailLevel: Literal["default", "full"] = "default"
     outputDir: str = "sigrid-ci-output"
     sigridURL: str = "https://sigrid-says.com"
     feedbackURL: str = "https://docs.sigrid-says.com/landing/feedback.html"
@@ -80,3 +81,8 @@ class PublishOptions:
                 with open(f"{self.sourceDir}/{file}", "r") as f:
                     return f.read()
         return None
+
+    def getMaxShownFindings(self):
+        if self.detailLevel == "full":
+            return 9999
+        return 8
