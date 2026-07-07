@@ -3,6 +3,10 @@ Sigrid release notes
 
 SIG uses [continuous delivery](https://en.wikipedia.org/wiki/Continuous_delivery), meaning that every change to Sigrid or the underlying analysis is released once our development pipeline has completed. On average, we release somewhere between 10 and 20 times per day. This page therefore doesn't list every single change, since that would quickly lead to an excessively long list of small changes. Instead, this page lists Sigrid and analysis changes that we consider noteworthy for the typical Sigrid user.
 
+### July 13, 2026
+
+- **Sigrid CI:** Added an option to make Sigrid CI wait until the analysis results are available from Sigrid. This is disabled by default, as there is typically no reason to make the pipeline wait for this. This option is available from both "normal" Sigrid CI and from the [multi-repository upload script for consultancy engagements](../organization-integration/upload-instructions.md). You can find this new option in the [Sigrid CI option reference](client-script-usage.md).
+
 ### June 29, 2026
 
 - **Code Explorer:** The user interface within the Code Explorer has been expanded to be more flexible. You can now choose to collapse the source code, giving you more space to browse the list of findings. The [Code Explorer documentation](../capabilities/system-code-explorer.md) has been updated accordingly. 

@@ -1,4 +1,4 @@
-# Copyright 2024 Software Improvement Group
+# Copyright Software Improvement Group
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -179,7 +179,7 @@ class EndToEndTest(unittest.TestCase):
             origin = _make_local_git_repo(tmp, "my-service")
             assertions_made = {}
 
-            def fake_run_sigridci(sigridci_script, customer, system, source_dir, sigrid_url):
+            def fake_run_sigridci(sigridci_script, customer, system, source_dir, sigrid_url, wait_for_publish):
                 assertions_made["customer"] = customer
                 assertions_made["system"] = system
                 assertions_made["sigrid_url"] = sigrid_url
@@ -221,7 +221,3 @@ class EndToEndTest(unittest.TestCase):
                  patch.object(sys, "argv", argv):
                 with self.assertRaises(SystemExit):
                     _mod.main()
-
-
-if __name__ == "__main__":
-    unittest.main()

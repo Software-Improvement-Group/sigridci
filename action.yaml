@@ -54,6 +54,10 @@ inputs:
     description: "The desired target quality threshold"
     required: false
     type: "number"
+  waitforpublish:
+    description: "Blocks the script until the results are available in Sigrid."
+    required: false
+    default: false
     
   # Sigrid metadata
   displayname:
@@ -120,6 +124,8 @@ runs:
     - ${{ inputs.convert }}
     - "--capability"
     - ${{ inputs.capability }}
+    - "--wait-for-publish"
+    - ${{ inputs.waitforpublish }}
   env:
     displayname: ${{ inputs.displayname }}
     divisionname: ${{ inputs.divisionname }}
