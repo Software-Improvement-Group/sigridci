@@ -5,6 +5,7 @@ SIG uses [continuous delivery](https://en.wikipedia.org/wiki/Continuous_delivery
 
 ### July 13, 2026
 
+- **IDE integrations:** The Sigrid extension for JetBrains IDEs is now available from [the JetBrains Marketplace](https://plugins.jetbrains.com/plugin/32479-sigrid). You can find more information on how to use the IDE extension in [the documentation](../integrations/jetbrains-extension.md).
 - **Sigrid CI:** By default, Sigrid CI will only point out the top issues in its feedback, to avoid overwhelming people with huge lists of findings. But some people *do* want to see all findings. We have added [an option to configure how detailed Sigrid CI feedback should be](client-script-usage.md#command-line-options). If you add `--detaillevel full`, Sigrid CI will point out every single finding in its feedback. 
 
 ### June 29, 2026
