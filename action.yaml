@@ -131,7 +131,7 @@ runs:
     - "--detaillevel"
     - ${{ inputs.detaillevel }}
     - "--wait-for-publish"
-    - ${{ inputs.waitforpublish }}
+    - ${{ (inputs.waitforpublish == 'true' && '--showupload') || '--dummy' }}
   env:
     displayname: ${{ inputs.displayname }}
     divisionname: ${{ inputs.divisionname }}
