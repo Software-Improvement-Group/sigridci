@@ -121,9 +121,10 @@ class SigridCiRunner:
 
     def loadFeedbackBaseline(self, capability):
         if capability == OPEN_SOURCE_HEALTH:
-            return self.apiClient.fetchOpenSourceHealth()
-        else:
-            return None
+            oshBaseline = self.apiClient.fetchOpenSourceHealth()
+            if oshBaseline and "metadata" in oshBaseline:
+                return oshBaseline
+        return None
 
     def validateConfigurationFiles(self, metadata):
         scope = self.options.readScopeFile()

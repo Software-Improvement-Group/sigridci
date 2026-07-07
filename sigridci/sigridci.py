@@ -46,6 +46,7 @@ def parsePublishOptions(args):
         includePatterns=args.include.split(","),
         includeHistory=True,
         showUploadContents=args.showupload,
+        detailLevel=args.detaillevel,
         outputDir=args.out,
         sigridURL=args.sigridurl,
         ignoreMissingScopeFile=args.ignore_missing_scope_file
@@ -90,6 +91,7 @@ if __name__ == "__main__":
     parser.add_argument("--exclude", type=str, default="", help="Comma-separated list of files/directories to exclude.")
     parser.add_argument("--include", type=str, default="", help="Comma-separated list of files/directories to include.")
     parser.add_argument("--showupload", action="store_true", help="Logs the contents of the upload published to Sigrid.")
+    parser.add_argument("--detaillevel", type=str, default="default", help="Detail level for how much feedback to provide.")
     parser.add_argument("--out", type=str, default="sigrid-ci-output", help="Output directory for Sigrid CI feedback.")
     parser.add_argument("--sigridurl", type=str, default="https://sigrid-says.com", help="Sigrid base URL.")
     parser.add_argument("--wait-for-publish", action="store_true", help="Blocks the script until the results are available in Sigrid.")
