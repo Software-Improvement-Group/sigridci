@@ -23,7 +23,13 @@ from .upload_log import UploadLog
 
 class SystemUploadPacker:
     MAX_UPLOAD_SIZE_MB = 500
-    ALWAYS_INCLUDE = (RepositoryHistoryExporter.LIGHTWEIGHT_HISTORY_EXPORT_FILE)
+
+    ALWAYS_INCLUDE = tuple(
+        [RepositoryHistoryExporter.LIGHTWEIGHT_HISTORY_EXPORT_FILE] +
+        PublishOptions.SCOPE_FILE_NAMES +
+        PublishOptions.METADATA_FILE_NAMES
+    )
+
     EXCLUDE_EXTENSIONS = (".7z",
                           ".amr", ".avi",
                           ".bacpac", ".bil", ".bmp",

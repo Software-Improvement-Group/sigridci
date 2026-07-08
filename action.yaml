@@ -46,6 +46,10 @@ inputs:
   convert:
     description: "Convert upload format. Only required for certain technologies, see Sigrid documentation for details."
     required: false
+  detaillevel:
+    description: "Detail level for how much feedback to provide. Either 'default' or 'full'."
+    required: false
+    default: "default"
   out:
     description: "Output directory for Sigrid CI feedback."
     required: false
@@ -120,6 +124,8 @@ runs:
     - ${{ inputs.convert }}
     - "--capability"
     - ${{ inputs.capability }}
+    - "--detaillevel"
+    - ${{ inputs.detaillevel }}
   env:
     displayname: ${{ inputs.displayname }}
     divisionname: ${{ inputs.divisionname }}

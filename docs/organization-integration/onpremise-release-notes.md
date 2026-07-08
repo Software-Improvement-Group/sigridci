@@ -15,6 +15,30 @@ For a complete overview of all Sigrid changes, refer to the [general release not
 
 The Helm chart is published under the name `sigrid-stack`.
 
+### Release 1.0.20260701 - BREAKING CHANGE
+
+**Change:** The bundled Bitnami `postgresql` subchart has been removed from `sigrid-stack`. **Only impactful if your deployment had `postgresql.enabled: true`** — the standard PostgreSQL setup ([your own database](onpremise-kubernetes.md#c-postgresql), initialized manually with `psql` or automatically via [`global.onPremise.postgresInit`](onpremise-automated-database-initialization.md)) is unchanged.
+
+<details markdown="1">
+<summary>Details</summary>
+
+**Breaking:** On `helm upgrade`, the bundled Postgres pod and Service are torn down, _if_ you had this enabled; the data volume is left behind but no longer attached to anything.
+
+**Actions:** Before upgrading, provide your own PostgreSQL, migrate the data, and update the application database URLs.
+</details>
+
+### Release 1.0.20260622
+
+**Fixed:** The Sigrid Multi-Analyzer now fails early when a system has been deactivated in the Sigrid system settings page, instead of proceeding with the analysis and failing with a confusing error.
+
+**Fixed:** Custom CA certificates were not being passed through to the feedback step, causing TLS failures when posting PR/MR comments on platforms configured with a custom certificate.  The `SIGRID_CA_CERT` value (or the new `CICD_CA_CERT` if set) is now forwarded correctly. A dedicated `CICD_CA_CERT` variable is now available if your CI/CD platform uses a different certificate than Sigrid itself.
+
+<details markdown="1">
+<summary>Details</summary>
+
+**Actions:** Update the Sigrid Helm chart, Sigrid deployment images, and Sigrid-Multi-Analyzer image. No configuration changes required.
+</details>
+
 ### Release 1.0.20260616
 
 **Fixed:** The Sigrid Multi-Analyzer now validates your Sigrid credentials and configuration *before* starting an analysis. The pipeline job now fails fast with a clear message when the `SIGRID_CI_TOKEN` is missing or incomplete, when the configured system name is invalid, or when the token does not have access to the system (HTTP 401/403). When the system does not exist in Sigrid yet, the job clearly reports that it will be on-boarded on the first analysis, instead of failing with a confusing error.

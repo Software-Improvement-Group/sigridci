@@ -363,8 +363,6 @@ pre {
     padding: 16px;
     border-radius: 8px;
     font-family: "Menlo", monospace;
-    margin-left: auto;
-    margin-right: auto;
 }
 
 p > code, li > code {
