@@ -29,25 +29,27 @@ On Windows, use `python sigrid-git-upload.py` instead of `./sigrid-git-upload.py
 
 ## Arguments
 
-| Argument | Required | Description |
-|---|---|---|
-| `SOURCE ...` | Yes | One or more sources to include: remote git URLs (HTTPS/SSH) or local folder paths. |
-| `--customer` | Yes | Name of your organization's Sigrid account. |
-| `--system` | Yes | Name of the system in Sigrid (letters, digits, hyphens). |
-| `--sigrid-yaml` | No | Path to a `sigrid.yaml` scope configuration file to include at the root. |
-| `--sigrid-metadata-yaml` | No | Path to a `sigrid-metadata.yaml` file to include at the root. |
-| `--sigridci-path` | No | Path to a local `sigridci` directory. Defaults to the `sigridci/` directory in this repository. |
-| `--sigrid-url` | No | Sigrid base URL. Defaults to `https://sigrid-says.com`. |
-| `--keep-temp` | No | Keep the temporary working directory after the run and print its location. |
-| `--temp-path` | No | Directory in which to create the temporary working folder. Defaults to the system temp directory. Useful on Windows when the default temp path is long and would cause total path lengths to exceed the 260-character limit. |
+| Argument                 | Required | Description                                                                                                                                                                                                                  |
+|--------------------------|----------|------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| `SOURCE ...`             | Yes      | One or more sources to include: remote git URLs (HTTPS/SSH) or local folder paths.                                                                                                                                           |
+| `--customer`             | Yes      | Name of your organization's Sigrid account.                                                                                                                                                                                  |
+| `--system`               | Yes      | Name of the system in Sigrid (letters, digits, hyphens).                                                                                                                                                                     |
+| `--sigrid-yaml`          | No       | Path to a `sigrid.yaml` scope configuration file to include at the root.                                                                                                                                                     |
+| `--sigrid-metadata-yaml` | No       | Path to a `sigrid-metadata.yaml` file to include at the root.                                                                                                                                                                |
+| `--sigridci-path`        | No       | Path to a local `sigridci` directory. Defaults to the `sigridci/` directory in this repository.                                                                                                                              |
+| `--sigrid-url`           | No       | Sigrid base URL. Defaults to `https://sigrid-says.com`.                                                                                                                                                                      |
+| `--keep-temp`            | No       | Keep the temporary working directory after the run and print its location.                                                                                                                                                   |
+| `--temp-path`            | No       | Directory in which to create the temporary working folder. Defaults to the system temp directory. Useful on Windows when the default temp path is long and would cause total path lengths to exceed the 260-character limit. |
+| `--wait-for-publish`     | No       | Blocks the script until the results are available in Sigrid.                                                                                                                                                                 |
+
 
 ## Environment variables
 
-| Variable | Description |
-|---|---|
-| `SIGRID_CI_TOKEN` | Bearer token for Sigrid API authentication. **Required.** |
-| `SIGRID_CI_PROXY_URL` | HTTP/HTTPS proxy URL (e.g. `http://proxy:8080`). |
-| `SIGRID_CA_CERT` | Path to a custom CA certificate bundle for TLS verification. |
+| Variable              | Description                                                  |
+|-----------------------|--------------------------------------------------------------|
+| `SIGRID_CI_TOKEN`     | Bearer token for Sigrid API authentication. **Required.**    |
+| `SIGRID_CI_PROXY_URL` | HTTP/HTTPS proxy URL (e.g. `http://proxy:8080`).             |
+| `SIGRID_CA_CERT`      | Path to a custom CA certificate bundle for TLS verification. |
 
 ## Example
 

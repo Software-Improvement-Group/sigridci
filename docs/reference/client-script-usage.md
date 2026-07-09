@@ -38,6 +38,7 @@ The script takes a limited number of mandatory arguments. However, Sigrid CI's b
 | `--detaillevel`               | No       | all                 | Detail level for how much feedback to provide. Either 'default' or 'full'.                                                        | 
 | `--out`                       | No       | /tmp                | Output directory for Sigrid CI feedback, default is `sigrid-ci-output`.                                                           |
 | `--ignore-missing-scope-file` | No       | N/A                 | Don't fail if the `sigrid.yaml` scope file is missing (e.g. if it's provided through a different repository).                     |
+| `--wait-for-publish`          | No       | N/A                 | Blocks the script until the results are available in Sigrid.                                                                      |
 
 Notes:
 

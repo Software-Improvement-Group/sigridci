@@ -17,11 +17,13 @@
 import os
 import sys
 from argparse import ArgumentParser, SUPPRESS
+from datetime import datetime, timezone
 
 from sigridci.capability import MAINTAINABILITY, OPEN_SOURCE_HEALTH, SECURITY
 from sigridci.publish_options import PublishOptions, RunMode
 from sigridci.sigrid_api_client import SigridApiClient
 from sigridci.platform import Platform
+from sigridci.publish_poller import PublishPoller
 from sigridci.sigridci_runner import SigridCiRunner
 from sigridci.upload_log import UploadLog
 
@@ -92,6 +94,7 @@ if __name__ == "__main__":
     parser.add_argument("--detaillevel", type=str, default="default", help="Detail level for how much feedback to provide.")
     parser.add_argument("--out", type=str, default="sigrid-ci-output", help="Output directory for Sigrid CI feedback.")
     parser.add_argument("--sigridurl", type=str, default="https://sigrid-says.com", help="Sigrid base URL.")
+    parser.add_argument("--wait-for-publish", action="store_true", help="Blocks the script until the results are available in Sigrid.")
     # These options are now obsolete, but we leave them here to avoid breaking people's configuration.
     parser.add_argument("--include-history", action="store_true", help=SUPPRESS)
     parser.add_argument("--targetquality", type=str, help=SUPPRESS)
@@ -105,6 +108,7 @@ if __name__ == "__main__":
         sys.exit(1)
 
     Platform.checkEnvironment()
+    start = datetime.now(timezone.utc)
     options = parsePublishOptions(args)
     apiClient = SigridApiClient(options)
 
@@ -122,5 +126,9 @@ if __name__ == "__main__":
     UploadLog.log("Starting Sigrid CI")
     runner = SigridCiRunner(options, apiClient)
     exitCode = runner.run()
+
     if options.runMode == RunMode.FEEDBACK_ONLY:
         sys.exit(exitCode)
+    elif args.wait_for_publish:
+        poller = PublishPoller(apiClient)
+        poller.waitForSnapshot(start)

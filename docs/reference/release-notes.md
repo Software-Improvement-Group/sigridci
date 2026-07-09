@@ -5,7 +5,9 @@ SIG uses [continuous delivery](https://en.wikipedia.org/wiki/Continuous_delivery
 
 ### July 13, 2026
 
-- **Sigrid CI:** By default, Sigrid CI will only point out the top issues in its feedback, to avoid overwhelming people with huge lists of findings. But some people *do* want to see all findings. We have added [an option to configure how detailed Sigrid CI feedback should be](client-script-usage.md#command-line-options). If you add `--detaillevel full`, Sigrid CI will point out every single finding in its feedback. 
+- **IDE integrations:** The Sigrid extension for JetBrains IDEs is now available from [the JetBrains Marketplace](https://plugins.jetbrains.com/plugin/32479-sigrid). You can find more information on how to use the IDE extension in [the documentation](../integrations/jetbrains-extension.md).
+- **Sigrid CI:** By default, Sigrid CI will only point out the top issues in its feedback, to avoid overwhelming people with huge lists of findings. But some people *do* want to see all findings. We have added [an option to configure how detailed Sigrid CI feedback should be](client-script-usage.md#command-line-options). If you add `--detaillevel full`, Sigrid CI will point out every single finding in its feedback.
+- **Sigrid CI:** Added an option to make Sigrid CI wait until the analysis results are available from Sigrid. This is disabled by default, as there is typically no reason to make the pipeline wait for this. This option is available from both "normal" Sigrid CI and from the [multi-repository upload script for consultancy engagements](../organization-integration/upload-instructions.md). You can find this new option in the [Sigrid CI option reference](client-script-usage.md).
 
 ### June 29, 2026
 

@@ -1,5 +1,6 @@
 #!/usr/bin/env python3
-# Copyright 2024 Software Improvement Group
+
+# Copyright Software Improvement Group
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -12,7 +13,6 @@
 # WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 # See the License for the specific language governing permissions and
 # limitations under the License.
-"""sigrid-git-upload.py - Upload multiple git repositories or local folders to Sigrid as a single system."""
 
 import argparse
 import io
@@ -124,6 +124,7 @@ def _build_arg_parser() -> argparse.ArgumentParser:
                         help="Keep the temporary working directory after the run and print its location.")
     parser.add_argument("--temp-path", metavar="PATH",
                         help="Directory in which to create the temporary working folder. Defaults to the system temp directory.")
+    parser.add_argument("--wait-for-publish", action="store_true", help="Blocks the script until the results are available in Sigrid.")
     parser.add_argument("sources", nargs="+", metavar="SOURCE",
                         help="One or more git repository URLs or local folder paths to include.")
     return parser
@@ -202,6 +203,7 @@ def _run_sigridci(
     system: str,
     source_dir: str,
     sigrid_url: str,
+    wait_for_publish: bool = False,
 ) -> None:
     print("[3/3] Publishing to Sigrid …")
     cmd = [
@@ -213,6 +215,9 @@ def _run_sigridci(
         "--publishonly",
         "--sigridurl", sigrid_url,
     ]
+    if wait_for_publish:
+        cmd.append("--wait-for-publish")
+
     result = subprocess.run(cmd)
     if result.returncode != 0:
         print("\nERROR: sigridci failed", file=sys.stderr)
@@ -245,7 +250,7 @@ def main() -> None:
         print()
 
         sigridci_script = _resolve_sigridci_script(args.sigridci_path)
-        _run_sigridci(sigridci_script, args.customer, args.system, source_dir, args.sigrid_url)
+        _run_sigridci(sigridci_script, args.customer, args.system, source_dir, args.sigrid_url, args.wait_for_publish)
     finally:
         if args.keep_temp:
             print(f"\nTemporary files kept at: {tmp_dir}")

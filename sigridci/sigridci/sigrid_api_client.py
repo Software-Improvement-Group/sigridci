@@ -180,6 +180,10 @@ class SigridApiClient:
         path = f"/analysis-results/api/v1/security-findings/{self.urlCustomerName}/{self.urlSystemName}"
         return self.retry(lambda: self.callSigridAPI(path, method="HEAD", accept=None))
 
+    def fetchArchitectureGraph(self):
+        path = f"/analysis-results/api/v1/architecture-quality/{self.urlCustomerName}/{self.urlSystemName}/raw"
+        return self.retry(lambda: self.callSigridAPI(path))
+
     def logPlatformInformation(self, platformId):
         try:
             url = f"{self.options.sigridURL}/usage/matomo.php?idsite=6&rec=1&ca=1&e_c=sigridci.platform&e_a={platformId}"
