@@ -66,6 +66,9 @@ So when to use these options:
   - This is suitable for merge commits to the main/master branch. In that situation, you do not need feedback, since you *already had* your feedback in the pull request and there is no reason to receive the same feedback again when merging your changes. 
   - Moreover, this publishes your code to Sigrid in a fire-and-forget fashion, which is faster since the script will not wait for the analysis to complete and will immediately exit. This is suitable for the main/master branch scenario described above, but can also be used in other situations where the fire-and-forget behavior is preferred.
 
+Sigrid CI feedback has a 30-minute timeout. We consider this the maximum time acceptable for blocking your pipeline. If you are using an extremely large system, the analsyis time might exceed 30 minutes. In those situations, we recommend you use the `--publishonly` flow so that your pipeline is not blocking while waiting for Sigrid's analysis to complete.
+{: .attention }
+
 ## Letting Sigrid CI fail your pipeline
 
 Sigrid CI returns a different exit code depending on whether you achieved or failed your
