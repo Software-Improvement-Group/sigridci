@@ -5,9 +5,12 @@ SIG uses [continuous delivery](https://en.wikipedia.org/wiki/Continuous_delivery
 
 ### July 13, 2026
 
+- **Configuration:** Sigrid administrators can now configure a custom support email address for their organization, via the "Metadata" option in the "Portfolio Settings" menu. This address is then shown to your users when they need help, instead of the default SIG support address. See the [organization metadata documentation](../organization-integration/metadata.md#organization-level-metadata) for details.
+- **On-premise:** The documentation and academy links shown in the Sigrid user interface can now be configured per deployment, so they can point to a mirrored documentation site or be hidden entirely in air-gapped environments. See the [on-premise release notes](../organization-integration/onpremise-release-notes.md) for details.
 - **IDE integrations:** The Sigrid extension for JetBrains IDEs is now available from [the JetBrains Marketplace](https://plugins.jetbrains.com/plugin/32479-sigrid). You can find more information on how to use the IDE extension in [the documentation](../integrations/jetbrains-extension.md).
 - **Sigrid CI:** By default, Sigrid CI will only point out the top issues in its feedback, to avoid overwhelming people with huge lists of findings. But some people *do* want to see all findings. We have added [an option to configure how detailed Sigrid CI feedback should be](client-script-usage.md#command-line-options). If you add `--detaillevel full`, Sigrid CI will point out every single finding in its feedback.
 - **Architecture Quality:** Previously, the Knowledge Awareness metric would always assume a full year of Git history. If the Git history was less than a year, either because the project exists for less than a year or because you are not publishing all history to Sigrid, it would assume the missing period as "no knowledge". This is not a fair reflection of the situation, so it has been corrected to only analyze the available Git history, treating the missing period as simply unavailable.
+- **AI Governance:** The [AI code detection and dashboards](../capabilities/system-ai-governance.md) are now also available in on-premise Sigrid. Note that you may need an additional license in order to enable this functionality.
 
 ### June 29, 2026
 
