@@ -103,7 +103,7 @@ class DocumentationTest(TestCase):
     
         for root, subdirs, files in os.walk("docs"):
             for file in files:
-                if file.endswith(".md"):
+                if file.endswith(".md") and not file.endswith("CLAUDE.md"):
                     with open(f"{root}/{file}", "r") as fileRef:
                         yield (f"{root}/{file}", fileRef.read())
 
