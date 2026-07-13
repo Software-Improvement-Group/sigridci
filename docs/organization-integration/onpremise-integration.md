@@ -115,6 +115,7 @@ In addition to updating Sigrid itself, you will also need to periodically update
   - Source Code Publishing: You are required to run the analysis container in a development pipeline (or another Docker-capable environment) to publish your source code to Sigrid. SFTP uploads and manual uploads are not supported. For more details, read [here](onpremise-analysis.md).
   - Multi-Repo Systems: [Multi-repo systems](systems.md#sigrid-view-is-based-on-business-applications) are not supported. You are responsible for publishing source code from your development platform to Sigrid.
   - View Source Feature: The "view source" feature displays the current state of the file in your development platform, which may differ from the version that was analyzed by Sigrid.
+  - Documentation and Academy Links: The documentation and academy links in the Sigrid user interface are configurable per deployment, so they can point to an internally mirrored documentation site or be hidden in air-gapped environments. By default they point to the public SIG sites. Both URLs must have a value: either both are set, or neither takes effect. To hide a single link, set its value to the literal string `"none"` instead of leaving it empty. See the [installation runbook](runbook-onpremise-installation.md#sigrid-api) for the Helm configuration.
 
 - Technology Support Differences:
   - Supported technologies:
