@@ -15,6 +15,35 @@ For a complete overview of all Sigrid changes, refer to the [general release not
 
 The Helm chart is published under the name `sigrid-stack`.
 
+### Release 1.0.20260713
+
+**New:** The documentation and academy links shown in the Sigrid user interface are now configurable per deployment. This allows air-gapped environments to point the links to an internally mirrored documentation site, or to hide them entirely.
+
+**New:** Sigrid administrators can now set a custom support email address for their organization via the Sigrid user interface ("Portfolio Settings" → "Metadata"). When no address is set, Sigrid shows the default SIG support address (`support@softwareimprovementgroup.com`). This is a setting within Sigrid itself, not a Helm value. See the [organization metadata documentation](metadata.md#organization-level-metadata) for details.
+
+<details markdown="1">
+<summary>Details</summary>
+
+The documentation and academy URLs are configured in the `sigrid-api` chart (chart version 0.3.2 and later):
+
+{% raw %}
+```yaml
+sigrid-api:
+  config:
+    sigridConfigurableMetaURLs:
+      documentationUrl: "https://docs.sigrid-says.com"
+      academyUrl: "https://academy.sigrid-says.com"
+```
+{% endraw %}
+
+The values above are the defaults from the Helm chart. Behavior to be aware of:
+- If you do not configure anything, the defaults apply and the links point to the public SIG documentation and academy sites, as before. You only need to touch this configuration if you want different URLs or want to hide the links.
+- Both URLs must have a value: either both are set, or neither takes effect. If either one is set to an empty value or `null`, the entire configuration is omitted and *both* links are hidden.
+- To hide a single link, set its value to the literal string `"none"` (case-insensitive) instead of leaving it empty. The other link keeps working normally.
+
+**Actions:** Update the Sigrid Helm chart, Sigrid deployment images, and Sigrid-Multi-Analyzer image. No configuration changes required unless you want to override the default URLs.
+</details>
+
 ### Release 1.0.20260701 - BREAKING CHANGE
 
 **Change:** The bundled Bitnami `postgresql` subchart has been removed from `sigrid-stack`. **Only impactful if your deployment had `postgresql.enabled: true`** — the standard PostgreSQL setup ([your own database](onpremise-kubernetes.md#c-postgresql), initialized manually with `psql` or automatically via [`global.onPremise.postgresInit`](onpremise-automated-database-initialization.md)) is unchanged.
