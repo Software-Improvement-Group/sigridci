@@ -259,7 +259,7 @@ config.oauth2.provider.sigridmfa.issuer-uri: "https://my-idp.example.com"
 
 #### sigrid-api:
 
-Optionally, you can configure the documentation and academy links shown in the Sigrid user interface. By default they point to the public SIG sites. In air-gapped environments you can point them to an internally mirrored documentation site, or hide them by using the special value `none`.
+Optionally, you can configure the documentation and academy links shown in the Sigrid user interface. If you do not configure anything, the Helm chart defaults shown below apply and the links point to the public SIG sites. In air-gapped environments you can point them to an internally mirrored documentation site, or hide a link by setting its value to the literal string `"none"` (case-insensitive).
 
 {% raw %}
 ```yaml
@@ -271,7 +271,7 @@ sigrid-api:
 ```
 {% endraw %}
 
-Note that both URLs must be set for the configuration to take effect: if either one is left empty, both links are hidden. Use `none` instead of an empty value if you want to hide a single link.
+Note that both URLs must have a value: either both are set, or neither takes effect. If either one is set to an empty value or `null`, the entire configuration is omitted and *both* links are hidden. To hide a single link, set its value to the literal string `"none"` instead of leaving it empty; the other link keeps working normally.
 
 #### inbound-api:
 

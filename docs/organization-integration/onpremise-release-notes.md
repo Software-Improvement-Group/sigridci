@@ -36,9 +36,10 @@ sigrid-api:
 ```
 {% endraw %}
 
-The values above are the defaults. Behavior to be aware of:
-- Setting a URL to the special value `none` hides the corresponding link in the Sigrid user interface.
-- Both URLs must be set for the configuration to take effect. If either one is left empty, the entire configuration block is omitted and both links are hidden. Use `none` instead of an empty value to hide a single link.
+The values above are the defaults from the Helm chart. Behavior to be aware of:
+- If you do not configure anything, the defaults apply and the links point to the public SIG documentation and academy sites, as before. You only need to touch this configuration if you want different URLs or want to hide the links.
+- Both URLs must have a value: either both are set, or neither takes effect. If either one is set to an empty value or `null`, the entire configuration is omitted and *both* links are hidden.
+- To hide a single link, set its value to the literal string `"none"` (case-insensitive) instead of leaving it empty. The other link keeps working normally.
 
 **Actions:** Update the Sigrid Helm chart, Sigrid deployment images, and Sigrid-Multi-Analyzer image. No configuration changes required unless you want to override the default URLs.
 </details>
