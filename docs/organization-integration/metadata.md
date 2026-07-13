@@ -200,7 +200,7 @@ These additional fields are free-text fields, in the sense that their values are
 
 ## Organization-level metadata
 
-In addition to the system-level metadata described above, Sigrid also supports metadata for your organization as a whole. Sigrid administrators can edit these settings using the "metadata" option in the menu. The following fields are available:
+In addition to the system-level metadata described above, Sigrid also supports metadata for your organization as a whole. Sigrid administrators can edit these settings using the "Metadata" option in the "Portfolio Settings" menu. The following fields are available:
 
 | **Field name**  | **Values**                                                                                                                                                                                          |
 |-----------------|-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|

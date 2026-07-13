@@ -19,7 +19,7 @@ The Helm chart is published under the name `sigrid-stack`.
 
 **New:** The documentation and academy links shown in the Sigrid user interface are now configurable per deployment. This allows air-gapped environments to point the links to an internally mirrored documentation site, or to hide them entirely.
 
-**New:** Sigrid administrators can now set a custom support email address for their organization via the Sigrid user interface (menu → "metadata"). When no address is set, Sigrid shows the default SIG support address (`support@softwareimprovementgroup.com`). This is a setting within Sigrid itself, not a Helm value. See the [organization metadata documentation](metadata.md#organization-level-metadata) for details.
+**New:** Sigrid administrators can now set a custom support email address for their organization via the Sigrid user interface ("Portfolio Settings" → "Metadata"). When no address is set, Sigrid shows the default SIG support address (`support@softwareimprovementgroup.com`). This is a setting within Sigrid itself, not a Helm value. See the [organization metadata documentation](metadata.md#organization-level-metadata) for details.
 
 <details markdown="1">
 <summary>Details</summary>
