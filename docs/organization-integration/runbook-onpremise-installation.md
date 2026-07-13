@@ -259,7 +259,19 @@ config.oauth2.provider.sigridmfa.issuer-uri: "https://my-idp.example.com"
 
 #### sigrid-api:
 
-No further context required.
+Optionally, you can configure the documentation and academy links shown in the Sigrid user interface. By default they point to the public SIG sites. In air-gapped environments you can point them to an internally mirrored documentation site, or hide them by using the special value `none`.
+
+{% raw %}
+```yaml
+sigrid-api:
+  config:
+    sigridConfigurableMetaURLs:
+      documentationUrl: "https://docs.sigrid-says.com"
+      academyUrl: "https://academy.sigrid-says.com"
+```
+{% endraw %}
+
+Note that both URLs must be set for the configuration to take effect: if either one is left empty, both links are hidden. Use `none` instead of an empty value if you want to hide a single link.
 
 #### inbound-api:
 
