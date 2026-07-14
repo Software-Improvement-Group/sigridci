@@ -37,6 +37,8 @@ This example explained how to add secrets for a single repository. However, if y
 
 The organization-level secret.
 
+Sigrid CI can share its feedback directly as a comment on your pull request. To enable this, pass the built-in `GITHUB_TOKEN` as the `SIGRIDCI_GITHUB_COMMENT_TOKEN` environment variable in your pull request workflow (shown below) and grant the workflow `pull-requests: write` permission; GitHub does not require a separate access token.
+
 ### Step 2: Create a GitHub Actions workflow for Sigrid CI
 
 Sigrid CI consists of a number of Python-based client scripts, that interact with Sigrid in order to analyze your project's source code and provide feedback based on the results. These client scripts need to be available to the CI environment, in order to call the scripts *from* the CI pipeline. You can configure your GitHub Actions to both download the Sigrid CI client scripts and then run Sigrid CI. 
@@ -97,7 +99,8 @@ jobs:
       - name: "Run Sigrid CI" 
         env:
           SIGRID_CI_TOKEN: "${{ secrets.SIGRID_CI_TOKEN }}"
-        run: "./sigridci/sigridci/sigridci.py --customer <example_customer_name> --system <example_system_name> --source .
+          SIGRIDCI_GITHUB_COMMENT_TOKEN: "${{ secrets.GITHUB_TOKEN }}"
+        run: "./sigridci/sigridci/sigridci.py --customer <example_customer_name> --system <example_system_name> --source ."
       - name: "Save Sigrid CI results"
         if: always()
         uses: actions/upload-artifact@v4
@@ -105,12 +108,6 @@ jobs:
           path: "sigrid-ci-output/**"
           retention-days: 7
           if-no-files-found: ignore
-      - name: "Sigrid pull request feedback"
-        uses: mshick/add-pr-comment@v2
-        if: always()
-        with:
-          message-id: sigrid
-          message-path: sigrid-ci-output/*feedback.md
 ```
 {% endraw %}
 
@@ -174,12 +171,7 @@ jobs:
           system: examplesystemname
         env:
           SIGRID_CI_TOKEN: "${{ secrets.SIGRID_CI_TOKEN }}"
-      - name: "Sigrid pull request feedback"
-        uses: mshick/add-pr-comment@v2
-        if: always()
-        with:
-          message-id: sigrid
-          message-path: sigrid-ci-output/*feedback.md
+          SIGRIDCI_GITHUB_COMMENT_TOKEN: "${{ secrets.GITHUB_TOKEN }}"
 ```
 {% endraw %}
 

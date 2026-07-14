@@ -198,6 +198,17 @@ These additional fields are free-text fields, in the sense that their values are
 | Is Development Only | Boolean value categorizing the system as being development only<br>or not                                                                          |
 | Remark              | Free-text field containing any remarks about the system                                                                                            |
 
+## Organization-level metadata
+
+In addition to the system-level metadata described above, Sigrid also supports metadata for your organization as a whole. Sigrid administrators can edit these settings using the "Metadata" option in the "Portfolio Settings" menu. The following fields are available:
+
+| **Field name**  | **Values**                                                                                                                                                                                          |
+|-----------------|-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| Display Name    | Free-text field containing the display name for your organization, as shown in the Sigrid user interface (max. 255 characters long)                                                                  |
+| Support Email   | Email address shown to your users when they need help, for example the address of your internal Sigrid administrators or service desk. When left empty, the default SIG support address is used (max. 255 characters long) |
+
+Setting a custom support email address is particularly useful when Sigrid is administered by a central team within your organization, so that user questions are directed to the right place before they reach SIG.
+
 ## Contact and support
 
 Feel free to contact [SIG's support team](mailto:support@softwareimprovementgroup.com) for any questions or issues you may have after reading this documentation or when using Sigrid.

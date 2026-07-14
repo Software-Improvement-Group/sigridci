@@ -29,6 +29,7 @@ class SigridApiClient:
     API_VERSION = "v1"
     POLL_INTERVAL = 30
     POLL_ATTEMPTS = 60
+    TIMEOUT_S = 60
 
     def __init__(self, options: PublishOptions):
         self.options = options
@@ -59,7 +60,7 @@ class SigridApiClient:
         if contentType is not None:
             request.add_header("Content-Type", contentType)
 
-        response = urllib.request.urlopen(request, context=self.sslContext)
+        response = urllib.request.urlopen(request, None, timeout=self.TIMEOUT_S, context=self.sslContext)
 
         return self.parseResponse(method, response)
 
@@ -144,7 +145,7 @@ class SigridApiClient:
             uploadRequest.add_header("Content-Type", "application/zip")
             uploadRequest.add_header("Content-Length", "%d" % os.path.getsize(upload))
             uploadRequest.add_header("x-amz-server-side-encryption", "AES256")
-            urllib.request.urlopen(uploadRequest)
+            urllib.request.urlopen(uploadRequest, None, timeout=self.TIMEOUT_S)
 
     def checkSystemExists(self):
         path = f"/analysis-results/sigridci/{self.urlCustomerName}/{self.urlSystemName}/{self.API_VERSION}/ci"
@@ -183,6 +184,6 @@ class SigridApiClient:
         try:
             url = f"{self.options.sigridURL}/usage/matomo.php?idsite=6&rec=1&ca=1&e_c=sigridci.platform&e_a={platformId}"
             request = urllib.request.Request(url)
-            urllib.request.urlopen(request)
+            urllib.request.urlopen(request, None, timeout=self.TIMEOUT_S)
         except:
             UploadLog.log(f"Failed to log platform information")

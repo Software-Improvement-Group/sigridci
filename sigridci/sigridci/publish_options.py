@@ -16,7 +16,7 @@ import os
 import re
 from dataclasses import dataclass, field
 from enum import Enum
-from typing import List
+from typing import List, Literal
 
 from .capability import Capability, OPEN_SOURCE_HEALTH, MAINTAINABILITY
 
@@ -39,6 +39,7 @@ class PublishOptions:
     includeHistory: bool = False
     showUploadContents: bool = False
     convert: str = None
+    detailLevel: Literal["default", "full"] = "default"
     outputDir: str = "sigrid-ci-output"
     sigridURL: str = "https://sigrid-says.com"
     feedbackURL: str = "https://docs.sigrid-says.com/landing/feedback.html"
@@ -50,6 +51,8 @@ class PublishOptions:
     SYSTEM_NAME_LENGTH = range(2, 65)
     SUBSYSTEM_NAME_PATTERN = re.compile(r'^[A-Za-z0-9][A-Za-z0-9._\-/]*[A-Za-z0-9]$')
     SUBSYSTEM_CONSECUTIVE_PATTERN = re.compile(r'[./]{2,}')
+    SCOPE_FILE_NAMES = ["sigrid.yaml", "sigrid.yml"]
+    METADATA_FILE_NAMES = ["sigrid-metadata.yaml", "sigrid-metadata.yml"]
 
     def getSystemId(self):
         return f"{self.partner}-{self.customer}-{self.system}"
@@ -67,10 +70,10 @@ class PublishOptions:
             not bool(self.SUBSYSTEM_CONSECUTIVE_PATTERN.search(self.subsystem))
 
     def readScopeFile(self):
-        return self.locateFile(["sigrid.yaml", "sigrid.yml"])
+        return self.locateFile(self.SCOPE_FILE_NAMES)
 
     def readMetadataFile(self):
-        return self.locateFile(["sigrid-metadata.yaml", "sigrid-metadata.yml"])
+        return self.locateFile(self.METADATA_FILE_NAMES)
 
     def locateFile(self, possibleFileNames):
         for file in possibleFileNames:
@@ -78,3 +81,8 @@ class PublishOptions:
                 with open(f"{self.sourceDir}/{file}", "r") as f:
                     return f.read()
         return None
+
+    def getMaxShownFindings(self):
+        if self.detailLevel == "full":
+            return 9999
+        return 8
