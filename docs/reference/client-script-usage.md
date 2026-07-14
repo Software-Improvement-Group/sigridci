@@ -14,7 +14,7 @@ The [general Sigrid CI documentation](../sigridci-integration/development-workfl
 
 - Docker
 - If you are *not* using Docker
-  - Python 3.7 or higher
+  - Python 3.9 or higher
   - Git
   - To support custom runners and on-premise installations, the Sigrid CI client script intentionally does not require any [PIP](https://pypi.org/project/pip/) dependencies.
 
@@ -35,6 +35,7 @@ The script takes a limited number of mandatory arguments. However, Sigrid CI's b
 | `--include`                   | No       | /build/,.png        | Comma-separated list of file and/or directory names that should be included in the upload. [6, 7]                                 |
 | `--showupload`                | No       | N/A                 | Logs the contents of the upload before submitting it to Sigrid.                                                                   |
 | `--convert`                   | No       | beinformed          | Used for some technologies. See [technology conversion configuration](technology-support.md#technology-conversion-configuration). |
+| `--detaillevel`               | No       | all                 | Detail level for how much feedback to provide. Either 'default' or 'full'.                                                        | 
 | `--out`                       | No       | /tmp                | Output directory for Sigrid CI feedback, default is `sigrid-ci-output`.                                                           |
 | `--ignore-missing-scope-file` | No       | N/A                 | Don't fail if the `sigrid.yaml` scope file is missing (e.g. if it's provided through a different repository).                     |
 
@@ -64,6 +65,9 @@ So when to use these options:
 - If you want to publish your code to Sigrid, but do *not* want feedback on your new/changed code, use the `--publishonly` option.
   - This is suitable for merge commits to the main/master branch. In that situation, you do not need feedback, since you *already had* your feedback in the pull request and there is no reason to receive the same feedback again when merging your changes. 
   - Moreover, this publishes your code to Sigrid in a fire-and-forget fashion, which is faster since the script will not wait for the analysis to complete and will immediately exit. This is suitable for the main/master branch scenario described above, but can also be used in other situations where the fire-and-forget behavior is preferred.
+
+Sigrid CI feedback has a 30-minute timeout. We consider this the maximum time acceptable for blocking your pipeline. If you are using an extremely large system, the analsyis time might exceed 30 minutes. In those situations, we recommend you use the `--publishonly` flow so that your pipeline is not blocking while waiting for Sigrid's analysis to complete.
+{: .attention }
 
 ## Letting Sigrid CI fail your pipeline
 
