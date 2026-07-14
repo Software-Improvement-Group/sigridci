@@ -67,6 +67,10 @@ The system table towards the bottom of the page provides a less focused, but mor
 
 <img width="1067" alt="image" src="../images/portfolio-overview-table.png" />
 
+
+## How to learn more
+* Go to SIG Academy and follow the [Sigrid's Portfolio-level Functionalities e-learning](https://sig.academy.sigrid-says.com/learner/courseinfo/id:132) that covers the main aspects of Sigrid functionalities on portfolio level. You can access the SIG Academy via the graduation cap icon in the bottom left of your Sigrid window.
+
 ## Contact and support
 
 Feel free to contact [SIG's support team](mailto:support@softwareimprovementgroup.com) for any questions or issues you may have after reading this documentation or when using Sigrid.

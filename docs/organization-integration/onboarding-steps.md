@@ -22,7 +22,12 @@
 ### Start using Sigrid
 
 - **Define objectives:** It is unrealistic to target perfection for every single system. Sigrid therefore uses *objectives*. This allows you to define what type of goals are realistic for each system, taking both their business context, technical context, and team into consideration. Find out more in [how to define objectives](../capabilities/objectives.md)
-- **How to learn more:** The remainder of this documentation covers Sigrid's various workflows, use cases, and capabilities in more detail. You can use the menu on the left to navigate to explore the documentation.
+- **How to learn more:**
+  -  The remainder of this documentation covers Sigrid's various workflows, use cases, and capabilities in more detail. You can use the menu on the left to navigate to explore the documentation.
+  -  The SIG Academy contains several e-learnings that cover the main aspects of Sigrid set-up and usage. You can access the SIG Academy via the graduation cap icon in the bottom left of your Sigrid window, as shown in the screenshot below.
+ 
+      <img width="355" height="283" alt="Academy button on Sigrid" src="https://github.com/user-attachments/assets/aedd4f20-4ba4-4247-a9dd-43f9f349977b" />
+
 
 ## Contact and support
 

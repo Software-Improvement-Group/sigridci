@@ -7,14 +7,15 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: "Check out repository"
-        uses: actions/checkout@df4cb1c069e1874edd31b4311f1884172cec0e10 # v6.0.3
+        uses: actions/checkout@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0 # v7.0.0
         with:
           fetch-depth: 0
       - name: "Special case: We use Sigrid CI on itself, so if we want its own code to be analyzed we need a copy"
         run: "cp -r sigridci/sigridci src && cp sigridci/*.py src"
-      - name: "Run Sigrid CI" 
+      - name: "Run Sigrid CI"
         env:
           SIGRID_CI_TOKEN: "${{ secrets.SIGRID_CI_TOKEN }}"
+          SIGRIDCI_GITHUB_COMMENT_TOKEN: "${{ secrets.GITHUB_TOKEN }}"
         run: "./sigridci/sigridci.py --customer sig --system sigridci-client --source . --capability maintainability,osh,security"
       - name: "Save Sigrid CI results"
         if: always()
@@ -23,19 +24,13 @@ jobs:
           path: "sigrid-ci-output/**"
           retention-days: 7
           if-no-files-found: ignore
-      - name: "Sigrid pull request feedback"
-        uses: mshick/add-pr-comment@8e4927817251f1ff60c001f04568532b38e0b4a0 # v3.11.0
-        if: always()
-        with:
-          message-id: sigrid
-          message-path: sigrid-ci-output/*feedback.md
   sigridci_docker:
     name: "Sigrid CI in Docker"
     runs-on: ubuntu-latest
     if: github.repository_owner == 'Software-Improvement-Group' && github.actor != 'dependabot[bot]'
     steps:
       - name: "Check out repository"
-        uses: actions/checkout@df4cb1c069e1874edd31b4311f1884172cec0e10 # v6.0.3
+        uses: actions/checkout@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0 # v7.0.0
       - name: "Special case: We use Sigrid CI on itself, so if we want its own code to be analyzed we need a copy"
         run: "cp -r sigridci/sigridci src && cp sigridci/*.py src"
       - name: "Run Sigrid CI in Docker"
@@ -47,3 +42,4 @@ jobs:
           capability: "maintainability,osh,security"
         env:
           SIGRID_CI_TOKEN: "${{ secrets.SIGRID_CI_TOKEN }}"
+          SIGRIDCI_GITHUB_COMMENT_TOKEN: "${{ secrets.GITHUB_TOKEN }}"
