@@ -23,6 +23,8 @@ Before you can start using the Sigrid Local, you need the following:
   allowed to download and run applications yourself. In these situations, consult your IT department on how to make
   Sigrid Local available to you.
 - You will need local access to your source code that you want to analyze using Sigrid Local.
+- Sigrid Local will need internet access to download the containers and upload the results to AWS S3 bucket via presigned urls [s3.amazonaws.com](https://sig-sigrid-downloads.s3.amazonaws.com) and [s3.amazonaws.com](https://sig-sigrid-hybrid-upload.s3.amazonaws.com)
+- When there is no internet access you will be able to retreive the result files and upload them to SIG manually via the [Upload Portal](https://uploadportal.softwareimprovementgroup.com/filedrop/uploadportal/) 
 - In terms of hardware, you will need a laptop with at least 16 GB of memory and 10 GB of disk space.
   The hardware you need, and how long the analysis will take, depend on the size of your system.
   See the section on [performance estimates](#performance-estimates) for more information.

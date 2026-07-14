@@ -21,6 +21,7 @@ from .objective import Objective
 from .reports.ascii_art_report import AsciiArtReport
 from .reports.azure_pull_request_report import AzurePullRequestReport
 from .reports.bitbucket_pull_request_report import BitBucketPullRequestReport
+from .reports.github_pull_request_report import GitHubPullRequestReport
 from .reports.gitlab_pull_request_report import GitLabPullRequestReport
 from .reports.junit_format_report import JUnitFormatReport
 from .reports.maintainability_markdown_report import MaintainabilityMarkdownReport
@@ -115,7 +116,8 @@ class FeedbackProvider:
             markdownReport,
             GitLabPullRequestReport(markdownReport),
             AzurePullRequestReport(markdownReport),
-            BitBucketPullRequestReport(markdownReport)
+            BitBucketPullRequestReport(markdownReport),
+            GitHubPullRequestReport(markdownReport),
         ]
 
         if self.capability == MAINTAINABILITY:

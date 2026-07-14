@@ -27,7 +27,7 @@ class BitBucketPullRequestReport(Report):
     def __init__(self, markdownRenderer: MarkdownRenderer):
         self.markdownRenderer = markdownRenderer
 
-        certPath = os.getenv("SIGRID_GITLAB_CA_CERT_PATH")
+        certPath = os.getenv("SIGRID_BITBUCKET_CA_CERT_PATH")
         self.sslContext = ssl.create_default_context(cafile=certPath) if certPath else None
 
     def generate(self, analysisId, feedback, options):
@@ -37,8 +37,8 @@ class BitBucketPullRequestReport(Report):
                 comment = self.markdownRenderer.renderMarkdown(analysisId, feedback, options)
                 self.postComment(comment, existingCommentId)
                 UploadLog.log(f"Posted {self.markdownRenderer.getCapability().displayName} BitBucket comment")
-            except SystemExit:
-                print("Failed to publish feedback to GitLab")
+            except SystemExit as e:
+                print(f"Failed to publish feedback to Bitbucket: {e}")
 
     def shouldPostComment(self, options):
         return "BITBUCKET_PR_ID" in os.environ \
