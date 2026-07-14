@@ -23,8 +23,6 @@ from ..platform import OSH_EXCLUDE_DOCS
 
 
 class OpenSourceHealthMarkdownReport(Report, MarkdownRenderer):
-    MAX_FINDINGS = SecurityMarkdownReport.MAX_FINDINGS
-
     def __init__(self, options, vulnerabilityObjective="HIGH", licenseObjective=None):
         super().__init__()
         self.options = options
@@ -105,15 +103,15 @@ class OpenSourceHealthMarkdownReport(Report, MarkdownRenderer):
         md = "| Vulnerabilities | License | Library | Latest version | Location(s) |\n"
         md += "|----|----|----|----|----|\n"
 
-        for library in sorted(libraries, key=lambda lib: Objective.sortBySeverity(lib.vulnerabilityRisk.severity))[0:self.MAX_FINDINGS]:
+        for library in sorted(libraries, key=lambda lib: Objective.sortBySeverity(lib.vulnerabilityRisk.severity))[0:options.getMaxShownFindings()]:
             vulnCheck = self.getVulnerabilityRiskSymbol(library)
             licenseCheck = self.getLicenseRiskSymbol(library)
             suffix = self.formatInfoLine(library)
             locations = self.tableLineSeparator.join(self.decorateLink(options, file, file) for file in library.files)
             md += f"| {vulnCheck} | {licenseCheck} | {library.name} {library.version}{suffix} | {library.latestVersion} | {locations} |\n"
 
-        if len(libraries) > self.MAX_FINDINGS:
-            md += f"| | ... {len(libraries) - self.MAX_FINDINGS} more vulnerable open source libraries | |\n"
+        if len(libraries) > options.getMaxShownFindings():
+            md += f"| | ... {len(libraries) - options.getMaxShownFindings()} more vulnerable open source libraries | |\n"
 
         return f"{md}\n"
 

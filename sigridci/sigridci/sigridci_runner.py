@@ -12,6 +12,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
+import json
 import os
 import sys
 from datetime import datetime
@@ -120,9 +121,10 @@ class SigridCiRunner:
 
     def loadFeedbackBaseline(self, capability):
         if capability == OPEN_SOURCE_HEALTH:
-            return self.apiClient.fetchOpenSourceHealth()
-        else:
-            return None
+            oshBaseline = self.apiClient.fetchOpenSourceHealth()
+            if oshBaseline and "metadata" in oshBaseline:
+                return oshBaseline
+        return None
 
     def validateConfigurationFiles(self, metadata):
         scope = self.options.readScopeFile()
@@ -173,8 +175,8 @@ class SigridCiRunner:
             if self.options.readMetadataFile() != None:
                 raise Exception("Cannot add metadata using environment variables if metadata YAML file is already used")
 
-            with open(f"{self.options.sourceDir}/sigrid-metadata.yaml", "w") as writer:
+            with open(f"{self.options.sourceDir}/sigrid-metadata.yaml", "w", encoding="utf8") as writer:
                 writer.write("metadata:\n")
                 for name, value in metadata.items():
-                    formattedValue = f"[\"{value}\"]" if name in ["teamNames", "supplierNames"] else f"\"{value}\""
+                    formattedValue = json.dumps([value]) if name in ["teamNames", "supplierNames"] else json.dumps(value)
                     writer.write(f"  {name}: {formattedValue}\n")

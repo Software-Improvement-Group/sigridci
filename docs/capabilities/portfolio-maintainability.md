@@ -2,7 +2,7 @@
 
 The *maintainability overview* page summarizes the (change in) volume and maintainability for each system in your portfolio. 
 
-<img src="../images/portfolio-maintainability.png" width="600" />
+<img width="1711" height="848" alt="new_Portfolio_maintainability" src="https://github.com/user-attachments/assets/b32b8895-799a-43af-bf03-b8b79f701f82" />
 
 To gauge portfolio health and portfolio trends, example analysis questions are:
 * 
@@ -16,7 +16,7 @@ Setting this lifecycle metadata is discussed in the [metadata page](../organizat
 
 <img src="../images/help-button.png" class="inline" /> The "?" help buttons explain the meaning of the different types of settings.
 
-<img src="../images/portfolio-lifecycle-phase-maintainability.png" width="600" />
+<img width="1336" height="527" alt="Treemap_sorted_lifecycle" src="https://github.com/user-attachments/assets/99a28d4d-c691-47a7-b6ac-261d6ba3a394" />
 
 The maintainability ratings expressed in (rounded) stars are distinguished by "traffic light colors", ranging from red (1 star) to green (5 stars). 
 
@@ -31,7 +31,7 @@ You can create different views by system characteristics. The characteristics un
 
 Here, "*Maintainability change*" is chosen as the meaning of the color scheme. The relative changes are colored as white (neutral) up to green (improving) and red (deteriorating), based on the period selected above (in this example, Year-To-Date/YTD). This can be useful as trend analysis, comparing to expectations. Generally, you would expect public-facing systems to be more actively maintained because outside users tend to come up with new requests, bug reports, and requirements for e.g. stability. As a simplification, you would expect actively maintained systems to not (or very little) deteriorate in code quality. Switching between views of "*Maintainability change*" in different grouping will give you an idea of the balance between expected- and actual trends.  
 
-<img src="../images/portfolio-system-type-maintainability-change.png" width="600" />
+<img width="1335" height="530" alt="treemap_sorte_change" src="https://github.com/user-attachments/assets/dbbd6f58-ba09-478b-b182-54d5c5e47b78" />
 
 You can filter per division/team/supplier on different quality aspects, and track the trends of each. 
 
@@ -41,7 +41,7 @@ Whether quality trends are heading in the right direction does depend on context
 ## Using quality trend lines 
 On a trend line, quality trends can help you see movements over time, possibly fuelled by specific (renovation/development) events. In the below example, a portfolio's code quality over time is shown per system. 
 
-<img src="../images/portfolio-trendline-technology.png" width="600" />
+<img width="1337" height="771" alt="Trendlines" src="https://github.com/user-attachments/assets/1d388baa-61bc-43aa-8860-f1cceb85a36e" />
 
 Systems can be (un)selected on the bottom of the graph. 
 
@@ -59,7 +59,7 @@ invidual system.
 
 The *Delta quality* view shows the impact of code changes on the entire portfolio for the selected period. By default it shows you "*New code*", the first of three tabs. In the treemap the results are grouped per system. Just like other Sigrid pages, the characteristics can be changed by their drop-down menus (here:"*Color*", "*Area*", "*Grouping*" and "*Annotations*"). So note that the summaries in the top tiles adjust to whether you have selected "*New code*", "*Changed code*" or "*New & changed code*".
 
-<img src="../images/portfolio-delta-quality-new-code.png" width="600" />
+<img width="1710" height="850" alt="New_delta_quality" src="https://github.com/user-attachments/assets/2158cf29-9ec8-422e-9386-7a7013a02959" />
 
 By clicking on a system, either on the treemap or the list below, you will move to the system view for *Delta Quality* in the same tab as you are viewing now ("*New code*", "*Changed code*" or "*New & changed code*"). Please see [Delta quality on a system-level](system-delta-quality.md) for elaboration on system-specifics. Generally, the "*New code*" delta tells you whether new developments are able to follow best practices (assuming that code change heuristics picked up those files correctly as being new, as opposed to moved or renamed). The impact of "*Changed code quality*" really depends on the size of the change. If 1 line of code has been changed, the code quality will probably stay the same. If that happens to be (older) code with lower quality, it is not necessarily alarming. A more balanced view will be visible in the "*New & changed code*" tab, which averages out changes to new and existing code. A sanity check is to see whether portfolio-wide metrics have actually changed (in the [Maintainability Overview tab, see above](#portfolio-level-maintainability-overview)).
 
