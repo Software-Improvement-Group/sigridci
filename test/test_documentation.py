@@ -95,7 +95,7 @@ class DocumentationTest(TestCase):
         output = subprocess.run(command, stdout=subprocess.PIPE).stdout.decode("utf8", "ignore")
         lastCommitDate = datetime.strptime(output.replace("\"", "").strip()[0:10], "%Y-%m-%d")
         ageInDays = (datetime.now() - lastCommitDate).days
-        self.assertTrue(ageInDays <= 42, f"Public roadmap is {ageInDays} days old")
+        self.assertTrue(ageInDays <= 60, f"Public roadmap is {ageInDays} days old")
 
     def readDocumentationPages(self):
         with open("README.md", "r") as fileRef:

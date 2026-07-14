@@ -52,8 +52,8 @@ class AzurePullRequestReport(Report):
             else:
                 self.callAzure("PATCH", self.buildRequestBody(markdown, feedback, options), existingId)
                 UploadLog.log(f"Updated existing {self.markdownRenderer.getCapability().displayName} feedback in Azure DevOps")
-        except SystemExit:
-            print("Failed to publish feedback to Azure DevOps")
+        except SystemExit as e:
+            print(f"Failed to publish feedback to Azure DevOps: {e}")
 
     def isSupported(self, options):
         return "SYSTEM_ACCESSTOKEN" in os.environ and \

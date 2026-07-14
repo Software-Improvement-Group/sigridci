@@ -3,7 +3,33 @@ Sigrid release notes
 
 SIG uses [continuous delivery](https://en.wikipedia.org/wiki/Continuous_delivery), meaning that every change to Sigrid or the underlying analysis is released once our development pipeline has completed. On average, we release somewhere between 10 and 20 times per day. This page therefore doesn't list every single change, since that would quickly lead to an excessively long list of small changes. Instead, this page lists Sigrid and analysis changes that we consider noteworthy for the typical Sigrid user.
 
-### May 29, 2026
+### July 13, 2026
+
+- **Configuration:** Sigrid administrators can now configure a custom support email address for their organization, via the "Metadata" option in the "Portfolio Settings" menu. This address is then shown to your users when they need help, instead of the default SIG support address. See the [organization metadata documentation](../organization-integration/metadata.md#organization-level-metadata) for details.
+- **On-premise:** The documentation and academy links shown in the Sigrid user interface can now be configured per deployment, so they can point to a mirrored documentation site or be hidden entirely in air-gapped environments. See the [on-premise release notes](../organization-integration/onpremise-release-notes.md) for details.
+- **IDE integrations:** The Sigrid extension for JetBrains IDEs is now available from [the JetBrains Marketplace](https://plugins.jetbrains.com/plugin/32479-sigrid). You can find more information on how to use the IDE extension in [the documentation](../integrations/jetbrains-extension.md).
+- **Sigrid CI:** By default, Sigrid CI will only point out the top issues in its feedback, to avoid overwhelming people with huge lists of findings. But some people *do* want to see all findings. We have added [an option to configure how detailed Sigrid CI feedback should be](client-script-usage.md#command-line-options). If you add `--detaillevel full`, Sigrid CI will point out every single finding in its feedback.
+- **Architecture Quality:** Previously, the Knowledge Awareness metric would always assume a full year of Git history. If the Git history was less than a year, either because the project exists for less than a year or because you are not publishing all history to Sigrid, it would assume the missing period as "no knowledge". This is not a fair reflection of the situation, so it has been corrected to only analyze the available Git history, treating the missing period as simply unavailable.
+- **AI Governance:** The [AI code detection and dashboards](../capabilities/system-ai-governance.md) are now also available in on-premise Sigrid. Note that you may need an additional license in order to enable this functionality.
+
+### June 29, 2026
+
+- **Code Explorer:** The user interface within the Code Explorer has been expanded to be more flexible. You can now choose to collapse the source code, giving you more space to browse the list of findings. The [Code Explorer documentation](../capabilities/system-code-explorer.md) has been updated accordingly. 
+- **Sigrid CI:** Pull request feedback comments can now be posted directly using the built-in `GITHUB_TOKEN`, making the `mshick/add-pr-comment` action optional. No additional configuration is required.
+- **On-premise:** The Sigrid Multi-Analyzer now fails early when a system has been deactivated in the Sigrid system settings page.
+- **On-premise:** Fixed custom CA certificates not being passed through when posting PR/MR feedback comments. See the [On-premise release notes](../organization-integration/onpremise-release-notes.md) for details.
+- **On-premise:** The Sigrid Multi-Analyzer now validates your Sigrid credentials and configuration before starting an analysis, so pipeline jobs fail fast with a clear message when the `SIGRID_CI_TOKEN` is missing, invalid, or lacks access to the system. Systems that have not been on-boarded yet are now reported clearly instead of failing with a confusing error. See the [On-premise release notes](../organization-integration/onpremise-release-notes.md) for details.
+- **Technology support:** Sigrid now properly counts test code for Rust. Previously, certain types of test code were not picked up and did therefore not count towards the test code ratio in Sigrid. If you're using Rust in Sigrid, do not forget to [configure your upload](technology-support.md#technology-conversion-configuration) accordingly.
+- **Technology support:** Sigrid's Open Source Health now detects dependencies and versions for [Hex](https://hex.pm), which is commonly used with the [Erlang](https://www.erlang.org) and [Elixir](https://elixir-lang.org) programming languages. Initial support is basic, as can be seen in the [technology support list](technology-support.md#supported-open-source-ecosystems), but will be expanded in the coming months.
+- **Integrations:** An open source [integration for posting new Sigrid security findings](https://github.com/Software-Improvement-Group/sigrid-integrations/tree/main/teams-security-findings) to Microsoft Teams is now available. A similar integration already existed for Slack, but is now also ailable to organizations using Microsoft Teams.
+
+### June 15, 2026
+
+- **IDE integrations:** The Sigrid extension for [Visual Studio Code](https://github.com/Software-Improvement-Group/sigrid-vscode-extension) now allows you to export Sigrid findings to [https://www.atlassian.com/software/jira](JIRA). You can use this in a process where you first triage Sigrid findings in your IDE, then mark certain findings as "will fix", then automatically create a JIRA issue based on those findings.
+- **IDE integrations:** A beta version of the [Sigrid extension for JetBrains IDEs](https://github.com/Software-Improvement-Group/sigrid-jetbrains-plugin) is now available. It offers similar functionality as the Sigrid IDE integrations for Visual Studio Code and Mendix Studio Pro. Instructions and downloads for the beta version are available from GitHub. 
+- **On-premise:** The support page in the Sigrid UI now shows the Sigrid version number for on-premise deployments, instead of only a commit SHA. See the [On-premise release notes](../organization-integration/onpremise-release-notes.md) for details.
+
+### June 1, 2026
 
 - **On-premise:** Fixed analyzer configuration to respect `sigrid.yaml` enabled/disabled flags. DependencyChecker now properly receives scope settings.
 
@@ -11,9 +37,6 @@ SIG uses [continuous delivery](https://en.wikipedia.org/wiki/Continuous_delivery
 
 - **On-premise:** Fixed console errors caused by missing Matomo analytics stub in on-premises deployments. See [On-premise release notes](../organization-integration/onpremise-release-notes.md) for details.
 - **AI Code Governance:** See where AI-generated code and AI technologies live, from portfolio level down to each system, directly in Sigrid. You can find more information in the [AI Code Governance documentation](../capabilities/system-ai-governance.md).
-
-### May 12, 2026
-
 - **On-premise:** The LDAP group sync integration now removes Sigrid users that are no longer present in LDAP by default. You can find more information in the [on-premise documentation](../organization-integration/onpremise-ldap-group-sync.md).
 
 ### May 1, 2026
