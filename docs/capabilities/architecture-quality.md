@@ -22,7 +22,7 @@ If Architecture Quality is available for your system, you can reach this view vi
 
 The overview page provides a summary of your system's current architecture, relative to the other systems in SIG's benchmark. The structure of this page is comparable to Sigrid's [maintainability summary](system-maintainability.md): you have an overall rating, which is then split into a number of underlying system properties and associated ratings. Hovering your cursor over the system properties on the right provides you with a short description of each metric. For more information on SIG's Architecture Quality Model, please consult the [Guidance for Producers](https://www.softwareimprovementgroup.com/wp-content/uploads/Guidance-for-producers-Architecture-Quality-Model.pdf).
 
-<img src="../images/aq-summary.png" width="600" />
+<img width="1025" height="590" alt="New_Architecture_overview" src="https://github.com/user-attachments/assets/807e0fc1-7b4e-4905-a60d-41086168fc11" />
 
 This page provides you with a summary, but you may decide that further investigation into your system's current architecture is needed. You can use the "explore architecture" button to navigate to Sigrid's architecture explorer page. Clicking on one of the system properties on the right will *also* take you to the architecture explorer page, but will then immediately jump to the system property you just clicked on.
 
@@ -32,7 +32,7 @@ This page provides you with a summary, but you may decide that further investiga
 
 The architecture explorer page visualizes your architecture. Not the architecture that was initially planned, not the to-be architecture, but the implemented as-is architecture. The information used to provide this view is extracted from your source code, your repository history, and your configuration. 
 
-<img src="../images/aq-explorer.png" width="600" />
+<img width="1658" height="919" alt="New_Architecture_Explorer" src="https://github.com/user-attachments/assets/ef640a10-b288-4d93-99bb-bd6bde1c5670" />
 
 In this visualization, every "block" is a *system element* in your code. Depending on the terminology you use, this could be called a subsystem or a component. Arrows between the system elements indicate *dependencies*. Depending on your system, the view might show different types of dependencies in different colors:
 
@@ -49,7 +49,7 @@ Each system element also includes a magnifying glass icon. Clicking this icon wi
 
 The different tabs across the top of the page represent the system properties in SIG's Architecture Quality Model. Selecting a different tab will also change the architecture view, to provide more specific information relevant to that system property. It will also change the detail panel on the right, to expose more detailed charts and data relevant to the selected system property.
 
-<img src="../images/aq-metric-details.png" width="500" />
+<img alt="New_architecture_metric" src="https://github.com/user-attachments/assets/e4a1b24f-8bd3-435a-8385-7685773dc0eb" width="500"  />
 
 Clicking on a dependency will provide you with a list of where those dependencies originate in your code. If a dependency is connected to a file, clicking on that file will navigate you to Sigrid's code explorer page where you can inspect the file and its source code in more detail.
 
@@ -65,7 +65,7 @@ The tree view also includes a search option. You can use this to locate a specif
 
 Finally, the buttons around the page allow you to manipulate the architecture view:
 
-<img src="../images/aq-display-options.png" width="400" />
+<img alt="New_graph_config" src="https://github.com/user-attachments/assets/8ede5c87-5b30-4e8f-b837-bf60871f92da" width="400" />
 
 - The settings icon allows you to customize what is displayed, as depicted above.
 - The "reset layout" button resets the architecture visualization to its original state, which can help to restore readability.
@@ -115,11 +115,10 @@ This means that any components that have been expanded, hidden or pinned will be
 
 Accessing saved views is easily done through the architecture explorer, where we've introduced a simple button that toggles a new panel to appear with an inventory of any saved views that exist for a given system.
 
-<img src="../images/aq-saved-views-button.png" width="500" />
+<img alt="New_saved_views" src="https://github.com/user-attachments/assets/3d8668b0-0974-4788-a9cc-f3697c4c99a3" width="500" />
 
 In order to create a new saved view, you must first open the "Open Saved Views Panel" button on the right side of the canvas explorer, which expands the Saved Views Panel over the existing Details Panel. From here, users can select from one of the existing saved views to render within the explorer canvas, or click the "Save current view" button at the top to save the current architecture configuration rendered in the explorer. 
 
-<img src="../images/aq-saved-views-panel.png" width="300" />
 
 When clicking on the "Save current view" button, you will be prompted to give a name to the configuration currently displayed in the architecture canvas, so picking a descriptive name other than the default is highly recommended. 
 
