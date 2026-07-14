@@ -299,6 +299,16 @@ summary {
     padding: 2px 8px 2px 8px;
     border-radius: 8px;
     color: var(--sig-white);
+    float: right;
+}
+
+.container nav .toc a.page em:hover {
+    margin-right: 16px;
+}
+
+.container nav .toc a.page em.new {
+    background-color: var(--sig-green) !important;
+    color: var(--sig-text-black);
 }
 
 .container nav .toc a.subPage {
