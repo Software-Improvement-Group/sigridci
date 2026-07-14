@@ -1,13 +1,9 @@
 # System-level overview
 
-This section describes the main functionalities and typical uses/analysis questions on the system level, looking at details and root causes of system quality findings. 
+You can reach this view from a protfolio level by selecting a system from the systems' tree map or list. The system overview shows the status of your system quality in a nutshell by introducing the Quality overview, System details and the objectives progress tiles. 
 
-For the portfolio-level view, see [the portfolio-level overview](portfolio-overview.md).
+<img width="1711" height="923" alt="New_system_overview" src="https://github.com/user-attachments/assets/6d0d7166-fad1-49ab-86be-0aee82a75882" />
 
-## System quality overview
-Quality goals can be assessed in the Overview tab. You can reach this either by starting with a portfolio view and then selecting a system from the system list. Or start at the system view and move to the Overview tab.
-
-<img src="../images/system-overview-tab-objectives.png" width="600" />
 
 The status of quality goals are shown in the System Objective Overview on the right (see also [Objectives](objectives.md)). This is binary: either the objective is met or not. 
 
@@ -34,14 +30,14 @@ Moving deeper into code details, to know what to focus development efforts on, e
 
 ## Navigating to capabilities
 
-Whichever Sigrid tab you are working in now, you can use the top menu to navigate to other system-level pages for specific Sigrid capabilities.
-<img src="../images/system-overview-top-bar.png" width="600" />
+Whichever Sigrid tab you are working in now, you can use the left menu to navigate to other system-level pages for specific Sigrid capabilities.
+
+<img width="254" height="549" alt="New_system_menu" src="https://github.com/user-attachments/assets/af2d9988-8286-42cb-a28b-4eaa7c6ada6f" />
 
 Starting from the System Overview: to move to specific capabilities you can also use the *Quality Overview* clicking on the area of your interest.
-<img src="../images/system-overview-quality-overview.png" width="600" />
 
-Starting from the Portfolio *Overview*: similar to the system overview, you can click on a capability of your interest, and then select the system you want to investigate further.
-<img src="../images/portfolio-overview-quality-overview.png" width="600" />
+<img width="1027" height="125" alt="New_quality_overview" src="https://github.com/user-attachments/assets/c1d13a3a-1a58-41ce-b79e-585483384497" />
+
 
 These capability pages are explained specifically here:
 * [System maintainability](system-maintainability.md) and [Delta quality](system-delta-quality.md)
@@ -49,3 +45,6 @@ These capability pages are explained specifically here:
 * [System security](system-security.md)
 * [System Open Source Health](system-open-source-health.md)
 * [Code explorer](system-code-explorer.md)
+
+## How to learn more:
+* Go to SIG Academy and follow the System-level functionalities e-learnings that cover the main aspects of Sigrid on system level. You can access the SIG Academy via the graduation cap icon in the bottom left of your Sigrid window.
