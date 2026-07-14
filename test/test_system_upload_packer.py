@@ -205,11 +205,12 @@ class SystemUploadPackerTest(TestCase):
         self.assertEqual(os.path.exists(outputFile), True)
         self.assertEqual(sorted(ZipFile(outputFile).namelist()), ["b/b.py", "b/c/c.py"])
 
-    def testIncludePatternShouldStillIncludeGitHistory(self):
+    def testIncludePatternShouldStillIncludeGitHistoryAndScopeFile(self):
         sourceDir = tempfile.mkdtemp()
         self.createTempFile(sourceDir, "a.py", "a")
         self.createTempFile(sourceDir, "b.py", "b")
         self.createTempFile(sourceDir, "git.log", "something")
+        self.createTempFile(sourceDir, "sigrid.yaml", "default_excludes: true")
 
         outputFile = tempfile.mkstemp()[1]
 
@@ -218,7 +219,7 @@ class SystemUploadPackerTest(TestCase):
         uploadPacker.prepareUpload(outputFile)
 
         self.assertEqual(os.path.exists(outputFile), True)
-        self.assertEqual(sorted(ZipFile(outputFile).namelist()), ["a.py", "git.log"])
+        self.assertEqual(sorted(ZipFile(outputFile).namelist()), ["a.py", "git.log", "sigrid.yaml"])
 
     def testIncludeGitHistory(self):
         tempDir = tempfile.mkdtemp()

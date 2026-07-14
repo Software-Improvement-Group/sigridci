@@ -12,7 +12,8 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-from unittest import TestCase
+import os
+from unittest import TestCase, mock
 
 from sigridci.sigridci.platform import Platform
 
@@ -24,3 +25,22 @@ class PlatformTest(TestCase):
         self.assertFalse(Platform.isValidToken(""))
         self.assertFalse(Platform.isValidToken("$"))
         self.assertTrue(Platform.isValidToken("zeiYh/WYQ==" * 10))
+
+    @mock.patch.dict(os.environ, {
+        "CI_SERVER_URL": "https://example.com",
+        "CI_PROJECT_PATH": "aap/noot",
+        "CI_COMMIT_REF_NAME": "feature/mybranch"
+    })
+    def testFileURLKeepsSlashesInBranchAndPath(self):
+        url = Platform.createPullRequestFileURL("src/main.py", 12)
+        self.assertEqual(url, "https://example.com/aap/noot/-/blob/feature/mybranch/src/main.py#L12")
+
+    @mock.patch.dict(os.environ, {
+        "CI_SERVER_URL": "https://example.com",
+        "CI_PROJECT_PATH": "aap/noot",
+        "CI_COMMIT_REF_NAME": "x) [evil](http://attacker.example)"
+    })
+    def testFileURLEncodesMaliciousBranchName(self):
+        url = Platform.createPullRequestFileURL("src/main.py", 12)
+        for character in ("(", ")", "[", "]", " "):
+            self.assertNotIn(character, url)

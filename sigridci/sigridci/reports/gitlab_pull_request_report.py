@@ -43,8 +43,8 @@ class GitLabPullRequestReport(Report):
                 else:
                     self.callAPI("PUT", self.buildPostCommentURL(existingCommentId), body)
                     UploadLog.log(f"Updated existing GitLab {self.markdownRenderer.getCapability().displayName} feedback")
-            except SystemExit:
-                print("Failed to publish feedback to GitLab")
+            except SystemExit as e:
+                print(f"Failed to publish feedback to GitLab: {e}")
 
     def isWithinGitLabMergeRequestPipeline(self, options):
         return "CI_MERGE_REQUEST_IID" in os.environ and \

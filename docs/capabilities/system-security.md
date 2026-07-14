@@ -1,27 +1,14 @@
 # System-level Security
 
-System-level security is one of the detailed technical views under *Findings*. This may be available for your system. It depends on which capabilities have been activated specifically for your system or portfolio. 
+The security overview page shows a summary of findings, their change, age and estimated severity. 
 
-## Reaching the Security page
-You can reach the system-level security view in different ways: Via the top menu (the *Findings* tab), clicking a capability on the System or Portfolio *Overview* pages, or clicking on a system from the Portfolio security view. See  [the system-level Overview page](system-overview.md#navigating-to-capabilities), [navigating from the portfolio-level Overview page](portfolio-overview.md#navigating-to-capabilities) or [navigating from the portfolio security view](portfolio-security.md#moving-from-portfolio-level-to-system-level).
-
-The tooling underlying this analysis is updated as often as possible. Therefore it may be possible that [new findings are found even when code is unchanged (link to FAQ)](faq-security.md#is-it-possible-that-sigrid-creates-new-findings-without-us-changing-the-code).
-
-
-## Navigating the Security Overview
-As an example, clicking on the *Findings* tab will show you a menu different capabilities (if available for your particular system). Here, with *Security* highlighted when hovering the mouse.
-
-<img src="../images/system-findings-menu-security.png" width="300" />
-
-The security overview page shows a summary of findings, their change, age and estimated severity. Note that the *Findings* tab will remain highlighted in yellow.
-
-<img src="../images/system-security-overview.png" width="600" />
+<img width="1714" height="898" alt="New_Security_system" src="https://github.com/user-attachments/assets/aa47b263-2fa4-43da-92b5-ee3bf9daee6c" />
 
 The different elements in this page are:
 * *Findings* shows a count of *the current number of findings*. Below it is the number of changes, based on the source code comparison period. This range be changed in the top right as usual. The note *"Also showing ... resolved findings and ... informational findings"* means that on top of this number, more findings are shown below. This is relevant for estimating activity surrounding these findings, such as fixing security findings or marking them as *false positive*. 
 * *Activity* shows a breakdown of this number. A mouseover on the *Activity* barchart will show the following:
 
-<img src="../images/system-security-activity-mouseover.png" width="300" />
+<img width="341" height="162" alt="New_activity_security" src="https://github.com/user-attachments/assets/d2707219-96b1-4b8d-9a8d-fcd7cfa4215c" />
 
 * The *Findings Age* tile gives an indication how long findings are known. 
 
@@ -117,9 +104,9 @@ You can group and sort the detailed view of security findings. The sorting offer
 
 <img src="../images/system-security-sorting-menu.png" width="150" />
 
-Below an example of a list of detailed findings. 
+Below an example of a list of detailed findings with no grouping. 
 
-<img src="../images/system-security-overview-no-grouping-sorting-status.png" width="600" />
+<img width="1457" height="866" alt="New_severity_none" src="https://github.com/user-attachments/assets/35ce9753-6fd3-4780-9a6d-1338a657dfa9" />
 
 In the top left you can see that the findings are not grouped. Therefore each finding is shown individually. Below, the *"Grouping"* menu under *"Sorting"*, sorting is set to CVSS severity. Therefore the highest risk findings are shown above. Note that for example the first two findings are Maven dependencies. These originate from [Open Source Health](system-open-source-health.md). 
 
@@ -205,6 +192,10 @@ In case of false positives, you may contact Sigrid Support. Given the automatic 
     * Please see the [Agile workflow page regarding refinement/planning](../workflows/agile-development-process.md#triage-security-and-osh-findings) for a further discussion on processing security findings in an Agile workflow. 
 * **Prioritizing by severity** is the typical approach, and this is faithful to agile practices (assuming you choose the action with the highest return first). This way you move from urgent to less urgent findings.
 * **Prioritizing by pattern grouping** means that you may exclude or solve many findings in one go. There are indeed cases when a whole class of findings can be excluded because for some reason the findings are not applicable or can be resolved in one place. You can arrive by this grouping e.g. by using "Finding Type" (specific vulnerability) or "CWE" (more general weakness). See our [section on grouping findings above](#different-possible-grouping-of-security-findings).
+
+NOTE:
+The tooling underlying this analysis is updated as often as possible. Therefore it may be possible that [new findings are found even when code is unchanged (link to FAQ)](faq-security.md#is-it-possible-that-sigrid-creates-new-findings-without-us-changing-the-code).
+
 
 ## SIG may offer consultancy services to help you with security
 Depending on your agreement with SIG, security expertise consultancy may be available. Or this can be offered as a separate consultancy effort. See also [this question in the security FAQ](faq-security.md#to-what-extent-does-sig-provide-consultancy-for-security-findings).

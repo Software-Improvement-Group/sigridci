@@ -126,4 +126,8 @@ class MarkdownRenderer(ABC):
         link = Platform.createPullRequestFileURL(file, line)
         if not link or not self.decorateLinks:
             return label
-        return f"[{label}]({link})"
+        return f"[{self.escapeMarkdownLabel(label)}]({link})"
+
+    def escapeMarkdownLabel(self, label):
+        # Escape characters that could break out of the [...] link label.
+        return label.replace("\\", "\\\\").replace("[", "\\[").replace("]", "\\]")
