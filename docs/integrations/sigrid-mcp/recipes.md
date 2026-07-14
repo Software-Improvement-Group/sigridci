@@ -17,6 +17,24 @@ You need:
 
 Pass them in your prompt or add them to your agent's context file (e.g. `CLAUDE.md`, `.cursor/rules/`).
 
+## Experimental example skills
+
+We publish a set of example skills in the [sigrid-ai-toolkit](https://github.com/Software-Improvement-Group/sigrid-ai-toolkit) repository. These are experimental — they show what's possible with the Recipes MCP tools and give you a starting point for your own workflows.
+
+| Skill | What it does |
+|-------|--------------|
+| `sigrid-diagnose` | Finds your weakest maintainability property and surfaces the highest-leverage refactoring candidates |
+| `sigrid-improve` | Executes refactoring candidates with guardrail verification |
+| `sigrid-ci-feedback` | Runs Sigrid CI locally and returns structured quality feedback |
+| `fix-osh-risk` | Remediates open source health findings — creates merge requests or researched issues |
+
+Install them directly as a Claude Code plugin, or browse the skill definitions and adapt them to your own agent and workflow:
+
+```
+/plugin marketplace add Software-Improvement-Group/sigrid-ai-toolkit
+/plugin install sigrid-experimental@sigrid-ai-toolkit
+```
+
 ## Workflows
 
 A few patterns for using Recipes with your AI agent. Adapt the prompts to your codebase, combine them, or do something different entirely.

@@ -3,7 +3,7 @@ Mapping repositories to Sigrid systems
 
 Sigrid provides you with an overview of your organization's entire software portfolio. Your portfolio will be split into several systems. In Sigrid's main portfolio dashboard, each system is depicted as a block within a treemap.
 
-<img src="../images/portfolio-lifecycle-phase-maintainability.png" width="600" />
+<img width="1714" height="910" alt="Opendemo Portfolio" src="https://github.com/user-attachments/assets/bfce4b76-d2c9-4209-b1cf-38db8c6f0456" />
 
 So what is a "system"? SIG uses the following definition based on the [ISO 25010 standard](https://www.softwareimprovementgroup.com/wp-content/uploads/SIG-TUViT-Evaluation-Criteria-Trusted-Product-Maintainability-Guidance-for-producers.pdf):
 

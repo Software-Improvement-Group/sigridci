@@ -32,6 +32,7 @@ def parseFeedbackOptions(args):
         system=args.system,
         runMode=RunMode.FEEDBACK_ONLY,
         capabilities=[CAPABILITY_SHORT_NAMES[args.capability.lower()]],
+        detailLevel=args.detaillevel,
         outputDir=args.out,
         sigridURL=args.sigridurl
     )
@@ -66,6 +67,7 @@ if __name__ == "__main__":
     parser.add_argument("--partner", type=str, default="sig", help=SUPPRESS)
     parser.add_argument("--customer", type=str, required=True, help="Name of your organization's Sigrid account.")
     parser.add_argument("--system", type=str, required=True, help="Name of your system in Sigrid, letters/digits/hyphens only.")
+    parser.add_argument("--detaillevel", type=str, default="default", help="Detail level for how much feedback to provide.")
     parser.add_argument("--out", type=str, default="sigrid-ci-output", help="Output directory for Sigrid CI feedback.")
     parser.add_argument("--sigridurl", type=str, default="https://sigrid-says.com", help="Sigrid base URL.")
     parser.add_argument("--capability", type=str, required=True, choices=list(CAPABILITY_SHORT_NAMES.keys()))

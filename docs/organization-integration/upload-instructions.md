@@ -184,7 +184,7 @@ The Sigrid Local Runner is *only* available for one-off assessments, and cannot 
 
 ## Uploading multiple Git repositories as a single Sigrid system
 
-If you need to combine several Git repositories into one Sigrid system for a one-off upload, you can use the `sigrid-git-upload.py` script provided in this repository. The script clones each repository into a temporary directory, bundles them together, and publishes the result to Sigrid.
+If you need to combine several Git repositories into one Sigrid system for a one-off upload, you can use [the `sigrid-git-upload.py` script](https://github.com/Software-Improvement-Group/sigridci/tree/main/multi-repository-upload) provided in this repository. The script clones each repository into a temporary directory, bundles them together, and publishes the result to Sigrid.
 
 This upload channel is designed for manual runs only and does not include pull-request feedback. For automated pipeline uploads, use [Sigrid CI](../sigridci-integration/development-workflows.md) instead.
 
