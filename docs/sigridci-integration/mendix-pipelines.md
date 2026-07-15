@@ -1,12 +1,13 @@
 Integrating Sigrid CI with Mendix Pipelines
 ===========================================
 
-This documentation covers cloud-based Sigrid. For on-premise Sigrid, refer to the section about
-[on-premise analysis configuration](../organization-integration/onpremise-analysis.md).
-{: .attention }
-
 This document describes integrating Sigrid with [Mendix Pipelines](https://docs.mendix.com/developerportal/deploy/mendix-pipelines/), 
 which is a continuous integration pipeline built into the Mendix Platform.
+
+This documentation covers cloud-based Sigrid. The integration with Mendix Pipelines is not available for on-premise
+Mendix. See the section about [on-premise analysis configuration](../organization-integration/onpremise-analysis.md)
+for publishing your code to Sigrid in on-premise environments.
+{: .attention }
 
 ## Prerequisites
 
