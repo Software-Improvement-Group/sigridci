@@ -239,11 +239,12 @@ A required secret must be created in the auth-api (see also inbound-api). This e
 {% raw %}
 ```yaml
 auth-api:
-   onboarding:
-    create: true
-    secretName: my-system-onboarding-secret
-    data:
-      secret: "example"
+  config:
+    onboarding:
+      create: true
+      secretName: my-system-onboarding-secret
+      data:
+        secret: "example"
 ```
 {% endraw %}
 
