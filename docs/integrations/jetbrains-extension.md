@@ -14,7 +14,7 @@ What you can do with it:
 - Triage findings — update status and add remarks — without opening Sigrid in your browser
 - Double-click a finding to jump straight to the relevant line of code
 - Open the full finding detail page in Sigrid when you need more context
-- Create Jira issues directly from one or more findings
+- Create Jira or Azure DevOps issues directly from one or more findings, via a unified "Create Issue" button
 
 ## Requirements
 
@@ -48,7 +48,6 @@ At the project level (**Settings → Tools → Sigrid → Project**), you need t
 <img src="../images/ide/jetbrains-setting-global-project.png" width="700" />
 
 You can leave **API Key**, **Portfolio Name**, and **Sigrid URL** blank at the project level — the plugin automatically falls back to your global settings, so you don't have to repeat them for every project. You'd only override them here if you have a separate Sigrid account for this specific project, which is rare.
-
 
 
 ## Opening the plugin
@@ -91,13 +90,15 @@ To edit a finding, select one or more rows and do one of the following:
 
 Batch edits are supported for up to 25 findings at a time.
 
-<!-- screenshot: edit dialog open with status and remark fields -->
+## Creating issues from findings
 
-## Creating Jira issues from findings
+You can turn one or more findings into a Jira issue or an Azure DevOps work item without leaving your IDE. Once at least one tracker is configured, a **Create Issue** button appears in the toolbar above the findings list. If you've configured both Jira and Azure DevOps, the button becomes a split button: clicking it directly creates an issue in whichever tracker you configured first, and the dropdown arrow next to it lets you pick the other tracker, or jump straight to **Issue Tracker Settings**.
 
-You can turn one or more findings into a Jira issue without leaving your IDE.
+<img src="../images/ide/sig-jetbrains-azuredevops-create-issue.png" width="700" />
 
-First, connect the plugin to Jira. Go to **Settings → Tools → Sigrid → Jira** (this is a project-level setting) and fill in:
+### Setting up Jira
+
+Go to **Settings → Tools → Sigrid → Jira** (this is a project-level setting) and fill in:
 
 - **Base URL** — your Jira site, e.g. `https://yourcompany.atlassian.net`
 - **User** — the email or username for the Jira account the plugin should act as
@@ -106,7 +107,9 @@ First, connect the plugin to Jira. Go to **Settings → Tools → Sigrid → Jir
 
 <img src="../images/ide/jetbrains-jira-setting.png" width="700" />
 
-To create an issue, select one or more findings in the Maintainability, Security, or Open Source Health panel, then click **Create Jira Issue** in the toolbar.
+### Creating a Jira issue
+
+To create an issue, select one or more findings in the Maintainability, Security, or Open Source Health panel, then click **Create Issue** in the toolbar (or pick **Jira** from the dropdown if Azure DevOps is also configured).
 
 <img src="../images/ide/jetbrains-jira-findings.png" width="700" />
 
@@ -128,6 +131,36 @@ If issue creation fails, Jira usually reports this as a generic permission error
 2. The **Base URL** points to the correct Jira site
 3. The Jira account behind your token has permission to create issues in that specific project
 4. The **User** matches the account that generated the token
+
+### Setting up Azure DevOps
+
+Azure DevOps settings are split across two pages. Go to **Settings → Tools → Sigrid → Issue Trackers → Azure DevOps** (a global setting, shared across all your projects) and fill in:
+
+- **Organization URL** — your Azure DevOps organization, e.g. `https://dev.azure.com/yourorganization`
+- **Personal Access Token** — a token with **Work Items (Read & write)** scope, generated from **User settings → Personal access tokens → New Token** in Azure DevOps
+
+<img src="../images/ide/sig-jetbrains-azuredevops-global-set.png" width="700" />
+
+**Project Name** is set per-project rather than globally, since each IntelliJ project you work in will typically map to a different Azure DevOps project. Go to **Settings → Tools → Sigrid → Issue Trackers → Azure DevOps → Project Settings** and fill in:
+
+- **Project Name** — the Azure DevOps project where work items will be created, e.g. `SigridTest`. This field is required.
+- **Organization URL** — leave blank to use the global Organization URL
+- **Personal Access Token** — leave blank to use the global PAT
+
+<img src="../images/ide/sig-jetbrains-azuredevops-project-set.png" width="700" />
+
+### Creating an Azure DevOps work item
+
+Select one or more findings the same way you would for a Jira issue, then click **Create Issue** in the toolbar (or pick **Azure DevOps** from the dropdown if Jira is also configured).
+
+A dialog opens where you can enter a title and choose the **work item type** from a dropdown — the available types are loaded directly from your Azure DevOps project, so they'll match whatever process template it uses (for example, a Scrum project offers Task, Bug, Feature, Impediment, and Product Backlog Item). The dialog also lets you preview the auto-generated description, which lists each finding's title, severity, and file locations, before submitting.
+
+<img src="../images/ide/sig-jetbrains-azuredevops-create-isssue2.png" width="700" />
+<img src="../images/ide/sig-jetbrains-azuredevops-workitems.png" width="700" />
+
+Click **Create**. A success notification appears showing the work item number, with an **Open in Browser** link to view it directly in Azure DevOps.
+
+<img src="../images/ide/sig-jetbrains-azuredevops-tasks.png" width="700" />
 
 
 ## Contact and support
