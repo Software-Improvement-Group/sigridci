@@ -160,7 +160,6 @@ A dialog opens where you can enter a title and choose the **work item type** fro
 
 Click **Create**. A success notification appears showing the work item number, with an **Open in Browser** link to view it directly in Azure DevOps.
 
-<img src="../images/ide/sig-jetbrains-azuredevops-tasks.png" width="700" />
 
 
 ## Contact and support
