@@ -147,8 +147,6 @@ A dialog opens where you can enter a title and choose the **work item type** fro
 
 Click **Create**. The extension calls your Azure DevOps organization and creates the work item. A confirmation notification appears showing the work item ID, with a link to open it directly in Azure DevOps.
 
-<img src="../images/ide/azure-devops-sigrid-finding.png" width="900" />
-
 ## Contact and support
 
 Feel free to contact [SIG's support team](mailto:support@softwareimprovementgroup.com) for any questions or issues 
