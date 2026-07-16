@@ -131,6 +131,8 @@ Before you can create work items, you need to configure your Azure DevOps creden
 | **Azure DevOps Personal Access Token** | A personal access token with **Work Items (Read & write)** scope | *(keep this private)* |
 | **Azure DevOps Project Name** | The name of the Azure DevOps project where work items will be created | `SigridTest` |
 
+<img src="../images/ide/sig-vscode-azure-setting-2.png" width="900" />
+
 You can generate a personal access token from your Azure DevOps organization under **User settings > Personal access tokens > New Token**.
 
 ### Creating a work item
