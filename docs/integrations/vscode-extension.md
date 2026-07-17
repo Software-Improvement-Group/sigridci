@@ -21,8 +21,7 @@ findings from within your IDE. In particular, it lets you do the following:
   more convenient when you need quickly triage large numbers of findings.
 - **Jump back-and-forth between Sigrid and your IDE.** When needed, you can quickly jump from the finding information
   in your IDE to viewing the finding details in Sigrid.
-- **Filter and search findings.** Narrow down a large list of findings by risk level or status, or search across all findings using the search bar.
-- **Create Jira issues from findings.** Select one or more findings and create a Jira issue directly from your IDE, without leaving VS Code.
+- **Create Jira or Azure DevOps issues from findings.** Narrow down a large list of findings by risk level or status, or search across all findings using the search bar.
 
 <img src="../images/ide/vs-ccde-screenshot.png" width="500" />
 
@@ -115,6 +114,40 @@ Click the button. A **"Create JIRA Issue"** dialog appears where you can enter a
 Click **Create Issue**. The extension calls your Jira instance and creates the issue. A confirmation notification appears at the bottom-right of the panel showing the issue ID (for example, *"JIRA issue created: SCRUM-5"*) with an **"Open in Browser"** button to view it directly in Jira.
 
 <img src="../images/ide/vs-code-jira.png" width="500" />
+
+## Creating Azure DevOps work items from findings
+
+As an alternative to Jira, you can create Azure DevOps work items directly from Sigrid findings without leaving Visual Studio Code. As with the Jira integration, the request is made from your own IDE, so this also works if your Azure DevOps organization is behind a firewall and not reachable from Sigrid directly.
+
+<img src="../images/ide/sigrid-vs-code-azure-devops-findings.png" width="900" />
+
+### Setting up Azure DevOps integration
+
+Before you can create work items, you need to configure your Azure DevOps credentials. Open VS Code settings (`Cmd+,` on Mac, `Ctrl+,` on Windows), search for "Sigrid", and scroll down to fill in the following fields:
+
+| Setting | Description | Example |
+|---|---|---|
+| **Azure DevOps Organization URL** | The URL of your Azure DevOps organization | `https://dev.azure.com/yourorganization` |
+| **Azure DevOps Personal Access Token** | A personal access token with **Work Items (Read & write)** scope | *(keep this private)* |
+| **Azure DevOps Project Name** | The name of the Azure DevOps project where work items will be created | `SigridTest` |
+
+<img src="../images/ide/sig-vscode-azure-setting-2.png" width="900" />
+
+You can generate a personal access token from your Azure DevOps organization under **User settings > Personal access tokens > New Token**.
+
+### Creating a work item
+
+Select one or more findings using the checkboxes in the findings list, the same way you would for a Jira issue. With at least one finding selected, use the **"Create Azure DevOps work item"** button above the list.
+
+<img src="../images/ide/sigrid-vs-code-azure-devops-createtask.png" width="900" />
+
+A dialog opens where you can enter a title and choose the **work item type** from a dropdown. The available types depend on the process template your Azure DevOps project uses — for example, a Scrum project offers Task, Bug, Feature, Impediment, and Product Backlog Item. The extension automatically generates a description that lists the selected findings and links back to each finding in Sigrid. Some work item types support an additional **Repro Steps** field; the extension detects whether this field is available for the type you chose and includes it automatically when supported.
+
+<img src="../images/ide/sigrid-azure-devops-workitem-type.png" width="400" />
+
+Click **Create**. The extension calls your Azure DevOps organization and creates the work item. A confirmation notification appears showing the work item ID, with a link to open it directly in Azure DevOps.
+
+<img src="../images/ide/azure-devops-sigrid-finding-2.png" width="700" />
 
 ## Contact and support
 

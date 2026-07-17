@@ -123,7 +123,7 @@ Once created, a notification confirms the new issue and links straight to it in 
 
 The issue itself carries over the same finding details from the description preview, so anyone picking it up in Jira has the full context without needing to open Sigrid.
 
-<img src="../images/ide/jetbrains-jira-issue.png" width="700" />
+<img src="../images/ide/jetbrains-jira-issue-2.png" width="700" />
 
 If issue creation fails, Jira usually reports this as a generic permission error even when the real cause is different. Check, in order:
 
