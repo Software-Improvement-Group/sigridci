@@ -217,6 +217,8 @@ Note the **extra** outer brackets required for the configuration to validate suc
 | `list_open_source_risks` | [Modernization Recipes MCP](sigrid-mcp/recipes.md) | Returns open source dependency risks across vulnerability, freshness, legal, activity, stability, and management |
 | `list_open_source_vulnerabilities` | [Modernization Recipes MCP](sigrid-mcp/recipes.md) | Returns known CVEs in open source dependencies ranked by CVSS score |
 | `edit_finding_status` | [Modernization Recipes MCP](sigrid-mcp/recipes.md) | Updates the status and remarks of a Sigrid finding |
+| `get_internal_architecture` | [Modernization Recipes MCP](sigrid-mcp/recipes.md) | Shows how the parts inside a directory relate to each other, to understand structure before changing it |
+| `get_external_dependencies` | [Modernization Recipes MCP](sigrid-mcp/recipes.md) | Lists a file or directory's incoming and outgoing dependencies, to find the blast radius of a change |
 
 
 ### Tool selection
