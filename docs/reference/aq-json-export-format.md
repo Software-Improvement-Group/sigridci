@@ -203,6 +203,7 @@ Dependency types are considated into three "families":
 
 ### Component role labels
 
-| Role    | Description                            |
-|---------|----------------------------------------|
-| UTILITY | Indicates this is a utility component. |
+| Role    | Description                                                                      |
+|---------|----------------------------------------------------------------------------------|
+| REPOSITORY | Indicates this component is a separate repository within a multi-repo system. |
+| UTILITY | Indicates this is a utility component.                                           |
