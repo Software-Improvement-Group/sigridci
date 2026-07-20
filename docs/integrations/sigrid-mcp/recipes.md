@@ -84,7 +84,7 @@ Get maintainability findings for [customer]/[system]. What patterns do you see? 
 
 ### Architecture exploration
 
-Before refactoring or moving code, let the agent map how the system fits together: which components call which, and what a change would ripple out to. These tools are read-only — they inform a plan, they don't change anything. Giving the agent this context up front helps it respect the existing structure instead of introducing architecture drift.
+Before touching code, let the agent map how the system fits together: which components call which, and what a change would ripple out to. These tools are read-only — they inform a plan, they don't change anything. Giving the agent this context up front helps it respect the existing structure instead of introducing architecture drift.
 
 Two tools support this:
 
