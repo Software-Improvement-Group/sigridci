@@ -82,6 +82,25 @@ Get maintainability findings for [customer]/[system]. What patterns do you see? 
 
 <a href="../../images/mcp/recipes/maintainability-overview.png" target="_blank"><img src="../../images/mcp/recipes/maintainability-overview.png" width="600" alt="Claude Code querying maintainability ratings, showing a 3.3 star overview with duplication at 1.3 stars identified as the key technical debt hotspot" /></a>
 
+### Architecture exploration
+
+Before refactoring or moving code, let the agent map how the system fits together: which components call which, and what a change would ripple out to. These tools are read-only — they inform a plan, they don't change anything. Giving the agent this context up front helps it respect the existing structure instead of introducing architecture drift.
+
+Two tools support this:
+
+- `get_internal_architecture` shows how the parts *inside* a directory relate to each other — which sub-parts call which, and how often. Omit the path to see the system's top-level components, then drill down into a specific directory.
+- `get_external_dependencies` lists the direct dependencies of a file or directory: what it calls out to (outgoing) and what calls into it (incoming) — the blast radius of a change. It returns one hop at a time; follow a returned path with another call to go deeper.
+
+**Example — understand a component before changing it:**
+```
+Before I refactor the Analyses component in [customer]/[system], map its internal structure and tell me which sub-parts are most tightly coupled.
+```
+
+**Example — assess blast radius:**
+```
+I want to change [file] in [customer]/[system]. What depends on it, and what does it depend on? Treat anything with a high call count as higher risk and call it out.
+```
+
 ### Security and reliability triage
 
 The agent fetches security or reliability findings, investigates each one in the code, and either fixes it or triages it with a rationale.
@@ -134,7 +153,7 @@ These compose: run discovery first, triage the results, then execute on the will
 
 ## Tools reference
 
-Seven MCP tools drive the workflows above.
+Nine MCP tools drive the workflows above.
 
 | Tool | Description | Key parameters                                                                                                                                   |
 | --- | --- |--------------------------------------------------------------------------------------------------------------------------------------------------|
@@ -145,6 +164,8 @@ Seven MCP tools drive the workflows above.
 | `list_open_source_risks` | Open source dependency risks across vulnerability, freshness, legal, activity, stability, and management — default tool for any open-source health question | `risk_dimension`: filter dimensions. `risk_min`: `NONE`, `LOW`, `MEDIUM` (default), `HIGH`, `CRITICAL`. `limit` |
 | `list_open_source_vulnerabilities` | Known CVEs in open-source dependencies ranked by CVSS score | `severity_min`: `LOW`, `MEDIUM` (default), `HIGH`, `CRITICAL`. `limit` |
 | `edit_finding_status` | Updates the status of a finding so Sigrid reflects the agent's decisions | `status` — see below. Optional: `remark`                                                                                                         |
+| `get_internal_architecture` | Shows how the parts inside a directory relate to each other — which sub-parts call which, and how often. Omit the path for the system's top-level components | Optional: `path` (omit for top-level components) |
+| `get_external_dependencies` | Lists a file or directory's direct dependencies — outgoing (what it calls) and incoming (what calls it) — to find the blast radius of a change. One hop per call | `path` (required). Optional: `direction`: `incoming`, `outgoing`, `all` (default) |
 
 **Valid statuses for `edit_finding_status`:**
 
