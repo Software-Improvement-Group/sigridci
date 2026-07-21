@@ -222,7 +222,7 @@ The following example shows the CI JSON structure:
   "baseline": "20260720",
   "dependencyFeedback": [
     {
-      "qualification": "Undesirable dependency",
+      "qualification": "UNDESIRABLE", // One of UNDESIRABLE, CYCLIC, NEW
       "activity": "INTRODUCED", // One of "INTRODUCED", "REMOVED", "INCREASED", "DECREASED", "UNCHANGED"
       "type": "CODE_CALL",
       "sourceHierarchy": [
