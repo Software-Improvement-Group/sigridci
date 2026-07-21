@@ -220,10 +220,10 @@ The following example shows the CI JSON structure:
 ```
 {
   "baseline": "20260720",
-  "positiveFeedback": [
+  "dependencyFeedback": [
     {
-      "smell": "Undesirable dependency",
-      "contribution": "FIXED", // For positive feedback, either "FIXED" or "IMPROVED"
+      "qualification": "Undesirable dependency",
+      "activity": "INTRODUCED", // One of "INTRODUCED", "REMOVED", "INCREASED", "DECREASED", "UNCHANGED"
       "type": "CODE_CALL",
       "sourceHierarchy": [
         {
@@ -254,9 +254,7 @@ The following example shows the CI JSON structure:
         }
       ]
     }
-  ],
-  "negativeFeedback": [], // Same format as positive feedback, contribution is "INTRODUCED" or "WORSENED"
-  "remaining": 6
+  ]
 }
 ```
 
