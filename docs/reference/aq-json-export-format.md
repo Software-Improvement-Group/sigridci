@@ -220,8 +220,11 @@ The following example shows the CI JSON structure:
 ```
 {
   "baseline": "20260720",
-  "undesirableDependencies": [
+  "positiveFeedback": [
     {
+      "smell": "Undesirable dependency",
+      "contribution": "FIXED", // For positive feedback, either "FIXED" or "IMPROVED"
+      "type": "CODE_CALL",
       "sourceHierarchy": [
         {
           "id": "1",
@@ -249,10 +252,11 @@ The following example shows the CI JSON structure:
           "shortName": "noot.py",
           "type": "FILE",
         }
-      ],
-      "type": "CODE_CALL"
+      ]
     }
-  ]
+  ],
+  "negativeFeedback": [], // Same format as positive feedback, contribution is "INTRODUCED" or "WORSENED"
+  "remaining": 6
 }
 ```
 
