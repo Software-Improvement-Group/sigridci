@@ -203,6 +203,62 @@ Dependency types are considated into three "families":
 
 ### Component role labels
 
-| Role    | Description                            |
-|---------|----------------------------------------|
-| UTILITY | Indicates this is a utility component. |
+| Role       | Description                                                                      |
+|------------|----------------------------------------------------------------------------------|
+| REPOSITORY | Indicates this component is a separate repository within a multi-repo system.    |
+| UTILITY    | Indicates this is a utility component.                                           |
+
+## CI JSON feedback
+
+Sigrid CI architecture feedback does *not* use the JSON export format described above. Instead, you will get an
+additional *second* CI JSON feedback file. So what the difference? The "normal" JSON file is much larger and always 
+contains the full architecture graph. The CI JSON file is smaller and specifically contains the CI feedback that was 
+calculated by comparing the current snapshot against the baseline snapshot.
+
+The following example shows the CI JSON structure:
+
+```
+{
+  "baseline": "20260720",
+  "dependencyFeedback": [
+    {
+      "qualification": "UNDESIRABLE", // One of UNDESIRABLE, CYCLIC, NEW
+      "activity": "INTRODUCED", // One of "INTRODUCED", "REMOVED", "INCREASED", "DECREASED", "UNCHANGED"
+      "type": "CODE_CALL",
+      "sourceHierarchy": [
+        {
+          "id": "1",
+          "name": "Aap",
+          "shortName": "Aap",
+          "type": "CODE_COMPONENT",
+        },
+        {
+          "id": "2",
+          "name": "Aap/aap.py",
+          "shortName": "aap.py",
+          "type": "FILE",
+        }
+      ],
+      "targetHierarchy": [
+        {
+          "id": "3",
+          "name": "Noot",
+          "shortName": "Noot",
+          "type": "CODE_COMPONENT",
+        },
+        {
+          "id": "4",
+          "name": "Noot/noot.py",
+          "shortName": "noot.py",
+          "type": "FILE",
+        }
+      ]
+    }
+  ]
+}
+```
+
+## Contact and support
+
+Feel free to contact [SIG's support team](mailto:support@softwareimprovementgroup.com) for any questions or issues you 
+may have after reading this documentation or when using Sigrid.
