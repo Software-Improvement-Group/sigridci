@@ -209,16 +209,17 @@ Note the **extra** outer brackets required for the configuration to validate suc
 
 | Tool | Product | Description |
 | --- | --- | --- |
-| `code_quality_guardrails` | [Guardrails MCP](sigrid-mcp/guardrails.md) | Checks code for maintainability issues and security vulnerabilities |
-| `refactoring_candidates` | [Modernization Recipes MCP](sigrid-mcp/recipes.md) | Retrieves ranked refactoring candidates for a given maintainability property |
-| `maintainability_ratings` | [Modernization Recipes MCP](sigrid-mcp/recipes.md) | Returns current maintainability ratings for a system |
-| `list_security_findings` | [Modernization Recipes MCP](sigrid-mcp/recipes.md) | Returns open security findings ranked by severity |
-| `list_reliability_findings` | [Modernization Recipes MCP](sigrid-mcp/recipes.md) | Returns open reliability findings ranked by severity |
-| `list_open_source_risks` | [Modernization Recipes MCP](sigrid-mcp/recipes.md) | Returns open source dependency risks across vulnerability, freshness, legal, activity, stability, and management |
-| `list_open_source_vulnerabilities` | [Modernization Recipes MCP](sigrid-mcp/recipes.md) | Returns known CVEs in open source dependencies ranked by CVSS score |
-| `edit_finding_status` | [Modernization Recipes MCP](sigrid-mcp/recipes.md) | Updates the status and remarks of a Sigrid finding |
-| `get_internal_architecture` | [Modernization Recipes MCP](sigrid-mcp/recipes.md) | Shows how the parts inside a directory relate to each other, to understand structure before changing it |
-| `get_external_dependencies` | [Modernization Recipes MCP](sigrid-mcp/recipes.md) | Lists a file or directory's incoming and outgoing dependencies, to find the blast radius of a change |
+| `guardrails:quality_check` | [Guardrails MCP](sigrid-mcp/guardrails.md) | Checks code for maintainability issues and security vulnerabilities |
+| `maintainability:get_findings` | [Modernization Recipes MCP](sigrid-mcp/recipes.md) | Retrieves ranked refactoring candidates for a given maintainability property |
+| `maintainability:get_ratings` | [Modernization Recipes MCP](sigrid-mcp/recipes.md) | Returns current maintainability ratings for a system |
+| `security:get_findings` | [Modernization Recipes MCP](sigrid-mcp/recipes.md) | Returns open security findings ranked by severity |
+| `reliability:get_findings` | [Modernization Recipes MCP](sigrid-mcp/recipes.md) | Returns open reliability findings ranked by severity |
+| `opensourcehealth:get_risks` | [Modernization Recipes MCP](sigrid-mcp/recipes.md) | Returns open source dependency risks across vulnerability, freshness, legal, activity, stability, and management |
+| `opensourcehealth:get_vulnerabilities` | [Modernization Recipes MCP](sigrid-mcp/recipes.md) | Returns known CVEs in open source dependencies ranked by CVSS score |
+| `update_finding_status` | [Modernization Recipes MCP](sigrid-mcp/recipes.md) | Updates the status and remarks of a Sigrid finding |
+| `architecture:get_internal` | [Modernization Recipes MCP](sigrid-mcp/recipes.md) | Shows how the parts inside a directory relate to each other, to understand structure before changing it |
+| `architecture:get_external_dependencies` | [Modernization Recipes MCP](sigrid-mcp/recipes.md) | Lists a file or directory's incoming and outgoing dependencies, to find the blast radius of a change |
+| `architecture:get_worst_directories` | [Modernization Recipes MCP](sigrid-mcp/recipes.md) | Returns the lowest-scoring architecture directories, ranked by impact |
 
 
 ### Tool selection
@@ -234,7 +235,7 @@ To further restrict which tools are visible in a session, pass the `X-Enabled-To
       "url": "https://sigrid-says.com/mcp",
       "headers": {
         "Authorization": "Bearer <your_sigrid_token>",
-        "X-Enabled-Tools": "code_quality_guardrails, list_security_findings"
+        "X-Enabled-Tools": "guardrails:quality_check, security:get_findings"
       }
     }
   }
