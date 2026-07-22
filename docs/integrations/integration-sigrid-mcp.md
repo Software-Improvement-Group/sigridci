@@ -2,7 +2,7 @@
 
 Sigrid MCP integrations let AI coding tools use Sigrid's analysis while you work — catching security and quality issues as they're introduced, and driving down technical debt through guided refactoring.
 
-- **[Sigrid Guardrails MCP](sigrid-mcp/guardrails.md)**: A guardrail agent that uses Sigrid's code analysis to prevent AI Coding Assistants from introducing security and other quality issues
+- **[Sigrid Guardrails MCP](sigrid-mcp/guardrails.md)**: Agent guardrails that use Sigrid's code analysis to prevent AI Coding Assistants from introducing security and other quality issues
 - **[Sigrid Auto-fix Agents MCP](sigrid-mcp/autofix-agents.md)**: An auto-fix agent that uses data from Sigrid to let AI Coding Agents fix and improve existing issues
 
 Start with Guardrails for automatic quality checks on new code. Add Auto-fix Agents when you're ready to tackle existing technical debt.
