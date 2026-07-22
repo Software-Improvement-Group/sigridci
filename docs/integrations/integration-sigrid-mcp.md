@@ -2,10 +2,10 @@
 
 Sigrid MCP integrations let AI coding tools use Sigrid's analysis while you work — catching security and quality issues as they're introduced, and driving down technical debt through guided refactoring.
 
-- **[Sigrid Guardrails MCP](sigrid-mcp/guardrails.md)**: Leverage Sigrid's code analysis to safeguard AI Coding Assistants from introducing security and other quality issues
-- **[Sigrid Modernization Recipes MCP](sigrid-mcp/recipes.md)**: Use data from Sigrid to let AI Coding Agents perform large-scale modernization tasks
+- **[Sigrid Guardrails MCP](sigrid-mcp/guardrails.md)**: A guardrail agent that uses Sigrid's code analysis to prevent AI Coding Assistants from introducing security and other quality issues
+- **[Sigrid Auto-fix Agents MCP](sigrid-mcp/autofix-agents.md)**: An auto-fix agent that uses data from Sigrid to let AI Coding Agents fix and improve existing issues
 
-Start with Guardrails for automatic quality checks on new code. Add Recipes when you're ready to tackle existing technical debt.
+Start with Guardrails for automatic quality checks on new code. Add Auto-fix Agents when you're ready to tackle existing technical debt.
 
 ## Installation
 
@@ -69,7 +69,7 @@ Follow instructions below to configure the MCP server manually:
 ```json
 {
   "mcpServers": {
-    "SigridCode": {
+    "Sigrid": {
       "url": "https://sigrid-says.com/mcp",
       "headers": {
         "Authorization": "Bearer <your_sigrid_token>"
@@ -91,7 +91,7 @@ Add:
 ```json
 {
   "servers": {
-    "SigridCode": {
+    "Sigrid": {
       "command": "npx",
       "args": [
         "mcp-remote",
@@ -112,7 +112,7 @@ Add:
 - Connect your GitHub account and open GitHub Copilot
 - At the bottom left, below the chat box, select "Agent" mode
 - Click on the + button to add a new MCP server
-- When prompted, enter the name "SigridCode", then add the URL as `https://sigrid-says.com/mcp`
+- When prompted, enter the name "Sigrid", then add the URL as `https://sigrid-says.com/mcp`
 - Choose "Additional headers" and add: `Authorization: Bearer <your_sigrid_token>`
 - After saving/closing the window, if the token is valid, verify server appears in tools list
 
@@ -124,7 +124,7 @@ Add:
 ```json
 {
   "mcpServers": {
-    "SigridCode": {
+    "Sigrid": {
       "serverUrl": "https://sigrid-says.com/mcp",
       "headers": {
         "Authorization": "Bearer <your_sigrid_token>"
@@ -141,7 +141,7 @@ Note that the url key must be `serverUrl`.
 #### Claude Code (manual)
 
 ```bash
-claude mcp add --transport http SigridCode https://sigrid-says.com/mcp --header "Authorization: Bearer <your_sigrid_token>"
+claude mcp add --transport http Sigrid https://sigrid-says.com/mcp --header "Authorization: Bearer <your_sigrid_token>"
 ```
 
 Replace `<your_sigrid_token>` with your actual Sigrid API token. Restart Claude Code after adding.
@@ -153,7 +153,7 @@ Replace `<your_sigrid_token>` with your actual Sigrid API token. Restart Claude 
 ```json
 {
   "mcp": {
-    "SigridCode": {
+    "Sigrid": {
       "type": "remote",
       "url": "https://sigrid-says.com/mcp",
       "headers": {
@@ -172,7 +172,7 @@ Navigate to Tools > AI Assistant > Model Context Protocol (MCP) and add:
 
 ```json
 "mcpServers": {
-    "CodeGuardrails": {
+    "Sigrid": {
       "command": "npx",
       "args": [
         "mcp-remote",
@@ -192,7 +192,7 @@ Navigate to Settings (the cogwheel icon inside the Bob chat window) > MCP. Confi
 {
     "mcpServers":
     {
-        "CodeGuardrails": {
+        "Sigrid": {
             "type": "streamable-http",
             "url": "https://sigrid-says.com/mcp",
             "headers": {
@@ -210,16 +210,16 @@ Note the **extra** outer brackets required for the configuration to validate suc
 | Tool | Product | Description |
 | --- | --- | --- |
 | `guardrails:quality_check` | [Guardrails MCP](sigrid-mcp/guardrails.md) | Checks code for maintainability issues and security vulnerabilities |
-| `maintainability:get_findings` | [Modernization Recipes MCP](sigrid-mcp/recipes.md) | Retrieves ranked refactoring candidates for a given maintainability property |
-| `maintainability:get_ratings` | [Modernization Recipes MCP](sigrid-mcp/recipes.md) | Returns current maintainability ratings for a system |
-| `security:get_findings` | [Modernization Recipes MCP](sigrid-mcp/recipes.md) | Returns open security findings ranked by severity |
-| `reliability:get_findings` | [Modernization Recipes MCP](sigrid-mcp/recipes.md) | Returns open reliability findings ranked by severity |
-| `opensourcehealth:get_risks` | [Modernization Recipes MCP](sigrid-mcp/recipes.md) | Returns open source dependency risks across vulnerability, freshness, legal, activity, stability, and management |
-| `opensourcehealth:get_vulnerabilities` | [Modernization Recipes MCP](sigrid-mcp/recipes.md) | Returns known CVEs in open source dependencies ranked by CVSS score |
-| `update_finding_status` | [Modernization Recipes MCP](sigrid-mcp/recipes.md) | Updates the status and remarks of a Sigrid finding |
-| `architecture:get_internal` | [Modernization Recipes MCP](sigrid-mcp/recipes.md) | Shows how the parts inside a directory relate to each other, to understand structure before changing it |
-| `architecture:get_external_dependencies` | [Modernization Recipes MCP](sigrid-mcp/recipes.md) | Lists a file or directory's incoming and outgoing dependencies, to find the blast radius of a change |
-| `architecture:get_worst_directories` | [Modernization Recipes MCP](sigrid-mcp/recipes.md) | Returns the lowest-scoring architecture directories, ranked by impact |
+| `maintainability:get_findings` | [Auto-fix Agents MCP](sigrid-mcp/autofix-agents.md) | Retrieves ranked refactoring candidates for a given maintainability property |
+| `maintainability:get_ratings` | [Auto-fix Agents MCP](sigrid-mcp/autofix-agents.md) | Returns current maintainability ratings for a system |
+| `security:get_findings` | [Auto-fix Agents MCP](sigrid-mcp/autofix-agents.md) | Returns open security findings ranked by severity |
+| `reliability:get_findings` | [Auto-fix Agents MCP](sigrid-mcp/autofix-agents.md) | Returns open reliability findings ranked by severity |
+| `opensourcehealth:get_risks` | [Auto-fix Agents MCP](sigrid-mcp/autofix-agents.md) | Returns open source dependency risks across vulnerability, freshness, legal, activity, stability, and management |
+| `opensourcehealth:get_vulnerabilities` | [Auto-fix Agents MCP](sigrid-mcp/autofix-agents.md) | Returns known CVEs in open source dependencies ranked by CVSS score |
+| `update_finding_status` | [Auto-fix Agents MCP](sigrid-mcp/autofix-agents.md) | Updates the status and remarks of a Sigrid finding |
+| `architecture:get_internal` | [Auto-fix Agents MCP](sigrid-mcp/autofix-agents.md) | Shows how the parts inside a directory relate to each other, to understand structure before changing it |
+| `architecture:get_external_dependencies` | [Auto-fix Agents MCP](sigrid-mcp/autofix-agents.md) | Lists a file or directory's incoming and outgoing dependencies, to find the blast radius of a change |
+| `architecture:get_worst_directories` | [Auto-fix Agents MCP](sigrid-mcp/autofix-agents.md) | Returns the lowest-scoring architecture directories, ranked by impact |
 
 
 ### Tool selection
@@ -231,7 +231,7 @@ To further restrict which tools are visible in a session, pass the `X-Enabled-To
 ```json
 {
   "mcpServers": {
-    "SigridCode": {
+    "Sigrid": {
       "url": "https://sigrid-says.com/mcp",
       "headers": {
         "Authorization": "Bearer <your_sigrid_token>",

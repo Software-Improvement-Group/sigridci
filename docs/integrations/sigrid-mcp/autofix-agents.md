@@ -1,10 +1,10 @@
-# Sigrid Modernization Recipes MCP
+# Sigrid Auto-fix Agents MCP
 
-Modernization Recipes gives AI agents a prioritized list of refactoring targets from Sigrid. The agent works through the list, fixes what it can, and marks each finding as resolved.
+An auto-fix agent uses the available Sigrid skills and MCP tools to fix and improve existing issues. It gives AI agents a prioritized list of refactoring targets from Sigrid, works through the list, fixes what it can, and marks each finding as resolved.
 
 For installation instructions, see the [MCP overview page](../integration-sigrid-mcp.md).
 
-> **Beta:** Modernization Recipes is in early access. The current tools cover core refactoring workflows. We're actively adding more.
+> **Beta:** Auto-fix agents are in early access. The current tools cover core refactoring workflows. We're actively adding more.
 
 ## Before you start
 
@@ -19,7 +19,7 @@ Pass them in your prompt or add them to your agent's context file (e.g. `CLAUDE.
 
 ## Experimental example skills
 
-We publish a set of example skills in the [sigrid-ai-toolkit](https://github.com/Software-Improvement-Group/sigrid-ai-toolkit) repository. These are experimental — they show what's possible with the Recipes MCP tools and give you a starting point for your own workflows.
+We publish a set of example skills in the [sigrid-ai-toolkit](https://github.com/Software-Improvement-Group/sigrid-ai-toolkit) repository. These are experimental — they show what's possible with the auto-fix agent MCP tools and give you a starting point for your own workflows.
 
 | Skill | What it does |
 |-------|--------------|
@@ -37,7 +37,7 @@ Install them directly as a Claude Code plugin, or browse the skill definitions a
 
 ## Workflows
 
-A few patterns for using Recipes with your AI agent. Adapt the prompts to your codebase, combine them, or do something different entirely.
+A few patterns for running an auto-fix agent on your codebase. Adapt the prompts, combine them, or do something different entirely.
 
 ### Autonomous fixing
 
