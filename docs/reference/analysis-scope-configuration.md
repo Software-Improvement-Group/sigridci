@@ -7,23 +7,9 @@ You can change Sigrid's configuration for your project, to make Sigrid's feedbac
 
 You configure Sigrid by creating a file called `sigrid.yaml` in the root of your repository. When you publish your repository to Sigrid, it will pick up the `sigrid.yaml` file. 
 
-The `sigrid.yaml` file supports a lot of options to configure and customize Sigrid. And we mean *a lot* of options, as you can see from the length of this page!
+However, the scope configuration file is entirely optional. If you do not provide a `sigrid.yaml` file in your repository, Sigrid will automatically detect the technologies and components in your system. You only need to create a scope configuration if you want to override or customize the automatic detection.
 
-The following example shows a minimal `sigrid.yaml` file that should help you to get started:
-
-    languages:
-      - name: TypeScript
-      - name: JavaScript
-      
-So what do these options actually do?
-
-- The `languages` option lists all technologies in your system. You can find the list of supported technology names in the first column of [the technology support list](technology-support.md#list-of-supported-technologies).
-
-If you're not sure what technologies you repository is using, and you're using a development platform like GitHub or GitLab, you can find this information on your repository's dashboard page. For example, this GitHub repository would result in the list of technologies used in the example above:
-
-<img src="../images/github-languages-example.png" width="250" />
-
-Of course, you can always extend this simple example by adding additional configuration. The remainder of this page describes the various configuration options and how to use them.
+If you do want to customize the configuration, the `sigrid.yaml` file supports tons of customization options, as you can see from the length of this page! The remainder of this page describes the various configuration options and how to use them.
 
 ## Editing scope files
 
@@ -92,7 +78,17 @@ In rare cases, you might see files ending up in a Remainder component, even thou
 
 ## Defining technologies
 
-The `languages` section lists all languages that you want Sigrid to analyze:
+By default, Sigrid will automatically detect your system’s technologies based on SIG’s knowledge base. If your system contains `.java` files and `.py` files, you do not need to tell Sigrid that you're using Java and Python, Sigrid will be able to figure this out automatically. 
+
+We recommend you use automatic technology detection instead of manually configuring the list of technologies. The reason is maintenance: The list of technologies might change over time. If you add a technology to your system, and you forget to add that technology to the Sigrid configuration, it means that Sigrid will not monitor that technology. If you use automatic technology detection, you do not need to remember this, as Sigrid will just pick up the new technology automatically.
+{: .attention }
+
+If you want to exclude certain technologies from Sigrid, it is better to use the [exclude option](#excluding-files-and-directories). Using the list of technologies to exclude certain files or directories is possible, but leads to the downsides described above.
+{: .warning }
+
+### Manual technology configuration
+
+You override the default automatic detection by adding a `languages` section to your scope configuration file. This section lists all technologies that you want Sigrid to analyze:
 
     languages:
       - name: Csharp
@@ -102,11 +98,14 @@ The `languages` section lists all languages that you want Sigrid to analyze:
 
 Refer to the first column in the [list of supported technologies](technology-support.md) for an overview of all supported technologies and the names that can be used.
 
-### Overriding automatic technology and test code detection
+Choosing between automatic technology detection and manual technology configuration is all-or-nothing. You cannot use automatic detection for some technologies and manual configuration for others. The reason is that it can lead to weird conflicts where the two have different opinions on the same files, which leads to confusing behavior where your configuration will not do what you expect it to do. Choosing one or the other leads to more transparent behavior where it's easy to understand *why* a certain file is mapped to a certain technology.
+{: .attention }
 
-When you add a technology to your scope file, Sigrid will try to locate the corresponding files based on file and directory name conventions. This includes automatic detection of test code. For example, Java-based projects typically use `src/main/java` for production code and `src/test/java` for test code.
+### Overriding automatic test code detection
 
-This automatic detection is usually sufficient for the majority of projects. However, if you are using less common frameworks or a custom naming convention, you will need to tell Sigrid where it can find the test code. Like other parts of the scope file, this is done using regular expressions:
+When you add a technology to your scope file, Sigrid will differentiate between production code and test code based on the patterns in its knowledge base. For example, Java-based projects typically use `src/main/java` for production code and `src/test/java` for test code.
+
+This is usually sufficient for the majority of projects. However, if you are using less common frameworks or a custom naming convention, you will need to tell Sigrid where it can find the test code. Like other parts of the scope file, this is done using regular expressions:
 
     languages:
       - name: Java
@@ -118,7 +117,6 @@ This automatic detection is usually sufficient for the majority of projects. How
 This example will classify all Java code in the `our-smoke-tests` directory as test code. The patterns for test code take precedence over the patterns for production code.   
 
 If you choose to manually override the technology detection, be aware that every file must match a single technology. If you define overlapping patterns where multiple technologies "claim" the same file, the first matching technology will be used.
-{: .warning }
 
 ## Defining components
 
