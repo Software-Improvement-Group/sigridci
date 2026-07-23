@@ -191,6 +191,12 @@ This happens when Sigrid CI tried to provide command line output that includes U
 
 This message occurs when the (Linux) user that cloned your Git repository is different from the (Linux) user that is running the CI job. This scenario is pretty uncommon, in the majority of cases the entire CI pipeline is performed with the same user. If you see this error, you can add `git config --global --add safe.directory <repository-dir>` to tell Git it is safe to trust the directory to which the repository was cloned. Note you need to provide the directory's absolute path, Git will not allow `.`.
 
+### Why do I see a message about Node.js 20 being deprecated in my pull request feedback?
+
+Sigrid CI itself does not use Node.js, so this message does not come from Sigrid. If you're using the [GitHub Marketplace action](../sigridci-integration/github-actions.md#alternative-2b-github-marketplace) to post Sigrid CI feedback as a pull request comment, that action relies on a third-party GitHub Action ([`mshick/add-pr-comment`](https://github.com/mshick/add-pr-comment)) to post the comment. GitHub Actions is moving its runners from Node.js 20 to Node.js 24, and GitHub automatically adds this deprecation notice whenever a step still depends on the older Node.js runtime. Any accompanying Node.js `DeprecationWarning` lines (for example about `punycode` or `url.parse()`) come from that same dependency chain.
+
+In short: this is a notice from GitHub Actions' infrastructure and the third-party comment action, not from Sigrid. It's a warning, not an error, and does not affect the Sigrid CI analysis itself. If your pipeline is actually failing, look for a separate error message in the same step's log, since the Node.js deprecation notice on its own will not fail the build.
+
 ## Infrastructure and security questions
 
 ### How do you protect our source code?
