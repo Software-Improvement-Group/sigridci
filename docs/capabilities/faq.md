@@ -193,9 +193,9 @@ This message occurs when the (Linux) user that cloned your Git repository is dif
 
 ### Why do I see a message about Node.js 20 being deprecated in my pull request feedback?
 
-Sigrid CI itself does not use Node.js, so this message does not come from Sigrid. If you're using the [GitHub Marketplace action](../sigridci-integration/github-actions.md#alternative-2b-github-marketplace) to post Sigrid CI feedback as a pull request comment, that action relies on a third-party GitHub Action ([`mshick/add-pr-comment`](https://github.com/mshick/add-pr-comment)) to post the comment. GitHub Actions is moving its runners from Node.js 20 to Node.js 24, and GitHub automatically adds this deprecation notice whenever a step still depends on the older Node.js runtime. Any accompanying Node.js `DeprecationWarning` lines (for example about `punycode` or `url.parse()`) come from that same dependency chain.
+Sigrid CI itself does not use Node.js, so this message does not come from Sigrid. This notice shows up if you're using an older version of our GitHub Actions configuration, which relied on a third-party GitHub Action ([`mshick/add-pr-comment`](https://github.com/mshick/add-pr-comment)) to post Sigrid CI feedback as a pull request comment. We have since replaced that third-party action with our own implementation. If you follow the [current GitHub Actions instructions](../sigridci-integration/github-actions.md#alternative-2b-github-marketplace), you no longer depend on `mshick/add-pr-comment`, and the deprecation notice will disappear.
 
-In short: this is a notice from GitHub Actions' infrastructure and the third-party comment action, not from Sigrid. It's a warning, not an error, and does not affect the Sigrid CI analysis itself. If your pipeline is actually failing, look for a separate error message in the same step's log, since the Node.js deprecation notice on its own will not fail the build.
+In short: this is a notice from GitHub Actions' infrastructure and an outdated third-party dependency in your workflow configuration, not from Sigrid. It's a warning, not an error, and does not affect the Sigrid CI analysis itself. Updating to the current GitHub Actions configuration removes the dependency, and the notice, entirely.
 
 ## Infrastructure and security questions
 
