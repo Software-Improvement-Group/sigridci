@@ -3,7 +3,7 @@ Sigrid release notes
 
 SIG uses [continuous delivery](https://en.wikipedia.org/wiki/Continuous_delivery), meaning that every change to Sigrid or the underlying analysis is released once our development pipeline has completed. On average, we release somewhere between 10 and 20 times per day. This page therefore doesn't list every single change, since that would quickly lead to an excessively long list of small changes. Instead, this page lists Sigrid and analysis changes that we consider noteworthy for the typical Sigrid user.
 
-### July 20, 2026
+### July 27, 2026
 
 - **Mendix QSM:** Sigrid now supports integration with [Mendix Pipelines](https://docs.mendix.com/developerportal/deploy/mendix-pipelines/). This allows you to automatically publish your app to Sigrid, as part of your time. [The documentation](../sigridci-integration/mendix-pipelines.md) contains more information on how you can configure this integration in Mendix Pipelines.
 - **Sigrid API:** You can now retrieve architecture quality ratings for a certain time period, instead of just being able to retrieve the current state. You can use this trend information for reporting purposes. The [REST API documentation](../integrations/sigrid-api-documentation.md#architecture-quality-ratings) has been updated with instructions on how to use this option. 
