@@ -262,7 +262,7 @@ The following example shows the CI JSON structure:
   },
   "remaining": {
     "UNDESIRABLE": 1,
-    "CYCLIC": 0,
+    "CYCLIC": 0
   }
 }
 ```
