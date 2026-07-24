@@ -191,6 +191,12 @@ This happens when Sigrid CI tried to provide command line output that includes U
 
 This message occurs when the (Linux) user that cloned your Git repository is different from the (Linux) user that is running the CI job. This scenario is pretty uncommon, in the majority of cases the entire CI pipeline is performed with the same user. If you see this error, you can add `git config --global --add safe.directory <repository-dir>` to tell Git it is safe to trust the directory to which the repository was cloned. Note you need to provide the directory's absolute path, Git will not allow `.`.
 
+### Why do I see a message about Node.js 20 being deprecated in my pull request feedback?
+
+Sigrid CI itself does not use Node.js, so this message does not come from Sigrid. This notice shows up if you're using an older version of our GitHub Actions configuration, which relied on a third-party GitHub Action ([`mshick/add-pr-comment`](https://github.com/mshick/add-pr-comment)) to post Sigrid CI feedback as a pull request comment. We have since replaced that third-party action with our own implementation. If you follow the [current GitHub Actions instructions](../sigridci-integration/github-actions.md#alternative-2b-github-marketplace), you no longer depend on `mshick/add-pr-comment`, and the deprecation notice will disappear.
+
+In short: this is a notice from GitHub Actions' infrastructure and an outdated third-party dependency in your workflow configuration, not from Sigrid. It's a warning, not an error, and does not affect the Sigrid CI analysis itself. Updating to the current GitHub Actions configuration removes the dependency, and the notice, entirely.
+
 ## Infrastructure and security questions
 
 ### How do you protect our source code?
