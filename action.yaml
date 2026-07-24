@@ -24,6 +24,10 @@ inputs:
     description: "Publishes your source code to Sigrid, without waiting for feedback (true/false)."
     required: false
     default: false
+  disableonboarding:
+    description: "Disables automatic on-boarding."
+    required: false
+    default: false
   exclude:
     description: "Comma-separated list of files and directories that should not be uploaded."
     required: false
@@ -126,6 +130,7 @@ runs:
     - ${{ inputs.capability }}
     - "--detaillevel"
     - ${{ inputs.detaillevel }}
+    - ${{ (inputs.disableonboarding == 'true' && '--disable-onboarding') || '--dummy' }}
   env:
     displayname: ${{ inputs.displayname }}
     divisionname: ${{ inputs.divisionname }}
