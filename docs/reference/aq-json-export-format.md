@@ -254,9 +254,26 @@ The following example shows the CI JSON structure:
         }
       ]
     }
-  ]
+  ],
+  "totals": {
+    "UNDESIRABLE": 1,
+    "CYCLIC": 0,
+    "NEW": 0
+  },
+  "remaining": {
+    "UNDESIRABLE": 1,
+    "CYCLIC": 0
+  }
 }
 ```
+
+- The list of dependencies is capped to 50. The numbers in `total` always reflect the true number of feedback
+  items, but detail information will only be returned for the top 50. Note that the overwhelming majority of
+  CI feedback will never get to 50 noteworthy dependencies being introduced or removed.
+- The `qualification`s are in order of precedence. So if a dependency is both `UNDESIRABLE` and `NEW`, the
+  `UNDESIRABLE` will win.
+- The `remaining` field covers existing technical debt *not* included in the CI feedback. These numbers
+  do not include the `NEW` category since that would always be zero.
 
 ## Contact and support
 
