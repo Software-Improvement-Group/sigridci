@@ -1,10 +1,10 @@
-# Sigrid Modernization Recipes MCP
+# Sigrid Auto-fix Agents MCP
 
-Modernization Recipes gives AI agents a prioritized list of refactoring targets from Sigrid. The agent works through the list, fixes what it can, and marks each finding as resolved.
+An auto-fix agent uses the available Sigrid skills and MCP tools to fix and improve existing issues. It gives AI agents a prioritized list of refactoring targets from Sigrid, works through the list, fixes what it can, and marks each finding as resolved.
 
 For installation instructions, see the [MCP overview page](../integration-sigrid-mcp.md).
 
-> **Beta:** Modernization Recipes is in early access. The current tools cover core refactoring workflows. We're actively adding more.
+> **Beta:** Auto-fix agents are in early access. The current tools cover core refactoring workflows. We're actively adding more.
 
 ## Before you start
 
@@ -19,7 +19,7 @@ Pass them in your prompt or add them to your agent's context file (e.g. `CLAUDE.
 
 ## Experimental example skills
 
-We publish a set of example skills in the [sigrid-ai-toolkit](https://github.com/Software-Improvement-Group/sigrid-ai-toolkit) repository. These are experimental — they show what's possible with the Recipes MCP tools and give you a starting point for your own workflows.
+We publish a set of example skills in the [sigrid-ai-toolkit](https://github.com/Software-Improvement-Group/sigrid-ai-toolkit) repository. These are experimental — they show what's possible with the auto-fix agent MCP tools and give you a starting point for your own workflows.
 
 | Skill | What it does |
 |-------|--------------|
@@ -37,7 +37,7 @@ Install them directly as a Claude Code plugin, or browse the skill definitions a
 
 ## Workflows
 
-A few patterns for using Recipes with your AI agent. Adapt the prompts to your codebase, combine them, or do something different entirely.
+A few patterns for running an auto-fix agent on your codebase. Adapt the prompts, combine them, or do something different entirely.
 
 ### Autonomous fixing
 
@@ -86,10 +86,11 @@ Get maintainability findings for [customer]/[system]. What patterns do you see? 
 
 Before touching code, let the agent map how the system fits together: which components call which, and what a change would ripple out to. These tools are read-only — they inform a plan, they don't change anything. Giving the agent this context up front helps it respect the existing structure instead of introducing architecture drift.
 
-Two tools support this:
+Three tools support this:
 
-- `get_internal_architecture` shows how the parts *inside* a directory relate to each other — which sub-parts call which, and how often. Omit the path to see the system's top-level components, then drill down into a specific directory.
-- `get_external_dependencies` lists the direct dependencies of a file or directory: what it calls out to (outgoing) and what calls into it (incoming) — the blast radius of a change. It returns one hop at a time; follow a returned path with another call to go deeper.
+- `architecture:get_internal` shows how the parts *inside* a directory relate to each other — which sub-parts call which, and how often. Omit the path to see the system's top-level components, then drill down into a specific directory.
+- `architecture:get_external_dependencies` lists the direct dependencies of a file or directory: what it calls out to (outgoing) and what calls into it (incoming) — the blast radius of a change. It returns one hop at a time; follow a returned path with another call to go deeper.
+- `architecture:get_worst_directories` ranks directories by their architecture quality impact — low ratings on large components surface first. Use it to find where refactoring would move the needle most, optionally scoped to a directory or a specific structure metric.
 
 **Example — understand a component before changing it:**
 ```
@@ -153,21 +154,22 @@ These compose: run discovery first, triage the results, then execute on the will
 
 ## Tools reference
 
-Nine MCP tools drive the workflows above.
+Ten MCP tools drive the workflows above.
 
 | Tool | Description | Key parameters                                                                                                                                   |
 | --- | --- |--------------------------------------------------------------------------------------------------------------------------------------------------|
-| `refactoring_candidates` | Ranked refactoring candidates for a [maintainability property](../../reference/sig-quality-models.md) | `property`, optional: `technology`, `limit`                                                                                                      |
-| `maintainability_ratings` | Current maintainability ratings on a 0.5–5.5 star scale (3.0 = market average, 4.0 = target for new development) | Optional: `component`, `technology` breakdowns                                                                                                   |
-| `list_security_findings` | Open security findings ranked by severity and exploitability, with CWE identifiers and file locations | `severity`: `LOW`, `MEDIUM`, `HIGH`, `CRITICAL`. `model`: `ow10` (default), `sigsec`, `5055sec`, `c25`, `pci4`, `owasvs4c`, `owasvs4s`, `lcnc10`. `path_prefix`: filter by file path prefix (use long, specific prefixes) |
-| `list_reliability_findings` | Open reliability findings (error handling, concurrency, resource management, IPC) ranked by severity | Same filters as security. `model`: `sigrel` (default), `5055rel`. `path_prefix`: filter by file path prefix (use long, specific prefixes)                                                                                 |
-| `list_open_source_risks` | Open source dependency risks across vulnerability, freshness, legal, activity, stability, and management — default tool for any open-source health question | `risk_dimension`: filter dimensions. `risk_min`: `NONE`, `LOW`, `MEDIUM` (default), `HIGH`, `CRITICAL`. `limit` |
-| `list_open_source_vulnerabilities` | Known CVEs in open-source dependencies ranked by CVSS score | `severity_min`: `LOW`, `MEDIUM` (default), `HIGH`, `CRITICAL`. `limit` |
-| `edit_finding_status` | Updates the status of a finding so Sigrid reflects the agent's decisions | `status` — see below. Optional: `remark`                                                                                                         |
-| `get_internal_architecture` | Shows how the parts inside a directory relate to each other — which sub-parts call which, and how often. Omit the path for the system's top-level components | Optional: `path` (omit for top-level components) |
-| `get_external_dependencies` | Lists a file or directory's direct dependencies — outgoing (what it calls) and incoming (what calls it) — to find the blast radius of a change. One hop per call | `path` (required). Optional: `direction`: `incoming`, `outgoing`, `all` (default) |
+| `maintainability:get_findings` | Ranked refactoring candidates for a [maintainability property](../../reference/sig-quality-models.md) | `property`, optional: `technology`, `limit`                                                                                                      |
+| `maintainability:get_ratings` | Current maintainability ratings on a 0.5–5.5 star scale (3.0 = market average, 4.0 = target for new development) | Optional: `component`, `technology` breakdowns                                                                                                   |
+| `security:get_findings` | Open security findings ranked by severity and exploitability, with CWE identifiers and file locations | `severity`: `LOW`, `MEDIUM`, `HIGH`, `CRITICAL`. `model`: `ow10` (default), `sigsec`, `5055sec`, `c25`, `pci4`, `owasvs4c`, `owasvs4s`, `lcnc10`. `path_prefix`: filter by file path prefix (use long, specific prefixes) |
+| `reliability:get_findings` | Open reliability findings (error handling, concurrency, resource management, IPC) ranked by severity | Same filters as security. `model`: `sigrel` (default), `5055rel`. `path_prefix`: filter by file path prefix (use long, specific prefixes)                                                                                 |
+| `opensourcehealth:get_risks` | Open source dependency risks across vulnerability, freshness, legal, activity, stability, and management — default tool for any open-source health question | `risk_dimension`: filter dimensions. `risk_min`: `NONE`, `LOW`, `MEDIUM` (default), `HIGH`, `CRITICAL`. `limit` |
+| `opensourcehealth:get_vulnerabilities` | Known CVEs in open-source dependencies ranked by CVSS score | `severity_min`: `LOW`, `MEDIUM` (default), `HIGH`, `CRITICAL`. `limit` |
+| `update_finding_status` | Updates the status of a finding so Sigrid reflects the agent's decisions | `status` — see below. Optional: `remark`                                                                                                         |
+| `architecture:get_internal` | Shows how the parts inside a directory relate to each other — which sub-parts call which, and how often. Omit the path for the system's top-level components | Optional: `path` (omit for top-level components) |
+| `architecture:get_external_dependencies` | Lists a file or directory's direct dependencies — outgoing (what it calls) and incoming (what calls it) — to find the blast radius of a change. One hop per call | `path` (required). Optional: `direction`: `incoming`, `outgoing`, `all` (default) |
+| `architecture:get_worst_directories` | Lowest-scoring architecture directories, worst impact first, to identify where refactoring would most improve architecture quality | Optional: `directory_scope`, `metric` (`structure`, `coupling`, `cohesion`, `adjacency`), `limit` (default: 10) |
 
-**Valid statuses for `edit_finding_status`:**
+**Valid statuses for `update_finding_status`:**
 
 | Finding type | Valid statuses |
 | --- | --- |
