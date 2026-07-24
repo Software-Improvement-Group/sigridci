@@ -1,6 +1,8 @@
 # Sigrid Guardrails MCP
 
-Guardrails gives your AI coding assistant access to Sigrid's code analysis during generation. The agent checks its own output as it works — security vulnerabilities and quality issues get caught before they land in a commit.
+Agent guardrails use Sigrid's code analysis to prevent issues from being introduced. They give your AI coding assistant access to that analysis during generation, so the agent checks its own output as it works — security vulnerabilities and quality issues get caught before they land in a commit.
+
+This is the counterpart to the [auto-fix agent](autofix-agents.md), which fixes and improves issues that already exist.
 
 For installation instructions, see the [MCP overview page](../integration-sigrid-mcp.md).
 
@@ -40,7 +42,7 @@ functions, clear naming, avoid duplication, simple control flow.
 
 Before reporting ANY task as complete:
 
-1. Run the Sigrid Code Quality Guardrails tool on all files you changed
+1. Run the Sigrid guardrails:quality_check MCP tool on all files you changed
 2. Maintainability findings: fix every finding in files you touched, new or
    pre-existing, judged against the principles above. Leave one only if the code
    already honors the principles, or the fix cascades outside task scope

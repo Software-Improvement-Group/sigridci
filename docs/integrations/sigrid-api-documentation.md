@@ -633,8 +633,7 @@ Arcitecture quality ratings for a given customer are available via two endpoints
 
 The path parameters `{customer}` and `{system}` refer to your Sigrid account name and system ID respectively.
 
-By default, these end points return the current architecture ratings. You can add an optional query parameter `endDate` to control the time period. For example, adding `?endDate=2026-02-01` will make the end point return the latest architecture ratings as of February 1, 2026. You would typically use this option for reporting purposes. 
-
+By default, these end points return the current architecture ratings. You can add an optional query parameter `endDate` to control the time period. For example, adding `?endDate=2026-02-01` will make the end point return the latest architecture ratings as of February 1, 2026. You would typically use this option for reporting purposes.
 
 <details markdown="1">
   <summary>Example system-level response format</summary>
