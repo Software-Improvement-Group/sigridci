@@ -17,23 +17,18 @@ You need:
 
 Pass them in your prompt or add them to your agent's context file (e.g. `CLAUDE.md`, `.cursor/rules/`).
 
-## Experimental example skills
+## Skills
 
-We publish a set of example skills in the [sigrid-ai-toolkit](https://github.com/Software-Improvement-Group/sigrid-ai-toolkit) repository. These are experimental — they show what's possible with the auto-fix agent MCP tools and give you a starting point for your own workflows.
+The [Sigrid Claude Code Plugin](../integration-sigrid-mcp.md) ships a set of skills that run the workflows below for you. They come with the plugin, so [installing it](../integration-sigrid-mcp.md) makes them available. Run `/sigrid:setup` once afterwards to record your Sigrid system and team conventions; see [plugin configuration](configuration.md) for what it stores.
 
 | Skill | What it does |
 |-------|--------------|
 | `sigrid-diagnose` | Finds your weakest maintainability property and surfaces the highest-leverage refactoring candidates |
 | `sigrid-improve` | Executes refactoring candidates with guardrail verification |
 | `sigrid-ci-feedback` | Runs Sigrid CI locally and returns structured quality feedback |
-| `fix-osh-risk` | Remediates open source health findings — creates merge requests or researched issues |
+| `fix-osh-risk` | Remediates open source health findings by creating merge requests or researched issues |
 
-Install them directly as a Claude Code plugin, or browse the skill definitions and adapt them to your own agent and workflow:
-
-```
-/plugin marketplace add Software-Improvement-Group/sigrid-ai-toolkit
-/plugin install sigrid-experimental@sigrid-ai-toolkit
-```
+If you use a different AI agent, browse the skill definitions in the [sigrid-ai-toolkit](https://github.com/Software-Improvement-Group/sigrid-ai-toolkit) repository and adapt them to your own workflow.
 
 ## Workflows
 
