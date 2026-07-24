@@ -47,7 +47,8 @@ def parsePublishOptions(args):
         detailLevel=args.detaillevel,
         outputDir=args.out,
         sigridURL=args.sigridurl,
-        ignoreMissingScopeFile=args.ignore_missing_scope_file
+        ignoreMissingScopeFile=args.ignore_missing_scope_file,
+        autoOnboarding=not args.disable_onboarding
     )
 
 
@@ -86,6 +87,7 @@ if __name__ == "__main__":
     parser.add_argument("--capability", type=str, default=DEFAULT_CAPABILITIES, help=f"Comma-separated Sigrid capabilities ({','.join(CAPABILITIES.keys())}).")
     parser.add_argument("--publish", action="store_true", help="Publishes analysis results to Sigrid.")
     parser.add_argument("--publishonly", action="store_true", help="Only publishes to Sigrid without waiting for results.")
+    parser.add_argument("--disable-onboarding", action="store_true", help="Disables automatic on-boarding.")
     parser.add_argument("--exclude", type=str, default="", help="Comma-separated list of files/directories to exclude.")
     parser.add_argument("--include", type=str, default="", help="Comma-separated list of files/directories to include.")
     parser.add_argument("--showupload", action="store_true", help="Logs the contents of the upload published to Sigrid.")
