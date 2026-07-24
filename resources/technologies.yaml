@@ -625,10 +625,6 @@
   display_name: "Mustache"
   category: templating
 
-- context: mysql
-  display_name: "MySQL"
-  category: database
-
 - context: nabsic
   display_name: "Nabsic"
   category: dsl
@@ -762,10 +758,6 @@
 - context: pega
   display_name: "Pega"
   category: customization
-
-- context: pegajsp
-  display_name: "PEGA JSP"
-  category: templating
 
 - context: perl
   display_name: "Perl"
@@ -1000,10 +992,6 @@
 
 - context: sqlj
   display_name: "SQLJ"
-  category: database
-
-- context: sqlite
-  display_name: "SQLite"
   category: database
 
 - context: sqr
