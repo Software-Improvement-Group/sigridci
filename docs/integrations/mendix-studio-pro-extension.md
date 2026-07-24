@@ -18,7 +18,7 @@ It focuses on viewing and managing QSM findings from within your IDE. In particu
 
 The Mendix Studio Pro extension requires Studio Pro version 11.7 or newer. It is unfortunately not possible to
 support older versions.
-{: .warning }
+{: .attention }
 
 ## Installing the extension
 
@@ -39,7 +39,10 @@ Before you can use the extension, you will first need to provide your QSM creden
 - Enter your QSM customer name and system name.
 - You will also need to add your [authentication token](../organization-integration/authentication-tokens.md).
 
-<img src="../images/ide/mendix-settings.png" width="450" />
+<img src="../images/ide/mendix-settings.png" width="400" />
+
+By default, Mendix Studio Pro extensions will store their settings in the project directory. This is also true for the Sigrid/QSM extension, which saves its settings as `qsm-settings.json`. **We recommend you add `qsm-settings.json` to your `.gitignore` so that the settings are not committed to version control.** This is because the settings file contains your Sigrid token, and it is a security best practices to not commit *any* credentials to version control.
+{: .warning }
 
 ## Using the extension
 
