@@ -55,6 +55,8 @@ class SigridCiRunner:
 
         systemExists = self.apiClient.checkSystemExists()
         UploadLog.log("Found system in Sigrid" if systemExists else "System is not yet on-boarded to Sigrid")
+        if not systemExists and not self.options.autoOnboarding:
+            sys.exit(1)
 
         metadata = self.apiClient.fetchMetadata() if systemExists else {}
         if systemExists and not metadata.get("active", True):
