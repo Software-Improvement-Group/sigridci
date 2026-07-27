@@ -46,6 +46,7 @@ class PublishOptions:
     partner: str = "sig"
     capabilities: List[Capability] = field(default_factory=lambda: [MAINTAINABILITY, OPEN_SOURCE_HEALTH])
     ignoreMissingScopeFile: bool = False
+    autoOnboarding: bool = True
 
     SYSTEM_NAME_PATTERN = re.compile("^[a-z0-9]+(-[a-z0-9]+)*$", re.IGNORECASE)
     SYSTEM_NAME_LENGTH = range(2, 65)

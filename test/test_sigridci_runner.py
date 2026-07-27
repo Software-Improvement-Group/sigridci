@@ -186,6 +186,23 @@ class SigridCiRunnerTest(TestCase):
         self.assertEqual(apiClient.called, expectedCalls)
         self.assertEqual(apiClient.received["/inboundresults/sig/aap/noot/ci/uploads/v1"]["mode"], "ONBOARDING")
 
+    def testDoNotAutoOnboardIfDisabledViaOptions(self):
+        self.createTempFile(self.tempDir, "a.py", "print(123)")
+
+        self.options.autoOnboarding = False
+
+        apiClient = MockApiClient(self.options, systemExists=False)
+        runner = SigridCiRunner(self.options, apiClient)
+        with self.assertRaises(SystemExit):
+            runner.run()
+
+        expectedLog = [
+            "Using token ending in '****ummy'",
+            "System is not yet on-boarded to Sigrid",
+        ]
+
+        self.assertEqual(UploadLog.history, expectedLog)
+
     def testAddSubsystemOptionToUrl(self):
         self.createTempFile(self.tempDir, "a.py", "print(123)")
 
