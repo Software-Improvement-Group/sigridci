@@ -300,10 +300,7 @@ summary {
     border-radius: 8px;
     color: var(--sig-white);
     float: right;
-}
-
-.container nav .toc a.page em:hover {
-    margin-right: 16px;
+    margin-right: -16px;
 }
 
 .container nav .toc a.page em.new {
@@ -324,6 +321,10 @@ summary {
     background-color: var(--sig-highlight-gray);
     margin-right: -16px;
     background-image: none;
+}
+
+.container nav .toc a:hover em, .container nav .toc .currentPage em, .container nav .toc .category:hover em {
+    margin-right: 0px !important;
 }
 
 .toc .currentPage {
