@@ -299,6 +299,16 @@ summary {
     padding: 2px 8px 2px 8px;
     border-radius: 8px;
     color: var(--sig-white);
+    float: right;
+}
+
+.container nav .toc a.page em:hover {
+    margin-right: 16px;
+}
+
+.container nav .toc a.page em.new {
+    background-color: var(--sig-green) !important;
+    color: var(--sig-text-black);
 }
 
 .container nav .toc a.subPage {
@@ -535,4 +545,19 @@ sig-toc .h4 {
     margin-top: 30px;
     margin-bottom: 30px;
     border: none;
+}
+
+.announcement {
+    top: 24px;
+    border-radius: 8px;
+    background-color: #FAE196;
+    color: #584814;
+    padding: 12px;
+    margin-top: 38px;
+    font-size: 12px;
+}
+
+.announcement a, .announcement a:hover {
+    color: #584814;
+    text-decoration: underline;
 }
