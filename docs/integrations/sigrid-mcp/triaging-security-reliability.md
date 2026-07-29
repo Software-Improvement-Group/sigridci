@@ -1,53 +1,36 @@
 # Triaging security and reliability findings with auto-fix agents
 
-An [auto-fix agent](autofix-agents.md) can work through a backlog of security and reliability findings: it fetches the findings, reads the code around each one, and records a decision with a rationale.
+A security finding is a hypothesis: this code pattern may be exploitable. Confirming or dismissing it takes context that is not at the finding's location, such as where the data comes from, what validated it earlier, and whether the endpoint is reachable from outside. That tracing work is mechanical, which makes it a good thing to hand to an agent. It is also the work that gets skipped when a list is long.
 
-This guide covers triage and reporting. It stops short of letting the agent fix things autonomously, which is the main way it differs from [reducing technical debt](reducing-technical-debt.md).
+An [auto-fix agent](autofix-agents.md) fetches the findings, reads the code around each one, and records a decision with a rationale you can still read in six months. What it does not do here is fix anything. Security code is where confident-and-wrong is most expensive: an agent that rewrites an authorization check, an escaping routine, or a crypto call and reports success has produced a change that looks correct, passes the tests, and may be a vulnerability. A maintainability refactor that goes wrong shows up as a failing test. This does not. So the default in this workflow is to change nothing, and fixes are separate, deliberate work.
 
-Everything here applies to any agentic CLI. The worked configuration uses Claude Code, since that is the only CLI we ship a plugin for.
+Reach for it when the reason your finding backlog is untouched is volume and not difficulty, when you want each finding assessed in context instead of by severity label, and when you need the reasoning written down for an audit or for the next person. A single fresh critical vulnerability is the case this is not for. That one needs you, now, without a triage loop in front of it.
 
-## When you'd do this, and who's at the keyboard
+Maintainability findings work differently, and autonomous fixing is safer there: see [reducing technical debt](reducing-technical-debt.md).
 
-A developer or a security champion who owns the finding list and has to get through it. You are at the keyboard for the whole run. The agent's output is a set of assessments you accept, reject, or escalate, and you make every call it records.
+## Why the agent needs help
 
-Use it when:
+The agent brings the tracing. Two things it cannot bring are what separate a useful run from a confidently wrong one.
 
-- You have a finding backlog large enough that the reason it is untouched is volume rather than difficulty.
-- You want each finding assessed in context, considering whether the input is actually reachable and whether something upstream already validated it, instead of by severity label alone.
-- You need the reasoning written down: for an audit, for the next person, or so nobody re-triages the same finding in six months.
+It has no reachability model of your system. It cannot know that a service is internal-only, that a gateway strips a client-supplied header, or that a queue is only ever fed by another service you own. Handed a finding it cannot resolve from the code, it guesses, and it guesses in whichever direction your prompt leaned. Prompt for false positives and you will get false positives.
 
-Do not point this at a fresh critical vulnerability. A single urgent finding does not need a triage loop. It needs you, now.
+It also has no burden of proof unless you give it one. Nothing about the task stops it from dismissing a finding by rewording it, because "reviewed, not an issue" satisfies the request as well as a real assessment does.
 
-The default is to change nothing. Ask for triage first, and pick up fixes as separate, deliberate work.
+Sigrid supplies the finding list, ranked, with locations, CWE identifiers, and severity. The agent supplies the tracing. You supply the reachability facts and the verdict. Both of those gaps close with the same two things: a context file that states what the code cannot, and a rule that every verdict has to point at a line.
 
-## Why the agent needs help here
-
-A security finding is a hypothesis: this code pattern may be exploitable. Confirming or dismissing it takes context that is not at the finding's location, such as where the data comes from, what validated it earlier, and whether the endpoint is reachable from outside. That work gets skipped when a list is long, and an agent is good at it, because tracing a value back through call sites is mechanical.
-
-Two things go wrong if you leave the agent to it.
-
-- **It has no reachability model of your system.** It cannot know that a service is internal-only, that a gateway strips a header, or that a queue is only ever fed by another service you own. Handed a finding it cannot resolve, it guesses, and it guesses in whichever direction your prompt leaned. Prompt for false positives and you will get false positives.
-- **Security code is where confident-and-wrong is most expensive.** An agent that rewrites an authorization check, an escaping routine, or a crypto call and reports success has produced a change that looks correct, passes the tests, and may be a vulnerability. A maintainability refactor that goes wrong shows up as a failing test. This does not.
-
-So Sigrid supplies the finding list, ranked, with locations, CWE identifiers, and severity. The agent supplies the tracing work. You supply the reachability facts and the verdict. That division is what makes the loop trustworthy, and it is why triage and fixing stay separate.
-
-## Setup
-
-The four primitives again:
+## Setting it up
 
 {% include sigrid-mcp-primitives.md %}
 
 ### 1. Tool access
 
-```
-/plugin marketplace add Software-Improvement-Group/sigrid-ai-toolkit
-/plugin install sigrid@sigrid-ai-toolkit
-/sigrid:setup
-```
+{% include sigrid-plugin-install.md setup=true %}
 
-On another CLI, configure the MCP server with the [installation instructions](../integration-sigrid-mcp.md#manual-configuration-other-ides) and put your customer and system in your context file. This guide uses the `security:get_findings`, `reliability:get_findings`, and `update_finding_status` tools.
+On another CLI, configure the MCP server with the [installation instructions](../integration-sigrid-mcp.md#manual-configuration-other-ides) and put your customer and system in your context file. This workflow uses the `security:get_findings`, `reliability:get_findings`, and `update_finding_status` tools.
 
-Which security model you triage against matters, because it changes the finding list. `security:get_findings` uses your organisation's default model, which is OWASP Top 10 unless you changed it. Pass `model` for `sigsec`, `pci4`, `c25`, or one of the ASVS variants. Reliability defaults to the SIG Code Reliability Top 10 (`sigrel`). The [tools reference](autofix-agents.md#tools-reference) has the full list.
+Which security model you triage against changes the finding list, so decide before you start. `security:get_findings` uses your organization's default model, which is OWASP Top 10 unless you changed it, and you can pass `model` for `sigsec`, `pci4`, `c25`, or one of the ASVS variants. Reliability defaults to the SIG Code Reliability Top 10 (`sigrel`). The [tools reference](autofix-agents.md#tools-reference) has the full list.
+
+Two filters shape the list as much as the model does. `severity_min` sets the floor and `path_prefix` narrows the area, and both default to something broader than you probably want for a first run. Findings you have already marked `FIXED` or `FALSE_POSITIVE` are excluded by default, which is usually what you want and is also why a list can look empty when it is not.
 
 Each finding comes back with its file and line, a severity, an impact and exploitability score, a CWE identifier, the model categories it falls under, its current triage status, and a UUID. The agent needs that UUID to record a decision later, so keep the findings and the decisions in the same session.
 
@@ -68,7 +51,7 @@ This step decides whether the run is worth anything. Everything the agent cannot
   HIGH regardless of the reported severity.
 ```
 
-Without this, the agent re-derives your architecture from scratch every session, badly. With it, you get assessments that reason about your deployment instead of about the abstract pattern.
+Write these in specific terms. "Internal" means nothing to an agent. "Not reachable from the internet, the gateway strips client headers" is a fact it can reason from. Without this file the agent re-derives your architecture from scratch every session, badly, and you get assessments about the abstract pattern instead of about your deployment.
 
 ### 3. Set the triage rules
 
@@ -88,11 +71,11 @@ Name the statuses and require a rationale for each one:
 - When you are unsure, say unsure. An unsure finding stays RAW.
 ```
 
-The last two lines carry most of the value. An agent that has to justify a false positive with a code reference cannot dismiss a finding by rewording it, and an agent that is allowed to say "unsure" stops manufacturing confidence.
+The last two lines carry most of the value. An agent that has to justify a false positive with a code reference cannot dismiss a finding by rewording it, and an agent that is allowed to say "unsure" stops manufacturing confidence. Keep the assess-only rule in this file and not only in your prompt, since a rule that lives in a prompt applies to one session.
 
 Valid statuses for security and reliability findings are `RAW`, `REFINED`, `WILL_FIX`, `FIXED`, `ACCEPTED`, and `FALSE_POSITIVE`. See the [status reference](autofix-agents.md#tools-reference).
 
-## The session, walked through
+## What a session looks like
 
 Start narrow: one severity, one area, enough findings to calibrate on and few enough to check by hand.
 
@@ -103,22 +86,20 @@ validates it, then tell me whether it is exploitable given our security
 context. Don't update anything yet. Show me your assessment first.
 ```
 
-What comes back, per finding:
-
-1. **The finding**, with CWE, location, and reported severity.
-2. **The trace.** Where the value enters the system, what touched it on the way, and whether anything validated it. This is the part you read.
-3. **A verdict with a reason:** exploitable, mitigated, or unsure, pointing at the code that decides it.
+Per finding you get the finding itself, with CWE, location, and reported severity; the trace, showing where the value enters the system, what touched it on the way, and whether anything validated it; and a verdict of exploitable, mitigated, or unsure, pointing at the code that decides it. The trace is the part you read.
 
 <a href="../../images/mcp/recipes/security-findings-triage.png" target="_blank"><img src="../../images/mcp/recipes/security-findings-triage.png" width="600" alt="Claude Code retrieving high-severity security findings and assessing their real-world exploitability in context" /></a>
 
-Check that batch yourself, finding by finding. You are testing whether the traces are real and whether the verdicts follow from them. When they do, let it record:
+Hold the output to one standard: every verdict cites code. "Not exploitable, input is validated" is not an assessment. "Not exploitable, because `RequestValidator.validateAmount` rejects non-numeric input at `RequestValidator.java:88`, before this line runs" is one, because you can go and read line 88. Anything that cannot point at a line is unsure, whatever it has been labeled. A verdict reasoning from the pattern and not from your codebase is the failure this rule catches.
+
+Check that first batch yourself, finding by finding, testing whether the traces are real and whether the verdicts follow from them. When they do, let it record:
 
 ```
 Update the statuses for the findings we agreed on, with the rationale as the
 remark. Leave the two you were unsure about as RAW.
 ```
 
-Then widen a batch at a time, by severity, by path, or by model.
+Then widen a batch at a time, by severity, by path, or by model. Ten findings you actually read beat a hundred you skimmed, and the batch size is the main thing keeping that true.
 
 Reliability findings use the same loop with a different question. Instead of asking whether an attacker can reach the code, you ask what happens when it fails: swallowed exceptions, resources that leak on the error path, races under concurrency.
 
@@ -132,7 +113,7 @@ happens at runtime when the failure occurs, and whether we notice.
 
 ### If you do want fixes
 
-Two rules: fix in a separate session from triage, and take the `WILL_FIX` list one finding at a time.
+Fix in a separate session from triage, and take the `WILL_FIX` list one finding at a time.
 
 ```
 Fix the finding at PaymentController.java:142 that we marked WILL_FIX.
@@ -140,47 +121,25 @@ Show me the diff and explain why the fix closes the vulnerability. Do not
 touch anything else.
 ```
 
-Then review it as a security change. Does the fix address the mechanism, or only the symptom the scanner matched on? Do not batch these, and do not let a security fix ride along in a feature branch. The [triage and execute](autofix-agents.md#triage-and-execute) pattern generalises this split.
+Then review it as a security change. Does the fix address the mechanism, or only the symptom the scanner matched on? Do not merge on the agent's confidence: ask it to explain the exploit the fix prevents, and get a second pair of human eyes. Do not batch these, and do not let a security fix ride along in a feature branch. The [triage and execute](autofix-agents.md#triage-and-execute) pattern generalizes this split.
 
-## What good looks like, and how you verify it in the session
+## Checking that the triage holds up
 
-**Every verdict cites code.** "Not exploitable, input is validated" is not an assessment. "Not exploitable, because `RequestValidator.validateAmount` rejects non-numeric input at `RequestValidator.java:88`, before this line runs" is. Anything that cannot point at a line is unsure, whatever it is labelled.
+The failure mode to watch for is a run that looks productive. If the agent dismissed most of a HIGH-severity batch, something is wrong: either your prompt leaned that way, or it is reasoning from an assumption it has not stated. Spot-check three of those dismissals properly, and reset them to `RAW` if the reasoning does not hold. This is the most common way the whole loop goes bad, and it is invisible unless you look.
 
-**The false-positive rate is plausible.** If the agent dismissed most of a HIGH-severity batch, something is wrong: either your prompt leaned that way, or it is reasoning from an assumption it has not stated. Spot-check three of them properly. This is the most common failure of the whole loop.
-
-**Unsure findings exist.** A run that resolved every finding confidently is a run that guessed somewhere. Ask directly:
+A run that resolved every finding confidently is a run that guessed somewhere, so unsure findings existing at all is a good sign. Ask directly:
 
 ```
 Which of these did you have to make an assumption about, and what was it?
 ```
 
-**The remarks will make sense in six months.** The remark is the artefact. If it says "reviewed, not an issue", the next person redoes the work.
+If the assumptions it names contradict your security context, the reachability facts are missing from the file or too vague. Fix that in the file, not in the next prompt.
 
-**Statuses match what you agreed.** Check the recorded statuses against your decisions, not against the agent's summary of them.
+Read the remarks as the artifact they are, because the remark is what survives the session. If it says "reviewed, not an issue", the next person redoes the work. And check the recorded statuses against your own decisions, not against the agent's summary of them. Findings you already triaged coming back means the statuses never landed, or a new analysis has run. Findings for code that no longer exists means Sigrid analyzed an older branch, which you can check in [configuration](configuration.md).
 
-## When it goes wrong, and the recovery move
+## Where to go next
 
-| What you see | What is happening | What to do |
-|---|---|---|
-| Everything is a false positive | The prompt leaned that way, or the burden of proof is missing | Re-run the batch with the code-reference requirement. Manually check three dismissals, and reset those findings to `RAW` if they do not hold |
-| Verdicts with no code reference | It is reasoning from the pattern, not from your codebase | Reject them. Require file and line per verdict |
-| It contradicts your security context | Reachability facts are missing from the context file, or are ambiguous | Put them in the file, in specific terms. "Internal" means nothing. "Not reachable from the internet, gateway strips client headers" does |
-| It fixed code you asked it to triage | The assess-only rule is missing or too soft | Revert. Put "Assess only. Do not change code" in the context file, not only in the prompt |
-| A fix looks right but you cannot tell | Security fixes are where this is most dangerous | Do not merge on the agent's confidence. Ask it to explain the exploit the fix prevents, and get a second pair of human eyes |
-| Findings you already triaged reappear | Statuses were not updated, or a new analysis has run | Check that the statuses landed. Recorded decisions persist, session decisions do not |
-| Findings for code that no longer exists | Sigrid analysed an older branch | Check which branch is analysed in [configuration](configuration.md) |
-| No findings at all | The model filter, path prefix, or severity floor is too narrow | Lower `severity_min`, drop `path_prefix`, and confirm the [model](autofix-agents.md#tools-reference) you are querying. Findings you already marked `FIXED` or `FALSE_POSITIVE` are excluded by default |
-
-## Habits worth keeping
-
-- **Triage and fix in separate sessions.** Mixing them is how an unreviewed security change reaches a branch.
-- **Demand a code reference for every dismissal.** This one rule prevents most bad triage.
-- **Work in small batches.** Ten findings you actually read beat a hundred you skimmed.
-- **Keep reachability facts in the context file.** They are the same every session, and re-deriving them is where the agent goes wrong.
-- **Let the agent be unsure.** An honest `RAW` costs one more look, and a confident false positive can cost you an incident.
-- **Prevent while you triage.** [Guardrails](building-with-guardrails.md) flags security issues in code as it is written, which keeps this backlog from refilling behind you.
-
-## Next
+This backlog refills from the code being written now, so triage on its own is a queue you keep draining. [Guardrails](building-with-guardrails.md) flags security issues as the code is written, which is the half of the problem this guide does not touch.
 
 - [Remediating open source risk](remediating-open-source-risk.md) for the dependency half of the same problem
 - [Reducing technical debt with auto-fix agents](reducing-technical-debt.md) for maintainability, where autonomous fixing is safer

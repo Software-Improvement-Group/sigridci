@@ -32,25 +32,7 @@ The prompt below combines two elements: brief **code principles** that guide the
 
 Add this to your agent instructions (see [where to place these instructions](#where-to-place-these-instructions)):
 
-```
-## Code Principles
-
-Write maintainable, self-documenting code: single responsibility, small focused
-functions, clear naming, avoid duplication, simple control flow.
-
-## MANDATORY: Quality Gate
-
-Before reporting ANY task as complete:
-
-1. Run the Sigrid guardrails:quality_check MCP tool on all files you changed
-2. Maintainability findings: fix every finding in files you touched, new or
-   pre-existing, judged against the principles above. Leave one only if the code
-   already honors the principles, or the fix cascades outside task scope
-   (don't get stuck). Say which, and why.
-3. Security findings: fix if contained, otherwise flag to user
-
-Only skip if the tool is unavailable and say so if you do.
-```
+{% include sigrid-quality-gate-prompt.md %}
 
 > The quality gate applies the [Boy Scout Rule](https://www.oreilly.com/library/view/97-things-every/9780596809515/ch08.html) — leaving each file touched cleaner than it was found.
 

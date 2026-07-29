@@ -29,11 +29,23 @@ class DocumentationTest(TestCase):
         for file, contents in self.readDocumentationPages():
             for match in self.LINK.finditer(contents):
                 if ".md" in match.group(2) and not match.group(2).startswith("https://"):
-                    parentDir = os.path.dirname(file)
-                    linkedFile = os.path.join(parentDir, match.group(2).split(".md")[0] + ".md")
-                    self.assertTrue(os.path.exists(linkedFile), f"Dead link in {file} to {linkedFile}")
+                    for parentDir in self.resolveLinkBaseDirs(file):
+                        linkedFile = os.path.join(parentDir, match.group(2).split(".md")[0] + ".md")
+                        self.assertTrue(os.path.exists(linkedFile), f"Dead link in {file} to {linkedFile}")
                 elif "docs.sigrid-says.com" in match.group(2) and not file.endswith("README.md"):
                     self.fail(f"{file} should link to relative .md file, not to the absolute URL: {match.group(2)}")
+
+    def resolveLinkBaseDirs(self, file):
+        """Relative links are resolved against the directory of the file itself, except for Liquid
+        includes: those are not pages, so their links have to resolve from every page including them."""
+        if os.path.dirname(file) != "docs/_includes":
+            return [os.path.dirname(file)]
+
+        includeDirective = re.compile("{%\\s*include\\s+" + re.escape(os.path.basename(file)) + "[\\s%]")
+        baseDirs = {os.path.dirname(page) for page, contents in self.readDocumentationPages()
+                    if includeDirective.search(contents)}
+        self.assertTrue(baseDirs, f"Include {file} is not used by any page")
+        return sorted(baseDirs)
                                         
     def testDocumentationDoesNotContainDeadImages(self):
         for file, contents in self.readDocumentationPages():
