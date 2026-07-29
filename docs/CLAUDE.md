@@ -27,7 +27,7 @@ documentation, see [../CLAUDE.md](../CLAUDE.md) for instructions when working on
 - Following a paragraph with the `{: .attention }` will turn that paragraph into a highlighted block.
 - Source code containing HTML characters should be wrapped betweeen `{% raw %}` and `{% endraw %}`.
 - Liquid is processed inside Markdown pages, so a block repeated across several pages can live in
-  `docs/_includes/` and be pulled in with `{% include name.md %}`.
+  `docs/_includes/` and be pulled in with {% raw %}`{% include name.md %}`{% endraw %}.
   - Keep relative links out of these files. The unit tests resolve links relative to the file they
     appear in, which for an include is `docs/_includes/` rather than the page including it.
 
