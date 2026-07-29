@@ -30,6 +30,14 @@ The [Sigrid Claude Code Plugin](../integration-sigrid-mcp.md) ships a set of ski
 
 If you use a different AI agent, browse the skill definitions in the [sigrid-ai-toolkit](https://github.com/Software-Improvement-Group/sigrid-ai-toolkit) repository and adapt them to your own workflow.
 
+## Guides
+
+This page is the reference: the tools, the workflows, the statuses. For end-to-end walkthroughs — setup, one worked session, how to verify the result, and the recovery move when it goes wrong — see:
+
+- [Reducing technical debt with auto-fix agents](reducing-technical-debt.md) — maintainability, built on `sigrid-diagnose` and `sigrid-improve`
+- [Triaging security and reliability findings](triaging-security-reliability.md) — assess in context, triage with a rationale
+- [Remediating open source risk](remediating-open-source-risk.md) — running unattended when new dependency risk appears
+
 ## Workflows
 
 A few patterns for running an auto-fix agent on your codebase. Adapt the prompts, combine them, or do something different entirely.
@@ -85,7 +93,7 @@ Three tools support this:
 
 - `architecture:get_internal` shows how the parts *inside* a directory relate to each other — which sub-parts call which, and how often. Omit the path to see the system's top-level components, then drill down into a specific directory.
 - `architecture:get_external_dependencies` lists the direct dependencies of a file or directory: what it calls out to (outgoing) and what calls into it (incoming) — the blast radius of a change. It returns one hop at a time; follow a returned path with another call to go deeper.
-- `architecture:get_worst_directories` ranks directories by their architecture quality impact — low ratings on large components surface first. Use it to find where refactoring would move the needle most, optionally scoped to a directory or a specific structure metric.
+- `architecture:get_worst_directories` ranks directories by their architecture quality impact — low ratings on large components surface first. Use it to find where refactoring would move the needle most, optionally scoped to a directory instead of the whole system.
 
 **Example — understand a component before changing it:**
 ```
@@ -149,20 +157,20 @@ These compose: run discovery first, triage the results, then execute on the will
 
 ## Tools reference
 
-Ten MCP tools drive the workflows above.
+Ten MCP tools drive the workflows above. Every tool takes `customer` and `system`; the parameters below are the ones that shape the result.
 
 | Tool | Description | Key parameters                                                                                                                                   |
 | --- | --- |--------------------------------------------------------------------------------------------------------------------------------------------------|
-| `maintainability:get_findings` | Ranked refactoring candidates for a [maintainability property](../../reference/sig-quality-models.md) | `property`, optional: `technology`, `limit`                                                                                                      |
+| `maintainability:get_findings` | Ranked refactoring candidates for a [maintainability property](../../reference/sig-quality-models.md), each with a finding UUID, LOC weight, and severity | `system_property`: `duplication`, `unitSize`, `unitComplexity`, `unitInterfacing`, `moduleCoupling`, `componentIndependence`, `componentEntanglement`. Optional: `technology`, `count` (default 20), `status` |
 | `maintainability:get_ratings` | Current maintainability ratings on a 0.5–5.5 star scale (3.0 = market average, 4.0 = target for new development) | Optional: `component`, `technology` breakdowns                                                                                                   |
-| `security:get_findings` | Open security findings ranked by severity and exploitability, with CWE identifiers and file locations | `severity`: `LOW`, `MEDIUM`, `HIGH`, `CRITICAL`. `model`: `ow10` (default), `sigsec`, `5055sec`, `c25`, `pci4`, `owasvs4c`, `owasvs4s`, `lcnc10`. `path_prefix`: filter by file path prefix (use long, specific prefixes) |
-| `reliability:get_findings` | Open reliability findings (error handling, concurrency, resource management, IPC) ranked by severity | Same filters as security. `model`: `sigrel` (default), `5055rel`. `path_prefix`: filter by file path prefix (use long, specific prefixes)                                                                                 |
+| `security:get_findings` | Open security findings ranked by severity and exploitability, with CWE identifiers and file locations | `severity_min`: `LOW` (default), `MEDIUM`, `HIGH`, `CRITICAL`. `model`: `ow10`, `sigsec`, `5055sec`, `c25`, `pci4`, `owasvs4c`, `owasvs4s`, `lcnc10`; omit for your organization's default. `path_prefix`: filter by file path prefix (use long, specific prefixes). `limit` (default 25). `status`: defaults to excluding `FIXED` and `FALSE_POSITIVE` |
+| `reliability:get_findings` | Open reliability findings (error handling, concurrency, resource management, IPC) ranked by severity | Same filters as security. `model`: `sigrel` (default), `5055rel`                                                                                 |
 | `opensourcehealth:get_risks` | Open source dependency risks across vulnerability, freshness, legal, activity, stability, and management — default tool for any open-source health question | `risk_dimension`: filter dimensions. `risk_min`: `NONE`, `LOW`, `MEDIUM` (default), `HIGH`, `CRITICAL`. `limit` |
 | `opensourcehealth:get_vulnerabilities` | Known CVEs in open-source dependencies ranked by CVSS score | `severity_min`: `LOW`, `MEDIUM` (default), `HIGH`, `CRITICAL`. `limit` |
-| `update_finding_status` | Updates the status of a finding so Sigrid reflects the agent's decisions | `status` — see below. Optional: `remark`                                                                                                         |
+| `update_finding_status` | Updates the status of a finding so Sigrid reflects the agent's decisions. Open source health components do not support status updates | `finding_id`: the `id` returned with the finding. `status` — see below. `remark`. At least one of `status` or `remark` is required |
 | `architecture:get_internal` | Shows how the parts inside a directory relate to each other — which sub-parts call which, and how often. Omit the path for the system's top-level components | Optional: `path` (omit for top-level components) |
 | `architecture:get_external_dependencies` | Lists a file or directory's direct dependencies — outgoing (what it calls) and incoming (what calls it) — to find the blast radius of a change. One hop per call | `path` (required). Optional: `direction`: `incoming`, `outgoing`, `all` (default) |
-| `architecture:get_worst_directories` | Lowest-scoring architecture directories, worst impact first, to identify where refactoring would most improve architecture quality | Optional: `directory_scope`, `metric` (`structure`, `coupling`, `cohesion`, `adjacency`), `limit` (default: 10) |
+| `architecture:get_worst_directories` | Up to 10 architecture directories ranked by structure rating, worst first. Ranking is volume-weighted, so a low rating on a large component outranks the same rating on a small one | Optional: `path` to rank the components inside that path instead of system-wide |
 
 **Valid statuses for `update_finding_status`:**
 

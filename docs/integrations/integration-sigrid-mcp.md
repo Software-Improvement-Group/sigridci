@@ -7,6 +7,19 @@ Sigrid MCP integrations let AI coding tools use Sigrid's analysis while you work
 
 Start with Guardrails for automatic quality checks on new code. Add Auto-fix Agents when you're ready to tackle existing technical debt.
 
+## Developer guides
+
+The pages above describe the tools. These guides describe how to work with them on a real codebase: the setup, what a session looks like, how to tell a good run from a bad one, and what to do when it goes wrong. Each guide is readable on its own.
+
+| Guide | What it covers |
+| --- | --- |
+| [Building with an AI coding agent and Sigrid Guardrails](sigrid-mcp/building-with-guardrails.md) | The feature loop: shipping normally, with Guardrails checking maintainability and security on code as it is written |
+| [Reducing technical debt with auto-fix agents](sigrid-mcp/reducing-technical-debt.md) | Working the refactoring candidates for your weakest maintainability property |
+| [Triaging security and reliability findings](sigrid-mcp/triaging-security-reliability.md) | Assessing findings in context and recording a decision with a rationale |
+| [Remediating open source risk](sigrid-mcp/remediating-open-source-risk.md) | Running unattended when new dependency risk appears, and reviewing the resulting merge request |
+
+The concepts in these guides apply to any agentic CLI. The worked configuration examples use Claude Code, since that is the only CLI we ship a plugin for.
+
 ## Installation
 
 ### Claude Code plugin (recommended)
