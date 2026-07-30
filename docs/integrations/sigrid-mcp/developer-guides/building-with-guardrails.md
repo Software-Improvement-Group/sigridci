@@ -1,8 +1,8 @@
 # Building with an AI coding agent and Sigrid Guardrails
 
-We built the same system 20 times with Claude Sonnet 4.6. One group of runs got a written set of code principles and nothing else. The other group also had Sigrid Guardrails in the build loop, checking each file as the agent wrote it. The guided runs came out with roughly 97% fewer high-risk security findings and a maintainability score roughly 24% higher, and the separation was clean: every guided run scored better on maintainability than every unguided one. The [experiment write-up](https://www.softwareimprovementgroup.com/blog/claude-sonnet-4-6-guardrails-experiment/) has the method and the full results.
-
 [Sigrid Guardrails](../guardrails.md) gives your coding agent the same analysis Sigrid runs, on the files it just changed, while it is still working on them. The agent sees what it broke and fixes it before it presents you with anything. The checks are deterministic: the same metrics against the same thresholds every time, decided by Sigrid's quality model and not by a model's opinion of its own output.
+
+Guided runs come out measurably better. We built the same system 20 times with Claude Sonnet 4.6, and the runs with Guardrails in the build loop had roughly 97% fewer high-risk security findings and a maintainability score roughly 24% higher than the runs that only had a written set of code principles. The separation was clean, with every guided run scoring better on maintainability than every unguided one. The [experiment write-up](https://www.softwareimprovementgroup.com/blog/claude-sonnet-4-6-guardrails-experiment/) has the method and the full results.
 
 When should you use it? Whenever an agent writes code. How closely you read the result is a separate question from whether the code has to be secure and maintainable: anything you deploy, or come back to and change in six months, has to be both. If you are reading every diff, Guardrails saves you the review comments you were about to write. If you are vibe coding and only checking that the thing runs, it is the only thing between you and whatever the agent happened to produce, which is when it matters most.
 
