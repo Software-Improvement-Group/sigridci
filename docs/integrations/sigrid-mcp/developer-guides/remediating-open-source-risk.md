@@ -1,10 +1,21 @@
 # Remediating open source risk with auto-fix agents
 
-Dependency risk is different from the other work an [auto-fix agent](../autofix-agents.md) does. A new critical CVE in a library you use appears without anyone touching your code, the fix is usually a one-line version bump, and the value of fixing it decays by the day. That combination makes it the one workflow worth running unattended, on a schedule, with nobody watching the middle of the run.
+This guide walks through running an [auto-fix agent](../autofix-agents.md) on a schedule so new dependency risk gets researched, fixed, and verified without anyone watching, and arrives as a merge request you review like any other.
+
+Dependency risk is different from the other work an auto-fix agent does. A new critical CVE in a library you use appears without anyone touching your code, the fix is usually a one-line version bump, and the value of fixing it decays by the day. That combination makes it the one workflow worth running unattended.
 
 What comes out is a merge request or an issue, one per dependency, reviewed through whatever process you already have. The agent never merges anything, and your existing review and CI rules apply unchanged.
 
-Set it up when the repository has real dependencies and Sigrid [Open Source Health](../../../capabilities/system-open-source-health.md) analyzes it, when your test suite is good enough that a green build after a version bump means something, and when a merge request opened by a bot is normal in your team so someone will actually look at it. If you are clearing an existing backlog of dependency risk for the first time, run it interactively for that pass. It tells you which of your dependencies are pinned for a reason, and that is much cheaper to learn in one session than from eleven merge requests.
+If you are clearing an existing backlog of dependency risk for the first time, run it interactively for that pass. It tells you which of your dependencies are pinned for a reason, and that is much cheaper to learn in one session than from eleven merge requests.
+
+## Prerequisites
+
+- A repository with real dependencies, analyzed by Sigrid [Open Source Health](../../../capabilities/system-open-source-health.md).
+- A connected git-host MCP server. The skill refuses to run without one, and there is deliberately no local-only fallback.
+- A profile recorded with `/sigrid:setup`, because an unattended run cannot stop to ask you anything.
+- A test suite good enough that a green build after a version bump means something.
+- An environment that can run [Sigrid CI](../../../sigridci-integration/using-sigridci.md), which is how the agent verifies a risk is actually cleared.
+- A team where a merge request opened by a bot is normal, so someone will actually look at it.
 
 ## Why the agent needs help
 
@@ -20,23 +31,19 @@ Unattended operation adds a fourth requirement on top of those three: failure ha
 
 The `fix-osh-risk` skill is built around those four facts. It groups findings by dependency, because one bump usually clears several CVEs. It researches the upgrade path with a separate subagent that has web access only, no repository files and no Sigrid context. It verifies with Sigrid CI before it will open a merge request. And when it cannot fix something confidently it takes an off-ramp and opens a researched issue, which is why a run can never end in a local change nobody sees.
 
-## Setting it up
+## Set up the automation
 
 {% include sigrid-mcp/primitives.md %}
 
 The fourth one carries this workflow, since the trigger is what makes it unattended.
 
-### 1. Tool access, plus a git host
+### 1. Install the plugin and connect a git host
 
 {% include sigrid-mcp/plugin-install.md setup=true %}
 
-Two prerequisites go beyond the other guides, and the skill refuses to run without either.
+Connect a git-host MCP server for GitLab, GitHub, or whichever forge you use. The skill is forge-agnostic, and it needs to be able to create a branch, a merge request, and an issue.
 
-The first is a connected git-host MCP server, for GitLab, GitHub, or whichever forge you use. The skill is forge-agnostic, and it has to be able to create a branch, a merge request, and an issue. There is deliberately no local-only fallback.
-
-The second is a profile with your conventions recorded. `/sigrid:setup` asks for the baseline branch, your branch naming, whether merge requests open as drafts, and who reviews them. An unattended run cannot ask, so anything missing here either stops the run or comes out wrong. See [plugin configuration](../configuration.md).
-
-The skill also uses [Sigrid CI](../../../sigridci-integration/using-sigridci.md) through the `sigrid-ci-feedback` skill for verification, so the environment needs to be able to run it.
+`/sigrid:setup` then asks for the baseline branch, your branch naming, whether merge requests open as drafts, and who reviews them. Take the time to get these right, because an unattended run cannot stop to ask, and anything missing either aborts the run or comes out wrong. See [plugin configuration](../configuration.md) for what it stores.
 
 ### 2. Set the boundaries
 
@@ -109,7 +116,7 @@ An **issue** appears when the agent could not fix the risk confidently: an aband
 
 If a merge request or issue already exists for that dependency, the agent comments on it with what is new instead of opening a second one.
 
-## Reviewing what it opens
+## Review what it opens
 
 We hold these to the same standard as a colleague's dependency bump.
 

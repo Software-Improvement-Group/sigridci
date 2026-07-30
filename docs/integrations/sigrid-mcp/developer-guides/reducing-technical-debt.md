@@ -1,12 +1,21 @@
 # Reducing technical debt with auto-fix agents
 
-A hundred medium-severity maintainability findings routinely outweigh a handful of very high ones. Sigrid's ratings are LOC-weighted: what a finding contributes is the amount of code it puts in a bad risk bracket, measured against the size of the whole system. So the intuitive move, sorting by severity and starting at the top, is usually the wrong one. It is also why a week of refactoring can leave a rating exactly where it was.
+This guide walks through using an [auto-fix agent](../autofix-agents.md) to work down the maintainability debt Sigrid already found in your codebase, taking the ranked refactoring candidates in the order that actually moves your rating.
 
-An [auto-fix agent](../autofix-agents.md) works from that weighting. The `sigrid-diagnose` skill decides what to work on, and `sigrid-improve` does the work, verifying each change with Guardrails before it moves on.
+That order is not the obvious one. A hundred medium-severity findings routinely outweigh a handful of very high ones, because Sigrid's ratings are LOC-weighted: what a finding contributes is the amount of code it puts in a bad risk bracket, measured against the size of the whole system. Sorting by severity and starting at the top is why a week of refactoring can leave a rating exactly where it was.
+
+The `sigrid-diagnose` skill decides what to work on, and `sigrid-improve` does the work, verifying each change with Guardrails before it moves on.
 
 You would run this deliberately, with time set aside: a debt-reduction day, the slack at the end of a sprint, or the week before you start work in a module you know is bad. It suits diffuse debt, dozens of long units or duplication spread across a package. If you already know a module needs to be split differently, do that part yourself and hand the agent the mechanical work afterwards. Sigrid ranks candidates by how much rated code they carry, and it has no opinion on whether your design is right.
 
-This covers maintainability only. Security and reliability findings behave differently and have their own guide: [triaging security and reliability findings](triaging-security-reliability.md). It also needs a published system, because refactoring candidates come from Sigrid's analysis of the branch it last analyzed. [Guardrails](building-with-guardrails.md) is the one that reads your working tree.
+This covers maintainability only. Security and reliability findings behave differently and have their own guide: [triaging security and reliability findings](triaging-security-reliability.md).
+
+## Prerequisites
+
+- A system published to Sigrid and analyzed, since the refactoring candidates come from Sigrid's analysis of the branch it last analyzed. [Guardrails](building-with-guardrails.md) is the one that reads your working tree.
+- An agentic CLI that can call MCP tools, with the `sigrid-diagnose` and `sigrid-improve` procedures available. The configuration below uses Claude Code.
+- A clean working tree on a fresh branch, so you can drop one refactor without losing the others.
+- Time to review and merge a series of refactors without blocking a release.
 
 ## Why the agent needs help
 
@@ -20,7 +29,7 @@ Third, it has no definition of done. Splitting a 200-line method into five 40-li
 
 Sigrid supplies the global view: which property is weakest, which candidates carry the most rated code, and which candidates appear under several properties at once, where a single fix moves more than one rating. Your context file supplies the definition of done, in the form of the rules you are not willing to see broken.
 
-## Setting it up
+## Set up the agent
 
 {% include sigrid-mcp/primitives.md %}
 
@@ -101,7 +110,7 @@ Make that request before the session ends. An accepted finding with a written re
 
 It will also stop and ask about context it cannot get from the code: serialization constraints, callers outside the repository, a migration window. In autonomous mode it skips those and logs them, which is the right trade, and it does mean the skipped list is part of the output you need to read.
 
-## Checking that the work was real
+## Check that the work was real
 
 Verify per candidate. It takes about a minute each.
 

@@ -1,12 +1,20 @@
 # Triaging security and reliability findings with auto-fix agents
 
+This guide walks through using an [auto-fix agent](../autofix-agents.md) to get through a backlog of security and reliability findings, assessing each one against how your system is actually deployed and recording a decision with a rationale you can still read in six months.
+
 A security finding is a hypothesis: this code pattern may be exploitable. Confirming or dismissing it takes context that is not at the finding's location, such as where the data comes from, what validated it earlier, and whether the endpoint is reachable from outside. That tracing work is mechanical, which makes it a good thing to hand to an agent. It is also the work that gets skipped when a list is long.
 
-An [auto-fix agent](../autofix-agents.md) fetches the findings, reads the code around each one, and records a decision with a rationale you can still read in six months. What it does not do here is fix anything. Security code is where confident-and-wrong is most expensive: an agent that rewrites an authorization check, an escaping routine, or a crypto call and reports success has produced a change that looks correct, passes the tests, and may be a vulnerability. A maintainability refactor that goes wrong shows up as a failing test. This does not. So the default in this workflow is to change nothing, and fixes are separate, deliberate work.
+The agent fetches the findings and reads the code around each one. What it does not do here is fix anything. Security code is where confident-and-wrong is most expensive: an agent that rewrites an authorization check, an escaping routine, or a crypto call and reports success has produced a change that looks correct, passes the tests, and may be a vulnerability. A maintainability refactor that goes wrong shows up as a failing test. This does not. So the default in this workflow is to change nothing, and fixes are separate, deliberate work.
 
 Reach for it when the reason your finding backlog is untouched is volume and not difficulty, when you want each finding assessed in context instead of by severity label, and when you need the reasoning written down for an audit or for the next person. A single fresh critical vulnerability is the case this is not for. That one needs you, now, without a triage loop in front of it.
 
 Maintainability findings work differently, and autonomous fixing is safer there: see [reducing technical debt](reducing-technical-debt.md).
+
+## Prerequisites
+
+- A system published to Sigrid, with security or reliability findings to work through.
+- An agentic CLI that can call MCP tools, with `security:get_findings`, `reliability:get_findings`, and `update_finding_status`. The configuration below uses Claude Code.
+- The facts about your own deployment that the code does not show: what is reachable from outside, what validates input, and what is not deployed at all. Step 2 is where you write these down.
 
 ## Why the agent needs help
 
@@ -18,15 +26,15 @@ It also has no burden of proof unless you give it one. Nothing about the task st
 
 Sigrid supplies the finding list, ranked, with locations, CWE identifiers, and severity. The agent supplies the tracing. You supply the reachability facts and the verdict. Both of those gaps close with the same two things: a context file that states what the code cannot, and a rule that every verdict has to point at a line.
 
-## Setting it up
+## Set up triage
 
 {% include sigrid-mcp/primitives.md %}
 
-### 1. Tool access
+### 1. Install the plugin
 
 {% include sigrid-mcp/plugin-install.md setup=true %}
 
-On another CLI, configure the MCP server with the [installation instructions](../../integration-sigrid-mcp.md#manual-configuration-other-ides) and put your customer and system in your context file. This workflow uses the `security:get_findings`, `reliability:get_findings`, and `update_finding_status` tools.
+On another CLI, configure the MCP server with the [installation instructions](../../integration-sigrid-mcp.md#manual-configuration-other-ides) and put your customer and system in your context file.
 
 Which security model you triage against changes the finding list, so decide before you start. `security:get_findings` uses your organization's default model, which is OWASP Top 10 unless you changed it, and you can pass `model` for `sigsec`, `pci4`, `c25`, or one of the ASVS variants. Reliability defaults to the SIG Code Reliability Top 10 (`sigrel`). The [tools reference](../autofix-agents.md#tools-reference) has the full list.
 
@@ -77,7 +85,7 @@ Valid statuses for security and reliability findings are `RAW`, `REFINED`, `WILL
 
 ## What a session looks like
 
-We would start narrow: one severity, one area, enough findings to calibrate on and few enough to check by hand.
+We would start narrow: one severity, one area, enough findings to calibrate on and few enough to check by hand. That makes a first prompt something like this:
 
 ```
 Get HIGH and CRITICAL security findings for acme/payment-platform under
@@ -123,7 +131,7 @@ touch anything else.
 
 Then review it as a security change. Does the fix address the mechanism, or only the symptom the scanner matched on? Do not merge on the agent's confidence: ask it to explain the exploit the fix prevents, and get a second pair of human eyes. Do not batch these, and do not let a security fix ride along in a feature branch. The [triage and execute](../autofix-agents.md#triage-and-execute) pattern generalizes this split.
 
-## Checking that the triage holds up
+## Check that the triage holds up
 
 The failure mode to watch for is a run that looks productive. If the agent dismissed most of a HIGH-severity batch, something is wrong: either your prompt leaned that way, or it is reasoning from an assumption it has not stated. Spot-check three of those dismissals properly, and reset them to `RAW` if the reasoning does not hold. This is the most common way we see the whole loop go bad, and it is invisible unless you look.
 

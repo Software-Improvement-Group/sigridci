@@ -1,12 +1,22 @@
 # Building with an AI coding agent and Sigrid Guardrails
 
-[Sigrid Guardrails](../guardrails.md) gives your coding agent the same analysis Sigrid runs, on the files it just changed, while it is still working on them. The agent sees what it broke and fixes it before it presents you with anything. The checks are deterministic: the same metrics against the same thresholds every time, decided by Sigrid's quality model and not by a model's opinion of its own output.
+This guide walks through putting [Sigrid Guardrails](../guardrails.md) in your coding agent's build loop, so the agent checks the maintainability and security of every file it writes and fixes what it finds before you see the diff.
+
+Guardrails gives the agent the same analysis Sigrid runs, on the files it just changed, while it is still working on them. The checks are deterministic: the same metrics against the same thresholds every time, decided by Sigrid's quality model and not by a model's opinion of its own output.
 
 Guided runs come out measurably better. We built the same system 20 times with Claude Sonnet 4.6, and the runs with Guardrails in the build loop had roughly 97% fewer high-risk security findings and a maintainability score roughly 24% higher than the runs that only had a written set of code principles. The separation was clean, with every guided run scoring better on maintainability than every unguided one. The [experiment write-up](https://www.softwareimprovementgroup.com/blog/claude-sonnet-4-6-guardrails-experiment/) has the method and the full results.
 
-When should you use it? Whenever an agent writes code. How closely you read the result is a separate question from whether the code has to be secure and maintainable: anything you deploy, or come back to and change in six months, has to be both. If you are reading every diff, Guardrails saves you the review comments you were about to write. If you are vibe coding and only checking that the thing runs, it is the only thing between you and whatever the agent happened to produce, which is when it matters most.
+Use it whenever an agent writes code. How closely you read the result is a separate question from whether the code has to be secure and maintainable: anything you deploy, or come back to and change in six months, has to be both. If you are reading every diff, Guardrails saves you the review comments you were about to write. If you are vibe coding and only checking that the thing runs, it is the only thing between you and whatever the agent happened to produce.
 
-Guardrails reads the code you are working on, so the system does not have to be published to Sigrid first and the code does not have to be committed. For clearing out technical debt that is already there, which is a different job with a different setup, see [reducing technical debt with auto-fix agents](reducing-technical-debt.md).
+For clearing out technical debt that is already there, which is a different job with a different setup, see [reducing technical debt with auto-fix agents](reducing-technical-debt.md).
+
+## Prerequisites
+
+- An agentic CLI that can call MCP tools. The configuration below uses Claude Code.
+- A Sigrid API token, which the plugin installer asks for once.
+- A codebase in one of the [supported technologies](../guardrails.md#supported-technologies).
+
+Guardrails reads the code in your working tree, so the system does not have to be published to Sigrid first and the code does not have to be committed.
 
 ## Why the agent needs help
 
@@ -20,19 +30,19 @@ Then there is the problem we built Sigrid to solve. "Maintainable" is not someth
 
 Guardrails makes the missing half of the goal testable too. It returns which guidelines a file violates, where, at what severity, and the thresholds behind each finding, so the agent knows what "too long" means instead of guessing. Your context file covers the rest, recording the conventions particular to your team.
 
-## Setting it up
+## Set up Guardrails
 
 {% include sigrid-mcp/primitives.md %}
 
 You need the first two to get started.
 
-### 1. Tool access
+### 1. Install the plugin
 
-Install the plugin, which configures the Sigrid MCP server and the skills together:
+The plugin configures the Sigrid MCP server and the skills together:
 
 {% include sigrid-mcp/plugin-install.md %}
 
-The installer asks for your Sigrid API token once and stores it in your system keychain. See [authentication tokens](../../../organization-integration/authentication-tokens.md) for how to get one. On any other CLI, configure the MCP server by hand using the [installation instructions](../../integration-sigrid-mcp.md#manual-configuration-other-ides); you need at least the `guardrails:quality_check` tool, and your language has to be one of the [supported technologies](../guardrails.md#supported-technologies).
+The installer asks for your Sigrid API token once and stores it in your system keychain. See [authentication tokens](../../../organization-integration/authentication-tokens.md) for how to get one. On any other CLI, configure the MCP server by hand using the [installation instructions](../../integration-sigrid-mcp.md#manual-configuration-other-ides). You need at least the `guardrails:quality_check` tool.
 
 Check it works before you rely on it:
 
@@ -42,7 +52,7 @@ Run the Sigrid quality check on <a file you changed recently>.
 
 The tool takes one file at a time. The agent passes the code and the filename, and gets back the maintainability guidelines that file violates, with a severity and a line range per unit, plus a separate list of security findings. A clean file returns both lists empty, so an empty result is a pass and not a failure to run. For Java, the analyzer compiles what it is given, so the agent has to pass a complete class and not a bare method. If the tool comes back unavailable, fix that now and see [troubleshooting](../../integration-sigrid-mcp.md#troubleshooting) if you need it.
 
-### 2. The quality gate
+### 2. Add the quality gate
 
 Tool access alone changes nothing, because the agent has no reason to call the tool. What makes it fire is an instruction in your project's context file, so it applies to every session without you asking for it. In Claude Code that file is `CLAUDE.md` in the repository root; for the equivalent elsewhere, see [where to place these instructions](../guardrails.md#where-to-place-these-instructions).
 
@@ -69,7 +79,7 @@ Instead it calls `guardrails:quality_check` on the file it changed, and the resp
 
 The refactor is the part that matters. You did not have to name the problem, and the agent did not have to guess what "too complex" means in your codebase. It got a location, a metric, and a threshold, and it had your code principles to fix against.
 
-## Checking that the gate fired
+## Check that the gate fired
 
 "Quality gate passed" is a claim, and it deserves the same skepticism as a claim about tests. We would check it properly for the first few sessions in a new repository, to confirm the setup does what you think it does. Your CLI shows tool calls, so look for at least one `guardrails:quality_check` call after the last edit. A check that ran before the final edit tells you nothing about the code you are about to commit. Look at the file list too: the tool takes one file per call, so a four-file change means four calls, and if only one shows up then the gate covered a quarter of your work. Asking directly is enough:
 
