@@ -6,3 +6,4 @@ Everything here applies to any agentic CLI. The configuration below is for Claud
 | Tool access | MCP server | `sigrid-ai-toolkit` plugin |
 | Reusable procedures | skills | `sigrid-ai-toolkit` plugin |
 | Automatic enforcement | hook, git pre-commit, or a scheduled job | `PostToolUse` hook, or a scheduled CI job |
+

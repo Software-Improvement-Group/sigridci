@@ -20,11 +20,11 @@ Sigrid supplies the finding list, ranked, with locations, CWE identifiers, and s
 
 ## Setting it up
 
-{% include sigrid-mcp-primitives.md %}
+{% include sigrid-mcp/primitives.md %}
 
 ### 1. Tool access
 
-{% include sigrid-plugin-install.md setup=true %}
+{% include sigrid-mcp/plugin-install.md setup=true %}
 
 On another CLI, configure the MCP server with the [installation instructions](../integration-sigrid-mcp.md#manual-configuration-other-ides) and put your customer and system in your context file. This workflow uses the `security:get_findings`, `reliability:get_findings`, and `update_finding_status` tools.
 

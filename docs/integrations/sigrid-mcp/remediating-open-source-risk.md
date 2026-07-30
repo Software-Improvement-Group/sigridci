@@ -22,13 +22,13 @@ The `fix-osh-risk` skill is built around those four facts. It groups findings by
 
 ## Setting it up
 
-{% include sigrid-mcp-primitives.md %}
+{% include sigrid-mcp/primitives.md %}
 
 The fourth one carries this workflow, since the trigger is what makes it unattended.
 
 ### 1. Tool access, plus a git host
 
-{% include sigrid-plugin-install.md setup=true %}
+{% include sigrid-mcp/plugin-install.md setup=true %}
 
 Two prerequisites go beyond the other guides, and the skill refuses to run without either.
 

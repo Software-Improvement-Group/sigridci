@@ -35,13 +35,16 @@ class DocumentationTest(TestCase):
                 elif "docs.sigrid-says.com" in match.group(2) and not file.endswith("README.md"):
                     self.fail(f"{file} should link to relative .md file, not to the absolute URL: {match.group(2)}")
 
+    INCLUDE_DIR = "docs/_includes"
+
     def resolveLinkBaseDirs(self, file):
         """Relative links are resolved against the directory of the file itself, except for Liquid
         includes: those are not pages, so their links have to resolve from every page including them."""
-        if os.path.dirname(file) != "docs/_includes":
+        if not file.startswith(f"{self.INCLUDE_DIR}/"):
             return [os.path.dirname(file)]
 
-        includeDirective = re.compile("{%\\s*include\\s+" + re.escape(os.path.basename(file)) + "[\\s%]")
+        includeName = os.path.relpath(file, self.INCLUDE_DIR)
+        includeDirective = re.compile("{%\\s*include\\s+" + re.escape(includeName) + "[\\s%]")
         baseDirs = {os.path.dirname(page) for page, contents in self.readDocumentationPages()
                     if includeDirective.search(contents)}
         self.assertTrue(baseDirs, f"Include {file} is not used by any page")

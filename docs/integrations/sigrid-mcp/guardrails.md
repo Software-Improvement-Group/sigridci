@@ -32,7 +32,7 @@ The prompt below combines two elements: brief **code principles** that guide the
 
 Add this to your agent instructions (see [where to place these instructions](#where-to-place-these-instructions)):
 
-{% include sigrid-quality-gate-prompt.md %}
+{% include sigrid-mcp/quality-gate-prompt.md %}
 
 > The quality gate applies the [Boy Scout Rule](https://www.oreilly.com/library/view/97-things-every/9780596809515/ch08.html) — leaving each file touched cleaner than it was found.
 

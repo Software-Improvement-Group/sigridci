@@ -22,13 +22,13 @@ Sigrid supplies the global view: which property is weakest, which candidates car
 
 ## Setting it up
 
-{% include sigrid-mcp-primitives.md %}
+{% include sigrid-mcp/primitives.md %}
 
 This workflow leans on the third one, since the two skills carry most of the procedure.
 
 ### 1. Install the plugin and record your profile
 
-{% include sigrid-plugin-install.md setup=true %}
+{% include sigrid-mcp/plugin-install.md setup=true %}
 
 The first two commands configure the MCP server and the skills together. `/sigrid:setup` is the one people skip, and it is the one that matters here: it records which Sigrid system this repository maps to, which branch Sigrid analyzes, and how your team handles branches and change requests. The skills read it at the start of every run, so you answer these questions once instead of every session. See [plugin configuration](configuration.md) for what it stores and where.
 

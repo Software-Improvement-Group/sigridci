@@ -22,7 +22,7 @@ Guardrails makes the missing half of the goal testable too. It returns which gui
 
 ## Setting it up
 
-{% include sigrid-mcp-primitives.md %}
+{% include sigrid-mcp/primitives.md %}
 
 You need the first two to get started.
 
@@ -30,7 +30,7 @@ You need the first two to get started.
 
 Install the plugin, which configures the Sigrid MCP server and the skills together:
 
-{% include sigrid-plugin-install.md %}
+{% include sigrid-mcp/plugin-install.md %}
 
 The installer asks for your Sigrid API token once and stores it in your system keychain. See [authentication tokens](../../organization-integration/authentication-tokens.md) for how to get one. On any other CLI, configure the MCP server by hand using the [installation instructions](../integration-sigrid-mcp.md#manual-configuration-other-ides); you need at least the `guardrails:quality_check` tool, and your language has to be one of the [supported technologies](guardrails.md#supported-technologies).
 
@@ -46,7 +46,7 @@ The tool takes one file at a time. The agent passes the code and the filename, a
 
 Tool access alone changes nothing, because the agent has no reason to call the tool. What makes it fire is an instruction in your project's context file, so it applies to every session without you asking for it. In Claude Code that file is `CLAUDE.md` in the repository root; for the equivalent elsewhere, see [where to place these instructions](guardrails.md#where-to-place-these-instructions).
 
-{% include sigrid-quality-gate-prompt.md %}
+{% include sigrid-mcp/quality-gate-prompt.md %}
 
 Two details in that text do the work, and both are easy to lose when you reword it. It names the tool, which makes the outcome verifiable: "check code quality" is advice, while "run `guardrails:quality_check` on all files you changed" is an instruction you can confirm was followed. And it is tied to task completion, which is the only placement that fires reliably, because an agent decides for itself when it is finished.
 
