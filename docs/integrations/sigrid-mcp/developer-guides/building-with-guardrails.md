@@ -4,9 +4,9 @@ This guide walks through putting [Sigrid Guardrails](../guardrails.md) in your c
 
 Guardrails gives the agent the same analysis Sigrid runs, on the files it just changed, while it is still working on them. The checks are deterministic: the same metrics against the same thresholds every time, decided by Sigrid's quality model and not by a model's opinion of its own output.
 
-Guided runs come out measurably better. We built the same system 20 times with Claude Sonnet 4.6, and the runs with Guardrails in the build loop had roughly 97% fewer high-risk security findings and a maintainability score roughly 24% higher than the runs that only had a written set of code principles. The separation was clean, with every guided run scoring better on maintainability than every unguided one. The [experiment write-up](https://www.softwareimprovementgroup.com/blog/claude-sonnet-4-6-guardrails-experiment/) has the method and the full results.
+Guided runs come out measurably better. We built the same system 20 times with Claude Sonnet 4.6, and the runs with Guardrails in the build loop had roughly 97% fewer high-risk security findings and a maintainability score roughly 24% higher than the runs that only had a written set of code principles. Every guided run scored better on maintainability than every unguided one. The [experiment write-up](https://www.softwareimprovementgroup.com/blog/claude-sonnet-4-6-guardrails-experiment/) has the method and the full results.
 
-Use it whenever an agent writes code. How closely you read the result is a separate question from whether the code has to be secure and maintainable: anything you deploy, or come back to and change in six months, has to be both. If you are reading every diff, Guardrails saves you the review comments you were about to write. If you are vibe coding and only checking that the thing runs, it is the only thing between you and whatever the agent happened to produce.
+Use it whenever an agent writes code. How closely you read the result is a separate question from whether the code has to be secure and maintainable: anything you deploy, or come back to in six months, has to be both. If you read every diff, Guardrails saves you the review comments you were about to write. If you are vibe coding, it is the only thing between you and whatever the agent happened to produce.
 
 For clearing out technical debt that is already there, which is a different job with a different setup, see [reducing technical debt with auto-fix agents](reducing-technical-debt.md).
 
@@ -22,13 +22,9 @@ Guardrails reads the code in your working tree, so the system does not have to b
 
 An agent optimizes for the goal you gave it, and it can only verify part of that goal by itself. "The feature works" is testable: run the code, read the error, try again. "The code is good" is not, so the agent stops when the tests pass, and what it leaves behind is whatever satisfied the test.
 
-That plays out in three ways you will recognize. Extending an existing method is a smaller and safer-looking edit than splitting it, so units grow across sessions until the worst unit in the file is the one the agent has touched most often.
+Two things follow, and you will recognize both. Extending an existing method is a smaller and safer-looking edit than splitting it, so units grow across sessions until the worst unit in the file is the one the agent has touched most often. And an agent reproduces the patterns it has seen most, insecure idioms among them: a query assembled by string concatenation, a permissive default, a check that runs after the work instead of before it. Nothing in the task tells it to look, and a vulnerability does not announce itself the way a failing assertion does.
 
-Security is the second. An agent reproduces the patterns it has seen most, and insecure idioms are well represented among them: a query assembled by string concatenation, a permissive default, a check that runs after the work instead of before it. Nothing in the task tells it to look, and a vulnerability does not announce itself the way a failing assertion does.
-
-Then there is the problem we built Sigrid to solve. "Maintainable" is not something an agent can measure by reading. Unit size, complexity, parameter counts, and duplication all have thresholds and a rating behind them, and without those numbers the agent is aiming at a standard it cannot see.
-
-Guardrails makes the missing half of the goal testable too. It returns which guidelines a file violates, where, at what severity, and the thresholds behind each finding, so the agent knows what "too long" means instead of guessing. Your context file covers the rest, recording the conventions particular to your team.
+Underneath both sits the problem we built Sigrid to solve. "Maintainable" is not something an agent can measure by reading. Unit size, complexity, parameter counts, and duplication all have thresholds and a rating behind them, and without those numbers the agent is aiming at a standard it cannot see. Guardrails returns which guidelines a file violates, where, at what severity, and the threshold behind each one, so "too long" stops being a guess.
 
 ## Set up Guardrails
 
@@ -47,55 +43,54 @@ The installer asks for your Sigrid API token once and stores it in your system k
 Check it works before you rely on it:
 
 ```
-Run the Sigrid quality check on <a file you changed recently>.
+Run the Sigrid guardrails quality check on <a file you changed recently>.
 ```
 
-The tool takes one file at a time. The agent passes the code and the filename, and gets back the maintainability guidelines that file violates, with a severity and a line range per unit, plus a separate list of security findings. A clean file returns both lists empty, so an empty result is a pass and not a failure to run. For Java, the analyzer compiles what it is given, so the agent has to pass a complete class and not a bare method. If the tool comes back unavailable, fix that now and see [troubleshooting](../../integration-sigrid-mcp.md#troubleshooting) if you need it.
+The tool takes one file (snippet) at a time, and returns the maintainability guidelines that file violates, with a severity and a line range per unit, plus a separate list of security findings. A clean file returns both lists empty, so an empty result is a pass and not a failure to run.
 
 ### 2. Add the quality gate
 
-Tool access alone changes nothing, because the agent has no reason to call the tool. What makes it fire is an instruction in your project's context file, so it applies to every session without you asking for it. In Claude Code that file is `CLAUDE.md` in the repository root; for the equivalent elsewhere, see [where to place these instructions](../guardrails.md#where-to-place-these-instructions).
+Tool access alone changes nothing, because the agent has no reason to call the tool. What makes it fire is an instruction in your project's context file, so it applies to every session without you asking. In Claude Code that file is `CLAUDE.md` in the repository root; for the equivalent elsewhere, see [where to place these instructions](../guardrails.md#where-to-place-these-instructions).
 
 {% include sigrid-mcp/quality-gate-prompt.md %}
 
-Two details in that text do the work, and both are easy to lose when you reword it. It names the tool, which makes the outcome verifiable: "check code quality" is advice, while "run `guardrails:quality_check` on all files you changed" is an instruction you can confirm was followed. And it is tied to task completion, which is the only placement that fires reliably, because an agent decides for itself when it is finished.
+Two details in that text do the work, and both are easy to lose when you reword it. It names the tool, which makes the outcome verifiable: "check code quality" is advice, while "run `guardrails:quality_check` on all files you changed" is something you can confirm happened. And "before reporting ANY task as complete" attaches the check to a point every task passes through exactly once, which looser timing like "after every edit" does not give you.
 
-Then add your own conventions under Code Principles: the framework patterns your codebase actually uses, and a line for every recurring mistake you find yourself correcting. That file is where a correction becomes permanent.
+The gate also lets the agent leave a finding alone, either because the code already honors the principles or because the fix would cascade outside the task, as long as it says which and why. That clause is what keeps a small addition from turning into an afternoon of extractions.
+
+An instruction is followed most of the time, and the agent is the one who decides it has finished, so we would verify the gate for the first few sessions in a new repository. Where it really matters, back it with something mechanical: [Sigrid CI](../../../sigridci-integration/using-sigridci.md) in a pre-commit hook or in your pipeline runs the same checks whatever produced the code.
+
+Then add your own conventions under Code Principles: the framework patterns your codebase actually uses, and a line for every recurring mistake you find yourself correcting.
 
 ## What a session looks like
 
-Say you are adding partial refunds to a `PaymentService`, and you ask for it like this:
+Say you are adding a retrying file copy to a `FileUtil` class, and you ask for it like this:
 
 ```
-Add support for partial refunds. A refund can now be for less than the
-original amount, and we need to reject refunds that exceed what's left.
+Add a method to FileUtil that copies a file byte-by-byte with retry logic
 ```
 
-The agent opens the file, finds the existing `refund` method and its call sites, and makes the obvious change. The remaining-amount check goes into `refund`, which grows from about 30 lines to about 50 and picks up two new branches. The tests pass. Without the gate, this is where it would report done.
+The agent reads the surrounding class to pick up the patterns already in use, then adds `copyFileWithRetry(File src, File dst, int maxRetries)` at the end of it: argument validation, a retry loop, and a nested try-with-resources doing the copy itself. That is 34 lines. Without the gate, this is where it would report done.
 
-Instead it calls `guardrails:quality_check` on the file it changed, and the response flags `refund` under "Write Short Units of Code" and "Write Simple Units of Code" at HIGH severity, with the line range of the method. So it refactors: the validation moves into a `validateRefundable` helper, the amount arithmetic into a small value method, and `refund` is left doing the orchestration. A second call on the same file comes back clean, the tests still pass, and the summary you get says what changed, that the gate passed, and anything it deliberately left alone.
+The method does two unrelated jobs. One is the retry policy: how many attempts, what to log on a failure, when to give up. The other is the copy, a stream-to-stream loop with no interest in whether anyone retries it. That is a single responsibility violation, and it costs you on the next change rather than this one. You cannot adjust the retry policy without reading the copy loop, you cannot test the copy without driving it through the retries, and a unit carrying two responsibilities is longer and more deeply nested than either job needs alone.
+
+Length and nesting are what Sigrid measures, so the check picks it up. The findings come back at medium severity, and the agent extracts the single-attempt copy into a private `copyFileByteByByte(File src, File dst)` helper, leaving `copyFileWithRetry` with the validation and the retry loop. That trades 6 lines for 13, and each method ends up with one reason to change.
 
 <a href="../../../images/mcp/guardrails/guardrails-refactoring-loop.png" target="_blank"><img src="../../../images/mcp/guardrails/guardrails-refactoring-loop.png" width="800" alt="Claude Code implementing a method, running Sigrid guardrails that flag maintainability issues, then refactoring by extracting a helper method" /></a>
 
-The refactor is the part that matters. You did not have to name the problem, and the agent did not have to guess what "too complex" means in your codebase. It got a location, a metric, and a threshold, and it had your code principles to fix against.
+The second check is the part worth reading. It still reports two medium-severity findings, and the agent leaves both with a reason: `copyFileWithRetry` is around 20 lines, reasonable for something that validates input, loops, and handles exceptions, and its three parameters are the minimum the operation needs. No security findings.
 
 ## Check that the gate fired
 
-"Quality gate passed" is a claim, and it deserves the same skepticism as a claim about tests. We would check it properly for the first few sessions in a new repository, to confirm the setup does what you think it does. Your CLI shows tool calls, so look for at least one `guardrails:quality_check` call after the last edit. A check that ran before the final edit tells you nothing about the code you are about to commit. Look at the file list too: the tool takes one file per call, so a four-file change means four calls, and if only one shows up then the gate covered a quarter of your work. Asking directly is enough:
+Your CLI shows tool calls, so look for at least one `guardrails:quality_check` call after the last edit. Look at the file list too: the tool takes one file per call, so a four-file change means four calls, and if only one shows up then the gate covered a quarter of your work.
 
 ```
 Which files did you run the quality check on? List them against the files you changed.
 ```
 
-The gate deliberately lets the agent leave a finding alone when the fix would cascade outside the task, and that clause is what stops a small feature from turning into a three-hour refactor. It is fine as long as the agent says so. If findings were left behind silently, tighten the wording rather than trusting the next run. Then read the diff: Guardrails tells you the code is well structured, not that it does what you asked.
-
-The failure worth watching for is the quiet one, where an agent has stopped calling the tool and reports success anyway. Check the calls, not the summary.
-
-Which points at the honest limit of a context file. An instruction is followed most of the time, and that is not the same as always. The less of the output you read, the more that gap costs you, so back the instruction with something mechanical: [Sigrid CI](../../../sigridci-integration/using-sigridci.md) in a pre-commit hook or in your pipeline runs the same deterministic checks where the code leaves your machine, whatever produced it.
-
 ## Where to go next
 
-There is also a limit to what Guardrails can see, since it only ever looks at the files in front of it. Architecture drift, vulnerable dependencies, and duplication spread across files need the analysis of the whole system, which is the other reason to run Sigrid CI; the `sigrid-ci-feedback` skill does it locally before you push. From there:
+Guardrails only ever looks at the files in front of it. Architecture drift, vulnerable dependencies, and duplication spread across files need the analysis of the whole system, which is the other reason to run Sigrid CI; the `sigrid-ci-feedback` skill does it locally before you push. From there:
 
 - [Reducing technical debt with auto-fix agents](reducing-technical-debt.md) for the debt that is already there
 - [Triaging security and reliability findings](triaging-security-reliability.md) for the findings Sigrid already knows about
