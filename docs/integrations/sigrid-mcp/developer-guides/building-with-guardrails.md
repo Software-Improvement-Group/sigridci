@@ -38,7 +38,7 @@ The plugin configures the Sigrid MCP server and the skills together:
 
 {% include sigrid-mcp/plugin-install.md %}
 
-The installer asks for your Sigrid API token once and stores it in your system keychain. See [authentication tokens](../../../organization-integration/authentication-tokens.md) for how to get one. On any other CLI, configure the MCP server by hand using the [installation instructions](../../integration-sigrid-mcp.md#manual-configuration-other-ides). You need at least the `guardrails:quality_check` tool.
+The installer asks for your Sigrid API token once and stores it in your system keychain. See [authentication tokens](../../../organization-integration/authentication-tokens.md) for how to get one. The plugin only works in Claude Code. If you use a different agentic CLI, configure the MCP server by hand with the [installation instructions](../../integration-sigrid-mcp.md#manual-configuration-other-ides). You need at least the `guardrails:quality_check` tool.
 
 Check it works before you rely on it:
 

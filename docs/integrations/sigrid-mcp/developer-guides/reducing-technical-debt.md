@@ -38,7 +38,7 @@ This workflow leans on the third one, since the two skills carry most of the pro
 
 The first two commands configure the MCP server and the skills together. `/sigrid:setup` is easy to skip, and it is the one that matters most here: it records which Sigrid system this repository maps to, which branch Sigrid analyzes, and how your team handles branches and change requests. The skills read it at the start of every run, so you answer these questions once instead of every session. See [plugin configuration](../configuration.md) for what it stores and where.
 
-On another CLI, take the skills from the [sigrid-ai-toolkit](https://github.com/Software-Improvement-Group/sigrid-ai-toolkit) and adapt them. See [before you start](../autofix-agents.md#before-you-start) for the identifiers Sigrid needs and where to put them.
+The plugin only works in Claude Code. If you use a different agentic CLI, configure the Sigrid MCP server by hand with the [installation instructions](../../integration-sigrid-mcp.md#manual-configuration-other-ides), then take the skills from the [sigrid-ai-toolkit](https://github.com/Software-Improvement-Group/sigrid-ai-toolkit) and adapt them to whatever that CLI calls a skill or a rules file. See [before you start](../autofix-agents.md#before-you-start) for the identifiers Sigrid needs and where to put them.
 
 ### 2. Work on a branch
 
