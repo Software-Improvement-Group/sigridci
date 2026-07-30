@@ -34,9 +34,9 @@ If you use a different AI agent, browse the skill definitions in the [sigrid-ai-
 
 This page is the reference: the tools, the workflows, the statuses. For end-to-end walkthroughs — setup, one worked session, how to verify the result, and the recovery move when it goes wrong — see:
 
-- [Reducing technical debt with auto-fix agents](reducing-technical-debt.md) — maintainability, built on `sigrid-diagnose` and `sigrid-improve`
-- [Triaging security and reliability findings](triaging-security-reliability.md) — assess in context, triage with a rationale
-- [Remediating open source risk](remediating-open-source-risk.md) — running unattended when new dependency risk appears
+- [Reducing technical debt with auto-fix agents](developer-guides/reducing-technical-debt.md) — maintainability, built on `sigrid-diagnose` and `sigrid-improve`
+- [Triaging security and reliability findings](developer-guides/triaging-security-reliability.md) — assess in context, triage with a rationale
+- [Remediating open source risk](developer-guides/remediating-open-source-risk.md) — running unattended when new dependency risk appears
 
 ## Workflows
 

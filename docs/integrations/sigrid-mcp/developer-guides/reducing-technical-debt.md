@@ -2,7 +2,7 @@
 
 A hundred medium-severity maintainability findings routinely outweigh a handful of very high ones. Sigrid's ratings are LOC-weighted: what a finding contributes is the amount of code it puts in a bad risk bracket, measured against the size of the whole system. So the intuitive move, sorting by severity and starting at the top, is usually the wrong one. It is also why a week of refactoring can leave a rating exactly where it was.
 
-An [auto-fix agent](autofix-agents.md) works from that weighting. The `sigrid-diagnose` skill decides what to work on, and `sigrid-improve` does the work, verifying each change with Guardrails before it moves on.
+An [auto-fix agent](../autofix-agents.md) works from that weighting. The `sigrid-diagnose` skill decides what to work on, and `sigrid-improve` does the work, verifying each change with Guardrails before it moves on.
 
 You would run this deliberately, with time set aside: a debt-reduction day, the slack at the end of a sprint, or the week before you start work in a module you know is bad. It suits diffuse debt, dozens of long units or duplication spread across a package. If you already know a module needs to be split differently, do that part yourself and hand the agent the mechanical work afterwards. Sigrid ranks candidates by how much rated code they carry, and it has no opinion on whether your design is right.
 
@@ -30,9 +30,9 @@ This workflow leans on the third one, since the two skills carry most of the pro
 
 {% include sigrid-mcp/plugin-install.md setup=true %}
 
-The first two commands configure the MCP server and the skills together. `/sigrid:setup` is the one people skip, and it is the one that matters here: it records which Sigrid system this repository maps to, which branch Sigrid analyzes, and how your team handles branches and change requests. The skills read it at the start of every run, so you answer these questions once instead of every session. See [plugin configuration](configuration.md) for what it stores and where.
+The first two commands configure the MCP server and the skills together. `/sigrid:setup` is the one people skip, and it is the one that matters here: it records which Sigrid system this repository maps to, which branch Sigrid analyzes, and how your team handles branches and change requests. The skills read it at the start of every run, so you answer these questions once instead of every session. See [plugin configuration](../configuration.md) for what it stores and where.
 
-On another CLI, configure the MCP server with the [installation instructions](../integration-sigrid-mcp.md#manual-configuration-other-ides) and put your customer and system identifiers in your context file, since there is no profile to read:
+On another CLI, configure the MCP server with the [installation instructions](../../integration-sigrid-mcp.md#manual-configuration-other-ides) and put your customer and system identifiers in your context file, since there is no profile to read:
 
 ```
 ## Sigrid
@@ -123,7 +123,7 @@ Show the maintainability ratings again. Which property moved, and by how much?
 
 Set your expectations honestly here, because the LOC weighting cuts both ways. Ratings are measured against total system size, so a handful of refactors on a large codebase will not move a star. Clusters move ratings. If nothing moved after a substantial run, you worked the long tail instead of the mass, so go back to the diagnosis and ask which candidates carry the most LOC in a bad risk bracket.
 
-If the candidates themselves look stale, pointing at code that has changed or no longer exists, Sigrid analyzed a different branch or analyzed before your last merge. Check which branch is analyzed in [configuration](configuration.md), and run the `sigrid-ci-feedback` skill for a local picture of the current tree.
+If the candidates themselves look stale, pointing at code that has changed or no longer exists, Sigrid analyzed a different branch or analyzed before your last merge. Check which branch is analyzed in [configuration](../configuration.md), and run the `sigrid-ci-feedback` skill for a local picture of the current tree.
 
 ## Where to go next
 
@@ -131,4 +131,4 @@ Debt reduction on the old code and prevention on the new code are the same proje
 
 - [Building with an AI coding agent and Sigrid Guardrails](building-with-guardrails.md) to stop new debt while you clear the old
 - [Triaging security and reliability findings](triaging-security-reliability.md) for different findings and a different loop
-- [Auto-fix agents MCP reference](autofix-agents.md) for the full tool and status reference
+- [Auto-fix agents MCP reference](../autofix-agents.md) for the full tool and status reference

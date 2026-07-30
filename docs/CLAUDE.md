@@ -30,8 +30,9 @@ documentation, see [../CLAUDE.md](../CLAUDE.md) for instructions when working on
   `docs/_includes/` and be pulled in with {% raw %}`{% include name.md %}`{% endraw %}.
   - Group these per section in a subdirectory, so the Guardrails and auto-fix agent blocks live in
     `docs/_includes/sigrid-mcp/` and are included as {% raw %}`{% include sigrid-mcp/name.md %}`{% endraw %}.
-  - Relative links are allowed. The unit tests resolve them from every page that includes the file,
-    so a link has to be valid for all of them. Keeping an include's users in one directory avoids this.
+  - Relative links are allowed, but the unit tests resolve them from every page that includes the
+    file, so a link has to be valid from all of them. Pages including the same file sit at different
+    depths, so prefer an include with no links, and keep any link it does need in the including page.
   - Pass a parameter with {% raw %}`{% include name.md flag=true %}`{% endraw %} and read it as
     {% raw %}`{% if include.flag %}`{% endraw %}, for a block that varies slightly between pages.
 

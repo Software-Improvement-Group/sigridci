@@ -1,10 +1,10 @@
 # Remediating open source risk with auto-fix agents
 
-Dependency risk is different from the other work an [auto-fix agent](autofix-agents.md) does. A new critical CVE in a library you use appears without anyone touching your code, the fix is usually a one-line version bump, and the value of fixing it decays by the day. That combination makes it the one workflow worth running unattended, on a schedule, with nobody watching the middle of the run.
+Dependency risk is different from the other work an [auto-fix agent](../autofix-agents.md) does. A new critical CVE in a library you use appears without anyone touching your code, the fix is usually a one-line version bump, and the value of fixing it decays by the day. That combination makes it the one workflow worth running unattended, on a schedule, with nobody watching the middle of the run.
 
 What comes out is a merge request or an issue, one per dependency, reviewed through whatever process you already have. The agent never merges anything, and your existing review and CI rules apply unchanged.
 
-Set it up when the repository has real dependencies and Sigrid [Open Source Health](../../capabilities/system-open-source-health.md) analyzes it, when your test suite is good enough that a green build after a version bump means something, and when a merge request opened by a bot is normal in your team so someone will actually look at it. If you are clearing an existing backlog of dependency risk for the first time, run it interactively for that pass. It tells you which of your dependencies are pinned for a reason, and that is much cheaper to learn in one session than from eleven merge requests.
+Set it up when the repository has real dependencies and Sigrid [Open Source Health](../../../capabilities/system-open-source-health.md) analyzes it, when your test suite is good enough that a green build after a version bump means something, and when a merge request opened by a bot is normal in your team so someone will actually look at it. If you are clearing an existing backlog of dependency risk for the first time, run it interactively for that pass. It tells you which of your dependencies are pinned for a reason, and that is much cheaper to learn in one session than from eleven merge requests.
 
 ## Why the agent needs help
 
@@ -34,9 +34,9 @@ Two prerequisites go beyond the other guides, and the skill refuses to run witho
 
 The first is a connected git-host MCP server, for GitLab, GitHub, or whichever forge you use. The skill is forge-agnostic, and it has to be able to create a branch, a merge request, and an issue. There is deliberately no local-only fallback.
 
-The second is a profile with your conventions recorded. `/sigrid:setup` asks for the baseline branch, your branch naming, whether merge requests open as drafts, and who reviews them. An unattended run cannot ask, so anything missing here either stops the run or comes out wrong. See [plugin configuration](configuration.md).
+The second is a profile with your conventions recorded. `/sigrid:setup` asks for the baseline branch, your branch naming, whether merge requests open as drafts, and who reviews them. An unattended run cannot ask, so anything missing here either stops the run or comes out wrong. See [plugin configuration](../configuration.md).
 
-The skill also uses [Sigrid CI](../../sigridci-integration/using-sigridci.md) through the `sigrid-ci-feedback` skill for verification, so the environment needs to be able to run it.
+The skill also uses [Sigrid CI](../../../sigridci-integration/using-sigridci.md) through the `sigrid-ci-feedback` skill for verification, so the environment needs to be able to run it.
 
 ### 2. Set the boundaries
 
@@ -91,7 +91,7 @@ Treat that as a sketch to adapt to your CI system, not a working pipeline file. 
 - **A non-interactive run** (`claude -p` in Claude Code, the equivalent flag elsewhere). In this mode the skill takes its defaults, never asks, and downgrades to an issue when it is uncertain instead of blocking. That is what makes unattended runs safe. It also means a missing profile value aborts the run rather than prompting, which is why step 1 matters.
 - **Credentials with the right scope.** The job needs a Sigrid token and git-host credentials that can push a branch and open a merge request, and nothing more. It must not be able to merge, approve, or push to your baseline branch. Verify that once, when you set the job up.
 
-If you would rather trigger on a signal than on a clock, the [Sigrid REST API](../sigrid-api-documentation.md) exposes the same open source health data, so a job can check for new risk and only start an agent when there is something to do.
+If you would rather trigger on a signal than on a clock, the [Sigrid REST API](../../sigrid-api-documentation.md) exposes the same open source health data, so a job can check for new risk and only start an agent when there is something to do.
 
 ## What comes out
 
@@ -127,5 +127,5 @@ Dependencies are one source of risk arriving without anyone changing your code. 
 
 - [Triaging security and reliability findings](triaging-security-reliability.md) for the findings in your own code
 - [Reducing technical debt with auto-fix agents](reducing-technical-debt.md) for maintainability debt
-- [Open Source Health](../../capabilities/system-open-source-health.md) for the risk dimensions Sigrid reports
-- [Auto-fix agents MCP reference](autofix-agents.md) for tools and parameters
+- [Open Source Health](../../../capabilities/system-open-source-health.md) for the risk dimensions Sigrid reports
+- [Auto-fix agents MCP reference](../autofix-agents.md) for tools and parameters

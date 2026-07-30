@@ -4,7 +4,7 @@ Agent guardrails use Sigrid's code analysis to prevent issues from being introdu
 
 This is the counterpart to the [auto-fix agent](autofix-agents.md), which fixes and improves issues that already exist.
 
-For installation instructions, see the [MCP overview page](../integration-sigrid-mcp.md). For a walkthrough of using this in day-to-day feature work, see the guide on [building with an AI coding agent and Sigrid Guardrails](building-with-guardrails.md).
+For installation instructions, see the [MCP overview page](../integration-sigrid-mcp.md). For a walkthrough of using this in day-to-day feature work, see the guide on [building with an AI coding agent and Sigrid Guardrails](developer-guides/building-with-guardrails.md).
 
 ## Supported technologies
 

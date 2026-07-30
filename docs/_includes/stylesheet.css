@@ -313,6 +313,11 @@ summary {
     font-size: 12px !important;
 }
 
+.container nav .toc a.subSubPage {
+    padding-left: 72px !important;
+    font-size: 12px !important;
+}
+
 .container nav .currentCategory {
     display: block;
 }
