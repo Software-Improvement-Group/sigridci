@@ -1,16 +1,8 @@
 # Developer guides
 
-The [Guardrails](guardrails.md) and [auto-fix agent](autofix-agents.md) pages describe the tools: the MCP tools, the skills, the parameters, the statuses. These guides describe the work. Each one covers a single job on a real codebase, with the setup, one worked session, and how to tell a good run from a bad one.
+Each of these guides follows one job through on a real codebase: what to configure, what a session looks like, and how to check what the agent actually did. For the tools underneath them, with their parameters and the finding statuses, see [Guardrails](guardrails.md) and [auto-fix agents](autofix-agents.md).
 
-| Guide | What it covers |
-| --- | --- |
-| [Building with an AI coding agent and Sigrid Guardrails](developer-guides/building-with-guardrails.md) | Checking maintainability and security on code as the agent writes it, before you see the diff |
-| [Reducing technical debt with auto-fix agents](developer-guides/reducing-technical-debt.md) | Working the refactoring candidates for your weakest maintainability property |
-| [Triaging security and reliability findings](developer-guides/triaging-security-reliability.md) | Assessing findings in context and recording a decision with a rationale |
-| [Remediating open source risk](developer-guides/remediating-open-source-risk.md) | Running unattended when new dependency risk appears, and reviewing the merge request it opens |
-
-Start with Guardrails. It needs the least setup, it applies to every session in which an agent writes code, and it stops the debt the other three guides are about clearing. The other three each need a system published to Sigrid, and you can read them in any order.
-
-Every guide is readable on its own, so there is some repetition between them, mostly in the setup steps.
-
-The concepts apply to any agentic CLI. The worked configuration examples use Claude Code, since that is the only CLI we ship a plugin for, and each guide names the generic equivalent of whatever it configures.
+- [Building with an AI coding agent and Sigrid Guardrails](developer-guides/building-with-guardrails.md) puts Guardrails in the feature loop, so the agent checks each file it writes before you ever see the diff.
+- [Reducing technical debt with auto-fix agents](developer-guides/reducing-technical-debt.md) works through the refactoring candidates for your weakest maintainability property.
+- [Triaging security and reliability findings](developer-guides/triaging-security-reliability.md) assesses a finding backlog in context and records each decision with a rationale.
+- [Remediating open source risk](developer-guides/remediating-open-source-risk.md) runs unattended when new dependency risk appears, and opens a merge request for you to review.

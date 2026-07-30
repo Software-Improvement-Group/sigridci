@@ -71,13 +71,13 @@ Name the statuses and require a rationale for each one:
 - When you are unsure, say unsure. An unsure finding stays RAW.
 ```
 
-The last two lines carry most of the value. An agent that has to justify a false positive with a code reference cannot dismiss a finding by rewording it, and an agent that is allowed to say "unsure" stops manufacturing confidence. Keep the assess-only rule in this file and not only in your prompt, since a rule that lives in a prompt applies to one session.
+In our experience the last two lines carry most of the value. An agent that has to justify a false positive with a code reference cannot dismiss a finding by rewording it, and an agent that is allowed to say "unsure" stops manufacturing confidence. Keep the assess-only rule in this file and not only in your prompt, since a rule that lives in a prompt applies to one session.
 
 Valid statuses for security and reliability findings are `RAW`, `REFINED`, `WILL_FIX`, `FIXED`, `ACCEPTED`, and `FALSE_POSITIVE`. See the [status reference](../autofix-agents.md#tools-reference).
 
 ## What a session looks like
 
-Start narrow: one severity, one area, enough findings to calibrate on and few enough to check by hand.
+We would start narrow: one severity, one area, enough findings to calibrate on and few enough to check by hand.
 
 ```
 Get HIGH and CRITICAL security findings for acme/payment-platform under
@@ -125,7 +125,7 @@ Then review it as a security change. Does the fix address the mechanism, or only
 
 ## Checking that the triage holds up
 
-The failure mode to watch for is a run that looks productive. If the agent dismissed most of a HIGH-severity batch, something is wrong: either your prompt leaned that way, or it is reasoning from an assumption it has not stated. Spot-check three of those dismissals properly, and reset them to `RAW` if the reasoning does not hold. This is the most common way the whole loop goes bad, and it is invisible unless you look.
+The failure mode to watch for is a run that looks productive. If the agent dismissed most of a HIGH-severity batch, something is wrong: either your prompt leaned that way, or it is reasoning from an assumption it has not stated. Spot-check three of those dismissals properly, and reset them to `RAW` if the reasoning does not hold. This is the most common way we see the whole loop go bad, and it is invisible unless you look.
 
 A run that resolved every finding confidently is a run that guessed somewhere, so unsure findings existing at all is a good sign. Ask directly:
 

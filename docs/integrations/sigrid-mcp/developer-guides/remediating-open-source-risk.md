@@ -67,7 +67,7 @@ Before you automate anything, do one supervised pass:
 
 It asks what to work on and walks through dependencies one at a time. Upgrade choices come framed in terms of what they cost you, such as "patch bump, no code changes" versus "minor bump, one deprecated call to update", so you are not picking version numbers.
 
-This pass is worth a morning for two reasons. It empties the queue, so the automated runs afterwards only ever see genuinely new risk. And it shows you where your rules are wrong before a scheduled job starts acting on them.
+We think this pass is worth a morning, for two reasons. It empties the queue, so the automated runs afterwards only ever see genuinely new risk. And it shows you where your rules are wrong before a scheduled job starts acting on them.
 
 ### 4. Add the trigger
 
@@ -85,7 +85,7 @@ osh-remediation:
 
 Treat that as a sketch to adapt to your CI system, not a working pipeline file. What matters is what it is made of:
 
-- **A schedule, not a code push.** New dependency risk appears when an advisory is published, which has nothing to do with your commits. Nightly is usually right, and hourly buys you very little.
+- **A schedule, not a code push.** New dependency risk appears when an advisory is published, which has nothing to do with your commits. We find nightly is usually right, and hourly buys you very little.
 - **A severity floor.** Without one you get merge requests for every low-severity freshness notice, and the whole thing gets muted within a week.
 - **A prompt that reaches the skill.** Phrase it in the terms the skill triggers on, such as fixing open source risks or dependency vulnerabilities, without naming the skill. That also works on a CLI where the procedure is a plain instruction in your context file.
 - **A non-interactive run** (`claude -p` in Claude Code, the equivalent flag elsewhere). In this mode the skill takes its defaults, never asks, and downgrades to an issue when it is uncertain instead of blocking. That is what makes unattended runs safe. It also means a missing profile value aborts the run rather than prompting, which is why step 1 matters.
@@ -111,13 +111,13 @@ If a merge request or issue already exists for that dependency, the agent commen
 
 ## Reviewing what it opens
 
-Review a merge request the way you would a colleague's dependency bump, at the same standard.
+We hold these to the same standard as a colleague's dependency bump.
 
 Check that Sigrid CI confirmed the fix, meaning the analysis re-ran and the finding is gone, not that the version was bumped. The description says so, and if it does not, that is your signal: the verification step did not run, so look for the `sigrid-ci-feedback` step in the CI job log. This is also the case the skill is supposed to off-ramp on, when tests pass but the bumped version does not clear every CVE on that dependency.
 
 Open one of the linked advisories and check that the new version is outside the affected range. Worth doing properly on the first few merge requests from a new setup, then spot-checking. The diff should be the bump and nothing else: a manifest change, a lock file change, and the call sites if the API changed, with anything beyond that explained in the description. And your own CI has to be green, because the agent's verification does not replace your pipeline.
 
-Two things are worth watching across a few weeks. Issues should outnumber merge requests on the hard risk types, and if everything comes out as a merge request then the off-ramp is not firing and confidence is being manufactured somewhere. The queue should also drain: if new risk arrives faster than it clears, the trigger is working and the review is not. That is where this kind of automation usually stalls, and the fix is an owner or a rotation, not a change to the job. An unreviewed merge request looks like the risk is handled when it is not.
+Two things are worth watching across a few weeks. Issues should outnumber merge requests on the hard risk types, and if everything comes out as a merge request then the off-ramp is not firing and confidence is being manufactured somewhere. The queue should also drain: if new risk arrives faster than it clears, the trigger is working and the review is not. That is where we usually see this kind of automation stall, and the fix is an owner or a rotation, not a change to the job. An unreviewed merge request looks like the risk is handled when it is not.
 
 If a run returns no risks at all, check with `opensourcehealth:get_risks` at a lower `risk_min` before concluding you are clean. If it opens dozens of merge requests at once, the backlog was never cleared and the floor is too low; the skill consolidates into a single issue past roughly five unrelated dependencies, so seeing dozens means it was invoked per dependency.
 

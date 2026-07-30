@@ -30,7 +30,7 @@ This workflow leans on the third one, since the two skills carry most of the pro
 
 {% include sigrid-mcp/plugin-install.md setup=true %}
 
-The first two commands configure the MCP server and the skills together. `/sigrid:setup` is the one people skip, and it is the one that matters here: it records which Sigrid system this repository maps to, which branch Sigrid analyzes, and how your team handles branches and change requests. The skills read it at the start of every run, so you answer these questions once instead of every session. See [plugin configuration](../configuration.md) for what it stores and where.
+The first two commands configure the MCP server and the skills together. `/sigrid:setup` is the one we see people skip, and it is the one that matters here: it records which Sigrid system this repository maps to, which branch Sigrid analyzes, and how your team handles branches and change requests. The skills read it at the start of every run, so you answer these questions once instead of every session. See [plugin configuration](../configuration.md) for what it stores and where.
 
 On another CLI, configure the MCP server with the [installation instructions](../../integration-sigrid-mcp.md#manual-configuration-other-ides) and put your customer and system identifiers in your context file, since there is no profile to read:
 
@@ -86,11 +86,11 @@ It asks which mode you want:
 | **Interactive** | Presents the candidate list, you pick the order, it shows each diff and asks before continuing | First run on a codebase, or any module you do not know well |
 | **Autonomous** | Works the full list from the diagnosis, you review the diffs at the end | Once you have seen the kind of change it makes and trust the rules in your context file |
 
-Start interactive. You are calibrating whether the agent's idea of a good refactor matches yours, and that is much cheaper to find out one diff at a time. Calibrate per codebase, not once: a repository with unusual conventions needs the interactive run again.
+We would start interactive. You are calibrating whether the agent's idea of a good refactor matches yours, and that is much cheaper to find out one diff at a time. Calibrate per codebase, not once: a repository with unusual conventions needs the interactive run again.
 
 Per candidate it reads the whole file before touching anything, makes the change, updates every call site of a changed signature, runs Guardrails to confirm no new findings appeared, and runs your formatter and type check. If a change introduces a new finding or breaks the build, it tries once more and then reverts that candidate instead of digging.
 
-Two behaviors are worth knowing before you start. It does not touch code for the three architecture-level properties (`moduleCoupling`, `componentIndependence`, `componentEntanglement`); for those it explains the problem and proposes a restructuring plan for you to decide on. That is the right call, because those fixes are design decisions and not extractions. It also does not update finding statuses on its own. If you want Sigrid to reflect what happened, ask in the same session, while the finding UUIDs are still in context:
+Two behaviors are worth knowing before you start. It does not touch code for the three architecture-level properties (`moduleCoupling`, `componentIndependence`, `componentEntanglement`); for those it explains the problem and proposes a restructuring plan for you to decide on. We think that is the right call, because those fixes are design decisions and not extractions. It also does not update finding statuses on its own. If you want Sigrid to reflect what happened, ask in the same session, while the finding UUIDs are still in context:
 
 ```
 Update the status of the candidates we just fixed to WILL_FIX, with a remark
@@ -121,7 +121,7 @@ At the end of the run, check movement at the system level:
 Show the maintainability ratings again. Which property moved, and by how much?
 ```
 
-Set your expectations honestly here, because the LOC weighting cuts both ways. Ratings are measured against total system size, so a handful of refactors on a large codebase will not move a star. Clusters move ratings. If nothing moved after a substantial run, you worked the long tail instead of the mass, so go back to the diagnosis and ask which candidates carry the most LOC in a bad risk bracket.
+We should be honest about expectations here, because the LOC weighting cuts both ways. Ratings are measured against total system size, so a handful of refactors on a large codebase will not move a star. Clusters move ratings. If nothing moved after a substantial run, you worked the long tail instead of the mass, so go back to the diagnosis and ask which candidates carry the most LOC in a bad risk bracket.
 
 If the candidates themselves look stale, pointing at code that has changed or no longer exists, Sigrid analyzed a different branch or analyzed before your last merge. Check which branch is analyzed in [configuration](../configuration.md), and run the `sigrid-ci-feedback` skill for a local picture of the current tree.
 

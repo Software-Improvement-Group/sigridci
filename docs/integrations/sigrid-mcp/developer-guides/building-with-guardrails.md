@@ -1,6 +1,6 @@
 # Building with an AI coding agent and Sigrid Guardrails
 
-SIG built the same system 20 times with Claude Sonnet 4.6. One group of runs got a written set of code principles and nothing else. The other group also had Sigrid Guardrails in the build loop, checking each file as the agent wrote it. The guided runs came out with roughly 97% fewer high-risk security findings and a maintainability score roughly 24% higher, and the separation was clean: every guided run scored better on maintainability than every unguided one. The [experiment write-up](https://www.softwareimprovementgroup.com/blog/claude-sonnet-4-6-guardrails-experiment/) has the method and the full results.
+We built the same system 20 times with Claude Sonnet 4.6. One group of runs got a written set of code principles and nothing else. The other group also had Sigrid Guardrails in the build loop, checking each file as the agent wrote it. The guided runs came out with roughly 97% fewer high-risk security findings and a maintainability score roughly 24% higher, and the separation was clean: every guided run scored better on maintainability than every unguided one. The [experiment write-up](https://www.softwareimprovementgroup.com/blog/claude-sonnet-4-6-guardrails-experiment/) has the method and the full results.
 
 [Sigrid Guardrails](../guardrails.md) gives your coding agent the same analysis Sigrid runs, on the files it just changed, while it is still working on them. The agent sees what it broke and fixes it before it presents you with anything. The checks are deterministic: the same metrics against the same thresholds every time, decided by Sigrid's quality model and not by a model's opinion of its own output.
 
@@ -16,7 +16,7 @@ That plays out in three ways you will recognize. Extending an existing method is
 
 Security is the second. An agent reproduces the patterns it has seen most, and insecure idioms are well represented among them: a query assembled by string concatenation, a permissive default, a check that runs after the work instead of before it. Nothing in the task tells it to look, and a vulnerability does not announce itself the way a failing assertion does.
 
-Then there is the problem Sigrid exists to solve. "Maintainable" is not something an agent can measure by reading. Unit size, complexity, parameter counts, and duplication all have thresholds and a rating behind them, and without those numbers the agent is aiming at a standard it cannot see.
+Then there is the problem we built Sigrid to solve. "Maintainable" is not something an agent can measure by reading. Unit size, complexity, parameter counts, and duplication all have thresholds and a rating behind them, and without those numbers the agent is aiming at a standard it cannot see.
 
 Guardrails makes the missing half of the goal testable too. It returns which guidelines a file violates, where, at what severity, and the thresholds behind each finding, so the agent knows what "too long" means instead of guessing. Your context file covers the rest, recording the conventions particular to your team.
 
@@ -71,7 +71,7 @@ The refactor is the part that matters. You did not have to name the problem, and
 
 ## Checking that the gate fired
 
-"Quality gate passed" is a claim, and it deserves the same skepticism as a claim about tests. Check it properly for the first few sessions in a new repository, to confirm the setup does what you think it does. Your CLI shows tool calls, so look for at least one `guardrails:quality_check` call after the last edit. A check that ran before the final edit tells you nothing about the code you are about to commit. Look at the file list too: the tool takes one file per call, so a four-file change means four calls, and if only one shows up then the gate covered a quarter of your work. Asking directly is enough:
+"Quality gate passed" is a claim, and it deserves the same skepticism as a claim about tests. We would check it properly for the first few sessions in a new repository, to confirm the setup does what you think it does. Your CLI shows tool calls, so look for at least one `guardrails:quality_check` call after the last edit. A check that ran before the final edit tells you nothing about the code you are about to commit. Look at the file list too: the tool takes one file per call, so a four-file change means four calls, and if only one shows up then the gate covered a quarter of your work. Asking directly is enough:
 
 ```
 Which files did you run the quality check on? List them against the files you changed.
