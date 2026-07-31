@@ -1,4 +1,4 @@
-# Developer guides
+# Agentic development workflows with Sigrid
 
 Each of these guides follows one job through on a real codebase: what to configure, what a session looks like, and how to check what the agent actually did. For the tools underneath them, with their parameters and the finding statuses, see [Guardrails](../integrations/sigrid-mcp/guardrails.md) and [auto-fix agents](../integrations/sigrid-mcp/autofix-agents.md).
 
