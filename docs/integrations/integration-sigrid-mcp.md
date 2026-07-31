@@ -9,7 +9,7 @@ Start with Guardrails for automatic quality checks on new code. Add Auto-fix Age
 
 ## Developer guides
 
-The pages above describe the tools. The [developer guides](sigrid-mcp/developer-guides.md) describe how to work with them on a real codebase.
+The pages above describe the tools. The [guide for using agents](../workflows/agents.md) describes how to work with them on a real codebase.
 
 ## Installation
 

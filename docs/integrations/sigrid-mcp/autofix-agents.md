@@ -34,8 +34,8 @@ If you use a different AI agent, browse the skill definitions in the [sigrid-ai-
 
 For end-to-end walkthroughs, see:
 
-- [Reducing technical debt with auto-fix agents](developer-guides/reducing-technical-debt.md): maintainability, built on `sigrid-diagnose` and `sigrid-improve`
-- [Triaging security and reliability findings](developer-guides/triaging-security-reliability.md): assess in context, triage with a rationale
+- [Reducing technical debt with auto-fix agents](../../workflows/agents/reducing-technical-debt.md): maintainability, built on `sigrid-diagnose` and `sigrid-improve`
+- [Triaging security and reliability findings](../../workflows/agents/triaging-security-reliability.md): assess in context, triage with a rationale
 
 ## Workflows
 
@@ -53,7 +53,7 @@ The agent investigated eight coupling findings, concluded the high fan-in was de
 
 <a href="../../images/mcp/recipes/coupling-triage-accepted.png" target="_blank"><img src="../../images/mcp/recipes/coupling-triage-accepted.png" width="600" alt="Claude Code investigating module coupling findings, determining high fan-in is by design, and marking all 8 findings as accepted in Sigrid" /></a>
 
-The `sigrid-improve` skill runs this loop with Guardrails verification after each change, and [reducing technical debt](developer-guides/reducing-technical-debt.md) walks through a full session.
+The `sigrid-improve` skill runs this loop with Guardrails verification after each change, and [reducing technical debt](../../workflows/agents/reducing-technical-debt.md) walks through a full session.
 
 ### Discovery and prioritization
 
@@ -65,7 +65,7 @@ Get maintainability findings for [customer]/[system]. What patterns do you see? 
 
 <a href="../../images/mcp/recipes/maintainability-overview.png" target="_blank"><img src="../../images/mcp/recipes/maintainability-overview.png" width="600" alt="Claude Code querying maintainability ratings, showing a 3.3 star overview with duplication at 1.3 stars identified as the key technical debt hotspot" /></a>
 
-Prompted this way the agent will rank by severity, which is not the order that moves your rating. `sigrid-diagnose` weights candidates by the amount of rated code they cover; [reducing technical debt](developer-guides/reducing-technical-debt.md) explains why that changes the answer.
+Prompted this way the agent will rank by severity, which is not the order that moves your rating. `sigrid-diagnose` weights candidates by the amount of rated code they cover; [reducing technical debt](../../workflows/agents/reducing-technical-debt.md) explains why that changes the answer.
 
 ### Architecture exploration
 
@@ -103,7 +103,7 @@ Reliability findings use the same loop with a different question, because what y
 Get reliability findings for [customer]/[system] with severity HIGH or above. Focus on error handling and concurrency issues. Fix straightforward ones and flag complex ones for manual review.
 ```
 
-A prompt like this gets you a first batch. What decides whether the verdicts are worth anything is context the agent cannot read from the code, such as which services are reachable from outside, plus a rule that every verdict cites a line. Both are in [triaging security and reliability findings](developer-guides/triaging-security-reliability.md).
+A prompt like this gets you a first batch. What decides whether the verdicts are worth anything is context the agent cannot read from the code, such as which services are reachable from outside, plus a rule that every verdict cites a line. Both are in [triaging security and reliability findings](../../workflows/agents/triaging-security-reliability.md).
 
 ### Open source health
 
@@ -133,7 +133,7 @@ Get the top 100 duplication findings for [customer]/[system]. We accept duplicat
 Get duplication findings for [customer]/[system]. Fix the ones I've previously marked as will-fix and update their status.
 ```
 
-Splitting the two is worth it whenever the accept-or-fix call needs something only your team knows. If you can state that call up front, autonomous fixing does both in one pass. [Triaging security and reliability findings](developer-guides/triaging-security-reliability.md) applies the same split to findings where each decision has to carry a written rationale.
+Splitting the two is worth it whenever the accept-or-fix call needs something only your team knows. If you can state that call up front, autonomous fixing does both in one pass. [Triaging security and reliability findings](../../workflows/agents/triaging-security-reliability.md) applies the same split to findings where each decision has to carry a written rationale.
 
 ## Tools reference
 

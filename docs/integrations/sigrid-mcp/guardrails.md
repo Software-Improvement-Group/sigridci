@@ -4,7 +4,7 @@ Agent guardrails use Sigrid's code analysis to prevent issues from being introdu
 
 This is the counterpart to the [auto-fix agent](autofix-agents.md), which fixes and improves issues that already exist.
 
-For installation instructions, see the [MCP overview page](../integration-sigrid-mcp.md). For a walkthrough of using this in day-to-day feature work, see the guide on [building with an AI coding agent and Sigrid Guardrails](developer-guides/building-with-guardrails.md).
+For installation instructions, see the [MCP overview page](../integration-sigrid-mcp.md). For a walkthrough of using this in day-to-day feature work, see the guide on [building with an AI coding agent and Sigrid Guardrails](../../workflows/agents/building-with-guardrails.md).
 
 ## Supported technologies
 
@@ -34,7 +34,7 @@ Connecting the MCP server is only half of it, since the agent will not call the 
 
 Two adjustments are worth making from the start. If your codebase follows specific design patterns, such as hexagonal architecture or Redux, add them under Code Principles, and write a principle for every recurring mistake you find yourself correcting. You can also loosen the timing to commits only, and you can always invoke the check by hand: "Run Sigrid on these files: ...".
 
-For which wording in that prompt carries it, and a session where the agent refactors in response to a finding, see [building with an AI coding agent and Sigrid Guardrails](developer-guides/building-with-guardrails.md).
+For which wording in that prompt carries it, and a session where the agent refactors in response to a finding, see [building with an AI coding agent and Sigrid Guardrails](../../workflows/agents/building-with-guardrails.md).
 
 ### Where to place these instructions
 

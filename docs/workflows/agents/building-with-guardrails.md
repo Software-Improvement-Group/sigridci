@@ -1,8 +1,8 @@
 # Building with an AI coding agent and Sigrid Guardrails
 
-<div><a href="{% link integrations/sigrid-mcp/developer-guides.md %}#where-sigrid-fits-in-an-agentic-workflow">{% include sigrid-mcp/lifecycle-strip.md active="prevent" %}</a></div>
+<div><a href="{% link workflows/agents.md %}#where-sigrid-fits-in-an-agentic-workflow">{% include sigrid-mcp/lifecycle-strip.md active="prevent" %}</a></div>
 
-This guide walks through putting [Sigrid Guardrails](../guardrails.md) in your coding agent's build loop, so the agent checks the maintainability and security of every file it writes and fixes what it finds before you see the diff.
+This guide walks through putting [Sigrid Guardrails](../../integrations/sigrid-mcp/guardrails.md) in your coding agent's build loop, so the agent checks the maintainability and security of every file it writes and fixes what it finds before you see the diff.
 
 Guardrails gives the agent the same analysis Sigrid runs, on the files it just changed, while it is still working on them. The checks are deterministic: the same metrics against the same thresholds every time, decided by Sigrid's quality model and not by a model's opinion of its own output.
 
@@ -16,7 +16,7 @@ For clearing out technical debt that is already there, which is a different job 
 
 - An agentic CLI that can call MCP tools. The configuration below uses Claude Code.
 - A Sigrid API token, which the plugin installer asks for once.
-- A codebase in one of the [supported technologies](../guardrails.md#supported-technologies).
+- A codebase in one of the [supported technologies](../../integrations/sigrid-mcp/guardrails.md#supported-technologies).
 
 Guardrails reads the code in your working tree, so the system does not have to be published to Sigrid first and the code does not have to be committed.
 
@@ -40,7 +40,7 @@ The plugin configures the Sigrid MCP server and the skills together:
 
 {% include sigrid-mcp/plugin-install.md %}
 
-The installer asks for your Sigrid API token once and stores it in your system keychain. See [authentication tokens](../../../organization-integration/authentication-tokens.md) for how to get one. The plugin only works in Claude Code. If you use a different agentic CLI, configure the MCP server by hand with the [installation instructions](../../integration-sigrid-mcp.md#manual-configuration-other-ides). You need at least the `guardrails:quality_check` tool.
+The installer asks for your Sigrid API token once and stores it in your system keychain. See [authentication tokens](../../organization-integration/authentication-tokens.md) for how to get one. The plugin only works in Claude Code. If you use a different agentic CLI, configure the MCP server by hand with the [installation instructions](../../integrations/integration-sigrid-mcp.md#manual-configuration-other-ides). You need at least the `guardrails:quality_check` tool.
 
 Check it works before you rely on it:
 
@@ -52,7 +52,7 @@ The tool takes one file (snippet) at a time, and returns the maintainability gui
 
 ### 2. Add the quality gate
 
-Tool access alone changes nothing, because the agent has no reason to call the tool. What makes it fire is an instruction in your project's context file, so it applies to every session without you asking. In Claude Code that file is `CLAUDE.md` in the repository root; for the equivalent elsewhere, see [where to place these instructions](../guardrails.md#where-to-place-these-instructions).
+Tool access alone changes nothing, because the agent has no reason to call the tool. What makes it fire is an instruction in your project's context file, so it applies to every session without you asking. In Claude Code that file is `CLAUDE.md` in the repository root; for the equivalent elsewhere, see [where to place these instructions](../../integrations/sigrid-mcp/guardrails.md#where-to-place-these-instructions).
 
 {% include sigrid-mcp/quality-gate-prompt.md %}
 
@@ -60,11 +60,11 @@ Two details in that text do the work, and both are easy to lose when you reword 
 
 The gate also lets the agent leave a finding alone, either because the code already honors the principles or because the fix would cascade outside the task, as long as it says which and why. That clause is what keeps a small addition from turning into an afternoon of extractions.
 
-An instruction is followed most of the time, and the agent is the one who decides it has finished, so we would verify the gate for the first few sessions in a new repository. Where it really matters, back it with something mechanical: [Sigrid CI](../../../sigridci-integration/using-sigridci.md) in a pre-commit hook or in your pipeline runs the same checks whatever produced the code.
+An instruction is followed most of the time, and the agent is the one who decides it has finished, so we would verify the gate for the first few sessions in a new repository. Where it really matters, back it with something mechanical: [Sigrid CI](../../sigridci-integration/using-sigridci.md) in a pre-commit hook or in your pipeline runs the same checks whatever produced the code.
 
 Then add your own conventions under Code Principles: the framework patterns your codebase actually uses, and a line for every recurring mistake you find yourself correcting.
 
-Use whatever you are already coding with. Handing the checks to a cheaper subagent looks like a saving, since `guardrails:quality_check` is deterministic and its output is a plain list. The fix is the actual work though, and it is the least self-contained step here: it needs the file, the class around it, and the reason the code is shaped the way it is. A subagent starts with none of that, so it reads the file again to catch up, and then either makes a change you did not want or invents a reason for leaving a finding alone. Both cost you more than the cheaper model saves. See [LLM model selection](../developer-guides.md#llm-model-selection).
+Use whatever you are already coding with. Handing the checks to a cheaper subagent looks like a saving, since `guardrails:quality_check` is deterministic and its output is a plain list. The fix is the actual work though, and it is the least self-contained step here: it needs the file, the class around it, and the reason the code is shaped the way it is. A subagent starts with none of that, so it reads the file again to catch up, and then either makes a change you did not want or invents a reason for leaving a finding alone. Both cost you more than the cheaper model saves. See [LLM model selection](../agents.md#llm-model-selection).
 {: .model }
 
 ## What a session looks like
@@ -81,7 +81,7 @@ The method does two unrelated jobs. One is the retry policy: how many attempts, 
 
 Length and nesting are what Sigrid measures, so the check picks it up. The findings come back at medium severity, and the agent extracts the single-attempt copy into a private `copyFileByteByByte(File src, File dst)` helper, leaving `copyFileWithRetry` with the validation and the retry loop. That trades 6 lines for 13, and each method ends up with one reason to change.
 
-<a href="../../../images/mcp/guardrails/guardrails-refactoring-loop.png" target="_blank"><img src="../../../images/mcp/guardrails/guardrails-refactoring-loop.png" width="800" alt="Claude Code implementing a method, running Sigrid guardrails that flag maintainability issues, then refactoring by extracting a helper method" /></a>
+<a href="../../images/mcp/guardrails/guardrails-refactoring-loop.png" target="_blank"><img src="../../images/mcp/guardrails/guardrails-refactoring-loop.png" width="800" alt="Claude Code implementing a method, running Sigrid guardrails that flag maintainability issues, then refactoring by extracting a helper method" /></a>
 
 The second check is the part worth reading. It still reports two medium-severity findings, and the agent leaves both with a reason: `copyFileWithRetry` is around 20 lines, reasonable for something that validates input, loops, and handles exceptions, and its three parameters are the minimum the operation needs. No security findings.
 
@@ -99,4 +99,4 @@ Guardrails only ever looks at the files in front of it. Architecture drift, vuln
 
 - [Reducing technical debt with auto-fix agents](reducing-technical-debt.md) for the debt that is already there
 - [Triaging security and reliability findings](triaging-security-reliability.md) for the findings Sigrid already knows about
-- [Guardrails MCP reference](../guardrails.md) for supported technologies and the tool itself
+- [Guardrails MCP reference](../../integrations/sigrid-mcp/guardrails.md) for supported technologies and the tool itself

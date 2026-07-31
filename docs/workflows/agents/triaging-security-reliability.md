@@ -1,8 +1,8 @@
 # Triaging security and reliability findings with auto-fix agents
 
-<div><a href="{% link integrations/sigrid-mcp/developer-guides.md %}#where-sigrid-fits-in-an-agentic-workflow">{% include sigrid-mcp/lifecycle-strip.md active="plan" %}</a></div>
+<div><a href="{% link workflows/agents.md %}#where-sigrid-fits-in-an-agentic-workflow">{% include sigrid-mcp/lifecycle-strip.md active="plan" %}</a></div>
 
-This guide walks through using an [auto-fix agent](../autofix-agents.md) to get through a backlog of security and reliability findings, assessing each one against how your system is actually deployed.
+This guide walks through using an [auto-fix agent](../../integrations/sigrid-mcp/autofix-agents.md) to get through a backlog of security and reliability findings, assessing each one against how your system is actually deployed.
 
 A security finding is a hypothesis: this code pattern may be exploitable. Confirming or dismissing it takes context that is not at the finding's location, such as where the data comes from, what validated it earlier, and whether the endpoint is reachable from outside. One finding is a few minutes of reading. A few hundred of them is why the backlog is still sitting there.
 
@@ -14,7 +14,7 @@ The agent assesses and records the outcome. Fixing what it found is separate wor
 
 - A system published to Sigrid, with security or reliability findings to work through.
 - An agentic CLI that can call MCP tools, with `security:get_findings`, `reliability:get_findings`, and `update_finding_status`. The configuration below uses Claude Code.
-- A [Sigrid API token](../../../organization-integration/authentication-tokens.md) for the MCP server, which the plugin installer asks for once.
+- A [Sigrid API token](../../organization-integration/authentication-tokens.md) for the MCP server, which the plugin installer asks for once.
 
 ## How the agent helps
 
@@ -36,9 +36,9 @@ Both gaps close with the same two things: a context file holding the deployment 
 
 {% include sigrid-mcp/plugin-install.md setup=true %}
 
-The plugin only works in Claude Code. If you use a different agentic CLI, configure the Sigrid MCP server by hand with the [installation instructions](../../integration-sigrid-mcp.md#manual-configuration-other-ides), then take the skills from the [sigrid-ai-toolkit](https://github.com/Software-Improvement-Group/sigrid-ai-toolkit) and adapt them to whatever that CLI calls a skill or a rules file. See [before you start](../autofix-agents.md#before-you-start) for the identifiers Sigrid needs and where to put them.
+The plugin only works in Claude Code. If you use a different agentic CLI, configure the Sigrid MCP server by hand with the [installation instructions](../../integrations/integration-sigrid-mcp.md#manual-configuration-other-ides), then take the skills from the [sigrid-ai-toolkit](https://github.com/Software-Improvement-Group/sigrid-ai-toolkit) and adapt them to whatever that CLI calls a skill or a rules file. See [before you start](../../integrations/sigrid-mcp/autofix-agents.md#before-you-start) for the identifiers Sigrid needs and where to put them.
 
-Which security model you triage against changes the finding list, so decide before you start. `security:get_findings` uses OWASP Top 10 unless you changed it, and you can pass `model` for `sigsec`, `pci4`, `c25`, or one of the ASVS variants. Reliability defaults to the SIG Code Reliability Top 10 (`sigrel`). The [tools reference](../autofix-agents.md#tools-reference) has the full list.
+Which security model you triage against changes the finding list, so decide before you start. `security:get_findings` uses OWASP Top 10 unless you changed it, and you can pass `model` for `sigsec`, `pci4`, `c25`, or one of the ASVS variants. Reliability defaults to the SIG Code Reliability Top 10 (`sigrel`). The [tools reference](../../integrations/sigrid-mcp/autofix-agents.md#tools-reference) has the full list.
 
 Two filters shape the list as much as the model does. `severity_min` sets the floor and `path_prefix` narrows the area, and both default to something broader than you probably want for a first run. Findings you have already marked `FIXED` or `FALSE_POSITIVE` are excluded by default. That is usually what you want.
 
@@ -83,11 +83,11 @@ Name the statuses and require a rationale for each one:
 
 In our experience the last two lines carry most of the value. An agent that has to justify a false positive with a code reference cannot dismiss a finding by rewording it, and an agent that is allowed to say "unsure" stops manufacturing confidence. Keep the assess-only rule in this file and not only in your prompt, since a rule that lives in a prompt applies to one session.
 
-Valid statuses for security and reliability findings are `RAW`, `REFINED`, `WILL_FIX`, `FIXED`, `ACCEPTED`, and `FALSE_POSITIVE`. See the [status reference](../autofix-agents.md#tools-reference).
+Valid statuses for security and reliability findings are `RAW`, `REFINED`, `WILL_FIX`, `FIXED`, `ACCEPTED`, and `FALSE_POSITIVE`. See the [status reference](../../integrations/sigrid-mcp/autofix-agents.md#tools-reference).
 
 Both blocks are specific to triage, and everything in your context file is loaded whether you are triaging or not. Once they settle, move them into a file of their own, such as `SECURITY_CONTEXT.md`, and reference it from your context file. If the run itself becomes routine, a repository-level skill is the better home.
 
-Use a reasoning model at high effort, since every verdict here is a judgment call about your deployment. See [LLM model selection](../developer-guides.md#llm-model-selection) for the tiers and for fanning findings out to subagents.
+Use a reasoning model at high effort, since every verdict here is a judgment call about your deployment. See [LLM model selection](../agents.md#llm-model-selection) for the tiers and for fanning findings out to subagents.
 {: .model }
 
 ## What a session looks like
@@ -109,7 +109,7 @@ Per finding you get three things back:
 
 The trace is the part you read.
 
-<a href="../../../images/mcp/recipes/security-findings-triage.png" target="_blank"><img src="../../../images/mcp/recipes/security-findings-triage.png" width="600" alt="Claude Code retrieving high-severity security findings and assessing their real-world exploitability in context" /></a>
+<a href="../../images/mcp/recipes/security-findings-triage.png" target="_blank"><img src="../../images/mcp/recipes/security-findings-triage.png" width="600" alt="Claude Code retrieving high-severity security findings and assessing their real-world exploitability in context" /></a>
 
 Hold the output to one standard: every verdict cites code. "Not exploitable, input is validated" is not an assessment. "Not exploitable, because `RequestValidator.validateAmount` rejects non-numeric input at `RequestValidator.java:88`, before this line runs" is one, because you can go and read line 88. Anything that cannot point at a line is unsure, whatever it has been labeled. That is the rule that catches a verdict reasoned from the pattern and not from your codebase.
 
@@ -142,7 +142,7 @@ Show me the diff and explain why the fix closes the vulnerability. Do not
 touch anything else.
 ```
 
-Then review it as a security change. Does the fix address the mechanism, or only the symptom the scanner matched on? Ask it to explain the exploit the fix prevents, and get a second pair of human eyes on the diff. Keep it to one fix per branch, out of your feature work. The [triage and execute](../autofix-agents.md#triage-and-execute) pattern generalizes this split.
+Then review it as a security change. Does the fix address the mechanism, or only the symptom the scanner matched on? Ask it to explain the exploit the fix prevents, and get a second pair of human eyes on the diff. Keep it to one fix per branch, out of your feature work. The [triage and execute](../../integrations/sigrid-mcp/autofix-agents.md#triage-and-execute) pattern generalizes this split.
 
 ## Check that the triage holds up
 
@@ -156,9 +156,9 @@ Which of these did you have to make an assumption about, and what was it?
 
 If the assumptions it names contradict your security context, the reachability facts are missing from the file or too vague. Fix that in the file, not in the next prompt.
 
-The remark outlives the session, so read a few of them the way the next person will. If one says "reviewed, not an issue", that work gets done again. And check the recorded statuses against your own decisions, not against the agent's summary of them. Findings you already triaged coming back means the statuses never landed, or a new analysis has run. Findings for code that no longer exists means Sigrid analyzed an older branch, which you can check in [configuration](../configuration.md).
+The remark outlives the session, so read a few of them the way the next person will. If one says "reviewed, not an issue", that work gets done again. And check the recorded statuses against your own decisions, not against the agent's summary of them. Findings you already triaged coming back means the statuses never landed, or a new analysis has run. Findings for code that no longer exists means Sigrid analyzed an older branch, which you can check in [configuration](../../integrations/sigrid-mcp/configuration.md).
 
 ## Where to go next
 
 - [Reducing technical debt with auto-fix agents](reducing-technical-debt.md) for maintainability, where the agent refactors as well as diagnoses
-- [Auto-fix agents MCP reference](../autofix-agents.md) for tools, models, and statuses
+- [Auto-fix agents MCP reference](../../integrations/sigrid-mcp/autofix-agents.md) for tools, models, and statuses

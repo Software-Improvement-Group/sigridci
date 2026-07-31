@@ -1,8 +1,8 @@
 # Reducing technical debt with auto-fix agents
 
-<div><a href="{% link integrations/sigrid-mcp/developer-guides.md %}#where-sigrid-fits-in-an-agentic-workflow">{% include sigrid-mcp/lifecycle-strip.md active="plan,improve" %}</a></div>
+<div><a href="{% link workflows/agents.md %}#where-sigrid-fits-in-an-agentic-workflow">{% include sigrid-mcp/lifecycle-strip.md active="plan,improve" %}</a></div>
 
-This guide walks through using an [auto-fix agent](../autofix-agents.md) to work down the maintainability debt Sigrid already found in your codebase, taking the ranked refactoring candidates in the order that actually moves your rating.
+This guide walks through using an [auto-fix agent](../../integrations/sigrid-mcp/autofix-agents.md) to work down the maintainability debt Sigrid already found in your codebase, taking the ranked refactoring candidates in the order that actually moves your rating.
 
 That order is not the obvious one. A hundred medium-severity findings routinely outweigh a handful of very high ones, because Sigrid's ratings are LOC-weighted: what a finding contributes is the amount of code it puts in a bad risk bracket, measured against the size of the whole system. Sorting by severity and starting at the top is why a week of refactoring can leave a rating exactly where it was.
 
@@ -16,7 +16,7 @@ This covers maintainability only. Security and reliability findings behave diffe
 
 - A system published to Sigrid.
 - An agentic CLI that can call MCP tools, with the `sigrid-diagnose` and `sigrid-improve` skills available. The configuration below uses Claude Code.
-- A [Sigrid API token](../../../organization-integration/authentication-tokens.md) for the MCP server, which the plugin installer asks for once.
+- A [Sigrid API token](../../organization-integration/authentication-tokens.md) for the MCP server, which the plugin installer asks for once.
 
 ## Why the agent needs help
 
@@ -38,15 +38,15 @@ This workflow leans on the third one, since the two skills carry most of the pro
 
 {% include sigrid-mcp/plugin-install.md setup=true %}
 
-The first two commands configure the MCP server and the skills together. `/sigrid:setup` is easy to skip, and it is the one that matters most here: it records which Sigrid system this repository maps to, which branch Sigrid analyzes, and how your team handles branches and change requests. The skills read it at the start of every run, so you answer these questions once instead of every session. See [plugin configuration](../configuration.md) for what it stores and where.
+The first two commands configure the MCP server and the skills together. `/sigrid:setup` is easy to skip, and it is the one that matters most here: it records which Sigrid system this repository maps to, which branch Sigrid analyzes, and how your team handles branches and change requests. The skills read it at the start of every run, so you answer these questions once instead of every session. See [plugin configuration](../../integrations/sigrid-mcp/configuration.md) for what it stores and where.
 
-The plugin only works in Claude Code. If you use a different agentic CLI, configure the Sigrid MCP server by hand with the [installation instructions](../../integration-sigrid-mcp.md#manual-configuration-other-ides), then take the skills from the [sigrid-ai-toolkit](https://github.com/Software-Improvement-Group/sigrid-ai-toolkit) and adapt them to whatever that CLI calls a skill or a rules file. See [before you start](../autofix-agents.md#before-you-start) for the identifiers Sigrid needs and where to put them.
+The plugin only works in Claude Code. If you use a different agentic CLI, configure the Sigrid MCP server by hand with the [installation instructions](../../integrations/integration-sigrid-mcp.md#manual-configuration-other-ides), then take the skills from the [sigrid-ai-toolkit](https://github.com/Software-Improvement-Group/sigrid-ai-toolkit) and adapt them to whatever that CLI calls a skill or a rules file. See [before you start](../../integrations/sigrid-mcp/autofix-agents.md#before-you-start) for the identifiers Sigrid needs and where to put them.
 
 ### 2. Work on a branch
 
 An ordinary git precaution, not a Sigrid requirement. A run produces a series of independent commits, so start from a clean tree on a fresh branch, and you can drop one refactor out of ten without redoing the other nine.
 
-A mid-sized model handles most of what follows, since extracting a method and updating its call sites is procedural work. Architectural candidates are the exception, and they are worth a reasoning subagent. See [LLM model selection](../developer-guides.md#llm-model-selection).
+A mid-sized model handles most of what follows, since extracting a method and updating its call sites is procedural work. Architectural candidates are the exception, and they are worth a reasoning subagent. See [LLM model selection](../agents.md#llm-model-selection).
 {: .model }
 
 ## What a session looks like
@@ -93,7 +93,7 @@ Start with behavior. The tests pass and the diff contains no new behavior. If a 
 
 Ratings come last, and the dashboard will not show movement yet. Sigrid rates the branch it is configured to analyze, so your refactors only reach the ratings once they are merged and that branch has been analyzed again. Two things answer the question before then:
 
-- Push the branch and open a merge request. Your [Sigrid CI](../../../sigridci-integration/using-sigridci.md) step reports Sigrid's verdict on the changed code in the pipeline, before anyone merges.
+- Push the branch and open a merge request. Your [Sigrid CI](../../sigridci-integration/using-sigridci.md) step reports Sigrid's verdict on the changed code in the pipeline, before anyone merges.
 - Call the `/sigrid-ci-feedback` skill with the `maintainability` capability. It analyzes your working tree locally and returns the same maintainability feedback, publishing nothing to Sigrid. It reads a `SIGRID_CI_TOKEN` from your environment, separate from the token the plugin stored in your keychain.
 
 We should be honest about expectations here, because ratings are measured against total system size, so a handful of refactors on a large codebase will not move a star rating. Clusters move ratings. If nothing moved after a substantial run, you worked the long tail instead of the mass, so go back to the diagnosis and ask which candidates carry the most LOC in a bad risk bracket.
@@ -104,10 +104,10 @@ Rejecting a diff usually means the agent hit something specific to your codebase
 
 Rules like these go in your agent's context file, such as `AGENTS.md` or `CLAUDE.md`. Once the set settles, move it to a file of its own, such as `REFACTORING_RULES.md`, and point to that from your context file.
 
-Code that should never be a candidate is a different problem and has a better home. For anything you do not want rated, such as generated sources that live under your source root, add an `exclude` pattern to your [analysis scope configuration](../../../reference/analysis-scope-configuration.md). Then those candidates stop arriving at all.
+Code that should never be a candidate is a different problem and has a better home. For anything you do not want rated, such as generated sources that live under your source root, add an `exclude` pattern to your [analysis scope configuration](../../reference/analysis-scope-configuration.md). Then those candidates stop arriving at all.
 
 ## Where to go next
 
 - [Building with an AI coding agent and Sigrid Guardrails](building-with-guardrails.md) to stop new debt while you clear the old
 - [Triaging security and reliability findings](triaging-security-reliability.md) for different findings and a different loop
-- [Auto-fix agents MCP reference](../autofix-agents.md) for the full tool and status reference
+- [Auto-fix agents MCP reference](../../integrations/sigrid-mcp/autofix-agents.md) for the full tool and status reference
