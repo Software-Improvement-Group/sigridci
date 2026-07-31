@@ -9,7 +9,7 @@ Start with Guardrails for automatic quality checks on new code. Add Auto-fix Age
 
 ## Developer guides
 
-The pages above describe the tools. The [developer guides](sigrid-mcp/developer-guides.md) describe how to work with them on a real codebase: the setup, what a session looks like, and how to tell a good run from a bad one. There is one guide per job, covering Guardrails in the feature loop, maintainability debt, security and reliability triage, and open source risk.
+The pages above describe the tools. The [developer guides](sigrid-mcp/developer-guides.md) describe how to work with them on a real codebase.
 
 ## Installation
 
@@ -176,16 +176,16 @@ Navigate to Tools > AI Assistant > Model Context Protocol (MCP) and add:
 
 ```json
 "mcpServers": {
-    "Sigrid": {
-      "command": "npx",
-      "args": [
-        "mcp-remote",
-        "https://sigrid-says.com/mcp",
-        "--header",
-        "Authorization: Bearer <your_sigrid_token>",
-        "--allow-http"
-      ]
-    }
+  "Sigrid": {
+    "command": "npx",
+    "args": [
+      "mcp-remote",
+      "https://sigrid-says.com/mcp",
+      "--header",
+      "Authorization: Bearer <your_sigrid_token>",
+      "--allow-http"
+    ]
+  }
 ```
 
 #### IBM Bob

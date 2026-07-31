@@ -155,6 +155,5 @@ The remark outlives the session, so read a few of them the way the next person w
 
 ## Where to go next
 
-- [Remediating open source risk](remediating-open-source-risk.md) for the dependency half of the same problem
 - [Reducing technical debt with auto-fix agents](reducing-technical-debt.md) for maintainability, where the agent refactors as well as diagnoses
 - [Auto-fix agents MCP reference](../autofix-agents.md) for tools, models, and statuses

@@ -1,6 +1,6 @@
 # Sigrid Guardrails MCP
 
-Agent guardrails use Sigrid's code analysis to prevent issues from being introduced. They give your AI coding assistant access to that analysis during generation, so the agent checks its own output as it works — security vulnerabilities and quality issues get caught before they land in a commit.
+Agent guardrails use Sigrid's code analysis to prevent issues from being introduced. They give your AI coding assistant access to that analysis during generation, so the agent checks its own output as it works. Security vulnerabilities and quality issues get caught before they land in a commit.
 
 This is the counterpart to the [auto-fix agent](autofix-agents.md), which fixes and improves issues that already exist.
 
@@ -22,21 +22,19 @@ Currently supported:
 
 Visit the [Technology Support](../../reference/technology-support.md#list-of-supported-technologies) page for more details on supported technologies.
 
-## Using Sigrid Quality Gates with AI Coding Agents
+## Set up the quality gate
 
-AI-generated code quality varies significantly based on the instructions given. The Sigrid MCP provides guardrails that notify agents when code doesn't meet quality standards without requiring the system to be published to Sigrid first.
+The quality of AI-generated code varies a lot with the instructions the agent was given. Guardrails tells the agent which quality standards its code fails to meet, reading the working tree, so the system does not have to be published to Sigrid first.
 
-The prompt below combines two elements: brief **code principles** that guide the agent upfront, and a mandatory **quality gate** using Sigrid before completing any task.
-
-### Recommended prompt
-
-Add this to your agent instructions (see [where to place these instructions](#where-to-place-these-instructions)):
+Connecting the MCP server is only half of it, since the agent will not call the tool unless something tells it to. The instruction belongs in your agent's instruction file, where it applies to every session without you asking. The prompt below pairs brief **code principles** with a mandatory **quality gate** before any task is reported complete:
 
 {% include sigrid-mcp/quality-gate-prompt.md %}
 
-> The quality gate applies the [Boy Scout Rule](https://www.oreilly.com/library/view/97-things-every/9780596809515/ch08.html) — leaving each file touched cleaner than it was found.
+> The quality gate applies the [Boy Scout Rule](https://www.oreilly.com/library/view/97-things-every/9780596809515/ch08.html): leave each file you touch cleaner than you found it.
 
-**Adapting the code principles**: if your codebase follows specific design patterns (e.g., hexagonal architecture, Redux patterns), add them to the Code Principles section. When the agent makes recurring mistakes, add a principle that addresses the pattern.
+Two adjustments are worth making from the start. If your codebase follows specific design patterns, such as hexagonal architecture or Redux, add them under Code Principles, and write a principle for every recurring mistake you find yourself correcting. You can also loosen the timing to commits only, and you can always invoke the check by hand: "Run Sigrid on these files: ...".
+
+For which wording in that prompt carries it, and a session where the agent refactors in response to a finding, see [building with an AI coding agent and Sigrid Guardrails](developer-guides/building-with-guardrails.md).
 
 ### Where to place these instructions
 
@@ -52,15 +50,6 @@ Most AI coding agents respect instruction files in your repository. Refer to you
 
 For tools that support both global and project-level rules, prefer project-level to keep instructions versioned with your code.
 
-### Other adjustments
+## What Guardrails does not see
 
-- **Check frequency**: You may prefer to run the quality gate only before commits rather than after every task.
-- **Direct invocation**: You can also ask the agent directly: "Run Sigrid on these files: ..."
-
-Pair the MCP with Sigrid CI to also catch architecture issues, vulnerable dependencies, and cross-file metrics.
-
-## Example in action
-
-The following screenshot shows Claude Code implementing a new method, then running the Sigrid quality guardrails automatically. The guardrails flag maintainability issues, and the agent refactors in response — extracting a helper method to reduce complexity and unit length:
-
-<a href="../../images/mcp/guardrails/guardrails-refactoring-loop.png" target="_blank"><img src="../../images/mcp/guardrails/guardrails-refactoring-loop.png" width="800" alt="Claude Code implementing a method, running Sigrid guardrails that flag maintainability issues, then refactoring by extracting a helper method" /></a>
+Guardrails reads one file at a time, so anything that only shows up across a whole system stays invisible to it: architecture drift, vulnerable dependencies, duplication spread across files. [Sigrid CI](../../sigridci-integration/using-sigridci.md) covers those. Running it in a pre-commit hook or in your pipeline also gives you a check the agent cannot decide it has already satisfied.
