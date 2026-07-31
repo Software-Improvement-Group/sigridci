@@ -117,6 +117,8 @@ class DocumentationTest(TestCase):
             yield ("README.md", fileRef.read())
     
         for root, subdirs, files in os.walk("docs"):
+            self.skipGeneratedDirs(root, subdirs)
+
             for file in files:
                 if file.endswith(".md") and not file.endswith("CLAUDE.md"):
                     with open(f"{root}/{file}", "r") as fileRef:
@@ -124,6 +126,15 @@ class DocumentationTest(TestCase):
 
     def listDocumentationImages(self):
         for root, subdirs, files in os.walk("docs"):
+            self.skipGeneratedDirs(root, subdirs)
+
             for file in files:
                 if file.lower().endswith((".png", ".jpg")):
                     yield f"{root}/{file}"
+
+    GENERATED_DIR = "docs/_site"
+
+    def skipGeneratedDirs(self, root, subdirs):
+        """Previewing the documentation locally generates the Jekyll output directory. That is a copy
+        of the documentation, not the source, so walking it would report every issue twice."""
+        subdirs[:] = [subdir for subdir in subdirs if f"{root}/{subdir}" != self.GENERATED_DIR]
