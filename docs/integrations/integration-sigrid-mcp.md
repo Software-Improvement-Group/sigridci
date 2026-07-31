@@ -7,9 +7,7 @@ Sigrid MCP integrations let AI coding tools use Sigrid's analysis while you work
 
 Start with Guardrails for automatic quality checks on new code. Add Auto-fix Agents when you're ready to tackle existing technical debt.
 
-## Developer guides
-
-The pages above describe the tools. The [guide for using agents](../workflows/agents.md) describes how to work with them on a real codebase.
+The pages above describe the tools. For a walkthrough of using them on a real codebase, see [the guide for using agents](../workflows/agents.md).
 
 ## Installation
 
