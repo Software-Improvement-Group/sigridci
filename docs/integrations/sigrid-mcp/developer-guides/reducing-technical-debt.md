@@ -46,6 +46,9 @@ The plugin only works in Claude Code. If you use a different agentic CLI, config
 
 An ordinary git precaution, not a Sigrid requirement. A run produces a series of independent commits, so start from a clean tree on a fresh branch, and you can drop one refactor out of ten without redoing the other nine.
 
+A mid-sized model handles most of what follows, since extracting a method and updating its call sites is procedural work. Architectural candidates are the exception, and they are worth a reasoning subagent. See [LLM model selection](../developer-guides.md#llm-model-selection).
+{: .model }
+
 ## What a session looks like
 
 Two commands, and the order is not optional. The first diagnoses:

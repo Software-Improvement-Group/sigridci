@@ -24,3 +24,22 @@ That gives four steps of an agentic development cycle where Sigrid does somethin
 - **Improve:** Sigrid refactors technical debt and security risks autonomously.
 
 The guides above cover parts of this cycle, and the tools enable more than the guides describe. We are working on more guides, skills, and tools.
+
+## LLM model selection
+
+Which LLM model you want depends on how much of the work is judgment, and you cannot switch models mid-session. One model runs your session from the first prompt, and starting a subagent is the only way to get a second one involved. So there are two decisions here: which model runs the session, and whether any step is worth handing off.
+
+Three tiers cover the work in these guides, and every vendor ships some version of the same ladder:
+
+| What the step needs | Claude | OpenAI | Gemini |
+|---|---|---|---|
+| **Small.** Retrieving findings, recording statuses, summarizing a batch | Haiku | GPT mini | Flash-Lite |
+| **Mid-sized.** Following a written procedure, editing code to a known pattern | Sonnet | GPT | Flash |
+| **Reasoning.** Assessing a finding against how your system actually works | Opus | GPT at high reasoning | Pro |
+
+Reasoning effort is the second dial. It earns its cost on the mid-sized and reasoning tiers, and does nothing for retrieval. Some vendors expose the top rung as an effort setting on one model, so for them the two dials are one. A single model runs your whole session, so pick for the hardest step in the loop.
+
+Hand a step to a subagent only when it is self-contained. A subagent starts with an empty context and returns a summary, so a step that depends on what your session has already read comes back weaker and burns more tokens getting there. The `osh-researcher` agent we ship works this way: it looks up published advisories for one dependency over the web, with no access to your files and none to Sigrid. We pin it to a mid-sized model.
+
+Every guide carries its own recommendation, in a block marked like this one.
+{: .model }

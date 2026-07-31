@@ -87,6 +87,9 @@ Valid statuses for security and reliability findings are `RAW`, `REFINED`, `WILL
 
 Both blocks are specific to triage, and everything in your context file is loaded whether you are triaging or not. Once they settle, move them into a file of their own, such as `SECURITY_CONTEXT.md`, and reference it from your context file. If the run itself becomes routine, a repository-level skill is the better home.
 
+Use a reasoning model at high effort, since every verdict here is a judgment call about your deployment. See [LLM model selection](../developer-guides.md#llm-model-selection) for the tiers and for fanning findings out to subagents.
+{: .model }
+
 ## What a session looks like
 
 We would start narrow: one severity, one area, enough findings to calibrate on and few enough to check by hand. That makes a first prompt something like this:

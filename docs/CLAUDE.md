@@ -35,6 +35,8 @@ docker run --rm -v "$(pwd)/docs:/srv/jekyll" -v sigridci-docs-gems:/usr/local/bu
   - This is checked by the unit tests.
 - All images should have an explicit width set using the `<img src="..." width="123" />` notation.
 - Following a paragraph with the `{: .attention }` will turn that paragraph into a highlighted block.
+  - The other callout classes are `.warning`, `.faq`, and `.model`. Each one prints its own label
+    above the text through CSS, so do not repeat that label in the paragraph itself.
 - Source code containing HTML characters should be wrapped betweeen `{% raw %}` and `{% endraw %}`.
 - Liquid is processed inside Markdown pages, so a block repeated across several pages can live in
   `docs/_includes/` and be pulled in with {% raw %}`{% include name.md %}`{% endraw %}.

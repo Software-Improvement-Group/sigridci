@@ -64,6 +64,9 @@ An instruction is followed most of the time, and the agent is the one who decide
 
 Then add your own conventions under Code Principles: the framework patterns your codebase actually uses, and a line for every recurring mistake you find yourself correcting.
 
+Use whatever you are already coding with. Handing the checks to a cheaper subagent looks like a saving, since `guardrails:quality_check` is deterministic and its output is a plain list. The fix is the actual work though, and it is the least self-contained step here: it needs the file, the class around it, and the reason the code is shaped the way it is. A subagent starts with none of that, so it reads the file again to catch up, and then either makes a change you did not want or invents a reason for leaving a finding alone. Both cost you more than the cheaper model saves. See [LLM model selection](../developer-guides.md#llm-model-selection).
+{: .model }
+
 ## What a session looks like
 
 Say you are adding a retrying file copy to a `FileUtil` class, and you ask for it like this:
