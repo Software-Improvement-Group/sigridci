@@ -26,19 +26,19 @@ about with active="plan,improve"; the stages you leave out are greyed out. Omit 
            L190,76 A8,8 0 0 1 182,68"/>
   <path fill="#808087" opacity=".7" d="M182,58 L187,68 L177,68 Z"/>
   <circle cx="182" cy="40" r="14" class="qb s-grounding" fill="#16214E"/>
-  <text class="num qn s-grounding" x="182" y="45.3" text-anchor="middle" fill="#FFFFFF">1</text>
+  <text class="num qn s-grounding" x="182" y="44.3" text-anchor="middle" fill="#FFFFFF">1</text>
   <text class="lbl s-grounding" x="204" y="44.6" fill="#151632" textLength="66" lengthAdjust="spacing">Grounding</text>
   <path fill="none" stroke="#808087" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" opacity=".55" d="M282.5,35.5 l5,4.5 l-5,4.5"/>
   <circle cx="314" cy="40" r="14" class="qb s-plan" fill="#183D98"/>
-  <text class="num qn s-plan" x="314" y="45.3" text-anchor="middle" fill="#FFFFFF">2</text>
+  <text class="num qn s-plan" x="314" y="44.3" text-anchor="middle" fill="#FFFFFF">2</text>
   <text class="lbl s-plan" x="336" y="44.6" fill="#151632" textLength="29" lengthAdjust="spacing">Plan</text>
   <path fill="none" stroke="#808087" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" opacity=".55" d="M377.5,35.5 l5,4.5 l-5,4.5"/>
   <circle cx="409" cy="40" r="14" class="qb s-prevent" fill="#1A59E3"/>
-  <text class="num qn s-prevent" x="409" y="45.3" text-anchor="middle" fill="#FFFFFF">3</text>
+  <text class="num qn s-prevent" x="409" y="44.3" text-anchor="middle" fill="#FFFFFF">3</text>
   <text class="lbl s-prevent" x="431" y="44.6" fill="#151632" textLength="50" lengthAdjust="spacing">Prevent</text>
   <path fill="none" stroke="#808087" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" opacity=".55" d="M493.5,35.5 l5,4.5 l-5,4.5"/>
   <circle cx="525" cy="40" r="14" class="qb s-improve" fill="#F8C716"/>
-  <text class="num qn s-improve" x="525" y="45.3" text-anchor="middle" fill="#151632">4</text>
+  <text class="num qn s-improve" x="525" y="44.3" text-anchor="middle" fill="#151632">4</text>
   <text class="lbl s-improve" x="547" y="44.6" fill="#151632" textLength="53" lengthAdjust="spacing">Improve</text>
 </svg>
 
