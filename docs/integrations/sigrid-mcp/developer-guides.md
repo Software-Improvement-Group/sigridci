@@ -12,6 +12,8 @@ They also do not cover everything that Sigrid MCP can do. The [Sigrid MCP doc](.
 
 ## Where Sigrid fits in an agentic workflow
 
+{% include sigrid-mcp/lifecycle-circle.md %}
+
 An agent that writes code in your repository needs to know what the system looks like, what is worth working on, and whether the change it just made is safe. Sigrid answers those from analysis of your own codebase.
 
 That gives four steps of an agentic development cycle where Sigrid does something for you:

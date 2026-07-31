@@ -1,5 +1,7 @@
 # Reducing technical debt with auto-fix agents
 
+<div><a href="{% link integrations/sigrid-mcp/developer-guides.md %}#where-sigrid-fits-in-an-agentic-workflow">{% include sigrid-mcp/lifecycle-strip.md active="plan,improve" %}</a></div>
+
 This guide walks through using an [auto-fix agent](../autofix-agents.md) to work down the maintainability debt Sigrid already found in your codebase, taking the ranked refactoring candidates in the order that actually moves your rating.
 
 That order is not the obvious one. A hundred medium-severity findings routinely outweigh a handful of very high ones, because Sigrid's ratings are LOC-weighted: what a finding contributes is the amount of code it puts in a bad risk bracket, measured against the size of the whole system. Sorting by severity and starting at the top is why a week of refactoring can leave a rating exactly where it was.

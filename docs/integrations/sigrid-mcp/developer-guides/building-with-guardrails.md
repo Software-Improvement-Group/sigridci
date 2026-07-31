@@ -1,5 +1,7 @@
 # Building with an AI coding agent and Sigrid Guardrails
 
+<div><a href="{% link integrations/sigrid-mcp/developer-guides.md %}#where-sigrid-fits-in-an-agentic-workflow">{% include sigrid-mcp/lifecycle-strip.md active="prevent" %}</a></div>
+
 This guide walks through putting [Sigrid Guardrails](../guardrails.md) in your coding agent's build loop, so the agent checks the maintainability and security of every file it writes and fixes what it finds before you see the diff.
 
 Guardrails gives the agent the same analysis Sigrid runs, on the files it just changed, while it is still working on them. The checks are deterministic: the same metrics against the same thresholds every time, decided by Sigrid's quality model and not by a model's opinion of its own output.

@@ -1,5 +1,7 @@
 # Triaging security and reliability findings with auto-fix agents
 
+<div><a href="{% link integrations/sigrid-mcp/developer-guides.md %}#where-sigrid-fits-in-an-agentic-workflow">{% include sigrid-mcp/lifecycle-strip.md active="plan" %}</a></div>
+
 This guide walks through using an [auto-fix agent](../autofix-agents.md) to get through a backlog of security and reliability findings, assessing each one against how your system is actually deployed.
 
 A security finding is a hypothesis: this code pattern may be exploitable. Confirming or dismissing it takes context that is not at the finding's location, such as where the data comes from, what validated it earlier, and whether the endpoint is reachable from outside. One finding is a few minutes of reading. A few hundred of them is why the backlog is still sitting there.
