@@ -81,7 +81,6 @@ class MaintainabilityMarkdownReportTest(TestCase):
             
             | System property | System on 2022-01-10 | Before changes | New/changed code |
             |-----------------|-------------------------------------------|----------------|------------------|
-            | Volume | N/A | N/A | N/A |
             | Duplication | 4.0 | N/A | 5.0 |
             | Unit Size | 4.0 | N/A | 2.0 |
             | Unit Complexity | N/A | N/A | N/A |
@@ -377,7 +376,6 @@ class MaintainabilityMarkdownReportTest(TestCase):
             
             | System property | System on 2022-01-10 | Before changes | New/changed code |
             |-----------------|-------------------------------------------|----------------|------------------|
-            | Volume | N/A | N/A | N/A |
             | Duplication | N/A | N/A | N/A |
             | Unit Size | N/A | N/A | N/A |
             | Unit Complexity | N/A | N/A | N/A |
@@ -496,7 +494,6 @@ class MaintainabilityMarkdownReportTest(TestCase):
             
             | System property | System on N/A | Before changes | New/changed code |
             |-----------------|-------------------------------------------|----------------|------------------|
-            | Volume | N/A | N/A | N/A |
             | Duplication | N/A | N/A | N/A |
             | Unit Size | N/A | N/A | N/A |
             | Unit Complexity | N/A | N/A | N/A |
@@ -571,7 +568,6 @@ class MaintainabilityMarkdownReportTest(TestCase):
             
             | System property | System on N/A | Before changes | New/changed code |
             |-----------------|-------------------------------------------|----------------|------------------|
-            | Volume | N/A | N/A | N/A |
             | Duplication | N/A | N/A | N/A |
             | Unit Size | N/A | N/A | N/A |
             | Unit Complexity | N/A | N/A | N/A |
@@ -739,7 +735,6 @@ class MaintainabilityMarkdownReportTest(TestCase):
             
             | System property | System on N/A | Before changes | New/changed code |
             |-----------------|-------------------------------------------|----------------|------------------|
-            | Volume | N/A | N/A | N/A |
             | Duplication | N/A | N/A | N/A |
             | Unit Size | 3.0 | 3.0 | 2.0 |
             | Unit Complexity | 3.0 | 3.0 | 4.0 |
