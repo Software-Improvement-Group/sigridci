@@ -208,6 +208,17 @@ Dependency types are considated into three "families":
 | REPOSITORY | Indicates this component is a separate repository within a multi-repo system.    |
 | UTILITY    | Indicates this is a utility component.                                           |
 
+### Dependency qualifications
+
+| Qualification | Description                                                                                 |
+|---------------|---------------------------------------------------------------------------------------------|
+| UNDESIRABLE   | Dependency has been marked as undesirable by the user, in the configuration.                |
+| CYCLIC        | Cyclic dependency violation where component A calls B, but B also calls A.                  |
+| NEW           | Cross-component dependency introduced since the baseline *(only available in CI feedback)*. |
+
+Qualifications are listed in order of precedence, so qualifications towards the top of the list are considered more
+important than qualifications towards the bottom.
+
 ## CI JSON feedback
 
 Sigrid CI architecture feedback does *not* use the JSON export format described above. Instead, you will get an
@@ -222,7 +233,7 @@ The following example shows the CI JSON structure:
   "baseline": "20260720",
   "dependencyFeedback": [
     {
-      "qualification": "UNDESIRABLE", // One of UNDESIRABLE, CYCLIC, NEW
+      "qualification": "UNDESIRABLE",
       "activity": "INTRODUCED", // One of "INTRODUCED", "REMOVED", "INCREASED", "DECREASED", "UNCHANGED"
       "type": "CODE_CALL",
       "sourceHierarchy": [
@@ -270,6 +281,7 @@ The following example shows the CI JSON structure:
 - The list of dependencies is capped to 50. The numbers in `total` always reflect the true number of feedback
   items, but detail information will only be returned for the top 50. Note that the overwhelming majority of
   CI feedback will never get to 50 noteworthy dependencies being introduced or removed.
+- The possible values for `qualification` are listed [here](#dependency-qualifications).
 - The `qualification`s are in order of precedence. So if a dependency is both `UNDESIRABLE` and `NEW`, the
   `UNDESIRABLE` will win.
 - The `remaining` field covers existing technical debt *not* included in the CI feedback. These numbers

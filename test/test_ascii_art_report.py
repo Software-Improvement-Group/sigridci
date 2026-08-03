@@ -106,7 +106,6 @@ class AsciiArtReportTest(TestCase):
             -------------------------------------------------------------------------------
             
             System property          System on 2022-01-10  Before changes  New/changed code
-            Volume                   N/A                   N/A             N/A             
             Duplication              4.0                   4.0             5.0             
             Unit Size                4.0                   4.0             2.0             
             Unit Complexity          N/A                   N/A             N/A             

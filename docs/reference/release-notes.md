@@ -3,6 +3,10 @@ Sigrid release notes
 
 SIG uses [continuous delivery](https://en.wikipedia.org/wiki/Continuous_delivery), meaning that every change to Sigrid or the underlying analysis is released once our development pipeline has completed. On average, we release somewhere between 10 and 20 times per day. This page therefore doesn't list every single change, since that would quickly lead to an excessively long list of small changes. Instead, this page lists Sigrid and analysis changes that we consider noteworthy for the typical Sigrid user.
 
+### August 10, 2026
+
+- **Sigrid CI:** Sigrid CI will now also provide feedback on the Component Independence system property. This is the start of expanding architecture feedback throughout the Sigrid platform.
+
 ### July 27, 2026
 
 - **Configuration:** Previously, the Sigrid configuration required you to list all technologies in your Sigrid configuration. This had two downsides: The first is that it's cumbersome. The second is more serious: If the technologies in your system *change* over time, and you forget to update the Sigrid configuration accordingly, it means that Sigrid will not monitor the new technology. To make this more convenient and less error prone, Sigrid is now able to automatically detect the technologies in your system. This behavior is now the default for new systems. *Existing* systems and configurations are unaffected and will continue to work. Moreover, it remains possible to override the automatic detection and list the technologies manually. The [documentation for the scope configuration file](../reference/analysis-scope-configuration.md#defining-technologies) has been updated to describe both options.
