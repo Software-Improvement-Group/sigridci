@@ -34,7 +34,6 @@ For example, `https://sigrid-says.com/aap/noot/-/overview` means your customer n
 Use these values exactly as they appear in the URL.
 
 Please note: for systems on-boarded from a specific Team Server branch, the system name is a concatenation of the app name, the word `branch`, and the branch name, with unsupported characters replaced or removed. On-boarding app `noot` from branch `mies` gives the system name `noot-branch-mies`. Reading the name from the URL saves you from constructing it yourself.
-{: .attention }
 
 ## Step 1: Store your Sigrid token as a pipeline variable
 
@@ -49,7 +48,6 @@ Storing the token as a variable keeps it out of your pipeline configuration, whe
 <img src="../images/mendix-pipelines/sigrid-token.png" width="450" />
 
 Please note: the word `Bearer` must be part of the variable value. Mendix Pipelines cannot combine a variable with other text, so writing `Bearer $SigridToken` in the header field does not work.
-{: .attention }
 
 ## Step 2: Add a POST request step to your pipeline
 
