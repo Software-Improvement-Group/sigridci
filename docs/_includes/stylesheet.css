@@ -300,10 +300,7 @@ summary {
     border-radius: 8px;
     color: var(--sig-white);
     float: right;
-}
-
-.container nav .toc a.page em:hover {
-    margin-right: 16px;
+    margin-right: -16px;
 }
 
 .container nav .toc a.page em.new {
@@ -324,6 +321,10 @@ summary {
     background-color: var(--sig-highlight-gray);
     margin-right: -16px;
     background-image: none;
+}
+
+.container nav .toc a:hover em, .container nav .toc .currentPage em, .container nav .toc .category:hover em {
+    margin-right: 0px !important;
 }
 
 .toc .currentPage {
@@ -545,4 +546,19 @@ sig-toc .h4 {
     margin-top: 30px;
     margin-bottom: 30px;
     border: none;
+}
+
+.announcement {
+    top: 24px;
+    border-radius: 8px;
+    background-color: #FAE196;
+    color: #584814;
+    padding: 12px;
+    margin-top: 38px;
+    font-size: 12px;
+}
+
+.announcement a, .announcement a:hover {
+    color: #584814;
+    text-decoration: underline;
 }

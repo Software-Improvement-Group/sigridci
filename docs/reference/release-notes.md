@@ -3,6 +3,10 @@ Sigrid release notes
 
 SIG uses [continuous delivery](https://en.wikipedia.org/wiki/Continuous_delivery), meaning that every change to Sigrid or the underlying analysis is released once our development pipeline has completed. On average, we release somewhere between 10 and 20 times per day. This page therefore doesn't list every single change, since that would quickly lead to an excessively long list of small changes. Instead, this page lists Sigrid and analysis changes that we consider noteworthy for the typical Sigrid user.
 
+### August 10, 2026
+
+- **Sigrid CI:** Sigrid CI will now also provide feedback on the Component Independence system property. This is the start of expanding architecture feedback throughout the Sigrid platform.
+
 ### July 27, 2026
 
 - **Mendix QSM:** Sigrid now supports integration with [Mendix Pipelines](https://docs.mendix.com/developerportal/deploy/mendix-pipelines/). This allows you to automatically publish your app to Sigrid, as part of your time. [The documentation](../sigridci-integration/mendix-pipelines.md) contains more information on how you can configure this integration in Mendix Pipelines.
