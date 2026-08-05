@@ -172,7 +172,7 @@ Similarly, while Maintainers enjoy additional admin-level permissions on those s
 - Maintainer users cannot grant or revoke the 'access to all systems' permission
 - Maintainer users cannot update access rights for Administrator users, nor are they able to adjust the system access rights of other users for systems they themselves do not have access to
 - Maintainer users cannot update user details or security settings
-- Maintainer users cannot create or delete users or authorization groups
+- Maintainer users cannot delete users, and cannot create or delete authorization groups
 
 ### Authorized Actions based on User Type
 
@@ -203,7 +203,8 @@ For a full breakdown of tasks able to be performed by each user type, please ref
 | Configure portfolio-level objectives | | | ✅✅ |
 | **User Management**
 | View Users | ✅ | ✅ | ✅✅ |
-| Create / Delete Users | | | ✅✅ |
+| Create Users | | ✅ | ✅✅ |
+| Delete Users | | | ✅✅ |
 | Edit User Permissions | | ✅ | ✅✅ |
 | Edit User Details (other than self) | | | ✅✅ |
 | View User Status Details | | | ✅✅ |
