@@ -1,6 +1,11 @@
 {%- comment -%}
 The agentic lifecycle diagram, described on the developer guides page. Pass the stages this page is
 about with active="plan,improve"; the stages you leave out are greyed out. Omit it to show all four.
+
+This is inline SVG instead of a file in images/, because that greying out is done with CSS, in
+lifecycle.css. A browser loads an <img> in secure static mode, so the stylesheet of the page cannot
+reach inside it. Referencing a file would therefore mean one file per combination of stages, and with
+four stages there are fifteen of those.
 {%- endcomment -%}
 {%- assign stages = "grounding,plan,prevent,improve" | split: "," -%}
 {%- assign active = include.active | default: "grounding,plan,prevent,improve" | split: "," -%}

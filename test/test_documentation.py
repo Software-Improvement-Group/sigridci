@@ -24,6 +24,8 @@ from unittest import TestCase
 class DocumentationTest(TestCase):
     LINK = re.compile("\\[(.*?)\\]\\((\\S+)\\)")
     IMAGE = re.compile("img src=\"(\\S+)\"")
+    INCLUDE_DIR = "docs/_includes"
+    GENERATED_DIR = "docs/_site"
 
     def testDocumentationDoesNotContainBrokenLinks(self):
         for file, contents in self.readDocumentationPages():
@@ -34,8 +36,6 @@ class DocumentationTest(TestCase):
                         self.assertTrue(os.path.exists(linkedFile), f"Dead link in {file} to {linkedFile}")
                 elif "docs.sigrid-says.com" in match.group(2) and not file.endswith("README.md"):
                     self.fail(f"{file} should link to relative .md file, not to the absolute URL: {match.group(2)}")
-
-    INCLUDE_DIR = "docs/_includes"
 
     def resolveLinkBaseDirs(self, file):
         """Relative links are resolved against the directory of the file itself, except for Liquid
@@ -131,8 +131,6 @@ class DocumentationTest(TestCase):
             for file in files:
                 if file.lower().endswith((".png", ".jpg")):
                     yield f"{root}/{file}"
-
-    GENERATED_DIR = "docs/_site"
 
     def skipGeneratedDirs(self, root, subdirs):
         """Previewing the documentation locally generates the Jekyll output directory. That is a copy
