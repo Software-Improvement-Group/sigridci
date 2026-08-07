@@ -7,6 +7,8 @@ Sigrid MCP integrations let AI coding tools use Sigrid's analysis while you work
 
 Start with Guardrails for automatic quality checks on new code. Add Auto-fix Agents when you're ready to tackle existing technical debt.
 
+The pages above describe the tools. For a walkthrough of using them on a real codebase, see [the guide for using agents](../workflows/agents.md).
+
 ## Installation
 
 ### Claude Code plugin (recommended)
@@ -172,16 +174,16 @@ Navigate to Tools > AI Assistant > Model Context Protocol (MCP) and add:
 
 ```json
 "mcpServers": {
-    "Sigrid": {
-      "command": "npx",
-      "args": [
-        "mcp-remote",
-        "https://sigrid-says.com/mcp",
-        "--header",
-        "Authorization: Bearer <your_sigrid_token>",
-        "--allow-http"
-      ]
-    }
+  "Sigrid": {
+    "command": "npx",
+    "args": [
+      "mcp-remote",
+      "https://sigrid-says.com/mcp",
+      "--header",
+      "Authorization: Bearer <your_sigrid_token>",
+      "--allow-http"
+    ]
+  }
 ```
 
 #### IBM Bob

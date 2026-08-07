@@ -24,16 +24,31 @@ from unittest import TestCase
 class DocumentationTest(TestCase):
     LINK = re.compile("\\[(.*?)\\]\\((\\S+)\\)")
     IMAGE = re.compile("img src=\"(\\S+)\"")
+    INCLUDE_DIR = "docs/_includes"
+    GENERATED_DIR = "docs/_site"
 
     def testDocumentationDoesNotContainBrokenLinks(self):
         for file, contents in self.readDocumentationPages():
             for match in self.LINK.finditer(contents):
                 if ".md" in match.group(2) and not match.group(2).startswith("https://"):
-                    parentDir = os.path.dirname(file)
-                    linkedFile = os.path.join(parentDir, match.group(2).split(".md")[0] + ".md")
-                    self.assertTrue(os.path.exists(linkedFile), f"Dead link in {file} to {linkedFile}")
+                    for parentDir in self.resolveLinkBaseDirs(file):
+                        linkedFile = os.path.join(parentDir, match.group(2).split(".md")[0] + ".md")
+                        self.assertTrue(os.path.exists(linkedFile), f"Dead link in {file} to {linkedFile}")
                 elif "docs.sigrid-says.com" in match.group(2) and not file.endswith("README.md"):
                     self.fail(f"{file} should link to relative .md file, not to the absolute URL: {match.group(2)}")
+
+    def resolveLinkBaseDirs(self, file):
+        """Relative links are resolved against the directory of the file itself, except for Liquid
+        includes: those are not pages, so their links have to resolve from every page including them."""
+        if not file.startswith(f"{self.INCLUDE_DIR}/"):
+            return [os.path.dirname(file)]
+
+        includeName = os.path.relpath(file, self.INCLUDE_DIR)
+        includeDirective = re.compile("{%\\s*include\\s+" + re.escape(includeName) + "[\\s%]")
+        baseDirs = {os.path.dirname(page) for page, contents in self.readDocumentationPages()
+                    if includeDirective.search(contents)}
+        self.assertTrue(baseDirs, f"Include {file} is not used by any page")
+        return sorted(baseDirs)
                                         
     def testDocumentationDoesNotContainDeadImages(self):
         for file, contents in self.readDocumentationPages():
@@ -102,6 +117,8 @@ class DocumentationTest(TestCase):
             yield ("README.md", fileRef.read())
     
         for root, subdirs, files in os.walk("docs"):
+            self.skipGeneratedDirs(root, subdirs)
+
             for file in files:
                 if file.endswith(".md") and not file.endswith("CLAUDE.md"):
                     with open(f"{root}/{file}", "r") as fileRef:
@@ -109,6 +126,13 @@ class DocumentationTest(TestCase):
 
     def listDocumentationImages(self):
         for root, subdirs, files in os.walk("docs"):
+            self.skipGeneratedDirs(root, subdirs)
+
             for file in files:
                 if file.lower().endswith((".png", ".jpg")):
                     yield f"{root}/{file}"
+
+    def skipGeneratedDirs(self, root, subdirs):
+        """Previewing the documentation locally generates the Jekyll output directory. That is a copy
+        of the documentation, not the source, so walking it would report every issue twice."""
+        subdirs[:] = [subdir for subdir in subdirs if f"{root}/{subdir}" != self.GENERATED_DIR]

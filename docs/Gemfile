@@ -1,0 +1,8 @@
+source "https://rubygems.org"
+
+# The github-pages gem pins Jekyll and all plugins to the exact versions that
+# GitHub Pages runs in production, so a local build matches docs.sigrid-says.com.
+# It also implicitly enables the plugins this site relies on (rendering Markdown
+# without front matter, README as the index page, relative .md links, and the
+# default layout), which is why this repository intentionally has no _config.yml.
+gem "github-pages", group: :jekyll_plugins
