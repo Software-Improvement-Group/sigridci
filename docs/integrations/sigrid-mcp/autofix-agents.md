@@ -25,6 +25,7 @@ The [Sigrid Claude Code Plugin](../integration-sigrid-mcp.md) ships a set of ski
 |-------|--------------|
 | `sigrid-diagnose` | Finds your weakest maintainability property and surfaces the highest-leverage refactoring candidates |
 | `sigrid-improve` | Executes refactoring candidates with guardrail verification |
+| `architecture-drift` | Checks a diff, staged change, or branch against Sigrid's architecture graph for new coupling, bypassed facades, and cycles |
 | `sigrid-ci-feedback` | Runs Sigrid CI locally and returns structured quality feedback |
 | `fix-osh-risk` | Remediates open source health findings by creating merge requests or researched issues |
 
@@ -34,6 +35,7 @@ If you use a different AI agent, browse the skill definitions in the [sigrid-ai-
 
 For end-to-end walkthroughs, see:
 
+- [Preventing architecture drift with an AI coding agent](../../workflows/agents/preventing-architecture-drift.md): check a diff against the architecture graph before it merges, built on `architecture-drift`
 - [Reducing technical debt with auto-fix agents](../../workflows/agents/reducing-technical-debt.md): maintainability, built on `sigrid-diagnose` and `sigrid-improve`
 - [Triaging security and reliability findings](../../workflows/agents/triaging-security-reliability.md): assess in context, triage with a rationale
 
@@ -69,7 +71,7 @@ Prompted this way the agent will rank by severity, which is not the order that m
 
 ### Architecture exploration
 
-Before touching code, let the agent map how the system fits together: which components call which, and what a change would ripple out to. The three `architecture:*` tools are read-only, so they inform a plan without changing anything. Giving the agent this context up front helps it respect the existing structure instead of introducing architecture drift.
+Before touching code, let the agent map how the system fits together: which components call which, and what a change would ripple out to. The three `architecture:*` tools are read-only, so they inform a plan without changing anything. Giving the agent this context up front helps it respect the existing structure instead of introducing architecture drift. To check whether a change already made did so, run the `architecture-drift` skill against the diff instead; [preventing architecture drift](../../workflows/agents/preventing-architecture-drift.md) walks through a session.
 
 We would reach for them in this order:
 
