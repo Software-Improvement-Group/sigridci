@@ -78,7 +78,7 @@ Then click **Save and activate**.
 
 ## Verifying the integration
 
-Run your pipeline. A successful POST request step means the scan has been triggered, not that it has finished. Once the analysis completes, open your system in Sigrid and check that the analysis date reflects the current run.
+Run your pipeline. A successful POST request step means the scan has been triggered, not that it has finished. It might take a few minutes before you see the new results appear in Sigrid.
 
 <img src="../images/mendix-pipelines/itworks.png" width="450" />
 
