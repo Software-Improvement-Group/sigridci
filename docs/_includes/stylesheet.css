@@ -164,7 +164,7 @@ blockquote {
     margin-left: 2px;
 }
 
-aside, .attention, .warning, .faq {
+aside, .attention, .warning, .faq, .model {
     max-width: 750px;
     padding: 12px 20px 12px 50px;
     margin: 16px auto 16px auto;
@@ -221,6 +221,23 @@ aside::before, .attention::before {
     display: block;
     font-weight: 600;
     color: #df4949;
+}
+
+.model {
+    background-image: url("/images/icon-model.svg");
+    background-color: var(--sig-light);
+    background-repeat: no-repeat;
+    background-position: 12px 12px;
+    background-size: 24px;
+    border: 1px solid var(--sig-border-gray);
+    color: var(--sig-text-black);
+}
+
+.model::before {
+    content: "LLM model";
+    display: block;
+    font-weight: 600;
+    color: var(--sig-text-black);
 }
 
 summary {
@@ -310,6 +327,11 @@ summary {
 
 .container nav .toc a.subPage {
     padding-left: 56px !important;
+    font-size: 12px !important;
+}
+
+.container nav .toc a.subSubPage {
+    padding-left: 72px !important;
     font-size: 12px !important;
 }
 
