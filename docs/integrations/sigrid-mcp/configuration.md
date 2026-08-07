@@ -22,7 +22,7 @@ To get a token, see [authentication tokens](../../organization-integration/authe
 
 ## The Sigrid profile
 
-The profile gives the skills the context they need to answer for your situation instead of in general terms: which Sigrid system a repository belongs to, which branch Sigrid analyses, and how your team handles branches, reviews, and change requests. Skills such as `sigrid-diagnose`, `sigrid-improve`, and `fix-osh-risk` read it at the start of a run.
+The profile gives the skills the context they need to answer for your situation instead of in general terms: which Sigrid system a repository belongs to, which branch Sigrid analyzes, and how your team handles branches, reviews, and change requests. Skills such as `sigrid-diagnose`, `sigrid-improve`, and `fix-osh-risk` read it at the start of a run.
 
 ### Where it lives
 

@@ -1,0 +1,78 @@
+/*
+ * Styling for the agentic lifecycle diagrams in docs/_includes/sigrid-mcp/. The diagrams are inline
+ * SVG rather than an image, so that these rules can grey out the stages a guide is not about. See the
+ * comment in those includes. SVG styling tends to get messy, so it lives in its own stylesheet.
+ */
+article svg.lifecycle {
+    display: block;
+    max-width: 100%;
+    height: auto;
+}
+
+article svg.lifecycle-strip {
+    margin: 0 0 24px;
+}
+
+article svg.lifecycle-circle {
+    float: right;
+    margin: 0 0 24px 32px;
+}
+
+article svg.lifecycle .lbl {
+    font-family: "Open Sans", sans-serif;
+    font-weight: 600;
+    font-size: 13.5px;
+}
+
+article svg.lifecycle-circle .lbl {
+    font-size: 13px;
+    letter-spacing: 0.6px;
+}
+
+article svg.lifecycle .num, article svg.lifecycle .tag {
+    font-family: "Azeret Mono", monospace;
+}
+
+article svg.lifecycle .num {
+    font-size: 9.5px;
+}
+
+article svg.lifecycle-strip .tag {
+    font-size: 8.6px;
+}
+
+article svg.lifecycle-circle .tag {
+    font-size: 9.5px;
+    letter-spacing: 1.2px;
+}
+
+/* The lifecycle include greys out the stages a page is not about, by putting one class per stage on the SVG. */
+article svg.lifecycle.disable-grounding .s-grounding.q,
+article svg.lifecycle.disable-grounding .s-grounding.qb,
+article svg.lifecycle.disable-plan .s-plan.q,
+article svg.lifecycle.disable-plan .s-plan.qb,
+article svg.lifecycle.disable-prevent .s-prevent.q,
+article svg.lifecycle.disable-prevent .s-prevent.qb,
+article svg.lifecycle.disable-improve .s-improve.q,
+article svg.lifecycle.disable-improve .s-improve.qb {
+    fill: var(--sig-light-gray);
+}
+
+article svg.lifecycle.disable-grounding .s-grounding.qn,
+article svg.lifecycle.disable-grounding text.s-grounding,
+article svg.lifecycle.disable-plan .s-plan.qn,
+article svg.lifecycle.disable-plan text.s-plan,
+article svg.lifecycle.disable-prevent .s-prevent.qn,
+article svg.lifecycle.disable-prevent text.s-prevent,
+article svg.lifecycle.disable-improve .s-improve.qn,
+article svg.lifecycle.disable-improve text.s-improve {
+    fill: var(--sig-dark-gray);
+}
+
+/* There is no room next to the text on a phone, so a floating diagram goes back in the flow. */
+@media screen and (max-width: 834px) {
+    article svg.lifecycle-circle {
+        float: none;
+        margin: 0 auto 16px;
+    }
+}
