@@ -5,7 +5,10 @@ SIG uses [continuous delivery](https://en.wikipedia.org/wiki/Continuous_delivery
 
 ### August 10, 2026
 
+- **Mendix QSM:** Sigrid now supports integration with [Mendix Pipelines](https://docs.mendix.com/developerportal/deploy/mendix-pipelines/). This allows you to automatically publish your app to Sigrid, as part of your time. [The documentation](../sigridci-integration/mendix-pipelines.md) contains more information on how you can configure this integration in Mendix Pipelines.
 - **Sigrid CI:** Sigrid CI will now also provide feedback on the Component Independence system property. This is the start of expanding architecture feedback throughout the Sigrid platform.
+- **Open Source Health:** Sigrid now fully supports Python's [pyproject.toml](https://packaging.python.org/en/latest/guides/writing-pyproject-toml/).
+- **Open Source Health:** Support for Mendix [RequiredLib libraries](https://docs.mendix.com/appstore/creating-content/best-practices/development/#dependencies) has been improved. Previously, all occurrences of a RequiredLib were reported separately. This has been improved so that all occurrences of a RequiredLib are now combined into a single entry. This makes the libraries table easier to read, and it also allows you to easily see where each RequiredLib is used.
 
 ### July 27, 2026
 
