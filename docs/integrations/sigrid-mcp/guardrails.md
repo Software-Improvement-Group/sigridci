@@ -52,4 +52,4 @@ For tools that support both global and project-level rules, prefer project-level
 
 ## What Guardrails does not see
 
-Guardrails reads one file at a time, so anything that only shows up across a whole system stays invisible to it: architecture drift, vulnerable dependencies, duplication spread across files. [Sigrid CI](../../sigridci-integration/using-sigridci.md) covers those. Running it in a pre-commit hook or in your pipeline also gives you a check the agent cannot decide it has already satisfied.
+Guardrails reads one file at a time, so anything that only shows up across a whole system stays invisible to it: architecture drift, vulnerable dependencies, duplication spread across files. [Sigrid CI](../../sigridci-integration/using-sigridci.md) covers vulnerable dependencies and duplication; running it in a pre-commit hook or in your pipeline also gives you a check the agent cannot decide it has already satisfied. Architecture drift has its own diff-scoped check, grounded in Sigrid's dependency graph rather than a single file; see [preventing architecture drift](../../workflows/agents/preventing-architecture-drift.md).
