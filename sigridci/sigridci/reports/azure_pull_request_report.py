@@ -15,6 +15,7 @@
 import json
 import os
 import ssl
+import urllib.parse
 import urllib.request
 
 from .report import Report, MarkdownRenderer
@@ -87,9 +88,9 @@ class AzurePullRequestReport(Report):
 
     def buildURL(self, threadId):
         baseURL = os.environ["SYSTEM_TEAMFOUNDATIONCOLLECTIONURI"]
-        project = os.environ["SYSTEM_TEAMPROJECTID"]
-        repo = os.environ["BUILD_REPOSITORY_NAME"]
-        pr = os.environ["SYSTEM_PULLREQUEST_PULLREQUESTID"]
+        project = urllib.parse.quote(os.environ["SYSTEM_TEAMPROJECTID"], safe="")
+        repo = urllib.parse.quote(os.environ.get("BUILD_REPOSITORY_ID", os.environ["BUILD_REPOSITORY_NAME"]), safe="")
+        pr = urllib.parse.quote(os.environ["SYSTEM_PULLREQUEST_PULLREQUESTID"], safe="")
 
         if threadId:
             return f"{baseURL}{project}/_apis/git/repositories/{repo}/pullRequests/{pr}/threads/{threadId}?api-version={self.AZURE_API_VERSION}"
