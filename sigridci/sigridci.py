@@ -48,7 +48,8 @@ def parsePublishOptions(args):
         outputDir=args.out,
         sigridURL=args.sigridurl,
         ignoreMissingScopeFile=args.ignore_missing_scope_file,
-        autoOnboarding=not args.disable_onboarding
+        autoOnboarding=not args.disable_onboarding,
+        inlineResults=args.inline_results
     )
 
 
@@ -94,6 +95,7 @@ if __name__ == "__main__":
     parser.add_argument("--detaillevel", type=str, default="default", help="Detail level for how much feedback to provide.")
     parser.add_argument("--out", type=str, default="sigrid-ci-output", help="Output directory for Sigrid CI feedback.")
     parser.add_argument("--sigridurl", type=str, default="https://sigrid-says.com", help="Sigrid base URL.")
+    parser.add_argument("--inline-results", action="store_true", help="Prints structured feedback to stdout instead of writing report files.")
     # These options are now obsolete, but we leave them here to avoid breaking people's configuration.
     parser.add_argument("--include-history", action="store_true", help=SUPPRESS)
     parser.add_argument("--targetquality", type=str, help=SUPPRESS)

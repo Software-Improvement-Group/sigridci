@@ -12,6 +12,9 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
+import contextlib
+import io
+import json
 import os
 import tempfile
 from unittest import TestCase
@@ -56,6 +59,26 @@ class FeedbackProviderTest(TestCase):
         securityFeedback.generateReports()
 
         self.assertTrue(os.path.exists(f"{tempDir}/security-feedback.md"))
+
+    def testInlineResultsPrintsJsonInsteadOfWritingFiles(self):
+        tempDir = tempfile.mkdtemp()
+        options = PublishOptions("aap", "noot", RunMode.FEEDBACK_ONLY, outputDir=tempDir, inlineResults=True)
+
+        oshFeedback = FeedbackProvider(OPEN_SOURCE_HEALTH, options, {})
+        oshFeedback.analysisId = "1234"
+        oshFeedback.feedback = {"components": [], "metadata": {"timestamp": "2025-09-29"}}
+
+        with contextlib.redirect_stdout(io.StringIO()) as output:
+            objectiveMet = oshFeedback.generateReports()
+
+        self.assertTrue(objectiveMet)
+        self.assertFalse(os.path.exists(f"{tempDir}/osh-feedback.md"))
+        self.assertEqual([], os.listdir(tempDir))
+
+        lines = output.getvalue().splitlines()
+        self.assertEqual(2, len(lines))
+        self.assertEqual("osh", lines[0])
+        self.assertEqual("osh", json.loads(lines[1])["capability"])
 
     def testGetMaintainabilityObjective(self):
         tempDir = tempfile.mkdtemp()
