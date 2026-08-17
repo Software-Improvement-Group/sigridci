@@ -77,7 +77,7 @@ class FeedbackProviderTest(TestCase):
 
         lines = output.getvalue().splitlines()
         self.assertEqual(2, len(lines))
-        self.assertEqual("osh", lines[0])
+        self.assertEqual("Inline results: osh", lines[0])
         self.assertEqual("osh", json.loads(lines[1])["capability"])
 
     def testGetMaintainabilityObjective(self):

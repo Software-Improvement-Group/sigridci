@@ -188,6 +188,6 @@ class InlineResultsReportTest(TestCase):
 
         lines = output.getvalue().splitlines()
         self.assertEqual(2, len(lines))
-        self.assertEqual("maintainability", lines[0])
+        self.assertEqual("Inline results: maintainability", lines[0])
         parsed = json.loads(lines[1])
         self.assertEqual("maintainability", parsed["capability"])

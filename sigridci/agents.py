@@ -5,7 +5,7 @@
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
 # You may obtain a copy of the License at
-# 
+#
 #     http://www.apache.org/licenses/LICENSE-2.0
 #
 # Unless required by applicable law or agreed to in writing, software
@@ -37,33 +37,16 @@ def parsePublishOptions(args):
         system=args.system.lower(),
         subsystem=args.subsystem,
         convert=args.convert,
-        runMode=parseRunMode(args),
+        runMode=RunMode.FEEDBACK_ONLY,
         capabilities=parseCapabilities(args.capability),
         sourceDir=args.source,
         excludePatterns=args.exclude.split(","),
         includePatterns=args.include.split(","),
-        includeHistory=True,
-        showUploadContents=args.showupload,
-        detailLevel=args.detaillevel,
-        outputDir=args.out,
         sigridURL=args.sigridurl,
-        ignoreMissingScopeFile=args.ignore_missing_scope_file
+        ignoreMissingScopeFile=args.ignore_missing_scope_file,
+        autoOnboarding=False,
+        inlineResults=True
     )
-
-
-def parseRunMode(args):
-    if args.publishonly:
-        return RunMode.PUBLISH_ONLY
-    elif args.publish:
-        return RunMode.FEEDBACK_AND_PUBLISH
-    else:
-        return RunMode.FEEDBACK_ONLY
-
-
-def parseTarget(target):
-    if target == "sigrid":
-        return "sigrid"
-    return float(target)
 
 
 def parseCapabilities(names):
@@ -75,7 +58,7 @@ def parseCapabilities(names):
 
 
 if __name__ == "__main__":
-    parser = ArgumentParser(description="Starts a Sigrid CI analysis and provides feedback on the outcomes.")
+    parser = ArgumentParser(description="Starts a Sigrid CI analysis and prints structured feedback to stdout for AI agents to consume.")
     parser.add_argument("--partner", type=str, default="sig", help=SUPPRESS)
     parser.add_argument("--ignore-missing-scope-file", action="store_true", help="File sigrid.yaml is handled separately.")
     parser.add_argument("--customer", type=str, required=True, help="Name of your organization's Sigrid account.")
@@ -84,20 +67,9 @@ if __name__ == "__main__":
     parser.add_argument("--convert", type=str, default="", help="Code conversion for specific technologies")
     parser.add_argument("--source", type=str, required=True, help="Path of your project's source code.")
     parser.add_argument("--capability", type=str, default=DEFAULT_CAPABILITIES, help=f"Comma-separated Sigrid capabilities ({','.join(CAPABILITIES.keys())}).")
-    parser.add_argument("--publish", action="store_true", help="Publishes analysis results to Sigrid.")
-    parser.add_argument("--publishonly", action="store_true", help="Only publishes to Sigrid without waiting for results.")
     parser.add_argument("--exclude", type=str, default="", help="Comma-separated list of files/directories to exclude.")
     parser.add_argument("--include", type=str, default="", help="Comma-separated list of files/directories to include.")
-    parser.add_argument("--showupload", action="store_true", help="Logs the contents of the upload published to Sigrid.")
-    parser.add_argument("--detaillevel", type=str, default="default", help="Detail level for how much feedback to provide.")
-    parser.add_argument("--out", type=str, default="sigrid-ci-output", help="Output directory for Sigrid CI feedback.")
     parser.add_argument("--sigridurl", type=str, default="https://sigrid-says.com", help="Sigrid base URL.")
-    # These options are now obsolete, but we leave them here to avoid breaking people's configuration.
-    parser.add_argument("--include-history", action="store_true", help=SUPPRESS)
-    parser.add_argument("--targetquality", type=str, help=SUPPRESS)
-    # Dummy argument used when passing false to boolean arguments.
-    # BooleanOptionalAction would solve this, but requires Python 3.9+.
-    parser.add_argument("--dummy", action="store_true", help=SUPPRESS)
     args = parser.parse_args()
 
     if not os.path.exists(args.source):
@@ -113,7 +85,7 @@ if __name__ == "__main__":
         print(f"Invalid system name, system name should match '{PublishOptions.SYSTEM_NAME_PATTERN.pattern}' "
               f", not completely numeric, and be {PublishOptions.SYSTEM_NAME_LENGTH.start} to {maxNameLength} characters long (inclusive).")
         sys.exit(1)
-    
+
     if not options.isValidSubSystemName():
         print(f"Invalid subsystem name, subsystem name should match '{PublishOptions.SUBSYSTEM_NAME_PATTERN.pattern}'"
               ", must be at least two characters long and not contain consecutive dots or slashes.")
