@@ -58,31 +58,29 @@ class AzurePullRequestReportTest(TestCase):
 
         self.assertEqual(["GET", "POST"], azure.calledEndPoints)
 
+    @patch.dict(os.environ, {
+        "SYSTEM_TEAMFOUNDATIONCOLLECTIONURI": "https://dev.azure.com/exampleorg/",
+        "SYSTEM_TEAMPROJECTID": "ExampleProject",
+        "BUILD_REPOSITORY_NAME": "My Repo",
+        "SYSTEM_PULLREQUEST_PULLREQUESTID": "123",
+    }, clear=True)
     def testBuildURLEncodesRepositoryNameWithSpaces(self):
-        env = {
-            "SYSTEM_TEAMFOUNDATIONCOLLECTIONURI": "https://dev.azure.com/exampleorg/",
-            "SYSTEM_TEAMPROJECTID": "ExampleProject",
-            "BUILD_REPOSITORY_NAME": "My Repo",
-            "SYSTEM_PULLREQUEST_PULLREQUESTID": "123",
-        }
-        with patch.dict(os.environ, env, clear=True):
-            report = AzurePullRequestReport(MaintainabilityMarkdownReport())
-            url = report.buildURL(None)
+        report = AzurePullRequestReport(MaintainabilityMarkdownReport())
+        url = report.buildURL(None)
 
         self.assertNotIn(" ", url)
         self.assertIn("My%20Repo", url)
 
+    @patch.dict(os.environ, {
+        "SYSTEM_TEAMFOUNDATIONCOLLECTIONURI": "https://dev.azure.com/exampleorg/",
+        "SYSTEM_TEAMPROJECTID": "ExampleProject",
+        "BUILD_REPOSITORY_NAME": "My Repo",
+        "BUILD_REPOSITORY_ID": "00000000-0000-0000-0000-000000000000",
+        "SYSTEM_PULLREQUEST_PULLREQUESTID": "123",
+    }, clear=True)
     def testBuildURLPrefersRepositoryId(self):
-        env = {
-            "SYSTEM_TEAMFOUNDATIONCOLLECTIONURI": "https://dev.azure.com/exampleorg/",
-            "SYSTEM_TEAMPROJECTID": "ExampleProject",
-            "BUILD_REPOSITORY_NAME": "My Repo",
-            "BUILD_REPOSITORY_ID": "00000000-0000-0000-0000-000000000000",
-            "SYSTEM_PULLREQUEST_PULLREQUESTID": "123",
-        }
-        with patch.dict(os.environ, env, clear=True):
-            report = AzurePullRequestReport(MaintainabilityMarkdownReport())
-            url = report.buildURL(None)
+        report = AzurePullRequestReport(MaintainabilityMarkdownReport())
+        url = report.buildURL(None)
 
         self.assertIn("00000000-0000-0000-0000-000000000000", url)
         self.assertNotIn("My", url)
