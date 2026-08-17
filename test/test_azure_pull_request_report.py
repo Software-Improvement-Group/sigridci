@@ -13,8 +13,10 @@
 # limitations under the License.
 
 import json
+import os
 from tempfile import mkdtemp
 from unittest import TestCase
+from unittest.mock import patch
 
 from sigridci.sigridci.publish_options import PublishOptions, RunMode
 from sigridci.sigridci.reports.azure_pull_request_report import AzurePullRequestReport
@@ -55,6 +57,35 @@ class AzurePullRequestReportTest(TestCase):
         azure.generate("1234", feedback, options)
 
         self.assertEqual(["GET", "POST"], azure.calledEndPoints)
+
+    def testBuildURLEncodesRepositoryNameWithSpaces(self):
+        env = {
+            "SYSTEM_TEAMFOUNDATIONCOLLECTIONURI": "https://dev.azure.com/cegekadsa/",
+            "SYSTEM_TEAMPROJECTID": "DynamicsEmpire",
+            "BUILD_REPOSITORY_NAME": "ERP AL",
+            "SYSTEM_PULLREQUEST_PULLREQUESTID": "42198",
+        }
+        with patch.dict(os.environ, env, clear=True):
+            report = AzurePullRequestReport(MaintainabilityMarkdownReport())
+            url = report.buildURL(None)
+
+        self.assertNotIn(" ", url)
+        self.assertIn("ERP%20AL", url)
+
+    def testBuildURLPrefersRepositoryId(self):
+        env = {
+            "SYSTEM_TEAMFOUNDATIONCOLLECTIONURI": "https://dev.azure.com/cegekadsa/",
+            "SYSTEM_TEAMPROJECTID": "DynamicsEmpire",
+            "BUILD_REPOSITORY_NAME": "ERP AL",
+            "BUILD_REPOSITORY_ID": "1f2e3d4c-0000-0000-0000-000000000000",
+            "SYSTEM_PULLREQUEST_PULLREQUESTID": "42198",
+        }
+        with patch.dict(os.environ, env, clear=True):
+            report = AzurePullRequestReport(MaintainabilityMarkdownReport())
+            url = report.buildURL(None)
+
+        self.assertIn("1f2e3d4c-0000-0000-0000-000000000000", url)
+        self.assertNotIn("ERP", url)
 
     def testUpdateExistingComment(self):
         tempDir = mkdtemp()
