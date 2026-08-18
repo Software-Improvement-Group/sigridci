@@ -95,6 +95,8 @@ Sigrid MCP is not detected, the assistant still receives this same information a
 directly, but it won't be able to look up more context from Sigrid on its own, and a note appears suggesting
 you install the Sigrid plugin for the best experience.
 
+<img src="../images/ide/vs-code-fix-with-ai.png" width="700" />
+
 <img src="../images/ide/vs-code-fix-by-ai.png" width="700" />
 
 ### Getting "Sigrid MCP detected" for GitHub Copilot
