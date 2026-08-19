@@ -41,7 +41,7 @@ class ArchitectureMarkdownReportTest(TestCase):
 
             **⚠️  You did not meet your objective of having no architecture issues**
             
-            Sigrid compared your code against the baseline of 2026-08-17 12:00 UTC.
+            Sigrid compared your code against the baseline of 2026-08-17 12:00:00 UTC.
             
             ## 👎 What could be better?
             
@@ -83,7 +83,7 @@ class ArchitectureMarkdownReportTest(TestCase):
 
             **⚠️  You did not meet your objective of having no architecture issues**
             
-            Sigrid compared your code against the baseline of 2026-08-17 12:00 UTC.
+            Sigrid compared your code against the baseline of 2026-08-17 12:00:00 UTC.
             
             ## 👎 What could be better?
             

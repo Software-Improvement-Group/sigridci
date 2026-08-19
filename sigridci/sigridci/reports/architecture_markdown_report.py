@@ -39,7 +39,7 @@ class ArchitectureMarkdownReport(Report, MarkdownRenderer):
         remaining = self.getRemainingFeedback(feedback)
         sigridLink = f"{self.getSigridUrl(options)}/-/architecture-quality/explorer"
 
-        md = f"Sigrid compared your code against the baseline of {feedback['baseline']}.\n\n"
+        md = f"Sigrid compared your code against the baseline of {feedback['baseline']} UTC.\n\n"
 
         if len(positive) > 0 or len(negative) == 0:
             md += "## 👍 What went well?\n\n"
