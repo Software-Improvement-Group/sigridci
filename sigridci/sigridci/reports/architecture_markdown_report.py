@@ -54,7 +54,7 @@ class ArchitectureMarkdownReport(Report, MarkdownRenderer):
             md += f"> Unfortunately, you introduced **{len(negative)}** architecture issues.\n\n"
             md += f"{self.generateFindingsTable(negative, options)}\n"
             md += "If you believe these findings are false positives,\n"
-            md += f"you can [exclude the rule]({AQ_EXCLUDE_DOCS}) in the Sigrid configuration.\n"
+            md += f"you can [exclude the rule]({AQ_EXCLUDE_DOCS}) in the Sigrid configuration.\n\n"
 
         if remaining > 0:
             md += "## 📚 You have remaining technical debt\n\n"
@@ -69,13 +69,15 @@ class ArchitectureMarkdownReport(Report, MarkdownRenderer):
 
         md = "| Issue | Location |\n"
         md += "|---|---|\n"
-        for finding in findings:
+        for finding in findings[0:options.getMaxShownFindings()]:
             type = self.FINDING_TYPES.get(finding["qualification"], finding["qualification"])
             activity = finding["activity"].title()
             source = self.formatDependencyLocation(finding["sourceHierarchy"], options)
             target = self.formatDependencyLocation(finding["targetHierarchy"], options)
             location = f"Source: {source}{self.tableLineSeparator}Target: {target}"
             md += f"| **{type}**{self.tableLineSeparator}({activity}) | {location} |\n"
+        if len(findings) > options.getMaxShownFindings():
+            md += f"| ... and {len(findings) - options.getMaxShownFindings()} more findings | |\n"
         return md
 
     def formatDependencyLocation(self, hierarchy, options):
@@ -84,7 +86,7 @@ class ArchitectureMarkdownReport(Report, MarkdownRenderer):
 
         location = topLevelComponent["shortName"]
         if file:
-            location += f"▶ {self.decorateLink(options, file['shortName'], file['name'])}"
+            location += f" ▶ {self.decorateLink(options, file['shortName'], file['name'])}"
         return location
 
     def getSummary(self, feedback, options):

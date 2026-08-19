@@ -49,11 +49,61 @@ class ArchitectureMarkdownReportTest(TestCase):
             
             | Issue | Location |
             |---|---|
-            | **🔴 Undesirable dependency** • (Increased) | Source: sigdelivery-aqci▶ b.ts • Target: sigdelivery-aqci▶ c.ts |
-            | **🟠 Cyclic dependency** • (Introduced) | Source: sigdelivery-aqci▶ b.ts • Target: sigdelivery-aqci▶ a.ts |
+            | **🔴 Undesirable dependency** • (Increased) | Source: sigdelivery-aqci ▶ b.ts • Target: sigdelivery-aqci ▶ c.ts |
+            | **🟠 Cyclic dependency** • (Introduced) | Source: sigdelivery-aqci ▶ b.ts • Target: sigdelivery-aqci ▶ a.ts |
             
             If you believe these findings are false positives,
             you can [exclude the rule](https://docs.sigrid-says.com/reference/analysis-scope-configuration.html#manually-removing-architecture-dependencies) in the Sigrid configuration.
+            
+            ## 📚 You have remaining technical debt
+            
+            > You have **1** architecture issues.
+            [You can view these findings in Sigrid](https://sigrid-says.com/aap/noot/-/architecture-quality/explorer).
+            
+            
+            ----
+            
+            [**View this system in Sigrid**](https://sigrid-says.com/aap/noot/-/architecture-quality/explorer)
+        """
+
+        self.assertEqual(markdown.strip(), inspect.cleandoc(expected).strip())
+
+    @mock.patch.dict(os.environ, {"SIGRID_CI_MARKDOWN_HTML" : "false"})
+    def testLimitFindingsIfTooMany(self):
+        with open(os.path.dirname(__file__) + "/testdata/architecture.json", encoding="utf-8", mode="r") as f:
+            feedback = json.load(f)
+            feedback["dependencyFeedback"] = [feedback["dependencyFeedback"][0]] * 1000
+
+        report = ArchitectureMarkdownReport()
+        report.decorateLinks = False
+        markdown = report.renderMarkdown("1234", feedback, self.options)
+
+        expected = """
+            # [Sigrid](https://sigrid-says.com/aap/noot/-/architecture-quality/explorer) Architecture feedback *(Beta)*
+
+            **⚠️  You did not meet your objective of having no architecture issues**
+            
+            Sigrid compared your code against the baseline of 2026-08-17 12:00 UTC.
+            
+            ## 👎 What could be better?
+            
+            > Unfortunately, you introduced **1000** architecture issues.
+            
+            | Issue | Location |
+            |---|---|
+            | **🔴 Undesirable dependency** • (Increased) | Source: sigdelivery-aqci ▶ b.ts • Target: sigdelivery-aqci ▶ c.ts |
+            | **🔴 Undesirable dependency** • (Increased) | Source: sigdelivery-aqci ▶ b.ts • Target: sigdelivery-aqci ▶ c.ts |
+            | **🔴 Undesirable dependency** • (Increased) | Source: sigdelivery-aqci ▶ b.ts • Target: sigdelivery-aqci ▶ c.ts |
+            | **🔴 Undesirable dependency** • (Increased) | Source: sigdelivery-aqci ▶ b.ts • Target: sigdelivery-aqci ▶ c.ts |
+            | **🔴 Undesirable dependency** • (Increased) | Source: sigdelivery-aqci ▶ b.ts • Target: sigdelivery-aqci ▶ c.ts |
+            | **🔴 Undesirable dependency** • (Increased) | Source: sigdelivery-aqci ▶ b.ts • Target: sigdelivery-aqci ▶ c.ts |
+            | **🔴 Undesirable dependency** • (Increased) | Source: sigdelivery-aqci ▶ b.ts • Target: sigdelivery-aqci ▶ c.ts |
+            | **🔴 Undesirable dependency** • (Increased) | Source: sigdelivery-aqci ▶ b.ts • Target: sigdelivery-aqci ▶ c.ts |
+            | ... and 992 more findings | |
+            
+            If you believe these findings are false positives,
+            you can [exclude the rule](https://docs.sigrid-says.com/reference/analysis-scope-configuration.html#manually-removing-architecture-dependencies) in the Sigrid configuration.
+            
             ## 📚 You have remaining technical debt
             
             > You have **1** architecture issues.
