@@ -36,9 +36,10 @@ class ArchitectureTextReport(Report):
                 print(f"    {title}", file=self.output)
                 print(f"        Source: {self.formatDependencyLocation(finding['sourceHierarchy'])}", file=self.output)
                 print(f"        Target: {self.formatDependencyLocation(finding['targetHierarchy'])}", file=self.output)
+                print("", file=self.output)
             if len(findings) > len(displayedFindings):
                 print(f"    ... and {len(findings) - len(displayedFindings)} more findings", file=self.output)
-            print("", file=self.output)
+                print("", file=self.output)
 
     def formatDependencyLocation(self, hierarchy):
         topLevelComponent = hierarchy[0]

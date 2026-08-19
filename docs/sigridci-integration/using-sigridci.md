@@ -34,8 +34,9 @@ the [Sigrid CI configuration](../reference/client-script-usage.md).
 ## How does Sigrid CI give feedback?
 
 Sigrid CI gives you feedback on different quality aspects. You can find more information on our feedback for
-[Maintainability](#maintainability-feedback) and [Open Source Health](#open-source-health-feedback) in the sections
-below. However, there are also some shared principles we apply across Sigrid CI:
+[Maintainability](#maintainability-feedback), [Architecture](#architecture-feedback-beta),
+[Open Source Health](#open-source-health-feedback), and [Security](#security-feedback-beta) in the sections below. 
+However, there are also some shared principles we apply across Sigrid CI:
 
 - **Focus on objectives:** All Sigrid CI feedback relates your changes to the
   [objectives](../capabilities/portfolio-objectives.md) you've defined in Sigrid. Objectives provide *context*.
@@ -74,6 +75,26 @@ cleaner than you found it.
 Feedback is based on your [maintainability objective](../capabilities/portfolio-objectives.md). If you have not
 configured an objective, Sigrid CI will use a default target of 3.5 stars, which is what we recommand as a reasonable
 default for modern systems.
+
+### Architecture feedback (Beta)
+
+Software architectures tend to slowly degrade over time. This is something you can track with Sigrid, but how can
+you ensure that pull requests are not having a negative impact on your architecture?
+
+To make architecture feedback as concrete as possible, Sigrid CI will report on the following:
+
+- **Undesirable dependencies.** These are things that *you* consider undesirable. You can mark dependencies between
+  certain components as undesirable in [the Sigrid configuration](../reference/analysis-scope-configuration.md#highlighting-undesirable-dependencies).
+  If such a dependency is then introduced, Sigrid CI will report it.
+- **Dependencies matching known antipatterns, e.g. cyclic dependencies.** Unlike undesirable dependencies, you do
+  not to configure this yourself, these antipatterns are automatically detected and flagged by Sigrid. 
+
+<img src="../images/ci/architecture-feedback.png" width="350" />
+
+Architecture feedback is currently in Beta, so these issues will always be reported as warnings. Architecture feedback
+will currently not fail your build. The ability to fail your build will become availabkle when this feature leaves
+Beta.
+{: .attention }
 
 ### Open Source Health feedback
 
