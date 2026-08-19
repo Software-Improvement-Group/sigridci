@@ -19,6 +19,8 @@ findings from within your IDE. In particular, it lets you do the following:
   those files.
 - **Triage findings.** Changing a finding's status and adding remarks directly from your IDE makes it faster and
   more convenient when you need quickly triage large numbers of findings.
+- **Fix findings with AI.** Send a finding directly to Claude Code or GitHub Copilot to have it fixed for you,
+without leaving the findings list.
 - **Jump back-and-forth between Sigrid and your IDE.** When needed, you can quickly jump from the finding information
   in your IDE to viewing the finding details in Sigrid.
 - **Create Jira or Azure DevOps issues from findings.** Narrow down a large list of findings by risk level or status, or search across all findings using the search bar.
@@ -78,6 +80,43 @@ with the available statuses, such as Raw, Accepted, and False Positive.
 
 **To search across all findings**, use the **search bar** in the top-right corner of the panel. The list
 updates in real time as you type.You can combine risk, status, and search filters at the same time.
+
+## Fixing findings with AI
+
+For findings that involve code changes, you can send them directly to an AI coding assistant instead of
+fixing them by hand. In the findings list, hover over a finding to see two options: **"Fix with Claude Code"**
+and **"Fix with GitHub Copilot."** Each option shows a small status label, either **"Sigrid MCP detected"** or
+**"Sigrid MCP not detected,"** telling you whether that assistant is already connected to Sigrid in your
+current setup.
+
+Clicking either option opens that assistant in a new panel, with a message already filled in describing the
+finding (its risk level, description, and file locations) and an instruction to fix only that finding. If
+Sigrid MCP is not detected, the assistant still receives this same information and can usually work from it
+directly, but it won't be able to look up more context from Sigrid on its own, and a note appears suggesting
+you install the Sigrid plugin for the best experience.
+
+<img src="../images/ide/vs-code-fix-with-ai.png" width="700" />
+
+<img src="../images/ide/vs-code-fix-by-ai.png" width="700" />
+
+### Getting "Sigrid MCP detected" for GitHub Copilot
+
+Configure the Sigrid MCP server in VS Code's own MCP settings (`Cmd+Shift+P` → "MCP: Add Server" → HTTP),
+pointing to `https://sigrid-says.com/mcp` with your Sigrid API token as a Bearer token in the Authorization
+header. Once GitHub Copilot can see this server, the label switches to detected.
+
+### Getting "Sigrid MCP detected" for Claude Code
+
+Install the official Sigrid plugin for Claude Code rather than adding the MCP server manually, only the
+plugin is recognized by this detection check:
+
+/plugin marketplace add Software-Improvement-Group/sigrid-ai-toolkit
+
+/plugin install sigrid@sigrid-ai-toolkit
+
+Choose "Install for you (user scope)" so it's available in every project, not just the current one. After
+installing, run `/sigrid:setup` once to tell Claude Code which local repository corresponds to which Sigrid
+customer and system, this lets it act on findings instead of just reading them.
 
 ## Creating Jira issues from findings
 
