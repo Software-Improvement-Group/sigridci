@@ -332,7 +332,22 @@ Set the following variables in your pipeline:
 |-------------------------------|-------------|
 | `CICD_COMMENT_TOKEN` | GitLab personal access token with `api` scope |
 
+To create the token:
+
+- In GitLab, go to your user (or a service account's) *Preferences → Access Tokens*, or use a [project or group access token](https://docs.gitlab.com/ee/user/project/settings/project_access_tokens.html).
+- Create a token with the `api` scope. The token owner needs sufficient rights to post merge request comments in the target projects.
+- In your project or group *Settings → CI/CD → Variables*, add a variable named `CICD_COMMENT_TOKEN` with the token as value. Use type "Variable" (not "File"), and do *not* mark it as protected, otherwise it is not available in merge request pipelines from unprotected branches.
+
 Sigrid will automatically detect merge request pipelines via the `CI_MERGE_REQUEST_IID` variable set by GitLab CI and post or update a comment on the merge request.
+
+Note that `CI_MERGE_REQUEST_IID` is only available in merge request pipelines, so the analysis job needs a rule that makes it run in them:
+
+{% raw %}
+```yaml
+  rules:
+    - if: '$CI_PIPELINE_SOURCE == "merge_request_event"'
+```
+{% endraw %}
 
 ### GitHub
 
@@ -342,7 +357,19 @@ Set the following variables in your pipeline:
 |-------------------------------|-------------|
 | `CICD_COMMENT_TOKEN` | GitHub personal access token (classic) or fine-grained token with `pull-requests: write` permission |
 
+To create the token:
+
+- In GitHub, go to *Settings → Developer settings → Personal access tokens* (for your user or a service account).
+- Create a fine-grained token with *Pull requests: Read and write* permission for the target repositories, or a classic token with the `repo` scope.
+- In your repository or organization *Settings → Secrets and variables → Actions*, add a secret named `CICD_COMMENT_TOKEN` with the token as value, and pass it to the analysis job as an environment variable.
+
 Sigrid will automatically detect pull request pipelines via the `GITHUB_EVENT_NAME` variable set by GitHub Actions and post or update a comment on the pull request. The `GITHUB_API_URL` variable set by GitHub Actions is used as the API endpoint, so this works for both github.com and GitHub Enterprise Server without extra configuration.
+
+Note that `GITHUB_EVENT_NAME` is only `pull_request` when the workflow is triggered by a pull request event, so the workflow running the analysis needs:
+
+```yaml
+on: [pull_request]
+```
 
 ### Azure DevOps
 
