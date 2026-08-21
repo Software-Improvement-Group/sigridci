@@ -95,9 +95,11 @@ Batch edits are supported for up to 25 findings at a time.
 
 Any finding that involves a code change can be sent straight to Claude Code instead of being fixed by hand. Select one or more findings in the Maintainability, Security, or Open Source Health panel, then either click the **Fix with AI** button in the toolbar, or right-click and choose **Fix it with Claude Code** from the context menu.
 
+<img src="../images/ide/jetbrains-fix-w-ai.png" width="700" />
+
 This builds a natural-language prompt describing the selected findings, their severity, and their file locations, and hands it to the `claude` CLI in a terminal. If the Sigrid plugin for Claude Code is installed and enabled, the prompt also includes the right Sigrid slash command for the category involved (for example `/sigrid:sigrid-improve` for maintainability findings, or `/sigrid:fix-osh-risk` for Open Source Health), so Claude can pull extra context from Sigrid while it works. If the plugin isn't detected, the prompt falls back to plain instructions instead, and a one-time notification offers a link to install it.
 
-<!-- screenshot: right-click context menu on a finding showing "Fix it with Claude Code", and the toolbar "Fix with AI" button -->
+<img src="../images/ide/sig-jetbrains-azuredevops-create-issue.png" width="700" />
 
 ## Creating issues from findings
 
