@@ -365,7 +365,7 @@ To create the token:
 
 Sigrid will automatically detect pull request pipelines via the `GITHUB_EVENT_NAME` variable set by GitHub Actions and post or update a comment on the pull request. The `GITHUB_API_URL` variable set by GitHub Actions is used as the API endpoint, so this works for both github.com and GitHub Enterprise Server without extra configuration.
 
-Note that `GITHUB_EVENT_NAME` is only `pull_request` when the workflow is triggered by a pull request event, so the workflow running the analysis needs:
+Note that `GITHUB_EVENT_NAME` is only defined as `pull_request` when the workflow is triggered by a pull request event, so the workflow running the analysis needs:
 
 ```yaml
 on: [pull_request]
