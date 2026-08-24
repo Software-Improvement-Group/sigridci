@@ -385,6 +385,8 @@ You can now start inviting more people to Sigrid if so desired.
         SIGRID_URL: "https://my-sigrid.example.com"
         SIGRID_CI_TOKEN: "secret"
         SIGRID_SOURCES_REGISTRATION_ID: "gitlab-onprem"
+      rules:
+        - if: '$CI_PIPELINE_SOURCE == "merge_request_event"'
       script:
         - "run-analyzers --publish"
     ```
