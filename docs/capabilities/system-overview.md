@@ -45,6 +45,7 @@ These capability pages are explained specifically here:
 * [System security](system-security.md)
 * [System Open Source Health](system-open-source-health.md)
 * [Code explorer](system-code-explorer.md)
+* [Generated reports](generated-reports.md#system-level-generated-reports)
 
 ## How to learn more:
 * Go to SIG Academy and follow the System-level functionalities e-learnings that cover the main aspects of Sigrid on system level. You can access the SIG Academy via the graduation cap icon in the bottom left of your Sigrid window.
