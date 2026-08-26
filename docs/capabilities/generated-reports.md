@@ -34,17 +34,17 @@ When you click the "Generate Report" button, a dialog opens showing the availabl
 
 The dialog displays:
 
-- **Current scope**: The scope of the generated report is based on any filters you have applied in Sigrid (such as metadata filters)
+- **Current scope**: The scope of the generated report is always set to the full system or portfolio for which the report is generated
 - **Report types**: Different report types available for your portfolio or system
-- **Last generated**: When each report type was last generated for your current scope and filter selection
+- **Last generated**: When each report type was last generated for the current scope (portfolio/system)
 - **Generate button**: Click to initiate report generation
 
 After you click the "Generate" button, report generation begins. Processing may take some time depending on the report complexity and current processing queue. If you don't want to perform any other actions in Sigrid, you can close Sigrid after you have clicked the "Generate" button.
 
 **Once your report is ready, you will receive an email with a download link.** Click the link to open the download page. The download page for the generated report is only accessible to the user who initiated the report generation.
 
-{: .attention }
 Report download links do not currently have an expiration date, but this may change in the future. If you need to retain reports for long-term use, we recommend archiving them offline after downloading.
+{: .attention }
 
 ## Related pages
 
