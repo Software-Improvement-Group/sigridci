@@ -16,8 +16,9 @@
 
 from argparse import ArgumentParser, SUPPRESS
 
-from sigridci.cli_common import addCommonArguments, parseCapabilities, runSigridCi
+from sigridci.cli_options import addPublishArguments, parseCapabilities
 from sigridci.publish_options import PublishOptions, RunMode
+from sigridci.sigridci_runner import runAnalysis
 
 
 def parsePublishOptions(args):
@@ -52,7 +53,7 @@ def parseRunMode(args):
 
 if __name__ == "__main__":
     parser = ArgumentParser(description="Starts a Sigrid CI analysis and provides feedback on the outcomes.")
-    addCommonArguments(parser)
+    addPublishArguments(parser)
     parser.add_argument("--publish", action="store_true", help="Publishes analysis results to Sigrid.")
     parser.add_argument("--publishonly", action="store_true", help="Only publishes to Sigrid without waiting for results.")
     parser.add_argument("--showupload", action="store_true", help="Logs the contents of the upload published to Sigrid.")
@@ -66,4 +67,4 @@ if __name__ == "__main__":
     parser.add_argument("--dummy", action="store_true", help=SUPPRESS)
     args = parser.parse_args()
 
-    runSigridCi(parsePublishOptions(args))
+    runAnalysis(parsePublishOptions(args))

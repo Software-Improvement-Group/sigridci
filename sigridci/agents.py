@@ -16,8 +16,9 @@
 
 from argparse import ArgumentParser
 
-from sigridci.cli_common import addCommonArguments, parseCapabilities, runSigridCi
+from sigridci.cli_options import addPublishArguments, parseCapabilities
 from sigridci.publish_options import PublishOptions, RunMode
+from sigridci.sigridci_runner import runAnalysis
 
 
 def parsePublishOptions(args):
@@ -41,7 +42,7 @@ def parsePublishOptions(args):
 
 if __name__ == "__main__":
     parser = ArgumentParser(description="Starts a Sigrid CI analysis and prints structured feedback to stdout for AI agents to consume.")
-    addCommonArguments(parser)
+    addPublishArguments(parser)
     args = parser.parse_args()
 
-    runSigridCi(parsePublishOptions(args))
+    runAnalysis(parsePublishOptions(args))
