@@ -26,7 +26,13 @@ Visit the [Technology Support](../../reference/technology-support.md#list-of-sup
 
 The quality of AI-generated code varies a lot with the instructions the agent was given. Guardrails tells the agent which quality standards its code fails to meet, reading the working tree, so the system does not have to be published to Sigrid first.
 
-Connecting the MCP server is only half of it, since the agent will not call the tool unless something tells it to. The instruction belongs in your agent's instruction file, where it applies to every session without you asking. The prompt below pairs brief **code principles** with a mandatory **quality gate** before any task is reported complete:
+### Claude Code
+
+Use the [Sigrid AI Toolkit plugin](../integration-sigrid-mcp.md). Its hook runs the check on every changed file at the end of each turn.
+
+### Other tools
+
+Connecting the MCP server is only half of it, since the agent will not call the tool unless something tells it to. Put the instruction in `AGENTS.md` at your repository root, so it applies to every session without you asking; Cursor, GitHub Copilot, Devin, and most other agentic CLIs read it natively, since it is a Linux Foundation-governed standard. The prompt below pairs brief **code principles** with a mandatory **quality gate** before any task is reported complete:
 
 {% include sigrid-mcp/quality-gate-prompt.md %}
 
@@ -35,20 +41,6 @@ Connecting the MCP server is only half of it, since the agent will not call the 
 Two adjustments are worth making from the start. If your codebase follows specific design patterns, such as hexagonal architecture or Redux, add them under Code Principles, and write a principle for every recurring mistake you find yourself correcting. You can also loosen the timing to commits only, and you can always invoke the check by hand: "Run Sigrid on these files: ...".
 
 For which wording in that prompt carries it, and a session where the agent refactors in response to a finding, see [building with an AI coding agent and Sigrid Guardrails](../../workflows/agents/building-with-guardrails.md).
-
-### Where to place these instructions
-
-Most AI coding agents respect instruction files in your repository. Refer to your agent's documentation for specifics.
-
-| File | Supported by |
-|------|--------------|
-| `.cursor/rules/` | Cursor |
-| `.github/copilot-instructions.md` | GitHub Copilot |
-| `global_rules.md` | Devin Desktop |
-| `CLAUDE.md` | Claude Code |
-| `AGENTS.md` | OpenCode, emerging convention (check agent support) |
-
-For tools that support both global and project-level rules, prefer project-level to keep instructions versioned with your code.
 
 ## What Guardrails does not see
 
