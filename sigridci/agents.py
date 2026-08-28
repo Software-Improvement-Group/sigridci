@@ -1,0 +1,48 @@
+#!/usr/bin/env python3
+
+# Copyright Software Improvement Group
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#     http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+
+from argparse import ArgumentParser
+
+from sigridci.cli_options import addPublishArguments, parseCapabilities
+from sigridci.publish_options import PublishOptions, RunMode
+from sigridci.sigridci_runner import runAnalysis
+
+
+def parsePublishOptions(args):
+    return PublishOptions(
+        partner=args.partner.lower(),
+        customer=args.customer.lower(),
+        system=args.system.lower(),
+        subsystem=args.subsystem,
+        convert=args.convert,
+        runMode=RunMode.FEEDBACK_ONLY,
+        capabilities=parseCapabilities(args.capability),
+        sourceDir=args.source,
+        excludePatterns=args.exclude.split(","),
+        includePatterns=args.include.split(","),
+        sigridURL=args.sigridurl,
+        ignoreMissingScopeFile=args.ignore_missing_scope_file,
+        autoOnboarding=False,
+        inlineResults=True
+    )
+
+
+if __name__ == "__main__":
+    parser = ArgumentParser(description="Starts a Sigrid CI analysis and prints structured feedback to stdout for AI agents to consume.")
+    addPublishArguments(parser)
+    args = parser.parse_args()
+
+    runAnalysis(parsePublishOptions(args))

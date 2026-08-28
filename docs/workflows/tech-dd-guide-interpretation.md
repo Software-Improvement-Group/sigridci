@@ -2,7 +2,7 @@
 
 ## Introduction
 
-This document serves as a guide to interpreting Software Improvement Group’s Sigrid software assurance platform measurement results, and reporting on findings presented in the platform.
+This document serves as a guide to interpreting Software Improvement Group’s Sigrid software governance platform measurement results, and reporting on findings presented in the platform.
 
 Currently, this guide covers the following topics:
 

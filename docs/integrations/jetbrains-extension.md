@@ -4,7 +4,7 @@ The JetBrains plugin is another Sigrid IDE extension, alongside the [Sigrid exte
 
 The plugin is available on the [JetBrains Marketplace](https://plugins.jetbrains.com/plugin/32479-sigrid).
 
-If you're looking for AI coding assistant integration instead, check out the [Sigrid MCP](integration-sigrid-mcp.md). This plugin is for developers who want to work with findings themselves.
+This plugin also includes a **Fix with AI** feature, described below, that hands findings off to Claude Code directly from the findings panel. If you want AI coding assistant integration without the findings panel itself, see the [Sigrid MCP](integration-sigrid-mcp.md).
 
 What you can do with it:
 
@@ -14,6 +14,7 @@ What you can do with it:
 - Triage findings — update status and add remarks — without opening Sigrid in your browser
 - Double-click a finding to jump straight to the relevant line of code
 - Open the full finding detail page in Sigrid when you need more context
+- Fix findings with AI. Send one or more findings to Claude Code, using the **Fix with AI** toolbar button or the right-click **Fix it with Claude Code** menu, to have them fixed for you without leaving your IDE.
 - Create Jira or Azure DevOps issues directly from one or more findings, via a unified "Create Issue" button
 
 ## Requirements
@@ -89,6 +90,16 @@ To edit a finding, select one or more rows and do one of the following:
 - Right-click and choose **Edit…** from the context menu
 
 Batch edits are supported for up to 25 findings at a time.
+
+## Fixing findings with AI
+
+Any finding that involves a code change can be sent straight to Claude Code instead of being fixed by hand. Select one or more findings in the Maintainability, Security, or Open Source Health panel, then either click the **Fix with AI** button in the toolbar, or right-click and choose **Fix it with Claude Code** from the context menu.
+
+<img src="../images/ide/jetbrains-fix-w-ai.png" width="700" />
+
+This builds a natural-language prompt describing the selected findings, their severity, and their file locations, and hands it to the `claude` CLI in a terminal. If the Sigrid plugin for Claude Code is installed and enabled, the prompt also includes the right Sigrid slash command for the category involved (for example `/sigrid:sigrid-improve` for maintainability findings, or `/sigrid:fix-osh-risk` for Open Source Health), so Claude can pull extra context from Sigrid while it works. If the plugin isn't detected, the prompt falls back to plain instructions instead, and a one-time notification offers a link to install it.
+
+<img src="../images/ide/sig-jetbrains-azuredevops-create-issue.png" width="700" />
 
 ## Creating issues from findings
 

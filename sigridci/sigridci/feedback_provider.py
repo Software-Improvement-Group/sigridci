@@ -18,6 +18,8 @@ import uuid
 
 from .capability import MAINTAINABILITY, OPEN_SOURCE_HEALTH, SECURITY
 from .objective import Objective
+from .reports.inline_results_report import MaintainabilityInlineResultsReport, OpenSourceHealthInlineResultsReport, \
+    SecurityInlineResultsReport
 from .reports.ascii_art_report import AsciiArtReport
 from .reports.azure_pull_request_report import AzurePullRequestReport
 from .reports.bitbucket_pull_request_report import BitBucketPullRequestReport
@@ -83,6 +85,12 @@ class FeedbackProvider:
         if self.feedback is None:
             raise Exception("No feedback provided")
 
+        if self.options.inlineResults:
+            report = self.prepareInlineResultsReport()
+            report.previousFeedback = self.previousFeedback
+            report.generate(self.analysisId, self.feedback, self.options)
+            return report.isObjectiveSuccess(self.feedback, self.options)
+
         if not os.path.exists(self.options.outputDir):
             os.mkdir(self.options.outputDir)
 
@@ -108,6 +116,18 @@ class FeedbackProvider:
             return OpenSourceHealthMarkdownReport(self.options, vulnerabilityObjective, licenseObjective)
         elif self.capability == SECURITY:
             return SecurityMarkdownReport(self.options, self.objectives["SECURITY_MAX_SEVERITY"])
+        else:
+            raise Exception(f"Unknown capability: {self.capability}")
+
+    def prepareInlineResultsReport(self):
+        if self.capability == MAINTAINABILITY:
+            return MaintainabilityInlineResultsReport(self.objectives)
+        elif self.capability == OPEN_SOURCE_HEALTH:
+            vulnerabilityObjective = self.objectives["OSH_MAX_SEVERITY"]
+            licenseObjective = self.objectives["OSH_MAX_LICENSE_RISK"]
+            return OpenSourceHealthInlineResultsReport(self.options, vulnerabilityObjective, licenseObjective)
+        elif self.capability == SECURITY:
+            return SecurityInlineResultsReport(self.options, self.objectives["SECURITY_MAX_SEVERITY"])
         else:
             raise Exception(f"Unknown capability: {self.capability}")
 

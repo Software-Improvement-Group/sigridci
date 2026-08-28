@@ -1,5 +1,5 @@
 name: "Sigrid CI"
-description: "Sigrid | Software Assurance Platform"
+description: "Sigrid | Software Governance Platform"
 
 inputs:
   customer:
@@ -22,10 +22,6 @@ inputs:
     default: false
   publishonly:
     description: "Publishes your source code to Sigrid, without waiting for feedback (true/false)."
-    required: false
-    default: false
-  disableonboarding:
-    description: "Disables automatic on-boarding."
     required: false
     default: false
   exclude:
@@ -130,7 +126,6 @@ runs:
     - ${{ inputs.capability }}
     - "--detaillevel"
     - ${{ inputs.detaillevel }}
-    - ${{ (inputs.disableonboarding == 'true' && '--disable-onboarding') || '--dummy' }}
   env:
     displayname: ${{ inputs.displayname }}
     divisionname: ${{ inputs.divisionname }}
