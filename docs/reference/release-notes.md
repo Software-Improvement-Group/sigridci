@@ -3,6 +3,12 @@ Sigrid release notes
 
 SIG uses [continuous delivery](https://en.wikipedia.org/wiki/Continuous_delivery), meaning that every change to Sigrid or the underlying analysis is released once our development pipeline has completed. On average, we release somewhere between 10 and 20 times per day. This page therefore doesn't list every single change, since that would quickly lead to an excessively long list of small changes. Instead, this page lists Sigrid and analysis changes that we consider noteworthy for the typical Sigrid user.
 
+### August 24, 2026
+
+- **Report Generator:** Generate PowerPoint reports directly from the Portfolio or System Overview, to facilitate and integrate with offline reporting flows. [Find out more](../capabilities/generated-reports.md).
+- **Technology support:** Sigrid now supports the [Erlang](https://www.erlang.org) programming language for maintainability analysis. Additional support for architecture insights will be added in the coming weeks.
+- **On-premise:** Sigrid now supports Azure DevOps repository names with spaces or other non-alphanumerical characters. This makes it easier to reuse your repository name as a system name in Sigrid, without manually needing to configure the system name for each repository.
+
 ### August 10, 2026
 
 - **Mendix QSM:** Sigrid now supports integration with [Mendix Pipelines](https://docs.mendix.com/developerportal/deploy/mendix-pipelines/). This allows you to automatically publish your app to Sigrid, as part of your time. [The documentation](../sigridci-integration/mendix-pipelines.md) contains more information on how you can configure this integration in Mendix Pipelines.
