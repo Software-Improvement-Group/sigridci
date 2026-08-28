@@ -15,7 +15,7 @@ You can use the main menu at the top of the page to navigate to portfolio-level 
 
 <img src="../images/portfolio-overview-top-bar.png" width="600" />
 
-As an example, see the [portfolio security view](portfolio-security.md) or [portfolio Open Source Health view](portfolio-open-source-health.md). It's also possible to define [portfolio-level objectives](portfolio-objectives.md).
+As an example, see the [portfolio security view](portfolio-security.md) or [portfolio Open Source Health view](portfolio-open-source-health.md). It's also possible to define [portfolio-level objectives](portfolio-objectives.md). You can also [generate offline reports](generated-reports.md#portfolio-level-generated-reports) to share with stakeholders.
 
 ## Using the portfolio overview
 To answer questions such as the above, start in the portfolio view > tab *Overview*. Sigrid shows a dashboard with a quality overview of your entire portfolio, combining all quality characteristics. Based on the systems’ information, you can filter/zoom your portfolio into views that help you understand the details. 
