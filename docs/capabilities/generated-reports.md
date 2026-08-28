@@ -4,6 +4,8 @@ Generated offline reports are PowerPoint documents that you can create from Sigr
 
 Reports can focus on snapshot information (current state), changes across a time period, or process and metadata insights. All generated reports are PowerPoint documents that can be easily shared and archived offline.
 
+<img src="../images/generated-reports-hero.png" width="480" alt="Portfolio Overview page showing the Generate Report button in the top right" />
+
 ## Report types and focuses
 
 Different types of generated reports are available, each with a specific focus:
