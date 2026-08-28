@@ -1,5 +1,5 @@
 name: "Sigrid CI"
-description: "Sigrid | Software Assurance Platform"
+description: "Sigrid | Software Governance Platform"
 
 inputs:
   customer:
