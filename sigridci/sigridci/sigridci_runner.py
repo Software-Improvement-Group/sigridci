@@ -182,3 +182,31 @@ class SigridCiRunner:
                 for name, value in metadata.items():
                     formattedValue = json.dumps([value]) if name in ["teamNames", "supplierNames"] else json.dumps(value)
                     writer.write(f"  {name}: {formattedValue}\n")
+
+
+def validateOptions(options):
+    if not options.isValidSystemName():
+        maxNameLength = PublishOptions.SYSTEM_NAME_LENGTH.stop - (len(options.customer) + 1)
+        print(f"Invalid system name, system name should match '{PublishOptions.SYSTEM_NAME_PATTERN.pattern}' "
+              f", not completely numeric, and be {PublishOptions.SYSTEM_NAME_LENGTH.start} to {maxNameLength} characters long (inclusive).")
+        sys.exit(1)
+
+    if not options.isValidSubSystemName():
+        print(f"Invalid subsystem name, subsystem name should match '{PublishOptions.SUBSYSTEM_NAME_PATTERN.pattern}'"
+              ", must be at least two characters long and not contain consecutive dots or slashes.")
+        sys.exit(1)
+
+
+def runAnalysis(options):
+    if not os.path.exists(options.sourceDir):
+        print(f"Source code directory not found: {options.sourceDir}")
+        sys.exit(1)
+
+    validateOptions(options)
+    Platform.checkEnvironment()
+
+    UploadLog.log("Starting Sigrid CI")
+    runner = SigridCiRunner(options, SigridApiClient(options))
+    exitCode = runner.run()
+    if options.runMode == RunMode.FEEDBACK_ONLY:
+        sys.exit(exitCode)
