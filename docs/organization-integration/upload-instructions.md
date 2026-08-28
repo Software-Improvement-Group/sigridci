@@ -23,7 +23,7 @@ This documentation contains platform-specific instructions for integrating Sigri
 In some situations, you may want to publish your source code to Sigrid *without* integrating Sigrid in your pipelines.
 In those cases, you can manually run Sigrid CI from the command line:
 
-- Make sure you have a Sigrid [API token](https://docs.sigrid-says.com/organization-integration/authentication-tokens.html).
+- Make sure you have a Sigrid [API token](../organization-integration/authentication-tokens.md).
 - Create an environment variable called `SIGRID_CI_TOKEN` containing your API token.
 - Navigate to the directory containing your source code.
 - Clone the Sigrid CI repository: `git clone https://github.com/Software-Improvement-Group/sigridci.git sigridci`
