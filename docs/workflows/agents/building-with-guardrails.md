@@ -32,7 +32,7 @@ Underneath both sits the problem we built Sigrid to solve. "Maintainable" is not
 
 {% include sigrid-mcp/primitives.md %}
 
-You need the first two to get started.
+On Claude Code, the plugin covers tool access and automatic enforcement together, so the second and fourth rows come from one install. Other tools need persistent instructions too, to fire the trigger.
 
 ### 1. Install the plugin
 
@@ -42,6 +42,8 @@ The plugin configures the Sigrid MCP server and the skills together:
 
 The installer asks for your Sigrid API token once and stores it in your system keychain. See [authentication tokens](../../organization-integration/authentication-tokens.md) for how to get one. The plugin only works in Claude Code. If you use a different agentic CLI, configure the MCP server by hand with the [installation instructions](../../integrations/integration-sigrid-mcp.md#manual-configuration-other-ides). You need at least the `guardrails:quality_check` tool.
 
+The plugin also installs a hook that calls that tool on every file changed at the end of each turn. Other CLIs need that trigger added by hand; see [setting it up for other tools](../../integrations/sigrid-mcp/guardrails.md#other-tools).
+
 Check it works before you rely on it:
 
 ```
@@ -50,9 +52,9 @@ Run the Sigrid guardrails quality check on <a file you changed recently>.
 
 The tool takes one file (snippet) at a time, and returns the maintainability guidelines that file violates, with a severity and a line range per unit, plus a separate list of security findings. A clean file returns both lists empty, so an empty result is a pass and not a failure to run.
 
-### 2. Add the quality gate
+### 2. Add your own conventions (optional on Claude Code)
 
-Tool access alone changes nothing, because the agent has no reason to call the tool. What makes it fire is an instruction in your project's context file, so it applies to every session without you asking. In Claude Code that file is `CLAUDE.md` in the repository root; for the equivalent elsewhere, see [where to place these instructions](../../integrations/sigrid-mcp/guardrails.md#where-to-place-these-instructions).
+The hook covers the trigger. This step adds your codebase's own conventions, and what the agent should do once it has a finding, in the block below. On another CLI, this step is also where the trigger itself comes from; see [setting it up for other tools](../../integrations/sigrid-mcp/guardrails.md#other-tools).
 
 {% include sigrid-mcp/quality-gate-prompt.md %}
 
@@ -61,8 +63,6 @@ Two details in that text do the work, and both are easy to lose when you reword 
 The gate also lets the agent leave a finding alone, either because the code already honors the principles or because the fix would cascade outside the task, as long as it says which and why. That clause is what keeps a small addition from turning into an afternoon of extractions.
 
 An instruction is followed most of the time, and the agent is the one who decides it has finished, so we would verify the gate for the first few sessions in a new repository. Where it really matters, back it with something mechanical: [Sigrid CI](../../sigridci-integration/using-sigridci.md) in a pre-commit hook or in your pipeline runs the same checks whatever produced the code.
-
-Then add your own conventions under Code Principles: the framework patterns your codebase actually uses, and a line for every recurring mistake you find yourself correcting.
 
 Use whatever you are already coding with. Handing the checks to a cheaper subagent looks like a saving, since `guardrails:quality_check` is deterministic and its output is a plain list. The fix is the actual work though, and it is the least self-contained step here: it needs the file, the class around it, and the reason the code is shaped the way it is. A subagent starts with none of that, so it reads the file again to catch up, and then either makes a change you did not want or invents a reason for leaving a finding alone. Both cost you more than the cheaper model saves. See [LLM model selection](../agents.md#llm-model-selection).
 {: .model }
