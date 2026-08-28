@@ -1,211 +1,59 @@
 # Uploading your source code to Sigrid
 
-There are multiple ways to upload your source code. The best and recommended way is to integrate Sigrid into your development environment using Sigrid CI. However, SIG also supports alternative upload channels for situations where Sigrid CI cannot be used.
-
-This documentation covers cloud-based Sigrid. On-premise Sigrid requires integration with your development platform, which is explained in the section about [on-premise analysis configuration](../organization-integration/onpremise-analysis.md).
+This documentation covers cloud-based Sigrid. On-premise Sigrid requires integration with your development platform, 
+which is explained in the section about [on-premise analysis configuration](../organization-integration/onpremise-analysis.md).
 {: .attention }
 
-## Sigrid CI: Pipeline integration
+## Recommended approach: Integrate Sigrid CI in your pipeline
 
-Integrating Sigrid CI into your pipeline allows you to automatically publish your source code to Sigrid after every change. It also allows you to receive feedback from Sigrid within your development environment.
+Integrating Sigrid CI into your pipeline allows you to automatically publish your source code to Sigrid after every 
+change. It also allows you to receive feedback from Sigrid within your development environment.
 
-### The general steps to start with CI:
+This documentation contains platform-specific instructions for integrating Sigrid CI into your pipeline:
 
-- SIG will create an empty Sigrid and a first user per customer.
-- The first user needs to create a [PAT token](../organization-integration/authentication-tokens.md).
-- Based on your environment the respective Sigrid CI jobs will need to configured with the above token.
-- Please check if your firewall allows outbound traffic to Sigrid-says.com [link to the FAQ page](../capabilities/faq.md)
+- [GitHub](../sigridci-integration/github-actions.md)
+- [GitLab](../sigridci-integration/gitlab.md)
+- [Azure DevOps](../sigridci-integration/azure-devops.md)
+- [BitBucket](../sigridci-integration/azure-devops.md)
+- [Jenkins](../sigridci-integration/jenkins.md)
+- [TeamCity](../sigridci-integration/teamcity.md)
 
-See the "Sigrid CI" section in the menu for an overview of supported platforms. The documentation also explains how Sigrid CI fits into various [development processes and workflows](../sigridci-integration/development-workflows.md).
+## Manually uploading source code using Sigrid CI
+
+In some situations, you may want to publish your source code to Sigrid *without* integrating Sigrid in your pipelines.
+In those cases, you can manually run Sigrid CI from the command line:
+
+- Make sure you have a Sigrid [API token](https://docs.sigrid-says.com/organization-integration/authentication-tokens.html).
+- Create an environment variable called `SIGRID_CI_TOKEN` containing your API token.
+- Navigate to the directory containing your source code.
+- Clone the Sigrid CI repository: `git clone https://github.com/Software-Improvement-Group/sigridci.git sigridci`
+- Run the script to publish your source code: `./sigridci/sigridci/sigridci.py --customer <example_customer_name> --system <example_system_name> --source . --publish`
 
 ## Uploading source code using SFTP
 
-The preferred method to upload source code is Sigrid CI, but SIG also offers SFTP uploads for situations where Sigrid CI cannot be used.
+SFTP uploads are outdated. Prefer using [Sigrid CI](#recommended-approach-integrate-sigrid-ci-in-your-pipeline) to
+publish your source code to Sigrid.
+{: .warning }
 
-The upload server for SFTP uploads is **upload.sigrid-says.com**. To make sure your uploaded files are secure, you will not receive full shell access to our upload server. Your account is jailed, such that other users of the upload server don't know its existence and cannot access it. Files uploaded to your account will be removed from your account after (at most) 3 days and removed from our backup after (at most) 6 weeks. The backup is encrypted using AES256. The disk your account resides on is encrypted using AES256 as well.
-
-The default folder you connect to is referred to as your home folder. You are free to create new files in your home folder, please be aware that we will keep the files for the last 4 upload dates.
-
-The requirements below must be fulfilled to ensure uploaded files can be processed automatically and correctly:
-
-- Create one ZIP file for each source code snapshot. Refer to the list of [supported file formats](#supported-sftp-file-formats) and [instructions for creating a ZIP file for your ststem](#creating-a-zip-file-for-your-system).
-- Keep the internal structure of the ZIP file consistent across snapshots.
-- Add the date of the source code snapshot to the file name, in the format `yyyymmdd`.
-- Use the following naming convention for files you upload: `<application name>–<date>.zip` (for example: `myportal–20200922.zip`).
-
-### Supported SFTP file formats
-
-- Regular ZIP files
-- GZIP
-- RAR (v1.5 to v4.0)
-- TAR
-- TAR.GZ
-
-
-### SFTP key creation
-
-You need to generate an SSH authentication key to connect to the upload server. The public part of this key needs to be whitelisted by the upload server. You can send it to [SIG's support department](mailto:support@softwareimprovementgroup.com)
-
-The SSH key you generate can be either an:
-- RSA key (of at least 2048 bits long)
-- ECDSA key (of at least 256 bits long)
-- ED25519 key (of at least 256 bits long)
-
- Please note we do not support the 'ssh-rsa' public key signature algorithm. Please use a modern SSH implementation that supports stronger algorithms such as:
-- rsa-sha2-256
-- rsa-sha2-512
-- ssh-ed25519
-
-### SFTP/SCP upload server details
-
-You can verify the authenticity of the upload server by checking its public host key fingerprint. This fingerprint should be visible when connecting to the upload server for the first time, and, depending on the type of authentication used, should be equal to one of the following:
-
-- RSA fingerprint: `4096 SHA256:1WMnU9ZOxldY+wfMoybHEQTknQJWd/SSGm0sv92TBDg`
-- ECDSA fingerprint: `256 SHA256:fETp+2EViXNquhE5SxRJ5YBqwiTchFCo0Za0Z+yyv1o`
-- ED25519 fingerprint: `256 SHA256:7AgpHOklx1QpkH88C2nbKFIyDuLhLQzUUnDrD95qF44`
-
-The SFTP/SCP protocol connects to port 22 on our upload server, so your firewall should allow outbound traffic to port 22.
-
-### SFTP key exchange
-
-To secure this account, please send your SIG contact the following:
-
-- Your name
-- Email address
-- Phone number (to arrange the key exchange, and in case of problems)
-- The public part of an SSH key pair (for each computer you intend to upload from)
-
-Both OpenSSH and SSH2 public keys are supported. Please use one key pair per computer and protect the private part of your key properly. After receiving this information, you will receive an account name linked to the supplied SSH key.
-
-### SFTP key creation
-
-If you are uploading from a Unix, Linux or macOS system, then you probably are in possession of an SSH key already, it's most likely stored in the `id_rsa.pub` file in the `.ssh` folder in the home folder of the account you use to upload your files. You can use `ssh-keygen -t rsa` to create a key if it isn't. It's safe to answer all questions with an 'enter'.
-
-If you are uploading from Windows, you likely need to create a new key. You can, for example, use the [puttygen3](https://www.chiark.greenend.org.uk/~sgtatham/putty/latest.html) application to accomplish this.
-
-### Uploading to upload.sigrid-says.com via scp
-
-Connections to our upload server can be made using an SCP client, such as [WinSCP](http://winscp.net/eng/index.php) for Windows, or the command line utility `scp` for Unix, Linux and macOS, which is part of the [OpenSSH](http://www.openssh.com) suite.
-
-An example of the secure copy command scp, which refers to a private key, the zip file to be uploaded and 'your-upload-account' that you will receive from Sigrid support. If you’re leaving out the remote file name, the ‘:’ at the end of ‘upload.sigrid-says.com’ is essential. The warning 'scp: remote fsetstat: Operation unsupported' is harmless.
-
-```
-scp -i ~/.ssh/id_rsa system-name-<yyyymmdd>.zip your-upload-account@upload.sigrid-says.com:
-```
-
-An example of sftp
-
-```
-% sftp <account>@upload.sigrid-says.com: <<< $'put <file>'
-Connected to upload.sigrid-says.com.
-Changing to: /.
-sftp> put <file>
-Uploading <file> to /<file>
-<file>
-```
-### Viewing the uploaded files
-- After uploading you can view the uploaded files to verify that the upload succeeded.
-- Your uploads will be kept for 30 days. Uploads older than 30 days will be removed.
-
-
-### Upload.sigrid-says.com is powered by SFTPGo
-Link to the source code of [SFTPGo](https://github.com/drakkan/sftpgo)
-
+See the [SFTP upload instructions](sftp-upload-instructions.md) if you are unable to use Sigrid CI and are therefore
+forced to rely on SFTP uploads.
 
 ## Manually uploading source code using the SIG Upload Portal
 
-**Note for when you do not have a Sigrid account yet:** In most cases, source code represents a significant financial or strategic value. SIG cannot accept responsibility for received source code without an established NDA or contract. That is why SIG advises to have a Non Disclosure Agreement (NDA) in place before uploading source code. We can send you an NDA upon request.
+Manual uploads are outdated. Prefer using [Sigrid CI manually](#manually-uploading-source-code-using-sigrid-ci) to
+publish your source code to Sigrid.
+{: .warning }
 
-The process for manual uploads is as follows:
-
-1. Client determines what source code to upload.
-2. Client archives all files into a ZIP file. Refer to our [instructions for creating a zip file for your system](#creating-a-zip-file-for-your-system).
-3. Client uploads file(s) to SIG using SIG upload facility. See below for details.
-4. SIG receives files and validates the upload.
-5. SIG informs client and involved SIG employees about successful upload.
-
-### The SIG Upload Portal for manual uploads
-
-The upload facility is a secure website. No login is required. The size of one single upload is limited to 2 GB. The URL is [uploadportal.softwareimprovementgroup.com](https://uploadportal.softwareimprovementgroup.com/).
-
-The usage of the portal is straightforward:
-
-1. Open the portal by typing `https://uploadportal.softwareimprovementgroup.com` in the address bar of your web browser
-2. (optional) Check if the connection is indeed secure:
-   - Your browser displays a symbol representing a closed lock
-   - You may verify that the secure connection is indeed with the Software Improvement Group by checking the validity of the certificate. Should you require assistance in validating the secure connection, please do not hesitate to contact us.
-3. Fill in your contact information and the upload details
-4. Click on 'Choose file'
-5. Select the file you want to upload
-6. Click on 'Upload'
-7. Wait for the system to finalize the file transfer (this may take some time, depending on network traffic and size of the file)
-8. The system returns with a message and provides the opportunity to upload another file
-
-## Creating a ZIP file for your system
-
-If you use Sigrid CI, this ZIP file is created automatically and you can skip this section. If you are using SFTP or manual uploads, you will need to create the ZIP file yourself using these guidelines.
-
-Prefer regular ZIP files, and avoid nested ZIP files. The following example can be used to create a ZIP file on the command line using Linux, MacOS, or WSL:
-
-```
-git clone https://github.com/LeaVerou/awesomplete.git code
-cd code
-git --no-pager log --date=iso --format='@@@;%H;%an;%ae;%cn;%ce;%cd;%s' --numstat --no-merges > git.log
-git --no-pager log --date=iso --format='@@@MERGE;%H;%an;%ae;%cn;%ce;%cd;%s' --merges >> git.log
-rm -rf .git
-zip -r your-project.zip .
-```
-
-The following example can be used with Windows PowerShell to create a ZIP file:
-
-```
-git clone https://github.com/LeaVerou/awesomplete.git code
-cd code
-git --no-pager log --date=iso --format='@@@;%H;%an;%ae;%cn;%ce;%cd;%s' --numstat --no-merges | Out-File -FilePath git.log -Encoding 'utf8'
-git --no-pager log --date=iso --format='@@@MERGE;%H;%an;%ae;%cn;%ce;%cd;%s' --merges | Out-File -FilePath git.log -Encoding 'utf8' -Append
-Remove-Item -Recurse -Force .git
-cd ..
-Compress-Archive -Path code\* -DestinationPath .\your-project.zip
-```
-
-The only thing you need to change in these examples is to replace the URL of the repository with your own system's URL. 
-
-This will clone a Git repository, and then create a ZIP file containing both the source code and the change history. The latter is used for Sigrid's [architecture quality](../capabilities/architecture-quality.md) analysis. We create a log file containing this change history, and afterwards we deleted the `.git` directory to make the ZIP file smaller and faster to upload. 
-
-Please make sure that you use the UTF-8 character encoding when creating the ZIP file.
-
-## Publishing analysis results to Sigrid without uploading your code
-
-If you are part of a one-off assessment where your source code needs to remain on-premise, SIG provides a special
-service where you can analyze your source code *locally* without needing to upload your source code. At the end of
-the analysis, the analysis results are published to Sigrid, but the source code itself is never uploaded.
-You can find more information in the [Local Runner documentation](../organization-integration/sigrid-local.md).
-The Sigrid Local Runner is *only* available for one-off assessments, and cannot be used for Sigrid subscriptions.
+See the instructions for [using the SIG Upload Portal](manual-upload-instructions.md) for more information on how
+to use the SIG Upload Portal in situations where you are unable to use Sigrid CI.
 
 ## Uploading multiple Git repositories as a single Sigrid system
 
-If you need to combine several Git repositories into one Sigrid system for a one-off upload, you can use [the `sigrid-git-upload.py` script](https://github.com/Software-Improvement-Group/sigridci/tree/main/multi-repository-upload) provided in this repository. The script clones each repository into a temporary directory, bundles them together, and publishes the result to Sigrid.
-
-This upload channel is designed for manual runs only and does not include pull-request feedback. For automated pipeline uploads, use [Sigrid CI](../sigridci-integration/development-workflows.md) instead.
-
-```bash
-export SIGRID_CI_TOKEN=your-token-here
-
-./multi-repository-upload/sigrid-git-upload.py \
-    --customer <customer> \
-    --system   <system>   \
-    https://git.example.com/org/repo1.git \
-    https://git.example.com/org/repo2.git
-```
-
-See the [multi-repository-upload README](../../multi-repository-upload/README.md) for the full list of options and requirements.
-
-## What if something went wrong?
-
-We recommend using Sigrid CI to publish your source code to Sigrid CI, since this approach is automated and therefore less error prone. If you run into issues while publishing your code it's best to [contact SIG's support team directly](#contact-and-support).
-
-If you manually exported your Git history and it's not being picked up by Sigrid, refer to the [frequently asked questions for manually providing this data](../capabilities/faq-architecture.md#troubleshooting-issues-when-manually-publishing-your-repository-history).
+If you need to combine several Git repositories into one Sigrid system for a one-off upload, 
+you can use [multi repository upload script](../../multi-repository-upload/README.md) provided by SIG
+on GitHub. The project documentation contains more instructions and examples on how to use this script.
 
 ## Contact and support
 
-Feel free to contact [SIG's support department](mailto:support@softwareimprovementgroup.com) for any questions or issues you may have after reading this document, or when using Sigrid or Sigrid CI.
+Feel free to contact [SIG's support department](mailto:support@softwareimprovementgroup.com) for any questions or 
+issues you may have after reading this document or when using Sigrid or Sigrid CI.
