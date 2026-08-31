@@ -3,7 +3,7 @@ Sigrid release notes
 
 SIG uses [continuous delivery](https://en.wikipedia.org/wiki/Continuous_delivery), meaning that every change to Sigrid or the underlying analysis is released once our development pipeline has completed. On average, we release somewhere between 10 and 20 times per day. This page therefore doesn't list every single change, since that would quickly lead to an excessively long list of small changes. Instead, this page lists Sigrid and analysis changes that we consider noteworthy for the typical Sigrid user.
 
-### September 2, 2026
+### September 7, 2026
 
 - **Sigrid CI:** After a successful Beta phase, Sigrid CI security feedback is now generally available. If your Sigrid license includes Sigrid Security, you will automatically receive security feedback from Sigrid CI. The [Sigrid CI documentation](../sigridci-integration/using-sigridci.md#security-feedback) contains more information on this feedback. If you do *not* want security feedback, you can disable it in [the Sigrid CI configuration](../reference/client-script-usage.md#command-line-options). 
 
