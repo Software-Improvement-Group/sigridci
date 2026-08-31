@@ -214,6 +214,10 @@
   display_name: "Clearbasic"
   category: legacy
 
+- context: clojure
+  display_name: "Clojure"
+  category: modern_general_purpose
+
 - context: cobol
   display_name: "Cobol"
   category: mainframe

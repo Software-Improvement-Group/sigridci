@@ -5,7 +5,8 @@ SIG uses [continuous delivery](https://en.wikipedia.org/wiki/Continuous_delivery
 
 ### September 2, 2026
 
-- **Sigrid CI:** After a successful Beta phase, Sigrid CI security feedback is now generally available. If your Sigrid license includes Sigrid Security, you will automatically receive security feedback from Sigrid CI. The [Sigrid CI documentation](../sigridci-integration/using-sigridci.md#security-feedback) contains more information on this feedback. If you do *not* want security feedback, you can disable it in [the Sigrid CI configuration](../reference/client-script-usage.md#command-line-options). 
+- **Sigrid CI:** After a successful Beta phase, Sigrid CI security feedback is now generally available. If your Sigrid license includes Sigrid Security, you will automatically receive security feedback from Sigrid CI. The [Sigrid CI documentation](../sigridci-integration/using-sigridci.md#security-feedback) contains more information on this feedback. If you do *not* want security feedback, you can disable it in [the Sigrid CI configuration](../reference/client-script-usage.md#command-line-options).
+- **Technology support:** Sigrid now supports the [Clojure](https://clojure.org) programming language.
 
 ### August 24, 2026
 
