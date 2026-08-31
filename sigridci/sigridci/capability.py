@@ -26,6 +26,6 @@ class Capability:
 
 MAINTAINABILITY = Capability("MAINTAINABILITY", "Maintainability", "maintainability", 2, False)
 OPEN_SOURCE_HEALTH = Capability("OPEN_SOURCE_HEALTH", "Open Source Health", "osh", 4, False)
-SECURITY = Capability("SECURITY", "Security", "security", 8, True)
+SECURITY = Capability("SECURITY", "Security", "security", 8, False)
 
 CAPABILITY_SHORT_NAMES = {cap.shortName: cap for cap in [MAINTAINABILITY, OPEN_SOURCE_HEALTH, SECURITY]}
