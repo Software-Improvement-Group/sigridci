@@ -73,7 +73,7 @@ that would not be reasonable. The behavior we're going for is known as
 cleaner than you found it. 
 
 Feedback is based on your [maintainability objective](../capabilities/portfolio-objectives.md). If you have not
-configured an objective, Sigrid CI will use a default target of 3.5 stars, which is what we recommand as a reasonable
+configured an objective, Sigrid CI will use a default target of 3.5 stars, which is what we recommend as a reasonable
 default for modern systems.
 
 ### Architecture feedback (Beta)
