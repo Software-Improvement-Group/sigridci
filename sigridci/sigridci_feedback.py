@@ -17,9 +17,10 @@
 import json
 import os
 import sys
-from argparse import ArgumentParser, SUPPRESS
+from argparse import ArgumentParser
 
 from sigridci.capability import CAPABILITY_SHORT_NAMES, SECURITY
+from sigridci.cli_options import addSigridConnectionArguments
 from sigridci.feedback_provider import FeedbackProvider
 from sigridci.publish_options import PublishOptions, RunMode
 from sigridci.sigrid_api_client import SigridApiClient
@@ -64,12 +65,9 @@ def loadPreviousAnalysisResults(capability, options, origin):
 
 if __name__ == "__main__":
     parser = ArgumentParser(description="Provides Sigrid CI feedback for the specified analysis.")
-    parser.add_argument("--partner", type=str, default="sig", help=SUPPRESS)
-    parser.add_argument("--customer", type=str, required=True, help="Name of your organization's Sigrid account.")
-    parser.add_argument("--system", type=str, required=True, help="Name of your system in Sigrid, letters/digits/hyphens only.")
+    addSigridConnectionArguments(parser)
     parser.add_argument("--detaillevel", type=str, default="default", help="Detail level for how much feedback to provide.")
     parser.add_argument("--out", type=str, default="sigrid-ci-output", help="Output directory for Sigrid CI feedback.")
-    parser.add_argument("--sigridurl", type=str, default="https://sigrid-says.com", help="Sigrid base URL.")
     parser.add_argument("--capability", type=str, required=True, choices=list(CAPABILITY_SHORT_NAMES.keys()))
     parser.add_argument("--analysisresults", type=str, required=True, help="Analysis results JSON file.")
     parser.add_argument("--previousresults", type=str, help="Previous results for comparison, either a file or 'sigrid'.")

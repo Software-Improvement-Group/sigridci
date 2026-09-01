@@ -100,6 +100,7 @@ This page provides an overview of all technologies that can be analyzed by Sigri
 | `elixir`                      | Elixir                                 | ✅          | Maintainability, Architecture, Static AI, GenAI                         |
 | `embeddedsql`                 | C++ Embedded SQL                       | ⚠️          | Maintainability, Architecture, GenAI                                    |
 | `erb`                         | ERB                                    | ✅          | Maintainability, Architecture                                           |
+| `erlang`                      | Erlang                                 | ✅          | Maintainability                                                         |
 | `esql`                        | ESQL                                   | ✅          | Maintainability, Architecture                                           |
 | `filetab`                     | File Tab                               | ✅          | Maintainability                                                         |
 | `finacle`                     | Finacle                                | ⚠️          | Maintainability, Architecture                                           |

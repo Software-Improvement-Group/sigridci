@@ -341,6 +341,10 @@
   display_name: "ERB"
   category: templating
 
+- context: erlang
+  display_name: "Erlang"
+  category: modern_general_purpose
+
 - context: esql
   display_name: "ESQL"
   category: database
