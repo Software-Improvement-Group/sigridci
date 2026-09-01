@@ -92,7 +92,7 @@ To make architecture feedback as concrete as possible, Sigrid CI will report on 
 <img src="../images/ci/architecture-feedback.png" width="350" />
 
 Architecture feedback is currently in Beta, so these issues will always be reported as warnings. Architecture feedback
-will currently not fail your build. The ability to fail your build will become availabkle when this feature leaves
+will currently not fail your build. The ability to fail your build will become available when this feature leaves
 Beta.
 {: .attention }
 
