@@ -263,7 +263,9 @@ The following example shows the CI JSON structure:
           "shortName": "noot.py",
           "type": "FILE",
         }
-      ]
+      ],
+      "count" 1,
+      "lines": [[1, 2]]
     }
   ],
   "totals": {
