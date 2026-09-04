@@ -26,7 +26,7 @@ The [Sigrid Claude Code Plugin](../integration-sigrid-mcp.md) ships a set of ski
 | `sigrid-diagnose` | Finds your weakest maintainability property and surfaces the highest-leverage refactoring candidates |
 | `sigrid-improve` | Executes refactoring candidates with guardrail verification |
 | `architecture-drift` | Checks a diff, staged change, or branch against Sigrid's architecture graph for new coupling, bypassed facades, and cycles |
-| `sigrid-ci-feedback` | Runs Sigrid CI locally and returns structured quality feedback |
+| `change-feedback` | Runs Sigrid CI locally and returns structured quality feedback |
 | `fix-osh-risk` | Remediates open source health findings by creating merge requests or researched issues |
 
 If you use a different AI agent, browse the skill definitions in the [sigrid-ai-toolkit](https://github.com/Software-Improvement-Group/sigrid-ai-toolkit) repository and adapt them to your own workflow.
