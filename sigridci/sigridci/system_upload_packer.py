@@ -64,6 +64,7 @@ class SystemUploadPacker:
         "sigrid-ci-output/",
         "target/",
         ".angular/",
+        ".cache/",
         ".git/",
         ".gitattributes",
         ".gitignore",
