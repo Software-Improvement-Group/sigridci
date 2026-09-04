@@ -1,0 +1,110 @@
+{
+  "baseline": "2026-08-17 12:00:00",
+  "dependencyFeedback": [
+    {
+      "qualification": "UNDESIRABLE",
+      "activity": "INCREASED",
+      "type": "CODE_CALL",
+      "sourceHierarchy": [
+        {
+          "id": "d5272b80859280ba213a386c89ffb90a9d47ebc7d8866e190f70000e6dbc51bc",
+          "name": "sigdelivery-aqci",
+          "shortName": "sigdelivery-aqci",
+          "type": "SYSTEM"
+        },
+        {
+          "id": "c3f928b9df8ce11aeb58ffea7e72d35f546fefd24b51a7191659ca077068cf4d",
+          "name": "b",
+          "shortName": "b",
+          "type": "CODE_COMPONENT"
+        },
+        {
+          "id": "cc643a40462568f1cc2d4a1427050d33f00b9c1cc47438a98fc868bb84bfc24b",
+          "name": "b/b.ts",
+          "shortName": "b.ts",
+          "type": "FILE"
+        }
+      ],
+      "targetHierarchy": [
+        {
+          "id": "d5272b80859280ba213a386c89ffb90a9d47ebc7d8866e190f70000e6dbc51bc",
+          "name": "sigdelivery-aqci",
+          "shortName": "sigdelivery-aqci",
+          "type": "SYSTEM"
+        },
+        {
+          "id": "ee3468917e6c4b98018d7df2e937103edcf9f5ff4d227007a77b9f8695649fbb",
+          "name": "c",
+          "shortName": "c",
+          "type": "CODE_COMPONENT"
+        },
+        {
+          "id": "2aff2ea1a8897030914812d0f506b01f9f2d73da9da94e669bf110985a75e35a",
+          "name": "c/c.ts",
+          "shortName": "c.ts",
+          "type": "FILE"
+        }
+      ],
+      "count": 1,
+      "lines": [
+        [
+          10,
+          20
+        ]
+      ]
+    },
+    {
+      "qualification": "CYCLIC",
+      "activity": "INTRODUCED",
+      "type": "CODE_CALL",
+      "sourceHierarchy": [
+        {
+          "id": "d5272b80859280ba213a386c89ffb90a9d47ebc7d8866e190f70000e6dbc51bc",
+          "name": "sigdelivery-aqci",
+          "shortName": "sigdelivery-aqci",
+          "type": "SYSTEM"
+        },
+        {
+          "id": "c3f928b9df8ce11aeb58ffea7e72d35f546fefd24b51a7191659ca077068cf4d",
+          "name": "b",
+          "shortName": "b",
+          "type": "CODE_COMPONENT"
+        },
+        {
+          "id": "cc643a40462568f1cc2d4a1427050d33f00b9c1cc47438a98fc868bb84bfc24b",
+          "name": "b/b.ts",
+          "shortName": "b.ts",
+          "type": "FILE"
+        }
+      ],
+      "targetHierarchy": [
+        {
+          "id": "d5272b80859280ba213a386c89ffb90a9d47ebc7d8866e190f70000e6dbc51bc",
+          "name": "sigdelivery-aqci",
+          "shortName": "sigdelivery-aqci",
+          "type": "SYSTEM"
+        },
+        {
+          "id": "bb9b79cbccfa40743944cb9272b3515c910435eac5d0fb60cf96d5a9cd900d69",
+          "name": "a",
+          "shortName": "a",
+          "type": "CODE_COMPONENT"
+        },
+        {
+          "id": "eaaf0cc7b89f44740fab5b4e8b2fc44577c88e352c900eea4f7c6c47ab0d2798",
+          "name": "a/a.ts",
+          "shortName": "a.ts",
+          "type": "FILE"
+        }
+      ]
+    }
+  ],
+  "totals": {
+    "UNDESIRABLE": 1,
+    "CYCLIC": 1
+  },
+  "remaining": {
+    "UNDESIRABLE": 0,
+    "CYCLIC": 1
+  }
+}

@@ -16,10 +16,12 @@ import json
 import os
 import uuid
 
-from .capability import MAINTAINABILITY, OPEN_SOURCE_HEALTH, SECURITY
+from .capability import ARCHITECTURE, MAINTAINABILITY, OPEN_SOURCE_HEALTH, SECURITY
 from .objective import Objective
-from .reports.inline_results_report import MaintainabilityInlineResultsReport, OpenSourceHealthInlineResultsReport, \
-    SecurityInlineResultsReport
+from .reports.architecture_markdown_report import ArchitectureMarkdownReport
+from .reports.architecture_text_report import ArchitectureTextReport
+from .reports.inline_results_report import ArchitectureInlineResultsReport, MaintainabilityInlineResultsReport, \
+    OpenSourceHealthInlineResultsReport, SecurityInlineResultsReport
 from .reports.ascii_art_report import AsciiArtReport
 from .reports.azure_pull_request_report import AzurePullRequestReport
 from .reports.bitbucket_pull_request_report import BitBucketPullRequestReport
@@ -50,9 +52,9 @@ class FeedbackProvider:
         elif self.capability == OPEN_SOURCE_HEALTH:
             return self.prepareOpenSourceHealthObjectives(objectives)
         elif self.capability == SECURITY:
-            return {
-                "SECURITY_MAX_SEVERITY" : objectives.get("SECURITY_MAX_SEVERITY", Objective.DEFAULT_FINDING_OBJECTIVE)
-            }
+            return {"SECURITY_MAX_SEVERITY" : objectives.get("SECURITY_MAX_SEVERITY", Objective.DEFAULT_FINDING_OBJECTIVE)}
+        elif self.capability == ARCHITECTURE:
+            return {"ARCHITECTURE_QUALITY" : objectives.get("ARCHITECTURE_QUALITY", Objective.DEFAULT_RATING_OBJECTIVE)}
         else:
             raise Exception(f"Unknown capability: {self.capability}")
 
@@ -116,6 +118,8 @@ class FeedbackProvider:
             return OpenSourceHealthMarkdownReport(self.options, vulnerabilityObjective, licenseObjective)
         elif self.capability == SECURITY:
             return SecurityMarkdownReport(self.options, self.objectives["SECURITY_MAX_SEVERITY"])
+        elif self.capability == ARCHITECTURE:
+            return ArchitectureMarkdownReport()
         else:
             raise Exception(f"Unknown capability: {self.capability}")
 
@@ -128,6 +132,8 @@ class FeedbackProvider:
             return OpenSourceHealthInlineResultsReport(self.options, vulnerabilityObjective, licenseObjective)
         elif self.capability == SECURITY:
             return SecurityInlineResultsReport(self.options, self.objectives["SECURITY_MAX_SEVERITY"])
+        elif self.capability == ARCHITECTURE:
+            return ArchitectureInlineResultsReport()
         else:
             raise Exception(f"Unknown capability: {self.capability}")
 
@@ -146,7 +152,8 @@ class FeedbackProvider:
             reports += [OpenSourceHealthTextReport(markdownReport)]
         elif self.capability == SECURITY:
             reports += [SecurityTextReport(markdownReport)]
+        elif self.capability == ARCHITECTURE:
+            reports += [ArchitectureTextReport(markdownReport)]
 
         reports.append(PipelineSummaryReport(markdownReport))
         return reports
-

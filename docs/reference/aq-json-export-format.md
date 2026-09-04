@@ -82,7 +82,8 @@ picture in the previous section.
       "sourceElementId": "fc570496-c70a-11e8-a8d5-f2801f1b9fd1",
       "targetElementId": "fc570496-c70a-11e8-a8d5-f2801f1b9fd2",
       "type": "CODE_CALL",
-      "count": 2
+      "count": 2,
+      "lines": [[10, 20]]
     }
   ]
 }
@@ -121,6 +122,8 @@ picture in the previous section.
 | dependency.type                     | See the [list of dependency types](#dependency-types) below.                                                   |
 | dependency.description              | Optional field. Text description of that the dependency is.                                                    |
 | dependency.count                    | Describes the number of dependencies. Optional, assume 1 when not specified.                                   |
+| dependency.lines                    | List of caller/callee line number pairs. Optional field.                                                       |
+| dependency.qualification            | One of `UNDESIRABLE`, `CYCLIC`, `NEW`.                                                                         |
 | dependency.undesirable              | Dependency is considered undesirable as specified in the scope file. Optional field, defaults to false.        |
 | technology.name                     | Technology display name, for example "C++".                                                                    |
 | technology.contextName              | Technology ID, for example "cpp".                                                                              |
@@ -263,7 +266,9 @@ The following example shows the CI JSON structure:
           "shortName": "noot.py",
           "type": "FILE",
         }
-      ]
+      ],
+      "count" 1,
+      "lines": [[1, 2]]
     }
   ],
   "totals": {

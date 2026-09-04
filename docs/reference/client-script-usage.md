@@ -22,22 +22,22 @@ The [general Sigrid CI documentation](../sigridci-integration/development-workfl
 
 The script takes a limited number of mandatory arguments. However, Sigrid CI's behavior can be configured and customized using a large number of optional arguments that can be used to align Sigrid CI's behavior to your development team's workflow. The following arguments are available:
 
-| Argument                      | Required | Example value       | Description                                                                                                                       |
-|-------------------------------|----------|---------------------|-----------------------------------------------------------------------------------------------------------------------------------|
-| `--customer`                  | Yes      | examplecustomername | Name of your organization's Sigrid account. Contact SIG support if you are not sure about this. [1]                               |
-| `--system`                    | Yes      | examplesystemname   | Name of your system in Sigrid. Contact SIG support if you are not sure about this. [2]                                            |
-| `--subsystem `                | No       | frontend            | Used to map between repository directory structure versus the one known by Sigrid. [5]                                            |
-| `--source`                    | No       | .                   | Path of your project's source code. Use "." for current directory.                                                                |
-| `--capability`                | No       | maintainability     | Comma-separated list of Sigrid capabilities (`maintainability,osh,security`). Default is based on your Sigrid license.            |
-| `--publish`                   | No       | N/A                 | Automatically publishes analysis results to Sigrid. [1]                                                                           |
-| `--publishonly`               | No       | N/A                 | Publishes analysis results to Sigrid, but *does not* provide feedback in the CI environment itself. [3]                           |
-| `--exclude`                   | No       | /build/,.png        | Comma-separated list of file and/or directory names that should be excluded from the upload. [4, 7]                               |
-| `--include`                   | No       | /build/,.png        | Comma-separated list of file and/or directory names that should be included in the upload. [6, 7]                                 |
-| `--showupload`                | No       | N/A                 | Logs the contents of the upload before submitting it to Sigrid.                                                                   |
-| `--convert`                   | No       | beinformed          | Used for some technologies. See [technology conversion configuration](technology-support.md#technology-conversion-configuration). |
-| `--detaillevel`               | No       | all                 | Detail level for how much feedback to provide. Either 'default' or 'full'.                                                        | 
-| `--out`                       | No       | /tmp                | Output directory for Sigrid CI feedback, default is `sigrid-ci-output`.                                                           |
-| `--ignore-missing-scope-file` | No       | N/A                 | Don't fail if the `sigrid.yaml` scope file is missing (e.g. if it's provided through a different repository).                     |
+| Argument                      | Required | Example value       | Description                                                                                                                         |
+|-------------------------------|----------|---------------------|-------------------------------------------------------------------------------------------------------------------------------------|
+| `--customer`                  | Yes      | examplecustomername | Name of your organization's Sigrid account. Contact SIG support if you are not sure about this. [1]                                 |
+| `--system`                    | Yes      | examplesystemname   | Name of your system in Sigrid. Contact SIG support if you are not sure about this. [2]                                              |
+| `--subsystem `                | No       | frontend            | Used to map between repository directory structure versus the one known by Sigrid. [5]                                              |
+| `--source`                    | No       | .                   | Path of your project's source code. Use "." for current directory.                                                                  |
+| `--capability`                | No       | maintainability     | Comma-separated list of Sigrid capabilities (`maintainability,architecture,osh,security`). Default is based on your Sigrid license. |
+| `--publish`                   | No       | N/A                 | Automatically publishes analysis results to Sigrid. [1]                                                                             |
+| `--publishonly`               | No       | N/A                 | Publishes analysis results to Sigrid, but *does not* provide feedback in the CI environment itself. [3]                             |
+| `--exclude`                   | No       | /build/,.png        | Comma-separated list of file and/or directory names that should be excluded from the upload. [4, 7]                                 |
+| `--include`                   | No       | /build/,.png        | Comma-separated list of file and/or directory names that should be included in the upload. [6, 7]                                   |
+| `--showupload`                | No       | N/A                 | Logs the contents of the upload before submitting it to Sigrid.                                                                     |
+| `--convert`                   | No       | beinformed          | Used for some technologies. See [technology conversion configuration](technology-support.md#technology-conversion-configuration).   |
+| `--detaillevel`               | No       | all                 | Detail level for how much feedback to provide. Either 'default' or 'full'.                                                          | 
+| `--out`                       | No       | /tmp                | Output directory for Sigrid CI feedback, default is `sigrid-ci-output`.                                                             |
+| `--ignore-missing-scope-file` | No       | N/A                 | Don't fail if the `sigrid.yaml` scope file is missing (e.g. if it's provided through a different repository).                       |
 
 Notes:
 
@@ -89,6 +89,7 @@ the Sigrid CI exit code for this, and you can even make this behavior more nuanc
 - Exit code 2: You failed your quality objective for Maintainability.
 - Exit code 4: You failed your quality objective for Open Source Health.
 - Exit code 8: You failed your quality objective for Security.
+- Exit code 16: You failed your quality objective for Architecture.
 
 These exit codes "stack", so an exit code of 6 means you failed your quality objectives for both Maintainability
 and Open Source Health.
