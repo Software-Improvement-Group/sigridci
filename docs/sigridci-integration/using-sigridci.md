@@ -26,7 +26,7 @@ on your Sigrid license:
 
 - [Maintainability feedback](#maintainability-feedback)
 - [Open Source Health feedback](#open-source-health-feedback)
-- [Security feedback](#security-feedback-beta) *(Beta, not enabled by default)*
+- [Security feedback](#security-feedback)
 
 If you do *not* want feedback for one of these aspects, you can explicitly define the `--capability` option in
 the [Sigrid CI configuration](../reference/client-script-usage.md).
@@ -122,11 +122,16 @@ you can explicitly add `--capability maintainability` to *only* receive feedback
 line `message-path: sigrid-ci-output/feedback.md`, and change this to `message-path: sigrid-ci-output/*feedback.md`.
 Adding the asterisk allows you to get feedback on *all* Sigrid capabilities, not just maintainability.
 
-### Security feedback (Beta)
+### Security feedback
 
 Sigrid CI provides security feedback based on your [objectives](../capabilities/portfolio-objectives.md).
 This helps you to "shift left" by reporting security findings early in the development process, making it easier
 and faster to address those findings. 
+
+If your Sigrid license includes Sigrid Security, you will automatically receive security feedback in Sigrid CI.
+If you prefer *not* to receive security feedback, you can use
+[the `--capability` option](../reference/client-script-usage.md#command-line-options) to disable it.
+{: .attention }
 
 <img src="../images/ci/security-feedback.png" width="350" />
 
@@ -164,27 +169,6 @@ If you have a system with a large number of existing security findings, we recom
 [security dashboard](../capabilities/portfolio-security.md) to make an explicit decision on which findings to
 address right now and which findings can be addressed later. This can then be planned as its own effort. You can
 then use Sigrid CI in parallel to avoid the introduction of new security findings in new code.
-
-During the Beta phase, Sigrid CI will give feedback on *all* new findings. That might include situations where your
-code is not new, but new security findings have been discovered in existing code. We will decide on the final behavior
-based on feedback we get during the Beta phase, because arguments go both ways: (A) People prefer to only receive
-feedback on things they did, but (B) new security threats are continuously discovered, and we need to make people
-aware.
-{: .warning }
-
-#### Adding Security feedback to an existing Sigrid CI configuration
-
-Sigrid CI feedback for Security is currently in Beta, and not enabled by default. If you want to enable Security
-feedback, you will need to change your configuration to explicitly enable it.
-
-The Beta version of Sigrid CI feedback for Security requires a Sigrid Security license. 
-{: .attention }
-
-- **All platforms:** You need to add the option `--capability maintainability,osh,security` to the Sigrid CI step in
-  your pipeline configuration.
-- **GitHub:** In addition to the above, you need one extra step: In your pipeline configuration, look for the
-  line `message-path: sigrid-ci-output/feedback.md`, and change this to `message-path: sigrid-ci-output/*feedback.md`.
-  Adding the asterisk allows you to get feedback on *all* Sigrid capabilities, not just maintainability.
 
 ## How do you deal with feedback from Sigrid CI?
 

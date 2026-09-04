@@ -19,7 +19,7 @@ from .capability import MAINTAINABILITY, OPEN_SOURCE_HEALTH, SECURITY
 
 
 CAPABILITIES = {cap.shortName: cap for cap in [MAINTAINABILITY, OPEN_SOURCE_HEALTH, SECURITY]}
-DEFAULT_CAPABILITIES = "maintainability,osh"
+DEFAULT_CAPABILITIES = "maintainability,osh,security"
 
 
 def parseCapabilities(names):

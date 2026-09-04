@@ -3,6 +3,13 @@ Sigrid release notes
 
 SIG uses [continuous delivery](https://en.wikipedia.org/wiki/Continuous_delivery), meaning that every change to Sigrid or the underlying analysis is released once our development pipeline has completed. On average, we release somewhere between 10 and 20 times per day. This page therefore doesn't list every single change, since that would quickly lead to an excessively long list of small changes. Instead, this page lists Sigrid and analysis changes that we consider noteworthy for the typical Sigrid user.
 
+### September 7, 2026
+
+- **Sigrid CI:** After a successful Beta phase, Sigrid CI security feedback is now generally available. If your Sigrid license includes Sigrid Security, you will automatically receive security feedback from Sigrid CI. The [Sigrid CI documentation](../sigridci-integration/using-sigridci.md#security-feedback) contains more information on this feedback. If you do *not* want security feedback, you can disable it in [the Sigrid CI configuration](../reference/client-script-usage.md#command-line-options).
+- **Technology support:** Sigrid now supports the [Clojure](https://clojure.org) programming language.
+- **Technology support:** Sigrid's support for SQL technologies has been simplified and improved. Previously, different SQL dialects like PL/SQL (Oracle), T-SQL (Microsoft), and PostgreSQL (Postgres) had different support levels. This has been homogenized so that every SQL dialect now supports the same features. In practical terms, this means you might see new dependencies that Sigrid was previously unable to find.
+- **Security:** Now that attackers are using AI to discover new vulnerabilities, new security threats are emerging faster than ever. Starting from today, you may see new findings related to one of the following: cryptographic algorithms, deserialization, cookie security, hard-coded credentials, password hashing, and password storage.
+
 ### August 24, 2026
 
 - **Report Generator:** Generate PowerPoint reports directly from the Portfolio or System Overview, to facilitate and integrate with offline reporting flows. [Find out more](../capabilities/generated-reports.md).
