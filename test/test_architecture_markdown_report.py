@@ -49,7 +49,7 @@ class ArchitectureMarkdownReportTest(TestCase):
             
             | Issue | Location |
             |---|---|
-            | **🔴 Undesirable dependency** • (Increased) | Source: sigdelivery-aqci ▶ b.ts • Target: sigdelivery-aqci ▶ c.ts |
+            | **🔴 Undesirable dependency** • (Increased) | Source: sigdelivery-aqci ▶ b.ts (line 10) • Target: sigdelivery-aqci ▶ c.ts |
             | **🟠 Cyclic dependency** • (Introduced) | Source: sigdelivery-aqci ▶ b.ts • Target: sigdelivery-aqci ▶ a.ts |
             
             If you believe these findings are false positives,
@@ -91,14 +91,14 @@ class ArchitectureMarkdownReportTest(TestCase):
             
             | Issue | Location |
             |---|---|
-            | **🔴 Undesirable dependency** • (Increased) | Source: sigdelivery-aqci ▶ b.ts • Target: sigdelivery-aqci ▶ c.ts |
-            | **🔴 Undesirable dependency** • (Increased) | Source: sigdelivery-aqci ▶ b.ts • Target: sigdelivery-aqci ▶ c.ts |
-            | **🔴 Undesirable dependency** • (Increased) | Source: sigdelivery-aqci ▶ b.ts • Target: sigdelivery-aqci ▶ c.ts |
-            | **🔴 Undesirable dependency** • (Increased) | Source: sigdelivery-aqci ▶ b.ts • Target: sigdelivery-aqci ▶ c.ts |
-            | **🔴 Undesirable dependency** • (Increased) | Source: sigdelivery-aqci ▶ b.ts • Target: sigdelivery-aqci ▶ c.ts |
-            | **🔴 Undesirable dependency** • (Increased) | Source: sigdelivery-aqci ▶ b.ts • Target: sigdelivery-aqci ▶ c.ts |
-            | **🔴 Undesirable dependency** • (Increased) | Source: sigdelivery-aqci ▶ b.ts • Target: sigdelivery-aqci ▶ c.ts |
-            | **🔴 Undesirable dependency** • (Increased) | Source: sigdelivery-aqci ▶ b.ts • Target: sigdelivery-aqci ▶ c.ts |
+            | **🔴 Undesirable dependency** • (Increased) | Source: sigdelivery-aqci ▶ b.ts (line 10) • Target: sigdelivery-aqci ▶ c.ts |
+            | **🔴 Undesirable dependency** • (Increased) | Source: sigdelivery-aqci ▶ b.ts (line 10) • Target: sigdelivery-aqci ▶ c.ts |
+            | **🔴 Undesirable dependency** • (Increased) | Source: sigdelivery-aqci ▶ b.ts (line 10) • Target: sigdelivery-aqci ▶ c.ts |
+            | **🔴 Undesirable dependency** • (Increased) | Source: sigdelivery-aqci ▶ b.ts (line 10) • Target: sigdelivery-aqci ▶ c.ts |
+            | **🔴 Undesirable dependency** • (Increased) | Source: sigdelivery-aqci ▶ b.ts (line 10) • Target: sigdelivery-aqci ▶ c.ts |
+            | **🔴 Undesirable dependency** • (Increased) | Source: sigdelivery-aqci ▶ b.ts (line 10) • Target: sigdelivery-aqci ▶ c.ts |
+            | **🔴 Undesirable dependency** • (Increased) | Source: sigdelivery-aqci ▶ b.ts (line 10) • Target: sigdelivery-aqci ▶ c.ts |
+            | **🔴 Undesirable dependency** • (Increased) | Source: sigdelivery-aqci ▶ b.ts (line 10) • Target: sigdelivery-aqci ▶ c.ts |
             | ... and 992 more findings | |
             
             If you believe these findings are false positives,

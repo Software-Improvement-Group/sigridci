@@ -40,7 +40,7 @@ class ArchitectureTextReportTest(TestCase):
             Architecture findings
             
                 🔴 Undesirable dependency
-                    Source: sigdelivery-aqci ▶ b/b.ts
+                    Source: sigdelivery-aqci ▶ b/b.ts (line 10)
                     Target: sigdelivery-aqci ▶ c/c.ts
             
                 🟠 Cyclic dependency

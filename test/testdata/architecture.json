@@ -44,6 +44,13 @@
           "shortName": "c.ts",
           "type": "FILE"
         }
+      ],
+      "count": 1,
+      "lines": [
+        [
+          10,
+          20
+        ]
       ]
     },
     {

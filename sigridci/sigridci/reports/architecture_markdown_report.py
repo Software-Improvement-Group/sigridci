@@ -72,7 +72,7 @@ class ArchitectureMarkdownReport(Report, MarkdownRenderer):
         for finding in findings[0:options.getMaxShownFindings()]:
             type = self.FINDING_TYPES[finding["qualification"]]
             activity = finding["activity"].title()
-            source = self.formatDependencyLocation(finding["sourceHierarchy"], options)
+            source = self.formatDependencyLocation(finding["sourceHierarchy"], options) + self.formatLines(finding)
             target = self.formatDependencyLocation(finding["targetHierarchy"], options)
             location = f"Source: {source}{self.tableLineSeparator}Target: {target}"
             md += f"| **{type}**{self.tableLineSeparator}({activity}) | {location} |\n"
@@ -88,6 +88,15 @@ class ArchitectureMarkdownReport(Report, MarkdownRenderer):
         if file:
             location += f" ▶ {self.decorateLink(options, file['shortName'], file['name'])}"
         return location
+
+    def formatLines(self, finding):
+        lines = finding.get("lines")
+        if not lines:
+            return ""
+        elif len(lines) == 1:
+            return f" (line {lines[0][0]})"
+        else:
+            return f" (lines {', '.join(line[0] for line in lines)})"
 
     def getSummary(self, feedback, options):
         if self.isObjectiveSuccess(feedback, options):

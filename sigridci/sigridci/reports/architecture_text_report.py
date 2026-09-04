@@ -33,15 +33,18 @@ class ArchitectureTextReport(Report):
             print("", file=self.output)
             for finding in displayedFindings:
                 title = ArchitectureMarkdownReport.FINDING_TYPES.get(finding["qualification"], finding["qualification"])
+                source = self.formatPath(finding['sourceHierarchy'])
+                target = self.formatPath(finding['targetHierarchy'])
+                lines = self.markdownReport.formatLines(finding)
                 print(f"    {title}", file=self.output)
-                print(f"        Source: {self.formatDependencyLocation(finding['sourceHierarchy'])}", file=self.output)
-                print(f"        Target: {self.formatDependencyLocation(finding['targetHierarchy'])}", file=self.output)
+                print(f"        Source: {source}{lines}", file=self.output)
+                print(f"        Target: {target}", file=self.output)
                 print("", file=self.output)
             if len(findings) > len(displayedFindings):
                 print(f"    ... and {len(findings) - len(displayedFindings)} more findings", file=self.output)
                 print("", file=self.output)
 
-    def formatDependencyLocation(self, hierarchy):
+    def formatPath(self, hierarchy):
         topLevelComponent = hierarchy[0]
         file = next((se for se in hierarchy if se["type"] == "FILE"), None)
 
