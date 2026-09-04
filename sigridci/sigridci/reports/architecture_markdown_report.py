@@ -70,7 +70,7 @@ class ArchitectureMarkdownReport(Report, MarkdownRenderer):
         md = "| Issue | Location |\n"
         md += "|---|---|\n"
         for finding in findings[0:options.getMaxShownFindings()]:
-            type = self.FINDING_TYPES.get(finding["qualification"], finding["qualification"])
+            type = self.FINDING_TYPES[finding["qualification"]]
             activity = finding["activity"].title()
             source = self.formatDependencyLocation(finding["sourceHierarchy"], options)
             target = self.formatDependencyLocation(finding["targetHierarchy"], options)
@@ -106,7 +106,11 @@ class ArchitectureMarkdownReport(Report, MarkdownRenderer):
 
     def getDependencyFeedback(self, feedback, activity):
         dependencyFeedback = feedback.get("dependencyFeedback", [])
-        return [dep for dep in dependencyFeedback if dep["qualification"] != "NEW" and dep["activity"] in activity]
+        return [
+            dep
+            for dep in dependencyFeedback
+            if dep["qualification"] in self.FINDING_TYPES and dep["activity"] in activity
+        ]
 
     def getPositiveFeedback(self, feedback):
         return self.getDependencyFeedback(feedback, ("REMOVED", "DECREASED"))
