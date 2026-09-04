@@ -8,6 +8,7 @@ SIG uses [continuous delivery](https://en.wikipedia.org/wiki/Continuous_delivery
 - **Sigrid CI:** After a successful Beta phase, Sigrid CI security feedback is now generally available. If your Sigrid license includes Sigrid Security, you will automatically receive security feedback from Sigrid CI. The [Sigrid CI documentation](../sigridci-integration/using-sigridci.md#security-feedback) contains more information on this feedback. If you do *not* want security feedback, you can disable it in [the Sigrid CI configuration](../reference/client-script-usage.md#command-line-options).
 - **Technology support:** Sigrid now supports the [Clojure](https://clojure.org) programming language.
 - **Technology support:** Sigrid's support for SQL technologies has been simplified and improved. Previously, different SQL dialects like PL/SQL (Oracle), T-SQL (Microsoft), and PostgreSQL (Postgres) had different support levels. This has been homogenized so that every SQL dialect now supports the same features. In practical terms, this means you might see new dependencies that Sigrid was previously unable to find.
+- **Security:** Now that attackers are using AI to discover new vulnerabilities, new security threats are emerging faster than ever. Starting from today, you may see new findings related to one of the following: cryptographic algorithms, deserialization, cookie security, hard-coded credentials, password hashing, and password storage.
 
 ### August 24, 2026
 
