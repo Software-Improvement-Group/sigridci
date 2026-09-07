@@ -29,6 +29,7 @@ The script takes a limited number of mandatory arguments. However, Sigrid CI's b
 | `--subsystem `                | No       | frontend            | Used to map between repository directory structure versus the one known by Sigrid. [5]                                            |
 | `--source`                    | No       | .                   | Path of your project's source code. Use "." for current directory.                                                                |
 | `--capability`                | No       | maintainability     | Comma-separated list of Sigrid capabilities (`maintainability,osh,security`). Default is based on your Sigrid license.            |
+| `--disable-capability`        | No       | N/A                 | Comma-separated list of capabilities to disable (maintainability,osh,security). Reverse of '--capability'.                        | 
 | `--publish`                   | No       | N/A                 | Automatically publishes analysis results to Sigrid. [1]                                                                           |
 | `--publishonly`               | No       | N/A                 | Publishes analysis results to Sigrid, but *does not* provide feedback in the CI environment itself. [3]                           |
 | `--exclude`                   | No       | /build/,.png        | Comma-separated list of file and/or directory names that should be excluded from the upload. [4, 7]                               |

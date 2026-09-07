@@ -20,13 +20,17 @@ from .capability import MAINTAINABILITY, OPEN_SOURCE_HEALTH, SECURITY
 
 CAPABILITIES = {cap.shortName: cap for cap in [MAINTAINABILITY, OPEN_SOURCE_HEALTH, SECURITY]}
 DEFAULT_CAPABILITIES = "maintainability,osh,security"
+CAPABILITY_HELP = ", ".join(CAPABILITIES.keys())
 
 
-def parseCapabilities(names):
+def parseCapabilities(enabled, disabled=""):
+    enabledNames = enabled.split(",")
+    disabledNames = (disabled or "").split(",")
+
     try:
-        return [CAPABILITIES[name.lower().strip()] for name in names.split(",")]
+        return [CAPABILITIES[name.lower().strip()] for name in enabledNames if name not in disabledNames]
     except KeyError as e:
-        print(f"Invalid value for --capability: {str(e)}")
+        print(f"Invalid capability: {str(e)}")
         sys.exit(1)
 
 
@@ -43,6 +47,7 @@ def addPublishArguments(parser):
     parser.add_argument("--subsystem", type=str, default="", help="Publishes your code as a subsystem within a Sigrid system.")
     parser.add_argument("--convert", type=str, default="", help="Code conversion for specific technologies")
     parser.add_argument("--source", type=str, required=True, help="Path of your project's source code.")
-    parser.add_argument("--capability", type=str, default=DEFAULT_CAPABILITIES, help=f"Comma-separated Sigrid capabilities ({','.join(CAPABILITIES.keys())}).")
+    parser.add_argument("--capability", type=str, default=DEFAULT_CAPABILITIES, help=f"Comma-separated Sigrid capabilities ({CAPABILITY_HELP}).")
+    parser.add_argument("--disable-capability", type=str, help=f"Comma-separated list of capabilities to disable ({CAPABILITY_HELP}). Reverse of '--capability'.")
     parser.add_argument("--exclude", type=str, default="", help="Comma-separated list of files/directories to exclude.")
     parser.add_argument("--include", type=str, default="", help="Comma-separated list of files/directories to include.")
