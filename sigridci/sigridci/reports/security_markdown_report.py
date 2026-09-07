@@ -32,6 +32,18 @@ class SecurityMarkdownReport(Report, MarkdownRenderer):
         "UNKNOWN" : "⚪️"
     }
 
+    # We phrase objectives as the "worst" severity that is still allowed.
+    # So an objective of HIGH means critical findings are not allowed,
+    # but high findings are allowed.
+    OBJECTIVE_SEVERITY_SUMMARIES = {
+        "CRITICAL" : "any",
+        "HIGH" : "no 🟣 critical",
+        "MEDIUM" : "no 🟣 critical or 🔴 high",
+        "LOW" : "no 🟣 critical or 🔴 high or 🟠 medium",
+        "INFORMATION" : "no 🟣 critical or 🔴 high or 🟠 medium or 🟡 low",
+        "NONE" : "no"
+    }
+
     def __init__(self, options, objective = "HIGH"):
         super().__init__()
         self.objective = objective
@@ -86,11 +98,11 @@ class SecurityMarkdownReport(Report, MarkdownRenderer):
         return self.renderMarkdownTemplate(feedback, options, details, sigridLink)
 
     def getSummary(self, feedback, options):
-        objectiveLabel = Objective.getSeverityObjectiveLabel(self.objective)
+        severitySummary = self.OBJECTIVE_SEVERITY_SUMMARIES.get(self.objective) or "N/A"
         if self.isObjectiveSuccess(feedback, options):
-            return [f"✅  You achieved your objective of having {objectiveLabel} security findings"]
+            return [f"✅  You achieved your objective of having {severitySummary} security findings"]
         else:
-            return [f"⚠️  You did not meet your objective of having {objectiveLabel} security findings"]
+            return [f"⚠️  You did not meet your objective of having {severitySummary} security findings"]
 
     def generateFindingsTable(self, findings, options):
         if len(findings) == 0:

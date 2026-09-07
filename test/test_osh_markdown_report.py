@@ -368,3 +368,14 @@ class OpenSourceHealthMarkdownReportTest(TestCase):
         """
 
         self.assertEqual(markdown.strip(), inspect.cleandoc(expected).strip())
+
+    def testSeverityObjectiveLabel(self):
+        report = OpenSourceHealthMarkdownReport(self.options, "HIGH")
+        report.decorateLinks = False
+
+        self.assertEqual("any", report.formatSeverity("CRITICAL"))
+        self.assertEqual("no critical-severity", report.formatSeverity("HIGH"))
+        self.assertEqual("no high-severity", report.formatSeverity("MEDIUM"))
+        self.assertEqual("no medium-severity", report.formatSeverity("LOW"))
+        self.assertEqual("no low-severity", report.formatSeverity("INFORMATION"))
+        self.assertEqual("no", report.formatSeverity("NONE"))

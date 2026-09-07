@@ -43,7 +43,7 @@ class SecurityMarkdownReportTest(TestCase):
         expected = """
             # [Sigrid](https://sigrid-says.com/aap/noot/-/security) Security feedback
             
-            **⚠️  You did not meet your objective of having no critical-severity security findings**
+            **⚠️  You did not meet your objective of having no 🟣 critical security findings**
             
             - ❌ means this finding fails your objective.
             - ⚠️ means a finding exists, but is not severe enough to fail your objective.
@@ -97,7 +97,7 @@ class SecurityMarkdownReportTest(TestCase):
         expected = """
             # [Sigrid](https://sigrid-says.com/aap/noot/-/security) Security feedback
             
-            **✅  You achieved your objective of having no critical-severity security findings**
+            **✅  You achieved your objective of having no 🟣 critical security findings**
             
             Sigrid compared your code against the baseline of 2026-03-20 12:00 UTC.
             
@@ -158,7 +158,7 @@ class SecurityMarkdownReportTest(TestCase):
         expected = """
             # [Sigrid](https://sigrid-says.com/aap/noot/-/security) Security feedback
     
-            **✅  You achieved your objective of having no critical-severity security findings**
+            **✅  You achieved your objective of having no 🟣 critical security findings**
             
             - ❌ means this finding fails your objective.
             - ⚠️ means a finding exists, but is not severe enough to fail your objective.
