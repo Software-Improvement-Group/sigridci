@@ -95,7 +95,7 @@ Which files did you run the quality check on? List them against the files you ch
 
 ## Where to go next
 
-Guardrails only ever looks at the files in front of it. Architecture drift, vulnerable dependencies, and duplication spread across files need the analysis of the whole system, which is the other reason to run Sigrid CI; the `sigrid-ci-feedback` skill does it locally before you push. From there:
+Guardrails only ever looks at the files in front of it. Architecture drift, vulnerable dependencies, and duplication spread across files need the analysis of the whole system, which is the other reason to run Sigrid CI; the `change-feedback` skill does it locally before you push. From there:
 
 - [Reducing technical debt with auto-fix agents](reducing-technical-debt.md) for the debt that is already there
 - [Triaging security and reliability findings](triaging-security-reliability.md) for the findings Sigrid already knows about

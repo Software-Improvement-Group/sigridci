@@ -116,6 +116,17 @@ The end point requires 3 mandatory query parameters:
   "systemRatingAtStart": 3.4809950112683796,
   "systemRatingAtEnd": 3.4793285702234433,
   "filesRatingAtEnd": 3.622633848690621,
+  "snapshotDates": [
+    "2025-09-01",
+    "2025-10-01"
+  ],
+  "filesCount": 344,
+  "filesVolumeInMonths": 22.76,
+  "filesVolumeInLoc": 17134,
+  "systemVolumeInMonthsAtStart": 345.47,
+  "systemVolumeInLocAtStart": 252058,
+  "systemVolumeInMonthsAtEnd": 301.75,
+  "systemVolumeInLocAtEnd": 226443,
   "unitSize": {
     "systemRiskProfileAtStart": {
       "rating": 4.970784175990668,
@@ -143,8 +154,12 @@ This response contains the following information, all of which can also be seen 
 
 - `systemRatingAtStart`: The overall maintainability rating at the start of the period.
 - `systemRatingAtEnd`: The overall maintainability rating at the end of the period.
-- `systemRatingAtEnd`: The overall maintainability rating at the end of the period.
 - `filesRatingAtEnd`: The maintainability rating for *only the changes files* at the end of the period.
+- `snapshotDates`: The dates of all analysis snapshots within the selected period, from the snapshot closest to `startDate` up to the snapshot closest to `endDate` (inclusive). This can be more than two dates if the system was analyzed multiple times during the period.
+- `filesCount`: The number of files matched by the `type` query parameter, for example the number of new files when `type=NEW_CODE`.
+- `filesVolumeInMonths` and `filesVolumeInLoc`: The volume of those files, in person months and lines of code respectively.
+- `systemVolumeInMonthsAtStart` and `systemVolumeInLocAtStart`: The total system volume at the start of the period, in person months and lines of code respectively.
+- `systemVolumeInMonthsAtEnd` and `systemVolumeInLocAtEnd`: The total system volume at the end of the period, in person months and lines of code respectively.
 - In addition to the overall ratings, you will also get the following details for each system property:
   - `systemRiskProfileAtStart` contains the risk profile at the start of the period.
   - `filesRiskProfileAtEnd` contains the risk profile for *only the changes files* at the end of the period.
