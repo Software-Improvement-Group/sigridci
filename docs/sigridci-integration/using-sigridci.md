@@ -28,7 +28,7 @@ on your Sigrid license:
 - [Open Source Health feedback](#open-source-health-feedback)
 - [Security feedback](#security-feedback)
 
-If you do *not* want feedback for one of these aspects, you can explicitly define the `--capability` option in
+If you do *not* want feedback for one of these aspects, you can explicitly define the `--disable-capability` option in
 the [Sigrid CI configuration](../reference/client-script-usage.md).
 
 ## How does Sigrid CI give feedback?
@@ -115,8 +115,7 @@ not receive feedback on license issues unless you have explicitly defined an obj
 #### Adding Open Source Health feedback to an existing Sigrid CI configuration
 
 If your Sigrid license includes Open Source Health, Sigrid CI will automatically give feedback on both Maintainability
-and Open Source Health. If you do *not* want feedback on Open Source Health, even though you have a license for it,
-you can explicitly add `--capability maintainability` to *only* receive feedback for Maintainability.
+and Open Source Health. 
 
 **If you use GitHub** you need one extra step: In your pipeline configuration, look for the
 line `message-path: sigrid-ci-output/feedback.md`, and change this to `message-path: sigrid-ci-output/*feedback.md`.
@@ -130,7 +129,7 @@ and faster to address those findings.
 
 If your Sigrid license includes Sigrid Security, you will automatically receive security feedback in Sigrid CI.
 If you prefer *not* to receive security feedback, you can use
-[the `--capability` option](../reference/client-script-usage.md#command-line-options) to disable it.
+[the `--disable-capability` option](../reference/client-script-usage.md#command-line-options) to disable it.
 {: .attention }
 
 <img src="../images/ci/security-feedback.png" width="350" />
