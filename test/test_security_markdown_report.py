@@ -41,11 +41,9 @@ class SecurityMarkdownReportTest(TestCase):
         markdown = report.renderMarkdown("1234", self.feedback, self.options)
 
         expected = """
-            # [Sigrid](https://sigrid-says.com/aap/noot/-/security) Security feedback *(Beta)*
+            # [Sigrid](https://sigrid-says.com/aap/noot/-/security) Security feedback
             
             **⚠️  You did not meet your objective of having no critical-severity security findings**
-            
-            > Sigrid CI for Security is currently in Beta. [The documentation](https://docs.sigrid-says.com/sigridci-integration/using-sigridci.html#security-feedback-beta) contains more information on its current state and known limitations.
             
             - ❌ means this finding fails your objective.
             - ⚠️ means a finding exists, but is not severe enough to fail your objective.
@@ -97,11 +95,9 @@ class SecurityMarkdownReportTest(TestCase):
         markdown = report.renderMarkdown("1234", noResults, self.options)
 
         expected = """
-            # [Sigrid](https://sigrid-says.com/aap/noot/-/security) Security feedback *(Beta)*
+            # [Sigrid](https://sigrid-says.com/aap/noot/-/security) Security feedback
             
             **✅  You achieved your objective of having no critical-severity security findings**
-            
-            > Sigrid CI for Security is currently in Beta. [The documentation](https://docs.sigrid-says.com/sigridci-integration/using-sigridci.html#security-feedback-beta) contains more information on its current state and known limitations.
             
             Sigrid compared your code against the baseline of 2026-03-20 12:00 UTC.
             
@@ -127,11 +123,9 @@ class SecurityMarkdownReportTest(TestCase):
         markdown = report.renderMarkdown("1234", noResults, self.options)
 
         expected = """
-            # [Sigrid](https://sigrid-says.com/aap/noot/-/security) Security feedback *(Beta)*
+            # [Sigrid](https://sigrid-says.com/aap/noot/-/security) Security feedback
             
             **✅  You achieved your objective of having no critical-severity security findings**
-            
-            > Sigrid CI for Security is currently in Beta. [The documentation](https://docs.sigrid-says.com/sigridci-integration/using-sigridci.html#security-feedback-beta) contains more information on its current state and known limitations.
             
             ## 👍 What went well?
             
@@ -162,11 +156,9 @@ class SecurityMarkdownReportTest(TestCase):
         markdown = report.renderMarkdown("1234", feedback, self.options)
 
         expected = """
-            # [Sigrid](https://sigrid-says.com/aap/noot/-/security) Security feedback *(Beta)*
+            # [Sigrid](https://sigrid-says.com/aap/noot/-/security) Security feedback
     
             **✅  You achieved your objective of having no critical-severity security findings**
-            
-            > Sigrid CI for Security is currently in Beta. [The documentation](https://docs.sigrid-says.com/sigridci-integration/using-sigridci.html#security-feedback-beta) contains more information on its current state and known limitations.
             
             - ❌ means this finding fails your objective.
             - ⚠️ means a finding exists, but is not severe enough to fail your objective.

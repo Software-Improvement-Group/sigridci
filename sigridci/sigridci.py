@@ -29,7 +29,7 @@ def parsePublishOptions(args):
         subsystem=args.subsystem,
         convert=args.convert,
         runMode=parseRunMode(args),
-        capabilities=parseCapabilities(args.capability),
+        capabilities=parseCapabilities(args.capability, args.disable_capability),
         sourceDir=args.source,
         excludePatterns=args.exclude.split(","),
         includePatterns=args.include.split(","),

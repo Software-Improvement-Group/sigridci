@@ -29,6 +29,7 @@ The script takes a limited number of mandatory arguments. However, Sigrid CI's b
 | `--subsystem `                | No       | frontend            | Used to map between repository directory structure versus the one known by Sigrid. [5]                                              |
 | `--source`                    | No       | .                   | Path of your project's source code. Use "." for current directory.                                                                  |
 | `--capability`                | No       | maintainability     | Comma-separated list of Sigrid capabilities (`maintainability,architecture,osh,security`). Default is based on your Sigrid license. |
+| `--disable-capability`        | No       | N/A                 | Comma-separated list of capabilities to disable (`maintainability,architectureosh,security`). Reverse of '--capability'.            | 
 | `--publish`                   | No       | N/A                 | Automatically publishes analysis results to Sigrid. [1]                                                                             |
 | `--publishonly`               | No       | N/A                 | Publishes analysis results to Sigrid, but *does not* provide feedback in the CI environment itself. [3]                             |
 | `--exclude`                   | No       | /build/,.png        | Comma-separated list of file and/or directory names that should be excluded from the upload. [4, 7]                                 |
@@ -43,8 +44,8 @@ Notes:
 
 1. Customer names can only contain lowercase letters and numbers.
 2. System names must be 2-64 characters long and may use letters, digits, and hyphens, but cannot start or end with a hyphen or contain consecutive hyphens.
-3. Typically, you would use the `--publish` option when committing to the main/master branch, and you would *not* use it for pull requests. See below for more information.  
-4. These files and directories are excluded *on top of* Sigrid's default excludes. By default, Sigrid excludes things like third party libraries (e.g. `/node_modules/` for NPM libraries, build output (e.g. `/target/` for Maven builds), and generated code. 
+3. Typically, you would use the `--publish` option when committing to the main/master branch, and you would *not* use it for pull requests. See below for more information.
+4. These files and directories are excluded *on top of* Sigrid's default excludes. By default, Sigrid excludes things like third party libraries (e.g. `/node_modules/` for NPM libraries, build output (e.g. `/target/` for Maven builds), and generated code.
 5. Subsystems must be at least two characters long, start and end with a letter or digit, and may include letters, digits, dots, underscores, dashes, or slashes, but cannot contain consecutive dots or slashes. See the section below for more details and its limitations.
 6. Include can be used to narrow down the upload to specific folders and/or files. In addition, exclude can be used to exclude files and folders from the included folders.
 7. Folders should always be surrounded by '/' characters
@@ -63,7 +64,7 @@ So when to use these options:
 - If you want feedback on your new/changed code, *without* publishing your code to Sigrid, run the script without the publish options. This is suitable for a workflow with pull requests, as you can use it to receive feedback on your pull request.
 - If you want to publish your code to Sigrid, *and* you want Sigrid CI to give your feedback on your new/changed code, use the `--publish` option. This is suitable for people who use a workflow without pull requests where everyone is making changes to the main/master branch.
 - If you want to publish your code to Sigrid, but do *not* want feedback on your new/changed code, use the `--publishonly` option.
-  - This is suitable for merge commits to the main/master branch. In that situation, you do not need feedback, since you *already had* your feedback in the pull request and there is no reason to receive the same feedback again when merging your changes. 
+  - This is suitable for merge commits to the main/master branch. In that situation, you do not need feedback, since you *already had* your feedback in the pull request and there is no reason to receive the same feedback again when merging your changes.
   - Moreover, this publishes your code to Sigrid in a fire-and-forget fashion, which is faster since the script will not wait for the analysis to complete and will immediately exit. This is suitable for the main/master branch scenario described above, but can also be used in other situations where the fire-and-forget behavior is preferred.
 
 Sigrid CI feedback has a 30-minute timeout. We consider this the maximum time acceptable for blocking your pipeline. If you are using an extremely large system, the analsyis time might exceed 30 minutes. In those situations, we recommend you use the `--publishonly` flow so that your pipeline is not blocking while waiting for Sigrid's analysis to complete.
@@ -72,7 +73,7 @@ Sigrid CI feedback has a 30-minute timeout. We consider this the maximum time ac
 ## Letting Sigrid CI fail your pipeline
 
 Sigrid CI returns a different exit code depending on whether you achieved or failed your
-[quality objectives](#defining-quality-objectives). If you want to use Sigrid CI as a mandatory quality gate, 
+[quality objectives](#defining-quality-objectives). If you want to use Sigrid CI as a mandatory quality gate,
 you can use this exit code to fail your pipeline.
 
 We actually recommend you do *not* fail your pipeline in this way. Ideally, you would use Sigrid CI feedback as input
@@ -89,7 +90,6 @@ the Sigrid CI exit code for this, and you can even make this behavior more nuanc
 - Exit code 2: You failed your quality objective for Maintainability.
 - Exit code 4: You failed your quality objective for Open Source Health.
 - Exit code 8: You failed your quality objective for Security.
-- Exit code 16: You failed your quality objective for Architecture.
 
 These exit codes "stack", so an exit code of 6 means you failed your quality objectives for both Maintainability
 and Open Source Health.
@@ -125,8 +125,8 @@ If subsystems need to be removed from the system this can be done via the [Sigri
 ## Connecting Sigrid CI using a proxy
 
 If your environment requires a proxy to connect to the internet, you can configure Sigrid CI to use this proxy.
-You define an environment variable `SIGRID_CI_PROXY_URL`, which will then be picked up by Sigrid CI. 
-The value of this environment variable should be the complete proxy URL, so including the protocol, and also including user information if required. 
+You define an environment variable `SIGRID_CI_PROXY_URL`, which will then be picked up by Sigrid CI.
+The value of this environment variable should be the complete proxy URL, so including the protocol, and also including user information if required.
 
 ## Contact and support
 

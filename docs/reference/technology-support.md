@@ -69,6 +69,7 @@ This page provides an overview of all technologies that can be analyzed by Sigri
 | `cicode`                      | Cicode                                 | ✅          | Maintainability, Architecture                                           |
 | `cl`                          | CL                                     | ⚠️          | Maintainability, Architecture                                           |
 | `clearbasic`                  | Clearbasic                             | ✅          | Maintainability, Architecture                                           |
+| `clojure`                     | Clojure                                | ✅          | Maintainability                                                         |
 | `cobol`                       | Cobol                                  | ✅          | Maintainability, Architecture, Static AI, GenAI                         |
 | `coffeescript`                | CoffeeScript                           | ✅          | Maintainability, Architecture, GenAI                                    |
 | `coldfusion`                  | ColdFusion                             | ✅          | Maintainability, Architecture, GenAI                                    |

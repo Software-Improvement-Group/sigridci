@@ -535,13 +535,6 @@ class MaintainabilityMarkdownReportTest(TestCase):
 
         expected = """
             # [Sigrid](https://sigrid-says.com/aap/noot) maintainability feedback
-            
-            ----
-
-            🔒**Enable security insights in your CI pipeline to detect vulnerabilities early.  
-            Start using Sigrid CI for Security today. [Learn more](https://docs.sigrid-says.com/sigridci-integration/using-sigridci.html#security-feedback-beta).**
-
-            ----
 
             **⚠️  Your code did not improve towards your objective of 3.5 stars.**
             
@@ -700,13 +693,6 @@ class MaintainabilityMarkdownReportTest(TestCase):
 
         expected = """
             # [Sigrid](https://sigrid-says.com/aap/noot) maintainability feedback
-            
-            ----
-
-            🔒**Enable security insights in your CI pipeline to detect vulnerabilities early.  
-            Start using Sigrid CI for Security today. [Learn more](https://docs.sigrid-says.com/sigridci-integration/using-sigridci.html#security-feedback-beta).**
-
-            ----
 
             **⚠️  Your code did not improve towards your Unit Size objective of 4.0 stars.**
             
