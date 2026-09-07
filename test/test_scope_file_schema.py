@@ -16,6 +16,7 @@ import inspect
 import json
 import jsonschema
 import yaml
+from textwrap import dedent
 from unittest import TestCase
 
 
@@ -187,3 +188,85 @@ class ScopeFileSchemaTest(TestCase):
 
         parsedScope = yaml.load(scope, Loader=yaml.FullLoader)
         jsonschema.validate(instance=parsedScope, schema=self.schema)
+
+    def testAllPossibleScopeFileFieldsAreKnown(self):
+        def getProperties(element):
+            properties = element.get("properties", {}) | element.get("items", {}).get("properties", {})
+            for alternative in element.get("anyOf", []):
+                properties = properties | alternative.get("properties", {})
+            return [(name, properties[name]) for name in sorted(properties.keys())]
+
+        def format(name, element, indent):
+            result = f"{'  ' * indent}{name}\n"
+            for propertyName, property in getProperties(element):
+                if isinstance(property, dict):
+                    result += format(propertyName, property, indent + 1)
+                    if property.get("$ref"):
+                        definitionName = property["$ref"].split("/")[-1]
+                        definition = self.schema["definitions"][definitionName]
+                        for defPropertyName, defProperty in getProperties(definition):
+                            result += format(defPropertyName, defProperty, indent + 2)
+            return result
+
+        expected = dedent("""
+                schema
+                  architecture
+                    add_dependencies
+                    add_system_elements
+                    branch
+                    co_evolution
+                    component_roles
+                    custom_components
+                    custom_patterns
+                    disabled_metrics
+                    duplication
+                    enabled
+                    exclude
+                    file_annotation_components
+                    flatten_directories
+                    grouping
+                    history
+                    history_enabled
+                    history_end
+                    history_filter_outliers
+                    history_interval
+                    history_period_months
+                    history_start
+                    merge_data_stores
+                    model
+                    remove_dependencies
+                    remove_system_elements
+                    rename
+                    undesirable_dependencies
+                  component_base_dirs
+                  component_depth
+                  components
+                    exclude
+                    include
+                    name
+                  default_excludes
+                  dependencychecker
+                    blacklist
+                    blocklist
+                    enabled
+                    exclude
+                    model
+                    override_disabled_technologies
+                    override_enabled_technologies
+                    source
+                    transitive
+                  exclude
+                  experimental
+                  languages
+                  model
+                  thirdpartyfindings
+                    disabled_analyzers
+                    disabled_rules
+                    enabled
+                    enabled_analyzers
+                    enabled_rules
+                    exclude
+                    include
+            """)
+
+        self.assertEqual(expected.strip(), format("schema", self.schema, 0).strip())

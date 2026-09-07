@@ -16,9 +16,9 @@ import html
 import os
 
 from .report import Report, MarkdownRenderer
-from ..capability import MAINTAINABILITY, SECURITY
+from ..capability import MAINTAINABILITY
 from ..objective import Objective, ObjectiveStatus
-from ..platform import Platform, SECURITY_BETA_DOCS
+from ..platform import Platform
 
 
 class MaintainabilityMarkdownReport(Report, MarkdownRenderer):
@@ -48,13 +48,6 @@ class MaintainabilityMarkdownReport(Report, MarkdownRenderer):
         sigridLink = self.getSigridUrl(options)
 
         md = f"# [Sigrid]({sigridLink}) maintainability feedback\n\n"
-
-        if not SECURITY in options.capabilities and Platform.isHtmlMarkdownSupported():
-            md += "----\n\n"
-            md += "🔒**Enable security insights in your CI pipeline to detect vulnerabilities early.  \n"
-            md += f"Start using Sigrid CI for Security today. [Learn more]({SECURITY_BETA_DOCS}).**\n\n"
-            md += "----\n\n"
-
         md += f"{self.renderSummary(feedback, options)}\n\n"
 
         if not ObjectiveStatus.UNKNOWN in self.getObjectiveStatuses(feedback):

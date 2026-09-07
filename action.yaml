@@ -13,9 +13,12 @@ inputs:
     required: false
     default: "."
   capability:
-    description: "Comma-separated list of Sigrid capabilities (`maintainability,osh,security`). Default is based on your Sigrid license."
+    description: "Comma-separated list of Sigrid capabilities (maintainability,osh,security). Default is based on your Sigrid license."
     required: false
     default: "maintainability"
+  disablecapability:
+    description: "Comma-separated list of capabilities to disable (maintainability,osh,security). Reverse of 'capability'."
+    required: false
   publish:
     description: "Publishes your source code to Sigrid (true/false)."
     required: false
@@ -124,6 +127,8 @@ runs:
     - ${{ inputs.convert }}
     - "--capability"
     - ${{ inputs.capability }}
+    - "--disable-capability"
+    - ${{ inputs.disablecapability }}
     - "--detaillevel"
     - ${{ inputs.detaillevel }}
   env:
