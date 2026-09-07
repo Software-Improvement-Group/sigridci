@@ -90,22 +90,6 @@ class Objective:
             return severity in ("CRITICAL", "HIGH", "MEDIUM", "LOW")
 
     @staticmethod
-    def getSeverityObjectiveLabel(objective):
-        # We phrase objectives for findings as the "worst" severity
-        # that is still allowed. So an objective of HIGH means high-severity
-        # findings are allowed, but critical-severity findings are not allowed.
-        # In the feedback, we want to phrase this in terms of goal, i.e. the
-        # "least-worst" severity that is *not* allowed.
-        if objective == "INFORMATION":
-            return "no low-severity"
-        if objective == "CRITICAL" or objective not in Objective.SEVERITY_OBJECTIVE:
-            return "any"
-        if objective == "NONE":
-            return "no"
-        index = Objective.SEVERITY_OBJECTIVE.index(objective)
-        return f"no {Objective.SEVERITY_OBJECTIVE[index - 1].lower()}-severity"
-
-    @staticmethod
     def sortBySeverity(severity):
         if not severity in Objective.SEVERITY_OBJECTIVE:
             return 99

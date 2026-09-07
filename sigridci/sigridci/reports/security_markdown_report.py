@@ -32,6 +32,18 @@ class SecurityMarkdownReport(Report, MarkdownRenderer):
         "UNKNOWN" : "⚪️"
     }
 
+    # We phrase objectives as the "worst" severity that is still allowed.
+    # So an objective of HIGH means critical findings are not allowed,
+    # but high findings are allowed.
+    OBJECTIVE_SEVERITY_SUMMARIES = {
+        "CRITICAL" : "any",
+        "HIGH" : "no 🟣 critical",
+        "MEDIUM" : "no 🟣 critical or 🔴 high",
+        "LOW" : "no 🟣 critical or 🔴 high or 🟠 medium",
+        "INFORMATION" : "no 🟣 critical or 🔴 high or 🟠 medium or 🟡 low",
+        "NONE" : "no"
+    }
+
     def __init__(self, options, objective = "HIGH"):
         super().__init__()
         self.objective = objective
@@ -73,7 +85,7 @@ class SecurityMarkdownReport(Report, MarkdownRenderer):
             details += self.generateFindingsTable(introduced, options)
             details += "If you believe these findings are false positives,\n"
             details += f"you can [exclude the rule]({SECURITY_EXCLUDE_RULE_DOCS}) in the Sigrid configuration.\n"
-            details += "If you believe these findings are located in files that should not be scanned, you can also\n"
+            details += "If these findings are located in files that should not be scanned, you can also\n"
             details += f"[exclude the files and/or directories]({SECURITY_EXCLUDE_FILE_DOCS}) in the configuration.\n\n"
 
         if len(remaining) + len(accepted) > 0:
@@ -86,11 +98,11 @@ class SecurityMarkdownReport(Report, MarkdownRenderer):
         return self.renderMarkdownTemplate(feedback, options, details, sigridLink)
 
     def getSummary(self, feedback, options):
-        objectiveLabel = Objective.getSeverityObjectiveLabel(self.objective)
+        severitySummary = self.OBJECTIVE_SEVERITY_SUMMARIES.get(self.objective) or "N/A"
         if self.isObjectiveSuccess(feedback, options):
-            return [f"✅  You achieved your objective of having {objectiveLabel} security findings"]
+            return [f"✅  You achieved your objective of having {severitySummary} security findings"]
         else:
-            return [f"⚠️  You did not meet your objective of having {objectiveLabel} security findings"]
+            return [f"⚠️  You did not meet your objective of having {severitySummary} security findings"]
 
     def generateFindingsTable(self, findings, options):
         if len(findings) == 0:
@@ -103,7 +115,7 @@ class SecurityMarkdownReport(Report, MarkdownRenderer):
             severitySymbol = self.SEVERITY_SYMBOLS[finding.risk]
             objectiveSymbol = self.formatObjectiveSymbol(finding)
             link = self.decorateLink(options, f"{finding.file}:{finding.line}", finding.file, finding.line)
-            md += f"| {severitySymbol} | {objectiveSymbol} | {link} | {finding.description} |\n"
+            md += f"| {severitySymbol} {finding.risk.title()} | {objectiveSymbol} | {link} | {finding.description} |\n"
 
         if len(findings) > options.getMaxShownFindings():
             md += f"| | ... and {len(findings) - options.getMaxShownFindings()} more findings | | |\n"

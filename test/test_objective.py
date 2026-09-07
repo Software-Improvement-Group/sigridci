@@ -104,14 +104,6 @@ class ObjectiveTest(TestCase):
         self.assertTrue(Objective.meetsFindingObjective(["UNKNOWN"], "HIGH"))
         self.assertTrue(Objective.meetsFindingObjective(["UNKNOWN"], "MEDIUM"))
 
-    def testSeverityObjectiveLabel(self):
-        self.assertEqual("any", Objective.getSeverityObjectiveLabel("CRITICAL"))
-        self.assertEqual("no critical-severity", Objective.getSeverityObjectiveLabel("HIGH"))
-        self.assertEqual("no high-severity", Objective.getSeverityObjectiveLabel("MEDIUM"))
-        self.assertEqual("no medium-severity", Objective.getSeverityObjectiveLabel("LOW"))
-        self.assertEqual("no low-severity", Objective.getSeverityObjectiveLabel("INFORMATION"))
-        self.assertEqual("no", Objective.getSeverityObjectiveLabel("NONE"))
-
     def testSortBySeverity(self):
         values = ["CRITICAL", "LOW", "HIGH", "AAP"]
         values.sort(key=Objective.sortBySeverity)

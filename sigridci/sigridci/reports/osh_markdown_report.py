@@ -81,7 +81,7 @@ class OpenSourceHealthMarkdownReport(Report, MarkdownRenderer):
         return summary
 
     def getVulnerabilitySummary(self, libraries):
-        objectiveDisplayName = f"{Objective.getSeverityObjectiveLabel(self.vulnerabilityObjective)} open source vulnerabilities"
+        objectiveDisplayName = f"{self.formatSeverity(self.vulnerabilityObjective)} open source vulnerabilities"
         fixable = [lib for lib in libraries if not lib.vulnerabilityRisk.meetsObjective and lib.fixable]
         unfixable = [lib for lib in libraries if not lib.vulnerabilityRisk.meetsObjective and not lib.fixable]
 
@@ -98,6 +98,21 @@ class OpenSourceHealthMarkdownReport(Report, MarkdownRenderer):
             return f"✅  You achieved your objective of having no open source libraries with license issues."
         else:
             return f"❌  You failed to meet your objective of having no open source libraries with license issues."
+
+    def formatSeverity(self, objective):
+        # We phrase objectives for findings as the "worst" severity
+        # that is still allowed. So an objective of HIGH means high-severity
+        # findings are allowed, but critical-severity findings are not allowed.
+        # In the feedback, we want to phrase this in terms of goal, i.e. the
+        # "least-worst" severity that is *not* allowed.
+        if objective == "INFORMATION":
+            return "no low-severity"
+        if objective == "CRITICAL" or objective not in Objective.SEVERITY_OBJECTIVE:
+            return "any"
+        if objective == "NONE":
+            return "no"
+        index = Objective.SEVERITY_OBJECTIVE.index(objective)
+        return f"no {Objective.SEVERITY_OBJECTIVE[index - 1].lower()}-severity"
 
     def generateFindingsTable(self, libraries, options):
         md = "| Vulnerabilities | License | Library | Latest version | Location(s) |\n"
