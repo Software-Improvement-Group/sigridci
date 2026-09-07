@@ -94,7 +94,7 @@ Start with behavior. The tests pass and the diff contains no new behavior. If a 
 Ratings come last, and the dashboard will not show movement yet. Sigrid rates the branch it is configured to analyze, so your refactors only reach the ratings once they are merged and that branch has been analyzed again. Two things answer the question before then:
 
 - Push the branch and open a merge request. Your [Sigrid CI](../../sigridci-integration/using-sigridci.md) step reports Sigrid's verdict on the changed code in the pipeline, before anyone merges.
-- Call the `/sigrid-ci-feedback` skill with the `maintainability` capability. It analyzes your working tree locally and returns the same maintainability feedback, publishing nothing to Sigrid. It reads a `SIGRID_CI_TOKEN` from your environment, separate from the token the plugin stored in your keychain.
+- Call the `/change-feedback` skill with the `maintainability` capability. It analyzes your working tree locally and returns the same maintainability feedback, publishing nothing to Sigrid. It reads a `SIGRID_CI_TOKEN` from your environment, separate from the token the plugin stored in your keychain.
 
 We should be honest about expectations here, because ratings are measured against total system size, so a handful of refactors on a large codebase will not move a star rating. Clusters move ratings. If nothing moved after a substantial run, you worked the long tail instead of the mass, so go back to the diagnosis and ask which candidates carry the most LOC in a bad risk bracket.
 
