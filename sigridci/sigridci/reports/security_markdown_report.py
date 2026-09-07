@@ -73,7 +73,7 @@ class SecurityMarkdownReport(Report, MarkdownRenderer):
             details += self.generateFindingsTable(introduced, options)
             details += "If you believe these findings are false positives,\n"
             details += f"you can [exclude the rule]({SECURITY_EXCLUDE_RULE_DOCS}) in the Sigrid configuration.\n"
-            details += "If you believe these findings are located in files that should not be scanned, you can also\n"
+            details += "If these findings are located in files that should not be scanned, you can also\n"
             details += f"[exclude the files and/or directories]({SECURITY_EXCLUDE_FILE_DOCS}) in the configuration.\n\n"
 
         if len(remaining) + len(accepted) > 0:
@@ -103,7 +103,7 @@ class SecurityMarkdownReport(Report, MarkdownRenderer):
             severitySymbol = self.SEVERITY_SYMBOLS[finding.risk]
             objectiveSymbol = self.formatObjectiveSymbol(finding)
             link = self.decorateLink(options, f"{finding.file}:{finding.line}", finding.file, finding.line)
-            md += f"| {severitySymbol} | {objectiveSymbol} | {link} | {finding.description} |\n"
+            md += f"| {severitySymbol} {finding.risk.title()} | {objectiveSymbol} | {link} | {finding.description} |\n"
 
         if len(findings) > options.getMaxShownFindings():
             md += f"| | ... and {len(findings) - options.getMaxShownFindings()} more findings | | |\n"

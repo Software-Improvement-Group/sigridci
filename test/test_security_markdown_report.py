@@ -55,7 +55,7 @@ class SecurityMarkdownReportTest(TestCase):
             
             | Risk | Meets objective? | File | Finding |
             |----|----|----|----|
-            | 🟣 | ✅ | [test:1](https://example.com/aap/noot/-/blob/mybranch/test#L1) | Insecure_Randomness |
+            | 🟣 Critical | ✅ | [test:1](https://example.com/aap/noot/-/blob/mybranch/test#L1) | Insecure_Randomness |
             
             ## 👎 What could be better?
             
@@ -63,12 +63,12 @@ class SecurityMarkdownReportTest(TestCase):
             
             | Risk | Meets objective? | File | Finding |
             |----|----|----|----|
-            | 🟣 | ❌ | [neutron/neutron/db/sqlalchemytypes.py:51](https://example.com/aap/noot/-/blob/mybranch/neutron/neutron/db/sqlalchemytypes.py#L51) | Puma4 |
-            | 🔴 | ⚠️ | [neutron/neutron/ipam/drivers/neutrondb_ipam/driver.py:51](https://example.com/aap/noot/-/blob/mybranch/neutron/neutron/ipam/drivers/neutrondb_ipam/driver.py#L51) | Puma2 |
+            | 🟣 Critical | ❌ | [neutron/neutron/db/sqlalchemytypes.py:51](https://example.com/aap/noot/-/blob/mybranch/neutron/neutron/db/sqlalchemytypes.py#L51) | Puma4 |
+            | 🔴 High | ⚠️ | [neutron/neutron/ipam/drivers/neutrondb_ipam/driver.py:51](https://example.com/aap/noot/-/blob/mybranch/neutron/neutron/ipam/drivers/neutrondb_ipam/driver.py#L51) | Puma2 |
             
             If you believe these findings are false positives,
             you can [exclude the rule](https://docs.sigrid-says.com/reference/analysis-scope-configuration.html#excluding-security-rules) in the Sigrid configuration.
-            If you believe these findings are located in files that should not be scanned, you can also
+            If these findings are located in files that should not be scanned, you can also
             [exclude the files and/or directories](https://docs.sigrid-says.com/reference/analysis-scope-configuration.html#excluding-files-and-directories-from-security-scanning) in the configuration.
             
             ## 😑 You have remaining security findings
@@ -170,11 +170,11 @@ class SecurityMarkdownReportTest(TestCase):
             
             | Risk | Meets objective? | File | Finding |
             |----|----|----|----|
-            | 🔴 | ⚠️ | Aap.java:86 | InterruptedException and ThreadDeath should not be ignored |
+            | 🔴 High | ⚠️ | Aap.java:86 | InterruptedException and ThreadDeath should not be ignored |
             
             If you believe these findings are false positives,
             you can [exclude the rule](https://docs.sigrid-says.com/reference/analysis-scope-configuration.html#excluding-security-rules) in the Sigrid configuration.
-            If you believe these findings are located in files that should not be scanned, you can also
+            If these findings are located in files that should not be scanned, you can also
             [exclude the files and/or directories](https://docs.sigrid-says.com/reference/analysis-scope-configuration.html#excluding-files-and-directories-from-security-scanning) in the configuration.
             
             
@@ -196,14 +196,14 @@ class SecurityMarkdownReportTest(TestCase):
         expected = """
             | Risk | Meets objective? | File | Finding |
             |----|----|----|----|
-            | 🟣 | ❌ | neutron/neutron/db/sqlalchemytypes.py:51 | Puma4 |
-            | 🟣 | ❌ | test:1 | Insecure_Randomness |
-            | 🟣 | ✅ | test:1 | Insecure_Randomness |
-            | 🟣 | ❌ | neutron/neutron/db/sqlalchemytypes.py:51 | Puma4 |
-            | 🟣 | ❌ | test:1 | Insecure_Randomness |
-            | 🟣 | ✅ | test:1 | Insecure_Randomness |
-            | 🟣 | ❌ | neutron/neutron/db/sqlalchemytypes.py:51 | Puma4 |
-            | 🟣 | ❌ | test:1 | Insecure_Randomness |
+            | 🟣 Critical | ❌ | neutron/neutron/db/sqlalchemytypes.py:51 | Puma4 |
+            | 🟣 Critical | ❌ | test:1 | Insecure_Randomness |
+            | 🟣 Critical | ✅ | test:1 | Insecure_Randomness |
+            | 🟣 Critical | ❌ | neutron/neutron/db/sqlalchemytypes.py:51 | Puma4 |
+            | 🟣 Critical | ❌ | test:1 | Insecure_Randomness |
+            | 🟣 Critical | ✅ | test:1 | Insecure_Randomness |
+            | 🟣 Critical | ❌ | neutron/neutron/db/sqlalchemytypes.py:51 | Puma4 |
+            | 🟣 Critical | ❌ | test:1 | Insecure_Randomness |
             | | ... and 8 more findings | | |
         """
 
@@ -222,22 +222,22 @@ class SecurityMarkdownReportTest(TestCase):
         expected = """
             | Risk | Meets objective? | File | Finding |
             |----|----|----|----|
-            | 🟣 | ❌ | neutron/neutron/db/sqlalchemytypes.py:51 | Puma4 |
-            | 🟣 | ❌ | test:1 | Insecure_Randomness |
-            | 🟣 | ✅ | test:1 | Insecure_Randomness |
-            | 🟣 | ❌ | neutron/neutron/db/sqlalchemytypes.py:51 | Puma4 |
-            | 🟣 | ❌ | test:1 | Insecure_Randomness |
-            | 🟣 | ✅ | test:1 | Insecure_Randomness |
-            | 🟣 | ❌ | neutron/neutron/db/sqlalchemytypes.py:51 | Puma4 |
-            | 🟣 | ❌ | test:1 | Insecure_Randomness |
-            | 🟣 | ✅ | test:1 | Insecure_Randomness |
-            | 🟣 | ❌ | neutron/neutron/db/sqlalchemytypes.py:51 | Puma4 |
-            | 🟣 | ❌ | test:1 | Insecure_Randomness |
-            | 🟣 | ✅ | test:1 | Insecure_Randomness |
-            | 🔴 | ⚠️ | neutron/neutron/ipam/drivers/neutrondb_ipam/driver.py:51 | Puma2 |
-            | 🔴 | ⚠️ | neutron/neutron/ipam/drivers/neutrondb_ipam/driver.py:51 | Puma2 |
-            | 🔴 | ⚠️ | neutron/neutron/ipam/drivers/neutrondb_ipam/driver.py:51 | Puma2 |
-            | 🔴 | ⚠️ | neutron/neutron/ipam/drivers/neutrondb_ipam/driver.py:51 | Puma2 |
+            | 🟣 Critical | ❌ | neutron/neutron/db/sqlalchemytypes.py:51 | Puma4 |
+            | 🟣 Critical | ❌ | test:1 | Insecure_Randomness |
+            | 🟣 Critical | ✅ | test:1 | Insecure_Randomness |
+            | 🟣 Critical | ❌ | neutron/neutron/db/sqlalchemytypes.py:51 | Puma4 |
+            | 🟣 Critical | ❌ | test:1 | Insecure_Randomness |
+            | 🟣 Critical | ✅ | test:1 | Insecure_Randomness |
+            | 🟣 Critical | ❌ | neutron/neutron/db/sqlalchemytypes.py:51 | Puma4 |
+            | 🟣 Critical | ❌ | test:1 | Insecure_Randomness |
+            | 🟣 Critical | ✅ | test:1 | Insecure_Randomness |
+            | 🟣 Critical | ❌ | neutron/neutron/db/sqlalchemytypes.py:51 | Puma4 |
+            | 🟣 Critical | ❌ | test:1 | Insecure_Randomness |
+            | 🟣 Critical | ✅ | test:1 | Insecure_Randomness |
+            | 🔴 High | ⚠️ | neutron/neutron/ipam/drivers/neutrondb_ipam/driver.py:51 | Puma2 |
+            | 🔴 High | ⚠️ | neutron/neutron/ipam/drivers/neutrondb_ipam/driver.py:51 | Puma2 |
+            | 🔴 High | ⚠️ | neutron/neutron/ipam/drivers/neutrondb_ipam/driver.py:51 | Puma2 |
+            | 🔴 High | ⚠️ | neutron/neutron/ipam/drivers/neutrondb_ipam/driver.py:51 | Puma2 |
         """
 
         self.assertEqual(markdown.strip(), inspect.cleandoc(expected).strip())
