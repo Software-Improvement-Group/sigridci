@@ -139,7 +139,7 @@ Splitting the two is worth it whenever the accept-or-fix call needs something on
 
 ## Tools reference
 
-Ten MCP tools drive the workflows above. Every tool takes `customer` and `system`; the parameters below are the ones that shape the result.
+Eleven MCP tools drive the workflows above. Every tool takes `customer` and `system`; the parameters below are the ones that shape the result.
 
 | Tool | Description | Key parameters                                                                                                                                   |
 | --- | --- |--------------------------------------------------------------------------------------------------------------------------------------------------|
@@ -150,6 +150,7 @@ Ten MCP tools drive the workflows above. Every tool takes `customer` and `system
 | `opensourcehealth:get_risks` | Open source dependency risks across vulnerability, freshness, legal, activity, stability, and management. Default tool for any open-source health question | `risk_dimension`: filter dimensions. `risk_min`: `NONE`, `LOW`, `MEDIUM` (default), `HIGH`, `CRITICAL`. `limit` |
 | `opensourcehealth:get_vulnerabilities` | Known CVEs in open-source dependencies ranked by CVSS score | `severity_min`: `LOW`, `MEDIUM` (default), `HIGH`, `CRITICAL`. `limit` |
 | `update_finding_status` | Updates the status of a finding so Sigrid reflects the agent's decisions. Open source health components do not support status updates | `finding_id`: the `id` returned with the finding. `status` (see below). `remark`. At least one of `status` or `remark` is required |
+| `get_finding` | Looks up a single finding already seen via one of the `get_findings` tools, by its id | `finding_id`: the `id` returned with the finding. `finding_type`: `security`, `reliability`, `maintainability`. `system_property`: required when `finding_type` is `maintainability` |
 | `architecture:get_internal` | Shows how the parts inside a directory relate to each other: which sub-parts call which, and how often. Omit the path for the system's top-level components | Optional: `path` (omit for top-level components) |
 | `architecture:get_external_dependencies` | Lists a file or directory's direct dependencies, outgoing (what it calls) and incoming (what calls it), to find the blast radius of a change. One hop per call | `path` (required). Optional: `direction`: `incoming`, `outgoing`, `all` (default) |
 | `architecture:get_worst_directories` | Up to 10 architecture directories ranked by structure rating, worst first. Ranking is volume-weighted, so a low rating on a large component outranks the same rating on a small one | Optional: `path` to rank the components inside that path instead of system-wide |
