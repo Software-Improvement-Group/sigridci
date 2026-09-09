@@ -219,6 +219,7 @@ Note the **extra** outer brackets required for the configuration to validate suc
 | `opensourcehealth:get_risks` | [Auto-fix Agents MCP](sigrid-mcp/autofix-agents.md) | Returns open source dependency risks across vulnerability, freshness, legal, activity, stability, and management |
 | `opensourcehealth:get_vulnerabilities` | [Auto-fix Agents MCP](sigrid-mcp/autofix-agents.md) | Returns known CVEs in open source dependencies ranked by CVSS score |
 | `update_finding_status` | [Auto-fix Agents MCP](sigrid-mcp/autofix-agents.md) | Updates the status and remarks of a Sigrid finding |
+| `get_finding` | [Auto-fix Agents MCP](sigrid-mcp/autofix-agents.md) | Looks up a single security, reliability, or maintainability finding by its id |
 | `architecture:get_internal` | [Auto-fix Agents MCP](sigrid-mcp/autofix-agents.md) | Shows how the parts inside a directory relate to each other, to understand structure before changing it |
 | `architecture:get_external_dependencies` | [Auto-fix Agents MCP](sigrid-mcp/autofix-agents.md) | Lists a file or directory's incoming and outgoing dependencies, to find the blast radius of a change |
 | `architecture:get_worst_directories` | [Auto-fix Agents MCP](sigrid-mcp/autofix-agents.md) | Returns the lowest-scoring architecture directories, ranked by impact |
