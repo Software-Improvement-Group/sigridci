@@ -28,6 +28,7 @@ The [Sigrid Claude Code Plugin](../integration-sigrid-mcp.md) ships a set of ski
 | `architecture-drift` | Checks a diff, staged change, or branch against Sigrid's architecture graph for new coupling, bypassed facades, and cycles |
 | `change-feedback` | Runs Sigrid CI locally and returns structured quality feedback |
 | `fix-osh-risk` | Remediates open source health findings by creating merge requests or researched issues |
+| `resolve-security-findings` | Classifies security findings as false positive, accepted risk, or will-fix, fixes what it can, and writes the decision back to Sigrid |
 
 If you use a different AI agent, browse the skill definitions in the [sigrid-ai-toolkit](https://github.com/Software-Improvement-Group/sigrid-ai-toolkit) repository and adapt them to your own workflow.
 
@@ -37,7 +38,7 @@ For end-to-end walkthroughs, see:
 
 - [Preventing architecture drift with an AI coding agent](../../workflows/agents/preventing-architecture-drift.md): check a diff against the architecture graph before it reaches production, built on `architecture-drift`
 - [Reducing technical debt with auto-fix agents](../../workflows/agents/reducing-technical-debt.md): maintainability, built on `sigrid-diagnose` and `sigrid-improve`
-- [Triaging security and reliability findings](../../workflows/agents/triaging-security-reliability.md): assess in context, triage with a rationale
+- [Resolving security findings](../../workflows/agents/resolving-security-findings.md): assess in context, fix what should be fixed, with a rationale recorded either way
 
 ## Workflows
 
@@ -93,6 +94,8 @@ I want to change [file] in [customer]/[system]. What depends on it, and what doe
 
 ### Security and reliability triage
 
+<a href="../../images/mcp/recipes/security-findings-triage.png" target="_blank"><img src="../../images/mcp/recipes/security-findings-triage.png" width="600" alt="Claude Code retrieving high-severity security findings and assessing their real-world exploitability in context" /></a>
+
 The agent fetches security or reliability findings, investigates each one in the code, and either fixes it or triages it with a rationale. Give it a severity floor, say whether it may change code, and state your risk tolerance:
 
 ```
@@ -105,7 +108,7 @@ Reliability findings use the same loop with a different question, because what y
 Get reliability findings for [customer]/[system] with severity HIGH or above. Focus on error handling and concurrency issues. Fix straightforward ones and flag complex ones for manual review.
 ```
 
-A prompt like this gets you a first batch. What decides whether the verdicts are worth anything is context the agent cannot read from the code, such as which services are reachable from outside, plus a rule that every verdict cites a line. Both are in [triaging security and reliability findings](../../workflows/agents/triaging-security-reliability.md).
+A prompt like this gets you a first batch. What decides whether the verdicts are worth anything is context the agent cannot read from the code, such as which services are reachable from outside, plus a rule that every verdict cites a line. For security findings, the `resolve-security-findings` skill runs this loop for you, on a single finding, a pasted finding, or a whole backlog: it reads the flagged code, classifies it against that evidence rule, fixes what falls to will-fix, and writes the status back to Sigrid. See [resolving security findings](../../workflows/agents/resolving-security-findings.md). Reliability findings have no packaged skill yet, so the prompt above is still the whole workflow for those.
 
 ### Open source health
 
@@ -135,7 +138,7 @@ Get the top 100 duplication findings for [customer]/[system]. We accept duplicat
 Get duplication findings for [customer]/[system]. Fix the ones I've previously marked as will-fix and update their status.
 ```
 
-Splitting the two is worth it whenever the accept-or-fix call needs something only your team knows. If you can state that call up front, autonomous fixing does both in one pass. [Triaging security and reliability findings](../../workflows/agents/triaging-security-reliability.md) applies the same split to findings where each decision has to carry a written rationale.
+Splitting the two is worth it whenever the accept-or-fix call needs something only your team knows. If you can state that call up front, autonomous fixing does both in one pass. [Resolving security findings](../../workflows/agents/resolving-security-findings.md) applies the same split to security findings, where each decision has to carry a written rationale.
 
 ## Tools reference
 
