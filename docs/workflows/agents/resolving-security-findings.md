@@ -1,6 +1,6 @@
 # Triaging and resolving security findings with auto-fix agents
 
-<div><a href="{% link workflows/agents.md %}#where-sigrid-fits-in-an-agentic-workflow">{% include sigrid-mcp/lifecycle-strip.md active="plan" %}</a></div>
+<div><a href="{% link workflows/agents.md %}#where-sigrid-fits-in-an-agentic-workflow">{% include sigrid-mcp/lifecycle-strip.md active="plan,improve" %}</a></div>
 
 Somewhere in your backlog there is a command injection finding on a deployment script. You already know it is fine. The
 script only runs from CI, the value it interpolates comes from a pipeline variable you control, and there is no route to
