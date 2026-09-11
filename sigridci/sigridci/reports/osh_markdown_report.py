@@ -15,7 +15,6 @@
 import os
 
 from .report import Report, MarkdownRenderer
-from .security_markdown_report import SecurityMarkdownReport
 from ..analysisresults.cyclonedx_processor import CycloneDXProcessor
 from ..capability import OPEN_SOURCE_HEALTH
 from ..objective import Objective

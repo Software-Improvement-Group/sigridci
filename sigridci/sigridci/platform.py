@@ -22,6 +22,8 @@ SCOPE_DOCS = f"{DOCS_URL}/reference/analysis-scope-configuration.html"
 OSH_EXCLUDE_DOCS = f"{SCOPE_DOCS}#exclude-open-source-health-risks"
 SECURITY_EXCLUDE_RULE_DOCS = f"{SCOPE_DOCS}#excluding-security-rules"
 SECURITY_EXCLUDE_FILE_DOCS = f"{SCOPE_DOCS}#excluding-files-and-directories-from-security-scanning"
+AQ_EXCLUDE_DOCS = f"{SCOPE_DOCS}#manually-removing-architecture-dependencies"
+AQ_UNDESIRABLE_DOCS = f"{SCOPE_DOCS}##highlighting-undesirable-dependencies"
 
 
 class Platform:
