@@ -52,6 +52,8 @@ class ArchitectureMarkdownReportTest(TestCase):
             | **🔴 Undesirable dependency** • (Increased) | Source: sigdelivery-aqci ▶ b.ts (line 10) • Target: sigdelivery-aqci ▶ c.ts |
             | **🟠 Cyclic dependency** • (Introduced) | Source: sigdelivery-aqci ▶ b.ts • Target: sigdelivery-aqci ▶ a.ts |
             
+            You can [configure undesirable dependencies](https://docs.sigrid-says.com/reference/analysis-scope-configuration.html##highlighting-undesirable-dependencies)
+            which Sigrid then checks and reports in this feedback.
             If you believe these findings are false positives,
             you can [exclude the rule](https://docs.sigrid-says.com/reference/analysis-scope-configuration.html#manually-removing-architecture-dependencies) in the Sigrid configuration.
             
@@ -101,6 +103,8 @@ class ArchitectureMarkdownReportTest(TestCase):
             | **🔴 Undesirable dependency** • (Increased) | Source: sigdelivery-aqci ▶ b.ts (line 10) • Target: sigdelivery-aqci ▶ c.ts |
             | ... and 992 more findings | |
             
+            You can [configure undesirable dependencies](https://docs.sigrid-says.com/reference/analysis-scope-configuration.html##highlighting-undesirable-dependencies)
+            which Sigrid then checks and reports in this feedback.
             If you believe these findings are false positives,
             you can [exclude the rule](https://docs.sigrid-says.com/reference/analysis-scope-configuration.html#manually-removing-architecture-dependencies) in the Sigrid configuration.
             

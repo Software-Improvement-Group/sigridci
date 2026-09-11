@@ -16,7 +16,7 @@ import os
 
 from .report import Report, MarkdownRenderer
 from ..capability import ARCHITECTURE
-from ..platform import AQ_EXCLUDE_DOCS, Platform
+from ..platform import AQ_EXCLUDE_DOCS, AQ_UNDESIRABLE_DOCS, Platform
 
 
 class ArchitectureMarkdownReport(Report, MarkdownRenderer):
@@ -53,6 +53,8 @@ class ArchitectureMarkdownReport(Report, MarkdownRenderer):
             md += "## 👎 What could be better?\n\n"
             md += f"> Unfortunately, you introduced **{len(negative)}** architecture issues.\n\n"
             md += f"{self.generateFindingsTable(negative, options)}\n"
+            md += f"You can [configure undesirable dependencies]({AQ_UNDESIRABLE_DOCS})\n"
+            md += "which Sigrid then checks and reports in this feedback.\n"
             md += "If you believe these findings are false positives,\n"
             md += f"you can [exclude the rule]({AQ_EXCLUDE_DOCS}) in the Sigrid configuration.\n\n"
 
@@ -99,7 +101,7 @@ class ArchitectureMarkdownReport(Report, MarkdownRenderer):
             return f" (lines {', '.join(line[0] for line in lines)})"
 
     def getSummary(self, feedback, options):
-        if self.isObjectiveSuccess(feedback, options):
+        if len(self.getNegativeFeedback(feedback)) == 0:
             return [f"✅  You achieved your objective of having no architecture issues"]
         else:
             return [f"⚠️  You did not meet your objective of having no architecture issues"]
@@ -111,7 +113,10 @@ class ArchitectureMarkdownReport(Report, MarkdownRenderer):
         return os.path.abspath(f"{options.outputDir}/architecture-feedback.md")
 
     def isObjectiveSuccess(self, feedback, options):
-        return len(self.getNegativeFeedback(feedback)) == 0
+        # We always consider architecture feedback a warning
+        # rather than an error. We don't want to hard-fail
+        # the pipeline like we do for e.g. security findings.
+        return True
 
     def getDependencyFeedback(self, feedback, activity):
         dependencyFeedback = feedback.get("dependencyFeedback", [])
