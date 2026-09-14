@@ -2,7 +2,7 @@
 
 You can reach this view via the left menu on system level > quaity aspects > maintainability. See the [system-level Overview page](system-overview.md#navigating-to-capabilities).
 
-<img width="210" height="200" alt="New_maintainability_views" src="../images/Maintainability-overview-deltaquality.png" />
+<img width="210" height="200" alt="New_maintainability_views" src="../images/maintainability-overview-deltaquality.png" />
 
 
 The definition of what a system is, what it is comprised of, and how it is configured, are detailed in the pages on [systems within Sigrid](../organization-integration/systems.md) and the [analysis scope configuration documentation page](../reference/analysis-scope-configuration.md).
