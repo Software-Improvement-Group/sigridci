@@ -9,7 +9,7 @@ Run it when a change touches more than one directory, on your own work or on a b
 ## Prerequisites
 
 - A system published to Sigrid, so its architecture has been analyzed.
-- An agentic CLI that can call MCP tools, with `architecture:get_internal`, `architecture:get_external_dependencies`, and the `architecture-drift` skill available. The configuration below uses Claude Code.
+- An agentic CLI that can call MCP tools, with `architecture.get_internal`, `architecture.get_external_dependencies`, and the `architecture-drift` skill available. The configuration below uses Claude Code.
 - A [Sigrid API token](../../organization-integration/authentication-tokens.md) for the MCP server, which the plugin installer asks for once.
 - A diff, a staged change, or a feature branch to check.
 
@@ -35,7 +35,7 @@ Running the check needs the second and third rows, the tools and the skill. The 
 
 {% include sigrid-mcp/plugin-install.md setup=true %}
 
-`/sigrid:setup` records which Sigrid system this repository maps to, so `architecture:get_internal` and `architecture:get_external_dependencies` know where to look without you naming a customer and a system every time you ask. See [plugin configuration](../../integrations/sigrid-mcp/configuration.md) for what it stores.
+`/sigrid:setup` records which Sigrid system this repository maps to, so `architecture.get_internal` and `architecture.get_external_dependencies` know where to look without you naming a customer and a system every time you ask. See [plugin configuration](../../integrations/sigrid-mcp/configuration.md) for what it stores.
 
 ## What a session looks like
 
@@ -48,7 +48,7 @@ Say an agent has just finished a `checkout` feature, part of which writes a ledg
 The skill pulls the new cross-directory references out of the diff, spots the import, and takes it to the graph:
 
 ```
-architecture:get_external_dependencies(acme, payment-platform,
+architecture.get_external_dependencies(acme, payment-platform,
     path="billing/internal", direction="incoming")
 ```
 
