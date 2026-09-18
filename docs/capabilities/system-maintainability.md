@@ -2,7 +2,7 @@
 
 You can reach this view via the left menu on system level > quaity aspects > maintainability. See the [system-level Overview page](system-overview.md#navigating-to-capabilities).
 
-<img width="210" height="200" alt="New_maintainability_views" src="../images/maintainability-overview-deltaquality.png" />
+<img width="210" src="../images/maintainability-overview-deltaquality.png" />
 
 
 The definition of what a system is, what it is comprised of, and how it is configured, are detailed in the pages on [systems within Sigrid](../organization-integration/systems.md) and the [analysis scope configuration documentation page](../reference/analysis-scope-configuration.md).
@@ -18,7 +18,7 @@ The overview page is shown below.
 * The main code changes are visible at the bottom.
 * The (change in) system metrics are in the top left. 
 
-<img width="1294" height="881" alt="New_Maintainability_system_view" src="https://github.com/user-attachments/assets/1a58c05a-5179-4d41-8257-b882ba179794" />
+<img width="700" src="../images/system-maintainability.png" />
 
 In the above picture, the test code ratio might not be obvious at a glance, the displayed percentage is calculated as the ratio of "test code lines" to "production code lines". 
 As an example, if there are 120 lines of test code and 100 lines of production code, the test code ratio would be:
