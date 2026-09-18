@@ -130,7 +130,6 @@ In addition to updating Sigrid itself, you will also need to periodically update
 - Unavailable Features:
   - AI-based features: The following features are not available in Sigrid On-Premise, as they depend on AI services hosted within SIG infrastructure and are not part of, or accessible from, the on-premise deployment:
     - [Interactive AI Explanations](../reference/ai-explanations.md#genai-explanations)
-    - [Sigrid MCP Integrations](../integrations/integration-sigrid-mcp.md)
 
 ## Contact and support
 
