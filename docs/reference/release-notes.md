@@ -3,6 +3,13 @@ Sigrid release notes
 
 SIG uses [continuous delivery](https://en.wikipedia.org/wiki/Continuous_delivery), meaning that every change to Sigrid or the underlying analysis is released once our development pipeline has completed. On average, we release somewhere between 10 and 20 times per day. This page therefore doesn't list every single change, since that would quickly lead to an excessively long list of small changes. Instead, this page lists Sigrid and analysis changes that we consider noteworthy for the typical Sigrid user.
 
+### September 21, 2026
+
+- **Technology support:** Sigrid now supports [pylock.toml for Python projects](https://packaging.python.org/en/latest/specifications/pylock-toml/) in Open Source Health.
+- **Security:** Improving our ruleset is not just adding more and more rules. It's also about *removing* rules that are no longer relevant, or that are seen as low-value by users. We have removed 70 rules that were frequently reported as low-value.
+- **On-premise:** The [Sigrid MCP integration](../integrations/integration-sigrid-mcp.md) is now part of on-premise Sigrid. The on-premise documentation will be updated later this week to provide some more instructions on how you can interact with the Sigrid MCP within an on-premise environment.
+- **Integrations:** The integrations for exporting Sigrid's architecture data have been updated so that you can [export a list of all dependencies in a system to CSV](https://github.com/Software-Improvement-Group/sigrid-integrations/tree/main/architecture-export). This is useful for when you need to manually post-process this data, or if you need it for a use case outside of Sigrid. If you want to integrate Sigrid's architecture data with other systems on a regular basis, we recommend [using the API](../integrations/sigrid-api-documentation.md#architecture-quality-data) instead of a CSV.
+
 ### September 7, 2026
 
 - **Sigrid CI:** After a successful Beta phase, Sigrid CI security feedback is now generally available. If your Sigrid license includes Sigrid Security, you will automatically receive security feedback from Sigrid CI. The [Sigrid CI documentation](../sigridci-integration/using-sigridci.md#security-feedback) contains more information on this feedback. If you do *not* want security feedback, you can disable it in [the Sigrid CI configuration](../reference/client-script-usage.md#command-line-options).
