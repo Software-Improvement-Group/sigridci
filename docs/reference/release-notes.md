@@ -7,7 +7,7 @@ SIG uses [continuous delivery](https://en.wikipedia.org/wiki/Continuous_delivery
 
 - **Technology support:** Sigrid now supports [pylock.toml for Python projects](https://packaging.python.org/en/latest/specifications/pylock-toml/) in Open Source Health.
 - **Security:** Improving our ruleset is not just adding more and more rules. It's also about *removing* rules that are no longer relevant, or that are seen as low-value by users. We have removed 70 rules that were frequently reported as low-value.
-- **On-premise:** The [Sigrid MCP integration](../integrations/integration-sigrid-mcp.md) is now part of on-premise Sigrid. The on-premise documentation will be updated later this week to provide some more instructions on how you can interact with the Sigrid MCP within an on-premise environment.
+- **On-premise:** The [Sigrid MCP integration](../integrations/integration-sigrid-mcp.md) is now part of on-premise Sigrid. See [Sigrid MCP server for Sigrid On-Premise](../organization-integration/onpremise-mcp.md) for how to enable it.
 - **Integrations:** The integrations for exporting Sigrid's architecture data have been updated so that you can [export a list of all dependencies in a system to CSV](https://github.com/Software-Improvement-Group/sigrid-integrations/tree/main/architecture-export). This is useful for when you need to manually post-process this data, or if you need it for a use case outside of Sigrid. If you want to integrate Sigrid's architecture data with other systems on a regular basis, we recommend [using the API](../integrations/sigrid-api-documentation.md#architecture-quality-data) instead of a CSV.
 
 ### September 7, 2026

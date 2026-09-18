@@ -15,6 +15,16 @@ For a complete overview of all Sigrid changes, refer to the [general release not
 
 The Helm chart is published under the name `sigrid-stack`.
 
+### Release 1.0.20260917
+
+**New:** The Sigrid MCP server is now available as an optional `mcp` subchart of `sigrid-stack`, disabled by default. See [Sigrid MCP server for Sigrid On-Premise](onpremise-mcp.md) for how to enable it.
+
+<details markdown="1">
+<summary>Details</summary>
+
+**Actions:** Update the Sigrid Helm chart, Sigrid deployment images, and Sigrid-Multi-Analyzer image. No configuration changes required unless you want to enable the MCP server, in which case follow the [setup instructions](onpremise-mcp.md).
+</details>
+
 ### Release 1.0.20260713
 
 **New:** The documentation and academy links shown in the Sigrid user interface are now configurable per deployment. This allows air-gapped environments to point the links to an internally mirrored documentation site, or to hide them entirely.
