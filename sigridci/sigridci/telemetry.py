@@ -20,9 +20,9 @@ from .platform import Platform
 from .publish_options import RunMode
 from .upload_log import UploadLog
 
-# This file is responsible for anonymous usage statistics. If you want to know more about how SIG uses this data,
-# see https://www.softwareimprovementgroup.com/wp-content/uploads/SIG_Sigrid_Privacy_Statement.pdf for our Privacy
-# Statement.
+# This file is responsible for anonymous statistics. If you want to know more about how SIG uses this data,
+# see https://www.softwareimprovementgroup.com/wp-content/uploads/SIG_Sigrid_Privacy_Statement.pdf for our
+# Privacy Statement.
 
 class Telemetry:
     TIMEOUT_S = 10
@@ -41,11 +41,12 @@ class Telemetry:
 
     def sendEvent(self, category, details):
         if self.options.feedbackURL:
-            category = urllib.parse.quote_plus(category)
-            details = urllib.parse.quote_plus(details)
+            ec = urllib.parse.quote_plus(category)
+            ea = urllib.parse.quote_plus(details)
+            en = urllib.parse.quote_plus(self.options.getSystemId())
 
             try:
-                url = f"{self.options.sigridURL}/usage/matomo.php?idsite=6&rec=1&ca=1&e_c={category}&e_a={details}"
+                url = f"{self.options.sigridURL}/usage/matomo.php?idsite=6&rec=1&ca=1&e_c={ec}&e_a={ea}&e_n={en}"
                 request = urllib.request.Request(url)
                 urllib.request.urlopen(request, None, timeout=self.TIMEOUT_S)
             except:
