@@ -179,11 +179,3 @@ class SigridApiClient:
     def fetchSecurityHeaders(self):
         path = f"/analysis-results/api/v1/security-findings/{self.urlCustomerName}/{self.urlSystemName}"
         return self.retry(lambda: self.callSigridAPI(path, method="HEAD", accept=None))
-
-    def logPlatformInformation(self, platformId):
-        try:
-            url = f"{self.options.sigridURL}/usage/matomo.php?idsite=6&rec=1&ca=1&e_c=sigridci.platform&e_a={platformId}"
-            request = urllib.request.Request(url)
-            urllib.request.urlopen(request, None, timeout=self.TIMEOUT_S)
-        except:
-            UploadLog.log(f"Failed to log platform information")

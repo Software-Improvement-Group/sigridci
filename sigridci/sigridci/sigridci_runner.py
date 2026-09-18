@@ -22,6 +22,7 @@ from .feedback_provider import FeedbackProvider
 from .platform import Platform
 from .publish_options import PublishOptions, RunMode
 from .sigrid_api_client import SigridApiClient
+from .telemetry import Telemetry
 from .upload_log import UploadLog
 
 
@@ -48,10 +49,14 @@ class SigridCiRunner:
     def __init__(self, options: PublishOptions, apiClient: SigridApiClient):
         self.options = options
         self.apiClient = apiClient
+        self.telemetry = Telemetry(options)
 
     def run(self):
-        self.prepareRun()
-        self.performLicenseCheck()
+        self.telemetry.trackRun()
+
+        licenses = self.getLicenses()
+        self.performLicenseCheck(licenses)
+        self.telemetry.trackUnusedLicenses(licenses)
 
         systemExists = self.apiClient.checkSystemExists()
         UploadLog.log("Found system in Sigrid" if systemExists else "System is not yet on-boarded to Sigrid")
@@ -77,17 +82,11 @@ class SigridCiRunner:
         else:
             return self.displayFeedback(analysisId, metadata)
 
-    def prepareRun(self):
-        # We don't use the options.feedbackURL directly, since that's intended
-        # for interactive usage, but we can use it to check if feedback is
-        # disabled.
-        if self.options.feedbackURL:
-            self.apiClient.logPlatformInformation(Platform.getPlatformId())
-
-    def performLicenseCheck(self):
+    def getLicenses(self):
         licenseData = self.apiClient.fetchLicenses()
-        licenses = licenseData.get("licenses", licenseData.get("licences", []))
+        return licenseData.get("licenses", licenseData.get("licences", []))
 
+    def performLicenseCheck(self, licenses):
         missingCapabilities = [capability for capability in self.options.capabilities if capability.name not in licenses]
         self.options.capabilities = [capability for capability in self.options.capabilities if capability.name in licenses]
 
