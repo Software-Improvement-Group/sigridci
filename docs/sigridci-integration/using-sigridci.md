@@ -142,7 +142,7 @@ When you encounter security findings during code reviews, there are three ways h
 - **Merge the pull request, manage the finding via Sigrid:** In some cases, the pull request author and reviewer might
   agree it's not feasible to address the finding right now. In those situations, it's OK to merge the pull request.
   This will cause the security finding to appear in Sigrid's
-  [Security dashboard](../capabilities/portfolio-security.md), where it can be tracked.
+  [Security dashboard](../capabilities/portfolio-overview.md), where it can be tracked.
 - **Merge the pull request, mark the finding as a false positive in Sigrid:** Like any automated check, Sigrid can
   produce findings that are false positives. In those situations, if the pull request author and reviewer agree the
   finding is *actually* a false positive, it's OK to merge the pull request. After your changes have been merged and
@@ -165,7 +165,7 @@ practical or reasonable to expect people to reuse their pull request to start fi
 areas in the code. Moreover, this tends to become overwhelming if the system has lots of existing findings. 
 
 If you have a system with a large number of existing security findings, we recommend you use the
-[security dashboard](../capabilities/portfolio-security.md) to make an explicit decision on which findings to
+[security dashboard](../capabilities/system-security.md) to make an explicit decision on which findings to
 address right now and which findings can be addressed later. This can then be planned as its own effort. You can
 then use Sigrid CI in parallel to avoid the introduction of new security findings in new code.
 

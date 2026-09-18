@@ -84,7 +84,7 @@ but it doesn’t tell the full story.
 
 To answer those questions, you need to go beyond surface-level scores—into objectives, trends, and actionable metrics.
 
-The [security dashboard](../capabilities/portfolio-security.md) provides a more detailed portfolio-level view of 
+The [security dashboard](../capabilities/portfolio-overview.md) provides a more detailed portfolio-level view of 
 your security posture, helping you understand where your systems stand in relation to defined objectives and 
 industry best practices. It offers a structured way to move beyond raw findings and understanding what your teams 
 are doing with these findings, and how good your processes around these findings are.
