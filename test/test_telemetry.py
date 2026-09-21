@@ -29,7 +29,7 @@ class TelemetryTest(TestCase):
         telemetry = DummyTelemetry(options)
         telemetry.trackUnusedLicenses(["MAINTAINABILITY", "SECURITY"])
 
-        self.assertEqual(telemetry.captured, ["sigridci.unused/security"])
+        self.assertEqual(telemetry.captured, ["sigridci.unused/sigridci.unused.security"])
 
     def testDoNotSendEventIfAllCapabilitiesAreUsed(self):
         options = PublishOptions("aap", "noot", RunMode.FEEDBACK_ONLY, "/tmp")

@@ -36,8 +36,8 @@ class Telemetry:
     def trackUnusedLicenses(self, licenses):
         if self.options.runMode in (RunMode.FEEDBACK_ONLY, RunMode.FEEDBACK_AND_PUBLISH):
             for capability in ALL_CAPABILITIES:
-                if self.hasLicense(capability, licenses) and not self.isUsed(capability):
-                    self.sendEvent("sigridci.unused", capability.shortName)
+                if self.hasLicense(capability, licenses) and not self.isUsed(capability) and not capability.beta:
+                    self.sendEvent("sigridci.unused", f"sigridci.unused.{capability.shortName}")
 
     def sendEvent(self, category, details):
         if self.options.feedbackURL:
