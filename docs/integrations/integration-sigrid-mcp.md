@@ -211,17 +211,18 @@ Note the **extra** outer brackets required for the configuration to validate suc
 
 | Tool | Product | Description |
 | --- | --- | --- |
-| `guardrails:quality_check` | [Guardrails MCP](sigrid-mcp/guardrails.md) | Checks code for maintainability issues and security vulnerabilities |
-| `maintainability:get_findings` | [Auto-fix Agents MCP](sigrid-mcp/autofix-agents.md) | Retrieves ranked refactoring candidates for a given maintainability property |
-| `maintainability:get_ratings` | [Auto-fix Agents MCP](sigrid-mcp/autofix-agents.md) | Returns current maintainability ratings for a system |
-| `security:get_findings` | [Auto-fix Agents MCP](sigrid-mcp/autofix-agents.md) | Returns open security findings ranked by severity |
-| `reliability:get_findings` | [Auto-fix Agents MCP](sigrid-mcp/autofix-agents.md) | Returns open reliability findings ranked by severity |
-| `opensourcehealth:get_risks` | [Auto-fix Agents MCP](sigrid-mcp/autofix-agents.md) | Returns open source dependency risks across vulnerability, freshness, legal, activity, stability, and management |
-| `opensourcehealth:get_vulnerabilities` | [Auto-fix Agents MCP](sigrid-mcp/autofix-agents.md) | Returns known CVEs in open source dependencies ranked by CVSS score |
+| `guardrails.quality_check` | [Guardrails MCP](sigrid-mcp/guardrails.md) | Checks code for maintainability issues and security vulnerabilities |
+| `maintainability.get_findings` | [Auto-fix Agents MCP](sigrid-mcp/autofix-agents.md) | Retrieves ranked refactoring candidates for a given maintainability property |
+| `maintainability.get_ratings` | [Auto-fix Agents MCP](sigrid-mcp/autofix-agents.md) | Returns current maintainability ratings for a system |
+| `security.get_findings` | [Auto-fix Agents MCP](sigrid-mcp/autofix-agents.md) | Returns open security findings ranked by severity |
+| `reliability.get_findings` | [Auto-fix Agents MCP](sigrid-mcp/autofix-agents.md) | Returns open reliability findings ranked by severity |
+| `opensourcehealth.get_risks` | [Auto-fix Agents MCP](sigrid-mcp/autofix-agents.md) | Returns open source dependency risks across vulnerability, freshness, legal, activity, stability, and management |
+| `opensourcehealth.get_vulnerabilities` | [Auto-fix Agents MCP](sigrid-mcp/autofix-agents.md) | Returns known CVEs in open source dependencies ranked by CVSS score |
 | `update_finding_status` | [Auto-fix Agents MCP](sigrid-mcp/autofix-agents.md) | Updates the status and remarks of a Sigrid finding |
-| `architecture:get_internal` | [Auto-fix Agents MCP](sigrid-mcp/autofix-agents.md) | Shows how the parts inside a directory relate to each other, to understand structure before changing it |
-| `architecture:get_external_dependencies` | [Auto-fix Agents MCP](sigrid-mcp/autofix-agents.md) | Lists a file or directory's incoming and outgoing dependencies, to find the blast radius of a change |
-| `architecture:get_worst_directories` | [Auto-fix Agents MCP](sigrid-mcp/autofix-agents.md) | Returns the lowest-scoring architecture directories, ranked by impact |
+| `get_finding` | [Auto-fix Agents MCP](sigrid-mcp/autofix-agents.md) | Looks up a single security, reliability, or maintainability finding by its id |
+| `architecture.get_internal` | [Auto-fix Agents MCP](sigrid-mcp/autofix-agents.md) | Shows how the parts inside a directory relate to each other, to understand structure before changing it |
+| `architecture.get_external_dependencies` | [Auto-fix Agents MCP](sigrid-mcp/autofix-agents.md) | Lists a file or directory's incoming and outgoing dependencies, to find the blast radius of a change |
+| `architecture.get_worst_directories` | [Auto-fix Agents MCP](sigrid-mcp/autofix-agents.md) | Returns the lowest-scoring architecture directories, ranked by impact |
 
 
 ### Tool selection
@@ -237,7 +238,7 @@ To further restrict which tools are visible in a session, pass the `X-Enabled-To
       "url": "https://sigrid-says.com/mcp",
       "headers": {
         "Authorization": "Bearer <your_sigrid_token>",
-        "X-Enabled-Tools": "guardrails:quality_check, security:get_findings"
+        "X-Enabled-Tools": "guardrails.quality_check, security.get_findings"
       }
     }
   }

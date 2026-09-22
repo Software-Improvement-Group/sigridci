@@ -2,16 +2,15 @@
 
 You can reach this view via the left menu on system level > quaity aspects > maintainability. See the [system-level Overview page](system-overview.md#navigating-to-capabilities).
 
-<img width="252" height="193" alt="New_maintainability_views" src="https://github.com/user-attachments/assets/61bf70bf-80d7-46be-b79e-ac288fdc1648" />
+<img width="210" src="../images/maintainability-overview-deltaquality.png" />
 
 
 The definition of what a system is, what it is comprised of, and how it is configured, are detailed in the pages on [systems within Sigrid](../organization-integration/systems.md) and the [analysis scope configuration documentation page](../reference/analysis-scope-configuration.md).
 
-## 3 different views in the Maintainability tab 
+## 2 different views in the Maintainability tab 
 The maintainability section on the system level has 3 views: 
 1. The *Overview* tab brings the main metrics together. 
-2. The *Refactoring Candidates* tab groups and prioritizes code that does not meet 4 star quality. 
-3. The [*Delta quality*](system-delta-quality.md) view shows the impact of new code changes on the system for the selected period.
+2. The [*Delta quality*](system-delta-quality.md) view shows the impact of new code changes on the system for the selected period.
 
 ## Maintainability overview
 The overview page is shown below. 
@@ -19,7 +18,7 @@ The overview page is shown below.
 * The main code changes are visible at the bottom.
 * The (change in) system metrics are in the top left. 
 
-<img width="1294" height="881" alt="New_Maintainability_system_view" src="https://github.com/user-attachments/assets/1a58c05a-5179-4d41-8257-b882ba179794" />
+<img width="700" src="../images/system-maintainability.png" />
 
 In the above picture, the test code ratio might not be obvious at a glance, the displayed percentage is calculated as the ratio of "test code lines" to "production code lines". 
 As an example, if there are 120 lines of test code and 100 lines of production code, the test code ratio would be:
@@ -34,68 +33,6 @@ For technical details on maintainability metrics, see [Maintainability Evaluatio
 
 Below the metrics overview, there is a shortcut to the *Refactoring candidates* [link on this page](system-maintainability.md#refactoring-candidates). This can also be reached by the Maintainability tab. 
 
-
-## Refactoring Candidates
-This view lists the top 100 findings per metric.  
-
-<img width="1624" height="725" alt="New_refactoring_candidates" src="https://github.com/user-attachments/assets/0badf9af-74b4-4057-92e7-387e9726b5ae" />
-
-Clicking on a metric will expand the list, prioritized by the "severity" of the violation. This is a good approximation of technical risk. The order/prioritization of the findings cannot be changed, but their status can be. The default status is *Raw*. This is meant in the sense of "not yet curated by hand". Setting another status may help you to filter findings. A finding can be set to *Prioritize* or *Accept risk*.  
-
-<img src="../images/system-refactoring-candidates-3dots-status.png" width="300" />
-
-Setting a finding to *Prioritize* will show as *Will fix*
-
-<img src="../images/system-refactoring-candidates-status-set.png" width="250" />
-
-When you set a finding to *Accept Risk*, its status will change to *Risk accepted* and the finding will be hidden by default. 
-
-<img width="63" height="61" alt="New_Filters" src="https://github.com/user-attachments/assets/be709599-25df-46b7-8dcf-f56437b30dd7" class="inline" /> Findings with *Risk accepted* can still be viewed by using the filter. By default the filter is set to *Will fix* and *Raw* only. 
-
-The relevant filter is shown below.
-
-<img src="../images/system-refactoring-candidates-filters-risk-accepted.png" width="150" />
-
-
-### Ordering of Refactoring Candidates
-
-Refactoring candidates are sorted by risk impact. This is shown as maintainability risk categories, color coded as green-yellow-orange-red from lowest- to highest risk. Within each category, code is sorted by code volume (since volume is the common denominator for the maintainability metrics). [See for more details the technical documentation](../reference/sig-quality-models.md).
-
-As an example, the risk categories for *Unit complexity* as shown at the top of the page:
-
-<img src="../images/system-refactoring-candidates-unit-complexity-risk-profile.png" width="600" />
-
-The exception in this ordering is *Duplication*, where no different degrees of risks are used for the rating calculation. They are ordered by *duplicate size*, where a duplicate may appear more than 3 times, in 1 or multiple files. This is visible next to the file names in the columns *Same file* and *Same component*.
-
-The risk impact ordering is a good indication for prioritization of findings, but it may need a case-by-case analysis. Context is a defining factor, which is discussed below. 
-
-### Dealing with Refactoring Candidates
-
-Being refactoring *candidates* should be taken literally. It is not to say that every candidate *needs* to be resolved. No system is technically perfect (or it is not for long). Every metric has tolerances for violations of the risk categories, and these violations may be defendable. 
-
-The decision to refactor is essentially a cost-benefit trade-off. As a simplification this is determined by:
-* The size of the **problem**
-* The amount of **effort** to resolve that
-* Expected **benefits** (like its *future value*)
-
-Questions to ask yourself dealing with refactoring candidates include:
-
-**Problem** 
-* Does this piece of code cause trouble to me or other developers? E.g. is this a long `switch` statement scoring badly for unit complexity, but it is perfectly readable in context?
-  * How likely is it that this code will need (frequent) modification in the future?
-  * Is this problem likely to grow? A *mistake waiting to happen*? For example, could this maintainability *tarnish* evolve into a security flaw?   
-* How important/critical is this code in context of the system? Do we value its stability more than technical elegance?
-  * To what extent is this code guarded against undesirable behavior (being well tested and contained)? And is this in sufficient proportion to the code's importance?
-
-**Effort**
-* How difficult is this to refactor? Am I confident in its unit-/integration tests?
-  * Are there technical limitations, or design choices, that limit our ability to change code into a more maintainable form? Can a case be made that consistency trumps technical cleanliness? 
-  * Is it efficient to change this code right now when I am already looking at it?
-* Can it even be placed outside of the source code (this may be true for e.g. static referennce lists)?
-
-**Benefits**
-* What is the "*opportunity cost*" of refactoring this as opposed to "the next best thing" you could spend your time on (such as bugfixing/building new functionality)? 
-* Could I gain an extra advantage by refactoring now, e.g. by improving unit tests? 
 
 ### Sigrid as part of the Agile development process
 For an elaboration of using and prioritizing maintainability findings within the development process, [see the elaboration in the Agile development process document](../workflows/agile-development-process.md#for-maintainability-focus-on-technical-debt-that-is-affecting-you-right-now)

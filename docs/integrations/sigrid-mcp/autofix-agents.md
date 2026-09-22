@@ -28,6 +28,7 @@ The [Sigrid Claude Code Plugin](../integration-sigrid-mcp.md) ships a set of ski
 | `architecture-drift` | Checks a diff, staged change, or branch against Sigrid's architecture graph for new coupling, bypassed facades, and cycles |
 | `change-feedback` | Runs Sigrid CI locally and returns structured quality feedback |
 | `fix-osh-risk` | Remediates open source health findings by creating merge requests or researched issues |
+| `resolve-security-findings` | Classifies security findings as false positive, accepted risk, or will-fix, fixes what it can, and writes the decision back to Sigrid |
 
 If you use a different AI agent, browse the skill definitions in the [sigrid-ai-toolkit](https://github.com/Software-Improvement-Group/sigrid-ai-toolkit) repository and adapt them to your own workflow.
 
@@ -37,7 +38,7 @@ For end-to-end walkthroughs, see:
 
 - [Preventing architecture drift with an AI coding agent](../../workflows/agents/preventing-architecture-drift.md): check a diff against the architecture graph before it reaches production, built on `architecture-drift`
 - [Reducing technical debt with auto-fix agents](../../workflows/agents/reducing-technical-debt.md): maintainability, built on `sigrid-diagnose` and `sigrid-improve`
-- [Triaging security and reliability findings](../../workflows/agents/triaging-security-reliability.md): assess in context, triage with a rationale
+- [Resolving security findings](../../workflows/agents/resolving-security-findings.md): assess in context, fix what should be fixed, with a rationale recorded either way
 
 ## Workflows
 
@@ -71,13 +72,13 @@ Prompted this way the agent will rank by severity, which is not the order that m
 
 ### Architecture exploration
 
-Before touching code, let the agent map how the system fits together: which components call which, and what a change would ripple out to. The three `architecture:*` tools are read-only, so they inform a plan without changing anything. Giving the agent this context up front helps it respect the existing structure instead of introducing architecture drift. To check whether a change already did, run the `architecture-drift` skill against the diff instead; [preventing architecture drift](../../workflows/agents/preventing-architecture-drift.md) walks through a session.
+Before touching code, let the agent map how the system fits together: which components call which, and what a change would ripple out to. The three `architecture.*` tools are read-only, so they inform a plan without changing anything. Giving the agent this context up front helps it respect the existing structure instead of introducing architecture drift. To check whether a change already did, run the `architecture-drift` skill against the diff instead; [preventing architecture drift](../../workflows/agents/preventing-architecture-drift.md) walks through a session.
 
 We would reach for them in this order:
 
-1. `architecture:get_worst_directories` to find where restructuring pays off, since the ranking is volume-weighted and a low rating on a large component outranks the same rating on a small one.
-2. `architecture:get_internal` to see how a directory hangs together. Call it without a path first for the system's top-level components, then drill into the one you care about.
-3. `architecture:get_external_dependencies` on whatever you plan to change, for its blast radius. It returns one hop per call, so follow a returned path with another call to go deeper.
+1. `architecture.get_worst_directories` to find where restructuring pays off, since the ranking is volume-weighted and a low rating on a large component outranks the same rating on a small one.
+2. `architecture.get_internal` to see how a directory hangs together. Call it without a path first for the system's top-level components, then drill into the one you care about.
+3. `architecture.get_external_dependencies` on whatever you plan to change, for its blast radius. It returns one hop per call, so follow a returned path with another call to go deeper.
 
 See the [tools reference](#tools-reference) for their parameters.
 
@@ -93,6 +94,8 @@ I want to change [file] in [customer]/[system]. What depends on it, and what doe
 
 ### Security and reliability triage
 
+<a href="../../images/mcp/recipes/security-findings-triage.png" target="_blank"><img src="../../images/mcp/recipes/security-findings-triage.png" width="600" alt="Claude Code retrieving high-severity security findings and assessing their real-world exploitability in context" /></a>
+
 The agent fetches security or reliability findings, investigates each one in the code, and either fixes it or triages it with a rationale. Give it a severity floor, say whether it may change code, and state your risk tolerance:
 
 ```
@@ -105,7 +108,7 @@ Reliability findings use the same loop with a different question, because what y
 Get reliability findings for [customer]/[system] with severity HIGH or above. Focus on error handling and concurrency issues. Fix straightforward ones and flag complex ones for manual review.
 ```
 
-A prompt like this gets you a first batch. What decides whether the verdicts are worth anything is context the agent cannot read from the code, such as which services are reachable from outside, plus a rule that every verdict cites a line. Both are in [triaging security and reliability findings](../../workflows/agents/triaging-security-reliability.md).
+A prompt like this gets you a first batch. What decides whether the verdicts are worth anything is context the agent cannot read from the code, such as which services are reachable from outside, plus a rule that every verdict cites a line. For security findings, the `resolve-security-findings` skill runs this loop for you, on a single finding, a pasted finding, or a whole backlog: it reads the flagged code, classifies it against that evidence rule, fixes what falls to will-fix, and writes the status back to Sigrid. See [resolving security findings](../../workflows/agents/resolving-security-findings.md). Reliability findings have no packaged skill yet, so the prompt above is still the whole workflow for those.
 
 ### Open source health
 
@@ -135,24 +138,25 @@ Get the top 100 duplication findings for [customer]/[system]. We accept duplicat
 Get duplication findings for [customer]/[system]. Fix the ones I've previously marked as will-fix and update their status.
 ```
 
-Splitting the two is worth it whenever the accept-or-fix call needs something only your team knows. If you can state that call up front, autonomous fixing does both in one pass. [Triaging security and reliability findings](../../workflows/agents/triaging-security-reliability.md) applies the same split to findings where each decision has to carry a written rationale.
+Splitting the two is worth it whenever the accept-or-fix call needs something only your team knows. If you can state that call up front, autonomous fixing does both in one pass. [Resolving security findings](../../workflows/agents/resolving-security-findings.md) applies the same split to security findings, where each decision has to carry a written rationale.
 
 ## Tools reference
 
-Ten MCP tools drive the workflows above. Every tool takes `customer` and `system`; the parameters below are the ones that shape the result.
+Eleven MCP tools drive the workflows above. Every tool takes `customer` and `system`; the parameters below are the ones that shape the result.
 
 | Tool | Description | Key parameters                                                                                                                                   |
 | --- | --- |--------------------------------------------------------------------------------------------------------------------------------------------------|
-| `maintainability:get_findings` | Ranked refactoring candidates for a [maintainability property](../../reference/sig-quality-models.md), each with a finding UUID, LOC weight, and severity | `system_property`: `duplication`, `unitSize`, `unitComplexity`, `unitInterfacing`, `moduleCoupling`, `componentIndependence`, `componentEntanglement`. Optional: `technology`, `count` (default 20), `status` |
-| `maintainability:get_ratings` | Current maintainability ratings on a 0.5–5.5 star scale (3.0 = market average, 4.0 = target for new development) | Optional: `component`, `technology` breakdowns                                                                                                   |
-| `security:get_findings` | Open security findings ranked by severity and exploitability, with CWE identifiers and file locations | `severity_min`: `LOW` (default), `MEDIUM`, `HIGH`, `CRITICAL`. `model`: `ow10`, `sigsec`, `5055sec`, `c25`, `pci4`, `owasvs4c`, `owasvs4s`, `lcnc10`; omit for your organization's default. `path_prefix`: filter by file path prefix (use long, specific prefixes). `limit` (default 25). `status`: defaults to excluding `FIXED` and `FALSE_POSITIVE` |
-| `reliability:get_findings` | Open reliability findings (error handling, concurrency, resource management, IPC) ranked by severity | Same filters as security. `model`: `sigrel` (default), `5055rel`                                                                                 |
-| `opensourcehealth:get_risks` | Open source dependency risks across vulnerability, freshness, legal, activity, stability, and management. Default tool for any open-source health question | `risk_dimension`: filter dimensions. `risk_min`: `NONE`, `LOW`, `MEDIUM` (default), `HIGH`, `CRITICAL`. `limit` |
-| `opensourcehealth:get_vulnerabilities` | Known CVEs in open-source dependencies ranked by CVSS score | `severity_min`: `LOW`, `MEDIUM` (default), `HIGH`, `CRITICAL`. `limit` |
+| `maintainability.get_findings` | Ranked refactoring candidates for a [maintainability property](../../reference/sig-quality-models.md), each with a finding UUID, LOC weight, and severity | `system_property`: `duplication`, `unitSize`, `unitComplexity`, `unitInterfacing`, `moduleCoupling`, `componentIndependence`, `componentEntanglement`. Optional: `technology`, `count` (default 20), `status` |
+| `maintainability.get_ratings` | Current maintainability ratings on a 0.5–5.5 star scale (3.0 = market average, 4.0 = target for new development) | Optional: `component`, `technology` breakdowns                                                                                                   |
+| `security.get_findings` | Open security findings ranked by severity and exploitability, with CWE identifiers and file locations | `severity_min`: `LOW` (default), `MEDIUM`, `HIGH`, `CRITICAL`. `model`: `ow10`, `sigsec`, `5055sec`, `c25`, `pci4`, `owasvs4c`, `owasvs4s`, `lcnc10`; omit for your organization's default. `path_prefix`: filter by file path prefix (use long, specific prefixes). `limit` (default 25). `status`: defaults to excluding `FIXED` and `FALSE_POSITIVE` |
+| `reliability.get_findings` | Open reliability findings (error handling, concurrency, resource management, IPC) ranked by severity | Same filters as security. `model`: `sigrel` (default), `5055rel`                                                                                 |
+| `opensourcehealth.get_risks` | Open source dependency risks across vulnerability, freshness, legal, activity, stability, and management. Default tool for any open-source health question | `risk_dimension`: filter dimensions. `risk_min`: `NONE`, `LOW`, `MEDIUM` (default), `HIGH`, `CRITICAL`. `limit` |
+| `opensourcehealth.get_vulnerabilities` | Known CVEs in open-source dependencies ranked by CVSS score | `severity_min`: `LOW`, `MEDIUM` (default), `HIGH`, `CRITICAL`. `limit` |
 | `update_finding_status` | Updates the status of a finding so Sigrid reflects the agent's decisions. Open source health components do not support status updates | `finding_id`: the `id` returned with the finding. `status` (see below). `remark`. At least one of `status` or `remark` is required |
-| `architecture:get_internal` | Shows how the parts inside a directory relate to each other: which sub-parts call which, and how often. Omit the path for the system's top-level components | Optional: `path` (omit for top-level components) |
-| `architecture:get_external_dependencies` | Lists a file or directory's direct dependencies, outgoing (what it calls) and incoming (what calls it), to find the blast radius of a change. One hop per call | `path` (required). Optional: `direction`: `incoming`, `outgoing`, `all` (default) |
-| `architecture:get_worst_directories` | Up to 10 architecture directories ranked by structure rating, worst first. Ranking is volume-weighted, so a low rating on a large component outranks the same rating on a small one | Optional: `path` to rank the components inside that path instead of system-wide |
+| `get_finding` | Looks up a single finding already seen via one of the `get_findings` tools, by its id | `finding_id`: the `id` returned with the finding. `finding_type`: `security`, `reliability`, `maintainability`. `system_property`: required when `finding_type` is `maintainability` |
+| `architecture.get_internal` | Shows how the parts inside a directory relate to each other: which sub-parts call which, and how often. Omit the path for the system's top-level components | Optional: `path` (omit for top-level components) |
+| `architecture.get_external_dependencies` | Lists a file or directory's direct dependencies, outgoing (what it calls) and incoming (what calls it), to find the blast radius of a change. One hop per call | `path` (required). Optional: `direction`: `incoming`, `outgoing`, `all` (default) |
+| `architecture.get_worst_directories` | Up to 10 architecture directories ranked by structure rating, worst first. Ranking is volume-weighted, so a low rating on a large component outranks the same rating on a small one | Optional: `path` to rank the components inside that path instead of system-wide |
 
 **Valid statuses for `update_finding_status`:**
 

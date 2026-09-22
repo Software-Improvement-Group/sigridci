@@ -2,7 +2,7 @@
 
 The Open Source Health overview page shows a summary of findings and estimated severity.  
 
-<img width="1696" height="897" alt="New_Portfolio_OSH" src="https://github.com/user-attachments/assets/a6453fbf-cf66-4f54-a141-b8b2baf3e434" />
+<img width="700" src="../images/portfolio-open-source-health-overview.png" />
 
 From left to right, the tiles read as follows:
 * *Systems and libraries*: the totals of systems being scanned and the sum of identified (third party) libraries.

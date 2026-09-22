@@ -3,6 +3,13 @@ Sigrid release notes
 
 SIG uses [continuous delivery](https://en.wikipedia.org/wiki/Continuous_delivery), meaning that every change to Sigrid or the underlying analysis is released once our development pipeline has completed. On average, we release somewhere between 10 and 20 times per day. This page therefore doesn't list every single change, since that would quickly lead to an excessively long list of small changes. Instead, this page lists Sigrid and analysis changes that we consider noteworthy for the typical Sigrid user.
 
+### September 21, 2026
+
+- **Technology support:** Sigrid now supports [pylock.toml for Python projects](https://packaging.python.org/en/latest/specifications/pylock-toml/) in Open Source Health.
+- **Security:** Improving our ruleset is not just adding more and more rules. It's also about *removing* rules that are no longer relevant, or that are seen as low-value by users. We have removed 70 rules that were frequently reported as low-value.
+- **On-premise:** The [Sigrid MCP integration](../integrations/integration-sigrid-mcp.md) is now part of on-premise Sigrid. The on-premise documentation will be updated later this week to provide some more instructions on how you can interact with the Sigrid MCP within an on-premise environment.
+- **Integrations:** The integrations for exporting Sigrid's architecture data have been updated so that you can [export a list of all dependencies in a system to CSV](https://github.com/Software-Improvement-Group/sigrid-integrations/tree/main/architecture-export). This is useful for when you need to manually post-process this data, or if you need it for a use case outside of Sigrid. If you want to integrate Sigrid's architecture data with other systems on a regular basis, we recommend [using the API](../integrations/sigrid-api-documentation.md#architecture-quality-data) instead of a CSV.
+
 ### September 7, 2026
 
 - **Sigrid CI:** After a successful Beta phase, Sigrid CI security feedback is now generally available. If your Sigrid license includes Sigrid Security, you will automatically receive security feedback from Sigrid CI. The [Sigrid CI documentation](../sigridci-integration/using-sigridci.md#security-feedback) contains more information on this feedback. If you do *not* want security feedback, you can disable it in [the Sigrid CI configuration](../reference/client-script-usage.md#command-line-options).
@@ -108,7 +115,7 @@ SIG uses [continuous delivery](https://en.wikipedia.org/wiki/Continuous_delivery
 
 ### February 23, 2026
 
-- **Scope configuration:** If you want to enable Sigrid's [Open Source Health](../capabilities/portfolio-open-source-health.md) or [Security](../capabilities/portfolio-security.md) capabilities, you previously needed to add some mandatory configuration to the [scope configuration file](../reference/analysis-scope-configuration.md). Many people considered this to be a bit cumbersome, so this has been simplified: Open Source Health and Security will now run automatically, as long as you have the corresponding license. This change is backward compatible, so existing scope configuration files will continue to work.
+- **Scope configuration:** If you want to enable Sigrid's [Open Source Health](../capabilities/portfolio-open-source-health.md) or Security capabilities, you previously needed to add some mandatory configuration to the [scope configuration file](../reference/analysis-scope-configuration.md). Many people considered this to be a bit cumbersome, so this has been simplified: Open Source Health and Security will now run automatically, as long as you have the corresponding license. This change is backward compatible, so existing scope configuration files will continue to work.
 - **Sigrid CI:** Following the change above, Sigrid CI will now automatically give feedback for Maintainability and/or Open Source Health based on your Sigrid license. If you want, you can still choose to explicitly disable certain feedback in [the Sigrid CI configuration](../sigridci-integration/using-sigridci.md).
 - **Sigrid CI:** The Open Source Health feedback in Sigrid CI now understands [sub-systems](client-script-usage.md#using-subsystems-to-combine-repositories). If you're using the sub-systems feature, Sigrid CI will only give feedback on Open Source Health issues within your sub-system. 
 - **Sigrid API:** It is now possible to retrieve Sigrid findings in [SARIF format](https://sarifweb.azurewebsites.net) using the API. See the [API documentation](../integrations/sigrid-api-documentation.md#security-and-reliability-findings) for more information.
@@ -217,7 +224,7 @@ SIG uses [continuous delivery](https://en.wikipedia.org/wiki/Continuous_delivery
 
 ### July 14, 2025
 
-- **Maintainability:** The [maintainability benchmark view](../capabilities/portfolio-maintainability.md#maintainability-benchmark) is now available in Sigrid. This visualization is used often in SIG consultancy and the Report Generator, but is now also available from Sigrid itself.
+- **Maintainability:** The maintainability benchmark view is now available in Sigrid. This visualization is used often in SIG consultancy and the Report Generator, but is now also available from Sigrid itself.
 - **Open Source Health:** Sigrid now recognizes open source libraries with "and"/"or" licenses, which are commonly used in the [SPDX license ID](https://spdx.dev/learn/handling-license-info/). The license risk is then based on the most permissive part of the license.
 - **Report Generator:** The Report Generator can now also generate the [system maintainability one-pager](https://github.com/Software-Improvement-Group/sigrid-report-generator#generating-standard-reports). This is a "classic" SIG report that, as the name implies, focuses on the maintainability trend for an single system.
 - **Technology support:** In Kotlin, [single expression functions](https://medium.com/@husayn.fakher/understanding-single-expression-functions-in-kotlin-10-questions-answered-09bacf6789e8) are now considered as units by Sigrid. This will result in feedback that is both more fair and more actionable.
@@ -267,7 +274,7 @@ SIG uses [continuous delivery](https://en.wikipedia.org/wiki/Continuous_delivery
 
 ### April 7, 2025
 
-- **Security:** The [portfolio-level security dashboard](../capabilities/portfolio-security.md) now shows the trend of open versus resolved findings, per month. Shows the number of open security findings (new and existing) and resolved findings each month. A healthy process resolves more findings than it opens.
+- **Security:** The [portfolio-level security dashboard](../capabilities/portfolio-overview.md) now shows the trend of open versus resolved findings, per month. Shows the number of open security findings (new and existing) and resolved findings each month. A healthy process resolves more findings than it opens.
 - **Sigrid CI:** Feedback from Sigrid CI now also included refactoring candidates that have been fixed. This information is not intended as "work items", it's purely positive feedback that is meant to encourage small refactorings as part of the normal development process.
 - **Sigrid CI**: If you have a pipeline that operates on *multiple* Git repositories, Sigrid CI will now export the repository history for each repository. Most people will not actually notice this change, as it's most common to have one pipeline operate on one repository. However, if you're in the minority of people that uses a pipeline that combines multiple repositories, this change means you can now use Sigrid CI out-of-the-box instead of needing to manually configure things.
 - **Open Source Health:** Sigrid reports on open source libraries in [JAR files](https://en.wikipedia.org/wiki/JAR_(file_format)). In most cases, a JAR file contains exactly one library. However, there are rare cases where people use a "fat" or "shadowed" JAR file that contains *multiple* open source libraries. Sigrid will now only report on the contents of those JAR files if the [transitive option](analysis-scope-configuration.md#open-source-health) is enabled in the configuration.

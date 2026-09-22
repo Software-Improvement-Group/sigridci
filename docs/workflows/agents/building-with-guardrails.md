@@ -40,7 +40,7 @@ The plugin configures the Sigrid MCP server and the skills together:
 
 {% include sigrid-mcp/plugin-install.md %}
 
-The installer asks for your Sigrid API token once and stores it in your system keychain. See [authentication tokens](../../organization-integration/authentication-tokens.md) for how to get one. The plugin only works in Claude Code. If you use a different agentic CLI, configure the MCP server by hand with the [installation instructions](../../integrations/integration-sigrid-mcp.md#manual-configuration-other-ides). You need at least the `guardrails:quality_check` tool.
+The installer asks for your Sigrid API token once and stores it in your system keychain. See [authentication tokens](../../organization-integration/authentication-tokens.md) for how to get one. The plugin only works in Claude Code. If you use a different agentic CLI, configure the MCP server by hand with the [installation instructions](../../integrations/integration-sigrid-mcp.md#manual-configuration-other-ides). You need at least the `guardrails.quality_check` tool.
 
 The plugin also installs a hook that calls that tool on every file changed at the end of each turn. Other CLIs need that trigger added by hand; see [setting it up for other tools](../../integrations/sigrid-mcp/guardrails.md#other-tools).
 
@@ -58,13 +58,13 @@ The hook covers the trigger. This step adds your codebase's own conventions, and
 
 {% include sigrid-mcp/quality-gate-prompt.md %}
 
-Two details in that text do the work, and both are easy to lose when you reword it. It names the tool, which makes the outcome verifiable: "check code quality" is advice, while "run `guardrails:quality_check` on all files you changed" is something you can confirm happened. And "before reporting ANY task as complete" attaches the check to a point every task passes through exactly once, which looser timing like "after every edit" does not give you.
+Two details in that text do the work, and both are easy to lose when you reword it. It names the tool, which makes the outcome verifiable: "check code quality" is advice, while "run `guardrails.quality_check` on all files you changed" is something you can confirm happened. And "before reporting ANY task as complete" attaches the check to a point every task passes through exactly once, which looser timing like "after every edit" does not give you.
 
 The gate also lets the agent leave a finding alone, either because the code already honors the principles or because the fix would cascade outside the task, as long as it says which and why. That clause is what keeps a small addition from turning into an afternoon of extractions.
 
 An instruction is followed most of the time, and the agent is the one who decides it has finished, so we would verify the gate for the first few sessions in a new repository. Where it really matters, back it with something mechanical: [Sigrid CI](../../sigridci-integration/using-sigridci.md) in a pre-commit hook or in your pipeline runs the same checks whatever produced the code.
 
-Use whatever you are already coding with. Handing the checks to a cheaper subagent looks like a saving, since `guardrails:quality_check` is deterministic and its output is a plain list. The fix is the actual work though, and it is the least self-contained step here: it needs the file, the class around it, and the reason the code is shaped the way it is. A subagent starts with none of that, so it reads the file again to catch up, and then either makes a change you did not want or invents a reason for leaving a finding alone. Both cost you more than the cheaper model saves. See [LLM model selection](../agents.md#llm-model-selection).
+Use whatever you are already coding with. Handing the checks to a cheaper subagent looks like a saving, since `guardrails.quality_check` is deterministic and its output is a plain list. The fix is the actual work though, and it is the least self-contained step here: it needs the file, the class around it, and the reason the code is shaped the way it is. A subagent starts with none of that, so it reads the file again to catch up, and then either makes a change you did not want or invents a reason for leaving a finding alone. Both cost you more than the cheaper model saves. See [LLM model selection](../agents.md#llm-model-selection).
 {: .model }
 
 ## What a session looks like
@@ -87,7 +87,7 @@ The second check is the part worth reading. It still reports two medium-severity
 
 ## Check that the gate fired
 
-Your CLI shows tool calls, so look for at least one `guardrails:quality_check` call after the last edit. Look at the file list too: the tool takes one file per call, so a four-file change means four calls, and if only one shows up then the gate covered a quarter of your work.
+Your CLI shows tool calls, so look for at least one `guardrails.quality_check` call after the last edit. Look at the file list too: the tool takes one file per call, so a four-file change means four calls, and if only one shows up then the gate covered a quarter of your work.
 
 ```
 Which files did you run the quality check on? List them against the files you changed.
@@ -98,5 +98,5 @@ Which files did you run the quality check on? List them against the files you ch
 Guardrails only ever looks at the files in front of it. Architecture drift, vulnerable dependencies, and duplication spread across files need the analysis of the whole system, which is the other reason to run Sigrid CI; the `change-feedback` skill does it locally before you push. From there:
 
 - [Reducing technical debt with auto-fix agents](reducing-technical-debt.md) for the debt that is already there
-- [Triaging security and reliability findings](triaging-security-reliability.md) for the findings Sigrid already knows about
+- [Resolving security findings](resolving-security-findings.md) for the findings Sigrid already knows about
 - [Guardrails MCP reference](../../integrations/sigrid-mcp/guardrails.md) for supported technologies and the tool itself

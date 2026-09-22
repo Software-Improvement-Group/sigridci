@@ -10,7 +10,7 @@ The `sigrid-diagnose` skill decides what to work on, and `sigrid-improve` does t
 
 You would run this deliberately, with time set aside: a debt-reduction day, the slack at the end of a sprint, or the week before you start work in a module you know is bad. Pick a stretch where you can review and merge a series of refactors without a release waiting on them. It suits diffuse debt, dozens of long units or duplication spread across a package.
 
-This covers maintainability only. Security and reliability findings behave differently and have their own guide: [triaging security and reliability findings](triaging-security-reliability.md).
+This covers maintainability only. Security findings behave differently and have their own guide, [resolving security findings](resolving-security-findings.md).
 
 ## Prerequisites
 
@@ -109,5 +109,5 @@ Code that should never be a candidate is a different problem and has a better ho
 ## Where to go next
 
 - [Building with an AI coding agent and Sigrid Guardrails](building-with-guardrails.md) to stop new debt while you clear the old
-- [Triaging security and reliability findings](triaging-security-reliability.md) for different findings and a different loop
+- [Resolving security findings](resolving-security-findings.md) for different findings and a different loop
 - [Auto-fix agents MCP reference](../../integrations/sigrid-mcp/autofix-agents.md) for the full tool and status reference

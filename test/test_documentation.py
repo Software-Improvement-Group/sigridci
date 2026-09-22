@@ -22,8 +22,11 @@ from unittest import TestCase
 
 
 class DocumentationTest(TestCase):
+    maxDiff = None
+
     LINK = re.compile("\\[(.*?)\\]\\((\\S+)\\)")
-    IMAGE = re.compile("img src=\"(\\S+)\"")
+    IMAGE_SOURCE = re.compile("img.*? src=\"(\\S+)\"")
+    IMAGE_HTML = re.compile("<img.*?>")
     INCLUDE_DIR = "docs/_includes"
     GENERATED_DIR = "docs/_site"
 
@@ -51,12 +54,29 @@ class DocumentationTest(TestCase):
         return sorted(baseDirs)
                                         
     def testDocumentationDoesNotContainDeadImages(self):
+        wrong = []
+
         for file, contents in self.readDocumentationPages():
-            for match in self.IMAGE.finditer(contents):
+            for match in self.IMAGE_SOURCE.finditer(contents):
                 if not match.group(1).startswith("https://"):
                     parentDir = os.path.dirname(file)
                     linkedFile = os.path.join(parentDir, match.group(1))
-                    self.assertTrue(os.path.exists(linkedFile), f"Dead image in {file} to {linkedFile}")
+                    if not os.path.exists(linkedFile):
+                        wrong.append(f"Dead image in {file} to {linkedFile}")
+                elif "github.com/user-attachments/" in match.group(1):
+                    wrong.append(f"Image refers to GitHub user attachment in {file}: {match.group(1)}")
+
+        self.assertEqual(len(wrong), 0, f"The following images are invalid:\n{'\n'.join(wrong)}")
+
+    def testImageShouldNotDefineBothWidthAndHeightToPreserveAspectRatio(self):
+        wrong = []
+
+        for file, contents in self.readDocumentationPages():
+            for match in self.IMAGE_HTML.finditer(contents):
+                if "width=" in match.group(0) and "height=" in match.group(0):
+                    wrong.append(f"Image in {file} defines both width and height: {match.group(0)}")
+
+        self.assertEqual(len(wrong), 0, f"The following images are invalid:\n{'\n'.join(wrong)}")
                 
     def testMenuDoesNotContainDeadLinks(self):
         with open("docs/_includes/menu.html", "r") as f:

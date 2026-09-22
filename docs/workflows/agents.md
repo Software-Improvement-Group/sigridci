@@ -5,7 +5,7 @@ Each of these guides follows one job through on a real codebase: what to configu
 - [Building with an AI coding agent and Sigrid Guardrails](agents/building-with-guardrails.md) puts Guardrails in the feature loop, so the agent checks each file it writes before you ever see the diff.
 - [Preventing architecture drift with an AI coding agent](agents/preventing-architecture-drift.md) checks an agent's diff against Sigrid's measured dependency graph before it merges.
 - [Reducing technical debt with auto-fix agents](agents/reducing-technical-debt.md) works through the refactoring candidates for your weakest maintainability property.
-- [Triaging security and reliability findings](agents/triaging-security-reliability.md) assesses a finding backlog in context and records each decision with a rationale.
+- [Resolving security findings](agents/resolving-security-findings.md) classifies a finding backlog against your own deployment and fixes what should be fixed, with a rationale recorded either way.
 
 These four are workflows we run ourselves, and they are a good place to start: try one out on your own codebase and you will learn quickly what these agents are good at and where you want something different.
 

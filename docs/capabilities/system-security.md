@@ -2,13 +2,13 @@
 
 The security overview page shows a summary of findings, their change, age and estimated severity. 
 
-<img width="1714" height="898" alt="New_Security_system" src="https://github.com/user-attachments/assets/aa47b263-2fa4-43da-92b5-ee3bf9daee6c" />
+<img width="600" src="../images/security/findings.png" />
 
 The different elements in this page are:
 * *Findings* shows a count of *the current number of findings*. Below it is the number of changes, based on the source code comparison period. This range be changed in the top right as usual. The note *"Also showing ... resolved findings and ... informational findings"* means that on top of this number, more findings are shown below. This is relevant for estimating activity surrounding these findings, such as fixing security findings or marking them as *false positive*. 
 * *Activity* shows a breakdown of this number. A mouseover on the *Activity* barchart will show the following:
 
-<img width="341" height="162" alt="New_activity_security" src="https://github.com/user-attachments/assets/d2707219-96b1-4b8d-9a8d-fcd7cfa4215c" />
+<img width="300" src="../images/security/totals.png" />
 
 * The *Findings Age* tile gives an indication how long findings are known. 
 
@@ -106,7 +106,7 @@ You can group and sort the detailed view of security findings. The sorting offer
 
 Below an example of a list of detailed findings with no grouping. 
 
-<img width="1457" height="866" alt="New_severity_none" src="https://github.com/user-attachments/assets/35ce9753-6fd3-4780-9a6d-1338a657dfa9" />
+<img width="600" src="../images/security/nogrouping.png" />
 
 In the top left you can see that the findings are not grouped. Therefore each finding is shown individually. Below, the *"Grouping"* menu under *"Sorting"*, sorting is set to CVSS severity. Therefore the highest risk findings are shown above. Note that for example the first two findings are Maven dependencies. These originate from [Open Source Health](system-open-source-health.md). 
 
