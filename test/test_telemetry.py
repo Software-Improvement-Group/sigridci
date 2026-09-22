@@ -29,7 +29,16 @@ class TelemetryTest(TestCase):
         telemetry = DummyTelemetry(options)
         telemetry.trackUnusedLicenses(["MAINTAINABILITY", "SECURITY"])
 
-        self.assertEqual(telemetry.captured, ["sigridci.unused/sigridci.unused.security"])
+        self.assertEqual(telemetry.captured, ["sigridci.unused/security"])
+
+    def testSendSingleEventForMultipleMissingLicenses(self):
+        options = PublishOptions("aap", "noot", RunMode.FEEDBACK_ONLY, "/tmp")
+        options.capabilities = [MAINTAINABILITY]
+
+        telemetry = DummyTelemetry(options)
+        telemetry.trackUnusedLicenses(["MAINTAINABILITY", "SECURITY", "OPEN_SOURCE_HEALTH"])
+
+        self.assertEqual(telemetry.captured, ["sigridci.unused/osh,security"])
 
     def testDoNotSendEventIfAllCapabilitiesAreUsed(self):
         options = PublishOptions("aap", "noot", RunMode.FEEDBACK_ONLY, "/tmp")
