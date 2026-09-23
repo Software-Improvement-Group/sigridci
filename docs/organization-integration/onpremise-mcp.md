@@ -3,7 +3,7 @@
 This documentation covers on-premise Sigrid. It is not applicable for cloud-based Sigrid.
 {: .attention }
 
-The [Sigrid MCP server](../integrations/integration-sigrid-mcp.md) lets AI coding assistants use Sigrid's analysis while developers work. On Sigrid On-Premise it runs inside your own cluster as an optional service. Unlike the other optional components, such as the LDAP group sync and the Open Source Health knowledge base updater, which are jobs, the MCP server is a long-running service with its own `mcp` subchart in `sigrid-stack`.
+The [Sigrid MCP server](../integrations/integration-sigrid-mcp.md) lets AI coding assistants use Sigrid's analysis while developers work. When using Sigrid On-Premise, the Sigrid MCP server runs inside your own cluster as an optional service. Unlike the other optional components, such as the LDAP group sync and the Open Source Health knowledge base updater, which are jobs, the MCP server is a long-running service with its own `mcp` subchart in `sigrid-stack`.
 
 ## Prerequisites
 
@@ -49,7 +49,7 @@ mcp:
 ```
 {% endraw %}
 
-The subchart requests 7 CPU and 28Gi memory per replica by default. Lower `mcp.resources` if your node pool cannot accommodate this, keeping in mind that the MCP server runs Sigrid analyses on code sent by the assistant, so it needs memory comparable to an analysis job.
+The subchart requests 7 CPU and 28Gi memory per replica by default. Lower `mcp.resources` if your node pool cannot accommodate this, keeping in mind that the MCP server runs Sigrid analyses on code sent by your AI agent, so it needs memory comparable to an analysis job in your CI pipeline.
 
 By default the subchart also creates a NetworkPolicy that limits egress to `auth-api` and `sigrid-api`, and a HorizontalPodAutoscaler that needs the Kubernetes metrics API. Set `mcp.networkPolicy.enabled: false` or `mcp.autoscaling.enabled: false` if your cluster does not support these.
 
