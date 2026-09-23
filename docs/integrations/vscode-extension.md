@@ -107,8 +107,9 @@ you install the Sigrid plugin for the best experience.
 ### Getting "Sigrid MCP detected" for GitHub Copilot
 
 Configure the Sigrid MCP server in VS Code's own MCP settings (`Cmd+Shift+P` → "MCP: Add Server" → HTTP),
-pointing to `https://sigrid-says.com/mcp` with your Sigrid API token as a Bearer token in the Authorization
-header. Once GitHub Copilot can see this server, the label switches to detected.
+pointing to `https://sigrid-says.com/mcp` (or `https://my-sigrid.example.com/mcp` on Sigrid On-Premise) with your
+Sigrid API token as a Bearer token in the Authorization header. Once GitHub Copilot can see this server, the label
+switches to "detected".
 
 ### Getting "Sigrid MCP detected" for Claude Code
 
