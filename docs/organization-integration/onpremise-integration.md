@@ -28,9 +28,9 @@ The most commonly deployed optional features are:
 
 - **Open Source Health (OSH)** - Provides vulnerability scanning and open source risk management. This service imports vulnerability data into Sigrid. The rest of Sigrid remains fully functional even if OSH is not enabled.
 - **Source code view** - Displays source code within Sigrid. Requires a web-accessible code repository integrated via [OAuth](https://oauth.net/2/), using the same identity provider as Sigrid authentication.
-- **Custom CA certificates** - Supports organizations using internal certificate authorities
-- **AI Explanations** - Pre-generated explanations tailored to each finding type
-- **Sigrid MCP** - Integrates Sigrid's analysis into AI coding assistants
+- **Custom CA certificates** - Supports organizations using internal certificate authorities.
+- **AI Explanations** - Pre-generated explanations tailored to each finding type.
+- **Sigrid MCP** - Integrates Sigrid's analysis into AI coding assistants.
 
 <img src="../images/onpremise-optional-features.png" width="60%" />
 
