@@ -90,7 +90,7 @@ SIG uses [continuous delivery](https://en.wikipedia.org/wiki/Continuous_delivery
 
 ### April 7, 2026
 
-- **Portfolio overview:** The new [portfolio overview dashboard](../capabilities/portfolio-dashboard-plans.md) has different tabs for different use cases:
+- **Portfolio overview:** The new portfolio overview dashboard has different tabs for different use cases:
   - Prioritize which systems require your attention.
   - Track objectives, grouped by team or policy.
   - View your landscape's current state, which is the "classic" dashboard you're used to, and which is still around.
