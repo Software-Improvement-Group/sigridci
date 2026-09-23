@@ -118,8 +118,9 @@ class SystemUploadPacker:
         UploadLog.log(f"Upload size is {uploadSizeMB} MB")
 
         if uploadSizeMB > self.MAX_UPLOAD_SIZE_MB:
-            raise Exception(f"Upload exceeds maximum size of {self.MAX_UPLOAD_SIZE_MB} MB")
-        elif not hasContents:
+            UploadLog.log(f"Upload exceeds maximum size of {self.MAX_UPLOAD_SIZE_MB} MB")
+            sys.exit(1)
+        elif not hasContents or uploadSizeBytes < 200:
             UploadLog.log("No code found to upload, please check the directory used for --source")
             sys.exit(1)
         elif uploadSizeBytes < 50000:
