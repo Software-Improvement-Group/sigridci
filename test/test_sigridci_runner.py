@@ -72,7 +72,7 @@ class SigridCiRunnerTest(TestCase):
             "Using token ending in '****ummy'",
             "Found system in Sigrid",
             "Creating upload",
-            "Upload size is 1 MB",
+            "Upload contains 1 files, size is 1 MB",
             "Warning: Upload is very small, source directory might not contain all source code",
             "Preparing upload",
             "Sigrid CI analysis ID: 123",
@@ -108,7 +108,7 @@ class SigridCiRunnerTest(TestCase):
             "Using token ending in '****ummy'",
             "Found system in Sigrid",
             "Creating upload",
-            "Upload size is 1 MB",
+            "Upload contains 1 files, size is 1 MB",
             "Warning: Upload is very small, source directory might not contain all source code",
             "Preparing upload",
             "Sigrid CI analysis ID: 123",
@@ -144,7 +144,7 @@ class SigridCiRunnerTest(TestCase):
             "Using token ending in '****ummy'",
             "Found system in Sigrid",
             "Creating upload",
-            "Upload size is 1 MB",
+            "Upload contains 1 files, size is 1 MB",
             "Warning: Upload is very small, source directory might not contain all source code",
             "Preparing upload",
             "Sigrid CI analysis ID: 123",
@@ -176,7 +176,7 @@ class SigridCiRunnerTest(TestCase):
             "Using token ending in '****ummy'",
             "System is not yet on-boarded to Sigrid",
             "Creating upload",
-            "Upload size is 1 MB",
+            "Upload contains 1 files, size is 1 MB",
             "Warning: Upload is very small, source directory might not contain all source code",
             "Preparing upload",
             "Sigrid CI analysis ID: 123",
@@ -255,7 +255,7 @@ class SigridCiRunnerTest(TestCase):
             "Using token ending in '****ummy'",
             "Found system in Sigrid",
             "Creating upload",
-            "Upload size is 1 MB",
+            "Upload contains 1 files, size is 1 MB",
             "Warning: Upload is very small, source directory might not contain all source code",
             "Preparing upload",
             "Sigrid CI analysis ID: 123",
@@ -284,7 +284,7 @@ class SigridCiRunnerTest(TestCase):
             "Using token ending in '****ummy'",
             "Found system in Sigrid",
             "Creating upload",
-            "Upload size is 1 MB",
+            "Upload contains 1 files, size is 1 MB",
             "Warning: Upload is very small, source directory might not contain all source code",
             "Preparing upload",
             "Sigrid CI analysis ID: 123",
@@ -339,7 +339,7 @@ class SigridCiRunnerTest(TestCase):
             "Validating scope configuration file",
             "Validation passed",
             "Creating upload",
-            "Upload size is 1 MB",
+            "Upload contains 2 files, size is 1 MB",
             "Warning: Upload is very small, source directory might not contain all source code",
             "Preparing upload",
             "Sigrid CI analysis ID: 123",
@@ -462,7 +462,7 @@ class SigridCiRunnerTest(TestCase):
             "Using token ending in '****ummy'",
             "Found system in Sigrid",
             "Creating upload",
-            "Upload size is 1 MB",
+            "Upload contains 1 files, size is 1 MB",
             "Warning: Upload is very small, source directory might not contain all source code",
             "Preparing upload",
             "Sigrid CI analysis ID: 123",
@@ -526,7 +526,7 @@ class SigridCiRunnerTest(TestCase):
             "Using token ending in '****ummy'",
             "Found system in Sigrid",
             "Creating upload",
-            "Upload size is 1 MB",
+            "Upload contains 0 files, size is 1 MB",
             "No code found to upload, please check the directory used for --source"
         ]
 
@@ -655,7 +655,7 @@ class SigridCiRunnerTest(TestCase):
             "Using token ending in '****ummy'",
             "Found system in Sigrid",
             "Creating upload",
-            "Upload size is 1 MB",
+            "Upload contains 0 files, size is 1 MB",
             "No code found to upload, please check the directory used for --source"
         ]
 
@@ -698,7 +698,7 @@ class SigridCiRunnerTest(TestCase):
             "Using token ending in '****ummy'",
             "Found system in Sigrid",
             "Creating upload",
-            "Upload size is 1 MB",
+            "Upload contains 0 files, size is 1 MB",
             "No code found to upload, please check the directory used for --source"
         ]
 

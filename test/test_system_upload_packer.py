@@ -295,7 +295,7 @@ class SystemUploadPackerTest(TestCase):
         expected = [
             "Adding file to upload: a.py", 
             "Adding file to upload: b.py", 
-            "Upload size is 1 MB", 
+            "Upload contains 2 files, size is 1 MB",
             "Warning: Upload is very small, source directory might not contain all source code"
         ]
 
