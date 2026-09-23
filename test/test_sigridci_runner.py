@@ -32,7 +32,14 @@ class SigridCiRunnerTest(TestCase):
 
     def setUp(self):
         self.tempDir = tempfile.mkdtemp()
-        self.options = PublishOptions("aap", "noot", RunMode.FEEDBACK_ONLY, self.tempDir, capabilities=[MAINTAINABILITY])
+        self.options = PublishOptions(
+            "aap",
+            "noot",
+            RunMode.FEEDBACK_ONLY,
+            self.tempDir,
+            capabilities=[MAINTAINABILITY],
+            feedbackURL=""
+        )
 
         UploadLog.clear()
 
