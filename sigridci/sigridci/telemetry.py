@@ -12,6 +12,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
+import sys
 import urllib.parse
 import urllib.request
 
@@ -32,6 +33,7 @@ class Telemetry:
 
     def trackRun(self):
         self.sendEvent("sigridci.platform", Platform.getPlatformId())
+        self.sendEvent("sigrid.python", f"python-{sys.version_info.major}.{sys.version_info.minor}")
 
     def trackUnusedLicenses(self, licenses):
         if self.options.runMode in (RunMode.FEEDBACK_ONLY, RunMode.FEEDBACK_AND_PUBLISH):
