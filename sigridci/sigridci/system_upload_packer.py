@@ -22,6 +22,7 @@ from .upload_log import UploadLog
 
 
 class SystemUploadPacker:
+    MIN_UPLOAD_SIZE_BYTES = 200
     MAX_UPLOAD_SIZE_MB = 500
 
     ALWAYS_INCLUDE = tuple(
@@ -120,7 +121,7 @@ class SystemUploadPacker:
         if uploadSizeMB > self.MAX_UPLOAD_SIZE_MB:
             UploadLog.log(f"Upload exceeds maximum size of {self.MAX_UPLOAD_SIZE_MB} MB")
             sys.exit(1)
-        elif entries == 0 or uploadSizeBytes < 200:
+        elif entries == 0 or uploadSizeBytes < self.MIN_UPLOAD_SIZE_BYTES:
             UploadLog.log("No code found to upload, please check the directory used for --source")
             sys.exit(1)
         elif uploadSizeBytes < 50000:
