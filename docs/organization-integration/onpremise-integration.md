@@ -12,7 +12,7 @@ From a deployment perspective, on-premise Sigrid consists of two "parts":
 - **Sigrid** is the Sigrid web application, which you access from your browser.
 - **Sigrid-Multi-Analyzer** runs within your development platform (e.g. GitHub). It performs the analyses and then publishes the results to Sigrid.
 
-<img src="../images/onpremise-overview.png" width="600" />
+<img src="../images/onpremise-overview.png" width="60%" />
 
 - Sigrid On-Premise is based on [Docker containers](https://en.wikipedia.org/wiki/Docker_%28software%29). There are two types of containers:
   - Application containers that should be deployed permanently in a [Kubernetes](https://en.wikipedia.org/wiki/Kubernetes) cluster, based on a [Helm chart](https://helm.sh) that is provided by SIG.
@@ -22,10 +22,19 @@ From a deployment perspective, on-premise Sigrid consists of two "parts":
 - Analyses are triggered from a build pipeline. The analysis results are then imported into a Postgres database, so they can be viewed in Sigrid.
 - Large files are stored in an [S3-compatible object store](https://aws.amazon.com/s3/).
 
-Some Sigrid On-Premise features are *optional*:
+Some Sigrid On-Premise features are *optional*.
 
-- The Open Source Health feature requires enabling the OSH knowledge base updater cronjob on Sigrid (see [here](onpremise-osh-knowledgebase-updater.md)). This service imports vulnerability data from the OSH knowledge base Docker container into Sigrid. The rest of Sigrid remains fully functional even if OSH is not enabled.
-- When viewing detailed analysis results, Sigrid displays relevant source code files within Sigrid. For this to work, a web-accessible code storage needs to be available. This integrates with Sigrid via [OAuth](https://oauth.net/2/). For this to work, the identity provider used for Sigrid authentication and for the code storage needs to be the same. For viewing source code within Sigrid, you need to provide a development platform that is integrated with the same identity provider as Sigrid itself. The view source functionality is optional, without this integration the rest of Sigrid is unaffected.
+The most commonly deployed optional features are:
+
+- **Open Source Health (OSH)** - Provides vulnerability scanning and open source risk management. This service imports vulnerability data into Sigrid. The rest of Sigrid remains fully functional even if OSH is not enabled.
+- **Source code view** - Displays source code within Sigrid. Requires a web-accessible code repository integrated via [OAuth](https://oauth.net/2/), using the same identity provider as Sigrid authentication.
+- **Custom CA certificates** - Supports organizations using internal certificate authorities
+- **AI Explanations** - Pre-generated explanations tailored to each finding type
+- **Sigrid MCP** - Integrates Sigrid's analysis into AI coding assistants
+
+<img src="../images/onpremise-optional-features.png" width="60%" />
+
+These features vary in their deployment complexity. Some require only a few configuration lines in your Helm values file, while others need additional container images or more service configuration. For deployment details, refer to [Kubernetes deployment](onpremise-kubernetes.md) and it's child pages.
 
 ## Prerequisites
 
@@ -78,7 +87,7 @@ Before deploying Sigrid On-Premise, ensure your environment meets the following 
 
 The Docker containers that form Sigrid On-Premise are distributed via AWS ECR registry. You will receive an account that allows you to access the container registry. 
 
-<img src="../images/onpremise-ecr-private-repo.png" width="100%" /> 
+<img src="../images/onpremise-ecr-private-repo.png" width="60%" /> 
 
 As explained above, Sigrid consists of several Docker containers. The container `sigrid-multi-analyzer` runs directly in your development platform's continuous integration pipelines, all other containers are deployed to your Kubernetes cluster. These steps are explained in more detail in the following sections.
 
