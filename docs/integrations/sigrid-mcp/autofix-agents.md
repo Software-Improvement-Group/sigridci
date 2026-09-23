@@ -25,6 +25,8 @@ The [Sigrid Claude Code Plugin](../integration-sigrid-mcp.md) ships a set of ski
 |-------|--------------|
 | `sigrid-diagnose` | Finds your weakest maintainability property and surfaces the highest-leverage refactoring candidates |
 | `sigrid-improve` | Executes refactoring candidates with guardrail verification |
+| `architecture-diagnose` | Finds the directory whose structure is most worth fixing and names the concrete fix |
+| `architecture-improve` | Implements the fix `architecture-diagnose` named |
 | `architecture-drift` | Checks a diff, staged change, or branch against Sigrid's architecture graph for new coupling, bypassed facades, and cycles |
 | `change-feedback` | Runs Sigrid CI locally and returns structured quality feedback |
 | `fix-osh-risk` | Remediates open source health findings by creating merge requests or researched issues |
@@ -72,7 +74,7 @@ Prompted this way the agent will rank by severity, which is not the order that m
 
 ### Architecture exploration
 
-Before touching code, let the agent map how the system fits together: which components call which, and what a change would ripple out to. The three `architecture.*` tools are read-only, so they inform a plan without changing anything. Giving the agent this context up front helps it respect the existing structure instead of introducing architecture drift. To check whether a change already did, run the `architecture-drift` skill against the diff instead; [preventing architecture drift](../../workflows/agents/preventing-architecture-drift.md) walks through a session.
+Before touching code, let the agent map how the system fits together: which components call which, and what a change would ripple out to. The three `architecture.*` tools are read-only, so they inform a plan without changing anything. Giving the agent this context up front helps it respect the existing structure instead of introducing architecture drift. To check whether a change already did, run the `architecture-drift` skill against the diff instead; [preventing architecture drift](../../workflows/agents/preventing-architecture-drift.md) walks through a session. To fix a structural problem rather than just spot one, `architecture-diagnose` finds the directory most worth restructuring and names the fix, and `architecture-improve` carries that fix out and verifies it against the same numbers.
 
 We would reach for them in this order:
 
@@ -156,7 +158,7 @@ Eleven MCP tools drive the workflows above. Every tool takes `customer` and `sys
 | `get_finding` | Looks up a single finding already seen via one of the `get_findings` tools, by its id | `finding_id`: the `id` returned with the finding. `finding_type`: `security`, `reliability`, `maintainability`. `system_property`: required when `finding_type` is `maintainability` |
 | `architecture.get_internal` | Shows how the parts inside a directory relate to each other: which sub-parts call which, and how often. Omit the path for the system's top-level components | Optional: `path` (omit for top-level components) |
 | `architecture.get_external_dependencies` | Lists a file or directory's direct dependencies, outgoing (what it calls) and incoming (what calls it), to find the blast radius of a change. One hop per call | `path` (required). Optional: `direction`: `incoming`, `outgoing`, `all` (default) |
-| `architecture.get_worst_directories` | Up to 10 architecture directories ranked by structure rating, worst first. Ranking is volume-weighted, so a low rating on a large component outranks the same rating on a small one | Optional: `path` to rank the components inside that path instead of system-wide |
+| `architecture.get_worst_directories` | Up to 20 architecture directories ranked by structure rating, worst first. Ranking is volume-weighted, so a low rating on a large component outranks the same rating on a small one | Optional: `path` to rank the components inside that path instead of system-wide. `min_volume`: drop directories at or below this cumulative person-years floor (default 0.2); lower it (e.g. 0.01) to surface leaf directories on small systems |
 
 **Valid statuses for `update_finding_status`:**
 
