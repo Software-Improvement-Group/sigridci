@@ -11,7 +11,7 @@ The [Sigrid MCP server](../integrations/integration-sigrid-mcp.md) lets AI codin
 - Sigrid On-Premise is installed and working, using the `sigrid-stack` Helm chart version 1.0.20260917 or later.
 - Your Sigrid license includes the Sigrid MCP server.
 
-The MCP server runs from the `sigrid-multi-analyzer` image, so no additional container image is needed.
+The MCP server uses the `sigrid-multi-analyzer` image, which was previoulsy only used in CI/CD for code analysis.
 
 ## Enabling the MCP server
 
