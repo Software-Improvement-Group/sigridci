@@ -325,6 +325,11 @@ summary {
     color: var(--sig-text-black);
 }
 
+.container nav .toc a.page em.kind {
+    background-color: var(--sig-medium-gray) !important;
+    color: var(--sig-white);
+}
+
 .container nav .toc a.subPage {
     padding-left: 56px !important;
     font-size: 12px !important;
