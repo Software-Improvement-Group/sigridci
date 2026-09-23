@@ -37,6 +37,7 @@ mcp:
       value: http://sigrid-onprem-sigrid-api/api/v1
   ingress:
     className: "nginx"  # Use the same ingress controller as the other Sigrid services
+    annotations: { }  # Specify any ingress controller-specific annotations you need
     hosts:
       - host: "my-sigrid.example.com"
         paths:
