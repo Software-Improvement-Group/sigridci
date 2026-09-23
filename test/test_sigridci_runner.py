@@ -52,7 +52,7 @@ class SigridCiRunnerTest(TestCase):
         os.environ["suppliernames"] = ""
         os.environ["teamnames"] = ""
 
-    def testForceLowerCaseForCustomerAndSytemName(self):
+    def testForceLowerCaseForCustomerAndSystemName(self):
         self.options.customer = "Aap"
         self.options.system = "NOOT"
 
