@@ -3,13 +3,17 @@ Sigrid release notes
 
 SIG uses [continuous delivery](https://en.wikipedia.org/wiki/Continuous_delivery), meaning that every change to Sigrid or the underlying analysis is released once our development pipeline has completed. On average, we release somewhere between 10 and 20 times per day. This page therefore doesn't list every single change, since that would quickly lead to an excessively long list of small changes. Instead, this page lists Sigrid and analysis changes that we consider noteworthy for the typical Sigrid user.
 
+### September 28, 2026
+
+- **Security:** We update Sigrid's security ruleset more frequently, since new security threats are emerging faster than ever. We're extending our infrastructure configuration checks. This will not result in critical findings, but you might see some new non-critical finings emerge within your portfolio.
+- **Sigrid CI:** The upload size checks are now more strict. If your upload exceeds the maximum size, or your upload is empty, or your upload is so small it's no longer plausible (i.e. less than 200 bytes), Sigrid CI will fail. This helps to catch broken pipelines or Sigrid CI configurations.
+
 ### September 21, 2026
 
 - **Technology support:** Sigrid now supports [pylock.toml for Python projects](https://packaging.python.org/en/latest/specifications/pylock-toml/) in Open Source Health.
 - **Security:** Improving our ruleset is not just adding more and more rules. It's also about *removing* rules that are no longer relevant, or that are seen as low-value by users. We have removed 70 rules that were frequently reported as low-value.
 - **On-premise:** The [Sigrid MCP integration](../integrations/integration-sigrid-mcp.md) is now part of on-premise Sigrid. See [Sigrid MCP server for Sigrid On-Premise](../organization-integration/onpremise-mcp.md) for how to enable it.
 - **Integrations:** The integrations for exporting Sigrid's architecture data have been updated so that you can [export a list of all dependencies in a system to CSV](https://github.com/Software-Improvement-Group/sigrid-integrations/tree/main/architecture-export). This is useful for when you need to manually post-process this data, or if you need it for a use case outside of Sigrid. If you want to integrate Sigrid's architecture data with other systems on a regular basis, we recommend [using the API](../integrations/sigrid-api-documentation.md#architecture-quality-data) instead of a CSV.
-- **Sigrid CI:** The upload size checks are now more strict. If your upload exceeds the maximum size, or your upload is empty, or your upload is so small it's no longer plausible (i.e. less than 200 bytes), Sigrid CI will fail. This helps to catch broken pipelines or Sigrid CI configurations.
 
 ### September 7, 2026
 
