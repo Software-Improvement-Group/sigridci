@@ -91,6 +91,7 @@ class MaintainabilityMarkdownReportTest(TestCase):
             | **Maintainability** | **4.0** | **2.6** | **3.0** |
             
             ----
+            
             [**View this system in Sigrid**](https://sigrid-says.com/aap/noot)
         """
 
@@ -386,6 +387,7 @@ class MaintainabilityMarkdownReportTest(TestCase):
             | **Maintainability** | **3.0** | **3.1** | **4.0** |
             
             ----
+            
             [**View this system in Sigrid**](https://sigrid-says.com/aap/noot)
         """
 
@@ -411,9 +413,9 @@ class MaintainabilityMarkdownReportTest(TestCase):
             # [Sigrid](https://sigrid-says.com/aap/noot) maintainability feedback
     
             **💭️  You did not change any files that are analyzed by Sigrid.**
-
             
             ----
+            
             [**View this system in Sigrid**](https://sigrid-says.com/aap/noot)
         """
 
@@ -444,75 +446,9 @@ class MaintainabilityMarkdownReportTest(TestCase):
             # [Sigrid](https://sigrid-says.com/aap/noot) maintainability feedback
 
             **💭️  You did not change any files that are analyzed by Sigrid.**
-
             
             ----
-            [**View this system in Sigrid**](https://sigrid-says.com/aap/noot)
-        """
-
-        self.assertEqual(markdown.strip(), inspect.cleandoc(expected).strip())
-
-    @mock.patch.dict(os.environ, {"SIGRID_CI_MARKDOWN_HTML" : "false"})
-    def testIncludeFeedbackLinks(self):
-        self.options.feedbackURL = "https://example.com"
-
-        feedback = {
-            "baselineRatings": {"MAINTAINABILITY": 3.0},
-            "changedCodeBeforeRatings" : {"MAINTAINABILITY" : 2.9},
-            "newCodeRatings": {"MAINTAINABILITY": 2.8},
-            "overallRatings": {"MAINTAINABILITY": 3.0},
-            "refactoringCandidates": []
-        }
-
-        report = MaintainabilityMarkdownReport()
-        report.decorateLinks = False
-        markdown = report.renderMarkdown("1234", feedback, self.options)
-
-        expected = """
-            # [Sigrid](https://sigrid-says.com/aap/noot) maintainability feedback
-
-            **⚠️  Your code did not improve towards your objective of 3.5 stars.**
             
-            Sigrid compared your code against the baseline of N/A.
-            
-            ## 👍 What went well?
-
-            > You fixed or improved **0** refactoring candidates.
-            
-            
-            ## 👎 What could be better?
-            
-            > You did not introduce any technical debt during your changes, great job!
-            
-            ## 📚 Remaining technical debt
-            
-            > **0** refactoring candidates didn't get better or worse, but are still present in the code you touched.
-            
-            [View this system in Sigrid to explore your technical debt](https://sigrid-says.com/aap/noot)
-            
-            ## ⭐️ Sigrid ratings
-            
-            | System property | System on N/A | Before changes | New/changed code |
-            |-----------------|-------------------------------------------|----------------|------------------|
-            | Duplication | N/A | N/A | N/A |
-            | Unit Size | N/A | N/A | N/A |
-            | Unit Complexity | N/A | N/A | N/A |
-            | Unit Interfacing | N/A | N/A | N/A |
-            | Module Coupling | N/A | N/A | N/A |
-            | Component Independence | N/A | N/A | N/A |
-            | Component Entanglement | N/A | N/A | N/A |
-            | **Maintainability** | **3.0** | **2.9** | **2.8** |
-            
-            ### 💬 Did you find this feedback helpful?
-            
-            We would like to know your thoughts to make Sigrid better.
-            Your username will remain confidential throughout the process.
-            
-            - ✅ [Yes, these findings are useful](https://example.com?feature=sigridci.maintainability&feedback=useful&system=sig-aap-noot)
-            - 🔸 [The findings are false positives](https://example.com?feature=sigridci.maintainability&feedback=falsepositive&system=sig-aap-noot)
-            - 🔹 [These findings are not important to me](https://example.com?feature=sigridci.maintainability&feedback=unimportant&system=sig-aap-noot)
-            
-            ----
             [**View this system in Sigrid**](https://sigrid-says.com/aap/noot)
         """
 
@@ -570,18 +506,13 @@ class MaintainabilityMarkdownReportTest(TestCase):
             | Component Entanglement | N/A | N/A | N/A |
             | **Maintainability** | **3.0** | **2.9** | **2.8** |
             
-            ### 💬 Did you find this feedback helpful?
-            
-            We would like to know your thoughts to make Sigrid better.
-            Your username will remain confidential throughout the process.
-            
-            - ✅ [Yes, these findings are useful](https://example.com?feature=sigridci.maintainability&feedback=useful&system=sig-aap-noot)
-            - 🔸 [The findings are false positives](https://example.com?feature=sigridci.maintainability&feedback=falsepositive&system=sig-aap-noot)
-            - 🔹 [These findings are not important to me](https://example.com?feature=sigridci.maintainability&feedback=unimportant&system=sig-aap-noot)
             </details>
             
             ----
+            
             [**View this system in Sigrid**](https://sigrid-says.com/aap/noot)
+            
+            ![© Software Improvement Group](https://sigrid-says.com/usage/matomo.php?idsite=6&rec=1&ca=1&e_c=sigridci.feedbackview&e_a=sigridci.feedbackview.maintainability&e_n=sig-aap-noot)
         """
 
         self.assertEqual(markdown.strip(), inspect.cleandoc(expected).strip())
@@ -603,9 +534,9 @@ class MaintainabilityMarkdownReportTest(TestCase):
             # [Sigrid](https://sigrid-says.com/aap/noot) maintainability feedback
             
             **💭️  You did not change any files that are analyzed by Sigrid.**
-
             
             ----
+            
             [**View this system in Sigrid**](https://sigrid-says.com/aap/noot)
         """
 
@@ -729,9 +660,11 @@ class MaintainabilityMarkdownReportTest(TestCase):
             | Component Independence | N/A | N/A | N/A |
             | Component Entanglement | N/A | N/A | N/A |
             | **Maintainability** | **3.0** | **2.9** | **2.8** |
+            
             </details>
             
             ----
+            
             [**View this system in Sigrid**](https://sigrid-says.com/aap/noot)
         """
 

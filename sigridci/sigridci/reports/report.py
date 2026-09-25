@@ -17,6 +17,7 @@ from abc import ABC, abstractmethod
 from datetime import datetime
 
 from ..platform import Platform
+from ..telemetry import Telemetry
 
 
 class Report(ABC):
@@ -75,12 +76,9 @@ class MarkdownRenderer(ABC):
             if Platform.isHtmlMarkdownSupported():
                 md += "<details><summary>Show details</summary>\n\n"
             md += details
-            if not self.isObjectiveSuccess(feedback, options):
-                md += self.renderReactionSection(options)
             if Platform.isHtmlMarkdownSupported():
-                md += "</details>\n"
-        md += "\n----\n\n"
-        md += f"[**View this system in Sigrid**]({sigridLink})"
+                md += "</details>\n\n"
+        md += self.renderFooter(options, sigridLink)
         return md
 
     def formatTitle(self, sigridLink):
@@ -88,21 +86,18 @@ class MarkdownRenderer(ABC):
         suffix = " *(Beta)*" if capability.beta else ""
         return f"[Sigrid]({sigridLink}) {capability.displayName} feedback{suffix}"
 
-    def renderReactionSection(self, options):
-        if not options.feedbackURL:
-            return ""
-
-        md = "\n### 💬 Did you find this feedback helpful?\n\n"
-        md += "We would like to know your thoughts to make Sigrid better.\n"
-        md += "Your username will remain confidential throughout the process.\n\n"
-        md += f"- ✅ [Yes, these findings are useful]({self.getReactionLink(options, 'useful')})\n"
-        md += f"- 🔸 [The findings are false positives]({self.getReactionLink(options, 'falsepositive')})\n"
-        md += f"- 🔹 [These findings are not important to me]({self.getReactionLink(options, 'unimportant')})\n"
-        return md
-
     def getReactionLink(self, options, reaction):
         featureId = f"sigridci.{self.getCapability().shortName}"
         return f"{options.feedbackURL}?feature={featureId}&feedback={reaction}&system={options.getSystemId()}"
+
+    def renderFooter(self, options, sigridLink):
+        md = "----\n\n"
+        md += f"[**View this system in Sigrid**]({sigridLink})\n\n"
+        if options.feedbackURL:
+            telemetry = Telemetry(options)
+            url = telemetry.getURL("sigridci.feedbackview", f"sigridci.feedbackview.{self.getCapability().shortName}")
+            md += f"![© Software Improvement Group]({url})"
+        return md
 
     @abstractmethod
     def getSummary(self, feedback, options):
@@ -129,5 +124,4 @@ class MarkdownRenderer(ABC):
         return f"[{self.escapeMarkdownLabel(label)}]({link})"
 
     def escapeMarkdownLabel(self, label):
-        # Escape characters that could break out of the [...] link label.
         return label.replace("\\", "\\\\").replace("[", "\\[").replace("]", "\\]")
