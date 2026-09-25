@@ -62,7 +62,6 @@ class ArchitectureMarkdownReportTest(TestCase):
             > You have **1** architecture issues.
             [You can view these findings in Sigrid](https://sigrid-says.com/aap/noot/-/architecture-quality/explorer).
             
-            
             ----
             
             [**View this system in Sigrid**](https://sigrid-says.com/aap/noot/-/architecture-quality/explorer)
@@ -112,7 +111,6 @@ class ArchitectureMarkdownReportTest(TestCase):
             
             > You have **1** architecture issues.
             [You can view these findings in Sigrid](https://sigrid-says.com/aap/noot/-/architecture-quality/explorer).
-            
             
             ----
             
