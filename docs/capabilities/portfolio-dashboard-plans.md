@@ -1,6 +1,6 @@
 # The Portfolio Overview
 This portfolio overview focuses on overall quality performance trend, acute risks, and progress toward objectives across systems. These insights help users prioritize which systems need to be improved. In short, the portfolio overview answers the following questions:
-1. Where should we give attention and investigate further? 
+1. Where should we give attention and investigate further?
 2. Where should we prioritize our next actions?
 3. Are we progressing toward our targets?
 
@@ -32,9 +32,9 @@ For each different tab, the meaning of the Area, Color, and Grouping are display
 ### Hotspots
 A **Hotspot** is a system which has seen high development activity during the selected period. Hotspots represent areas of attention, since code changes are where deterioration or improvement of code quality happen. Being on top of these hotspots is essential for being in control of quality and risk trends over time.
 For the Hotspots tab, the default treemap configuration is as follows:
-* **Block color:** the color of the blocks represents the quality delta of the system as a whole (as a result of the code changes), comparing the current system rating against the previous quality rating of the system at the start of the selected period. The colour intensity scale is dynamic, and is based on the largest deterioration/improvement in the selected period. 
+* **Block color:** the color of the blocks represents the quality delta of the system as a whole (as a result of the code changes), comparing the current system rating against the previous quality rating of the system at the start of the selected period. The colour intensity scale is dynamic, and is based on the largest deterioration/improvement in the selected period.
 * **Block size:** each block accounts for a system, and the size of the block represents the amount of change in development effort (e.g., code changes/Person Years) the system has received in the selected period. Systems that have not received any changes in the selected period are excluded from the overview.
-* **Grouping:** the systems are grouped together based either deterioration or improvement of the code quality. 
+* **Grouping:** the systems are grouped together based either deterioration or improvement of the code quality.
 
 Use the hotspots to find out:  
 _Which areas in my portfolio require attention to prevent quality decay?_

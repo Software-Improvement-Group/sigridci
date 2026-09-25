@@ -57,6 +57,11 @@ Before you can use the extension, you will first need to provide your Sigrid cre
 
 The Sigrid extension is not visible by default. You can open it using the *"> Sigrid: Show findings"* command.
 When opened, the Sigrid extension contains multiple tabs, one for each Sigrid capability.
+Before findings load, the extension checks whether the configured system exists in Sigrid and shows its
+status (checking, not onboarded, onboarding in progress). You can trigger a manual refresh if needed.
+
+**If the system isn't onboarded yet**, the panel offers to onboard it directly — no need to leave VS Code.
+Triggering this zips your workspace and uploads it to Sigrid for onboarding.
 
 <img src="../images/ide/vscode-tab.png" width="500" />
 
@@ -102,8 +107,9 @@ you install the Sigrid plugin for the best experience.
 ### Getting "Sigrid MCP detected" for GitHub Copilot
 
 Configure the Sigrid MCP server in VS Code's own MCP settings (`Cmd+Shift+P` → "MCP: Add Server" → HTTP),
-pointing to `https://sigrid-says.com/mcp` with your Sigrid API token as a Bearer token in the Authorization
-header. Once GitHub Copilot can see this server, the label switches to detected.
+pointing to `https://sigrid-says.com/mcp` (or `https://my-sigrid.example.com/mcp` on Sigrid On-Premise) with your
+Sigrid API token as a Bearer token in the Authorization header. Once GitHub Copilot can see this server, the label
+switches to "detected".
 
 ### Getting "Sigrid MCP detected" for Claude Code
 

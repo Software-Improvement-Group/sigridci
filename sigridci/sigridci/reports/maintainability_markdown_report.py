@@ -57,12 +57,10 @@ class MaintainabilityMarkdownReport(Report, MarkdownRenderer):
             md += self.renderRefactoringCandidates(feedback, options)
             md += "## ⭐️ Sigrid ratings\n\n"
             md += self.renderRatingsTable(feedback)
-            md += self.renderReactionSection(options)
             if Platform.isHtmlMarkdownSupported():
-                md += "</details>\n"
+                md += "</details>\n\n"
 
-        md += "\n----\n"
-        md += f"[**View this system in Sigrid**]({sigridLink})"
+        md += self.renderFooter(options, sigridLink)
         return md
 
     def renderSummary(self, feedback, options):
@@ -126,7 +124,7 @@ class MaintainabilityMarkdownReport(Report, MarkdownRenderer):
             before = self.formatRating(feedback["changedCodeBeforeRatings"], metric)
             md += f"| {fmt}{metricName}{fmt} | {fmt}{baseline}{fmt} | {fmt}{before}{fmt} | {fmt}{newCode}{fmt} |\n"
 
-        return md
+        return f"{md}\n"
 
     def renderRefactoringCandidatesTable(self, refactoringCandidates, options):
         if len(refactoringCandidates) == 0:

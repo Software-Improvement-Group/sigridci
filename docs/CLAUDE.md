@@ -1,3 +1,7 @@
+---
+published: false
+---
+
 # CLAUDE.md
 
 This file provides guidance to Claude Code when working on the Sigrid documentation. This file only covers the

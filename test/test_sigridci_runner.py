@@ -14,6 +14,8 @@
 
 import json
 import os
+import random
+import string
 import tempfile
 import urllib.error
 from email.message import Message
@@ -29,6 +31,7 @@ from sigridci.sigridci.upload_log import UploadLog
 
 class SigridCiRunnerTest(TestCase):
     maxDiff = None
+    RANDOM_STRING = "".join(random.choices(string.ascii_letters, k=10000))
 
     def setUp(self):
         self.tempDir = tempfile.mkdtemp()
@@ -59,7 +62,7 @@ class SigridCiRunnerTest(TestCase):
         self.assertEqual(apiClient.urlSystemName, "noot")
 
     def testRegularRun(self):
-        self.createTempFile(self.tempDir, "a.py", "print(123)")
+        self.createTempFile(self.tempDir, "a.py", self.RANDOM_STRING)
 
         apiClient = MockApiClient(self.options)
         runner = SigridCiRunner(self.options, apiClient)
@@ -69,7 +72,7 @@ class SigridCiRunnerTest(TestCase):
             "Using token ending in '****ummy'",
             "Found system in Sigrid",
             "Creating upload",
-            "Upload size is 1 MB",
+            "Upload contains 1 files, size is 1 MB",
             "Warning: Upload is very small, source directory might not contain all source code",
             "Preparing upload",
             "Sigrid CI analysis ID: 123",
@@ -93,7 +96,7 @@ class SigridCiRunnerTest(TestCase):
         self.assertEqual(apiClient.received["/inboundresults/sig/aap/noot/ci/uploads/v1"]["mode"], "DEFAULT")
 
     def testPublishRun(self):
-        self.createTempFile(self.tempDir, "a.py", "print(123)")
+        self.createTempFile(self.tempDir, "a.py", self.RANDOM_STRING)
 
         self.options.runMode = RunMode.FEEDBACK_AND_PUBLISH
 
@@ -105,7 +108,7 @@ class SigridCiRunnerTest(TestCase):
             "Using token ending in '****ummy'",
             "Found system in Sigrid",
             "Creating upload",
-            "Upload size is 1 MB",
+            "Upload contains 1 files, size is 1 MB",
             "Warning: Upload is very small, source directory might not contain all source code",
             "Preparing upload",
             "Sigrid CI analysis ID: 123",
@@ -129,7 +132,7 @@ class SigridCiRunnerTest(TestCase):
         self.assertEqual(apiClient.received["/inboundresults/sig/aap/noot/ci/uploads/v1"]["mode"], "PUBLISH")
 
     def testPublishOnlyRun(self):
-        self.createTempFile(self.tempDir, "a.py", "print(123)")
+        self.createTempFile(self.tempDir, "a.py", self.RANDOM_STRING)
 
         self.options.runMode = RunMode.PUBLISH_ONLY
 
@@ -141,7 +144,7 @@ class SigridCiRunnerTest(TestCase):
             "Using token ending in '****ummy'",
             "Found system in Sigrid",
             "Creating upload",
-            "Upload size is 1 MB",
+            "Upload contains 1 files, size is 1 MB",
             "Warning: Upload is very small, source directory might not contain all source code",
             "Preparing upload",
             "Sigrid CI analysis ID: 123",
@@ -163,7 +166,7 @@ class SigridCiRunnerTest(TestCase):
         self.assertEqual(apiClient.received["/inboundresults/sig/aap/noot/ci/uploads/v1"]["mode"], "PUBLISHONLY")
 
     def testOnBoardingRun(self):
-        self.createTempFile(self.tempDir, "a.py", "print(123)")
+        self.createTempFile(self.tempDir, "a.py", self.RANDOM_STRING)
 
         apiClient = MockApiClient(self.options, systemExists=False)
         runner = SigridCiRunner(self.options, apiClient)
@@ -173,7 +176,7 @@ class SigridCiRunnerTest(TestCase):
             "Using token ending in '****ummy'",
             "System is not yet on-boarded to Sigrid",
             "Creating upload",
-            "Upload size is 1 MB",
+            "Upload contains 1 files, size is 1 MB",
             "Warning: Upload is very small, source directory might not contain all source code",
             "Preparing upload",
             "Sigrid CI analysis ID: 123",
@@ -194,7 +197,7 @@ class SigridCiRunnerTest(TestCase):
         self.assertEqual(apiClient.received["/inboundresults/sig/aap/noot/ci/uploads/v1"]["mode"], "ONBOARDING")
 
     def testDoNotAutoOnboardIfDisabledViaOptions(self):
-        self.createTempFile(self.tempDir, "a.py", "print(123)")
+        self.createTempFile(self.tempDir, "a.py", self.RANDOM_STRING)
 
         self.options.autoOnboarding = False
 
@@ -211,7 +214,7 @@ class SigridCiRunnerTest(TestCase):
         self.assertEqual(UploadLog.history, expectedLog)
 
     def testAddSubsystemOptionToUrl(self):
-        self.createTempFile(self.tempDir, "a.py", "print(123)")
+        self.createTempFile(self.tempDir, "a.py", self.RANDOM_STRING)
 
         self.options.subsystem = "mysubsystem"
         self.options.runMode = RunMode.FEEDBACK_AND_PUBLISH
@@ -242,7 +245,7 @@ class SigridCiRunnerTest(TestCase):
             runner.run()
 
     def testRetryIfUploadFailsTheFirstTime(self):
-        self.createTempFile(self.tempDir, "a.py", "print(123)")
+        self.createTempFile(self.tempDir, "a.py", self.RANDOM_STRING)
 
         apiClient = MockApiClient(self.options, systemExists=True, uploadAttempts=3)
         runner = SigridCiRunner(self.options, apiClient)
@@ -252,7 +255,7 @@ class SigridCiRunnerTest(TestCase):
             "Using token ending in '****ummy'",
             "Found system in Sigrid",
             "Creating upload",
-            "Upload size is 1 MB",
+            "Upload contains 1 files, size is 1 MB",
             "Warning: Upload is very small, source directory might not contain all source code",
             "Preparing upload",
             "Sigrid CI analysis ID: 123",
@@ -272,7 +275,7 @@ class SigridCiRunnerTest(TestCase):
         self.assertEqual(UploadLog.history, expectedLog)
 
     def testExitIfUploadKeepsFailing(self):
-        self.createTempFile(self.tempDir, "a.py", "print(123)")
+        self.createTempFile(self.tempDir, "a.py", self.RANDOM_STRING)
 
         apiClient = MockApiClient(self.options, systemExists=True, uploadAttempts=99)
         runner = SigridCiRunner(self.options, apiClient)
@@ -281,7 +284,7 @@ class SigridCiRunnerTest(TestCase):
             "Using token ending in '****ummy'",
             "Found system in Sigrid",
             "Creating upload",
-            "Upload size is 1 MB",
+            "Upload contains 1 files, size is 1 MB",
             "Warning: Upload is very small, source directory might not contain all source code",
             "Preparing upload",
             "Sigrid CI analysis ID: 123",
@@ -322,6 +325,7 @@ class SigridCiRunnerTest(TestCase):
 
     def testValidateScopeFile(self):
         self.createTempFile(self.tempDir, "sigrid.yaml", "languages:\n- java")
+        self.createTempFile(self.tempDir, "a.py", self.RANDOM_STRING)
 
         apiClient = MockApiClient(self.options)
         apiClient.responses["/inboundresults/sig/aap/noot/ci/validate/v1"] = {"valid": True}
@@ -335,7 +339,7 @@ class SigridCiRunnerTest(TestCase):
             "Validating scope configuration file",
             "Validation passed",
             "Creating upload",
-            "Upload size is 1 MB",
+            "Upload contains 2 files, size is 1 MB",
             "Warning: Upload is very small, source directory might not contain all source code",
             "Preparing upload",
             "Sigrid CI analysis ID: 123",
@@ -403,6 +407,7 @@ class SigridCiRunnerTest(TestCase):
         runner.validateConfigurationFiles({})
 
     def testCannotUseScopeFileInCombinationWithSubsystem(self):
+        self.createTempFile(self.tempDir, "a.py", self.RANDOM_STRING)
         self.createTempFile(self.tempDir, "sigrid.yaml", "default_excludes: true")
 
         self.options.subsystem = "aap"
@@ -417,6 +422,7 @@ class SigridCiRunnerTest(TestCase):
             UploadLog.history)
 
     def testCanUseScopeFileForReservedRootSubsystemName(self):
+        self.createTempFile(self.tempDir, "a.py", self.RANDOM_STRING)
         self.createTempFile(self.tempDir, "sigrid.yaml", "default_excludes: true")
 
         self.options.subsystem = "root"
@@ -444,7 +450,7 @@ class SigridCiRunnerTest(TestCase):
             runner.run()
 
     def testDumpAvailableMetadataToOutput(self):
-        self.createTempFile(self.tempDir, "sigrid.py", "print(123)")
+        self.createTempFile(self.tempDir, "sigrid.py", self.RANDOM_STRING)
 
         apiClient = MockApiClient(self.options)
         apiClient.responses["/analysis-results/api/v1/system-metadata/aap/noot"] = {"aap" : 2, "noot" : None}
@@ -456,7 +462,7 @@ class SigridCiRunnerTest(TestCase):
             "Using token ending in '****ummy'",
             "Found system in Sigrid",
             "Creating upload",
-            "Upload size is 1 MB",
+            "Upload contains 1 files, size is 1 MB",
             "Warning: Upload is very small, source directory might not contain all source code",
             "Preparing upload",
             "Sigrid CI analysis ID: 123",
@@ -468,6 +474,7 @@ class SigridCiRunnerTest(TestCase):
         self.assertEqual(UploadLog.history, expectedLog)
 
     def testValidateMetadataFileIfPresent(self):
+        self.createTempFile(self.tempDir, "a.py", self.RANDOM_STRING)
         self.createTempFile(self.tempDir, "sigrid-metadata.yaml", "metadata:\n  division: aap")
 
         apiClient = MockApiClient(self.options)
@@ -519,7 +526,7 @@ class SigridCiRunnerTest(TestCase):
             "Using token ending in '****ummy'",
             "Found system in Sigrid",
             "Creating upload",
-            "Upload size is 1 MB",
+            "Upload contains 0 files, size is 1 MB",
             "No code found to upload, please check the directory used for --source"
         ]
 
@@ -581,7 +588,7 @@ class SigridCiRunnerTest(TestCase):
             self.assertEqual(f.read(), "metadata:\n  externalID: 1")
 
     def testUploadShouldBeDeletedAfterSubmission(self):
-        self.createTempFile(self.tempDir, "a.py", "print(123)")
+        self.createTempFile(self.tempDir, "a.py", self.RANDOM_STRING)
 
         apiClient = MockApiClient(self.options)
         runner = SigridCiRunner(self.options, apiClient)
@@ -592,7 +599,7 @@ class SigridCiRunnerTest(TestCase):
                 self.assertFalse(file.endswith(".zip"))
 
     def testExitWhenSystemIsNotActive(self):
-        self.createTempFile(self.tempDir, "a.py", "print(123)")
+        self.createTempFile(self.tempDir, "a.py", self.RANDOM_STRING)
 
         self.options.system = "i-am-not-active"
 
@@ -610,7 +617,7 @@ class SigridCiRunnerTest(TestCase):
         self.assertEqual(expectedLog, UploadLog.history)
 
     def testSkipForDeactivatedSystems(self):
-        self.createTempFile(self.tempDir, "a.py", "print(123)")
+        self.createTempFile(self.tempDir, "a.py", self.RANDOM_STRING)
 
         apiClient = MockApiClient(self.options, systemExists=True)
         apiClient.responses["/analysis-results/api/v1/system-metadata/aap/noot"] = {"active" : False}
@@ -648,7 +655,7 @@ class SigridCiRunnerTest(TestCase):
             "Using token ending in '****ummy'",
             "Found system in Sigrid",
             "Creating upload",
-            "Upload size is 1 MB",
+            "Upload contains 0 files, size is 1 MB",
             "No code found to upload, please check the directory used for --source"
         ]
 
@@ -691,7 +698,7 @@ class SigridCiRunnerTest(TestCase):
             "Using token ending in '****ummy'",
             "Found system in Sigrid",
             "Creating upload",
-            "Upload size is 1 MB",
+            "Upload contains 0 files, size is 1 MB",
             "No code found to upload, please check the directory used for --source"
         ]
 
@@ -708,7 +715,7 @@ class SigridCiRunnerTest(TestCase):
         self.assertEqual(UploadLog.history[-1], "No code found to upload, please check the directory used for --source")
 
     def testLicenseCheckFails(self):
-        self.createTempFile(self.tempDir, "a.py", "print(123)")
+        self.createTempFile(self.tempDir, "a.py", self.RANDOM_STRING)
 
         apiClient = MockApiClient(self.options)
         apiClient.responses["/analysis-results/api/v1/licenses/aap"] = {"licenses" : ["AAP"]}
@@ -719,7 +726,7 @@ class SigridCiRunnerTest(TestCase):
         self.assertIn("Skipping Maintainability, as your Sigrid license does not include it.", UploadLog.history)
 
     def testCompareAgainstOpenSourceHealthBaseline(self):
-        self.createTempFile(self.tempDir, "a.py", "print(123)")
+        self.createTempFile(self.tempDir, "a.py", self.RANDOM_STRING)
 
         self.options.capabilities = [OPEN_SOURCE_HEALTH]
 
@@ -745,7 +752,7 @@ class SigridCiRunnerTest(TestCase):
         self.assertEqual(apiClient.called, expectedCalls)
 
     def testDoNotCrashIfBaselineHeaderIsMissing(self):
-        self.createTempFile(self.tempDir, "a.py", "print(123)")
+        self.createTempFile(self.tempDir, "a.py", self.RANDOM_STRING)
 
         self.options.capabilities = [SECURITY]
 

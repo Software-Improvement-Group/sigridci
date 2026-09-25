@@ -26,6 +26,11 @@ The installer will prompt for your Sigrid API token and store it securely in the
 - Step 2: Run the two commands above in Claude Code
 - Step 3: Follow the installer prompts
 
+### Sigrid On-Premise
+
+When using [Sigrid On-Premise](../organization-integration/onpremise-mcp.md), use the manual configuration below with your own Sigrid host as the URL, for example `https://my-sigrid.example.com/mcp`, and a token from your on-premise Sigrid. The Claude Code plugin only connects to sigrid-says.com, so use the [manual Claude Code instructions](#claude-code-manual) instead.
+Note that you may have to point your AI Agent to a root certificate when running a private certificate authority in your organization. When your agent is based on Node, adding `"NODE_EXTRA_CA_CERTS": "/path/to/internal/root_ca.crt"` to the `"env"` section of your MCP server's configuration snippet (in JSON format) would be sufficient.
+
 ### Manual configuration (other IDEs)
 
 Follow instructions below to configure the MCP server manually:
@@ -255,3 +260,4 @@ To further restrict which tools are visible in a session, pass the `X-Enabled-To
 | Connection fails | Ensure --allow-http flag is present (proxy mode) |
 | Bad Request: No valid session ID provided | Restarting the client and/or simply enabling/disabling the MCP servers |
 | AI Coding Assistant ignores MCP tool | Try one of the recommended LLMs: GPT-5, Claude 4 series, Gemini 2.5 series or higher |
+| Sigrid On-Premise: connection refused or 401 | Verify the URL uses your own Sigrid host, the token was created in your on-premise Sigrid, and your administrator has enabled the MCP server in the Helm chart |

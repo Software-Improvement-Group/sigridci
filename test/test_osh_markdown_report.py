@@ -64,7 +64,6 @@ class OpenSourceHealthMarkdownReportTest(TestCase):
             | ⚠️ | ✅ | io.github.classgraph:classgraph 4.8.106 • *(Transitive) CVE-2021-47621.* | 4.8.181 | gradle/libs.versions.toml |
             | ⚠️ | ✅ | junit:junit  • *CVE-2020-15250.* | 4.13.2 | buildSrc/src/main/kotlin/junit4-compatibility.gradle.kts |
             
-            
             ----
             
             [**View this system in Sigrid**](https://sigrid-says.com/aap/noot/-/open-source-health)
@@ -103,7 +102,6 @@ class OpenSourceHealthMarkdownReportTest(TestCase):
             | ⚠️ | ✅ | io.github.classgraph:classgraph 4.8.106 • *(Transitive) CVE-2021-47621.* | 4.8.181 | gradle/libs.versions.toml |
             | ⚠️ | ✅ | junit:junit  • *CVE-2020-15250.* | 4.13.2 | buildSrc/src/main/kotlin/junit4-compatibility.gradle.kts |
             
-            
             ----
             
             [**View this system in Sigrid**](https://sigrid-says.com/aap/noot/-/open-source-health)
@@ -141,7 +139,6 @@ class OpenSourceHealthMarkdownReportTest(TestCase):
             | ❌ | ✅ | commons-io:commons-io 2.9.0 • *CVE-2024-47554.* | 2.20.0 | gradle/libs.versions.toml |
             | ❌ | ✅ | io.github.classgraph:classgraph 4.8.106 • *(Transitive) CVE-2021-47621.* | 4.8.181 | gradle/libs.versions.toml |
             | ❌ | ✅ | junit:junit  • *CVE-2020-15250.* | 4.13.2 | buildSrc/src/main/kotlin/junit4-compatibility.gradle.kts |
-            
             
             ----
             
@@ -189,7 +186,6 @@ class OpenSourceHealthMarkdownReportTest(TestCase):
             | ❌ | ✅ | commons-io:commons-io 2.9.0 • *CVE-2024-47554.* | 2.20.0 | gradle/libs.versions.toml |
             | ⚠️ | ✅ | io.github.classgraph:classgraph 4.8.106 • *(Transitive) CVE-2021-47621.* | 4.8.181 | gradle/libs.versions.toml |
             | ⚠️ | ✅ | junit:junit  • *CVE-2020-15250.* | 4.13.2 | buildSrc/src/main/kotlin/junit4-compatibility.gradle.kts |
-            
             
             ----
             
@@ -241,7 +237,6 @@ class OpenSourceHealthMarkdownReportTest(TestCase):
         | ⚠️ | ✅ | junit:junit  • *CVE-2020-15250.* | 4.13.2 | buildSrc/src/main/kotlin/junit4-compatibility.gradle.kts |
         | ✅ | ❌ | org.mockito:mockito-junit-jupiter 3.10.0 • *License: The MIT License.* | 5.19.0 | gradle/libs.versions.toml |
         
-        
         ----
         
         [**View this system in Sigrid**](https://sigrid-says.com/aap/noot/-/open-source-health)
@@ -268,7 +263,6 @@ class OpenSourceHealthMarkdownReportTest(TestCase):
             **💭  Sigrid did not find any open source libraries.**
             
             Sigrid compared your code against the baseline of 2026-02-03.
-            
             
             ----
             
@@ -320,7 +314,6 @@ class OpenSourceHealthMarkdownReportTest(TestCase):
             
             Sigrid compared your code against the baseline of 2026-02-03.
             
-            
             ----
             
             [**View this system in Sigrid**](https://sigrid-says.com/aap/noot/-/open-source-health)
@@ -360,7 +353,6 @@ class OpenSourceHealthMarkdownReportTest(TestCase):
             | Vulnerabilities | License | Library | Latest version | Location(s) |
             |----|----|----|----|----|
             | ❌ | ✅ | org.example:example-aap 1.0 • *CVE-2026-12345.* | 3.0 | aap/build.gradle |
-            
             
             ----
             

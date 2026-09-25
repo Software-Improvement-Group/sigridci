@@ -76,7 +76,6 @@ class SecurityMarkdownReportTest(TestCase):
             > You have **0** open security findings and **1** security findings for which you have previously accepted the risk.
             [You can view these findings in Sigrid](https://sigrid-says.com/aap/noot/-/security).
             
-            
             ----
             
             [**View this system in Sigrid**](https://sigrid-says.com/aap/noot/-/security)
@@ -104,7 +103,6 @@ class SecurityMarkdownReportTest(TestCase):
             ## 👍 What went well?
             
             > You did not introduce any security findings during your changes, great job!
-            
             
             ----
             
@@ -134,7 +132,6 @@ class SecurityMarkdownReportTest(TestCase):
             ## 👎 What could be better?
             
             > You did not introduce any security findings during your changes, great job!
-            
             
             ----
             
@@ -176,7 +173,6 @@ class SecurityMarkdownReportTest(TestCase):
             you can [exclude the rule](https://docs.sigrid-says.com/reference/analysis-scope-configuration.html#excluding-security-rules) in the Sigrid configuration.
             If these findings are located in files that should not be scanned, you can also
             [exclude the files and/or directories](https://docs.sigrid-says.com/reference/analysis-scope-configuration.html#excluding-files-and-directories-from-security-scanning) in the configuration.
-            
             
             ----
             

@@ -12,6 +12,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
+import sys
 import urllib.parse
 import urllib.request
 
@@ -32,6 +33,7 @@ class Telemetry:
 
     def trackRun(self):
         self.sendEvent("sigridci.platform", Platform.getPlatformId())
+        self.sendEvent("sigrid.python", f"python-{sys.version_info.major}.{sys.version_info.minor}")
 
     def trackUnusedLicenses(self, licenses):
         if self.options.runMode in (RunMode.FEEDBACK_ONLY, RunMode.FEEDBACK_AND_PUBLISH):
@@ -45,14 +47,15 @@ class Telemetry:
 
     def sendEvent(self, category, details):
         if self.options.feedbackURL:
-            ec = urllib.parse.quote_plus(category)
-            ea = urllib.parse.quote_plus(details)
-            en = urllib.parse.quote_plus(self.options.getSystemId())
-
             try:
-                url = f"{self.options.sigridURL}/usage/matomo.php?idsite=6&rec=1&ca=1&e_c={ec}&e_a={ea}&e_n={en}"
+                url = self.getURL(category, details)
                 request = urllib.request.Request(url)
                 urllib.request.urlopen(request, None, timeout=self.TIMEOUT_S)
             except:
                 UploadLog.log(f"Failed to log telemetry")
 
+    def getURL(self, category, details):
+        ec = urllib.parse.quote_plus(category)
+        ea = urllib.parse.quote_plus(details)
+        en = urllib.parse.quote_plus(self.options.getSystemId())
+        return f"{self.options.sigridURL}/usage/matomo.php?idsite=6&rec=1&ca=1&e_c={ec}&e_a={ea}&e_n={en}"

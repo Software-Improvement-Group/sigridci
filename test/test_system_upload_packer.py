@@ -15,6 +15,8 @@
 
 import os
 import tempfile
+import random
+import string
 import subprocess
 from unittest import TestCase
 from zipfile import ZipFile
@@ -25,14 +27,15 @@ from sigridci.sigridci.upload_log import UploadLog
 
 
 class SystemUploadPackerTest(TestCase):
+    RANDOM_STRING = "".join(random.choices(string.ascii_letters, k=10000))
 
     def setUp(self):
         UploadLog.clear()
 
     def testCreateZipFromDirectory(self):
         sourceDir = tempfile.mkdtemp()
-        self.createTempFile(sourceDir, "a.py", "a")
-        self.createTempFile(sourceDir, "b.py", "b")
+        self.createTempFile(sourceDir, "a.py", self.RANDOM_STRING)
+        self.createTempFile(sourceDir, "b.py", self.RANDOM_STRING)
         
         outputFile = tempfile.mkstemp()[1]
 
@@ -68,10 +71,10 @@ class SystemUploadPackerTest(TestCase):
         
     def testDefaultExcludePatterns(self):
         sourceDir = tempfile.mkdtemp()
-        self.createTempFile(sourceDir, "a.py", "a")
+        self.createTempFile(sourceDir, "a.py", self.RANDOM_STRING)
         subDir = sourceDir + "/node_modules"
         os.mkdir(subDir)
-        self.createTempFile(subDir, "b.py", "b")
+        self.createTempFile(subDir, "b.py", self.RANDOM_STRING)
         
         outputFile = tempfile.mkstemp()[1]
 
@@ -84,10 +87,10 @@ class SystemUploadPackerTest(TestCase):
         
     def testExcludeDollarTfDirectories(self):
         sourceDir = tempfile.mkdtemp()
-        self.createTempFile(sourceDir, "z.py", "z")
+        self.createTempFile(sourceDir, "z.py", self.RANDOM_STRING)
         subDir = sourceDir + "/$tf"
         os.mkdir(subDir)
-        self.createTempFile(subDir, "a.py", "a")
+        self.createTempFile(subDir, "a.py", self.RANDOM_STRING)
         
         outputFile = tempfile.mkstemp()[1]
 
@@ -239,10 +242,10 @@ class SystemUploadPackerTest(TestCase):
         
     def testExcludeGitHistory(self):
         sourceDir = tempfile.mkdtemp()
-        self.createTempFile(sourceDir, "a.py", "a")
+        self.createTempFile(sourceDir, "a.py", self.RANDOM_STRING)
         subDir = sourceDir + "/.git"
         os.mkdir(subDir)
-        self.createTempFile(subDir, "b.py", "b")
+        self.createTempFile(subDir, "b.py", self.RANDOM_STRING)
         
         outputFile = tempfile.mkstemp()[1]
 
@@ -261,15 +264,29 @@ class SystemUploadPackerTest(TestCase):
         options = PublishOptions("aap", "noot", RunMode.FEEDBACK_ONLY, sourceDir)
         uploadPacker = SystemUploadPacker(options)
         uploadPacker.MAX_UPLOAD_SIZE_MB = 1
-    
-        self.assertRaises(Exception, uploadPacker.prepareUpload, sourceDir, tempfile.mkstemp()[1])
-           
+
+        with self.assertRaises(SystemExit):
+            outputFile = tempfile.mkstemp()[1]
+            uploadPacker.prepareUpload(outputFile)
+
+    def testErrorIfUploadIsExtremelySmall(self):
+        sourceDir = tempfile.mkdtemp()
+        with open(sourceDir + "/a.py", "w") as f:
+            f.write("a")
+
+        options = PublishOptions("aap", "noot", RunMode.FEEDBACK_ONLY, sourceDir)
+        uploadPacker = SystemUploadPacker(options)
+
+        with self.assertRaises(SystemExit):
+            outputFile = tempfile.mkstemp()[1]
+            uploadPacker.prepareUpload(outputFile)
+
     def testLogUploadContents(self):
         sourceDir = tempfile.mkdtemp()
         with open(sourceDir + "/a.py", "wb") as f:
-            f.write(os.urandom(1))
+            f.write(os.urandom(1000))
         with open(sourceDir + "/b.py", "wb") as f:
-            f.write(os.urandom(1))
+            f.write(os.urandom(10000))
 
         options = PublishOptions("aap", "noot", RunMode.FEEDBACK_ONLY, sourceDir, showUploadContents=True)
         uploadPacker = SystemUploadPacker(options)
@@ -278,7 +295,7 @@ class SystemUploadPackerTest(TestCase):
         expected = [
             "Adding file to upload: a.py", 
             "Adding file to upload: b.py", 
-            "Upload size is 1 MB", 
+            "Upload contains 2 files, size is 1 MB",
             "Warning: Upload is very small, source directory might not contain all source code"
         ]
 
@@ -286,9 +303,9 @@ class SystemUploadPackerTest(TestCase):
 
     def testExcludeFileExtensions(self):
         sourceDir = tempfile.mkdtemp()
-        self.createTempFile(sourceDir, "a.py", "")
-        self.createTempFile(sourceDir, "b.zip", "")
-        self.createTempFile(sourceDir, "c.tar", "")
+        self.createTempFile(sourceDir, "a.py", self.RANDOM_STRING)
+        self.createTempFile(sourceDir, "b.zip", self.RANDOM_STRING)
+        self.createTempFile(sourceDir, "c.tar", self.RANDOM_STRING)
 
         outputFile = tempfile.mkstemp()[1]
 

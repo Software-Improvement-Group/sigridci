@@ -22,6 +22,7 @@ from .upload_log import UploadLog
 
 
 class SystemUploadPacker:
+    MIN_UPLOAD_SIZE_BYTES = 200
     MAX_UPLOAD_SIZE_MB = 500
 
     ALWAYS_INCLUDE = tuple(
@@ -87,7 +88,7 @@ class SystemUploadPacker:
 
     def prepareUpload(self, outputFile):
         zipFile = ZipFile(outputFile, "w", ZIP_DEFLATED)
-        hasContents = False
+        entries = 0
 
         if self.options.includeHistory:
             historyExporter = RepositoryHistoryExporter()
@@ -103,23 +104,24 @@ class SystemUploadPacker:
                     and self.isIncluded(filePath)
                 ):
                     relativePath = os.path.relpath(os.path.join(root, file), self.options.sourceDir)
-                    hasContents = True
+                    entries += 1
                     if self.options.showUploadContents:
                         UploadLog.log(f"Adding file to upload: {relativePath}")
                     zipFile.write(filePath, relativePath)
 
         zipFile.close()
 
-        self.checkUploadContents(outputFile, hasContents)
+        self.checkUploadContents(outputFile, entries)
 
-    def checkUploadContents(self, outputFile, hasContents):
+    def checkUploadContents(self, outputFile, entries):
         uploadSizeBytes = os.path.getsize(outputFile)
         uploadSizeMB = max(round(uploadSizeBytes / 1024 / 1024), 1)
-        UploadLog.log(f"Upload size is {uploadSizeMB} MB")
+        UploadLog.log(f"Upload contains {entries} files, size is {uploadSizeMB} MB")
 
         if uploadSizeMB > self.MAX_UPLOAD_SIZE_MB:
-            raise Exception(f"Upload exceeds maximum size of {self.MAX_UPLOAD_SIZE_MB} MB")
-        elif not hasContents:
+            UploadLog.log(f"Upload exceeds maximum size of {self.MAX_UPLOAD_SIZE_MB} MB")
+            sys.exit(1)
+        elif entries == 0 or uploadSizeBytes < self.MIN_UPLOAD_SIZE_BYTES:
             UploadLog.log("No code found to upload, please check the directory used for --source")
             sys.exit(1)
         elif uploadSizeBytes < 50000:
