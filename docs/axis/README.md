@@ -45,7 +45,7 @@ The [`setup`](skills.md#setup) skill sits outside both. It records which Sigrid 
 
 ## Get started
 
-Start with [installing Sigrid Axis](installation.md): connect the MCP server and install the skills in your agentic tool.
+Start with [installing Sigrid Axis](installation.md): connect the MCP server, install the skills, and add the Guardrails instruction, which the Claude Code plugin does for you.
 
 Then pick the [guide](../workflows/agents/README.md) for the job in front of you. Each one follows that job through on a real codebase: what to configure, what a session looks like, and how to check what the agent did.
 

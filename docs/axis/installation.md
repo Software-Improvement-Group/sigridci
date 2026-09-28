@@ -5,7 +5,7 @@ redirect_from:
 
 # Installing Sigrid Axis
 
-Sigrid Axis consists of the Sigrid Axis MCP server and a set of skills. Both follow open standards, so Axis works in any agentic tool that supports MCP and skills. Installing it means connecting the MCP server and installing the skills. In Claude Code, a plugin does both in one step.
+Sigrid Axis consists of the Sigrid Axis MCP server and a set of skills. Both follow open standards, so Axis works in any agentic tool that supports MCP and skills. Installing it means connecting the MCP server, installing the skills, and [adding the Guardrails instruction](#add-the-guardrails-instruction) to your repository. In Claude Code, a plugin does all three in one step.
 
 ## Prerequisites
 
@@ -45,6 +45,18 @@ The skills are plain `SKILL.md` files, the open format that most agentic tools r
 1. Connect the Sigrid Axis MCP server by hand, as described below.
 2. Install the skills the way your tool installs skills.
 3. Run `setup`, or write `.sigrid/profile.md` yourself, to record your Sigrid system and change how the skills behave in your repository. See [the Sigrid profile](configuration.md#the-sigrid-profile).
+4. [Add the Guardrails instruction](#add-the-guardrails-instruction) to your repository.
+
+## Add the Guardrails instruction
+
+Outside the Claude Code plugin, this step is required for Guardrails. The agent does not call the Guardrails check unless something tells it to, and in Claude Code the plugin's hook does that. Every other tool needs the instruction in its context file.
+{: .attention }
+
+Put this text in `AGENTS.md` at the root of your repository, which Cursor, GitHub Copilot, Devin, and most other agentic tools read at the start of every session. It is the same text the Claude Code hook adds:
+
+{% include axis/quality-gate-prompt.md %}
+
+This also applies when you connect the MCP server by hand in Claude Code, without the plugin, but there the file is `CLAUDE.md`. To adjust the instruction to your codebase, see [set up the quality gate](guardrails.md#set-up-the-quality-gate).
 
 ## Connect the MCP server by hand
 
@@ -141,7 +153,7 @@ Without the plugin, add the server with this command and restart Claude Code:
 claude mcp add --transport http axis https://sigrid-says.com/mcp --header "Authorization: Bearer <your_sigrid_token>"
 ```
 
-This gives you the MCP tools only. The skills and the Guardrails hook come with the [plugin](#install-the-claude-code-plugin).
+This gives you the MCP tools only. The skills and the Guardrails hook come with the [plugin](#install-the-claude-code-plugin), so without it, [add the Guardrails instruction](#add-the-guardrails-instruction) to `CLAUDE.md` yourself.
 
 ### OpenCode
 
