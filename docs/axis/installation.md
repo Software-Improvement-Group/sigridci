@@ -35,7 +35,7 @@ Run the Sigrid guardrails quality check on <a file you changed recently>.
 
 A clean file comes back with no findings, and that is a pass. See [configuration](configuration.md) for changing the token later and for the plugin options.
 
-The plugin connects to `sigrid-says.com` only. For Sigrid On-Premise, connect the MCP server by hand as described in [Sigrid On-Premise](#sigrid-on-premise).
+The plugin connects to `sigrid-says.com` only. For Sigrid On-Premise, see [connecting an AI coding assistant](../organization-integration/onpremise-mcp.md#connecting-an-ai-coding-assistant).
 {: .attention }
 
 ## Use the skills in other agentic tools
@@ -200,12 +200,6 @@ Open the settings with the cogwheel icon in the Bob chat window and go to **MCP*
 ```
 
 The configuration only validates with the extra outer braces shown here. Save it and check the connection on the settings page.
-
-## Sigrid On-Premise
-
-With [Sigrid On-Premise](../organization-integration/onpremise-mcp.md), connect by hand using one of the snippets above. Use your own Sigrid host in the URL, for example `https://my-sigrid.example.com/mcp`, and a token created in your on-premise Sigrid. This applies to Claude Code as well, because the plugin only connects to `sigrid-says.com`, so use the [Claude Code command](#claude-code).
-
-If your organization runs a private certificate authority, you may have to point your agent to its root certificate. For an agent based on Node, add `"NODE_EXTRA_CA_CERTS": "/path/to/internal/root_ca.crt"` to the `"env"` section of the MCP server's JSON configuration.
 
 <!-- Remove this section one release after the Sigrid Axis launch of October 1, 2026. -->
 ## Upgrade from the Sigrid AI Toolkit

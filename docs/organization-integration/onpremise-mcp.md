@@ -55,7 +55,9 @@ By default the subchart also creates a NetworkPolicy that limits egress to `auth
 
 ## Connecting an AI coding assistant
 
-After the `mcp` pod is running, developers connect their AI coding assistant to `https://my-sigrid.example.com/mcp` using an [authentication token](authentication-tokens.md) from your on-premise Sigrid. The [Sigrid Axis installation](../axis/installation.md#sigrid-on-premise) page lists the configuration per tool.
+After the `mcp` pod is running, developers connect their AI coding assistant to `https://my-sigrid.example.com/mcp` using an [authentication token](authentication-tokens.md) from your on-premise Sigrid. They use the [manual configuration](../axis/installation.md#connect-the-mcp-server-by-hand) for their tool, with your own Sigrid host in the URL. This applies to Claude Code as well, because the Claude Code plugin only connects to `sigrid-says.com`.
+
+If your organization runs a private certificate authority, the AI coding assistant may have to be pointed to its root certificate. For an assistant based on Node, add `"NODE_EXTRA_CA_CERTS": "/path/to/internal/root_ca.crt"` to the `"env"` section of the MCP server's JSON configuration.
 
 ## Contact and support
 
