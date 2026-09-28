@@ -15,7 +15,7 @@ Sigrid Axis consists of the Sigrid Axis MCP server and a set of skills. Both fol
 
 ## Install the Claude Code plugin
 
-In Claude Code, the plugin configures the Sigrid Axis MCP server and the skills together. Run these commands:
+In Claude Code, the plugin configures the Sigrid Axis MCP server and the skills together. It also adds a hook that reminds the agent to run the Guardrails check before it reports a task done, so you don't have to add that instruction yourself. Run these commands:
 
 {% include axis/plugin-install.md setup=true %}
 
@@ -141,7 +141,7 @@ Without the plugin, add the server with this command and restart Claude Code:
 claude mcp add --transport http axis https://sigrid-says.com/mcp --header "Authorization: Bearer <your_sigrid_token>"
 ```
 
-This gives you the MCP tools only. The skills come with the [plugin](#install-the-claude-code-plugin).
+This gives you the MCP tools only. The skills and the Guardrails hook come with the [plugin](#install-the-claude-code-plugin).
 
 ### OpenCode
 
