@@ -41,7 +41,7 @@ On Claude Code, the plugin covers tool access and automatic enforcement together
 
 ### 1. Install the plugin
 
-The plugin configures the Sigrid Axis MCP server, the skills, and the nudge hook together:
+The plugin configures the Sigrid Axis MCP server and the skills together:
 
 {% include axis/plugin-install.md %}
 
@@ -59,7 +59,7 @@ The tool takes one file at a time, and returns the maintainability guidelines th
 
 ### 2. Add your own conventions (optional on Claude Code)
 
-The hook covers the trigger and three general code principles. This step adds your codebase's own conventions, and what the agent should do once it has a finding. On Claude Code, put them in `CLAUDE.md`. On another CLI, this step is also where the trigger itself comes from, so put the whole block below in `AGENTS.md`:
+The hook covers the trigger and three general code principles. This step adds your codebase's own conventions, and what the agent should do once it has a finding. On Claude Code, put them in `CLAUDE.md`. In another tool, this step is also where the trigger itself comes from, so put the whole block below in `AGENTS.md`:
 
 {% include axis/quality-gate-prompt.md %}
 

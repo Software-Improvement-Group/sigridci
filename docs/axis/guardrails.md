@@ -12,7 +12,7 @@ The check reads your working tree, so the system does not have to be published t
 Guardrails consists of three parts:
 
 - **The `guardrails.quality_check` MCP tool** checks one file at a time. It returns the maintainability guidelines the file violates, with a severity and a line range per unit, plus a separate list of security findings. Both lists empty means the file passes. See the [MCP tools reference](tools.md#guardrails).
-- **The nudge hook**, in the Claude Code plugin, tells the agent to run that check on the production code it changed before it reports a task done.
+- **A standing instruction** tells the agent to run that check on the production code it changed before it reports a task done. See [set up the quality gate](#set-up-the-quality-gate).
 - **The [`change-feedback`](skills.md#change-feedback) skill** checks your whole local change before you push it, for the problems a check of one file cannot see.
 
 For the problems that are already in your code, see [Auto-fix Agents](autofix-agents.md). For a walkthrough of Guardrails in day-to-day feature work, see [building with Guardrails](guides/building-with-guardrails.md).
