@@ -66,9 +66,9 @@ Three tiers cover the work in these guides, and every vendor ships some version 
 
 | What the step needs                                                           | Claude | OpenAI | Gemini |
 |-------------------------------------------------------------------------------|---|---|---|
-| **Small:** Retrieving findings, recording statuses, summarizing a batch       | Haiku | GPT mini | Flash-Lite |
-| **Mid-sized:** Following a written procedure, editing code to a known pattern | Sonnet | GPT | Flash |
-| **Reasoning:** Assessing a finding against how your system actually works     | Opus | GPT at high reasoning | Pro |
+| **Small:** Retrieving findings, recording statuses, summarizing a batch       | Haiku | GPT Luna | Flash-Lite |
+| **Mid-sized:** Following a written procedure, editing code to a known pattern | Sonnet | GPT Sol | Flash |
+| **Reasoning:** Assessing a finding against how your system actually works     | Opus | GPT Astra, or GPT Sol at high reasoning | Pro |
 
 Reasoning effort is the second dial. It earns its cost on the mid-sized and reasoning tiers, and does nothing for retrieval. Some vendors expose the top rung as an effort setting on one model, so for them the two dials are one. A single model runs your whole session, so pick for the hardest step in the loop.
 

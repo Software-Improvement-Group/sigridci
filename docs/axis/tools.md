@@ -143,7 +143,7 @@ Here are the problems we see most, and what solves them:
 | Connection fails in proxy mode | Check that the `--allow-http` flag is there |
 | IntelliJ does not connect | Check where your OS keeps the MCP JSON file |
 | "Bad Request: No valid session ID provided" | Restart the client, or turn the MCP server off and on again |
-| The agent ignores the tools | Use a recent model: GPT-5, Claude 4, Gemini 2.5, or later |
+| The agent ignores the tools | Use a recent frontier model |
 | The agent asks permission for every Sigrid tool after upgrading | [Update your permission allowlist](installation.md#2-update-your-permission-allowlists) |
 | Sigrid On-Premise: connection refused or 401 | See below |
 
