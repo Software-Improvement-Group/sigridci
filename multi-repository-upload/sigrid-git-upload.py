@@ -23,7 +23,7 @@ import sys
 import tarfile
 import tempfile
 from pathlib import Path
-from typing import List, Optional
+from typing import Optional
 
 DEFAULT_SIGRIDCI_SCRIPT = Path(__file__).resolve().parent.parent / "sigridci" / "sigridci.py"
 
