@@ -36,7 +36,7 @@ Before touching code, let the agent map how the system fits together: which comp
 
 The `architecture-explorer` agent answers from Sigrid Core's dependency graph, and reads files for what the graph cannot tell it. One call to the graph gives the counted answer that grepping imports only approximates. Giving the agent this context up front helps it respect the existing structure instead of introducing architecture drift.
 
-The graph describes the baseline branch as Sigrid last analyzed it. To check whether a local change already drifted, use `change-feedback architecture` instead; see [preventing architecture drift](guides/preventing-architecture-drift.md).
+The graph describes the baseline branch as Sigrid last analyzed it. To check whether a local change already drifted, use `change-feedback architecture` instead; see [preventing architecture drift](guardrails/preventing-architecture-drift.md).
 
 ## Plan: diagnose maintainability and architecture
 
@@ -46,7 +46,7 @@ Maintainability and architecture are metrics-based models: they describe a state
 /diagnose maintainability
 ```
 
-For maintainability, `diagnose` reads the ratings of all seven properties and the top candidates for each, and weights them the way Sigrid does, by the amount of code each one puts in a bad risk bracket. That order is often not the order of severity. [Reducing technical debt](guides/reducing-technical-debt.md) explains why, and walks through a session.
+For maintainability, `diagnose` reads the ratings of all seven properties and the top candidates for each, and weights them the way Sigrid does, by the amount of code each one puts in a bad risk bracket. That order is often not the order of severity. [Reducing technical debt](autofix-agents/reducing-technical-debt.md) explains why, and walks through a session.
 
 For architecture, it finds the directory whose structure is most worth fixing, from the graph, and names the concrete fix, such as a file to move or a facade to add.
 
@@ -58,7 +58,7 @@ Security, reliability, and open source health are findings-based models: they pr
 /triage-findings security under src/payments/
 ```
 
-`triage-findings` reads each flagged location and decides: false positive, accepted risk, needs a person, or will fix. A false positive or an accepted risk has to cite a file and a line. For security and reliability, the decisions go back to Sigrid as finding statuses, with the evidence as the remark. What needs a person comes back as a list, with the blocker for each. [Triaging security and reliability findings](guides/triaging-security-and-reliability-findings.md) walks through a session.
+`triage-findings` reads each flagged location and decides: false positive, accepted risk, needs a person, or will fix. A false positive or an accepted risk has to cite a file and a line. For security and reliability, the decisions go back to Sigrid as finding statuses, with the evidence as the remark. What needs a person comes back as a list, with the blocker for each. [Triaging security and reliability findings](autofix-agents/triaging-security-and-reliability-findings.md) walks through a session.
 
 For open source findings, it groups the findings per dependency and researches the remediation options in public advisories and registries. See [`triage-findings`](skills.md#triage-findings) in the skills reference.
 

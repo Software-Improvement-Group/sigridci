@@ -128,7 +128,7 @@ Code that should never be a candidate is a different problem and has a better ho
 
 For the guides and references around this one, see:
 
-- [Building with an AI coding agent and Sigrid Guardrails](building-with-guardrails.md) to stop new debt while you clear the old
-- [Preventing architecture drift](preventing-architecture-drift.md) for the structural changes a refactor can introduce
+- [Building with an AI coding agent and Sigrid Guardrails](../guardrails/building-with-guardrails.md) to stop new debt while you clear the old
+- [Preventing architecture drift](../guardrails/preventing-architecture-drift.md) for the structural changes a refactor can introduce
 - [Triaging security and reliability findings](triaging-security-and-reliability-findings.md) for different findings and a different loop
 - [Skills reference](../skills.md) for everything `diagnose` and `autofix` do

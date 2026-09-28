@@ -9,7 +9,7 @@ redirect_from:
 
 This guide walks through checking an agent's diff for architecture drift before it merges: a new call across a directory boundary, a facade bypassed on the way to a database, a dependency cycle the change would close. The `change-feedback architecture` skill grounds that check in Sigrid's measured dependency graph, so the verdict comes from how your system is actually wired today and not from the few files the agent happened to open.
 
-Run it when a change touches more than one directory, on your own work or on a branch you are about to merge for someone else. It checks the diff and nothing more. [Guardrails](building-with-guardrails.md) covers each file as the agent writes it, and structure is exactly what a per-file check cannot see. For an audit of the coupling across the whole system, see [reducing technical debt](reducing-technical-debt.md), and you can always open the graph yourself in the [architecture explorer](../../capabilities/architecture-quality.md).
+Run it when a change touches more than one directory, on your own work or on a branch you are about to merge for someone else. It checks the diff and nothing more. [Guardrails](building-with-guardrails.md) covers each file as the agent writes it, and structure is exactly what a per-file check cannot see. For an audit of the coupling across the whole system, see [reducing technical debt](../autofix-agents/reducing-technical-debt.md), and you can always open the graph yourself in the [architecture explorer](../../capabilities/architecture-quality.md).
 
 ## Prerequisites
 
@@ -98,5 +98,5 @@ An instruction is followed most of the time, and the agent is the one deciding w
 For the checks and tools around this one, see:
 
 - [Building with an AI coding agent and Sigrid Guardrails](building-with-guardrails.md) for the file-level check that runs alongside this one
-- [Reducing technical debt with auto-fix agents](reducing-technical-debt.md) for the coupling across the whole system, which this check does not replace
+- [Reducing technical debt with auto-fix agents](../autofix-agents/reducing-technical-debt.md) for the coupling across the whole system, which this check does not replace
 - [MCP tools reference](../tools.md#architecture) for the architecture tools used here

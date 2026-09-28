@@ -48,7 +48,7 @@ Setup only reads the repository and writes the profile. It never changes your co
 Gives you Sigrid's verdict on your local changes before you commit or push, without starting a remote pipeline or publishing anything to Sigrid. With no argument, it runs maintainability, open-source, and security.
 
 - **Maintainability, open-source, and security** run [Sigrid CI](../sigridci-integration/using-sigridci.md) on your working tree, in one run for all three. This needs Python 3.7 or later, network access to `github.com` to fetch the Sigrid CI scripts, and your token in a `SIGRID_CI_TOKEN` or `SIGRID_TOKEN` environment variable. A run can take up to 30 minutes.
-- **Architecture** finds the new references across directories in your diff, by default against the baseline branch, and checks each one against Sigrid's measured dependency graph. A reference that matches an existing dependency is clean. One that adds a dependency, closes a cycle, or goes around a facade is drift, and the report names the file it should route through instead. See [preventing architecture drift](guides/preventing-architecture-drift.md).
+- **Architecture** finds the new references across directories in your diff, by default against the baseline branch, and checks each one against Sigrid's measured dependency graph. A reference that matches an existing dependency is clean. One that adds a dependency, closes a cycle, or goes around a facade is drift, and the report names the file it should route through instead. See [preventing architecture drift](guardrails/preventing-architecture-drift.md).
 
 ### `explore-architecture`
 
@@ -70,7 +70,7 @@ The agent also starts on its own when you ask a structural question in plain wor
 
 Reads the current state of your system for a metrics-based model and names the one fix most worth making. It never changes code.
 
-- **Maintainability** finds the property most worth fixing and the code driving it. It reports one primary candidate, the runner-ups, and the candidates it rejected with the rule that removed them, such as generated code, a finding your team already accepted, or a fix that would change a public API. See [reducing technical debt](guides/reducing-technical-debt.md).
+- **Maintainability** finds the property most worth fixing and the code driving it. It reports one primary candidate, the runner-ups, and the candidates it rejected with the rule that removed them, such as generated code, a finding your team already accepted, or a fix that would change a public API. See [reducing technical debt](autofix-agents/reducing-technical-debt.md).
 - **Architecture** finds the directory whose structure is most worth fixing, based on Sigrid's measured dependency graph, and names the concrete fix.
 
 If nothing qualifies, it says so and stops. Otherwise it writes a handover and offers to fix it.
@@ -83,7 +83,7 @@ If nothing qualifies, it says so and stops. Otherwise it writes a handover and o
 
 Goes through a list of findings for a findings-based model and decides each one: false positive, accepted risk, needs a person, or will fix. It never changes code and never opens issues. You can give it a finding ID, a finding pasted from Sigrid, or a scope such as a directory, and it works through the backlog in that scope.
 
-- **Security and reliability** read the flagged code at its file and line before classifying it. A false positive or an accepted risk needs a file, a line, and one sentence of evidence. The decisions go back to Sigrid as finding statuses, and you confirm false positives and accepted risks before they are written. See [triaging security and reliability findings](guides/triaging-security-and-reliability-findings.md).
+- **Security and reliability** read the flagged code at its file and line before classifying it. A false positive or an accepted risk needs a file, a line, and one sentence of evidence. The decisions go back to Sigrid as finding statuses, and you confirm false positives and accepted risks before they are written. See [triaging security and reliability findings](autofix-agents/triaging-security-and-reliability-findings.md).
 - **Open-source** groups the findings per dependency, because one version bump can clear several of them. For dependencies that need research, it starts the `osh-researcher` agent, which looks up advisories and versions in public registries and has no access to your files or to Sigrid. Open Source Health findings have no status in Sigrid, so the decisions live in the handover and the report.
 
 At the end, it lists every finding that needs a person, with what is blocking it, and offers a handover for the findings to fix.

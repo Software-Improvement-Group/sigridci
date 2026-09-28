@@ -15,7 +15,7 @@ Guided runs come out measurably better. We built the same system 20 times with C
 
 Use it whenever an agent writes code. How closely you read the result is a separate question from whether the code has to be secure and maintainable: anything you deploy, or come back to in six months, has to be both. If you read every diff, Guardrails saves you the review comments you were about to write. If you are vibe coding, it is the only thing between you and whatever the agent happened to produce.
 
-For clearing out technical debt that is already there, which is a different job with a different setup, see [reducing technical debt](reducing-technical-debt.md).
+For clearing out technical debt that is already there, which is a different job with a different setup, see [reducing technical debt](../autofix-agents/reducing-technical-debt.md).
 
 ## Prerequisites
 
@@ -113,6 +113,6 @@ Which files did you run the quality check on? List them against the files you ch
 Guardrails only ever looks at the files in front of it. Architecture drift, vulnerable dependencies, and duplication spread across files need the analysis of the whole system, which is what `change-feedback` runs before you push. From there:
 
 - [Preventing architecture drift](preventing-architecture-drift.md) for the structural check that runs alongside this one
-- [Reducing technical debt](reducing-technical-debt.md) for the debt that is already there
-- [Triaging security and reliability findings](triaging-security-and-reliability-findings.md) for the findings Sigrid already knows about
+- [Reducing technical debt](../autofix-agents/reducing-technical-debt.md) for the debt that is already there
+- [Triaging security and reliability findings](../autofix-agents/triaging-security-and-reliability-findings.md) for the findings Sigrid already knows about
 - [Guardrails](../guardrails.md) for supported technologies and the tool itself
