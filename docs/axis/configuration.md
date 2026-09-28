@@ -13,7 +13,7 @@ Sigrid Axis reads two kinds of configuration: a token that authenticates you to 
 | **Profile** | Your Sigrid system and team conventions | `.sigrid/profile.md` | The repository, committed |
 | **Plugin options** | Whether the nudge hook runs | Claude Code plugin settings | You |
 
-<img src="../images/axis-configuration.svg" width="720" alt="How the Sigrid token and profile are set, stored, and read" />
+<img src="../images/axis-configuration.svg" width="900" alt="How the Sigrid token and profile are set, stored, and read" />
 
 Your token never goes in the profile, and the profile never contains a secret. You can safely read, edit, commit, and share the profile.
 {: .attention }
