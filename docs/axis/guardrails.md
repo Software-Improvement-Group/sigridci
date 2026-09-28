@@ -39,21 +39,17 @@ Connecting the MCP server is half the setup. The agent does not call the tool un
 
 ### Claude Code
 
-Install the [Claude Code plugin](installation.md#install-the-claude-code-plugin). Its `UserPromptSubmit` hook adds this instruction to every prompt you send:
-
-{% include axis/nudge-guardrails.md %}
-
-The hook is on by default. To turn it off, see [plugin options](configuration.md#plugin-options).
+Install the [Claude Code plugin](installation.md#install-the-claude-code-plugin). Its `UserPromptSubmit` hook adds the instruction below to every prompt you send, so there is nothing to add yourself. The hook is on by default. To turn it off, see [plugin options](configuration.md#plugin-options).
 
 ### Other tools
 
-Put the instruction in `AGENTS.md` at the root of your repository, so it applies to every session without you asking. Cursor, GitHub Copilot, Devin, and most other agentic CLIs read that file. The prompt below pairs brief **code principles** with a mandatory **quality gate** before any task is reported complete:
+Put the instruction in `AGENTS.md` at the root of your repository, so it applies to every session without you asking. Cursor, GitHub Copilot, Devin, and most other agentic tools read that file. It is the same text the Claude Code hook adds: three **code principles**, and a **quality gate** to pass before reporting a task done:
 
 {% include axis/quality-gate-prompt.md %}
 
 The quality gate applies the [Boy Scout Rule](https://www.oreilly.com/library/view/97-things-every/9780596809515/ch08.html): leave each file you touch cleaner than you found it.
 
-Two adjustments are worth making from the start. If your codebase follows specific design patterns, such as hexagonal architecture or Redux, add them under Code Principles, and write a principle for every recurring mistake you find yourself correcting. You can also loosen the timing to commits only. Either way, you can always ask for the check yourself: "Run Sigrid on these files: ...".
+Two adjustments are worth making from the start. If your codebase follows specific design patterns, such as hexagonal architecture or Redux, add them to the principles line, and write a principle for every recurring mistake you find yourself correcting. You can also loosen the timing to commits only. Either way, you can always ask for the check yourself: "Run Sigrid on these files: ...".
 
 For which wording in that prompt carries it, and a session where the agent refactors in response to a finding, see [building with Guardrails](guides/building-with-guardrails.md).
 

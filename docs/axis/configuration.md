@@ -87,7 +87,7 @@ The Claude Code plugin has a `UserPromptSubmit` hook that adds a short nudge to 
 
 **Nudge to run guardrails** gives the agent three code principles, and tells it to run the Guardrails check on the production code it changed before it reports a task done, then fix what it finds. It adds this text:
 
-{% include axis/nudge-guardrails.md %}
+{% include axis/quality-gate-prompt.md %}
 
 **Nudge to use architecture-explorer** points the agent to the `architecture-explorer` agent instead of the generic Explore subagent for questions about code structure.
 

@@ -84,7 +84,7 @@ The skill checks at most about five top-level directories per run, starting with
 
 ## Run it without being asked
 
-Typing the command catches this once. An instruction in your agent's context file, next to the [conventions you add for Guardrails](building-with-guardrails.md#2-add-your-own-conventions-optional-on-claude-code), catches it in every session where the agent remembers to check:
+Typing the command catches this once. An instruction in your agent's context file, next to the [quality gate for Guardrails](building-with-guardrails.md#2-add-the-quality-gate-in-other-tools), catches it in every session where the agent remembers to check:
 
 ```
 Before reporting a task that touches more than one directory as complete, run /change-feedback architecture.

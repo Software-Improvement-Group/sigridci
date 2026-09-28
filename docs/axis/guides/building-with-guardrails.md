@@ -57,15 +57,17 @@ Run the Sigrid guardrails quality check on <a file you changed recently>.
 
 The tool takes one file at a time, and returns the maintainability guidelines that file violates, with a severity and a line range per unit, plus a separate list of security findings. A clean file returns both lists empty, so an empty result is a pass and not a failure to run.
 
-### 2. Add your own conventions (optional on Claude Code)
+### 2. Add the quality gate in other tools
 
-The hook covers the trigger and three general code principles. This step adds your codebase's own conventions, and what the agent should do once it has a finding. On Claude Code, put them in `CLAUDE.md`. In another tool, this step is also where the trigger itself comes from, so put the whole block below in `AGENTS.md`:
+On Claude Code, the hook already adds the quality gate, so skip this step. In another tool, this step is where the trigger comes from, so put this block in `AGENTS.md`:
 
 {% include axis/quality-gate-prompt.md %}
 
-Two details in that text do the work, and both are easy to lose when you reword it. It names the tool, which makes the outcome verifiable: "check code quality" is advice, while "run `guardrails.quality_check` on all files you changed" is something you can confirm happened. And "before reporting ANY task as complete" attaches the check to a point every task passes through exactly once, which looser timing like "after every edit" does not give you.
+Two details in that text do the work, and both are easy to lose when you reword it. It names the tool, which makes the outcome verifiable: "check code quality" is advice, while "run Sigrid guardrails_quality_check on changed production code" is something you can confirm happened. And "before reporting done" attaches the check to a point every task passes through exactly once, which looser timing like "after every edit" does not give you.
 
-The gate also lets the agent leave a finding alone, either because the code already honors the principles or because the fix would cascade outside the task, as long as it says which and why. That clause is what keeps a small addition from turning into an afternoon of extractions.
+The gate also lets the agent leave a finding alone when the code already honors the principles, as long as it says which and why. That clause is what keeps a small addition from turning into an afternoon of extractions.
+
+To add your codebase's own conventions, such as the design patterns it follows, extend the principles: in `AGENTS.md` on other tools, and in `CLAUDE.md` on Claude Code.
 
 An instruction is followed most of the time, and the agent is the one who decides it has finished, so we would verify the gate for the first few sessions in a new repository. Where it really matters, back it with something mechanical: [Sigrid CI](../../sigridci-integration/using-sigridci.md) in a pre-commit hook or in your pipeline runs the same checks whatever produced the code.
 
