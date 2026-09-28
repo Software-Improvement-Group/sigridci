@@ -16,7 +16,7 @@ Sigrid Core already has those answers. Sigrid Axis puts them inside the agent's 
 
 Sigrid Core is the analysis platform you may already know: it measures maintainability, architecture, security, reliability, and open source health, and it keeps the findings, ratings, and dependency graphs you see in the Sigrid dashboards and in [Sigrid CI](../sigridci-integration/using-sigridci.md).
 
-Sigrid Axis brings that analysis to AI coding agents. It consists of the Sigrid Axis MCP server, which gives an agent tools that read from Sigrid Core and write triage decisions back to it, plus a set of skills and a hook for Claude Code that run the common jobs end to end. Axis does not analyze anything on its own. Every rating, finding, and graph edge an agent sees through Axis comes from Sigrid Core, and every status it writes back shows up in Sigrid Core.
+Sigrid Axis brings that analysis to AI coding agents. It consists of the Sigrid Axis MCP server, which gives an agent tools that read from Sigrid Core and write triage decisions back to it, and a set of skills, which give the agent procedures for using those tools. MCP and skills are open standards, so Axis works in any agentic tool that supports them. Axis does not analyze anything on its own. Every rating, finding, and graph edge an agent sees through Axis comes from Sigrid Core, and every status it writes back shows up in Sigrid Core.
 
 Axis works with Sigrid On-Premise too, through the [on-premise Sigrid Axis MCP server](../organization-integration/onpremise-mcp.md).
 
@@ -35,7 +35,7 @@ We think of agentic development as a cycle of four phases, and Sigrid Axis does 
 
 Sigrid Axis has two capabilities today.
 
-[Guardrails](guardrails.md) covers the Prevent phase. It checks the code an agent writes while the agent is still working on it, and it checks a local change against Sigrid before you push. It consists of the `guardrails.quality_check` MCP tool, the nudge hook that gets the agent to run that check, and the [`change-feedback`](skills.md#change-feedback) skill.
+[Guardrails](guardrails.md) covers the Prevent phase. It checks the code an agent writes while the agent is still working on it, and it checks a local change against Sigrid before you push. It consists of the `guardrails.quality_check` MCP tool, a standing instruction that gets the agent to run that check, and the [`change-feedback`](skills.md#change-feedback) skill.
 
 [Auto-fix Agents](autofix-agents.md) covers the other three phases, for the problems Sigrid Core has already found:
 
@@ -47,7 +47,7 @@ The [`setup`](skills.md#setup) skill sits outside both. It records which Sigrid 
 
 ## Get started
 
-Start with [installing Sigrid Axis](installation.md). The Claude Code plugin sets up the MCP server, the skills, and the hook in three commands. Other agentic tools connect to the MCP server by hand.
+Start with [installing Sigrid Axis](installation.md): connect the MCP server and install the skills in your agentic tool.
 
 Then pick the guide for the job in front of you. Each one follows that job through on a real codebase: what to configure, what a session looks like, and how to check what the agent did.
 

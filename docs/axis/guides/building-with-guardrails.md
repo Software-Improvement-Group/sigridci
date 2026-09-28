@@ -19,7 +19,7 @@ For clearing out technical debt that is already there, which is a different job 
 
 ## Prerequisites
 
-- An agentic CLI that can call MCP tools. The configuration below uses Claude Code.
+- An agentic tool that supports MCP. The examples below use Claude Code.
 - A Sigrid API token, which the plugin asks for once.
 - A codebase in one of the [supported technologies](../guardrails.md#supported-technologies).
 
@@ -45,9 +45,9 @@ The plugin configures the Sigrid Axis MCP server, the skills, and the nudge hook
 
 {% include axis/plugin-install.md %}
 
-The plugin asks for your Sigrid API token once and stores it in your system keychain. See [authentication tokens](../../organization-integration/authentication-tokens.md) for how to get one. The plugin only works in Claude Code. If you use a different agentic CLI, [connect the MCP server by hand](../installation.md#connect-the-mcp-server-by-hand). You need at least the `guardrails.quality_check` tool.
+The plugin asks for your Sigrid API token once and stores it in your system keychain. See [authentication tokens](../../organization-integration/authentication-tokens.md) for how to get one. In another agentic tool, [connect the MCP server](../installation.md#connect-the-mcp-server-by-hand) instead. You need at least the `guardrails.quality_check` tool.
 
-The plugin's hook adds an instruction to every prompt you send: before reporting a task done, run the Guardrails check on the production code you changed, and fix the findings your change made worse. Other CLIs need that trigger added by hand; see [set up the quality gate](../guardrails.md#other-tools).
+The plugin's hook adds an instruction to every prompt you send: before reporting a task done, run the Guardrails check on the production code you changed, and fix the findings your change made worse. Other tools need that trigger added by hand; see [set up the quality gate](../guardrails.md#other-tools).
 
 Check it works before you rely on it:
 

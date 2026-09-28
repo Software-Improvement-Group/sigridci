@@ -49,7 +49,7 @@ Install the plugin, then run `setup` in the repository:
 
 `setup` is easy to skip, and it is the step that matters most here. It writes `.sigrid/profile.md`, which records the Sigrid system this repository maps to, the baseline branch Sigrid analyzes, and how your team names branches. The skills read it at the start of every run, so you answer these questions once instead of every session. Commit the file, so your team shares it. See [configuration](../configuration.md#the-sigrid-profile) for what it contains.
 
-The plugin only works in Claude Code. For another agentic tool, [install the skills and connect the MCP server](../installation.md#use-the-skills-in-other-agentic-tools) yourself.
+In another agentic tool, [install the skills and connect the MCP server](../installation.md#use-the-skills-in-other-agentic-tools) instead.
 
 ### 2. Know which branch you end up on
 

@@ -1,4 +1,4 @@
-Everything here applies to any agentic CLI. The configuration below is for Claude Code, since that is the only CLI we ship a plugin for, and every agentic CLI has its own version of the four primitives involved:
+Everything here applies to any agentic tool, and every tool has its own version of the four primitives involved. The Claude Code column is one example:
 
 | Primitive | Generic | Claude Code |
 |-----------|---------|-------------|

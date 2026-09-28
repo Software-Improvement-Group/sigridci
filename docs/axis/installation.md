@@ -5,7 +5,7 @@ redirect_from:
 
 # Installing Sigrid Axis
 
-This page covers installing Sigrid Axis as a Claude Code plugin, connecting the Sigrid Axis MCP server to any other agentic tool by hand, and upgrading from the Sigrid AI Toolkit.
+Sigrid Axis consists of the Sigrid Axis MCP server and a set of skills. Both follow open standards, so Axis works in any agentic tool that supports MCP and skills. Installing it means connecting the MCP server and installing the skills. In Claude Code, a plugin does both in one step. This page also covers upgrading from the Sigrid AI Toolkit.
 
 ## Prerequisites
 
@@ -15,7 +15,7 @@ This page covers installing Sigrid Axis as a Claude Code plugin, connecting the 
 
 ## Install the Claude Code plugin
 
-The plugin configures the Sigrid Axis MCP server, the skills, and the nudge hook together. It is the quickest way to get started, and it is what the [guides](README.md#get-started) assume. Run these commands in Claude Code:
+In Claude Code, the plugin configures the Sigrid Axis MCP server, the skills, and a nudge hook together. Run these commands:
 
 {% include axis/plugin-install.md setup=true %}
 
@@ -40,7 +40,7 @@ The plugin connects to `sigrid-says.com` only. For Sigrid On-Premise, connect th
 
 ## Use the skills in other agentic tools
 
-The plugin itself only runs in Claude Code. The skills are plain `SKILL.md` files, though, and many agentic tools read that format. You can find them in the `axis` directory of the [agent-integrations](https://github.com/Software-Improvement-Group/agent-integrations) repository. To use them in another tool:
+The skills are plain `SKILL.md` files, the open format that most agentic tools read. You can find them in the `axis` directory of the [agent-integrations](https://github.com/Software-Improvement-Group/agent-integrations) repository. To use them in another tool:
 
 1. Connect the Sigrid Axis MCP server by hand, as described below.
 2. Install the skills the way your tool installs skills.
