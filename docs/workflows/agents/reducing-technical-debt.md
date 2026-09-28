@@ -22,13 +22,13 @@ You need the following before you start:
 
 ## Why the agent needs help
 
-Ask an agent to "improve maintainability in this repository" and it will do something reasonable that barely moves your rating. The instruction sounds actionable, but two of the things it needs are missing from the code the agent can read.
+Ask an agent to "improve maintainability in this repository" and it will do something reasonable. Your rating will barely move.
 
-It cannot see the whole system. An agent picks targets from whatever it read into context, and ten files it happened to open are not the ten files that matter. On a large codebase, most of the code is code it never read.
+An agent picks its targets from the files it has read. On a large codebase, that is a handful out of thousands, and nothing says those are the ones that matter.
 
-It also has no model of impact. Without the LOC weighting, it judges severity by eye, so it optimizes the number of findings closed and not the rating. Closing eleven small findings and reporting a successful run is a plausible outcome that moves nothing.
+It also does not know what counts. Sigrid's rating is based on how much of your code is in bad shape, so one enormous method can weigh more than twenty small ones. An agent judging by eye goes for the findings that look worst, or the ones that are quickest to close. It can close eleven small findings, report a successful run, and leave the rating exactly where it was.
 
-Sigrid supplies the global view: which property is weakest, which candidates carry the most rated code, and which candidates appear under several properties at once, where a single fix moves more than one rating. You supply what no rating can express: the conventions of your own codebase, and how much change you are willing to review in one go.
+Sigrid knows which property is weakest, which code carries the most weight, and which pieces show up under several properties at once, where one fix improves more than one rating. You know what no rating can tell it: the conventions of your codebase, and how much change you are willing to review in one go.
 
 ## Set up the agent
 
@@ -85,7 +85,7 @@ If a change breaks the build or the tests, introduces a new Guardrails finding, 
 
 The skills ask only at real decision points you have not already answered. A refactor that runs into context the code does not show, such as a serialization constraint, callers outside the repository, or a migration window, is such a point. If you told the skill not to ask, it skips that candidate and logs it. Either way, the skipped list is part of the output you need to read. See [how the skills interact with you](../../axis/skills.md#how-the-skills-interact-with-you).
 
-`autofix` handles `unitSize`, `unitComplexity`, `unitInterfacing`, `duplication`, and `moduleCoupling`. It does not change code for the two component-level properties, `componentIndependence` and `componentEntanglement`. Those fixes are design decisions and not extractions, so it points you to `/diagnose architecture` instead.
+`autofix` handles `unitSize`, `unitComplexity`, `unitInterfacing`, `duplication`, and `moduleCoupling`. It does not change code for the two component-level properties, `componentIndependence` and `componentEntanglement`. Those fixes are design decisions and not extractions, so it points you to `/diagnose architecture` instead. See [improving architecture](improving-architecture.md).
 
 It stops at local commits. Review the branch, then push it and open the merge request or pull request yourself.
 
@@ -106,7 +106,7 @@ Start with behavior. The tests pass and the diff contains no new behavior. If a 
 
 Ratings come last, and the dashboard will not show movement yet. Sigrid rates the branch it is configured to analyze, so your refactors only reach the ratings once they are merged and that branch has been analyzed again. Two things answer the question before then:
 
-- Run `/change-feedback maintainability`. It runs Sigrid CI on your working tree and returns Sigrid's maintainability feedback, publishing nothing to Sigrid. It needs your token in a `SIGRID_CI_TOKEN` environment variable, separate from the token the plugin stored in your keychain.
+- Run `/change-feedback maintainability`. It runs Sigrid CI on your working tree and returns Sigrid's maintainability feedback, publishing nothing to Sigrid. It needs your token in a `SIGRID_CI_TOKEN` or `SIGRID_TOKEN` environment variable, separate from the token the plugin stored in your keychain.
 - Push the branch and open a merge request. Your [Sigrid CI](../../sigridci-integration/using-sigridci.md) step reports the same verdict in the pipeline, before anyone merges.
 
 Ratings are measured against total system size, so a handful of refactors on a large codebase will not move a star rating. Clusters move ratings. If nothing moved after a substantial run, you worked the long tail instead of the mass, so go back to the diagnosis and ask which candidates carry the most LOC in a bad risk bracket.
@@ -125,5 +125,6 @@ For the guides and references around this one, see:
 
 - [Building with an AI coding agent and Sigrid Guardrails](building-with-guardrails.md) to stop new debt while you clear the old
 - [Preventing architecture drift](preventing-architecture-drift.md) for the structural changes a refactor can introduce
+- [Improving architecture](improving-architecture.md) for the component-level properties this guide leaves out
 - [Triaging security and reliability findings](triaging-security-and-reliability-findings.md) for different findings and a different loop
 - [Skills reference](../../axis/skills.md) for everything `diagnose` and `autofix` do

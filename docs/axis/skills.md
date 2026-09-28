@@ -71,7 +71,7 @@ The agent also starts on its own when you ask a structural question in plain wor
 Reads the current state of your system for a metrics-based model and names the one fix most worth making. It never changes code.
 
 - **Maintainability** finds the property most worth fixing and the code driving it. It reports one primary candidate, the runner-ups, and the candidates it rejected with the rule that removed them, such as generated code, a finding your team already accepted, or a fix that would change a public API. See [reducing technical debt](../workflows/agents/reducing-technical-debt.md).
-- **Architecture** finds the directory whose structure is most worth fixing, based on Sigrid's measured dependency graph, and names the concrete fix.
+- **Architecture** finds the directory whose structure is most worth fixing, based on Sigrid's measured dependency graph, and names the concrete fix. See [improving architecture](../workflows/agents/improving-architecture.md).
 
 If nothing qualifies, it says so and stops. Otherwise it writes a handover and offers to fix it.
 

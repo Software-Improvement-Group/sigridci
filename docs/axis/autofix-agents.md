@@ -48,7 +48,7 @@ Maintainability and architecture are metrics-based models: they describe a state
 
 For maintainability, `diagnose` reads the ratings of all seven properties and the top candidates for each, and weights them the way Sigrid does, by the amount of code each one puts in a bad risk bracket. That order is often not the order of severity. [Reducing technical debt](../workflows/agents/reducing-technical-debt.md) explains why, and walks through a session.
 
-For architecture, it finds the directory whose structure is most worth fixing, from the graph, and names the concrete fix, such as a file to move or a facade to add.
+For architecture, it finds the directory whose structure is most worth fixing, from the graph, and names the concrete fix, such as a file to move or a facade to add. [Improving architecture](../workflows/agents/improving-architecture.md) walks through a session.
 
 ## Plan: triage security, reliability, and open source findings
 

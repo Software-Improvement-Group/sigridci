@@ -22,11 +22,11 @@ Guardrails reads the code in your working tree, so the system does not have to b
 
 ## Why the agent needs help
 
-An agent optimizes for the goal you gave it, and it can only verify part of that goal by itself. "The feature works" is testable: run the code, read the error, try again. "The code is good" is not, so the agent stops when the tests pass, and what it leaves behind is whatever satisfied the test.
+An agent knows it is done when the tests pass. Nothing in that loop tells it whether the code it wrote is any good.
 
-Two things follow, and you will recognize both. Extending an existing method is a smaller and safer-looking edit than splitting it, so units grow across sessions until the worst unit in the file is the one the agent has touched most often. And an agent reproduces the patterns it has seen most, insecure idioms among them: a query assembled by string concatenation, a permissive default, a check that runs after the work instead of before it. Nothing in the task tells it to look, and a vulnerability does not announce itself the way a failing assertion does.
+So it takes the easy path, and you will recognize where that leads. Adding a few lines to an existing method is a smaller edit than splitting it, so methods keep growing, session after session, until the worst method in the file is the one the agent touched most. An agent also writes the patterns it has seen most often, and some of those are insecure: a query glued together from strings, a default that lets everything through, a permission check that runs after the work instead of before it. None of them fail a test.
 
-Underneath both sits the problem we built Sigrid to solve. An agent cannot measure "maintainable" by reading. Unit size, complexity, parameter counts, and duplication all have thresholds and a rating behind them, and without those numbers the agent is aiming at a standard it cannot see. Guardrails returns which guidelines a file violates, where, at what severity, and the threshold behind each one, so "too long" stops being a guess.
+The agent cannot see the standard it is supposed to meet, either. How long is too long for a method? How many branches are too many? Sigrid has a threshold for each of these, calibrated on a benchmark of real systems, and none of it can be read off the code. Guardrails gives the agent the answer for every file it touches: which guidelines the file breaks, where, how badly, and the threshold behind each one. "Too long" stops being a guess.
 
 ## Set up Guardrails
 
@@ -93,7 +93,7 @@ Before you push, run the check that sees the whole change:
 /change-feedback
 ```
 
-It runs Sigrid CI on your working tree for maintainability, open-source, and security, and reports what the file-by-file check could not see, such as duplication across files. It publishes nothing to Sigrid, and it needs your token in a `SIGRID_CI_TOKEN` environment variable, separate from the one in your keychain.
+It runs Sigrid CI on your working tree for maintainability, open-source, and security, and reports what the file-by-file check could not see, such as duplication across files. It publishes nothing to Sigrid, and it needs your token in a `SIGRID_CI_TOKEN` or `SIGRID_TOKEN` environment variable, separate from the one in your keychain.
 
 ## Check that the gate fired
 
