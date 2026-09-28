@@ -85,7 +85,10 @@ The skills that plan work write their plan to `.sigrid/handovers/`, next to the 
 
 The Claude Code plugin has a `UserPromptSubmit` hook that adds a short nudge to every prompt you send. It has two options, both on by default:
 
-- **Nudge to run guardrails** tells the agent to run the Guardrails check on the production code it changed before it reports a task done, and to fix the findings its change made worse. Tests, documentation, and generated code are skipped.
-- **Nudge to use architecture-explorer** points the agent to the `architecture-explorer` agent instead of the generic Explore subagent when it has a question about code structure.
+**Nudge to run guardrails** gives the agent three code principles, and tells it to run the Guardrails check on the production code it changed before it reports a task done, then fix what it finds. It adds this text:
+
+{% include axis/nudge-guardrails.md %}
+
+**Nudge to use architecture-explorer** points the agent to the `architecture-explorer` agent instead of the generic Explore subagent for questions about code structure.
 
 To turn one off, run `/plugin`, open **Installed**, select **axis**, and choose **Configure options**. Other agentic tools have no equivalent of this hook, so on those you put the instruction in your context file instead. See [set up the quality gate](guardrails.md#set-up-the-quality-gate).

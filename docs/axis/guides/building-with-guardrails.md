@@ -47,7 +47,7 @@ The plugin configures the Sigrid Axis MCP server and the skills together:
 
 The plugin asks for your Sigrid API token once and stores it in your system keychain. See [authentication tokens](../../organization-integration/authentication-tokens.md) for how to get one. In another agentic tool, [connect the MCP server](../installation.md#connect-the-mcp-server-by-hand) instead. You need at least the `guardrails.quality_check` tool.
 
-The plugin's hook adds an instruction to every prompt you send: before reporting a task done, run the Guardrails check on the production code you changed, and fix the findings your change made worse. Other tools need that trigger added by hand; see [set up the quality gate](../guardrails.md#other-tools).
+The plugin's hook adds an instruction to every prompt you send: before reporting a task done, run the Guardrails check on the production code you changed, and fix the maintainability findings, leaving one only when the code already honors the principles. See [the exact text](../guardrails.md#claude-code). Other tools need that trigger added by hand; see [set up the quality gate](../guardrails.md#other-tools).
 
 Check it works before you rely on it:
 

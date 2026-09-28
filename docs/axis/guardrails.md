@@ -39,11 +39,9 @@ Connecting the MCP server is half the setup. The agent does not call the tool un
 
 ### Claude Code
 
-Install the [Claude Code plugin](installation.md#install-the-claude-code-plugin). Its `UserPromptSubmit` hook adds a short instruction to every prompt you send. It gives the agent three code principles, single responsibility, self-documenting code, and simple control flow, and tells it to do this before reporting a task done:
+Install the [Claude Code plugin](installation.md#install-the-claude-code-plugin). Its `UserPromptSubmit` hook adds this instruction to every prompt you send:
 
-1. Run the Guardrails check on the production code it changed, skipping tests, documentation, and generated code.
-2. Fix every maintainability finding, judged against the principles, and leave one only when the code already honors them, saying which and why.
-3. Fix security findings when the fix is contained, and flag them to you otherwise.
+{% include axis/nudge-guardrails.md %}
 
 The hook is on by default. To turn it off, see [plugin options](configuration.md#plugin-options).
 
