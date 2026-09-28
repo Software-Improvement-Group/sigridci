@@ -11,7 +11,7 @@ This page provides an overview of all technologies that can be analyzed by Sigri
 - In the list of supported capabilities:
   - "GenAI" indicates the technologies for which Sigrid offers AI-generated explanations on the source code. See the [GenAI Explanations](../reference/ai-explanations.md#genai-explanations) documentation for more information.
   - "Static AI" indicates the technologies for which Sigrid offers static explanations on the Maintainability findings. Support for other Static AI explanations on other Sigrid's capability depends on whether the technology is supported by the specific Sigrid capability. See the [AI Static Explanations](../reference/ai-explanations.md#ai-static-explanations) documentation for more information.
-  - "MCP" indicates technologies supported by Sigrid's MCP (Model Context Protocol). Visit [this page](../integrations/integration-sigrid-mcp.md) for more information about MCP integration.
+  - "MCP" indicates technologies supported by [Guardrails](../axis/guardrails.md) in Sigrid Axis, through the Sigrid Axis MCP server.
 
 <a>Sigrid</a> \| <a>On-premise Sigrid</a> \| <a>Sigrid Local</a>
 {: .technologySupportCategories }

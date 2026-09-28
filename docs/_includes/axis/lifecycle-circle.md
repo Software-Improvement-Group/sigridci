@@ -1,5 +1,5 @@
 {%- comment -%}
-The agentic lifecycle diagram, described on the developer guides page. Pass the stages this page is
+The agentic lifecycle diagram, described on the Sigrid Axis overview page. Pass the stages this page is
 about with active="plan,improve"; the stages you leave out are greyed out. Omit it to show all four.
 
 This is inline SVG instead of a file in images/, because that greying out is done with CSS, in
@@ -7,14 +7,14 @@ lifecycle.css. A browser loads an <img> in secure static mode, so the stylesheet
 reach inside it. Referencing a file would therefore mean one file per combination of stages, and with
 four stages there are fifteen of those.
 {%- endcomment -%}
-{%- assign stages = "grounding,plan,prevent,improve" | split: "," -%}
-{%- assign active = include.active | default: "grounding,plan,prevent,improve" | split: "," -%}
+{%- assign stages = "ground,plan,prevent,improve" | split: "," -%}
+{%- assign active = include.active | default: "ground,plan,prevent,improve" | split: "," -%}
 {%- capture disabled -%}
 {%- for stage in stages -%}{%- unless active contains stage -%}disable-{{ stage }} {% endunless -%}{%- endfor -%}
 {%- endcapture -%}
 
 <svg class="lifecycle lifecycle-circle {{ disabled | strip }}" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 320 320" width="320" height="320">
-  <title>Sigrid Agentic Software Lifecycle</title>
+  <title>Sigrid Axis agentic lifecycle</title>
   <defs>
     <linearGradient id="ramp" gradientUnits="userSpaceOnUse" x1="0" y1="-9.0" x2="0" y2="329.0">
       <stop offset="0" stop-color="#151632"/><stop offset="1" stop-color="#1B64FF"/>
@@ -30,18 +30,18 @@ four stages there are fifteen of those.
     </filter>
   </defs>
   <g filter="url(#soft)">
-    <path class="q s-grounding" d="M58.69,52.11 A148.0,148.0 0 0 1 261.31,52.11 L227.09,88.56 A98.0,98.0 0 0 0 92.91,88.56 Z" fill="url(#ramp)"/>
+    <path class="q s-ground" d="M58.69,52.11 A148.0,148.0 0 0 1 261.31,52.11 L227.09,88.56 A98.0,98.0 0 0 0 92.91,88.56 Z" fill="url(#ramp)"/>
     <path class="q s-plan" d="M267.89,58.69 A148.0,148.0 0 0 1 267.89,261.31 L231.44,227.09 A98.0,98.0 0 0 0 231.44,92.91 Z" fill="url(#ramp)"/>
     <path class="q s-prevent" d="M261.31,267.89 A148.0,148.0 0 0 1 58.69,267.89 L92.91,231.44 A98.0,98.0 0 0 0 227.09,231.44 Z" fill="url(#ramp)"/>
     <path class="q s-improve" d="M52.11,261.31 A148.0,148.0 0 0 1 52.11,58.69 L88.56,92.91 A98.0,98.0 0 0 0 88.56,227.09 Z" fill="#F8C716"/>
   </g>
-  <text class="lbl s-grounding" fill="#FFFFFF"><textPath href="#aTop" xlink:href="#aTop" startOffset="50%" text-anchor="middle">Grounding</textPath></text>
+  <text class="lbl s-ground" fill="#FFFFFF"><textPath href="#aTop" xlink:href="#aTop" startOffset="50%" text-anchor="middle">Ground</textPath></text>
   <text class="lbl s-plan" fill="#FFFFFF"><textPath href="#aRight" xlink:href="#aRight" startOffset="50%" text-anchor="middle">Plan</textPath></text>
   <text class="lbl s-prevent" fill="#FFFFFF"><textPath href="#aBottom" xlink:href="#aBottom" startOffset="50%" text-anchor="middle">Prevent</textPath></text>
   <text class="lbl s-improve" fill="#151632"><textPath href="#aLeft" xlink:href="#aLeft" startOffset="50%" text-anchor="middle">Improve</textPath></text>
   <g filter="url(#soft)">
     <circle cx="73.0" cy="73.0" r="17" fill="#FFFFFF"/>
-    <circle class="qb s-grounding" cx="73.0" cy="73.0" r="14" fill="#16214E"/>
+    <circle class="qb s-ground" cx="73.0" cy="73.0" r="14" fill="#16214E"/>
     <circle cx="247.0" cy="73.0" r="17" fill="#FFFFFF"/>
     <circle class="qb s-plan" cx="247.0" cy="73.0" r="14" fill="#183D98"/>
     <circle cx="247.0" cy="247.0" r="17" fill="#FFFFFF"/>
@@ -49,7 +49,7 @@ four stages there are fifteen of those.
     <circle cx="73.0" cy="247.0" r="17" fill="#FFFFFF"/>
     <circle class="qb s-improve" cx="73.0" cy="247.0" r="14" fill="#F8C716"/>
   </g>
-  <text class="num qn s-grounding" x="73.0" y="76.3" text-anchor="middle" fill="#FFFFFF">1</text>
+  <text class="num qn s-ground" x="73.0" y="76.3" text-anchor="middle" fill="#FFFFFF">1</text>
   <text class="num qn s-plan" x="247.0" y="76.3" text-anchor="middle" fill="#FFFFFF">2</text>
   <text class="num qn s-prevent" x="247.0" y="250.3" text-anchor="middle" fill="#FFFFFF">3</text>
   <text class="num qn s-improve" x="73.0" y="250.3" text-anchor="middle" fill="#151632">4</text>
