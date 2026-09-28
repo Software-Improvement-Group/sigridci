@@ -5,7 +5,7 @@ redirect_from:
 
 # Installing Sigrid Axis
 
-Sigrid Axis consists of the Sigrid Axis MCP server and a set of skills. Both follow open standards, so Axis works in any agentic tool that supports MCP and skills. Installing it means connecting the MCP server and installing the skills. In Claude Code, a plugin does both in one step. This page also covers upgrading from the Sigrid AI Toolkit.
+Sigrid Axis consists of the Sigrid Axis MCP server and a set of skills. Both follow open standards, so Axis works in any agentic tool that supports MCP and skills. Installing it means connecting the MCP server and installing the skills. In Claude Code, a plugin does both in one step.
 
 ## Prerequisites
 
@@ -201,7 +201,7 @@ Open the settings with the cogwheel icon in the Bob chat window and go to **MCP*
 
 The configuration only validates with the extra outer braces shown here. Save it and check the connection on the settings page.
 
-<!-- Remove this section one release after the Sigrid Axis launch of October 1, 2026. -->
+<!-- Remove this section after the Sigrid Axis launch of October 1, 2026. -->
 ## Upgrade from the Sigrid AI Toolkit
 
 The Claude Code plugin used to be called `sigrid`, installed from the `sigrid-ai-toolkit` marketplace. It is now `axis`, installed from the `sigrid` marketplace, and a few things changed along with the name.
