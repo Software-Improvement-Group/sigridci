@@ -1,7 +1,5 @@
 ---
 permalink: /axis/
-redirect_from:
-  - /workflows/agents.html
 ---
 
 # Sigrid Axis
@@ -49,14 +47,7 @@ The [`setup`](skills.md#setup) skill sits outside both. It records which Sigrid 
 
 Start with [installing Sigrid Axis](installation.md): connect the MCP server and install the skills in your agentic tool.
 
-Then pick the guide for the job in front of you. Each one follows that job through on a real codebase: what to configure, what a session looks like, and how to check what the agent did.
-
-- [Building with Guardrails](../workflows/agents/building-with-guardrails.md) puts Guardrails in the feature loop, so the agent checks each file it writes before you see the diff.
-- [Preventing architecture drift](../workflows/agents/preventing-architecture-drift.md) checks an agent's diff against Sigrid's measured dependency graph before it merges.
-- [Reducing technical debt](../workflows/agents/reducing-technical-debt.md) works through the refactoring candidates that carry the most weight in your maintainability rating.
-- [Triaging security and reliability findings](../workflows/agents/triaging-security-and-reliability-findings.md) classifies a findings backlog against how your system is deployed, records a rationale for every decision, and fixes what should be fixed.
-
-These are workflows we run ourselves. They do not cover everything Axis can do, so for the rest, see the [skills reference](skills.md), the [MCP tools reference](tools.md), and [configuration](configuration.md).
+Then pick the [guide](../workflows/agents/README.md) for the job in front of you. Each one follows that job through on a real codebase: what to configure, what a session looks like, and how to check what the agent did.
 
 ## LLM model selection
 

@@ -106,6 +106,9 @@ At the end, the skill lists every finding that needs a person, with its blocker,
 
 For each finding, `autofix` checks that the code still matches the finding, writes the fix, runs Guardrails on the changed code, and commits it on its own, with the message `Fix: <title> (Sigrid <id>)`. A fix that turns out to hit one of the blockers above is reverted, and the finding goes to `REFINED` with the blocker as its remark.
 
+Run triage on a reasoning model. Every classification is a judgment about how your system actually works, such as whether an input is reachable from outside or already validated upstream, and that is the step the evidence rule depends on. The skill does not pin a model for its per-finding subagents, so they run on your session's model. `autofix` is a separate command, so you can switch to a mid-sized model for it: once a finding is decided, writing the fix is procedural work, and the fixes that need a design decision are already blocked and sent to a person. See [LLM model selection](../../axis/README.md#llm-model-selection).
+{: .model }
+
 ### Skip the confirmations
 
 Once the context file has survived a couple of rounds, you can let the same scope run without the confirmations. Only you can waive them, by asking explicitly. The skill never assumes a waiver because a run is unattended or scripted:
