@@ -20,8 +20,8 @@ This guide walks through working down that backlog with two skills. `triage-find
 You need the following before you start:
 
 - A system published to Sigrid, with security or reliability findings waiting on it.
-- The [Claude Code plugin](../installation.md#install-the-claude-code-plugin), or another agentic tool with the skills and the Sigrid Axis MCP server.
-- A [Sigrid profile](../configuration.md#the-sigrid-profile) in the repository, written with `/setup`, so you are not naming the customer and system on every run.
+- The [Claude Code plugin](../../axis/installation.md#install-the-claude-code-plugin), or another agentic tool with the skills and the Sigrid Axis MCP server.
+- A [Sigrid profile](../../axis/configuration.md#the-sigrid-profile) in the repository, written with `/setup`, so you are not naming the customer and system on every run.
 
 ## Why this is worth doing
 
@@ -49,7 +49,7 @@ Decide which security model you triage against before you start, because it chan
 
 The skill asks you about context it cannot find in the code. That works for a handful of findings and gets tedious for a hundred, so write the facts down once.
 
-We recommend a `SECURITY-CONTEXT.md` file in the repository, next to the code it describes. That way it is reviewable in a merge request, it changes along with the architecture, and it goes stale where you can see it. Point to it from the **Customizing behavior** section of your [profile](../configuration.md#customize-how-the-skills-behave), or put the same content in `CLAUDE.md` or `AGENTS.md`, which the agent already reads. Here is an example:
+We recommend a `SECURITY-CONTEXT.md` file in the repository, next to the code it describes. That way it is reviewable in a merge request, it changes along with the architecture, and it goes stale where you can see it. Point to it from the **Customizing behavior** section of your [profile](../../axis/configuration.md#customize-how-the-skills-behave), or put the same content in `CLAUDE.md` or `AGENTS.md`, which the agent already reads. Here is an example:
 
 ```markdown
 # Security context
@@ -98,7 +98,7 @@ A false positive or an accepted risk needs evidence: a file, a line, and one sen
 
 The skill writes `WILL_FIX` and `REFINED` to Sigrid straight away. It proposes each false positive and accepted risk to you with its evidence, and writes it only after you confirm. Your job is to say no to the wrong ones, and to notice why they were wrong. Usually it is a missing fact rather than bad reasoning, and the fix goes in `SECURITY-CONTEXT.md`. Expect to reject something on a first run because the context was incomplete.
 
-At the end, the skill lists every finding that needs a person, with its blocker, and offers a [handover](../skills.md#handovers) for the findings to fix. Take it, and fix them:
+At the end, the skill lists every finding that needs a person, with its blocker, and offers a [handover](../../axis/skills.md#handovers) for the findings to fix. Take it, and fix them:
 
 ```
 /autofix security
@@ -154,5 +154,5 @@ Keep these in mind across runs:
 For the guides and references around this one, see:
 
 - [Reducing technical debt with auto-fix agents](reducing-technical-debt.md) for maintainability, where the plan comes from ratings instead of a list
-- [Skills reference](../skills.md#triage-findings) for `triage-findings`, including open source findings
-- [MCP tools reference](../tools.md#findings) for the finding statuses and the tools behind the skills
+- [Skills reference](../../axis/skills.md#triage-findings) for `triage-findings`, including open source findings
+- [MCP tools reference](../../axis/tools.md#findings) for the finding statuses and the tools behind the skills

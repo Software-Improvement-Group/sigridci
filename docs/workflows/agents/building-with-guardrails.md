@@ -1,13 +1,8 @@
----
-redirect_from:
-  - /workflows/agents/building-with-guardrails.html
----
-
 # Building with an AI coding agent and Sigrid Guardrails
 
 <div><a href="{% link axis/README.md %}#the-agentic-lifecycle">{% include axis/lifecycle-strip.md active="prevent" %}</a></div>
 
-This guide walks through putting [Guardrails](../guardrails.md) in your coding agent's build loop, so the agent checks the maintainability and security of every file it writes and fixes what it finds before you see the diff.
+This guide walks through putting [Guardrails](../../axis/guardrails.md) in your coding agent's build loop, so the agent checks the maintainability and security of every file it writes and fixes what it finds before you see the diff.
 
 Guardrails gives the agent the same analysis Sigrid Core runs, on the files it just changed, while it is still working on them. The checks are deterministic: the same metrics against the same thresholds every time, decided by Sigrid's quality model and not by a model's opinion of its own output.
 
@@ -15,13 +10,13 @@ Guided runs come out measurably better. We built the same system 20 times with C
 
 Use it whenever an agent writes code. How closely you read the result is a separate question from whether the code has to be secure and maintainable: anything you deploy, or come back to in six months, has to be both. If you read every diff, Guardrails saves you the review comments you were about to write. If you are vibe coding, it is the only thing between you and whatever the agent happened to produce.
 
-For clearing out technical debt that is already there, which is a different job with a different setup, see [reducing technical debt](../autofix-agents/reducing-technical-debt.md).
+For clearing out technical debt that is already there, which is a different job with a different setup, see [reducing technical debt](reducing-technical-debt.md).
 
 ## Prerequisites
 
 - An agentic tool that supports MCP. The examples below use Claude Code.
 - A Sigrid API token, which the plugin asks for once.
-- A codebase in one of the [supported technologies](../guardrails.md#supported-technologies).
+- A codebase in one of the [supported technologies](../../axis/guardrails.md#supported-technologies).
 
 Guardrails reads the code in your working tree, so the system does not have to be published to Sigrid first and the code does not have to be committed.
 
@@ -45,9 +40,9 @@ The plugin configures the Sigrid Axis MCP server and the skills together:
 
 {% include axis/plugin-install.md %}
 
-The plugin asks for your Sigrid API token once and stores it in your system keychain. See [authentication tokens](../../organization-integration/authentication-tokens.md) for how to get one. In another agentic tool, [connect the MCP server](../installation.md#connect-the-mcp-server-by-hand) instead. You need at least the `guardrails.quality_check` tool.
+The plugin asks for your Sigrid API token once and stores it in your system keychain. See [authentication tokens](../../organization-integration/authentication-tokens.md) for how to get one. In another agentic tool, [connect the MCP server](../../axis/installation.md#connect-the-mcp-server-by-hand) instead. You need at least the `guardrails.quality_check` tool.
 
-The plugin's hook adds an instruction to every prompt you send: before reporting a task done, run the Guardrails check on the production code you changed, and fix the maintainability findings, leaving one only when the code already honors the principles. See [the exact text](../guardrails.md#claude-code). Other tools need that trigger added by hand; see [set up the quality gate](../guardrails.md#other-tools).
+The plugin's hook adds an instruction to every prompt you send: before reporting a task done, run the Guardrails check on the production code you changed, and fix the maintainability findings, leaving one only when the code already honors the principles. See [the exact text](../../axis/guardrails.md#claude-code). Other tools need that trigger added by hand; see [set up the quality gate](../../axis/guardrails.md#other-tools).
 
 Check it works before you rely on it:
 
@@ -71,7 +66,7 @@ To add your codebase's own conventions, such as the design patterns it follows, 
 
 An instruction is followed most of the time, and the agent is the one who decides it has finished, so we would verify the gate for the first few sessions in a new repository. Where it really matters, back it with something mechanical: [Sigrid CI](../../sigridci-integration/using-sigridci.md) in a pre-commit hook or in your pipeline runs the same checks whatever produced the code.
 
-Use whatever you are already coding with. Handing the checks to a cheaper subagent looks like a saving, since `guardrails.quality_check` is deterministic and its output is a plain list. The fix is the actual work though, and it is the least self-contained step here: it needs the file, the class around it, and the reason the code is shaped the way it is. A subagent starts with none of that, so it reads the file again to catch up, and then either makes a change you did not want or invents a reason for leaving a finding alone. Both cost you more than the cheaper model saves. See [LLM model selection](../README.md#llm-model-selection).
+Use whatever you are already coding with. Handing the checks to a cheaper subagent looks like a saving, since `guardrails.quality_check` is deterministic and its output is a plain list. The fix is the actual work though, and it is the least self-contained step here: it needs the file, the class around it, and the reason the code is shaped the way it is. A subagent starts with none of that, so it reads the file again to catch up, and then either makes a change you did not want or invents a reason for leaving a finding alone. Both cost you more than the cheaper model saves. See [LLM model selection](../../axis/README.md#llm-model-selection).
 {: .model }
 
 ## What a session looks like
@@ -113,6 +108,6 @@ Which files did you run the quality check on? List them against the files you ch
 Guardrails only ever looks at the files in front of it. Architecture drift, vulnerable dependencies, and duplication spread across files need the analysis of the whole system, which is what `change-feedback` runs before you push. From there:
 
 - [Preventing architecture drift](preventing-architecture-drift.md) for the structural check that runs alongside this one
-- [Reducing technical debt](../autofix-agents/reducing-technical-debt.md) for the debt that is already there
-- [Triaging security and reliability findings](../autofix-agents/triaging-security-and-reliability-findings.md) for the findings Sigrid already knows about
-- [Guardrails](../guardrails.md) for supported technologies and the tool itself
+- [Reducing technical debt](reducing-technical-debt.md) for the debt that is already there
+- [Triaging security and reliability findings](triaging-security-and-reliability-findings.md) for the findings Sigrid already knows about
+- [Guardrails](../../axis/guardrails.md) for supported technologies and the tool itself

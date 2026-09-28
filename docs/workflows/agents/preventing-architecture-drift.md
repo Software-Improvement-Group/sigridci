@@ -1,23 +1,18 @@
----
-redirect_from:
-  - /workflows/agents/preventing-architecture-drift.html
----
-
 # Preventing architecture drift with an AI coding agent
 
 <div><a href="{% link axis/README.md %}#the-agentic-lifecycle">{% include axis/lifecycle-strip.md active="ground,prevent" %}</a></div>
 
 This guide walks through checking an agent's diff for architecture drift before it merges: a new call across a directory boundary, a facade bypassed on the way to a database, a dependency cycle the change would close. The `change-feedback architecture` skill grounds that check in Sigrid's measured dependency graph, so the verdict comes from how your system is actually wired today and not from the few files the agent happened to open.
 
-Run it when a change touches more than one directory, on your own work or on a branch you are about to merge for someone else. It checks the diff and nothing more. [Guardrails](building-with-guardrails.md) covers each file as the agent writes it, and structure is exactly what a per-file check cannot see. For an audit of the coupling across the whole system, see [reducing technical debt](../autofix-agents/reducing-technical-debt.md), and you can always open the graph yourself in the [architecture explorer](../../capabilities/architecture-quality.md).
+Run it when a change touches more than one directory, on your own work or on a branch you are about to merge for someone else. It checks the diff and nothing more. [Guardrails](building-with-guardrails.md) covers each file as the agent writes it, and structure is exactly what a per-file check cannot see. For an audit of the coupling across the whole system, see [reducing technical debt](reducing-technical-debt.md), and you can always open the graph yourself in the [architecture explorer](../../capabilities/architecture-quality.md).
 
 ## Prerequisites
 
 You need the following before you start:
 
 - A system published to Sigrid, so Sigrid Core has analyzed its architecture.
-- The [Claude Code plugin](../installation.md#install-the-claude-code-plugin), or another agentic tool with the skills and the Sigrid Axis MCP server. The check uses `architecture.get_external_dependencies`.
-- A [Sigrid profile](../configuration.md#the-sigrid-profile) in the repository, with your baseline branch.
+- The [Claude Code plugin](../../axis/installation.md#install-the-claude-code-plugin), or another agentic tool with the skills and the Sigrid Axis MCP server. The check uses `architecture.get_external_dependencies`.
+- A [Sigrid profile](../../axis/configuration.md#the-sigrid-profile) in the repository, with your baseline branch.
 - A feature branch, or a staged or unstaged change, to check.
 
 ## Why the agent needs help
@@ -44,7 +39,7 @@ Install the plugin, then run `setup` in the repository:
 
 {% include axis/plugin-install.md setup=true %}
 
-`setup` writes `.sigrid/profile.md`, which records the Sigrid system this repository maps to and its baseline branch. The check diffs against that branch, and looks up your system in the graph without you naming a customer and a system every time. See [configuration](../configuration.md#the-sigrid-profile) for what the profile contains.
+`setup` writes `.sigrid/profile.md`, which records the Sigrid system this repository maps to and its baseline branch. The check diffs against that branch, and looks up your system in the graph without you naming a customer and a system every time. See [configuration](../../axis/configuration.md#the-sigrid-profile) for what the profile contains.
 
 ### Ground the agent before it writes
 
@@ -54,7 +49,7 @@ The check catches drift after the fact. The `architecture-explorer` agent can ke
 /explore-architecture How does the reporting package reach the database today?
 ```
 
-The plugin nudges your agent to use `architecture-explorer` for questions like that one by itself. See [`explore-architecture`](../skills.md#explore-architecture).
+The plugin nudges your agent to use `architecture-explorer` for questions like that one by itself. See [`explore-architecture`](../../axis/skills.md#explore-architecture).
 
 ## What a session looks like
 
@@ -98,5 +93,5 @@ An instruction is followed most of the time, and the agent is the one deciding w
 For the checks and tools around this one, see:
 
 - [Building with an AI coding agent and Sigrid Guardrails](building-with-guardrails.md) for the file-level check that runs alongside this one
-- [Reducing technical debt with auto-fix agents](../autofix-agents/reducing-technical-debt.md) for the coupling across the whole system, which this check does not replace
-- [MCP tools reference](../tools.md#architecture) for the architecture tools used here
+- [Reducing technical debt with auto-fix agents](reducing-technical-debt.md) for the coupling across the whole system, which this check does not replace
+- [MCP tools reference](../../axis/tools.md#architecture) for the architecture tools used here
