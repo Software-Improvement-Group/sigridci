@@ -47,7 +47,7 @@ Setup only reads the repository and writes the profile. It never changes your co
 
 Gives you Sigrid's verdict on your local changes before you commit or push, without starting a remote pipeline or publishing anything to Sigrid. With no argument, it runs maintainability, open-source, and security.
 
-- **Maintainability, open-source, and security** run [Sigrid CI](../sigridci-integration/using-sigridci.md) on your working tree, in one run for all three. This needs Python 3.7 or later, network access to `github.com` to fetch the Sigrid CI scripts, and your token in a `SIGRID_CI_TOKEN` or `SIGRID_TOKEN` environment variable. A run can take up to 30 minutes.
+- **Maintainability, open-source, and security** run [Sigrid CI](../sigridci-integration/using-sigridci.md) on your working tree, in one run for all three. This needs Python 3.9 or later, network access to `github.com` to fetch the Sigrid CI scripts, and your token in a `SIGRID_CI_TOKEN` or `SIGRID_TOKEN` environment variable. A run can take up to 30 minutes.
 - **Architecture** finds the new references across directories in your diff, by default against the baseline branch, and checks each one against Sigrid's measured dependency graph. A reference that matches an existing dependency is clean. One that adds a dependency, closes a cycle, or goes around a facade is drift, and the report names the file it should route through instead. See [preventing architecture drift](../workflows/agents/preventing-architecture-drift.md).
 
 ### `explore-architecture`

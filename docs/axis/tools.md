@@ -1,6 +1,6 @@
 # Sigrid Axis MCP tools reference
 
-The Sigrid Axis MCP server gives an agent twelve tools: one Guardrails check that reads the code in your working tree, and eleven tools that read what Sigrid Core found in a published system or write triage decisions back to it.
+The Sigrid Axis MCP server gives an agent one Guardrails check that reads the code in your working tree, and tools that read what Sigrid Core found in a published system or write triage decisions back to it.
 
 The skills call these tools for you. You need this page when you prompt the tools directly, restrict which ones a session sees, or debug a connection. For connecting the server, see [installation](installation.md).
 
