@@ -44,7 +44,7 @@ Install the plugin, then run `setup` in the repository:
 
 `setup` is easy to skip, and it is the step that matters most here. It writes `.sigrid/profile.md`, which records the Sigrid system this repository maps to, the baseline branch Sigrid analyzes, and how your team names branches. The skills read it at the start of every run, so you answer these questions once instead of every session. Commit the file, so your team shares it. See [configuration](../../axis/configuration.md#the-sigrid-profile) for what it contains.
 
-In another agentic tool, [install the skills and connect the MCP server](../../axis/installation.md#use-the-skills-in-other-agentic-tools) instead.
+In another agentic tool, [install the skills and connect the MCP server](../../axis/installation.md#install-in-other-agentic-tools) instead.
 
 ### 2. Know which branch you end up on
 

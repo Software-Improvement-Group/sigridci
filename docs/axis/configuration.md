@@ -26,6 +26,8 @@ To get a token, see [authentication tokens](../organization-integration/authenti
 
 One skill needs a second copy of the token. The [`change-feedback`](skills.md#change-feedback) skill runs Sigrid CI on your machine, and Sigrid CI cannot read the keychain, so it reads a `SIGRID_CI_TOKEN` or `SIGRID_TOKEN` environment variable that you export yourself.
 
+In other agentic tools, the token goes wherever the tool keeps its MCP configuration. Most of them can read it from the `SIGRID_TOKEN` variable, which then serves `change-feedback` as well. See [connect the MCP server by hand](installation.md#connect-the-mcp-server-by-hand).
+
 ## The Sigrid profile
 
 The profile gives the skills the context they need to answer for your repository instead of in general terms: the Sigrid customer and system, the branch Sigrid analyzes, where the source code starts, and how your team works. Every skill reads it at the start of a run.

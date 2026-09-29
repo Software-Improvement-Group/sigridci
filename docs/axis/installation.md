@@ -38,46 +38,204 @@ A clean file comes back with no findings, and that is a pass. See [configuration
 The plugin connects to `sigrid-says.com` only. For Sigrid On-Premise, see [connecting an AI coding assistant](../organization-integration/onpremise-mcp.md#connecting-an-ai-coding-assistant).
 {: .attention }
 
-## Use the skills in other agentic tools
+## Install in other agentic tools
 
-The skills are plain `SKILL.md` files, the open format that most agentic tools read. You can find them in the `axis` directory of the [agent-integrations](https://github.com/Software-Improvement-Group/agent-integrations) repository. To use them in another tool:
+Outside Claude Code, you set up what the plugin would install for you:
 
-1. Connect the Sigrid Axis MCP server by hand, as described below.
-2. Install the skills the way your tool installs skills.
+1. [Connect the MCP server by hand](#connect-the-mcp-server-by-hand).
+2. [Install the skills](#install-the-skills).
 3. Run `setup`, or write `.sigrid/profile.md` yourself, to record your Sigrid system and change how the skills behave in your repository. See [the Sigrid profile](configuration.md#the-sigrid-profile).
 4. [Add the Guardrails instruction](#add-the-guardrails-instruction) to your repository.
 
+### Install the skills
+
+Install the skills with the [skills](https://github.com/vercel-labs/skills) command line tool, which needs Node. Run this in the root of your repository:
+
+```bash
+npx skills add Software-Improvement-Group/agent-integrations --skill '*'
+```
+
+It asks which of your agentic tools to install the skills for, and `--skill '*'` installs every skill. Keep them together, because they hand work to one another: `autofix`, for example, reads the plan that `diagnose` writes. Run `npx skills update` to get new versions.
+
 ## Add the Guardrails instruction
 
-Outside the Claude Code plugin, this step is required for Guardrails. The agent does not call the Guardrails check unless something tells it to, and in Claude Code the plugin's hook does that. Every other tool needs the instruction in its context file.
+The agent only calls the Guardrails check when something tells it to. In Claude Code, the plugin's hook does that. Everywhere else, including Claude Code without the plugin, this instruction does.
 {: .attention }
 
 Put this text in `AGENTS.md` at the root of your repository, which Cursor, GitHub Copilot, Devin, and most other agentic tools read at the start of every session. It is the same text the Claude Code hook adds:
 
 {% include axis/quality-gate-prompt.md %}
 
-This also applies when you connect the MCP server by hand in Claude Code, without the plugin, but there the file is `CLAUDE.md`. To adjust the instruction to your codebase, see [set up the quality gate](guardrails.md#set-up-the-quality-gate).
+In Claude Code without the plugin, put it in `CLAUDE.md`. To adjust the instruction to your codebase, see [set up the quality gate](guardrails.md#set-up-the-quality-gate).
 
 ## Connect the MCP server by hand
 
-Every agentic tool that supports MCP can connect to the Sigrid Axis MCP server directly. The snippets below name the server `axis`. Replace `<your_sigrid_token>` with your Sigrid API token in each of them.
+Every agentic tool that supports MCP can connect to the Sigrid Axis MCP server at `https://sigrid-says.com/mcp`. The snippets below name the server `axis` and send your Sigrid API token in an `Authorization` header.
 
-| Tool | Connection type | Where to configure it |
-| --- | --- | --- |
-| Cursor | Direct HTTP | MCP & Integrations panel |
-| VS Code with GitHub Copilot | Proxy (`mcp-remote`) | MCP settings |
-| Visual Studio with GitHub Copilot | Direct HTTP | Agent mode, add MCP server |
-| Devin Desktop | Direct HTTP | MCP settings |
-| Claude Code | Direct HTTP | CLI command |
-| OpenCode | Direct HTTP | `opencode.json` |
-| IntelliJ, PyCharm, WebStorm | Proxy (`mcp-remote`) | AI Assistant MCP settings |
-| IBM Bob | Direct HTTP | Bob settings, MCP |
+Most tools can read the token from an environment variable, so it never ends up in a configuration file you might commit. Set `SIGRID_TOKEN` once, in your shell profile on macOS and Linux:
 
-A direct HTTP connection is the simplest: the tool talks to the MCP server itself. The proxy connection runs `npx mcp-remote` locally for tools that cannot connect over HTTP directly, so it needs Node. If `npx` cannot find it, install it globally first with `npm install -g mcp-remote`.
+```bash
+export SIGRID_TOKEN=<your_sigrid_token>
+```
+
+On Windows, run `setx SIGRID_TOKEN <your_sigrid_token>`. Restart the tool afterwards, so it picks up the variable. The [`change-feedback`](skills.md#change-feedback) skill reads the same variable when it runs Sigrid CI. For the tools that can't read a variable, you paste the token into the configuration. Keep that file out of version control.
+
+### VS Code
+
+VS Code with GitHub Copilot doesn't read environment variables in headers yet, so this configuration asks for the token once and stores it securely. Put it in `.vscode/mcp.json` in your repository, or run **MCP: Open User Configuration** from the command palette to add it for your user account:
+
+```json
+{
+  "inputs": [
+    {
+      "type": "promptString",
+      "id": "sigrid-token",
+      "description": "Sigrid API token",
+      "password": true
+    }
+  ],
+  "servers": {
+    "axis": {
+      "type": "http",
+      "url": "https://sigrid-says.com/mcp",
+      "headers": {
+        "Authorization": "Bearer ${input:sigrid-token}"
+      }
+    }
+  }
+}
+```
+
+VS Code asks for the token the first time it starts the server. Check that `axis` appears in the tools list of the chat view.
+
+### Visual Studio
+
+To connect Visual Studio with GitHub Copilot:
+
+1. Connect your GitHub account and open GitHub Copilot.
+2. Below the chat box, at the bottom left, select **Agent** mode.
+3. Click the **+** button to add an MCP server. Enter the name `axis` and the URL `https://sigrid-says.com/mcp`.
+4. Choose **Additional headers** and add `Authorization: Bearer <your_sigrid_token>`.
+5. Save and close the window. If the token is valid, the server appears in the tools list.
+
+### GitHub Copilot in JetBrains IDEs
+
+In IntelliJ, PyCharm, WebStorm, and the other JetBrains IDEs, open Copilot Chat, click the tools icon, and choose **Add MCP Tools**. Add this configuration, which puts the header under `requestInit`:
+
+```json
+{
+  "servers": {
+    "axis": {
+      "url": "https://sigrid-says.com/mcp",
+      "requestInit": {
+        "headers": {
+          "Authorization": "Bearer <your_sigrid_token>"
+        }
+      }
+    }
+  }
+}
+```
+
+### GitHub Copilot CLI
+
+Add the server with this command. Your shell fills in the token, and the CLI stores it in `~/.copilot/mcp-config.json`:
+
+```bash
+copilot mcp add --transport http --header "Authorization: Bearer $SIGRID_TOKEN" axis https://sigrid-says.com/mcp
+```
+
+### Claude Code
+
+Without the plugin, add the server with this command and restart Claude Code:
+
+```bash
+claude mcp add --transport http --scope user axis https://sigrid-says.com/mcp --header "Authorization: Bearer $SIGRID_TOKEN"
+```
+
+This gives you the MCP tools only. The skills and the Guardrails hook come with the [plugin](#install-the-claude-code-plugin).
 
 ### Cursor
 
-Open the **MCP & Integrations** panel in the left sidebar and paste this configuration:
+Put this in `.cursor/mcp.json` in your repository, or in `~/.cursor/mcp.json` for your user account. The Cursor CLI reads the same files:
+
+```json
+{
+  "mcpServers": {
+    "axis": {
+      "url": "https://sigrid-says.com/mcp",
+      "headers": {
+        "Authorization": "Bearer ${env:SIGRID_TOKEN}"
+      }
+    }
+  }
+}
+```
+
+### OpenAI Codex
+
+The Codex CLI, IDE extension, and app share one configuration. Add the server with this command:
+
+```bash
+codex mcp add axis --url https://sigrid-says.com/mcp --bearer-token-env-var SIGRID_TOKEN
+```
+
+The command writes this to `~/.codex/config.toml`, which you can also edit by hand:
+
+```toml
+[mcp_servers.axis]
+url = "https://sigrid-says.com/mcp"
+bearer_token_env_var = "SIGRID_TOKEN"
+```
+
+### Gemini CLI
+
+Add the server for your user account with this command. Gemini Code Assist's agent mode reads the same configuration:
+
+```bash
+gemini mcp add --transport http --scope user --header "Authorization: Bearer $SIGRID_TOKEN" axis https://sigrid-says.com/mcp
+```
+
+To write it in `~/.gemini/settings.json` or `.gemini/settings.json` by hand, use `httpUrl`. With `url`, Gemini CLI connects over the older SSE transport:
+
+```json
+{
+  "mcpServers": {
+    "axis": {
+      "httpUrl": "https://sigrid-says.com/mcp",
+      "headers": {
+        "Authorization": "Bearer $SIGRID_TOKEN"
+      }
+    }
+  }
+}
+```
+
+### JetBrains AI Assistant
+
+Go to **Settings > Tools > AI Assistant > Model Context Protocol (MCP)** and add this configuration. It runs the `mcp-remote` proxy, so install Node first:
+
+```json
+{
+  "mcpServers": {
+    "axis": {
+      "command": "npx",
+      "args": [
+        "mcp-remote",
+        "https://sigrid-says.com/mcp",
+        "--header",
+        "Authorization: Bearer <your_sigrid_token>"
+      ]
+    }
+  }
+}
+```
+
+If `npx` can't find the proxy, install it globally first with `npm install -g mcp-remote`.
+
+### Junie
+
+The Junie plugin and the Junie CLI share one configuration. Put this in `~/.junie/mcp/mcp.json` for your user account:
 
 ```json
 {
@@ -92,45 +250,9 @@ Open the **MCP & Integrations** panel in the left sidebar and paste this configu
 }
 ```
 
-### VS Code
+### Google Antigravity
 
-To connect VS Code with GitHub Copilot:
-
-1. Install Node, which the `npx` command needs.
-2. Install the GitHub Copilot extension and connect your GitHub account.
-3. Click the settings icon at the bottom left, select **Profiles**, and click **MCP Servers**. If VS Code asks to create a new file, say yes.
-4. Add the configuration below, save, and check that the server appears in the tools list.
-
-```json
-{
-  "servers": {
-    "axis": {
-      "command": "npx",
-      "args": [
-        "mcp-remote",
-        "https://sigrid-says.com/mcp",
-        "--header",
-        "Authorization: Bearer <your_sigrid_token>",
-        "--allow-http"
-      ]
-    }
-  }
-}
-```
-
-### Visual Studio
-
-To connect Visual Studio with GitHub Copilot:
-
-1. Connect your GitHub account and open GitHub Copilot.
-2. Below the chat box, at the bottom left, select **Agent** mode.
-3. Click the **+** button to add an MCP server. Enter the name `axis` and the URL `https://sigrid-says.com/mcp`.
-4. Choose **Additional headers** and add `Authorization: Bearer <your_sigrid_token>`.
-5. Save and close the window. If the token is valid, the server appears in the tools list.
-
-### Devin Desktop
-
-Open the MCP settings, add this configuration, and restart Devin Desktop. The URL key has to be `serverUrl`:
+The Antigravity editor and CLI share one configuration. Put this in `~/.gemini/config/mcp_config.json`. Antigravity only accepts the `serverUrl` key, not `url`:
 
 ```json
 {
@@ -145,25 +267,70 @@ Open the MCP settings, add this configuration, and restart Devin Desktop. The UR
 }
 ```
 
-### Claude Code
-
-Without the plugin, add the server with this command and restart Claude Code:
-
-```bash
-claude mcp add --transport http axis https://sigrid-says.com/mcp --header "Authorization: Bearer <your_sigrid_token>"
-```
-
-This gives you the MCP tools only. The skills and the Guardrails hook come with the [plugin](#install-the-claude-code-plugin), so without it, [add the Guardrails instruction](#add-the-guardrails-instruction) to `CLAUDE.md` yourself.
-
 ### OpenCode
 
-Create or edit `opencode.json` in your project root, then restart OpenCode:
+Put this in `opencode.json` in your repository, or in `~/.config/opencode/opencode.json` for your user account, then restart OpenCode. OpenCode writes variables as `{env:NAME}`, without a dollar sign:
 
 ```json
 {
   "mcp": {
     "axis": {
       "type": "remote",
+      "url": "https://sigrid-says.com/mcp",
+      "headers": {
+        "Authorization": "Bearer {env:SIGRID_TOKEN}"
+      }
+    }
+  }
+}
+```
+
+### Devin Desktop
+
+Devin Desktop, formerly Windsurf, shares its configuration with the Devin CLI. Put this in `~/.config/devin/mcp_config.json` (`%APPDATA%\devin\mcp_config.json` on Windows), or in `.devin/mcp_config.json` in your repository, and restart Devin Desktop:
+
+```json
+{
+  "mcpServers": {
+    "axis": {
+      "url": "https://sigrid-says.com/mcp",
+      "headers": {
+        "Authorization": "Bearer ${env:SIGRID_TOKEN}"
+      }
+    }
+  }
+}
+```
+
+If you still use the older Cascade agent, the URL key has to be `serverUrl`.
+
+### Kiro
+
+Put this in `.kiro/settings/mcp.json` in your repository, or in `~/.kiro/settings/mcp.json` for your user account:
+
+```json
+{
+  "mcpServers": {
+    "axis": {
+      "url": "https://sigrid-says.com/mcp",
+      "headers": {
+        "Authorization": "Bearer ${SIGRID_TOKEN}"
+      }
+    }
+  }
+}
+```
+
+Kiro only fills in variables you approved. Add `SIGRID_TOKEN` to the **Mcp Approved Env Vars** setting, or approve it when Kiro asks.
+
+### Zed
+
+Run **zed: open settings file** and add the server under `context_servers`:
+
+```json
+{
+  "context_servers": {
+    "axis": {
       "url": "https://sigrid-says.com/mcp",
       "headers": {
         "Authorization": "Bearer <your_sigrid_token>"
@@ -173,45 +340,43 @@ Create or edit `opencode.json` in your project root, then restart OpenCode:
 }
 ```
 
-### IntelliJ, PyCharm, and WebStorm
+### Cline
 
-Go to **Tools > AI Assistant > Model Context Protocol (MCP)** and add:
+Open the MCP servers panel in Cline, choose **Configure MCP Servers**, and add:
 
 ```json
-"mcpServers": {
-  "axis": {
-    "command": "npx",
-    "args": [
-      "mcp-remote",
-      "https://sigrid-says.com/mcp",
-      "--header",
-      "Authorization: Bearer <your_sigrid_token>",
-      "--allow-http"
-    ]
+{
+  "mcpServers": {
+    "axis": {
+      "type": "streamableHttp",
+      "url": "https://sigrid-says.com/mcp",
+      "headers": {
+        "Authorization": "Bearer <your_sigrid_token>"
+      }
+    }
   }
 }
 ```
 
 ### IBM Bob
 
-Open the settings with the cogwheel icon in the Bob chat window and go to **MCP**. Configure a global or a project-specific MCP server:
+Open the settings with the cogwheel icon in the Bob chat window and go to **MCP**. Configure a global server, stored in `~/.bob/settings/mcp.json`, or a project server, stored in `.bob/mcp.json`:
 
 ```json
 {
-    "mcpServers":
-    {
-        "axis": {
-            "type": "streamable-http",
-            "url": "https://sigrid-says.com/mcp",
-            "headers": {
-              "Authorization": "Bearer <your_sigrid_token>"
-            }
-        }
+  "mcpServers": {
+    "axis": {
+      "type": "streamable-http",
+      "url": "https://sigrid-says.com/mcp",
+      "headers": {
+        "Authorization": "Bearer <your_sigrid_token>"
+      }
     }
+  }
 }
 ```
 
-The configuration only validates with the extra outer braces shown here. Save it and check the connection on the settings page.
+Save it and check the connection on the settings page. Bob Shell has its own file, `~/.bob/mcp_settings.json`, where the URL key is `httpURL`.
 
 <!-- Remove this section after the Sigrid Axis launch of October 1, 2026. -->
 ## Upgrade from the Sigrid AI Toolkit

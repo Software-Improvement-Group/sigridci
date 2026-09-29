@@ -2,7 +2,7 @@
 
 The Sigrid Axis skills give your agent procedures for working with Sigrid: record your Sigrid system, check a change before you push it, explore the structure of the code, plan what to fix, and fix it as local commits.
 
-The skills are `SKILL.md` files, an open format, so any agentic tool that supports skills can use them; see [installation](installation.md). Every skill reads [the Sigrid profile](configuration.md#the-sigrid-profile) for your customer, system, and conventions, so run `setup` first.
+The skills are `SKILL.md` files, an open format, so any agentic tool that supports skills can use them; see [install in other agentic tools](installation.md#install-in-other-agentic-tools). Every skill reads [the Sigrid profile](configuration.md#the-sigrid-profile) for your customer, system, and conventions, so run `setup` first.
 
 ## Call a skill
 

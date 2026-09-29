@@ -40,7 +40,7 @@ Install the plugin, then run `setup` in the repository:
 
 {% include axis/plugin-install.md setup=true %}
 
-`setup` writes `.sigrid/profile.md` with your Sigrid system and the baseline branch, so you do not have to name them on every run. Commit it, so your team shares it. In another agentic tool, [install the skills and connect the MCP server](../../axis/installation.md#use-the-skills-in-other-agentic-tools) instead.
+`setup` writes `.sigrid/profile.md` with your Sigrid system and the baseline branch, so you do not have to name them on every run. Commit it, so your team shares it. In another agentic tool, [install the skills and connect the MCP server](../../axis/installation.md#install-in-other-agentic-tools) instead.
 
 ### 2. Start from a clean branch with working tests
 
