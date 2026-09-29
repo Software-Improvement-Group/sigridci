@@ -23,7 +23,7 @@ import sys
 import tarfile
 import tempfile
 from pathlib import Path
-from typing import List, Optional
+from typing import Optional
 
 DEFAULT_SIGRIDCI_SCRIPT = Path(__file__).resolve().parent.parent / "sigridci" / "sigridci.py"
 
@@ -137,9 +137,9 @@ def _resolve_optional_file(path_str: str, label: str) -> Path:
     return path
 
 
-def _find_duplicate_names(sources: List[str]) -> List[str]:
+def _find_duplicate_names(sources: list[str]) -> list[str]:
     seen: set = set()
-    duplicates: List[str] = []
+    duplicates: list[str] = []
     for name in (_repo_name_from_source(s) for s in sources):
         if name in seen:
             duplicates.append(name)
@@ -155,7 +155,7 @@ def _copy_yaml_file(src: Path, dest: str) -> None:
 
 def _prepare_source_dir(
     source_dir: str,
-    sources: List[str],
+    sources: list[str],
     sigrid_yaml: Optional[Path],
     sigrid_metadata_yaml: Optional[Path],
 ) -> None:
