@@ -80,7 +80,11 @@ export SIGRID_TOKEN=<your_sigrid_token>
 
 On Windows, run `setx SIGRID_TOKEN <your_sigrid_token>`. Restart the tool afterwards, so it picks up the variable. The [`change-feedback`](skills.md#change-feedback) skill reads the same variable when it runs Sigrid CI. For the tools that can't read a variable, you paste the token into the configuration. Keep that file out of version control.
 
-### VS Code
+Open the section for your tool:
+
+<details name="agent-tool">
+  <summary>VS Code</summary>
+  <div markdown="1" id="vs-code">
 
 VS Code with GitHub Copilot doesn't read environment variables in headers yet, so this configuration asks for the token once and stores it securely. Put it in `.vscode/mcp.json` in your repository, or run **MCP: Open User Configuration** from the command palette to add it for your user account:
 
@@ -108,7 +112,12 @@ VS Code with GitHub Copilot doesn't read environment variables in headers yet, s
 
 VS Code asks for the token the first time it starts the server. Check that `axis` appears in the tools list of the chat view.
 
-### Visual Studio
+  </div>
+</details>
+
+<details name="agent-tool">
+  <summary>Visual Studio</summary>
+  <div markdown="1" id="visual-studio">
 
 To connect Visual Studio with GitHub Copilot:
 
@@ -118,7 +127,12 @@ To connect Visual Studio with GitHub Copilot:
 4. Choose **Additional headers** and add `Authorization: Bearer <your_sigrid_token>`.
 5. Save and close the window. If the token is valid, the server appears in the tools list.
 
-### GitHub Copilot in JetBrains IDEs
+  </div>
+</details>
+
+<details name="agent-tool">
+  <summary>GitHub Copilot in JetBrains IDEs</summary>
+  <div markdown="1" id="github-copilot-in-jetbrains-ides">
 
 In IntelliJ, PyCharm, WebStorm, and the other JetBrains IDEs, open Copilot Chat, click the tools icon, and choose **Add MCP Tools**. Add this configuration, which puts the header under `requestInit`:
 
@@ -137,7 +151,12 @@ In IntelliJ, PyCharm, WebStorm, and the other JetBrains IDEs, open Copilot Chat,
 }
 ```
 
-### GitHub Copilot CLI
+  </div>
+</details>
+
+<details name="agent-tool">
+  <summary>GitHub Copilot CLI</summary>
+  <div markdown="1" id="github-copilot-cli">
 
 Add the server with this command. Your shell fills in the token, and the CLI stores it in `~/.copilot/mcp-config.json`:
 
@@ -145,7 +164,12 @@ Add the server with this command. Your shell fills in the token, and the CLI sto
 copilot mcp add --transport http --header "Authorization: Bearer $SIGRID_TOKEN" axis https://sigrid-says.com/mcp
 ```
 
-### Claude Code
+  </div>
+</details>
+
+<details name="agent-tool">
+  <summary>Claude Code</summary>
+  <div markdown="1" id="claude-code">
 
 Without the plugin, add the server with this command and restart Claude Code:
 
@@ -155,7 +179,12 @@ claude mcp add --transport http --scope user axis https://sigrid-says.com/mcp --
 
 This gives you the MCP tools only. The skills and the Guardrails hook come with the [plugin](#install-the-claude-code-plugin).
 
-### Cursor
+  </div>
+</details>
+
+<details name="agent-tool">
+  <summary>Cursor</summary>
+  <div markdown="1" id="cursor">
 
 Put this in `.cursor/mcp.json` in your repository, or in `~/.cursor/mcp.json` for your user account. The Cursor CLI reads the same files:
 
@@ -172,7 +201,12 @@ Put this in `.cursor/mcp.json` in your repository, or in `~/.cursor/mcp.json` fo
 }
 ```
 
-### OpenAI Codex
+  </div>
+</details>
+
+<details name="agent-tool">
+  <summary>OpenAI Codex</summary>
+  <div markdown="1" id="openai-codex">
 
 The Codex CLI, IDE extension, and app share one configuration. Add the server with this command:
 
@@ -188,7 +222,12 @@ url = "https://sigrid-says.com/mcp"
 bearer_token_env_var = "SIGRID_TOKEN"
 ```
 
-### Gemini CLI
+  </div>
+</details>
+
+<details name="agent-tool">
+  <summary>Gemini CLI</summary>
+  <div markdown="1" id="gemini-cli">
 
 Add the server for your user account with this command. Gemini Code Assist's agent mode reads the same configuration:
 
@@ -211,7 +250,12 @@ To write it in `~/.gemini/settings.json` or `.gemini/settings.json` by hand, use
 }
 ```
 
-### JetBrains AI Assistant
+  </div>
+</details>
+
+<details name="agent-tool">
+  <summary>JetBrains AI Assistant</summary>
+  <div markdown="1" id="jetbrains-ai-assistant">
 
 Go to **Settings > Tools > AI Assistant > Model Context Protocol (MCP)** and add this configuration. It runs the `mcp-remote` proxy, so install Node first:
 
@@ -233,7 +277,12 @@ Go to **Settings > Tools > AI Assistant > Model Context Protocol (MCP)** and add
 
 If `npx` can't find the proxy, install it globally first with `npm install -g mcp-remote`.
 
-### Junie
+  </div>
+</details>
+
+<details name="agent-tool">
+  <summary>Junie</summary>
+  <div markdown="1" id="junie">
 
 The Junie plugin and the Junie CLI share one configuration. Put this in `~/.junie/mcp/mcp.json` for your user account:
 
@@ -250,7 +299,12 @@ The Junie plugin and the Junie CLI share one configuration. Put this in `~/.juni
 }
 ```
 
-### Google Antigravity
+  </div>
+</details>
+
+<details name="agent-tool">
+  <summary>Google Antigravity</summary>
+  <div markdown="1" id="google-antigravity">
 
 The Antigravity editor and CLI share one configuration. Put this in `~/.gemini/config/mcp_config.json`. Antigravity only accepts the `serverUrl` key, not `url`:
 
@@ -267,7 +321,12 @@ The Antigravity editor and CLI share one configuration. Put this in `~/.gemini/c
 }
 ```
 
-### OpenCode
+  </div>
+</details>
+
+<details name="agent-tool">
+  <summary>OpenCode</summary>
+  <div markdown="1" id="opencode">
 
 Put this in `opencode.json` in your repository, or in `~/.config/opencode/opencode.json` for your user account, then restart OpenCode. OpenCode writes variables as `{env:NAME}`, without a dollar sign:
 
@@ -285,7 +344,12 @@ Put this in `opencode.json` in your repository, or in `~/.config/opencode/openco
 }
 ```
 
-### Devin Desktop
+  </div>
+</details>
+
+<details name="agent-tool">
+  <summary>Devin Desktop</summary>
+  <div markdown="1" id="devin-desktop">
 
 Devin Desktop, formerly Windsurf, shares its configuration with the Devin CLI. Put this in `~/.config/devin/mcp_config.json` (`%APPDATA%\devin\mcp_config.json` on Windows), or in `.devin/mcp_config.json` in your repository, and restart Devin Desktop:
 
@@ -304,7 +368,12 @@ Devin Desktop, formerly Windsurf, shares its configuration with the Devin CLI. P
 
 If you still use the older Cascade agent, the URL key has to be `serverUrl`.
 
-### Kiro
+  </div>
+</details>
+
+<details name="agent-tool">
+  <summary>Kiro</summary>
+  <div markdown="1" id="kiro">
 
 Put this in `.kiro/settings/mcp.json` in your repository, or in `~/.kiro/settings/mcp.json` for your user account:
 
@@ -323,7 +392,12 @@ Put this in `.kiro/settings/mcp.json` in your repository, or in `~/.kiro/setting
 
 Kiro only fills in variables you approved. Add `SIGRID_TOKEN` to the **Mcp Approved Env Vars** setting, or approve it when Kiro asks.
 
-### Zed
+  </div>
+</details>
+
+<details name="agent-tool">
+  <summary>Zed</summary>
+  <div markdown="1" id="zed">
 
 Run **zed: open settings file** and add the server under `context_servers`:
 
@@ -340,7 +414,12 @@ Run **zed: open settings file** and add the server under `context_servers`:
 }
 ```
 
-### Cline
+  </div>
+</details>
+
+<details name="agent-tool">
+  <summary>Cline</summary>
+  <div markdown="1" id="cline">
 
 Open the MCP servers panel in Cline, choose **Configure MCP Servers**, and add:
 
@@ -358,7 +437,12 @@ Open the MCP servers panel in Cline, choose **Configure MCP Servers**, and add:
 }
 ```
 
-### IBM Bob
+  </div>
+</details>
+
+<details name="agent-tool">
+  <summary>IBM Bob</summary>
+  <div markdown="1" id="ibm-bob">
 
 Open the settings with the cogwheel icon in the Bob chat window and go to **MCP**. Configure a global server, stored in `~/.bob/settings/mcp.json`, or a project server, stored in `.bob/mcp.json`:
 
@@ -377,6 +461,9 @@ Open the settings with the cogwheel icon in the Bob chat window and go to **MCP*
 ```
 
 Save it and check the connection on the settings page. Bob Shell has its own file, `~/.bob/mcp_settings.json`, where the URL key is `httpURL`.
+
+  </div>
+</details>
 
 <!-- Remove this section after the Sigrid Axis launch of October 1, 2026. -->
 ## Upgrade from the Sigrid AI Toolkit
