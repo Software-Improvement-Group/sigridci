@@ -1,2 +1,9 @@
-languages:
-  - name: "Python"
+# Sigrid scope configuration file
+#
+# You can use this file to customize your Sigrid. If you leave it empty,
+# you will use a default configuration based on Sigrid's knowledge base.
+#
+# See the Sigrid documentation for more information on the available options:
+# https://docs.sigrid-says.com/reference/analysis-scope-configuration.html
+
+version: 1
