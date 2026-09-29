@@ -107,7 +107,7 @@ sigridpublish:
 
 #### Alternative 2b: Download SIG's Sigrid CI Python script
 
-Alternative 2b does not use a Docker image. Instead, the Sigrid CI GitLab jobs download SIG's Sigrid CI Python script directly from GitHub and runs it on your GitLab runner. This requires Github.com to be accessible from your CI environment and Python 3.7 to be available on your GitLab runners.
+Alternative 2b does not use a Docker image. Instead, the Sigrid CI GitLab jobs download SIG's Sigrid CI Python script directly from GitHub and runs it on your GitLab runner. This requires Github.com to be accessible from your CI environment. You also need to ensure [the prerequisites](#prerequisites) are available on your GitLab runners.
 
 Sigrid CI consists of a number of Python-based client scripts, that interact with Sigrid in order to analyze your project's source code and provide feedback based on the results. These client scripts need to be available to your GitLab runners, in order to call the scripts *from* the CI pipeline. 
 

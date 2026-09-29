@@ -16,7 +16,7 @@ import os
 import re
 from dataclasses import dataclass, field
 from enum import Enum
-from typing import List, Literal
+from typing import Literal
 
 from .capability import Capability, OPEN_SOURCE_HEALTH, MAINTAINABILITY
 
@@ -34,8 +34,8 @@ class PublishOptions:
     runMode: RunMode
     sourceDir: str = "."
     subsystem: str = ""
-    excludePatterns: List[str] = field(default_factory=lambda: [])
-    includePatterns: List[str] = field(default_factory=lambda: [])
+    excludePatterns: list[str] = field(default_factory=lambda: [])
+    includePatterns: list[str] = field(default_factory=lambda: [])
     includeHistory: bool = False
     showUploadContents: bool = False
     convert: str = None
@@ -44,7 +44,7 @@ class PublishOptions:
     sigridURL: str = "https://sigrid-says.com"
     feedbackURL: str = "https://docs.sigrid-says.com/landing/feedback.html"
     partner: str = "sig"
-    capabilities: List[Capability] = field(default_factory=lambda: [MAINTAINABILITY, OPEN_SOURCE_HEALTH])
+    capabilities: list[Capability] = field(default_factory=lambda: [MAINTAINABILITY, OPEN_SOURCE_HEALTH])
     ignoreMissingScopeFile: bool = False
     autoOnboarding: bool = True
     inlineResults: bool = False

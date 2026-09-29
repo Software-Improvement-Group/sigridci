@@ -13,7 +13,7 @@
 # limitations under the License.
 
 from dataclasses import dataclass
-from typing import List, Optional
+from typing import Optional
 
 from ..objective import Objective
 
@@ -36,9 +36,9 @@ class Library:
     transitive: bool
     version: str
     latestVersion: str
-    files: List[str]
-    vulnerabilities: List[LibraryVulnerability]
-    licenses: List[str]
+    files: list[str]
+    vulnerabilities: list[LibraryVulnerability]
+    licenses: list[str]
     vulnerabilityRisk: Risk
     licenseRisk: Risk
     fixable: bool
