@@ -5,7 +5,7 @@ redirect_from:
 
 # Installing Sigrid Axis
 
-Sigrid Axis consists of the Sigrid Axis MCP server and a set of skills. Both follow open standards, so Axis works in any agentic tool that supports MCP and skills. Installing it means connecting the MCP server, installing the skills, and [adding the Guardrails instruction](#add-the-guardrails-instruction) to your repository. In Claude Code, a plugin does all three in one step.
+Sigrid Axis consists of the Sigrid Axis MCP server and a set of skills. Both follow open standards, so Axis works in any agentic tool that supports MCP and skills. Installing it means connecting the MCP server, installing the skills, and [adding the Guardrails instruction](#4-add-the-guardrails-instruction) to your repository. In Claude Code, a plugin does all three in one step.
 
 ## Prerequisites
 
@@ -15,60 +15,28 @@ Sigrid Axis consists of the Sigrid Axis MCP server and a set of skills. Both fol
 
 ## Install the Claude Code plugin
 
-In Claude Code, the plugin configures the Sigrid Axis MCP server and the skills together. It also adds a hook that reminds the agent to run the Guardrails check before it reports a task done, so you don't have to add that instruction yourself. Run these commands:
+In Claude Code, one plugin installs the MCP server, the skills, and a hook that reminds the agent to run the Guardrails check. Run these commands:
 
 {% include axis/plugin-install.md setup=true %}
 
-What each one does:
+On first use, Claude Code asks for your Sigrid API token and stores it in your operating system's keychain. The [`setup`](skills.md#setup) skill detects your Sigrid system and writes `.sigrid/profile.md`. Run it once in each repository and commit the file. For changing the token later and for the plugin options, see [configuration](configuration.md).
 
-1. The first command adds the `sigrid` marketplace from the [agent-integrations](https://github.com/Software-Improvement-Group/agent-integrations) repository.
-2. The second installs the `axis` plugin. On first use, Claude Code asks for your Sigrid API token and stores it in your operating system's keychain.
-3. The third runs the [`setup`](skills.md#setup) skill. Run it once in each repository you work in. It detects your Sigrid system from the repository, asks for what it cannot tell, and writes `.sigrid/profile.md`. Commit that file, so your team shares it.
+We would also turn on auto-update: run `/plugin`, go to **Marketplaces**, select **sigrid**, and choose **Enable auto-update**.
 
-We would also turn on auto-update, so you get new skills and fixes without reinstalling: run `/plugin`, go to **Marketplaces**, select **sigrid**, and choose **Enable auto-update**.
-
-To check that the plugin works, ask for a Guardrails check on a file you changed recently:
+To check that it works, ask for a Guardrails check. No findings means a pass:
 
 ```
 Run the Sigrid guardrails quality check on <a file you changed recently>.
 ```
-
-A clean file comes back with no findings, and that is a pass. See [configuration](configuration.md) for changing the token later and for the plugin options.
 
 The plugin connects to `sigrid-says.com` only. For Sigrid On-Premise, see [connecting an AI coding assistant](../organization-integration/onpremise-mcp.md#connecting-an-ai-coding-assistant).
 {: .attention }
 
 ## Install in other agentic tools
 
-Outside Claude Code, you set up what the plugin would install for you:
+Outside Claude Code, you set up what the plugin would install for you, in four steps. The same steps apply to Claude Code without the plugin.
 
-1. [Connect the MCP server by hand](#connect-the-mcp-server-by-hand).
-2. [Install the skills](#install-the-skills).
-3. Run `setup`, or write `.sigrid/profile.md` yourself, to record your Sigrid system and change how the skills behave in your repository. See [the Sigrid profile](configuration.md#the-sigrid-profile).
-4. [Add the Guardrails instruction](#add-the-guardrails-instruction) to your repository.
-
-### Install the skills
-
-Install the skills with the [skills](https://github.com/vercel-labs/skills) command line tool, which needs Node. Run this in the root of your repository:
-
-```bash
-npx skills add Software-Improvement-Group/agent-integrations --skill '*'
-```
-
-It asks which of your agentic tools to install the skills for, and `--skill '*'` installs every skill. Keep them together, because they hand work to one another: `autofix`, for example, reads the plan that `diagnose` writes. Run `npx skills update` to get new versions.
-
-## Add the Guardrails instruction
-
-The agent only calls the Guardrails check when something tells it to. In Claude Code, the plugin's hook does that. Everywhere else, including Claude Code without the plugin, this instruction does.
-{: .attention }
-
-Put this text in `AGENTS.md` at the root of your repository, which Cursor, GitHub Copilot, Devin, and most other agentic tools read at the start of every session. It is the same text the Claude Code hook adds:
-
-{% include axis/quality-gate-prompt.md %}
-
-In Claude Code without the plugin, put it in `CLAUDE.md`. To adjust the instruction to your codebase, see [set up the quality gate](guardrails.md#set-up-the-quality-gate).
-
-## Connect the MCP server by hand
+### 1. Connect the MCP server
 
 Every agentic tool that supports MCP can connect to the Sigrid Axis MCP server at `https://sigrid-says.com/mcp`. The snippets below name the server `axis` and send your Sigrid API token in an `Authorization` header.
 
@@ -464,6 +432,31 @@ Save it and check the connection on the settings page. Bob Shell has its own fil
 
   </div>
 </details>
+
+### 2. Install the skills
+
+The [skills](https://github.com/vercel-labs/skills) command line tool installs them from GitHub, and it needs Node. Run this in the root of your repository:
+
+```bash
+npx skills add Software-Improvement-Group/agent-integrations --skill '*'
+```
+
+It asks which of your agentic tools to install the skills for, and `--skill '*'` installs every skill. Keep them together, because they hand work to one another: `autofix`, for example, reads the plan that `diagnose` writes. Run `npx skills update` to get new versions.
+
+### 3. Set up your repository
+
+Run the [`setup`](skills.md#setup) skill once in each repository. It records your Sigrid system in `.sigrid/profile.md`, which you commit. You can also write that file yourself, and edit it to change how the skills behave in your repository. See [the Sigrid profile](configuration.md#the-sigrid-profile).
+
+### 4. Add the Guardrails instruction
+
+The agent only calls the Guardrails check when something tells it to. In Claude Code, the plugin's hook does that. Everywhere else, including Claude Code without the plugin, this instruction does.
+{: .attention }
+
+Put this text in `AGENTS.md` at the root of your repository, which Cursor, GitHub Copilot, Devin, and most other agentic tools read at the start of every session. It is the same text the Claude Code hook adds:
+
+{% include axis/quality-gate-prompt.md %}
+
+In Claude Code without the plugin, put it in `CLAUDE.md`. To adjust the instruction to your codebase, see [set up the quality gate](guardrails.md#set-up-the-quality-gate).
 
 <!-- Remove this section after the Sigrid Axis launch of October 1, 2026. -->
 ## Upgrade from the Sigrid AI Toolkit

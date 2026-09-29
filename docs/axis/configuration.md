@@ -26,7 +26,7 @@ To get a token, see [authentication tokens](../organization-integration/authenti
 
 One skill needs a second copy of the token. The [`change-feedback`](skills.md#change-feedback) skill runs Sigrid CI on your machine, and Sigrid CI cannot read the keychain, so it reads a `SIGRID_CI_TOKEN` or `SIGRID_TOKEN` environment variable that you export yourself.
 
-In other agentic tools, the token goes wherever the tool keeps its MCP configuration. Most of them can read it from the `SIGRID_TOKEN` variable, which then serves `change-feedback` as well. See [connect the MCP server by hand](installation.md#connect-the-mcp-server-by-hand).
+In other agentic tools, the token goes wherever the tool keeps its MCP configuration. Most of them can read it from the `SIGRID_TOKEN` variable, which then serves `change-feedback` as well. See [connect the MCP server by hand](installation.md#1-connect-the-mcp-server).
 
 ## The Sigrid profile
 
@@ -87,8 +87,8 @@ The skills that plan work write their plan to `.sigrid/handovers/`, next to the 
 
 The Claude Code plugin has a `UserPromptSubmit` hook that adds a short nudge to every prompt you send. It has two options, both on by default:
 
-**Nudge to run guardrails** gives the agent three code principles, and tells it to run the Guardrails check on the production code it changed before it reports a task done, then fix what it finds. It adds the text shown in [add the Guardrails instruction](installation.md#add-the-guardrails-instruction). Turn it off and the agent stops running Guardrails on its own, unless you put that text in `CLAUDE.md`.
+**Nudge to run guardrails** gives the agent three code principles, and tells it to run the Guardrails check on the production code it changed before it reports a task done, then fix what it finds. It adds the text shown in [add the Guardrails instruction](installation.md#4-add-the-guardrails-instruction). Turn it off and the agent stops running Guardrails on its own, unless you put that text in `CLAUDE.md`.
 
 **Nudge to use architecture-explorer** points the agent to the `architecture-explorer` agent instead of the generic Explore subagent for questions about code structure.
 
-To turn one off, run `/plugin`, open **Installed**, select **axis**, and choose **Configure options**. Other agentic tools have no equivalent of this hook, so on those you [add the instruction yourself](installation.md#add-the-guardrails-instruction).
+To turn one off, run `/plugin`, open **Installed**, select **axis**, and choose **Configure options**. Other agentic tools have no equivalent of this hook, so on those you [add the instruction yourself](installation.md#4-add-the-guardrails-instruction).
