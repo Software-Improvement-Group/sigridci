@@ -10,6 +10,8 @@ An agent optimizes for the task you gave it, and it can only check part of that 
 
 Sigrid Core already has those answers. Sigrid Axis puts them inside the agent's loop.
 
+<img src="images/axis/axis-launch-horizontal-banner.png" width="700" />
+
 ## Sigrid Core and Sigrid Axis
 
 Sigrid Core is the analysis platform you may already know: it measures maintainability, architecture, security, reliability, and open source health, and it keeps the findings, ratings, and dependency graphs you see in the Sigrid dashboards and in [Sigrid CI](../sigridci-integration/using-sigridci.md).
@@ -55,11 +57,11 @@ Which LLM you want depends on how much of the work is judgment, and you cannot s
 
 Three tiers cover the work in these guides, and every vendor ships some version of the same ladder:
 
-| What the step needs                                                           | Claude | OpenAI | Gemini |
-|-------------------------------------------------------------------------------|---|---|---|
-| **Small:** Retrieving findings, recording statuses, summarizing a batch       | Haiku | Luna | Flash-Lite |
-| **Mid-sized:** Following a written procedure, editing code to a known pattern | Sonnet | Sol | Flash |
-| **Reasoning:** Assessing a finding against how your system actually works     | Opus or Fable | Astra | Pro |
+| What the step needs                                                           | Claude        | OpenAI | Gemini     |
+| ----------------------------------------------------------------------------- | ------------- | ------ | ---------- |
+| **Small:** Retrieving findings, recording statuses, summarizing a batch       | Haiku         | Luna   | Flash-Lite |
+| **Mid-sized:** Following a written procedure, editing code to a known pattern | Sonnet        | Sol    | Flash      |
+| **Reasoning:** Assessing a finding against how your system actually works     | Opus or Fable | Astra  | Pro        |
 
 Reasoning effort is the second dial. It earns its cost on the mid-sized and reasoning tiers, and does nothing for retrieval. Some vendors expose the top rung as an effort setting on one model, so for them the two dials are one. A single model runs your whole session, so pick for the hardest step in the loop.
 
