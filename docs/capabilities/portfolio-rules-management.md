@@ -1,3 +1,5 @@
+{: .attention }
+Rules management is in beta. The page may change as we add features, and we welcome your feedback.
 # Rules management
 
 With rules management, an Administrator can turn off a noisy security rule for
