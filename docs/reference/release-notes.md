@@ -3,6 +3,11 @@ Sigrid release notes
 
 SIG uses [continuous delivery](https://en.wikipedia.org/wiki/Continuous_delivery), meaning that every change to Sigrid or the underlying analysis is released once our development pipeline has completed. On average, we release somewhere between 10 and 20 times per day. This page therefore doesn't list every single change, since that would quickly lead to an excessively long list of small changes. Instead, this page lists Sigrid and analysis changes that we consider noteworthy for the typical Sigrid user.
 
+   ### October 5, 2026
+
+- **Rules management (beta):** Administrators can now exclude a noisy security rule for the entire portfolio, directly from a finding, and review all excluded rules on the new Rules Management page. This saves every team from dealing with the same false positives separately. See [Rules management](../capabilities/portfolio-rules-management.md).
+
+
 ### October 1, 2026
 
 - **Sigrid Axis:** Sigrid's integration for AI coding agents is now [Sigrid Axis](../axis/README.md). It has two capabilities: Guardrails, which keeps an agent from introducing new security and maintainability problems, and Auto-fix Agents, which plans and fixes the problems Sigrid already found. The Claude Code plugin is now `axis@sigrid`, the MCP server is the Sigrid Axis MCP server, the skills have new names, and the Sigrid profile now lives in each repository. If you used the Sigrid AI Toolkit, see [upgrade from the Sigrid AI Toolkit](../axis/installation.md#upgrade-from-the-sigrid-ai-toolkit) for what to change.
