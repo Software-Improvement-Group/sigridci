@@ -1,5 +1,5 @@
 /*
- * Styling for the agentic lifecycle diagrams in docs/_includes/sigrid-mcp/. The diagrams are inline
+ * Styling for the agentic lifecycle diagrams in docs/_includes/axis/. The diagrams are inline
  * SVG rather than an image, so that these rules can grey out the stages a guide is not about. See the
  * comment in those includes. SVG styling tends to get messy, so it lives in its own stylesheet.
  */
@@ -47,8 +47,8 @@ article svg.lifecycle-circle .tag {
 }
 
 /* The lifecycle include greys out the stages a page is not about, by putting one class per stage on the SVG. */
-article svg.lifecycle.disable-grounding .s-grounding.q,
-article svg.lifecycle.disable-grounding .s-grounding.qb,
+article svg.lifecycle.disable-ground .s-ground.q,
+article svg.lifecycle.disable-ground .s-ground.qb,
 article svg.lifecycle.disable-plan .s-plan.q,
 article svg.lifecycle.disable-plan .s-plan.qb,
 article svg.lifecycle.disable-prevent .s-prevent.q,
@@ -58,8 +58,8 @@ article svg.lifecycle.disable-improve .s-improve.qb {
     fill: var(--sig-light-gray);
 }
 
-article svg.lifecycle.disable-grounding .s-grounding.qn,
-article svg.lifecycle.disable-grounding text.s-grounding,
+article svg.lifecycle.disable-ground .s-ground.qn,
+article svg.lifecycle.disable-ground text.s-ground,
 article svg.lifecycle.disable-plan .s-plan.qn,
 article svg.lifecycle.disable-plan text.s-plan,
 article svg.lifecycle.disable-prevent .s-prevent.qn,

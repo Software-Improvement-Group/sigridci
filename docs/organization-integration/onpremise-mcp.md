@@ -1,17 +1,17 @@
-# Sigrid MCP server for Sigrid On-Premise
+# Sigrid Axis MCP server for Sigrid On-Premise
 
 This documentation covers on-premise Sigrid. It is not applicable for cloud-based Sigrid.
 {: .attention }
 
-The [Sigrid MCP server](../integrations/integration-sigrid-mcp.md) lets AI coding assistants use Sigrid's analysis while developers work. When using Sigrid On-Premise, the Sigrid MCP server runs inside your own cluster as an optional service. Unlike the other optional components, such as the LDAP group sync and the Open Source Health knowledge base updater, which are jobs, the MCP server is a long-running service with its own `mcp` subchart in `sigrid-stack`.
+The [Sigrid Axis MCP server](../axis/installation.md) lets AI coding assistants use Sigrid's analysis while developers work. When using Sigrid On-Premise, the Sigrid Axis MCP server runs inside your own cluster as an optional service. Unlike the other optional components, such as the LDAP group sync and the Open Source Health knowledge base updater, which are jobs, the MCP server is a long-running service with its own `mcp` subchart in `sigrid-stack`.
 
 ## Prerequisites
 
 - You should have already read the other Sigrid On-Premise documentation.
 - Sigrid On-Premise is installed and working, using the `sigrid-stack` Helm chart version 1.0.20260917 or later.
-- Your Sigrid license includes the Sigrid MCP server.
+- Your Sigrid license includes the Sigrid Axis MCP server.
 
-The MCP server uses the `sigrid-multi-analyzer` image, which was previoulsy only used in CI/CD for code analysis.
+The MCP server uses the `sigrid-multi-analyzer` image, which was previously only used in CI/CD for code analysis.
 
 ## Enabling the MCP server
 
@@ -55,7 +55,9 @@ By default the subchart also creates a NetworkPolicy that limits egress to `auth
 
 ## Connecting an AI coding assistant
 
-After the `mcp` pod is running, developers connect their AI coding assistant to `https://my-sigrid.example.com/mcp` using an [authentication token](authentication-tokens.md) from your on-premise Sigrid. The [Sigrid MCP Integrations](../integrations/integration-sigrid-mcp.md#sigrid-on-premise) page lists the configuration per IDE.
+After the `mcp` pod is running, developers connect their AI coding assistant to `https://my-sigrid.example.com/mcp` using an [authentication token](authentication-tokens.md) from your on-premise Sigrid. They use the [manual configuration](../axis/installation.md#1-connect-the-mcp-server) for their tool, with your own Sigrid host in the URL. This applies to Claude Code as well, because the Claude Code plugin only connects to `sigrid-says.com`.
+
+If your organization runs a private certificate authority, the AI coding assistant may have to be pointed to its root certificate. For an assistant based on Node, add `"NODE_EXTRA_CA_CERTS": "/path/to/internal/root_ca.crt"` to the `"env"` section of the MCP server's JSON configuration.
 
 ## Contact and support
 

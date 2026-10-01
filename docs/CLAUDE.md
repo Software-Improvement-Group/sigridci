@@ -44,8 +44,8 @@ docker run --rm -v "$(pwd)/docs:/srv/jekyll" -v sigridci-docs-gems:/usr/local/bu
 - Source code containing HTML characters should be wrapped betweeen `{% raw %}` and `{% endraw %}`.
 - Liquid is processed inside Markdown pages, so a block repeated across several pages can live in
   `docs/_includes/` and be pulled in with {% raw %}`{% include name.md %}`{% endraw %}.
-  - Group these per section in a subdirectory, for example the Guardrails and auto-fix agent blocks live in
-    `docs/_includes/sigrid-mcp/` and are included as {% raw %}`{% include sigrid-mcp/name.md %}`{% endraw %}.
+  - Group these per section in a subdirectory, for example the Sigrid Axis blocks live in
+    `docs/_includes/axis/` and are included as {% raw %}`{% include axis/name.md %}`{% endraw %}.
   - Relative links are allowed, but the unit tests resolve them from every page that includes the
     file, so a link has to be valid from all of them. Pages including the same file sit at different
     depths, so prefer an include with no links, and keep any link it does need in the including page.
