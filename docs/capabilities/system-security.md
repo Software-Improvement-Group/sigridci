@@ -139,6 +139,12 @@ An audit trail can be seen when clicking the *"Show Audit Trail"* button. In cas
 
 <img src="../images/system-security-audit-trail.png" width="400" />
 
+   Marking a finding as *False positive* only affects that finding. If the same
+   rule keeps producing false positives in several systems, an Administrator can
+   exclude the rule for your whole portfolio instead. The rule's findings are then
+   removed from all systems, including from Sigrid CI feedback. See
+   [Rules management](portfolio-rules-management.md).
+
 ## CWE and its link with CRE (Common Requirement Enumeration)
 If available, the relevant *CWE* will be shown. The *CWE* link in the security finding will refer you to the [OWASP Common Requirement Enumeration (CRE) page](https://www.opencre.org/). This will show the CWE in context. SIG has been an active and proud contributor to this project in close collaboration with the world's application security authority [*OWASP* (Open Worldwide Application Security Project)](https://owasp.org/). *CRE* is an open source security reference knowledge base, [a nexus between *OWASP's* initiatives](https://owasp.org/projects/#owasp-projects-the-sdlc-and-the-security-wayfinder) and relevant, authoritative security reference documents originating in [MITRE](https://www.mitre.org/), [NIST](https://www.nist.gov/) and [ISO](https://www.iso.org/). 
 
