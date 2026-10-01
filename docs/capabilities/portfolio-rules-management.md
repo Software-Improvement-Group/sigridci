@@ -44,7 +44,7 @@ Because excluding a rule affects every system in your portfolio, only users with
 the **Administrator** [user type](../organization-integration/usermanagement.md)
 can exclude or re-activate a rule.
 
-<img src="../images/rule-exclusion-admin.png" width="600" />
+<img src="../images/rule-exclusion-admin.png" width="900" />
 
 
 | Action | Administrator | Maintainer | Normal user |
@@ -59,7 +59,7 @@ portfolio*, Sigrid shows a
 message that asks you to contact an Administrator in your organization. Nothing
 changes in your portfolio.
 
-<img src="../images/rule-exclusion-non-admin.png" width="600" />
+<img src="../images/rule-exclusion-non-admin.png" width="900" />
 
 If a rule keeps cluttering your findings or your Sigrid CI feedback, share the
 rule ID and the reason it should be excluded with your Administrator. You can
@@ -83,8 +83,7 @@ finding:
 4. To share the rule ID, for example with your Administrator, select
    **Copy the Rule ID**.
 
-<!-- SCREENSHOT 2: Finding details, right-hand panel: Rule ID, "Copy the Rule ID" and the Rule actions section -->
-<img src="../images/rule-exclusion-finding-details.png" width="600" />
+<img src="../images/rule-exclusion-finding-details.png" width="800" />
 
 Below the rule ID, the **Rule actions** section shows whether the rule is
 **Active** or excluded, and lets an Administrator exclude it. See
@@ -106,7 +105,8 @@ is already in front of you.
    shown in the list of excluded rules, so others understand the decision later.
 4. Confirm.
 
-<img src="../images/rule-exclusion-exclude-dialog.png" width="600" />
+<img src="../images/rule-exclusion-exclude-rule.png" width="500" />
+<img src="../images/rule-exclusion-exclude-rule-dialog.png" width="500" />
 
 The rule is added to the [list of excluded rules](#reviewing-excluded-rules)
 straight away, and the **Rule actions** section shows that the rule is excluded.
@@ -162,7 +162,7 @@ place. Go to **Portfolio Settings** → **Rules Management**. You can also get
 there from a finding, by selecting **Go to Rules Management** in the
 **Rule actions** section.
 
-<img src="../images/rule-exclusion-excluded-rules.png" width="600" />
+<img src="../images/rule-exclusion-excluded-rules.png" width="800" />
 
 The **Excluded rules** tab shows one row per excluded rule:
 
@@ -207,13 +207,6 @@ disappeared. They come back as **new** findings:
 - Earlier remarks and audit trail entries are not restored.
 - They are dated from the analysis that finds them again, not from the day you
   re-activated the rule.
-
-### Excluding the rule again
-
-If you want to exclude the rule again, you can only do so once a system has been
-analyzed and the rule has produced a new finding. Until then, there is no
-finding to exclude it from. The earlier remark is not restored, so you need to
-enter a new one.
 
 ## Limitations
 
