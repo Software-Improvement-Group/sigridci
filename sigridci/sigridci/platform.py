@@ -15,6 +15,7 @@
 import os
 import sys
 import urllib.parse
+from typing import Union
 
 
 DOCS_URL = f"https://docs.sigrid-says.com"
@@ -26,27 +27,27 @@ SECURITY_EXCLUDE_FILE_DOCS = f"{SCOPE_DOCS}#excluding-files-and-directories-from
 
 class Platform:
     @staticmethod
-    def isGitHub():
+    def isGitHub() -> bool:
         return "GITHUB_REPOSITORY" in os.environ
 
     @staticmethod
-    def isGitLab():
+    def isGitLab() -> bool:
         return "GITLAB_CI" in os.environ
 
     @staticmethod
-    def isAzureDevOps():
+    def isAzureDevOps() -> bool:
         return "BUILD_REPOSITORY_NAME" in os.environ
 
     @staticmethod
-    def isBitBucket():
+    def isBitBucket() -> bool:
         return "BITBUCKET_REPO_SLUG" in os.environ
 
     @staticmethod
-    def isJenkins():
+    def isJenkins() -> bool:
         return "BUILD_NUMBER" in os.environ
 
     @staticmethod
-    def getPlatformId():
+    def getPlatformId() -> str:
         if Platform.isGitHub():
             return "github"
         elif Platform.isGitLab():
@@ -63,13 +64,13 @@ class Platform:
             return "unknown"
 
     @staticmethod
-    def isHtmlMarkdownSupported():
+    def isHtmlMarkdownSupported() -> bool:
         if os.environ.get("SIGRID_CI_MARKDOWN_HTML") in ("false", "0"):
             return False
         return Platform.isGitHub() or Platform.isGitLab() or Platform.isAzureDevOps()
 
     @staticmethod
-    def createPullRequestFileURL(file, line=0):
+    def createPullRequestFileURL(file: str, line: int = 0) -> Union[str, None]:
         encodePath = lambda value: urllib.parse.quote(value, safe="/")
         encodeParam = lambda value: urllib.parse.quote(value, safe="")
 
@@ -96,7 +97,7 @@ class Platform:
         return None
 
     @staticmethod
-    def checkEnvironment():
+    def checkEnvironment() -> None:
         if sys.version_info.major == 2 or sys.version_info.minor < 9:
             print("Sigrid CI requires Python 3.9 or higher")
             sys.exit(1)
@@ -107,9 +108,9 @@ class Platform:
             sys.exit(1)
 
     @staticmethod
-    def hasEnv(*names):
+    def hasEnv(*names) -> bool:
         return all(os.environ.get(name) for name in names)
 
     @staticmethod
-    def isValidToken(token):
+    def isValidToken(token) -> bool:
         return token is not None and len(token) >= 64

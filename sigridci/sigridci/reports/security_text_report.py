@@ -16,8 +16,9 @@ import sys
 
 from .report import Report
 from .security_markdown_report import SecurityMarkdownReport
-from ..analysisresults.sarif_processor import SarifProcessor, FindingStatus
+from ..analysisresults.sarif_processor import FindingStatus
 from ..objective import Objective
+from ..publish_options import PublishOptions
 
 
 class SecurityTextReport(Report):
@@ -28,7 +29,7 @@ class SecurityTextReport(Report):
         self.markdownReport = markdownReport
         self.objective = markdownReport.objective
 
-    def generate(self, analysisId, feedback, options):
+    def generate(self, analysisId: str, feedback: dict, options: PublishOptions) -> None:
         allFindings = self.markdownReport.extractFindings(feedback)
         self.printFindings(allFindings)
 

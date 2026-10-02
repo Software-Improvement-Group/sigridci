@@ -16,14 +16,14 @@ from datetime import datetime, timezone
 
 
 class UploadLog:
-    history = []
+    history: list[str] = []
 
     @staticmethod
-    def log(message):
+    def log(message: str) -> None:
         timestamp = datetime.now(timezone.utc).strftime("%Y-%m-%d %H:%M:%S%Z")
         print(f"{timestamp}  {message}", flush=True)
         UploadLog.history.append(message)
 
     @staticmethod
-    def clear():
+    def clear() -> None:
         UploadLog.history.clear()

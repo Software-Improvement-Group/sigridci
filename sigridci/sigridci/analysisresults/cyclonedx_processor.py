@@ -13,9 +13,10 @@
 # limitations under the License.
 
 from dataclasses import dataclass
-from typing import Optional
+from typing import Iterator, Optional, Union
 
 from ..objective import Objective
+from ..publish_options import PublishOptions
 
 
 @dataclass
@@ -48,12 +49,12 @@ class Library:
 
 
 class CycloneDXProcessor:
-    def __init__(self, options, vulnerabilityObjective, licenseObjective=None):
+    def __init__(self, options: PublishOptions, vulnerabilityObjective: Union[str, None], licenseObjective: Union[str, None] = None):
         self.options = options
         self.vulnerabilityObjective = vulnerabilityObjective
         self.licenseObjective = licenseObjective
 
-    def extractLibraries(self, feedback):
+    def extractLibraries(self, feedback: Union[dict, None]) -> Iterator[Library]:
         if feedback is None:
             return
 
@@ -75,27 +76,27 @@ class CycloneDXProcessor:
                 yield Library(name, transitive, version, latestVersion, files, vulnerabilities, licenses,
                     vulnerabilityRisk, licenseRisk, fixable)
 
-    def getOccurrenceLocations(self, component):
+    def getOccurrenceLocations(self, component: dict) -> Iterator[str]:
         if component.get("evidence") and component["evidence"].get("occurrences"):
             for occurrence in component["evidence"]["occurrences"]:
                 yield occurrence["location"]
 
-    def getComponentVulnerabilities(self, component, feedback):
+    def getComponentVulnerabilities(self, component: dict, feedback: dict) -> Iterator[LibraryVulnerability]:
         for vuln in feedback.get("vulnerabilities", []):
             affected = [affects["ref"] for affects in vuln["affects"]]
             if component.get("bom-ref") in affected:
                 link = vuln["source"]["url"] if vuln.get("source") else None
                 yield LibraryVulnerability(vuln["id"], link)
 
-    def parseRisk(self, severity, objective):
+    def parseRisk(self, severity: str, objective: Union[str, None]) -> Risk:
         meetsObjective = objective is None or Objective.meetsFindingObjective([severity], objective)
         return Risk(severity, meetsObjective)
 
-    def isInteresting(self, vulnerabilityRisk, licenseRisk):
+    def isInteresting(self, vulnerabilityRisk: Risk, licenseRisk: Risk) -> bool:
         return vulnerabilityRisk.severity not in ("UNKNOWN", "NONE") or \
             not licenseRisk.meetsObjective
 
-    def isRelevantSubSystem(self, files):
+    def isRelevantSubSystem(self, files: list[str]) -> bool:
         if not self.options.subsystem or len(files) == 0:
             return True
         return any(file for file in files if file.startswith(f"{self.options.subsystem}/"))

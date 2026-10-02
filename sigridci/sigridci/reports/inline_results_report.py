@@ -19,16 +19,17 @@ from .maintainability_markdown_report import MaintainabilityMarkdownReport
 from .osh_markdown_report import OpenSourceHealthMarkdownReport
 from .security_markdown_report import SecurityMarkdownReport
 from ..objective import Objective
+from ..publish_options import PublishOptions
 
 
 class InlineResultsReport(ABC):
-    def generate(self, analysisId, feedback, options):
+    def generate(self, analysisId: str, feedback: dict, options: PublishOptions) -> None:
         payload = self.buildPayload(feedback, options)
         print("Inline results: " + payload["capability"])
         print(json.dumps(payload))
 
     @abstractmethod
-    def buildPayload(self, feedback, options):
+    def buildPayload(self, feedback: dict, options: PublishOptions) -> dict:
         pass
 
 
@@ -49,7 +50,7 @@ class MaintainabilityInlineResultsReport(InlineResultsReport, MaintainabilityMar
     # stripped from the payload along with the other raw ratings dicts.
     RAW_RATINGS_KEYS = list(RATINGS_KEYS_NAMES) + ["changedCodeAfterRatings"]
 
-    def buildPayload(self, feedback, options):
+    def buildPayload(self, feedback: dict, options: PublishOptions) -> dict:
         payload = dict(feedback)
         payload["capability"] = self.getCapability().shortName
         payload["objectiveMet"] = self.isObjectiveSuccess(feedback, options)
@@ -78,7 +79,7 @@ class MaintainabilityInlineResultsReport(InlineResultsReport, MaintainabilityMar
 
 
 class OpenSourceHealthInlineResultsReport(InlineResultsReport, OpenSourceHealthMarkdownReport):
-    def buildPayload(self, feedback, options):
+    def buildPayload(self, feedback: dict, options: PublishOptions) -> dict:
         libraries = list(self.processor.extractLibraries(feedback))
         return {
             "capability": self.getCapability().shortName,
@@ -105,7 +106,7 @@ class OpenSourceHealthInlineResultsReport(InlineResultsReport, OpenSourceHealthM
 
 
 class SecurityInlineResultsReport(InlineResultsReport, SecurityMarkdownReport):
-    def buildPayload(self, feedback, options):
+    def buildPayload(self, feedback: dict, options: PublishOptions) -> dict:
         findings = self.extractFindings(feedback)
         return {
             "capability": self.getCapability().shortName,

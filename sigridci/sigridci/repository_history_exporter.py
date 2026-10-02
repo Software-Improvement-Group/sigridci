@@ -25,7 +25,7 @@ class RepositoryHistoryExporter:
     LIGHTWEIGHT_HISTORY_EXPORT_FILE = "git.log"
     COMMIT_PREFIXES = ("@@@", "'@@@")
 
-    def exportHistory(self, sourceDir):
+    def exportHistory(self, sourceDir: str) -> None:
         possibleLocations = [sourceDir] + [f"{sourceDir}/{sub}" for sub in os.listdir(sourceDir)]
         repoDirs = [dir for dir in possibleLocations if os.path.isdir(dir) and os.path.exists(f"{dir}/.git")]
 
@@ -35,7 +35,7 @@ class RepositoryHistoryExporter:
         if len(repoDirs) == 0:
             UploadLog.log("No repository history found")
 
-    def exportGitHistory(self, repoDir):
+    def exportGitHistory(self, repoDir: str) -> None:
         cutOff = self.CUTOFF_DATE.strftime("%Y-%m-%d")
         commandPrefix = ["git", "-C", repoDir, "--no-pager", "log", "--date=iso", f"--after={cutOff}"]
         commitsCommand = commandPrefix + ["--format='@@@;%H;%an;%ae;%cn;%ce;%cd;%s'", "--numstat", "--no-merges"]
@@ -53,7 +53,7 @@ class RepositoryHistoryExporter:
         except Exception as e:
             UploadLog.log("Error while trying to include repository history: " + str(e))
 
-    def createHistoryExportFile(self, history, outputFile):
+    def createHistoryExportFile(self, history: str, outputFile: str) -> None:
         entries = 0
 
         with open(outputFile, "w", encoding="utf8") as f:
@@ -65,7 +65,7 @@ class RepositoryHistoryExporter:
         if entries <= 1:
             UploadLog.log("Warning: Git history seems to be missing, maybe you're using a shallow clone?")
 
-    def anonymizeHistoryEntry(self, gitLog):
+    def anonymizeHistoryEntry(self, gitLog: str) -> str:
         anonymized = ""
 
         for line in gitLog.strip().split("\n"):
@@ -81,7 +81,7 @@ class RepositoryHistoryExporter:
 
         return anonymized
 
-    def anonymize(self, name):
+    def anonymize(self, name: str) -> str:
         if not name:
             return ""
         return hashlib.sha256(name.encode("utf8")).hexdigest()

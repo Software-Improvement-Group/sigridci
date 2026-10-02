@@ -21,7 +21,7 @@ from .upload_log import UploadLog
 
 
 class ApiCaller:
-    def __init__(self, service, pollInterval):
+    def __init__(self, service: str, pollInterval: int):
         self.service = service
         self.pollInterval = pollInterval
 
@@ -65,7 +65,8 @@ class ApiCaller:
                 UploadLog.log(f"The system no longer exists (HTTP status {e.code} for {e.url})")
             sys.exit(1)
         elif e.code in (500, 502):
-            UploadLog.log(f"Sigrid was unable to handle your request (HTTP status {e.code} for {e.url}):\n{e.read()}")
+            body = e.read().decode("utf8")
+            UploadLog.log(f"Sigrid was unable to handle your request (HTTP status {e.code} for {e.url}):\n{body}")
             sys.exit(1)
         else:
             UploadLog.log(str(e))

@@ -19,7 +19,7 @@ import urllib.request
 
 from .report import Report, MarkdownRenderer
 from ..api_caller import ApiCaller
-from ..publish_options import RunMode
+from ..publish_options import RunMode, PublishOptions
 from ..upload_log import UploadLog
 
 
@@ -31,7 +31,7 @@ class GitLabPullRequestReport(Report):
         certPath = os.getenv("SIGRID_GITLAB_CA_CERT_PATH")
         self.sslContext = ssl.create_default_context(cafile=certPath) if certPath else None
 
-    def generate(self, analysisId, feedback, options):
+    def generate(self, analysisId: str, feedback: dict, options: PublishOptions) -> None:
         if self.isWithinGitLabMergeRequestPipeline(options):
             try:
                 existingCommentId = self.findExistingCommentId()

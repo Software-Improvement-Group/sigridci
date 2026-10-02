@@ -86,7 +86,7 @@ class SystemUploadPacker:
     def __init__(self, options: PublishOptions):
         self.options = options
 
-    def prepareUpload(self, outputFile):
+    def prepareUpload(self, outputFile: str) -> None:
         zipFile = ZipFile(outputFile, "w", ZIP_DEFLATED)
         entries = 0
 
@@ -113,7 +113,7 @@ class SystemUploadPacker:
 
         self.checkUploadContents(outputFile, entries)
 
-    def checkUploadContents(self, outputFile, entries):
+    def checkUploadContents(self, outputFile: str, entries: int) -> None:
         uploadSizeBytes = os.path.getsize(outputFile)
         uploadSizeMB = max(round(uploadSizeBytes / 1024 / 1024), 1)
         UploadLog.log(f"Upload contains {entries} files, size is {uploadSizeMB} MB")
@@ -127,7 +127,7 @@ class SystemUploadPacker:
         elif uploadSizeBytes < 50000:
             UploadLog.log("Warning: Upload is very small, source directory might not contain all source code")
 
-    def isExcluded(self, filePath):
+    def isExcluded(self, filePath: str) -> bool:
         normalizedPath = filePath.replace("\\", "/")
 
         if normalizedPath.lower().endswith(self.EXCLUDE_EXTENSIONS):
@@ -136,7 +136,7 @@ class SystemUploadPacker:
         excludePatterns = self.DEFAULT_EXCLUDES + (self.options.excludePatterns or [])
         return any(exclude for exclude in excludePatterns if exclude != "" and exclude.strip() in normalizedPath)
 
-    def isIncluded(self, filePath):
+    def isIncluded(self, filePath: str) -> bool:
         includePatterns = self.options.includePatterns or []
         if len(includePatterns) == 0 or includePatterns == [""] or filePath.endswith(self.ALWAYS_INCLUDE):
             return True

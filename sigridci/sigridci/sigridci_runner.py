@@ -16,8 +16,9 @@ import json
 import os
 import sys
 from datetime import datetime
+from typing import Callable, Any
 
-from .capability import OPEN_SOURCE_HEALTH, SECURITY
+from .capability import OPEN_SOURCE_HEALTH, SECURITY, Capability
 from .feedback_provider import FeedbackProvider
 from .platform import Platform
 from .publish_options import PublishOptions, RunMode
@@ -51,7 +52,7 @@ class SigridCiRunner:
         self.apiClient = apiClient
         self.telemetry = Telemetry(options)
 
-    def run(self):
+    def run(self) -> int:
         self.telemetry.trackRun()
 
         licenses = self.getLicenses()
@@ -82,11 +83,11 @@ class SigridCiRunner:
         else:
             return self.displayFeedback(analysisId, metadata)
 
-    def getLicenses(self):
+    def getLicenses(self) -> list[str]:
         licenseData = self.apiClient.fetchLicenses()
         return licenseData.get("licenses", licenseData.get("licences", []))
 
-    def performLicenseCheck(self, licenses):
+    def performLicenseCheck(self, licenses: list[str]) -> None:
         missingCapabilities = [capability for capability in self.options.capabilities if capability.name not in licenses]
         self.options.capabilities = [capability for capability in self.options.capabilities if capability.name in licenses]
 
@@ -94,7 +95,7 @@ class SigridCiRunner:
             UploadLog.log(f"Skipping {missingCapability.displayName}, as your Sigrid license does not include it.")
 
 
-    def displayFeedback(self, analysisId, metadata):
+    def displayFeedback(self, analysisId: str, metadata: dict[str, str]) -> int:
         objectives = self.apiClient.fetchObjectives()
         exitCode = 0
 
@@ -120,14 +121,14 @@ class SigridCiRunner:
 
         return exitCode
 
-    def loadFeedbackBaseline(self, capability):
+    def loadFeedbackBaseline(self, capability: Capability) -> Any:
         if capability == OPEN_SOURCE_HEALTH:
             oshBaseline = self.apiClient.fetchOpenSourceHealth()
             if oshBaseline and "metadata" in oshBaseline:
                 return oshBaseline
         return None
 
-    def validateConfigurationFiles(self, metadata):
+    def validateConfigurationFiles(self, metadata: dict[str, str]) -> None:
         scope = self.options.readScopeFile()
 
         if scope is not None:
@@ -144,7 +145,7 @@ class SigridCiRunner:
         if metadataFile is not None:
             self.validateConfiguration(lambda: self.apiClient.validateMetadata(metadataFile), "Sigrid metadata file")
 
-    def validateConfiguration(self, validationCall, configurationName):
+    def validateConfiguration(self, validationCall: Callable, configurationName: str) -> None:
         UploadLog.log(f"Validating {configurationName}")
         validationResult = validationCall()
         if validationResult["valid"]:
@@ -152,7 +153,7 @@ class SigridCiRunner:
         else:
             self.showValidationError(configurationName, validationResult["notes"])
 
-    def showValidationError(self, configurationName, notes):
+    def showValidationError(self, configurationName: str, notes: list[str]) -> None:
         UploadLog.log("-" * 80)
         UploadLog.log(f"Invalid {configurationName}:")
         for note in notes:
@@ -160,7 +161,7 @@ class SigridCiRunner:
         UploadLog.log("-" * 80)
         sys.exit(1)
 
-    def displayMetadata(self, metadata):
+    def displayMetadata(self, metadata: dict[str, str]) -> None:
         if self.options.readMetadataFile() == None:
             print("")
             print("Sigrid metadata for this system:")
@@ -168,7 +169,7 @@ class SigridCiRunner:
                 if value:
                     print(f"    {key}:".ljust(40) + str(value))
 
-    def prepareMetadata(self):
+    def prepareMetadata(self) -> None:
         getMetadataValue = lambda field: os.environ.get(field.lower(), "")
         metadata = {field: getMetadataValue(field) for field in self.METADATA_FIELDS if getMetadataValue(field)}
 
@@ -183,7 +184,7 @@ class SigridCiRunner:
                     writer.write(f"  {name}: {formattedValue}\n")
 
 
-def validateOptions(options):
+def validateOptions(options: PublishOptions) -> None:
     if not options.isValidSystemName():
         maxNameLength = PublishOptions.SYSTEM_NAME_LENGTH.stop - (len(options.customer) + 1)
         print(f"Invalid system name, system name should match '{PublishOptions.SYSTEM_NAME_PATTERN.pattern}' "
@@ -196,7 +197,7 @@ def validateOptions(options):
         sys.exit(1)
 
 
-def runAnalysis(options):
+def runAnalysis(options: PublishOptions) -> None:
     if not os.path.exists(options.sourceDir):
         print(f"Source code directory not found: {options.sourceDir}")
         sys.exit(1)
