@@ -4,7 +4,7 @@ The JetBrains plugin is another Sigrid IDE extension, alongside the [Sigrid exte
 
 The plugin is available on the [JetBrains Marketplace](https://plugins.jetbrains.com/plugin/32479-sigrid).
 
-This plugin also includes a **Fix with AI** feature, described below, that hands findings off to Claude Code directly from the findings panel. If you want AI coding assistant integration without the findings panel itself, see the [Sigrid MCP](integration-sigrid-mcp.md).
+This plugin also includes a **Fix with AI** feature, described below, that hands findings off to Claude Code directly from the findings panel. If you want AI coding assistant integration without the findings panel itself, see [Sigrid Axis](../axis/README.md).
 
 What you can do with it:
 
@@ -97,7 +97,7 @@ Any finding that involves a code change can be sent straight to Claude Code inst
 
 <img src="../images/ide/jetbrains-fix-w-ai.png" width="700" />
 
-This builds a natural-language prompt describing the selected findings, their severity, and their file locations, and hands it to the `claude` CLI in a terminal. If the Sigrid plugin for Claude Code is installed and enabled, the prompt also includes the right Sigrid slash command for the category involved (for example `/sigrid:sigrid-improve` for maintainability findings, or `/sigrid:fix-osh-risk` for Open Source Health), so Claude can pull extra context from Sigrid while it works. If the plugin isn't detected, the prompt falls back to plain instructions instead, and a one-time notification offers a link to install it.
+This builds a natural-language prompt describing the selected findings, their severity, and their file locations, and hands it to the `claude` CLI in a terminal. If the [Sigrid Axis plugin](../axis/installation.md#install-the-claude-code-plugin) for Claude Code is installed and enabled, the prompt also points Claude Code to the right Sigrid Axis skill for the category involved, so Claude can pull extra context from Sigrid while it works. If the plugin isn't detected, the prompt falls back to plain instructions instead, and a one-time notification offers a link to install it.
 
 <img src="../images/ide/sig-jetbrains-azuredevops-create-issue.png" width="700" />
 
