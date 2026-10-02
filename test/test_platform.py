@@ -46,7 +46,7 @@ class PlatformTest(TestCase):
             self.assertNotIn(character, url)
 
     @mock.patch.dict(os.environ, {
-        "SYSTEM_PULLREQUEST_SOURCEREPOSITORYURI": "https://someorg@dev.azure.com/someorg/someproject/_git/some%20repo",
+        "BUILD_REPOSITORY_URI": "https://someorg@dev.azure.com/someorg/someproject/_git/some%20repo",
         "SYSTEM_PULLREQUEST_SOURCEBRANCH": "refs/heads/someowner/somebranch"
     }, clear=True)
     def testFileURLStripsAzureDevOpsCredentialsAndKeepsBranchOwner(self):
