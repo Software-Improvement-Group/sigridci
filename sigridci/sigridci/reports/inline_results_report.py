@@ -15,6 +15,7 @@
 import json
 from abc import ABC, abstractmethod
 
+from .architecture_markdown_report import ArchitectureMarkdownReport
 from .maintainability_markdown_report import MaintainabilityMarkdownReport
 from .osh_markdown_report import OpenSourceHealthMarkdownReport
 from .security_markdown_report import SecurityMarkdownReport
@@ -123,4 +124,14 @@ class SecurityInlineResultsReport(InlineResultsReport, SecurityMarkdownReport):
             "line": finding.line,
             "partOfObjective": finding.partOfObjective,
             "status": finding.status.value
+        }
+
+
+class ArchitectureInlineResultsReport(InlineResultsReport, ArchitectureMarkdownReport):
+    def buildPayload(self, feedback, options):
+        return {
+            "capability": self.getCapability().shortName,
+            "objectiveMet": self.isObjectiveSuccess(feedback, options),
+            "baseline": feedback.get("baseline"),
+            "findings": feedback.get("dependencyFeedback", [])
         }

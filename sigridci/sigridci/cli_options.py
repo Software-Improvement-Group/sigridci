@@ -15,12 +15,11 @@
 import sys
 from argparse import SUPPRESS
 
-from .capability import MAINTAINABILITY, OPEN_SOURCE_HEALTH, SECURITY
+from .capability import CAPABILITY_SHORT_NAMES
 
 
-CAPABILITIES = {cap.shortName: cap for cap in [MAINTAINABILITY, OPEN_SOURCE_HEALTH, SECURITY]}
 DEFAULT_CAPABILITIES = "maintainability,osh,security"
-CAPABILITY_HELP = ", ".join(CAPABILITIES.keys())
+CAPABILITY_HELP = ", ".join(CAPABILITY_SHORT_NAMES.keys())
 
 
 def parseCapabilities(enabled, disabled=""):
@@ -28,7 +27,7 @@ def parseCapabilities(enabled, disabled=""):
     disabledNames = (disabled or "").split(",")
 
     try:
-        return [CAPABILITIES[name.lower().strip()] for name in enabledNames if name not in disabledNames]
+        return [CAPABILITY_SHORT_NAMES[name.lower().strip()] for name in enabledNames if name not in disabledNames]
     except KeyError as e:
         print(f"Invalid capability: {str(e)}")
         sys.exit(1)
