@@ -294,6 +294,11 @@ If you want to exclude a certain rule and add it to the `disabled_rules` list, y
 
 The `disabled_analyzers` option is simular, but allows you to disable *all* rules produced by a specific analysis tool. You can see the list of enabled analyzers in your Sigrid security overview, if you [group by finding and then by origin](../capabilities/system-security.md#different-possible-grouping-of-security-findings). For the list of all supported analyzers, see [the technology support section](technology-support.md#supported-security-analyzers).
 
+   The `disabled_rules` option excludes rules for one system. If a rule is noisy
+   across many systems, an Administrator can exclude it for your whole portfolio
+   from within Sigrid, without changing every scope file. See
+   [Rules management](../capabilities/portfolio-rules-management.md).
+
 ## Architecture Quality
 
 Architecture Quality is available by default. However, you can still use the various scope file options to customize your analysis. The options related to architecture live in the `architecture` section in the scope file.
