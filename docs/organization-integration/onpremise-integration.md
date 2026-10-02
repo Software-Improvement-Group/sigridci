@@ -30,7 +30,7 @@ The most commonly deployed optional features are:
 - **Source code view** - Displays source code within Sigrid. Requires a web-accessible code repository integrated via [OAuth](https://oauth.net/2/), using the same identity provider as Sigrid authentication.
 - **Custom CA certificates** - Supports organizations using internal certificate authorities.
 - **AI Explanations** - Pre-generated explanations tailored to each finding type.
-- **Sigrid MCP** - Integrates Sigrid's analysis into AI coding assistants.
+- **Sigrid Axis MCP server** - Integrates Sigrid's analysis into AI coding assistants. See [Sigrid Axis MCP server for Sigrid On-Premise](onpremise-mcp.md).
 
 <img src="../images/onpremise-optional-features.png" width="60%" />
 

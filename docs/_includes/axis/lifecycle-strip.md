@@ -1,5 +1,5 @@
 {%- comment -%}
-The agentic lifecycle diagram, described on the developer guides page. Pass the stages this page is
+The agentic lifecycle diagram, described on the Sigrid Axis overview page. Pass the stages this page is
 about with active="plan,improve"; the stages you leave out are greyed out. Omit it to show all four.
 
 This is inline SVG instead of a file in images/, because that greying out is done with CSS, in
@@ -7,14 +7,14 @@ lifecycle.css. A browser loads an <img> in secure static mode, so the stylesheet
 reach inside it. Referencing a file would therefore mean one file per combination of stages, and with
 four stages there are fifteen of those.
 {%- endcomment -%}
-{%- assign stages = "grounding,plan,prevent,improve" | split: "," -%}
-{%- assign active = include.active | default: "grounding,plan,prevent,improve" | split: "," -%}
+{%- assign stages = "ground,plan,prevent,improve" | split: "," -%}
+{%- assign active = include.active | default: "ground,plan,prevent,improve" | split: "," -%}
 {%- capture disabled -%}
 {%- for stage in stages -%}{%- unless active contains stage -%}disable-{{ stage }} {% endunless -%}{%- endfor -%}
 {%- endcapture -%}
 
 <svg class="lifecycle lifecycle-strip {{ disabled | strip }}" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 662 104" width="662" height="104">
-  <title>Sigrid Agentic Software Lifecycle</title>
+  <title>Sigrid Axis agentic lifecycle</title>
   <rect width="662" height="104" fill="#FFFFFF"/>
     <g fill="#151632" transform="translate(24.00,20.00) scale(0.231518) translate(0,413) scale(0.1,-0.1)">
       <path d="M421,4123.8c-72-12-185-68-242-118c-120-105-163-315-95-456c52-106,150-174,401-282c150-64,216-147,199-252c-20-128-160-193-318-147c-88,26-134,78-211,242c-61,128-66,134-94,134c-56,0-61-6-61-79c0-36,5-118,10-181c9-112,10-116,41-142c80-67,267-114,424-105c156,9,261,53,352,150c62,66,98,141,112,237c34,222-85,371-379,480c-177,65-243,116-256,197c-29,183,218,280,376,148c53-44,90-46,131-6c43,44,35,107-19,135C715,4118.8,523,4141.8,421,4123.8z"/>
@@ -30,9 +30,9 @@ four stages there are fifteen of those.
         d="M622,40 A18,18 0 0 1 622,76
            L190,76 A8,8 0 0 1 182,68"/>
   <path fill="#808087" opacity=".7" d="M182,58 L187,68 L177,68 Z"/>
-  <circle cx="182" cy="40" r="14" class="qb s-grounding" fill="#16214E"/>
-  <text class="num qn s-grounding" x="182" y="44.3" text-anchor="middle" fill="#FFFFFF">1</text>
-  <text class="lbl s-grounding" x="204" y="44.6" fill="#151632" textLength="66" lengthAdjust="spacing">Grounding</text>
+  <circle cx="182" cy="40" r="14" class="qb s-ground" fill="#16214E"/>
+  <text class="num qn s-ground" x="182" y="44.3" text-anchor="middle" fill="#FFFFFF">1</text>
+  <text class="lbl s-ground" x="204" y="44.6" fill="#151632" textLength="48" lengthAdjust="spacing">Ground</text>
   <path fill="none" stroke="#808087" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" opacity=".55" d="M282.5,35.5 l5,4.5 l-5,4.5"/>
   <circle cx="314" cy="40" r="14" class="qb s-plan" fill="#183D98"/>
   <text class="num qn s-plan" x="314" y="44.3" text-anchor="middle" fill="#FFFFFF">2</text>

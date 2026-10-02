@@ -5,12 +5,12 @@ This extension lets you view and manage findings in [Visual Studio Code](https:/
 
 SIG offers two types of IDE integration:
 
-**The [Sigrid MCP](integration-sigrid-mcp.md) is IDE integration for AI coding assistants.** It lets your AI
+**[Sigrid Axis](../axis/README.md) is the integration for AI coding assistants.** It lets your AI
 coding assistant find quality issues in your code and fix them. It also gives an immediate feedback loop where 
 you receive quality feedback as you're working on the code.
 
-**The Visual Studio Code extension is an IDE extension "for humans".** It focuses on viewing and managing Sigrid
-findings from within your IDE. In particular, it lets you do the following:
+**The Visual Studio Code extension is an IDE extension "for humans".** It focuses on viewing and managing the findings
+from Sigrid Core within your IDE. In particular, it lets you do the following:
 
 - **Navigate Sigrid findings in your IDE.** This allows for faster and more familiar code navigation than having to
   navigate your code and findings in Sigrid itself.
@@ -98,7 +98,7 @@ Clicking either option opens that assistant in a new panel, with a message alrea
 finding (its risk level, description, and file locations) and an instruction to fix only that finding. If
 Sigrid MCP is not detected, the assistant still receives this same information and can usually work from it
 directly, but it won't be able to look up more context from Sigrid on its own, and a note appears suggesting
-you install the Sigrid plugin for the best experience.
+you install the Sigrid Axis plugin for the best experience.
 
 <img src="../images/ide/vs-code-fix-with-ai.png" width="700" />
 
@@ -106,23 +106,25 @@ you install the Sigrid plugin for the best experience.
 
 ### Getting "Sigrid MCP detected" for GitHub Copilot
 
-Configure the Sigrid MCP server in VS Code's own MCP settings (`Cmd+Shift+P` → "MCP: Add Server" → HTTP),
+Add the [Sigrid Axis MCP server](../axis/installation.md#vs-code) in VS Code's own MCP settings (`Cmd+Shift+P` → "MCP: Add Server" → HTTP),
 pointing to `https://sigrid-says.com/mcp` (or `https://my-sigrid.example.com/mcp` on Sigrid On-Premise) with your
 Sigrid API token as a Bearer token in the Authorization header. Once GitHub Copilot can see this server, the label
 switches to "detected".
 
 ### Getting "Sigrid MCP detected" for Claude Code
 
-Install the official Sigrid plugin for Claude Code rather than adding the MCP server manually, only the
+Install the Sigrid Axis plugin for Claude Code rather than adding the MCP server manually, only the
 plugin is recognized by this detection check:
 
-/plugin marketplace add Software-Improvement-Group/sigrid-ai-toolkit
-
-/plugin install sigrid@sigrid-ai-toolkit
+```
+/plugin marketplace add Software-Improvement-Group/agent-integrations
+/plugin install axis@sigrid
+```
 
 Choose "Install for you (user scope)" so it's available in every project, not just the current one. After
-installing, run `/sigrid:setup` once to tell Claude Code which local repository corresponds to which Sigrid
-customer and system, this lets it act on findings instead of just reading them.
+installing, run `/setup` once in each repository to tell Claude Code which Sigrid customer and system it
+corresponds to, this lets it act on findings instead of just reading them. See
+[installing Sigrid Axis](../axis/installation.md#install-the-claude-code-plugin).
 
 ## Creating Jira issues from findings
 

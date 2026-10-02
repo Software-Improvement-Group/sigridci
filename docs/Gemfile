@@ -4,5 +4,6 @@ source "https://rubygems.org"
 # GitHub Pages runs in production, so a local build matches docs.sigrid-says.com.
 # It also implicitly enables the plugins this site relies on (rendering Markdown
 # without front matter, README as the index page, relative .md links, and the
-# default layout), which is why this repository intentionally has no _config.yml.
+# default layout), so _config.yml only has to list jekyll-redirect-from. That
+# plugin is on the GitHub Pages allowlist, but only runs when listed there.
 gem "github-pages", group: :jekyll_plugins

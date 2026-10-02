@@ -15,14 +15,19 @@
 function expandCurrentSection() {
     const categoryHeaders = document.querySelectorAll("nav .category");
     const categoryPages = document.querySelectorAll("nav .pages");
+    const path = document.location.pathname;
+    const isExactMatch = href => path == href;
+    const isParentMatch = href => path.startsWith(href);
 
-    for (let i = categoryHeaders.length - 1; i >= 0; i--) {
-        const currentPageLink = findCurrentPageLink(categoryPages[i]);
+    for (const matches of [isExactMatch, isParentMatch]) {
+        for (let i = categoryHeaders.length - 1; i >= 0; i--) {
+            const currentPageLink = findCurrentPageLink(categoryPages[i], matches);
 
-        if (currentPageLink) {
-            expandSection(i);
-            currentPageLink.classList.add("currentPage");
-            return;
+            if (currentPageLink) {
+                expandSection(i);
+                currentPageLink.classList.add("currentPage");
+                return;
+            }
         }
     }
 }
@@ -40,10 +45,10 @@ function expandSection(index) {
     }
 }
 
-function findCurrentPageLink(panel) {
+function findCurrentPageLink(panel, matches) {
     const links = [...panel.querySelectorAll("a.page")];
     links.reverse();
-    return links.find(link => document.location.pathname.startsWith(link.getAttribute("href")));
+    return links.find(link => matches(link.getAttribute("href")));
 }
 
 document.addEventListener("DOMContentLoaded", () => {
