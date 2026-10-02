@@ -44,3 +44,11 @@ class PlatformTest(TestCase):
         url = Platform.createPullRequestFileURL("src/main.py", 12)
         for character in ("(", ")", "[", "]", " "):
             self.assertNotIn(character, url)
+
+    @mock.patch.dict(os.environ, {
+        "SYSTEM_PULLREQUEST_SOURCEREPOSITORYURI": "https://someorg@dev.azure.com/someorg/someproject/_git/some%20repo",
+        "SYSTEM_PULLREQUEST_SOURCEBRANCH": "refs/heads/someowner/somebranch"
+    }, clear=True)
+    def testFileURLStripsAzureDevOpsCredentialsAndKeepsBranchOwner(self):
+        url = Platform.createPullRequestFileURL("src/main.al", 46)
+        self.assertEqual(url, "https://dev.azure.com/someorg/someproject/_git/some%20repo?path=src%2Fmain.al&version=GBsomeowner%2Fsomebranch&line=46")

@@ -89,9 +89,10 @@ class Platform:
 
         # Azure DevOps
         if Platform.hasEnv("SYSTEM_PULLREQUEST_SOURCEREPOSITORYURI", "SYSTEM_PULLREQUEST_SOURCEBRANCH"):
-            repo = os.environ["SYSTEM_PULLREQUEST_SOURCEREPOSITORYURI"]
-            branch = encodeParam(os.environ["SYSTEM_PULLREQUEST_SOURCEBRANCH"].split("/")[-1])
-            return f"{repo}?path={encodeParam(file)}&version=GB{branch}&line={line}"
+            repo = urllib.parse.urlsplit(os.environ["SYSTEM_PULLREQUEST_SOURCEREPOSITORYURI"])
+            repoUrl = repo._replace(netloc=repo.hostname).geturl()
+            branch = encodeParam(os.environ["SYSTEM_PULLREQUEST_SOURCEBRANCH"].removeprefix("refs/heads/"))
+            return f"{repoUrl}?path={encodeParam(file)}&version=GB{branch}&line={line}"
 
         return None
 
