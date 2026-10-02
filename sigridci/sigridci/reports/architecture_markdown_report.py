@@ -53,9 +53,9 @@ class ArchitectureMarkdownReport(Report, MarkdownRenderer):
             md += "## 👎 What could be better?\n\n"
             md += f"> Unfortunately, you introduced **{len(negative)}** architecture issues.\n\n"
             md += f"{self.generateFindingsTable(negative, options)}\n"
-            md += f"You can [configure undesirable dependencies]({AQ_UNDESIRABLE_DOCS})\n"
+            md += f"You can [configure undesirable dependencies]({AQ_UNDESIRABLE_DOCS}) "
             md += "which Sigrid then checks and reports in this feedback.\n"
-            md += "If you believe these findings are false positives,\n"
+            md += "If you believe these findings are false positives, "
             md += f"you can [exclude the rule]({AQ_EXCLUDE_DOCS}) in the Sigrid configuration.\n\n"
 
         if remaining > 0:
