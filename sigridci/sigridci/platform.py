@@ -71,7 +71,6 @@ class Platform:
     @staticmethod
     def createPullRequestFileURL(file, line=0):
         encodePath = lambda value: urllib.parse.quote(value, safe="/")
-        encodeParam = lambda value: urllib.parse.quote(value, safe="")
 
         # GitLab
         if Platform.hasEnv("CI_SERVER_URL", "CI_PROJECT_PATH", "CI_COMMIT_REF_NAME"):
@@ -88,12 +87,19 @@ class Platform:
             return f"{server}/{repo}/blob/{branch}/{encodePath(file)}#L{line}"
 
         # Azure DevOps
-        if Platform.hasEnv("SYSTEM_PULLREQUEST_SOURCEREPOSITORYURI", "SYSTEM_PULLREQUEST_SOURCEBRANCH"):
-            repo = os.environ["SYSTEM_PULLREQUEST_SOURCEREPOSITORYURI"]
-            branch = encodeParam(os.environ["SYSTEM_PULLREQUEST_SOURCEBRANCH"].split("/")[-1])
-            return f"{repo}?path={encodeParam(file)}&version=GB{branch}&line={line}"
+        if Platform.hasEnv("BUILD_REPOSITORY_URI", "SYSTEM_PULLREQUEST_SOURCEBRANCH"):
+            return Platform.createAzureDevOpsFileURL(file, line)
 
         return None
+
+    @staticmethod
+    def createAzureDevOpsFileURL(file, line):
+        encodeParam = lambda value: urllib.parse.quote(value, safe="")
+        repo = urllib.parse.urlsplit(os.environ["BUILD_REPOSITORY_URI"])
+        host = repo.hostname if repo.port is None else f"{repo.hostname}:{repo.port}"
+        repoUrl = repo._replace(netloc=host).geturl()
+        branch = encodeParam(os.environ["SYSTEM_PULLREQUEST_SOURCEBRANCH"].removeprefix("refs/heads/"))
+        return f"{repoUrl}?path={encodeParam(file)}&version=GB{branch}&line={line}"
 
     @staticmethod
     def checkEnvironment():
