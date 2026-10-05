@@ -52,3 +52,11 @@ class PlatformTest(TestCase):
     def testFileURLStripsAzureDevOpsCredentialsAndKeepsBranchOwner(self):
         url = Platform.createPullRequestFileURL("src/main.al", 46)
         self.assertEqual(url, "https://dev.azure.com/someorg/someproject/_git/some%20repo?path=src%2Fmain.al&version=GBsomeowner%2Fsomebranch&line=46")
+
+    @mock.patch.dict(os.environ, {
+        "BUILD_REPOSITORY_URI": "https://someuser@devops.example.com:8080/someorg/someproject/_git/somerepo",
+        "SYSTEM_PULLREQUEST_SOURCEBRANCH": "refs/heads/somebranch"
+    }, clear=True)
+    def testFileURLKeepsPortForSelfHostedAzureDevOpsServer(self):
+        url = Platform.createPullRequestFileURL("src/main.al", 46)
+        self.assertEqual(url, "https://devops.example.com:8080/someorg/someproject/_git/somerepo?path=src%2Fmain.al&version=GBsomebranch&line=46")
