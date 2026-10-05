@@ -96,6 +96,17 @@ will currently not fail your build. The ability to fail your build will become a
 Beta.
 {: .attention }
 
+During the Beta phase, we are also very interested to hear your opinion on how we can turn the concrete architecture
+findings into objectives. Currently, architecture objectives are based on benchmarked star ratings. That's nice for
+dashboards, but for development teams it's often abstract how this translates into concrete things they can do to
+improve their architecture.
+
+The architecture feedback in Sigrid CI is much more concrete, but it doesn't yet translate back into a verdict you
+can track in the dashboard via objectives. We can either add additional feedback to bridge between the concrete
+recommendations and the star ratings, or we change architecture objectives to be finding-based (i.e. making the
+objectives follow the CI feedback). The latter is currently looking more promising, but we definitely want to hear
+your feedback on this during the beta phase.
+
 ### Open Source Health feedback
 
 Sigrid CI gives feedback on security vulnerabilities and license risks in open source libraries. Sigrid also
