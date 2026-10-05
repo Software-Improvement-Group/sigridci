@@ -35,7 +35,7 @@ the [Sigrid CI configuration](../reference/client-script-usage.md).
 
 Sigrid CI gives you feedback on different quality aspects. You can find more information on our feedback for
 [Maintainability](#maintainability-feedback), [Architecture](#architecture-feedback-beta),
-[Open Source Health](#open-source-health-feedback), and [Security](#security-feedback-beta) in the sections below. 
+[Open Source Health](#open-source-health-feedback), and [Security](#security-feedback) in the sections below. 
 However, there are also some shared principles we apply across Sigrid CI:
 
 - **Focus on objectives:** All Sigrid CI feedback relates your changes to the
