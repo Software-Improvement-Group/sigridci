@@ -49,7 +49,7 @@ class ApiCaller:
         UploadLog.log(f"{self.service} is currently unavailable, failed after {attempts} attempts")
         sys.exit(1)
 
-    def handleError(self, e: urllib.error.HTTPError):
+    def handleError(self, e: urllib.error.HTTPError) -> None:
         if e.code == 401:
             UploadLog.log(f"You are not authenticated to {self.service} (HTTP status {e.code} for {e.url})")
             self.printResponse(e)
@@ -72,7 +72,7 @@ class ApiCaller:
             UploadLog.log(str(e))
             self.printResponse(e)
 
-    def printResponse(self, e: urllib.error.HTTPError):
+    def printResponse(self, e: urllib.error.HTTPError) -> None:
         headers = dict(e.headers)
         if headers:
             UploadLog.log(f"Response headers:\n{headers}")

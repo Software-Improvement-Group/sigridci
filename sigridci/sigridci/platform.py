@@ -103,14 +103,14 @@ class Platform:
             sys.exit(1)
 
         token = os.environ.get("SIGRID_CI_TOKEN", None)
-        if not Platform.isValidToken(token):
+        if token is None or not Platform.isValidToken(token):
             print("Missing or incomplete environment variable SIGRID_CI_TOKEN")
             sys.exit(1)
 
     @staticmethod
-    def hasEnv(*names) -> bool:
+    def hasEnv(*names: str) -> bool:
         return all(os.environ.get(name) for name in names)
 
     @staticmethod
-    def isValidToken(token) -> bool:
+    def isValidToken(token: str) -> bool:
         return token is not None and len(token) >= 64

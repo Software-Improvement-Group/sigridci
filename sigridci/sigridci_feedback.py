@@ -18,6 +18,7 @@ import json
 import os
 import sys
 from argparse import ArgumentParser, Namespace
+from typing import Any, Union
 
 from sigridci.capability import Capability, CAPABILITY_SHORT_NAMES, SECURITY
 from sigridci.cli_options import addSigridConnectionArguments
@@ -45,14 +46,14 @@ def parseFeedbackOptions(args: Namespace) -> PublishOptions:
     return options
 
 
-def determineObjectives(options: PublishOptions):
+def determineObjectives(options: PublishOptions) -> dict:
     if not os.environ.get("SIGRID_CI_TOKEN"):
         return {}
     apiClient = SigridApiClient(options)
     return apiClient.fetchObjectives()
 
 
-def loadPreviousAnalysisResults(capability: Capability, options: PublishOptions, origin: str):
+def loadPreviousAnalysisResults(capability: Capability, options: PublishOptions, origin: str) -> Union[Any, None]:
     if not os.environ.get("SIGRID_CI_TOKEN"):
         return None
     elif capability == SECURITY and origin == "sigrid":

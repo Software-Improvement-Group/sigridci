@@ -11,6 +11,8 @@ source code, see [docs/CLAUDE.md](docs/CLAUDE.md) for instructions when working 
 ## Commands
 
 - Run unit tests: `python3 -m unittest`
+  - Run a single test file: `python3 -m unittest test.test_documentation`
+- Run type checks: `python3 -m mypy --disallow-incomplete-defs sigridci`
 
 ## Portability
 
