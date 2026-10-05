@@ -1,6 +1,7 @@
-{: .attention }
-Rules management is in beta. The page may change as we add features, and we welcome your feedback.
 # Rules management
+
+Rules management is in beta. The page may change as we add features, and we welcome your feedback.
+{: .attention }
 
 With rules management, an Administrator can turn off a noisy security rule for
 your entire portfolio at once, and everyone can see which rules are currently
@@ -32,10 +33,8 @@ instead. If only a few findings are incorrect, mark them as *False positive*
 rather than excluding the whole rule, so the rule can still catch real issues
 elsewhere.
 
+Excluding a rule turns it off everywhere. It also stops any genuine finding the rule would have caught in other systems. Only exclude a rule when you are confident it is not useful for your portfolio.
 {: .warning }
-Excluding a rule turns it off everywhere. It also stops any genuine finding the
-rule would have caught in other systems. Only exclude a rule when you are
-confident it is not useful for your portfolio.
 
 You exclude rules from Security findings. If a finding also counts under
 Reliability, excluding its rule removes it there too.
