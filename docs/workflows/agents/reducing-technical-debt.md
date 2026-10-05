@@ -52,7 +52,7 @@ In another agentic tool, [install the skills and connect the MCP server](../../a
 
 Each candidate becomes a commit of its own, so you can drop one refactor out of ten without redoing the other nine.
 
-A mid-sized model handles most of what follows, since extracting a method and updating its call sites is procedural work. See [LLM model selection](../../axis/README.md#llm-model-selection).
+A mid-sized model is usually enough here. Extracting a method and updating its call sites is procedural work. See [Choose a model](README.md#choose-a-model).
 {: .model }
 
 ## What a session looks like
