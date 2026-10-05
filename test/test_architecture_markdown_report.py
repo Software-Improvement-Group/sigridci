@@ -39,7 +39,7 @@ class ArchitectureMarkdownReportTest(TestCase):
         expected = """
             # [Sigrid](https://sigrid-says.com/aap/noot/-/architecture-quality/explorer) Architecture feedback *(Beta)*
 
-            **⚠️  You did not meet your objective of having no architecture issues**
+            **⚠️  Your changes introduced architecture issues**
             
             Sigrid compared your code against the baseline of 2026-08-17 12:00:00 UTC.
             
@@ -80,7 +80,7 @@ class ArchitectureMarkdownReportTest(TestCase):
         expected = """
             # [Sigrid](https://sigrid-says.com/aap/noot/-/architecture-quality/explorer) Architecture feedback *(Beta)*
 
-            **⚠️  You did not meet your objective of having no architecture issues**
+            **⚠️  Your changes introduced architecture issues**
             
             Sigrid compared your code against the baseline of 2026-08-17 12:00:00 UTC.
             

@@ -102,9 +102,9 @@ class ArchitectureMarkdownReport(Report, MarkdownRenderer):
 
     def getSummary(self, feedback, options):
         if len(self.getNegativeFeedback(feedback)) == 0:
-            return [f"✅  You achieved your objective of having no architecture issues"]
+            return [f"✅  Your changes did not introduce any architecture issues"]
         else:
-            return [f"⚠️  You did not meet your objective of having no architecture issues"]
+            return [f"⚠️  Your changes introduced architecture issues"]
 
     def getCapability(self):
         return ARCHITECTURE
