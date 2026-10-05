@@ -66,7 +66,7 @@ To add your codebase's own conventions, such as the design patterns it follows, 
 
 An instruction is followed most of the time, and the agent is the one who decides it has finished, so we would verify the gate for the first few sessions in a new repository. Where it really matters, back it with something mechanical: [Sigrid CI](../../sigridci-integration/using-sigridci.md) in a pre-commit hook or in your pipeline runs the same checks whatever produced the code.
 
-Use whatever you are already coding with. Handing the checks to a cheaper subagent looks like a saving, since `guardrails.quality_check` is deterministic and its output is a plain list. The fix is the actual work though, and it is the least self-contained step here: it needs the file, the class around it, and the reason the code is shaped the way it is. A subagent starts with none of that, so it reads the file again to catch up, and then either makes a change you did not want or invents a reason for leaving a finding alone. Both cost you more than the cheaper model saves. See [LLM model selection](../../axis/README.md#llm-model-selection).
+Use the model you already code with, and keep the checks in your session. To fix what a check finds, a subagent would have to read the file again, and without your session's context it tends to make changes you did not want or skip findings for reasons it made up. See [Choose a model](README.md#choose-a-model).
 {: .model }
 
 ## What a session looks like
