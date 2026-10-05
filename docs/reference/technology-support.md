@@ -13,7 +13,7 @@ This page provides an overview of all technologies that can be analyzed by Sigri
   - "Static AI" indicates the technologies for which Sigrid offers static explanations on the Maintainability findings. Support for other Static AI explanations on other Sigrid's capability depends on whether the technology is supported by the specific Sigrid capability. See the [AI Static Explanations](../reference/ai-explanations.md#ai-static-explanations) documentation for more information.
   - "Guardrails" indicates technologies supported by the live quality check in [Guardrails](../axis/guardrails.md)'s MCP tool in Sigrid Axis.
 
-<a>Sigrid</a> \| <a>On-premise Sigrid</a> \| <a>Sigrid Local</a>
+<a>Sigrid</a> \| <a>On-premise Sigrid</a> \| <a>Sigrid Local</a> \| <a>Sigrid Axis</a>
 {: .technologySupportCategories }
 
 | Name in configuration file    | Technology name(s)                     | Auto-detect | Supported Sigrid capabilities                                           | Notes                                       |
@@ -101,7 +101,7 @@ This page provides an overview of all technologies that can be analyzed by Sigri
 | `elixir`                      | Elixir                                 | ✅          | Maintainability, Architecture, Static AI, GenAI                         |
 | `embeddedsql`                 | C++ Embedded SQL                       | ⚠️          | Maintainability, Architecture, GenAI                                    |
 | `erb`                         | ERB                                    | ✅          | Maintainability, Architecture                                           |
-| `erlang`                      | Erlang                                 | ✅          | Maintainability                                                         |
+| `erlang`                      | Erlang                                 | ✅          | Maintainability, Security                                               |
 | `esql`                        | ESQL                                   | ✅          | Maintainability, Architecture                                           |
 | `filetab`                     | File Tab                               | ✅          | Maintainability                                                         |
 | `finacle`                     | Finacle                                | ⚠️          | Maintainability, Architecture                                           |

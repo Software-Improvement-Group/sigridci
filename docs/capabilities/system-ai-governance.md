@@ -97,29 +97,9 @@ Current detection accuracy ranges from 95% - 99%, which means that approximately
 In a large system it is not unusual to have a number of incorrectly identified code snippets.
 The goal of Sigrid's AI Governance is not to identify every single AI-generated code snippet correctly, but to 
 provide high level insights at portfolio level with enough accuracy (>95%) to perform AI Governance activities.
-Below are the currently supported Programming Languages and Large Language Models.
 
-Programming Languages:
-- Java
-- Python
-- C#
-- TypeScript (coming soon)
-
-Supported Large Language Models:
-- OpenAI GPT-4o
-- OpenAI GPT-4.1
-- OpenAI GPT-5
-- OpenAI GPT-5.2
-- Claude Sonnet 3.5
-- Claude Sonnet 4
-- Claude Sonnet 4.5
-- Claude Opus 4.5
-
-Support for new models happens quarterly.
-
-**AI Technology Detection**
-
-Sigrid supports over 300 checks to identify AI technologies in Python, Java and C#.
+The [technology support documentation](../reference/technology-support.md) contains more information about which
+technologies are currently supported by this feature.
 
 ## Frequently asked questions
 

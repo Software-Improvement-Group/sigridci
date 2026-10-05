@@ -3,10 +3,10 @@ Sigrid release notes
 
 SIG uses [continuous delivery](https://en.wikipedia.org/wiki/Continuous_delivery), meaning that every change to Sigrid or the underlying analysis is released once our development pipeline has completed. On average, we release somewhere between 10 and 20 times per day. This page therefore doesn't list every single change, since that would quickly lead to an excessively long list of small changes. Instead, this page lists Sigrid and analysis changes that we consider noteworthy for the typical Sigrid user.
 
-   ### October 5, 2026
+### October 5, 2026
 
-- **Rules management (beta):** Administrators can now exclude a noisy security rule for the entire portfolio, directly from a finding, and review all excluded rules on the new Rules Management page. This saves every team from dealing with the same false positives separately. See [Rules management](../capabilities/portfolio-rules-management.md).
-
+- **Rules management:** Administrators can now exclude a noisy security rule for the entire portfolio, directly from a finding, and review all excluded rules on the new Rules Management page. This saves every team from dealing with the same false positives separately. See [Rules management](../capabilities/portfolio-rules-management.md).
+- **Technology support:** Sigrid now also supports security analysis [Erlang](https://www.erlang.org), on top of the support for maintainability and architecture that was added last month.
 
 ### October 1, 2026
 
