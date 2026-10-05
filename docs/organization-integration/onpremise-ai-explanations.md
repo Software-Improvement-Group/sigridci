@@ -45,7 +45,7 @@ Notes:
 1. The image follows the same pattern as in the [OSH knowledge base updater](onpremise-osh-knowledgebase-updater.md): specify the `softwareimprovementgroup/ai-explanation-service` repository and pin a specific `image.tag` — the example shows a real tag from March 2026 — for instance using Renovate to update the tag regularly. The registry used is the same as for the other Sigrid images, as described in [Kubernetes deployment](onpremise-kubernetes.md#a-docker-image-registry).
 2. The username and password in the secret are only used for authentication between `sigrid-api` and the AI Explanation Service. Their values are chosen by you; they only need to match on both sides, because the same secret is mounted by both services (see below).
 
-As with all secrets in Sigrid's Helm chart, there are two ways to provide this secret: let the Helm chart create it (`secret.create: true` with inline `data`), or create it yourself and reference it (`secret.create: false` and `secret.secretName: "some-name"`). Referencing an existing secret is useful if you manage credentials with a secret management solution such as the External Secrets Operator, as done in SIG's own on-premise deployment:
+As with all secrets in Sigrid's Helm chart, there are two ways to provide this secret: let the Helm chart create it (`secret.create: true` with inline `data`), or create it yourself and reference it (`secret.create: false` and `secret.secretName: "some-name"`). Referencing an existing secret is useful if you manage credentials with a secret management solution such as the External Secrets Operator:
 
 {% raw %}
 ```yaml
