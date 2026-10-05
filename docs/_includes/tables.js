@@ -12,9 +12,12 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-function toggleRowVisibility(technologySupportTable, categoryIndex, withoutText) {
+function toggleRowVisibility(technologySupportTable, categoryIndex, withoutText, inverse=false) {
     for (const row of technologySupportTable.querySelectorAll("tr")) {
-        const unavailable = withoutText && row.innerText.indexOf(withoutText) !== -1;
+        let unavailable = withoutText && row.innerText.indexOf(withoutText) !== -1;
+        if (inverse) {
+            unavailable = !unavailable;
+        }
         row.querySelectorAll("td").forEach(td => td.classList.toggle("unavailable", unavailable));
     }
 
@@ -29,10 +32,11 @@ document.addEventListener("DOMContentLoaded", () => {
     const table = document.querySelector(".technologySupportTable");
 
     if (table) {
-        if (technologySupportLinks.length === 3) {
+        if (technologySupportLinks.length >= 4) {
             technologySupportLinks[0].addEventListener("click", e => toggleRowVisibility(table, 0, ""));
             technologySupportLinks[1].addEventListener("click", e => toggleRowVisibility(table, 1, "(1)"));
             technologySupportLinks[2].addEventListener("click", e => toggleRowVisibility(table, 2, "(4)"));
+            technologySupportLinks[3].addEventListener("click", e => toggleRowVisibility(table, 3, "Guardrails", true));
         }
 
         toggleRowVisibility(table, 0, "");
