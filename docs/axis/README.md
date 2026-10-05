@@ -14,7 +14,12 @@ Sigrid Core already has those answers. Sigrid Axis puts them inside the agent's 
 
 Sigrid Core is the analysis platform you may already know: it measures maintainability, architecture, security, reliability, and open source health, and it keeps the findings, ratings, and dependency graphs you see in the Sigrid dashboards and in [Sigrid CI](../sigridci-integration/using-sigridci.md).
 
-Sigrid Axis brings that analysis to AI coding agents. It consists of the Sigrid Axis MCP server, which gives an agent tools that read from Sigrid Core and write triage decisions back to it, and a set of skills, which give the agent procedures for using those tools. MCP and skills are open standards, so Axis works in any agentic tool that supports them. Axis does not analyze anything on its own. Every rating, finding, and graph edge an agent sees through Axis comes from Sigrid Core, and every status it writes back shows up in Sigrid Core.
+Sigrid Axis brings that analysis to AI coding agents. It consists of:
+
+- the Sigrid Axis MCP server, which gives an agent tools that read from Sigrid Core and write triage decisions back to it;
+- a set of skills, which give the agent procedures for using those tools. 
+
+MCP and skills are open standards, so Axis works in any agentic tool that supports them. Axis does not analyze anything on its own. Every rating, finding, and graph edge an agent sees through Axis comes from Sigrid Core, and every status it writes back shows up in Sigrid Core.
 
 Axis works with Sigrid On-Premise too, through the [on-premise Sigrid Axis MCP server](../organization-integration/onpremise-mcp.md).
 
