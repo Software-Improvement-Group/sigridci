@@ -48,7 +48,7 @@ Install the plugin, then run `setup` in the repository:
 
 Start with a clean working tree, up to date with the baseline branch. If you start on the baseline branch, `autofix` creates a new branch for the run.
 
-Run the diagnosis on a reasoning model, since deciding whether a boundary is in the right place is judgment about how your system is meant to work. `autofix` can run on a mid-sized model when the plan is a move or a reroute, because it works from the numbers in the plan. See [LLM model selection](../../axis/README.md#llm-model-selection).
+Run `diagnose` on a reasoning model, because deciding where a boundary belongs takes judgment about your system. `autofix` can run on a mid-sized model when the plan is a move or a reroute, since it follows the numbers in the plan. See [Choose a model](README.md#choose-a-model).
 {: .model }
 
 ## What a session looks like
