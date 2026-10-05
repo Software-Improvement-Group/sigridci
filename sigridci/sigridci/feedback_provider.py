@@ -21,13 +21,13 @@ from .objective import Objective
 from .publish_options import PublishOptions
 from .reports.architecture_markdown_report import ArchitectureMarkdownReport
 from .reports.architecture_text_report import ArchitectureTextReport
-from .reports.inline_results_report import ArchitectureInlineResultsReport, MaintainabilityInlineResultsReport, \
-    OpenSourceHealthInlineResultsReport, SecurityInlineResultsReport
 from .reports.ascii_art_report import AsciiArtReport
 from .reports.azure_pull_request_report import AzurePullRequestReport
 from .reports.bitbucket_pull_request_report import BitBucketPullRequestReport
 from .reports.github_pull_request_report import GitHubPullRequestReport
 from .reports.gitlab_pull_request_report import GitLabPullRequestReport
+from .reports.inline_results_report import ArchitectureInlineResultsReport, MaintainabilityInlineResultsReport, \
+    OpenSourceHealthInlineResultsReport, SecurityInlineResultsReport, InlineResultsReport
 from .reports.junit_format_report import JUnitFormatReport
 from .reports.maintainability_markdown_report import MaintainabilityMarkdownReport
 from .reports.osh_markdown_report import OpenSourceHealthMarkdownReport

@@ -65,7 +65,8 @@ class ApiCaller:
                 UploadLog.log(f"The system no longer exists (HTTP status {e.code} for {e.url})")
             sys.exit(1)
         elif e.code in (500, 502):
-            body = e.read().decode("utf8")
+            body = e.read()
+            body = body.decode("utf8") if isinstance(body, bytes) else body
             UploadLog.log(f"Sigrid was unable to handle your request (HTTP status {e.code} for {e.url}):\n{body}")
             sys.exit(1)
         else:

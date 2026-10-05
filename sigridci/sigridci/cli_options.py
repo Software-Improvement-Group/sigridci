@@ -15,8 +15,7 @@
 import sys
 from argparse import SUPPRESS, ArgumentParser
 
-from .capability import CAPABILITY_SHORT_NAMES
-
+from .capability import CAPABILITY_SHORT_NAMES, Capability
 
 DEFAULT_CAPABILITIES = "maintainability,osh,security"
 CAPABILITY_HELP = ", ".join(CAPABILITY_SHORT_NAMES.keys())

@@ -100,7 +100,7 @@ class Platform:
         encodeParam = lambda value: urllib.parse.quote(value, safe="")
         repo = urllib.parse.urlsplit(os.environ["BUILD_REPOSITORY_URI"])
         host = repo.hostname if repo.port is None else f"{repo.hostname}:{repo.port}"
-        repoUrl = repo._replace(netloc=host).geturl()
+        repoUrl = repo._replace(netloc=str(host)).geturl()
         branch = encodeParam(os.environ["SYSTEM_PULLREQUEST_SOURCEBRANCH"].removeprefix("refs/heads/"))
         return f"{repoUrl}?path={encodeParam(file)}&version=GB{branch}&line={line}"
 
