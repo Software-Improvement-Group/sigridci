@@ -16,9 +16,8 @@
 
 from argparse import ArgumentParser, SUPPRESS, Namespace
 
-from sigridci.cli_options import addPublishArguments, parseCapabilities
+from sigridci.cli_options import addPublishArguments, parseCapabilities, runAnalysis
 from sigridci.publish_options import PublishOptions, RunMode
-from sigridci.sigridci_runner import runAnalysis
 
 
 def parsePublishOptions(args: Namespace) -> PublishOptions:

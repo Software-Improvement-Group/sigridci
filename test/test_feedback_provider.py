@@ -44,10 +44,10 @@ class FeedbackProviderTest(TestCase):
     def testGenerateReportsBasedOnCapability(self):
         tempDir = tempfile.mkdtemp()
         options = PublishOptions("aap", "noot", RunMode.FEEDBACK_ONLY, outputDir=tempDir)
+        options.capabilities = [OPEN_SOURCE_HEALTH]
 
-        oshFeedback = FeedbackProvider(OPEN_SOURCE_HEALTH, options, {})
-        oshFeedback.analysisId = "1234"
-        oshFeedback.feedback = {"components" : [], "metadata" : {"timestamp" : "2025-09-29"}}
+        oshFeedback = FeedbackProvider("1234", options, {})
+        oshFeedback.registerFeedback(OPEN_SOURCE_HEALTH, {"components" : [], "metadata" : {"timestamp" : "2025-09-29"}})
         oshFeedback.generateReports()
 
         self.assertTrue(os.path.exists(f"{tempDir}/osh-feedback.md"))
@@ -63,10 +63,10 @@ class FeedbackProviderTest(TestCase):
     def testInlineResultsPrintsJsonInsteadOfWritingFiles(self):
         tempDir = tempfile.mkdtemp()
         options = PublishOptions("aap", "noot", RunMode.FEEDBACK_ONLY, outputDir=tempDir, inlineResults=True)
+        options.capabilities = [OPEN_SOURCE_HEALTH]
 
-        oshFeedback = FeedbackProvider(OPEN_SOURCE_HEALTH, options, {})
-        oshFeedback.analysisId = "1234"
-        oshFeedback.feedback = {"components": [], "metadata": {"timestamp": "2025-09-29"}}
+        oshFeedback = FeedbackProvider("1234", options, {})
+        oshFeedback.registerFeedback(OPEN_SOURCE_HEALTH, {"components": [], "metadata": {"timestamp": "2025-09-29"}})
 
         with contextlib.redirect_stdout(io.StringIO()) as output:
             objectiveMet = oshFeedback.generateReports()
@@ -83,7 +83,7 @@ class FeedbackProviderTest(TestCase):
     def testGetMaintainabilityObjective(self):
         tempDir = tempfile.mkdtemp()
         options = PublishOptions("aap", "noot", RunMode.FEEDBACK_ONLY, outputDir=tempDir)
-        feedbackProvider = FeedbackProvider(MAINTAINABILITY, options, {"MAINTAINABILITY" : 4.0})
+        feedbackProvider = FeedbackProvider("1234", options, {"MAINTAINABILITY" : 4.0})
 
         self.assertEqual({"MAINTAINABILITY" : 4.0}, feedbackProvider.objectives)
 
@@ -91,27 +91,27 @@ class FeedbackProviderTest(TestCase):
         tempDir = tempfile.mkdtemp()
         options = PublishOptions("aap", "noot", RunMode.FEEDBACK_ONLY, outputDir=tempDir)
         objectives = {"MAINTAINABILITY_UNIT_SIZE" : 4.0, "UNIT_COMPLEXITY" : 5.0}
-        feedbackProvider = FeedbackProvider(MAINTAINABILITY, options, objectives)
+        feedbackProvider = FeedbackProvider("1234", options, objectives)
 
         self.assertEqual({"UNIT_SIZE" : 4.0, "UNIT_COMPLEXITY" : 5.0}, feedbackProvider.objectives)
 
     def testDefaultMaintainabilityObjectiveIfNoneIsSet(self):
         tempDir = tempfile.mkdtemp()
         options = PublishOptions("aap", "noot", RunMode.FEEDBACK_ONLY, outputDir=tempDir)
-        feedbackProvider = FeedbackProvider(MAINTAINABILITY, options, {})
+        feedbackProvider = FeedbackProvider("1234", options, {})
 
         self.assertEqual({"MAINTAINABILITY" : 3.5}, feedbackProvider.objectives)
 
     def testSetDefaultOshVulnerabilityObjective(self):
         tempDir = tempfile.mkdtemp()
         options = PublishOptions("aap", "noot", RunMode.FEEDBACK_ONLY, outputDir=tempDir)
-        feedbackProvider = FeedbackProvider(OPEN_SOURCE_HEALTH, options, {})
+        feedbackProvider = FeedbackProvider("1234", options, {})
 
         self.assertEqual({"OSH_MAX_SEVERITY" : "HIGH", "OSH_MAX_LICENSE_RISK" : None}, feedbackProvider.objectives)
 
     def testUseOshLicenseObjectiveIfAvailable(self):
         tempDir = tempfile.mkdtemp()
         options = PublishOptions("aap", "noot", RunMode.FEEDBACK_ONLY, outputDir=tempDir)
-        feedbackProvider = FeedbackProvider(OPEN_SOURCE_HEALTH, options, {"OSH_MAX_LICENSE_RISK" : "LOW"})
+        feedbackProvider = FeedbackProvider("1234", options, {"OSH_MAX_LICENSE_RISK" : "LOW"})
 
         self.assertEqual({"OSH_MAX_SEVERITY" : "HIGH", "OSH_MAX_LICENSE_RISK" : "LOW"}, feedbackProvider.objectives)

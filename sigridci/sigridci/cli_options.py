@@ -12,10 +12,17 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
+import os
 import sys
 from argparse import SUPPRESS, ArgumentParser
 
 from .capability import CAPABILITY_SHORT_NAMES, Capability
+from .platform import Platform
+from .publish_options import PublishOptions, RunMode
+from .sigrid_api_client import SigridApiClient
+from .sigridci_runner import SigridCiRunner
+from .upload_log import UploadLog
+
 
 DEFAULT_CAPABILITIES = "maintainability,osh,security"
 CAPABILITY_HELP = ", ".join(CAPABILITY_SHORT_NAMES.keys())
@@ -49,3 +56,31 @@ def addPublishArguments(parser: ArgumentParser) -> None:
     parser.add_argument("--disable-capability", type=str, help=f"Comma-separated list of capabilities to disable ({CAPABILITY_HELP}). Reverse of '--capability'.")
     parser.add_argument("--exclude", type=str, default="", help="Comma-separated list of files/directories to exclude.")
     parser.add_argument("--include", type=str, default="", help="Comma-separated list of files/directories to include.")
+
+
+def validateOptions(options: PublishOptions) -> None:
+    if not options.isValidSystemName():
+        maxNameLength = PublishOptions.SYSTEM_NAME_LENGTH.stop - (len(options.customer) + 1)
+        print(f"Invalid system name, system name should match '{PublishOptions.SYSTEM_NAME_PATTERN.pattern}' "
+              f", not completely numeric, and be {PublishOptions.SYSTEM_NAME_LENGTH.start} to {maxNameLength} characters long (inclusive).")
+        sys.exit(1)
+
+    if not options.isValidSubSystemName():
+        print(f"Invalid subsystem name, subsystem name should match '{PublishOptions.SUBSYSTEM_NAME_PATTERN.pattern}'"
+              ", must be at least two characters long and not contain consecutive dots or slashes.")
+        sys.exit(1)
+
+
+def runAnalysis(options: PublishOptions) -> None:
+    if not os.path.exists(options.sourceDir):
+        print(f"Source code directory not found: {options.sourceDir}")
+        sys.exit(1)
+
+    validateOptions(options)
+    Platform.checkEnvironment()
+
+    UploadLog.log("Starting Sigrid CI")
+    runner = SigridCiRunner(options, SigridApiClient(options))
+    exitCode = runner.run()
+    if options.runMode == RunMode.FEEDBACK_ONLY:
+        sys.exit(exitCode)

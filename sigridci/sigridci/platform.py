@@ -25,6 +25,7 @@ SECURITY_EXCLUDE_RULE_DOCS = f"{SCOPE_DOCS}#excluding-security-rules"
 SECURITY_EXCLUDE_FILE_DOCS = f"{SCOPE_DOCS}#excluding-files-and-directories-from-security-scanning"
 AQ_EXCLUDE_DOCS = f"{SCOPE_DOCS}#manually-removing-architecture-dependencies"
 AQ_UNDESIRABLE_DOCS = f"{SCOPE_DOCS}##highlighting-undesirable-dependencies"
+MISSING_SCOPE_URL = f"{DOCS_URL}/reference/analysis-scope-configuration.html#removing-the-scope-configuration-file"
 
 
 class Platform:
