@@ -118,18 +118,21 @@ class CombinedMarkdownFeedbackReport(Report):
             for summaryLine in fragment.getSummary(capabilityFeedback, options):
                 symbol = "✅" if fragment.isObjectiveSuccess(capabilityFeedback, options) else "❌"
                 md += f"- {symbol} **{fragment.getCapability().displayName}** {summaryLine}\n"
-        return md + "\n"
+        return f"{md}\n"
 
     def renderFindingsTable(self, findings: list[FeedbackFinding], options: PublishOptions) -> str:
         md = "| Risk | Finding | Details | Location | Actions |\n"
-        md += "|-----|---------|---------|----------|---------|\n"
-        for finding in findings:
+        md += "|------|---------|---------|----------|---------|\n"
+        for finding in findings[0:options.getMaxShownFindings()]:
             symbol = self.renderSeverity(finding)
             title = f"**{finding.capability.displayName}**{self.tableLineSeparator}{finding.title}"
             location = self.tableLineSeparator.join(self.renderLocation(loc, options) for loc in finding.locations)
             actions = self.renderActionLink(finding.capability)
             md += f"| {symbol} | {title} | {finding.details} | {location} | {actions} |\n"
-        return md + "\n\n"
+        if len(findings) > options.getMaxShownFindings():
+            remaining = len(findings) - options.getMaxShownFindings()
+            md += f"| ⚪️ | ... and {remaining} more findings | | | |\n"
+        return f"{md}\n"
 
     def renderDetailsStart(self, title) -> str:
         if Platform.isHtmlMarkdownSupported():

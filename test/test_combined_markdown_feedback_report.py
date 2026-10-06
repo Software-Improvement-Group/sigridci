@@ -41,15 +41,41 @@ class CombinedMarkdownFeedbackReportTest(TestCase):
             "SECURITY_MAX_SEVERITY" : "HIGH"
         }
 
+        self.feedback = {}
+        for capability in ALL_CAPABILITIES:
+            with open(f"test/testdata/examplesystem/{capability.shortName}.json", "r", encoding="utf8") as f:
+                self.feedback[capability] = json.load(f)
+
+
     @mock.patch.dict(os.environ, {"SIGRID_CI_MARKDOWN_HTML" : "false"})
     def testGenerateMarkdown(self):
         report = CombinedMarkdownFeedbackReport(self.defaultObjectives)
         report.decorateLinks = False
-        feedback = self.loadExampleSystemFeedback()
-        markdown = report.renderMarkdown("1234", feedback, self.options)
+        markdown = report.renderMarkdown("1234", self.feedback, self.options)
 
         expected = """
             # [Sigrid](https://sigrid-says.com) objectives check: ❌ Failed
+
+            - ✅ **Maintainability** ⏸️️  You are still below your objective of 4.0 stars.
+            - ✅ **Architecture** ⚠️  Your changes introduced architecture issues
+            - ❌ **Open Source Health** ❌️  You failed to meet your objective of having no medium-severity open source vulnerabilities.
+            - ❌ **Security** ⚠️  You did not meet your objective of having no 🟣 critical security findings
+            
+            #### Failed checks
+            
+            | Risk | Finding | Details | Location | Actions |
+            |------|---------|---------|----------|---------|
+            | 🟣 | **Security** • ??? | Hard coded password | Example2.java | [Exclude file](https://docs.sigrid-says.com/reference/analysis-scope-configuration.html#excluding-files-and-directories-from-security-scanning) • [Exclude rule](https://docs.sigrid-says.com/reference/analysis-scope-configuration.html#excluding-security-rules) |
+            | 🟠 | **Architecture** • Cyclic dependency | ??? |  | [Exclude](https://docs.sigrid-says.com/reference/analysis-scope-configuration.html#manually-removing-architecture-dependencies) |
+            | 🟠 | **Open Source Health** • org.apache.logging.log4j:log4j-core 2.17.0 contains known vulnerabilities | [GHSA-6hg6-v5c8-fphq](https://nvd.nist.gov/vuln/detail/CVE-2026-34477), [GHSA-vc5p-v9hr-52mj](https://nvd.nist.gov/vuln/detail/CVE-2025-68161), [GHSA-8489-44mv-ggj8](https://nvd.nist.gov/vuln/detail/CVE-2021-44832), [GHSA-3pxv-7cmr-fjr4](https://nvd.nist.gov/vuln/detail/CVE-2026-34480). | build.gradle | [Exclude](https://docs.sigrid-says.com/reference/analysis-scope-configuration.html#exclude-open-source-health-risks) |
+            | 🔴 | **Maintainability** • Duplication (Introduced) |  |  |  |
+            | 🔴 | **Maintainability** • Duplication (Introduced) |  |  |  |
+            | 🔴 | **Maintainability** • Duplication (Introduced) |  |  |  |
+            | 🔴 | **Maintainability** • Duplication (Introduced) |  |  |  |
+            | 🔴 | **Maintainability** • Duplication (Introduced) |  |  |  |
+            | 🔴 | **Maintainability** • Duplication (Introduced) |  |  |  |
+            | 🔴 | **Maintainability** • Duplication (Introduced) |  |  |  |
+            | ⚪️ | ... and 54 more findings | | | |
             
             ----
     
@@ -67,12 +93,9 @@ class CombinedMarkdownFeedbackReportTest(TestCase):
         pass
 
     @mock.patch.dict(os.environ, {"SIGRID_CI_MARKDOWN_HTML" : "false"})
-    def testExcludeCapabilitiesNotInScope(self):
+    def testPositiveFindings(self):
         pass
 
-    def loadExampleSystemFeedback(self) -> dict[Capability, dict]:
-        feedback = {}
-        for capability in ALL_CAPABILITIES:
-            with open(f"test/testdata/examplesystem/{capability.shortName}.json", "r", encoding="utf8") as f:
-                feedback[capability] = json.load(f)
-        return feedback
+    @mock.patch.dict(os.environ, {"SIGRID_CI_MARKDOWN_HTML" : "false"})
+    def testExcludeCapabilitiesNotInScope(self):
+        pass
