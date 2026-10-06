@@ -13,17 +13,24 @@
 # limitations under the License.
 
 import os
+from typing import Iterator
 
+from .markdown_fragment import MarkdownFragment, FeedbackFinding
 from .report import MarkdownRenderer
 from ..capability import ARCHITECTURE, Capability
 from ..platform import AQ_EXCLUDE_DOCS, AQ_UNDESIRABLE_DOCS, Platform
 from ..publish_options import PublishOptions
 
 
-class ArchitectureMarkdownReport(MarkdownRenderer):
-    FINDING_TYPES = {
-        "UNDESIRABLE" : "🔴 Undesirable dependency",
-        "CYCLIC" : "🟠 Cyclic dependency"
+class ArchitectureMarkdownReport(MarkdownRenderer, MarkdownFragment):
+    FINDING_NAMES = {
+        "UNDESIRABLE" : "Undesirable dependency",
+        "CYCLIC" : "Cyclic dependency"
+    }
+
+    FINDING_SEVERITY = {
+        "UNDESIRABLE" : "HIGH",
+        "CYCLIC" : "MEDIUM"
     }
 
     def __init__(self):
@@ -73,7 +80,7 @@ class ArchitectureMarkdownReport(MarkdownRenderer):
         md = "| Issue | Location |\n"
         md += "|---|---|\n"
         for finding in findings[0:options.getMaxShownFindings()]:
-            type = self.FINDING_TYPES[finding["qualification"]]
+            type = self.FINDING_NAMES[finding["qualification"]]
             activity = finding["activity"].title()
             source = self.formatDependencyLocation(finding["sourceHierarchy"], options) + self.formatLines(finding)
             target = self.formatDependencyLocation(finding["targetHierarchy"], options)
@@ -124,7 +131,7 @@ class ArchitectureMarkdownReport(MarkdownRenderer):
         return [
             dep
             for dep in dependencyFeedback
-            if dep["qualification"] in self.FINDING_TYPES and dep["activity"] in activity
+            if dep["qualification"] in self.FINDING_NAMES and dep["activity"] in activity
         ]
 
     def getPositiveFeedback(self, feedback):
@@ -135,3 +142,14 @@ class ArchitectureMarkdownReport(MarkdownRenderer):
 
     def getRemainingFeedback(self, feedback):
         return sum(feedback["remaining"].values())
+
+    def getFindings(self, feedback: dict, options: PublishOptions) -> Iterator[FeedbackFinding]:
+        return (self.toFinding(dep) for dep in self.getNegativeFeedback(feedback))
+
+    def getPositiveFindings(self, feedback: dict, options: PublishOptions) -> Iterator[FeedbackFinding]:
+        return (self.toFinding(dep) for dep in self.getPositiveFeedback(feedback))
+
+    def toFinding(self, dependency: dict) -> FeedbackFinding:
+        severity = self.FINDING_SEVERITY.get(dependency["qualification"]) or "UNKNOWN"
+        title = self.FINDING_NAMES.get(dependency["qualification"]) or dependency["qualification"].title()
+        return FeedbackFinding(severity, ARCHITECTURE, title, "???", [])

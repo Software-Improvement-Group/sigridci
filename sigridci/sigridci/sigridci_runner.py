@@ -161,6 +161,7 @@ class SigridCiRunner:
             for key, value in metadata.items():
                 if value:
                     print(f"    {key}:".ljust(40) + str(value))
+            print("")
 
     def prepareMetadata(self) -> None:
         getMetadataValue = lambda field: os.environ.get(field.lower(), "")

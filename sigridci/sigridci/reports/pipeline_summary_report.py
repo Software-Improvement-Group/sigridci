@@ -22,7 +22,7 @@ from ..publish_options import PublishOptions
 
 class PipelineSummaryReport(Report):
 
-    def __init__(self, markdownReport: MarkdownRenderer, *, output:TextIO = sys.stdout, ansiColors: bool = True):
+    def __init__(self, markdownReport: MarkdownRenderer, *, output: TextIO = sys.stdout, ansiColors: bool = True):
         self.markdownReport = markdownReport
         self.output = output
         self.ansiColors = ansiColors

@@ -17,6 +17,7 @@ import os
 import ssl
 import urllib.request
 
+from .combined_markdown_feedback_report import CombinedMarkdownFeedbackReport
 from .report import Report, MarkdownRenderer
 from ..api_caller import ApiCaller
 from ..publish_options import RunMode, PublishOptions
@@ -25,8 +26,8 @@ from ..upload_log import UploadLog
 
 class GitLabPullRequestReport(Report):
 
-    def __init__(self, markdownRenderer: MarkdownRenderer):
-        self.markdownRenderer = markdownRenderer
+    def __init__(self, masterReport: CombinedMarkdownFeedbackReport):
+        self.masterReport = masterReport
 
         certPath = os.getenv("SIGRID_GITLAB_CA_CERT_PATH")
         self.sslContext = ssl.create_default_context(cafile=certPath) if certPath else None
@@ -35,14 +36,14 @@ class GitLabPullRequestReport(Report):
         if self.isWithinGitLabMergeRequestPipeline(options):
             try:
                 existingCommentId = self.findExistingCommentId()
-                body = self.buildRequestBody(self.markdownRenderer.renderMarkdown(analysisId, feedback, options))
+                body = self.buildRequestBody(self.masterReport.renderMarkdown(analysisId, feedback, options))
 
                 if existingCommentId is None:
                     self.callAPI("POST", self.buildPostCommentURL(None), body)
-                    UploadLog.log(f"Published {self.markdownRenderer.getCapability().displayName} feedback to GitLab")
+                    UploadLog.log("Published feedback to GitLab")
                 else:
                     self.callAPI("PUT", self.buildPostCommentURL(existingCommentId), body)
-                    UploadLog.log(f"Updated existing GitLab {self.markdownRenderer.getCapability().displayName} feedback")
+                    UploadLog.log("Updated existing GitLab feedback")
             except SystemExit as e:
                 print(f"Failed to publish feedback to GitLab: {e}")
 
@@ -86,5 +87,4 @@ class GitLabPullRequestReport(Report):
                     return comment["id"]
 
     def isExistingComment(self, comment):
-        header = f"{self.markdownRenderer.getCapability().displayName} feedback"
-        return comment["body"].startswith(("# Sigrid", "# [Sigrid]")) and header.lower() in comment["body"].lower()
+        return comment["body"].startswith(("# Sigrid", "# [Sigrid]"))

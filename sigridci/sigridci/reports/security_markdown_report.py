@@ -13,7 +13,9 @@
 # limitations under the License.
 
 import os
+from typing import Iterator
 
+from .markdown_fragment import MarkdownFragment, FeedbackFinding, Location
 from .report import MarkdownRenderer
 from ..analysisresults.sarif_processor import SarifProcessor, FindingStatus
 from ..capability import SECURITY, Capability
@@ -22,7 +24,7 @@ from ..platform import SECURITY_EXCLUDE_RULE_DOCS, SECURITY_EXCLUDE_FILE_DOCS
 from ..publish_options import PublishOptions
 
 
-class SecurityMarkdownReport(MarkdownRenderer):
+class SecurityMarkdownReport(MarkdownRenderer, MarkdownFragment):
     SEVERITY_SYMBOLS = {
         "CRITICAL" : "🟣",
         "HIGH" : "🔴",
@@ -156,3 +158,15 @@ class SecurityMarkdownReport(MarkdownRenderer):
                     finding.status = FindingStatus.INTRODUCED
 
         return findings
+
+    def getFindings(self, feedback: dict, options: PublishOptions) -> Iterator[FeedbackFinding]:
+        findings = self.extractFindings(feedback)
+        for finding in self.processor.filterStatus(findings, FindingStatus.INTRODUCED, partOfObjective=False):
+            location = Location(finding.file, finding.line)
+            yield FeedbackFinding(finding.risk, SECURITY, "???", finding.description, [location])
+
+    def getPositiveFindings(self, feedback: dict, options: PublishOptions) -> Iterator[FeedbackFinding]:
+        findings = self.extractFindings(feedback)
+        for finding in self.processor.filterStatus(findings, FindingStatus.FIXED, partOfObjective=False):
+            location = Location(finding.file, finding.line)
+            yield FeedbackFinding(finding.risk, SECURITY, "???", finding.description, [location])

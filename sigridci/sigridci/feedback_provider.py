@@ -20,12 +20,12 @@ from .publish_options import PublishOptions
 from .reports.ascii_art_report import AsciiArtReport
 from .reports.azure_pull_request_report import AzurePullRequestReport
 from .reports.bitbucket_pull_request_report import BitBucketPullRequestReport
+from .reports.combined_markdown_feedback_report import CombinedMarkdownFeedbackReport
 from .reports.github_pull_request_report import GitHubPullRequestReport
 from .reports.gitlab_pull_request_report import GitLabPullRequestReport
 from .reports.inline_results_report import ArchitectureInlineResultsReport, MaintainabilityInlineResultsReport, \
     OpenSourceHealthInlineResultsReport, SecurityInlineResultsReport
 from .reports.junit_format_report import JUnitFormatReport
-from .reports.pipeline_summary_report import PipelineSummaryReport
 from .reports.report import Report
 from .reports.static_html_report import StaticHtmlReport
 
@@ -38,8 +38,6 @@ class FeedbackProvider:
         self.analysisId = "local"
         self.capabilityFeedback: dict[Capability, dict] = {}
         self.previousCapabilityFeedback: dict[Capability, dict] = {}
-        self.feedback = None
-        self.previousFeedback = None
 
     def prepareObjectives(self, original: dict) -> dict:
         objectives = original.copy()
@@ -72,22 +70,24 @@ class FeedbackProvider:
                 report.previousFeedback = self.previousCapabilityFeedback.get(capability)
                 report.generate(self.analysisId, self.capabilityFeedback[capability], self.options)
 
-        for report in self.getCrossCapabilityReports():
+        masterReport = CombinedMarkdownFeedbackReport(self.objectives)
+
+        for report in self.getCrossCapabilityReports(masterReport):
             report.previousFeedback = self.previousCapabilityFeedback
             report.generate(self.analysisId, self.capabilityFeedback, self.options)
 
-        return exitCode
+        return masterReport.getExitCode(self.capabilityFeedback, self.options)
 
-    def getCrossCapabilityReports(self) -> list[Report]:
+    def getCrossCapabilityReports(self, masterReport: CombinedMarkdownFeedbackReport) -> list[Report]:
+        if not self.options.inlineResults:
+            return []
+
         return [
-            generic markdown,
-            generic text,
-            GitHubPullRequestReport(markdownReport),
-            GitLabPullRequestReport(markdownReport),
-            AzurePullRequestReport(markdownReport),
-            BitBucketPullRequestReport(markdownReport),
-            PipelineSummaryReport(markdownReport)
-            pipeline summary
+            masterReport,
+            GitHubPullRequestReport(masterReport),
+            GitLabPullRequestReport(masterReport),
+            AzurePullRequestReport(masterReport),
+            BitBucketPullRequestReport(masterReport)
         ]
 
     def getCapabilityReports(self) -> dict[Capability, list[Report]]:

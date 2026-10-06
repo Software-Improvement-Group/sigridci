@@ -13,8 +13,9 @@
 # limitations under the License.
 
 import os
-from typing import Union
+from typing import Union, Iterator
 
+from .markdown_fragment import MarkdownFragment, FeedbackFinding, Location
 from .report import MarkdownRenderer
 from ..analysisresults.cyclonedx_processor import CycloneDXProcessor
 from ..capability import OPEN_SOURCE_HEALTH, Capability
@@ -23,7 +24,7 @@ from ..platform import OSH_EXCLUDE_DOCS
 from ..publish_options import PublishOptions
 
 
-class OpenSourceHealthMarkdownReport(MarkdownRenderer):
+class OpenSourceHealthMarkdownReport(MarkdownRenderer, MarkdownFragment):
     def __init__(self, options: PublishOptions, vulnerabilityObjective: Union[str, None] = "HIGH", licenseObjective: Union[str, None] = None):
         super().__init__()
         self.options = options
@@ -171,3 +172,23 @@ class OpenSourceHealthMarkdownReport(MarkdownRenderer):
         libraries = list(self.processor.extractLibraries(feedback))
         fixable = [lib for lib in libraries if not lib.meetsObjectives() and lib.fixable]
         return len(fixable) == 0
+
+    def getFindings(self, feedback: dict, options: PublishOptions) -> Iterator[FeedbackFinding]:
+        for lib in self.processor.extractLibraries(feedback):
+            transitive = " (Transitive)" if lib.transitive else ""
+            name = f"{lib.name} {lib.version}{transitive}"
+            locations = [Location(file) for file in lib.files]
+
+            if not lib.vulnerabilityRisk.meetsObjective:
+                title = f"{name} contains known vulnerabilities"
+                formatVulnLink = lambda vuln: f"[{vuln.id}]({vuln.link})" if vuln.link else vuln.id
+                details = ", ".join(formatVulnLink(vuln) for vuln in lib.vulnerabilities) + "."
+                yield FeedbackFinding(lib.vulnerabilityRisk.severity, OPEN_SOURCE_HEALTH, title, details, locations)
+
+            if not lib.licenseRisk.meetsObjective:
+                title = f"{name} has license risks"
+                details = "License: " + ", ".join(lib.licenses)
+                yield FeedbackFinding(lib.licenseRisk.severity, OPEN_SOURCE_HEALTH, title, details, locations)
+
+    def getPositiveFindings(self, feedback: dict, options: PublishOptions) -> Iterator[FeedbackFinding]:
+        return []

@@ -55,7 +55,7 @@ class FeedbackProviderTest(TestCase):
 
         securityFeedback = FeedbackProvider(SECURITY, options, {})
         securityFeedback.analysisId = "1234"
-        securityFeedback.feedback = {"runs" : []}
+        securityFeedback.registerFeedback(OPEN_SOURCE_HEALTH, {"runs" : []})
         securityFeedback.generateReports()
 
         self.assertTrue(os.path.exists(f"{tempDir}/security-feedback.md"))

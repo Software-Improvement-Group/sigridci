@@ -18,7 +18,8 @@ import ssl
 import urllib.parse
 import urllib.request
 
-from .report import Report, MarkdownRenderer
+from .combined_markdown_feedback_report import CombinedMarkdownFeedbackReport
+from .report import Report
 from ..api_caller import ApiCaller
 from ..publish_options import RunMode, PublishOptions
 from ..upload_log import UploadLog
@@ -27,8 +28,8 @@ from ..upload_log import UploadLog
 class AzurePullRequestReport(Report):
     AZURE_API_VERSION = "6.0"
 
-    def __init__(self, markdownRenderer: MarkdownRenderer):
-        self.markdownRenderer = markdownRenderer
+    def __init__(self, masterReport: CombinedMarkdownFeedbackReport):
+        self.masterReport = masterReport
 
         certPath = os.getenv("SIGRID_AZURE_CA_CERT_PATH")
         self.sslContext = ssl.create_default_context(cafile=certPath) if certPath else None
@@ -39,7 +40,7 @@ class AzurePullRequestReport(Report):
 
         UploadLog.log("Sending feedback to Azure DevOps API")
 
-        markdown = self.markdownRenderer.renderMarkdown(analysisId, feedback, options)
+        markdown = self.masterReport.renderMarkdown(analysisId, feedback, options)
 
         try:
             # We want to update the existing comment, to avoid spamming people with new
@@ -49,10 +50,10 @@ class AzurePullRequestReport(Report):
 
             if existingId == None:
                 self.callAzure("POST", self.buildRequestBody(markdown, feedback, options), None)
-                UploadLog.log(f"Published new {self.markdownRenderer.getCapability().displayName} feedback to Azure DevOps")
+                UploadLog.log("Published new feedback to Azure DevOps")
             else:
                 self.callAzure("PATCH", self.buildRequestBody(markdown, feedback, options), existingId)
-                UploadLog.log(f"Updated existing {self.markdownRenderer.getCapability().displayName} feedback in Azure DevOps")
+                UploadLog.log("Updated existing feedback in Azure DevOps")
         except SystemExit as e:
             print(f"Failed to publish feedback to Azure DevOps: {e}")
 
@@ -74,8 +75,7 @@ class AzurePullRequestReport(Report):
     def isExistingComment(self, comment):
         if not comment.get("content"):
             return False
-        header = f"{self.markdownRenderer.getCapability().displayName} feedback".lower()
-        return comment["content"].startswith(("# Sigrid", "# [Sigrid]")) and header in comment["content"].lower()
+        return comment["content"].startswith(("# Sigrid", "# [Sigrid]"))
 
     def callAzure(self, method, body, threadId):
         request = urllib.request.Request(self.buildURL(threadId), json.dumps(body).encode("utf-8"))
@@ -108,7 +108,7 @@ class AzurePullRequestReport(Report):
         }
 
     def getCommentStatus(self, feedback, options):
-        if self.markdownRenderer.isObjectiveSuccess(feedback, options):
+        if self.masterReport.getExitCode(feedback, options) == 0:
             return "closed"
         else:
             return "active"

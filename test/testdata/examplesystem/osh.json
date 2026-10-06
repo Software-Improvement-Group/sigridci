@@ -1,0 +1,407 @@
+{
+    "version": 1,
+    "metadata": {
+        "tools": {
+            "components": [
+                {
+                    "name": "Sigrid CI",
+                    "type": "application",
+                    "version": "857624d",
+                    "manufacturer": {
+                        "url": [
+                            "https://softwareimprovementgroup.com"
+                        ],
+                        "name": "Software Improvement Group BV"
+                    }
+                }
+            ]
+        },
+        "supplier": {
+            "name": "sigdelivery"
+        },
+        "component": {
+            "name": "sigrid-ci-example-dennis",
+            "type": "application"
+        },
+        "timestamp": "2026-10-06T11:58:10Z",
+        "properties": [
+            {
+                "name": "sigrid:ci-run-id",
+                "value": "06c681bd-9a73-4614-a84a-8d1a6dd8c927"
+            },
+            {
+                "name": "OSHModelVersion",
+                "value": "2026_OSH_SIG"
+            },
+            {
+                "name": "sigrid:ratings:system",
+                "value": "4.399000000000001"
+            },
+            {
+                "name": "sigrid:ratings:vulnerability",
+                "value": "4.5"
+            },
+            {
+                "name": "sigrid:ratings:licenses",
+                "value": "5.5"
+            },
+            {
+                "name": "sigrid:ratings:activity",
+                "value": "5.5"
+            },
+            {
+                "name": "sigrid:ratings:freshness",
+                "value": "1.5"
+            },
+            {
+                "name": "sigrid:ratings:management",
+                "value": "5.5"
+            }
+        ],
+        "manufacturer": {
+            "url": [
+                "https://softwareimprovementgroup.com"
+            ],
+            "name": "Software Improvement Group BV"
+        }
+    },
+    "bomFormat": "CycloneDX",
+    "components": [
+        {
+            "name": "log4j-core",
+            "purl": "pkg:maven/org.apache.logging.log4j/log4j-core@2.17.0",
+            "type": "library",
+            "group": "org.apache.logging.log4j",
+            "bom-ref": "pkg:maven/org.apache.logging.log4j/log4j-core@2.17.0?package-id=aab41458fae73630",
+            "version": "2.17.0",
+            "evidence": {
+                "occurrences": [
+                    {
+                        "location": "build.gradle"
+                    }
+                ]
+            },
+            "licenses": [
+                {
+                    "license": {
+                        "name": "Apache-2.0"
+                    }
+                }
+            ],
+            "properties": [
+                {
+                    "name": "sigrid:risk:vulnerability",
+                    "value": "MEDIUM"
+                },
+                {
+                    "name": "sigrid:risk:legal",
+                    "value": "NONE"
+                },
+                {
+                    "name": "sigrid:risk:freshness",
+                    "value": "HIGH"
+                },
+                {
+                    "name": "sigrid:risk:activity",
+                    "value": "NONE"
+                },
+                {
+                    "name": "sigrid:risk:stability",
+                    "value": "NONE"
+                },
+                {
+                    "name": "sigrid:risk:management",
+                    "value": "NONE"
+                },
+                {
+                    "name": "sigrid:releaseDate",
+                    "value": "2021-12-18T01:58:10Z"
+                },
+                {
+                    "name": "sigrid:next:version",
+                    "value": "2.17.1"
+                },
+                {
+                    "name": "sigrid:next:releaseDate",
+                    "value": "2021-12-27T23:30:54Z"
+                },
+                {
+                    "name": "sigrid:latest:version",
+                    "value": "2.26.1"
+                },
+                {
+                    "name": "sigrid:latest:releaseDate",
+                    "value": "2026-06-29T07:44:25Z"
+                },
+                {
+                    "name": "sigrid:transitive",
+                    "value": "DIRECT"
+                }
+            ],
+            "externalReferences": [
+                {
+                    "url": "/sigdelivery/sigrid-ci-example-dennis/-/open-source-health/",
+                    "type": "website"
+                }
+            ]
+        },
+        {
+            "name": "javalin",
+            "purl": "pkg:maven/io.javalin/javalin@6.5.0",
+            "type": "library",
+            "group": "io.javalin",
+            "bom-ref": "pkg:maven/io.javalin/javalin@6.5.0?package-id=a41464619ef6d754",
+            "version": "6.5.0",
+            "evidence": {
+                "occurrences": [
+                    {
+                        "location": "build.gradle"
+                    }
+                ]
+            },
+            "licenses": [
+                {
+                    "license": {
+                        "name": "Apache-2.0"
+                    }
+                }
+            ],
+            "properties": [
+                {
+                    "name": "sigrid:risk:vulnerability",
+                    "value": "NONE"
+                },
+                {
+                    "name": "sigrid:risk:legal",
+                    "value": "NONE"
+                },
+                {
+                    "name": "sigrid:risk:freshness",
+                    "value": "LOW"
+                },
+                {
+                    "name": "sigrid:risk:activity",
+                    "value": "NONE"
+                },
+                {
+                    "name": "sigrid:risk:stability",
+                    "value": "NONE"
+                },
+                {
+                    "name": "sigrid:risk:management",
+                    "value": "NONE"
+                },
+                {
+                    "name": "sigrid:releaseDate",
+                    "value": "2025-03-09T10:54:16Z"
+                },
+                {
+                    "name": "sigrid:next:version",
+                    "value": "6.6.0"
+                },
+                {
+                    "name": "sigrid:next:releaseDate",
+                    "value": "2025-04-13T08:59:47Z"
+                },
+                {
+                    "name": "sigrid:latest:version",
+                    "value": "7.2.3"
+                },
+                {
+                    "name": "sigrid:latest:releaseDate",
+                    "value": "2026-08-12T01:57:48Z"
+                },
+                {
+                    "name": "sigrid:transitive",
+                    "value": "DIRECT"
+                }
+            ],
+            "externalReferences": [
+                {
+                    "url": "/sigdelivery/sigrid-ci-example-dennis/-/open-source-health/",
+                    "type": "website"
+                }
+            ]
+        }
+    ],
+    "specVersion": "1.6",
+    "serialNumber": "urn:uuid:5e9a481e-5810-494b-9235-fd62fbc15a67",
+    "vulnerabilities": [
+        {
+            "id": "GHSA-6hg6-v5c8-fphq",
+            "cwes": [
+                297,
+                297
+            ],
+            "source": {
+                "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-34477"
+            },
+            "affects": [
+                {
+                    "ref": "pkg:maven/org.apache.logging.log4j/log4j-core@2.17.0?package-id=aab41458fae73630"
+                }
+            ],
+            "bom-ref": "f243ec32-1a74-4bec-8999-f22ed21b241f",
+            "ratings": [
+                {
+                    "score": 6.3,
+                    "method": "CVSSv3",
+                    "severity": "medium"
+                }
+            ],
+            "updated": "2026-09-10T03:50:43Z",
+            "published": "2026-04-10T18:31:17Z",
+            "references": [
+                {
+                    "id": "GHSA-6hg6-v5c8-fphq",
+                    "source": {
+                        "url": "https://github.com/advisories/GHSA-6hg6-v5c8-fphq",
+                        "name": "GitHub Advisory Database"
+                    }
+                },
+                {
+                    "id": "CWE-297",
+                    "source": {
+                        "url": "https://cwe.mitre.org/data/definitions/297.html",
+                        "name": "MITRE CWE"
+                    }
+                }
+            ],
+            "description": "Apache Log4j Core: `verifyHostName` attribute silently ignored in TLS configuration"
+        },
+        {
+            "id": "GHSA-vc5p-v9hr-52mj",
+            "cwes": [
+                297,
+                297
+            ],
+            "source": {
+                "url": "https://nvd.nist.gov/vuln/detail/CVE-2025-68161"
+            },
+            "affects": [
+                {
+                    "ref": "pkg:maven/org.apache.logging.log4j/log4j-core@2.17.0?package-id=aab41458fae73630"
+                }
+            ],
+            "bom-ref": "a39fb9c2-c589-4425-ac63-0d8b47ae031b",
+            "ratings": [
+                {
+                    "score": 6.3,
+                    "method": "CVSSv3",
+                    "severity": "medium"
+                }
+            ],
+            "updated": "2026-09-10T03:50:32Z",
+            "published": "2025-12-18T21:31:44Z",
+            "references": [
+                {
+                    "id": "CWE-297",
+                    "source": {
+                        "url": "https://cwe.mitre.org/data/definitions/297.html",
+                        "name": "MITRE CWE"
+                    }
+                },
+                {
+                    "id": "GHSA-vc5p-v9hr-52mj",
+                    "source": {
+                        "url": "https://github.com/advisories/GHSA-vc5p-v9hr-52mj",
+                        "name": "GitHub Advisory Database"
+                    }
+                }
+            ],
+            "description": "Apache Log4j does not verify the TLS hostname in its Socket Appender"
+        },
+        {
+            "id": "GHSA-8489-44mv-ggj8",
+            "cwes": [
+                20,
+                20,
+                74
+            ],
+            "source": {
+                "url": "https://nvd.nist.gov/vuln/detail/CVE-2021-44832"
+            },
+            "affects": [
+                {
+                    "ref": "pkg:maven/org.apache.logging.log4j/log4j-core@2.17.0?package-id=aab41458fae73630"
+                }
+            ],
+            "bom-ref": "fd8dc832-27fd-4ae4-9a49-8e091ba5d654",
+            "ratings": [
+                {
+                    "score": 6.6,
+                    "method": "CVSSv3",
+                    "severity": "medium"
+                }
+            ],
+            "updated": "2026-06-09T10:45:14Z",
+            "published": "2022-01-04T16:14:20Z",
+            "references": [
+                {
+                    "id": "CWE-20",
+                    "source": {
+                        "url": "https://cwe.mitre.org/data/definitions/20.html",
+                        "name": "MITRE CWE"
+                    }
+                },
+                {
+                    "id": "CWE-74",
+                    "source": {
+                        "url": "https://cwe.mitre.org/data/definitions/74.html",
+                        "name": "MITRE CWE"
+                    }
+                },
+                {
+                    "id": "GHSA-8489-44mv-ggj8",
+                    "source": {
+                        "url": "https://github.com/advisories/GHSA-8489-44mv-ggj8",
+                        "name": "GitHub Advisory Database"
+                    }
+                }
+            ],
+            "description": "Improper Input Validation and Injection in Apache Log4j2"
+        },
+        {
+            "id": "GHSA-3pxv-7cmr-fjr4",
+            "cwes": [
+                116,
+                116
+            ],
+            "source": {
+                "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-34480"
+            },
+            "affects": [
+                {
+                    "ref": "pkg:maven/org.apache.logging.log4j/log4j-core@2.17.0?package-id=aab41458fae73630"
+                }
+            ],
+            "bom-ref": "40f89152-2c26-4f0d-a217-ab56935be184",
+            "ratings": [
+                {
+                    "score": 6.9,
+                    "method": "CVSSv3",
+                    "severity": "medium"
+                }
+            ],
+            "updated": "2026-09-10T03:50:42Z",
+            "published": "2026-04-10T18:31:17Z",
+            "references": [
+                {
+                    "id": "CWE-116",
+                    "source": {
+                        "url": "https://cwe.mitre.org/data/definitions/116.html",
+                        "name": "MITRE CWE"
+                    }
+                },
+                {
+                    "id": "GHSA-3pxv-7cmr-fjr4",
+                    "source": {
+                        "url": "https://github.com/advisories/GHSA-3pxv-7cmr-fjr4",
+                        "name": "GitHub Advisory Database"
+                    }
+                }
+            ],
+            "description": "Apache Log4j Core: Silent log event loss in XmlLayout due to unescaped XML 1.0 forbidden characters"
+        }
+    ]
+}

@@ -14,16 +14,17 @@
 
 import html
 import os
-from typing import Union
+from typing import Union, Iterator
 
-from .report import Report, MarkdownRenderer
+from .markdown_fragment import MarkdownFragment, FeedbackFinding
+from .report import MarkdownRenderer
 from ..capability import MAINTAINABILITY, Capability
 from ..objective import Objective, ObjectiveStatus
 from ..platform import Platform
 from ..publish_options import PublishOptions
 
 
-class MaintainabilityMarkdownReport(MarkdownRenderer):
+class MaintainabilityMarkdownReport(MarkdownRenderer, MarkdownFragment):
     MAX_OCCURRENCES = 3
 
     RISK_CATEGORY_SYMBOLS = {
@@ -39,7 +40,7 @@ class MaintainabilityMarkdownReport(MarkdownRenderer):
 
         if objectives is None:
             objectives = {"MAINTAINABILITY" : Objective.DEFAULT_RATING_OBJECTIVE}
-        self.objective = objectives
+        self.objective = {title: value for title, value in objectives.items() if title.startswith("MAINTAINABILITY")}
 
     def generate(self, analysisId: str, feedback: dict, options: PublishOptions) -> None:
         with open(self.getMarkdownFile(options), "w", encoding="utf-8") as f:
@@ -174,3 +175,15 @@ class MaintainabilityMarkdownReport(MarkdownRenderer):
 
     def isObjectiveSuccess(self, feedback: dict, options: PublishOptions) -> bool:
         return not ObjectiveStatus.WORSENED in self.getObjectiveStatuses(feedback)
+
+    def getFindings(self, feedback: dict, options: PublishOptions) -> Iterator[FeedbackFinding]:
+        for rc in self.filterRefactoringCandidates(feedback, self.BAD_CATEGORIES):
+            title = f"{self.formatMetricName(rc['metric'])} ({rc['category'].title()})"
+            details = ""
+            yield FeedbackFinding(rc["riskCategory"], MAINTAINABILITY, title, details, [])
+
+    def getPositiveFindings(self, feedback: dict, options: PublishOptions) -> Iterator[FeedbackFinding]:
+        for rc in self.filterRefactoringCandidates(feedback, self.GOOD_CATEGORIES):
+            title = f"{self.formatMetricName(rc['metric'])} ({rc['category'].title()})"
+            details = ""
+            yield FeedbackFinding(rc["riskCategory"], MAINTAINABILITY, title, details, [])
