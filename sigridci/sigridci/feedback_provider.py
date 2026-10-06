@@ -12,150 +12,103 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-import json
 import os
-import uuid
 
-from .capability import Capability, ARCHITECTURE, MAINTAINABILITY, OPEN_SOURCE_HEALTH, SECURITY
+from .capability import ARCHITECTURE, MAINTAINABILITY, OPEN_SOURCE_HEALTH, SECURITY, Capability
 from .objective import Objective
 from .publish_options import PublishOptions
-from .reports.architecture_markdown_report import ArchitectureMarkdownReport
-from .reports.architecture_text_report import ArchitectureTextReport
 from .reports.ascii_art_report import AsciiArtReport
 from .reports.azure_pull_request_report import AzurePullRequestReport
 from .reports.bitbucket_pull_request_report import BitBucketPullRequestReport
 from .reports.github_pull_request_report import GitHubPullRequestReport
 from .reports.gitlab_pull_request_report import GitLabPullRequestReport
 from .reports.inline_results_report import ArchitectureInlineResultsReport, MaintainabilityInlineResultsReport, \
-    OpenSourceHealthInlineResultsReport, SecurityInlineResultsReport, InlineResultsReport
+    OpenSourceHealthInlineResultsReport, SecurityInlineResultsReport
 from .reports.junit_format_report import JUnitFormatReport
-from .reports.maintainability_markdown_report import MaintainabilityMarkdownReport
-from .reports.osh_markdown_report import OpenSourceHealthMarkdownReport
-from .reports.osh_text_report import OpenSourceHealthTextReport
 from .reports.pipeline_summary_report import PipelineSummaryReport
-from .reports.report import MarkdownRenderer, Report
-from .reports.security_markdown_report import SecurityMarkdownReport
-from .reports.security_text_report import SecurityTextReport
+from .reports.report import Report
 from .reports.static_html_report import StaticHtmlReport
 
 
 class FeedbackProvider:
-    def __init__(self, capability: Capability, options: PublishOptions, objectives: dict):
-        self.capability = capability
+    def __init__(self, analysisId: str, options: PublishOptions, objectives: dict):
+        self.analysisId = analysisId
         self.options = options
         self.objectives = self.prepareObjectives(objectives)
         self.analysisId = "local"
+        self.capabilityFeedback: dict[Capability, dict] = {}
+        self.previousCapabilityFeedback: dict[Capability, dict] = {}
         self.feedback = None
         self.previousFeedback = None
 
-    def prepareObjectives(self, objectives: dict) -> dict:
-        if self.capability == MAINTAINABILITY:
-            return self.prepareMaintainabilityObjectives(objectives)
-        elif self.capability == OPEN_SOURCE_HEALTH:
-            return self.prepareOpenSourceHealthObjectives(objectives)
-        elif self.capability == SECURITY:
-            return {"SECURITY_MAX_SEVERITY" : objectives.get("SECURITY_MAX_SEVERITY", Objective.DEFAULT_FINDING_OBJECTIVE)}
-        elif self.capability == ARCHITECTURE:
-            return {"ARCHITECTURE_QUALITY" : objectives.get("ARCHITECTURE_QUALITY", Objective.DEFAULT_RATING_OBJECTIVE)}
-        else:
-            raise Exception(f"Unknown capability: {self.capability}")
+    def prepareObjectives(self, original: dict) -> dict:
+        objectives = original.copy()
 
-    def prepareMaintainabilityObjectives(self, objectives: dict) -> dict:
-        maintainabilityObjectives = {}
+        hasMaintainabilityObjective = any(metric for metric in objectives if metric.startswith("MAINTAINABILITY"))
+        if not hasMaintainabilityObjective:
+            objectives["MAINTAINABILITY"] = Objective.DEFAULT_RATING_OBJECTIVE
 
-        for metric in Objective.MAINTAINABILITY_METRICS:
-            if metric in objectives:
-                maintainabilityObjectives[metric] = objectives[metric]
-            elif f"MAINTAINABILITY_{metric}" in objectives:
-                maintainabilityObjectives[metric] = objectives[f"MAINTAINABILITY_{metric}"]
+        for defaultObjective in ["OSH_MAX_SEVERITY", "SECURITY_MAX_SEVERITY"]:
+            if not objectives.get(defaultObjective):
+                objectives[defaultObjective] = Objective.DEFAULT_FINDING_OBJECTIVE
 
-        if len(maintainabilityObjectives) == 0:
-            maintainabilityObjectives["MAINTAINABILITY"] = Objective.DEFAULT_RATING_OBJECTIVE
+        if not objectives.get("ARCHITECTURE_QUALITY"):
+            objectives["ARCHITECTURE_QUALITY"] = Objective.DEFAULT_RATING_OBJECTIVE
 
-        return maintainabilityObjectives
+        return objectives
 
-    def prepareOpenSourceHealthObjectives(self, objectives: dict) -> dict:
-        return {
-            "OSH_MAX_SEVERITY" : objectives.get("OSH_MAX_SEVERITY", Objective.DEFAULT_FINDING_OBJECTIVE),
-            "OSH_MAX_LICENSE_RISK" : objectives.get("OSH_MAX_LICENSE_RISK", None)
-        }
+    def registerFeedback(self, capability: Capability, feedback: dict) -> None:
+        self.capabilityFeedback[capability] = feedback
 
-    def loadLocalAnalysisResults(self, analysisResultsFile: str) -> None:
-        with open(analysisResultsFile, mode="r", encoding="utf-8") as f:
-            self.analysisId = "local"
-            self.feedback = json.load(f)
+    def registerPreviousFeedback(self, capability: Capability, feedback: dict) -> None:
+        self.previousCapabilityFeedback[capability] = feedback
 
-    def generateReports(self) -> bool:
-        if self.feedback is None:
-            raise Exception("No feedback provided")
-
-        if self.options.inlineResults:
-            report = self.prepareInlineResultsReport()
-            report.previousFeedback = self.previousFeedback
-            report.generate(self.analysisId, self.feedback, self.options)
-            return report.isObjectiveSuccess(self.feedback, self.options)
-
+    def generateReports(self) -> int:
         if not os.path.exists(self.options.outputDir):
             os.mkdir(self.options.outputDir)
 
-        rawFeedbackFile = f"{self.options.outputDir}/{self.capability.shortName}-{uuid.uuid4()}.json"
-        with open(rawFeedbackFile, mode="w", encoding="utf-8") as f:
-            json.dump(self.feedback, f, sort_keys=False, indent=4)
+        for capability, reports in self.getCapabilityReports().items():
+            for report in reports:
+                report.previousFeedback = self.previousCapabilityFeedback.get(capability)
+                report.generate(self.analysisId, self.capabilityFeedback[capability], self.options)
 
-        markdownReport = self.prepareMarkdownReport()
-        reports = self.prepareAdditionalReports(markdownReport)
+        for report in self.getCrossCapabilityReports():
+            report.previousFeedback = self.previousCapabilityFeedback
+            report.generate(self.analysisId, self.capabilityFeedback, self.options)
 
-        for report in reports:
-            report.previousFeedback = self.previousFeedback
-            report.generate(self.analysisId, self.feedback, self.options)
+        return exitCode
 
-        return markdownReport.isObjectiveSuccess(self.feedback, self.options)
-
-    def prepareMarkdownReport(self) -> MarkdownRenderer:
-        if self.capability == MAINTAINABILITY:
-            return MaintainabilityMarkdownReport(self.objectives)
-        elif self.capability == OPEN_SOURCE_HEALTH:
-            vulnerabilityObjective = self.objectives["OSH_MAX_SEVERITY"]
-            licenseObjective = self.objectives["OSH_MAX_LICENSE_RISK"]
-            return OpenSourceHealthMarkdownReport(self.options, vulnerabilityObjective, licenseObjective)
-        elif self.capability == SECURITY:
-            return SecurityMarkdownReport(self.options, self.objectives["SECURITY_MAX_SEVERITY"])
-        elif self.capability == ARCHITECTURE:
-            return ArchitectureMarkdownReport()
-        else:
-            raise Exception(f"Unknown capability: {self.capability}")
-
-    def prepareInlineResultsReport(self) -> InlineResultsReport:
-        if self.capability == MAINTAINABILITY:
-            return MaintainabilityInlineResultsReport(self.objectives)
-        elif self.capability == OPEN_SOURCE_HEALTH:
-            vulnerabilityObjective = self.objectives["OSH_MAX_SEVERITY"]
-            licenseObjective = self.objectives["OSH_MAX_LICENSE_RISK"]
-            return OpenSourceHealthInlineResultsReport(self.options, vulnerabilityObjective, licenseObjective)
-        elif self.capability == SECURITY:
-            return SecurityInlineResultsReport(self.options, self.objectives["SECURITY_MAX_SEVERITY"])
-        elif self.capability == ARCHITECTURE:
-            return ArchitectureInlineResultsReport()
-        else:
-            raise Exception(f"Unknown capability: {self.capability}")
-
-    def prepareAdditionalReports(self, markdownReport: MarkdownRenderer) -> list[Report]:
-        reports = [
-            markdownReport,
+    def getCrossCapabilityReports(self) -> list[Report]:
+        return [
+            generic markdown,
+            generic text,
+            GitHubPullRequestReport(markdownReport),
             GitLabPullRequestReport(markdownReport),
             AzurePullRequestReport(markdownReport),
             BitBucketPullRequestReport(markdownReport),
-            GitHubPullRequestReport(markdownReport),
+            PipelineSummaryReport(markdownReport)
+            pipeline summary
         ]
 
-        if self.capability == MAINTAINABILITY:
-            reports += [AsciiArtReport(), JUnitFormatReport(), StaticHtmlReport(self.objectives)]
-        elif self.capability == OPEN_SOURCE_HEALTH:
-            reports += [OpenSourceHealthTextReport(markdownReport)]
-        elif self.capability == SECURITY:
-            reports += [SecurityTextReport(markdownReport)]
-        elif self.capability == ARCHITECTURE:
-            reports += [ArchitectureTextReport(markdownReport)]
+    def getCapabilityReports(self) -> dict[Capability, list[Report]]:
+        if self.options.inlineResults:
+            return {cap : [self.prepareInlineResultsReport(cap)] for cap in self.options.capabilities}
+        elif MAINTAINABILITY in self.options.capabilities:
+            reports = [AsciiArtReport(), JUnitFormatReport(), StaticHtmlReport(self.objectives)]
+            return {MAINTAINABILITY : reports}
+        else:
+            return {}
 
-        reports.append(PipelineSummaryReport(markdownReport))
-        return reports
+    def prepareInlineResultsReport(self, capability) -> Report:
+        if capability == MAINTAINABILITY:
+            return MaintainabilityInlineResultsReport(self.objectives)
+        elif capability == OPEN_SOURCE_HEALTH:
+            vulnerabilityObjective = self.objectives["OSH_MAX_SEVERITY"]
+            licenseObjective = self.objectives["OSH_MAX_LICENSE_RISK"]
+            return OpenSourceHealthInlineResultsReport(self.options, vulnerabilityObjective, licenseObjective)
+        elif capability == SECURITY:
+            return SecurityInlineResultsReport(self.options, self.objectives["SECURITY_MAX_SEVERITY"])
+        elif capability == ARCHITECTURE:
+            return ArchitectureInlineResultsReport()
+        else:
+            raise Exception(f"Unknown capability: {capability}")
