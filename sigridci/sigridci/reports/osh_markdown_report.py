@@ -13,16 +13,18 @@
 # limitations under the License.
 
 import os
+from typing import Union
 
-from .report import Report, MarkdownRenderer
+from .report import MarkdownRenderer
 from ..analysisresults.cyclonedx_processor import CycloneDXProcessor
-from ..capability import OPEN_SOURCE_HEALTH
+from ..capability import OPEN_SOURCE_HEALTH, Capability
 from ..objective import Objective
 from ..platform import OSH_EXCLUDE_DOCS
+from ..publish_options import PublishOptions
 
 
-class OpenSourceHealthMarkdownReport(Report, MarkdownRenderer):
-    def __init__(self, options, vulnerabilityObjective="HIGH", licenseObjective=None):
+class OpenSourceHealthMarkdownReport(MarkdownRenderer):
+    def __init__(self, options: PublishOptions, vulnerabilityObjective: Union[str, None] = "HIGH", licenseObjective: Union[str, None] = None):
         super().__init__()
         self.options = options
         self.vulnerabilityObjective = vulnerabilityObjective
@@ -30,11 +32,11 @@ class OpenSourceHealthMarkdownReport(Report, MarkdownRenderer):
         self.previousFeedback = None
         self.processor = CycloneDXProcessor(options, self.vulnerabilityObjective, self.licenseObjective)
 
-    def generate(self, analysisId, feedback, options):
+    def generate(self, analysisId: str, feedback: dict, options: PublishOptions) -> None:
         with open(self.getMarkdownFile(options), "w", encoding="utf-8") as f:
             f.write(self.renderMarkdown(analysisId, feedback, options))
 
-    def renderMarkdown(self, analysisId, feedback, options):
+    def renderMarkdown(self, analysisId: str, feedback: dict, options: PublishOptions) -> str:
         libraries = list(self.processor.extractLibraries(feedback))
         previousLibraries = list(self.processor.extractLibraries(self.previousFeedback))
 
@@ -66,7 +68,7 @@ class OpenSourceHealthMarkdownReport(Report, MarkdownRenderer):
         sigridLink = f"{self.getSigridUrl(options)}/-/open-source-health"
         return self.renderMarkdownTemplate(feedback, options, details, sigridLink)
 
-    def getSummary(self, feedback, options):
+    def getSummary(self, feedback: dict, options: PublishOptions) -> list[str]:
         totalLibraryCount = len(feedback.get("components", []))
 
         if totalLibraryCount == 0:
@@ -159,13 +161,13 @@ class OpenSourceHealthMarkdownReport(Report, MarkdownRenderer):
             return feedback["metadata"]["timestamp"][0:10]
         return self.previousFeedback["metadata"]["timestamp"][0:10]
 
-    def getCapability(self):
+    def getCapability(self) -> Capability:
         return OPEN_SOURCE_HEALTH
 
-    def getMarkdownFile(self, options):
+    def getMarkdownFile(self, options: PublishOptions) -> str:
         return os.path.abspath(f"{options.outputDir}/osh-feedback.md")
 
-    def isObjectiveSuccess(self, feedback, options):
+    def isObjectiveSuccess(self, feedback: dict, options: PublishOptions) -> bool:
         libraries = list(self.processor.extractLibraries(feedback))
         fixable = [lib for lib in libraries if not lib.meetsObjectives() and lib.fixable]
         return len(fixable) == 0

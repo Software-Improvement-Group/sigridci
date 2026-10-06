@@ -21,7 +21,7 @@ from .upload_log import UploadLog
 
 
 class ApiCaller:
-    def __init__(self, service, pollInterval):
+    def __init__(self, service: str, pollInterval: int):
         self.service = service
         self.pollInterval = pollInterval
 
@@ -49,7 +49,7 @@ class ApiCaller:
         UploadLog.log(f"{self.service} is currently unavailable, failed after {attempts} attempts")
         sys.exit(1)
 
-    def handleError(self, e: urllib.error.HTTPError):
+    def handleError(self, e: urllib.error.HTTPError) -> None:
         if e.code == 401:
             UploadLog.log(f"You are not authenticated to {self.service} (HTTP status {e.code} for {e.url})")
             self.printResponse(e)
@@ -65,13 +65,14 @@ class ApiCaller:
                 UploadLog.log(f"The system no longer exists (HTTP status {e.code} for {e.url})")
             sys.exit(1)
         elif e.code in (500, 502):
-            UploadLog.log(f"Sigrid was unable to handle your request (HTTP status {e.code} for {e.url}):\n{e.read()}")
+            body = e.read()
+            UploadLog.log(f"Sigrid was unable to handle your request (HTTP status {e.code} for {e.url}):\n{body!r}")
             sys.exit(1)
         else:
             UploadLog.log(str(e))
             self.printResponse(e)
 
-    def printResponse(self, e: urllib.error.HTTPError):
+    def printResponse(self, e: urllib.error.HTTPError) -> None:
         headers = dict(e.headers)
         if headers:
             UploadLog.log(f"Response headers:\n{headers}")

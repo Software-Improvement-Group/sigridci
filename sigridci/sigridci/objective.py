@@ -13,6 +13,7 @@
 # limitations under the License.
 
 from enum import Enum
+from typing import Literal, Union
 
 
 class ObjectiveStatus(Enum):
@@ -32,11 +33,11 @@ class Objective:
     MAINTAINABILITY_METRICS = ["MAINTAINABILITY"] + SYSTEM_PROPERTIES
 
     @staticmethod
-    def checkMaintainabilityRating(feedback, metric, target):
+    def checkMaintainabilityRating(feedback: dict, metric: str, target: float) -> ObjectiveStatus:
         return Objective.determineStatus(feedback, target, metric)
 
     @staticmethod
-    def determineStatus(feedback, objective, metric="MAINTAINABILITY"):
+    def determineStatus(feedback: dict, objective: float, metric: str = "MAINTAINABILITY") -> ObjectiveStatus:
         newAndChangedAfter = feedback.get("newCodeRatings", {}).get(metric, None)
         baseline = feedback.get("baselineRatings", {}).get(metric, None)
         changedCodeBefore = feedback.get("changedCodeBeforeRatings", {}).get(metric, None)
@@ -61,7 +62,7 @@ class Objective:
             return Objective.determineStatusBasedOnTrend(baseline, newAndChangedAfter)
 
     @staticmethod
-    def determineStatusBasedOnTrend(previous, current):
+    def determineStatusBasedOnTrend(previous: Union[float, None], current: Union[float, None]) -> ObjectiveStatus:
         if previous == None or current == None:
             return ObjectiveStatus.UNKNOWN
         elif current > previous:
@@ -72,12 +73,12 @@ class Objective:
             return ObjectiveStatus.UNCHANGED
 
     @staticmethod
-    def meetsFindingObjective(findingSeverities, objective):
+    def meetsFindingObjective(findingSeverities: list[str], objective: str) -> bool:
         matches = [severity for severity in findingSeverities if Objective.isFindingIncluded(severity, objective)]
         return len(matches) == 0
 
     @staticmethod
-    def isFindingIncluded(severity, objective):
+    def isFindingIncluded(severity: str, objective: str) -> bool:
         if objective == "CRITICAL":
             return False
         elif objective == "HIGH":
@@ -90,7 +91,7 @@ class Objective:
             return severity in ("CRITICAL", "HIGH", "MEDIUM", "LOW")
 
     @staticmethod
-    def sortBySeverity(severity):
+    def sortBySeverity(severity: str) -> int:
         if not severity in Objective.SEVERITY_OBJECTIVE:
             return 99
         return Objective.SEVERITY_OBJECTIVE.index(severity)

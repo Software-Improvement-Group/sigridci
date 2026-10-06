@@ -11,6 +11,8 @@ source code, see [docs/CLAUDE.md](docs/CLAUDE.md) for instructions when working 
 ## Commands
 
 - Run unit tests: `python3 -m unittest`
+  - Run a single test file: `python3 -m unittest test.test_documentation`
+- Run type checks: `python3 -m mypy --disallow-incomplete-defs sigridci`
 
 ## Portability
 
@@ -37,5 +39,5 @@ run the code natively. This makes portability the top concern:
 
 - Follow PEP-8, but use camelCase for variable names and function names. PEP-8 makes an exception that this is 
   allowed if it is already the dominant style in the project.
-- Do not use type hints. We require compatibility with old Python versions, and many additions to the type hint
-  system require newer Python versions.
+- Do use type hints, but only type hints supported by Python 3.9. So that means you cannot use `str | None`,
+  you have to use `Union[str, None]`.

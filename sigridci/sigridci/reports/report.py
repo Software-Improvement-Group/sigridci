@@ -16,7 +16,9 @@ import urllib.parse
 from abc import ABC, abstractmethod
 from datetime import datetime
 
+from ..capability import Capability
 from ..platform import Platform
+from ..publish_options import PublishOptions
 from ..telemetry import Telemetry
 
 
@@ -27,48 +29,48 @@ class Report(ABC):
     UNCHANGED_CATEGORIES = ["unchanged"]
 
     @abstractmethod
-    def generate(self, analysisId, feedback, options):
+    def generate(self, analysisId: str, feedback: dict, options: PublishOptions) -> None:
         pass
 
-    def formatMetricName(self, metric):
+    def formatMetricName(self, metric: str) -> str:
         return metric.replace("_PROP", "").title().replace("_", " ")
 
-    def formatRating(self, ratings, metric, naText="N/A"):
+    def formatRating(self, ratings: dict[str, float], metric: str, naText: str = "N/A") -> str:
         if ratings.get(metric, None) == None:
             return naText
         return "%.1f" % ratings[metric]
 
-    def formatBaseline(self, feedback):
+    def formatBaseline(self, feedback: dict) -> str:
         if not feedback.get("baseline", None):
             return "N/A"
         snapshotDate = datetime.strptime(feedback["baseline"], "%Y%m%d")
         return snapshotDate.strftime("%Y-%m-%d")
 
-    def getRefactoringCandidates(self, feedback, metric):
+    def getRefactoringCandidates(self, feedback: dict, metric: str) -> list[dict]:
         refactoringCandidates = feedback.get("refactoringCandidates", [])
         return [rc for rc in refactoringCandidates if rc["metric"] == metric or metric == "MAINTAINABILITY"]
 
-    def filterRefactoringCandidates(self, feedback, categories):
+    def filterRefactoringCandidates(self, feedback: dict, categories: list[str]) -> list[dict]:
         matches = [rc for rc in feedback.get("refactoringCandidates", []) if rc["category"] in categories]
         matches.sort(key=lambda rc: self.RISK_CATEGORIES.index(rc.get("riskCategory", "")))
         return matches
 
-    def getSigridUrl(self, options):
+    def getSigridUrl(self, options: PublishOptions) -> str:
         customer = urllib.parse.quote_plus(options.customer.lower())
         system = urllib.parse.quote_plus(options.system.lower())
         return f"{options.sigridURL}/{customer}/{system}"
 
 
-class MarkdownRenderer(ABC):
+class MarkdownRenderer(Report, ABC):
     def __init__(self):
         self.decorateLinks = True
         self.tableLineSeparator = "<br />" if Platform.isHtmlMarkdownSupported() else " • "
 
     @abstractmethod
-    def renderMarkdown(self, analysisId, feedback, options):
+    def renderMarkdown(self, analysisId: str, feedback: dict, options: PublishOptions) -> str:
         pass
 
-    def renderMarkdownTemplate(self, feedback, options, details, sigridLink):
+    def renderMarkdownTemplate(self, feedback: dict, options: PublishOptions, details: str, sigridLink: str) -> str:
         md = f"# {self.formatTitle(sigridLink)}\n\n"
         for summaryLine in self.getSummary(feedback, options):
             md += f"**{summaryLine}**\n\n"
@@ -81,16 +83,12 @@ class MarkdownRenderer(ABC):
         md += self.renderFooter(options, sigridLink)
         return md
 
-    def formatTitle(self, sigridLink):
+    def formatTitle(self, sigridLink: str) -> str:
         capability = self.getCapability()
         suffix = " *(Beta)*" if capability.beta else ""
         return f"[Sigrid]({sigridLink}) {capability.displayName} feedback{suffix}"
 
-    def getReactionLink(self, options, reaction):
-        featureId = f"sigridci.{self.getCapability().shortName}"
-        return f"{options.feedbackURL}?feature={featureId}&feedback={reaction}&system={options.getSystemId()}"
-
-    def renderFooter(self, options, sigridLink):
+    def renderFooter(self, options: PublishOptions, sigridLink: str) -> str:
         md = "----\n\n"
         md += f"[**View this system in Sigrid**]({sigridLink})\n\n"
         if options.feedbackURL:
@@ -100,22 +98,22 @@ class MarkdownRenderer(ABC):
         return md
 
     @abstractmethod
-    def getSummary(self, feedback, options):
+    def getSummary(self, feedback: dict, options: PublishOptions) -> list[str]:
         pass
 
     @abstractmethod
-    def getCapability(self):
+    def getCapability(self) -> Capability:
         pass
 
     @abstractmethod
-    def getMarkdownFile(self, options):
+    def getMarkdownFile(self, options: PublishOptions) -> str:
         pass
 
     @abstractmethod
-    def isObjectiveSuccess(self, feedback, options):
+    def isObjectiveSuccess(self, feedback: dict, options: PublishOptions) -> bool:
         pass
 
-    def decorateLink(self, options, label, file, line=0):
+    def decorateLink(self, options: PublishOptions, label: str, file: str, line: int = 0) -> str:
         if options.subsystem and file.startswith(f"{options.subsystem}/"):
             file = file[len(options.subsystem) + 1:]
         link = Platform.createPullRequestFileURL(file, line)
@@ -123,5 +121,5 @@ class MarkdownRenderer(ABC):
             return label
         return f"[{self.escapeMarkdownLabel(label)}]({link})"
 
-    def escapeMarkdownLabel(self, label):
+    def escapeMarkdownLabel(self, label: str) -> str:
         return label.replace("\\", "\\\\").replace("[", "\\[").replace("]", "\\]")

@@ -14,14 +14,14 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-from argparse import ArgumentParser
+from argparse import ArgumentParser, Namespace
 
 from sigridci.cli_options import addPublishArguments, parseCapabilities
 from sigridci.publish_options import PublishOptions, RunMode
 from sigridci.sigridci_runner import runAnalysis
 
 
-def parsePublishOptions(args):
+def parsePublishOptions(args: Namespace) -> PublishOptions:
     return PublishOptions(
         partner=args.partner.lower(),
         customer=args.customer.lower(),

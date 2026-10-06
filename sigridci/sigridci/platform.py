@@ -15,6 +15,7 @@
 import os
 import sys
 import urllib.parse
+from typing import Union
 
 
 DOCS_URL = f"https://docs.sigrid-says.com"
@@ -28,27 +29,27 @@ AQ_UNDESIRABLE_DOCS = f"{SCOPE_DOCS}##highlighting-undesirable-dependencies"
 
 class Platform:
     @staticmethod
-    def isGitHub():
+    def isGitHub() -> bool:
         return "GITHUB_REPOSITORY" in os.environ
 
     @staticmethod
-    def isGitLab():
+    def isGitLab() -> bool:
         return "GITLAB_CI" in os.environ
 
     @staticmethod
-    def isAzureDevOps():
+    def isAzureDevOps() -> bool:
         return "BUILD_REPOSITORY_NAME" in os.environ
 
     @staticmethod
-    def isBitBucket():
+    def isBitBucket() -> bool:
         return "BITBUCKET_REPO_SLUG" in os.environ
 
     @staticmethod
-    def isJenkins():
+    def isJenkins() -> bool:
         return "BUILD_NUMBER" in os.environ
 
     @staticmethod
-    def getPlatformId():
+    def getPlatformId() -> str:
         if Platform.isGitHub():
             return "github"
         elif Platform.isGitLab():
@@ -65,13 +66,13 @@ class Platform:
             return "unknown"
 
     @staticmethod
-    def isHtmlMarkdownSupported():
+    def isHtmlMarkdownSupported() -> bool:
         if os.environ.get("SIGRID_CI_MARKDOWN_HTML") in ("false", "0"):
             return False
         return Platform.isGitHub() or Platform.isGitLab() or Platform.isAzureDevOps()
 
     @staticmethod
-    def createPullRequestFileURL(file, line=0):
+    def createPullRequestFileURL(file: str, line: int = 0) -> Union[str, None]:
         encodePath = lambda value: urllib.parse.quote(value, safe="/")
 
         # GitLab
@@ -95,29 +96,29 @@ class Platform:
         return None
 
     @staticmethod
-    def createAzureDevOpsFileURL(file, line):
+    def createAzureDevOpsFileURL(file: str, line: int) -> str:
         encodeParam = lambda value: urllib.parse.quote(value, safe="")
         repo = urllib.parse.urlsplit(os.environ["BUILD_REPOSITORY_URI"])
         host = repo.hostname if repo.port is None else f"{repo.hostname}:{repo.port}"
-        repoUrl = repo._replace(netloc=host).geturl()
+        repoUrl = repo._replace(netloc=str(host)).geturl()
         branch = encodeParam(os.environ["SYSTEM_PULLREQUEST_SOURCEBRANCH"].removeprefix("refs/heads/"))
         return f"{repoUrl}?path={encodeParam(file)}&version=GB{branch}&line={line}"
 
     @staticmethod
-    def checkEnvironment():
+    def checkEnvironment() -> None:
         if sys.version_info.major == 2 or sys.version_info.minor < 9:
             print("Sigrid CI requires Python 3.9 or higher")
             sys.exit(1)
 
         token = os.environ.get("SIGRID_CI_TOKEN", None)
-        if not Platform.isValidToken(token):
+        if token is None or not Platform.isValidToken(token):
             print("Missing or incomplete environment variable SIGRID_CI_TOKEN")
             sys.exit(1)
 
     @staticmethod
-    def hasEnv(*names):
+    def hasEnv(*names: str) -> bool:
         return all(os.environ.get(name) for name in names)
 
     @staticmethod
-    def isValidToken(token):
+    def isValidToken(token: str) -> bool:
         return token is not None and len(token) >= 64

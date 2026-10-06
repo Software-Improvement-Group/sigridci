@@ -16,11 +16,12 @@ from xml.dom.minidom import Document
 
 from .report import Report
 from ..objective import Objective
+from ..publish_options import PublishOptions
 
 
 class JUnitFormatReport(Report):
 
-    def generate(self, analysisId, feedback, options):
+    def generate(self, analysisId: str, feedback: dict, options: PublishOptions) -> None:
         with open(f"{options.outputDir}/sigridci-junit-format-report.xml", "w") as fileRef:
             fileRef.write(self.generateXML(feedback, options))
 

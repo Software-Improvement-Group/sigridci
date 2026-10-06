@@ -14,12 +14,13 @@
 
 import os
 
-from .report import Report, MarkdownRenderer
-from ..capability import ARCHITECTURE
+from .report import MarkdownRenderer
+from ..capability import ARCHITECTURE, Capability
 from ..platform import AQ_EXCLUDE_DOCS, AQ_UNDESIRABLE_DOCS, Platform
+from ..publish_options import PublishOptions
 
 
-class ArchitectureMarkdownReport(Report, MarkdownRenderer):
+class ArchitectureMarkdownReport(MarkdownRenderer):
     FINDING_TYPES = {
         "UNDESIRABLE" : "🔴 Undesirable dependency",
         "CYCLIC" : "🟠 Cyclic dependency"
@@ -29,11 +30,11 @@ class ArchitectureMarkdownReport(Report, MarkdownRenderer):
         super().__init__()
         self.tableLineSeparator = "<br />" if Platform.isHtmlMarkdownSupported() else " • "
 
-    def generate(self, analysisId, feedback, options):
+    def generate(self, analysisId: str, feedback: dict, options: PublishOptions) -> None:
         with open(self.getMarkdownFile(options), "w", encoding="utf-8") as f:
             f.write(self.renderMarkdown(analysisId, feedback, options))
 
-    def renderMarkdown(self, analysisId, feedback, options):
+    def renderMarkdown(self, analysisId: str, feedback: dict, options: PublishOptions) -> str:
         positive = self.getPositiveFeedback(feedback)
         negative = self.getNegativeFeedback(feedback)
         remaining = self.getRemainingFeedback(feedback)
@@ -100,19 +101,19 @@ class ArchitectureMarkdownReport(Report, MarkdownRenderer):
         else:
             return f" (lines {', '.join(line[0] for line in lines)})"
 
-    def getSummary(self, feedback, options):
+    def getSummary(self, feedback: dict, options: PublishOptions) -> list[str]:
         if len(self.getNegativeFeedback(feedback)) == 0:
             return [f"✅  Your changes did not introduce any architecture issues"]
         else:
             return [f"⚠️  Your changes introduced architecture issues"]
 
-    def getCapability(self):
+    def getCapability(self) -> Capability:
         return ARCHITECTURE
 
-    def getMarkdownFile(self, options):
+    def getMarkdownFile(self, options: PublishOptions) -> str:
         return os.path.abspath(f"{options.outputDir}/architecture-feedback.md")
 
-    def isObjectiveSuccess(self, feedback, options):
+    def isObjectiveSuccess(self, feedback: dict, options: PublishOptions) -> bool:
         # We always consider architecture feedback a warning
         # rather than an error. We don't want to hard-fail
         # the pipeline like we do for e.g. security findings.

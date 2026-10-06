@@ -16,6 +16,7 @@ import sys
 
 from .report import Report
 from ..objective import Objective
+from ..publish_options import PublishOptions
 
 
 class AsciiArtReport(Report):
@@ -30,7 +31,7 @@ class AsciiArtReport(Report):
         self.output = output
         self.ansiColors = ansiColors
 
-    def generate(self, analysisId, feedback, options):
+    def generate(self, analysisId: str, feedback: dict, options: PublishOptions) -> None:
         self.printHeader("What went well?")
         self.printRefactoringCandidates(self.filterRefactoringCandidates(feedback, self.GOOD_CATEGORIES))
 

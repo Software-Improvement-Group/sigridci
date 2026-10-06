@@ -16,7 +16,7 @@ import os
 import re
 from dataclasses import dataclass, field
 from enum import Enum
-from typing import Literal
+from typing import Literal, Union
 
 from .capability import Capability, OPEN_SOURCE_HEALTH, MAINTAINABILITY
 
@@ -38,7 +38,7 @@ class PublishOptions:
     includePatterns: list[str] = field(default_factory=lambda: [])
     includeHistory: bool = False
     showUploadContents: bool = False
-    convert: str = None
+    convert: Union[str, None] = None
     detailLevel: Literal["default", "full"] = "default"
     outputDir: str = "sigrid-ci-output"
     sigridURL: str = "https://sigrid-says.com"
@@ -56,35 +56,35 @@ class PublishOptions:
     SCOPE_FILE_NAMES = ["sigrid.yaml", "sigrid.yml"]
     METADATA_FILE_NAMES = ["sigrid-metadata.yaml", "sigrid-metadata.yml"]
 
-    def getSystemId(self):
+    def getSystemId(self) -> str:
         return f"{self.partner}-{self.customer}-{self.system}"
 
     def isValidSystemName(self):
-        return self.SYSTEM_NAME_PATTERN.match(self.system) and \
+        return bool(self.SYSTEM_NAME_PATTERN.match(self.system)) and \
             len(self.system) >= self.SYSTEM_NAME_LENGTH.start and \
             not self.system.isdigit() and \
             (len(self.system) + len(self.customer) + 1) in self.SYSTEM_NAME_LENGTH
 
-    def isValidSubSystemName(self):
+    def isValidSubSystemName(self) -> bool:
         if not self.subsystem:
             return True
         return bool(self.SUBSYSTEM_NAME_PATTERN.match(self.subsystem)) and \
             not bool(self.SUBSYSTEM_CONSECUTIVE_PATTERN.search(self.subsystem))
 
-    def readScopeFile(self):
+    def readScopeFile(self) -> Union[str, None]:
         return self.locateFile(self.SCOPE_FILE_NAMES)
 
-    def readMetadataFile(self):
+    def readMetadataFile(self) -> Union[str, None]:
         return self.locateFile(self.METADATA_FILE_NAMES)
 
-    def locateFile(self, possibleFileNames):
+    def locateFile(self, possibleFileNames: list[str]) -> Union[str, None]:
         for file in possibleFileNames:
             if os.path.exists(f"{self.sourceDir}/{file}"):
                 with open(f"{self.sourceDir}/{file}", "r") as f:
                     return f.read()
         return None
 
-    def getMaxShownFindings(self):
+    def getMaxShownFindings(self) -> int:
         if self.detailLevel == "full":
             return 9999
         return 8

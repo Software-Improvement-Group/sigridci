@@ -14,14 +14,15 @@
 
 import os
 
-from .report import Report, MarkdownRenderer
+from .report import MarkdownRenderer
 from ..analysisresults.sarif_processor import SarifProcessor, FindingStatus
-from ..capability import SECURITY
+from ..capability import SECURITY, Capability
 from ..objective import Objective
 from ..platform import SECURITY_EXCLUDE_RULE_DOCS, SECURITY_EXCLUDE_FILE_DOCS
+from ..publish_options import PublishOptions
 
 
-class SecurityMarkdownReport(Report, MarkdownRenderer):
+class SecurityMarkdownReport(MarkdownRenderer):
     SEVERITY_SYMBOLS = {
         "CRITICAL" : "🟣",
         "HIGH" : "🔴",
@@ -44,17 +45,17 @@ class SecurityMarkdownReport(Report, MarkdownRenderer):
         "NONE" : "no"
     }
 
-    def __init__(self, options, objective = "HIGH"):
+    def __init__(self, options: PublishOptions, objective: str = "HIGH"):
         super().__init__()
         self.objective = objective
         self.processor = SarifProcessor(options, objective)
         self.previousFeedback = None
 
-    def generate(self, analysisId, feedback, options):
+    def generate(self, analysisId: str, feedback: dict, options: PublishOptions) -> None:
         with open(self.getMarkdownFile(options), "w", encoding="utf-8") as f:
             f.write(self.renderMarkdown(analysisId, feedback, options))
 
-    def renderMarkdown(self, analysisId, feedback, options):
+    def renderMarkdown(self, analysisId: str, feedback: dict, options: PublishOptions) -> str:
         findings = self.extractFindings(feedback)
         introduced = self.processor.filterStatus(findings, FindingStatus.INTRODUCED, partOfObjective=False)
         fixed = self.processor.filterStatus(findings, FindingStatus.FIXED, partOfObjective=False)
@@ -97,7 +98,7 @@ class SecurityMarkdownReport(Report, MarkdownRenderer):
 
         return self.renderMarkdownTemplate(feedback, options, details, sigridLink)
 
-    def getSummary(self, feedback, options):
+    def getSummary(self, feedback: dict, options: PublishOptions) -> list[str]:
         severitySummary = self.OBJECTIVE_SEVERITY_SUMMARIES.get(self.objective) or "N/A"
         if self.isObjectiveSuccess(feedback, options):
             return [f"✅  You achieved your objective of having {severitySummary} security findings"]
@@ -130,13 +131,13 @@ class SecurityMarkdownReport(Report, MarkdownRenderer):
         else:
             return "⚠️"
 
-    def getCapability(self):
+    def getCapability(self) -> Capability:
         return SECURITY
 
-    def getMarkdownFile(self, options):
+    def getMarkdownFile(self, options: PublishOptions) -> str:
         return os.path.abspath(f"{options.outputDir}/security-feedback.md")
 
-    def isObjectiveSuccess(self, feedback, options):
+    def isObjectiveSuccess(self, feedback: dict, options: PublishOptions) -> bool:
         allFindings = self.extractFindings(feedback)
         relevantFindings = self.processor.filterStatus(allFindings, FindingStatus.INTRODUCED, partOfObjective=True)
         return len(relevantFindings) == 0

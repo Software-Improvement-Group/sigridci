@@ -16,6 +16,7 @@ import sys
 
 from .report import Report
 from ..analysisresults.cyclonedx_processor import CycloneDXProcessor
+from ..publish_options import PublishOptions
 
 
 class OpenSourceHealthTextReport(Report):
@@ -26,7 +27,7 @@ class OpenSourceHealthTextReport(Report):
         self.vulnerabilityObjective = markdownReport.vulnerabilityObjective
         self.licenseObjective = markdownReport.licenseObjective
 
-    def generate(self, analysisId, feedback, options):
+    def generate(self, analysisId: str, feedback: dict, options: PublishOptions) -> None:
         processor = CycloneDXProcessor(options, self.vulnerabilityObjective, self.licenseObjective)
         findings = [lib for lib in processor.extractLibraries(feedback) if not lib.meetsObjectives()]
 

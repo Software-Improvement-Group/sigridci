@@ -16,9 +16,9 @@ import sys
 import urllib.parse
 import urllib.request
 
-from .capability import ALL_CAPABILITIES
+from .capability import Capability, ALL_CAPABILITIES
 from .platform import Platform
-from .publish_options import RunMode
+from .publish_options import RunMode, PublishOptions
 from .upload_log import UploadLog
 
 # This file is responsible for anonymous statistics. If you want to know more about how SIG uses this data,
@@ -28,24 +28,24 @@ from .upload_log import UploadLog
 class Telemetry:
     TIMEOUT_S = 10
 
-    def __init__(self, options):
+    def __init__(self, options: PublishOptions):
         self.options = options
 
-    def trackRun(self):
+    def trackRun(self) -> None:
         self.sendEvent("sigridci.platform", Platform.getPlatformId())
         self.sendEvent("sigrid.python", f"python-{sys.version_info.major}.{sys.version_info.minor}")
 
-    def trackUnusedLicenses(self, licenses):
+    def trackUnusedLicenses(self, licenses: list[str]) -> None:
         if self.options.runMode in (RunMode.FEEDBACK_ONLY, RunMode.FEEDBACK_AND_PUBLISH):
             unused = [cap.shortName for cap in ALL_CAPABILITIES if self.isUnusedLicense(cap, licenses)]
             if len(unused) > 0:
                 self.sendEvent("sigridci.unused", ",".join(unused))
 
-    def isUnusedLicense(self, capability, licenses):
+    def isUnusedLicense(self, capability: Capability, licenses: list[str]) -> bool:
         used = [cap.name for cap in self.options.capabilities]
         return capability.name in licenses and capability.name not in used and not capability.beta
 
-    def sendEvent(self, category, details):
+    def sendEvent(self, category: str, details: str) -> None:
         if self.options.feedbackURL:
             try:
                 url = self.getURL(category, details)
@@ -54,7 +54,7 @@ class Telemetry:
             except:
                 UploadLog.log(f"Failed to log telemetry")
 
-    def getURL(self, category, details):
+    def getURL(self, category: str, details: str) -> str:
         ec = urllib.parse.quote_plus(category)
         ea = urllib.parse.quote_plus(details)
         en = urllib.parse.quote_plus(self.options.getSystemId())

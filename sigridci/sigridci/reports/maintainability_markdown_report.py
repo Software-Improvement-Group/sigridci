@@ -14,14 +14,16 @@
 
 import html
 import os
+from typing import Union
 
 from .report import Report, MarkdownRenderer
-from ..capability import MAINTAINABILITY
+from ..capability import MAINTAINABILITY, Capability
 from ..objective import Objective, ObjectiveStatus
 from ..platform import Platform
+from ..publish_options import PublishOptions
 
 
-class MaintainabilityMarkdownReport(Report, MarkdownRenderer):
+class MaintainabilityMarkdownReport(MarkdownRenderer):
     MAX_OCCURRENCES = 3
 
     RISK_CATEGORY_SYMBOLS = {
@@ -32,19 +34,19 @@ class MaintainabilityMarkdownReport(Report, MarkdownRenderer):
         "LOW" : "🟢"
     }
 
-    def __init__(self, objectives=None):
+    def __init__(self, objectives: Union[None, dict[str, Union[float, None]]] = None):
         super().__init__()
 
         if objectives is None:
             objectives = {"MAINTAINABILITY" : Objective.DEFAULT_RATING_OBJECTIVE}
         self.objective = objectives
 
-    def generate(self, analysisId, feedback, options):
+    def generate(self, analysisId: str, feedback: dict, options: PublishOptions) -> None:
         with open(self.getMarkdownFile(options), "w", encoding="utf-8") as f:
             markdown = self.renderMarkdown(analysisId, feedback, options)
             f.write(markdown)
 
-    def renderMarkdown(self, analysisId, feedback, options):
+    def renderMarkdown(self, analysisId: str, feedback: dict, options: PublishOptions) -> str:
         sigridLink = self.getSigridUrl(options)
 
         md = f"# [Sigrid]({sigridLink}) maintainability feedback\n\n"
@@ -67,7 +69,7 @@ class MaintainabilityMarkdownReport(Report, MarkdownRenderer):
         summaries = [self.getSummaryForObjective(metric, target, feedback) for metric, target in self.objective.items()]
         return "\n\n".join(f"**{summary}**" for summary in summaries)
 
-    def getSummary(self, feedback, options):
+    def getSummary(self, feedback: dict, options: PublishOptions) -> list[str]:
         return [self.getSummaryForObjective(metric, target, feedback) for metric, target in self.objective.items()]
 
     def getSummaryForObjective(self, metric, target, feedback):
@@ -161,14 +163,14 @@ class MaintainabilityMarkdownReport(Report, MarkdownRenderer):
             label = f"{occurrence['filePath']} line {occurrence['startLine']}-{occurrence['endLine']}"
         return self.decorateLink(options, label, occurrence["filePath"], occurrence.get("startLine", 0))
 
-    def getCapability(self):
+    def getCapability(self) -> Capability:
         return MAINTAINABILITY
 
-    def getMarkdownFile(self, options):
+    def getMarkdownFile(self, options: PublishOptions) -> str:
         return os.path.abspath(f"{options.outputDir}/feedback.md")
 
     def getObjectiveStatuses(self, feedback):
         return [Objective.checkMaintainabilityRating(feedback, metric, target) for metric, target in self.objective.items()]
 
-    def isObjectiveSuccess(self, feedback, options):
+    def isObjectiveSuccess(self, feedback: dict, options: PublishOptions) -> bool:
         return not ObjectiveStatus.WORSENED in self.getObjectiveStatuses(feedback)

@@ -14,8 +14,10 @@
 
 from dataclasses import dataclass
 from enum import Enum
+from typing import Iterator, Union
 
 from ..objective import Objective
+from ..publish_options import PublishOptions
 
 
 class FindingStatus(Enum):
@@ -40,13 +42,13 @@ class SarifProcessor:
     EXCLUDED_TOOLS = ["SIG Open Source Health"]
     UNKNOWN_LOCATION = "(unknown location)"
 
-    def __init__(self, options, objective):
+    def __init__(self, options: PublishOptions, objective: str):
         self.options = options
         self.objective = objective
 
-    def extractFindings(self, feedback):
+    def extractFindings(self, feedback: dict) -> Iterator[Finding]:
         if feedback is None or not feedback.get("runs"):
-            return []
+            return
 
         for run in feedback["runs"]:
             if self.isSuccessfulRun(run) and not self.isExcludedTool(run):
@@ -62,20 +64,20 @@ class SarifProcessor:
                     if file is not None and risk in Objective.SEVERITY_OBJECTIVE:
                         yield Finding(fingerprint, risk, result["message"]["text"], file, line, partOfObjective, status)
 
-    def isExcludedTool(self, run):
+    def isExcludedTool(self, run: dict) -> bool:
         return run["tool"]["driver"]["name"] in self.EXCLUDED_TOOLS
 
-    def isSuccessfulRun(self, run):
+    def isSuccessfulRun(self, run: dict) -> bool:
         if not "invocations" in run or len(run["invocations"]) == 0:
             return True
         return run["invocations"][0].get("executionSuccessful", True)
 
-    def getLocation(self, result):
+    def getLocation(self, result: dict) -> dict:
         if not "locations" in result or len(result["locations"]) == 0:
             return {}
         return result["locations"][0].get("physicalLocation", {})
 
-    def getFindingStatus(self, result):
+    def getFindingStatus(self, result: dict) -> FindingStatus:
         if result["properties"].get("status") == "ACCEPTED":
             return FindingStatus.ACCEPTED
 
@@ -87,7 +89,7 @@ class SarifProcessor:
         else:
             return FindingStatus.REMAINING
 
-    def rewriteSubSystem(self, file):
+    def rewriteSubSystem(self, file: str) -> Union[str, None]:
         if not self.options.subsystem or not file:
             return file
 
@@ -98,7 +100,7 @@ class SarifProcessor:
         else:
             return None
 
-    def filterStatus(self, findings, status, *, partOfObjective):
+    def filterStatus(self, findings: list[Finding], status: FindingStatus, *, partOfObjective: bool) -> list[Finding]:
         result = [finding for finding in findings if finding.status == status]
         if partOfObjective:
             result = [finding for finding in result if finding.partOfObjective]

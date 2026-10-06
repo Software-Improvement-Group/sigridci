@@ -95,7 +95,7 @@ class ApiCallerTest(TestCase):
         api = ApiCaller("Test", 1)
         with self.assertRaises(SystemExit):
             api.retryRequest(lambda: self.raiseHttp502(), attempts=1)
-        self.assertEqual(["Sigrid was unable to handle your request (HTTP status 502 for ):\n{body}"], UploadLog.history)
+        self.assertEqual(["Sigrid was unable to handle your request (HTTP status 502 for ):\n'{body}'"], UploadLog.history)
 
     def raiseTimeoutError(self):
         raise TimeoutError()

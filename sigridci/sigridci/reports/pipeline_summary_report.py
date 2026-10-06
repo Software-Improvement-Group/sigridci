@@ -13,19 +13,21 @@
 # limitations under the License.
 
 import sys
+from typing import TextIO
 
 from .ascii_art_report import AsciiArtReport
-from .report import Report
+from .report import Report, MarkdownRenderer
+from ..publish_options import PublishOptions
 
 
 class PipelineSummaryReport(Report):
 
-    def __init__(self, markdownReport, *, output=sys.stdout, ansiColors=True):
+    def __init__(self, markdownReport: MarkdownRenderer, *, output:TextIO = sys.stdout, ansiColors: bool = True):
         self.markdownReport = markdownReport
         self.output = output
         self.ansiColors = ansiColors
 
-    def generate(self, analysisId, feedback, options):
+    def generate(self, analysisId: str, feedback: dict, options: PublishOptions) -> None:
         capability = self.markdownReport.getCapability()
         markdownFile = self.markdownReport.getMarkdownFile(options)
         sigridLink = self.markdownReport.getSigridUrl(options)

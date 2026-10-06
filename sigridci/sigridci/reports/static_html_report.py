@@ -17,6 +17,7 @@ import os
 
 from .report import Report
 from ..objective import Objective, ObjectiveStatus
+from ..publish_options import PublishOptions
 
 
 class StaticHtmlReport(Report):
@@ -29,7 +30,7 @@ class StaticHtmlReport(Report):
         # the new fine-grained objectives.
         self.objective = objectives.get("MAINTAINABILITY", Objective.DEFAULT_RATING_OBJECTIVE)
 
-    def generate(self, analysisId, feedback, options):
+    def generate(self, analysisId: str, feedback: dict, options: PublishOptions) -> None:
         with open(os.path.dirname(__file__) + "/sigridci-feedback-template.html", encoding="utf-8", mode="r") as f:
             template = f.read()
             template = self.renderHtmlFeedback(template, feedback, options)
