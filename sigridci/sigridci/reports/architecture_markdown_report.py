@@ -59,9 +59,9 @@ class ArchitectureMarkdownReport(MarkdownFragment):
 
     def getSummary(self, feedback: dict, options: PublishOptions) -> list[Summary]:
         if len(self.getNegativeFeedback(feedback)) == 0:
-            return [Summary("✅ ", "Your changes did not introduce any architecture issues.")]
+            return [Summary("✅", "Your changes did not introduce any architecture issues.")]
         else:
-            return [Summary("⚠️ ", "Your changes introduced architecture issues.")]
+            return [Summary("⚠️", "Your changes introduced architecture issues.")]
 
     def getCapability(self) -> Capability:
         return ARCHITECTURE

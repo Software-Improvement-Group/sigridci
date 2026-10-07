@@ -105,8 +105,7 @@ class CombinedMarkdownFeedbackReport(Report):
             md += "#### Failed checks\n\n"
             md += self.renderFindingsTable(negative, options)
         if len(positive) > 0:
-            md += "#### What went well\n\n"
-            md += self.renderDetailsStart("Things that went well")
+            md += self.renderDetailsStart(f"Things that went well: You fixed/improved {len(positive)} findings")
             md += self.renderFindingsTable(positive, options)
             md += self.renderDetailsEnd()
         if MAINTAINABILITY in options.capabilities:
@@ -127,7 +126,7 @@ class CombinedMarkdownFeedbackReport(Report):
         for fragment in self.prepareFragments(options):
             capabilityFeedback = feedback[fragment.getCapability()]
             for summary in fragment.getSummary(capabilityFeedback, options):
-                md += f"- {summary.symbol} **{fragment.getCapability().displayName}** {summary.text}\n"
+                md += f"- {summary.symbol}  **{fragment.getCapability().displayName}** {summary.text}\n"
         return f"{md}\n"
 
     def renderFindingsTable(self, findings: list[FeedbackFinding], options: PublishOptions) -> str:

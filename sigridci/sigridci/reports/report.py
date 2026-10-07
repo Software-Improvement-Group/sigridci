@@ -21,13 +21,12 @@ from ..publish_options import PublishOptions
 
 
 class Report(ABC):
+    previousFeedback: Any
+
     RISK_CATEGORIES = ["VERY_HIGH", "HIGH", "MODERATE", "MEDIUM", "LOW"]
     GOOD_CATEGORIES = ["fixed", "improved"]
     BAD_CATEGORIES = ["introduced", "worsened"]
     UNCHANGED_CATEGORIES = ["unchanged"]
-
-    def __init__(self):
-        self.previousFeedback: Any = None
 
     @abstractmethod
     def generate(self, analysisId: str, feedback: dict, options: PublishOptions) -> None:

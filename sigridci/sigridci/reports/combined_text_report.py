@@ -73,7 +73,6 @@ class CombinedTextReport(Report):
                 print(f"    - ⚪️ ... and {remainder} more findings", file=self.output)
 
             print("", file=self.output)
-            print("", file=self.output)
 
     def printFinding(self, finding: FeedbackFinding) -> None:
         symbol = self.masterReport.renderSeverity(finding)

@@ -49,7 +49,7 @@ class MaintainabilityMarkdownReport(MarkdownFragment, Report):
         elif status == ObjectiveStatus.IMPROVED:
             return Summary("✅️ ", f"You improved your code towards your {objectiveName} of {targetText}.")
         elif status == ObjectiveStatus.UNCHANGED:
-            return Summary("️⚠️️ ", f"You are still below your {objectiveName} of {targetText}.")
+            return Summary("⚠️ ", f"You are still below your {objectiveName} of {targetText}.")
         elif status == ObjectiveStatus.WORSENED:
             return Summary("❌️", f"Your code did not improve towards your {objectiveName} of {targetText}.")
         else:
@@ -86,6 +86,8 @@ class MaintainabilityMarkdownReport(MarkdownFragment, Report):
         return not ObjectiveStatus.WORSENED in self.getObjectiveStatuses(feedback)
 
     def getFindings(self, feedback: dict, options: PublishOptions) -> Iterator[FeedbackFinding]:
+        if self.isObjectiveSuccess(feedback, options):
+            return iter(())
         return (self.toFinding(rc) for rc in self.filterRefactoringCandidates(feedback, self.BAD_CATEGORIES))
 
     def getPositiveFindings(self, feedback: dict, options: PublishOptions) -> Iterator[FeedbackFinding]:
