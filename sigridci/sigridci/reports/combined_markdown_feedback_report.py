@@ -140,7 +140,9 @@ class CombinedMarkdownFeedbackReport(Report):
         for fragment in self.prepareFragments(options):
             capabilityFeedback = feedback[fragment.getCapability()]
             for summary in fragment.getSummary(capabilityFeedback, options):
-                md += f"- {summary.symbol}  **{fragment.getCapability().displayName}:** {summary.text}\n"
+                capabilityName = fragment.getCapability().displayName
+                capabilitySuffix = " (Beta)" if fragment.getCapability().beta else ""
+                md += f"- {summary.symbol}  **{capabilityName}{capabilitySuffix}:** {summary.text}\n"
         return f"{md}\n"
 
     def renderFindingsTable(self, findings: list[FeedbackFinding], options: PublishOptions) -> str:
