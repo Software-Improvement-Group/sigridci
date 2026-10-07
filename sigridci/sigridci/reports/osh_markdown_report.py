@@ -73,7 +73,7 @@ class OpenSourceHealthMarkdownReport(MarkdownFragment):
         elif severity == "MEDIUM":
             return "no critical or high"
         elif severity == "LOW":
-            return "no critical, high or medium"
+            return "no critical, high, or medium"
         else:
             return "no"
 
