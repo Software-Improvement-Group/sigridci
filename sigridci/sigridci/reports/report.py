@@ -15,6 +15,7 @@
 import urllib.parse
 from abc import ABC, abstractmethod
 from datetime import datetime
+from typing import Any
 
 from ..publish_options import PublishOptions
 
@@ -24,6 +25,9 @@ class Report(ABC):
     GOOD_CATEGORIES = ["fixed", "improved"]
     BAD_CATEGORIES = ["introduced", "worsened"]
     UNCHANGED_CATEGORIES = ["unchanged"]
+
+    def __init__(self):
+        self.previousFeedback: Any = None
 
     @abstractmethod
     def generate(self, analysisId: str, feedback: dict, options: PublishOptions) -> None:

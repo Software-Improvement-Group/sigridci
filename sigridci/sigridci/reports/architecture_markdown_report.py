@@ -40,7 +40,7 @@ class ArchitectureMarkdownReport(MarkdownFragment):
             location += f" ▶ {file['shortName']}"
         return location
 
-    def getDependencyLocations(self, dependency) -> list[Location]:
+    def getDependencyLocations(self, dependency: dict) -> list[Location]:
         file = next((se for se in dependency["sourceHierarchy"] if se["type"] == "FILE"), None)
         if not file:
             return []

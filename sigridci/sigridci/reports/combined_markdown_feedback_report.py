@@ -74,14 +74,14 @@ class CombinedMarkdownFeedbackReport(Report):
             f.write(self.renderMarkdown(analysisId, feedback, options))
 
     def getFindings(self, feedback: dict, options: PublishOptions) -> list[FeedbackFinding]:
-        findings = []
+        findings: list[FeedbackFinding] = []
         for fragment in self.prepareFragments(options):
             capabilityFeedback = feedback[fragment.getCapability()]
             findings.extend(fragment.getFindings(capabilityFeedback, options))
         return sorted(findings, key=self.sortFindings)
 
     def getPositiveFindings(self, feedback: dict, options: PublishOptions) -> list[FeedbackFinding]:
-        findings = []
+        findings: list[FeedbackFinding] = []
         for fragment in self.prepareFragments(options):
             capabilityFeedback = feedback[fragment.getCapability()]
             findings.extend(fragment.getPositiveFindings(capabilityFeedback, options))
@@ -145,7 +145,7 @@ class CombinedMarkdownFeedbackReport(Report):
             md += f"| ⚪️ | ... and {remaining} more findings | | | |\n"
         return f"{md}\n"
 
-    def renderDetailsStart(self, title) -> str:
+    def renderDetailsStart(self, title: str) -> str:
         if Platform.isHtmlMarkdownSupported():
             return f"<details><summary>**{title}**</summary>\n\n"
         else:
