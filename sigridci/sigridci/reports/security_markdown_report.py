@@ -28,10 +28,10 @@ class SecurityMarkdownReport(MarkdownFragment):
     # but high findings are allowed.
     OBJECTIVE_SEVERITY_SUMMARIES = {
         "CRITICAL" : "any",
-        "HIGH" : "no 🟣 critical",
-        "MEDIUM" : "no 🟣 critical or 🔴 high",
-        "LOW" : "no 🟣 critical or 🔴 high or 🟠 medium",
-        "INFORMATION" : "no 🟣 critical or 🔴 high or 🟠 medium or 🟡 low",
+        "HIGH" : "no critical",
+        "MEDIUM" : "no critical or high",
+        "LOW" : "no critical, high or medium",
+        "INFORMATION" : "no critical, high, medium, or low",
         "NONE" : "no"
     }
 
