@@ -38,7 +38,7 @@ class MaintainabilityMarkdownReportTest(TestCase):
             "baseline": "20220110",
             "baselineRatings": {"DUPLICATION": 4.0, "UNIT_SIZE": 4.0, "MAINTAINABILITY": 4.0},
             "changedCodeBeforeRatings" : {"MAINTAINABILITY" : 2.6},
-            "changedCodeAfterRatings" : {"MAINTAINABILITY" : 2.8},
+            "changedCodeAfterRatings" : {"MAINTAINABILITY" : 2.4},
             "newCodeRatings": {"DUPLICATION": 5.0, "UNIT_SIZE": 2.0, "MAINTAINABILITY": 3.0},
             "overallRatings": {"DUPLICATION": 4.5, "UNIT_SIZE": 3.0, "MAINTAINABILITY": 2.0},
             "refactoringCandidates": refactoringCandidates
@@ -48,7 +48,7 @@ class MaintainabilityMarkdownReportTest(TestCase):
         summary = report.getSummary(feedback, self.options)
         negative = list(report.getFindings(feedback, self.options))
 
-        self.assertEqual(summary[0].text, "You improved your code towards your objective of 5.0 stars.")
+        self.assertEqual(summary[0].text, "Your code did not improve towards your objective of 5.0 stars.")
         self.assertEqual(len(negative), 2)
         self.assertEqual(negative[0].title, "Unit Size (Introduced)")
         self.assertEqual(negative[1].title, "Unit Size (Worsened)")
