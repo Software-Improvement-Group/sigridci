@@ -12,94 +12,55 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-import os
 from typing import Union, Iterator
 
-from .markdown_fragment import MarkdownFragment, FeedbackFinding, Location
-from .report import MarkdownRenderer
-from ..analysisresults.cyclonedx_processor import CycloneDXProcessor
+from .markdown_fragment import MarkdownFragment, FeedbackFinding, Location, Summary
+from ..analysisresults.cyclonedx_processor import CycloneDXProcessor, Library
 from ..capability import OPEN_SOURCE_HEALTH, Capability
 from ..objective import Objective
-from ..platform import OSH_EXCLUDE_DOCS
 from ..publish_options import PublishOptions
 
 
-class OpenSourceHealthMarkdownReport(MarkdownRenderer, MarkdownFragment):
-    def __init__(self, options: PublishOptions, vulnerabilityObjective: Union[str, None] = "HIGH", licenseObjective: Union[str, None] = None):
-        super().__init__()
+class OpenSourceHealthMarkdownReport(MarkdownFragment):
+    def __init__(self, options: PublishOptions,
+                 vulnerabilityObjective: Union[str, None] = "HIGH",
+                 licenseObjective: Union[str, None] = None):
         self.options = options
         self.vulnerabilityObjective = vulnerabilityObjective
         self.licenseObjective = licenseObjective
         self.previousFeedback = None
         self.processor = CycloneDXProcessor(options, self.vulnerabilityObjective, self.licenseObjective)
 
-    def generate(self, analysisId: str, feedback: dict, options: PublishOptions) -> None:
-        with open(self.getMarkdownFile(options), "w", encoding="utf-8") as f:
-            f.write(self.renderMarkdown(analysisId, feedback, options))
-
-    def renderMarkdown(self, analysisId: str, feedback: dict, options: PublishOptions) -> str:
-        libraries = list(self.processor.extractLibraries(feedback))
-        previousLibraries = list(self.processor.extractLibraries(self.previousFeedback))
-
-        fixable = [lib for lib in libraries if lib.fixable]
-        unfixable = [lib for lib in libraries if not lib.fixable]
-        updated = self.findUpdatedLibraries(previousLibraries, libraries)
-
-        details = f"Sigrid compared your code against the baseline of {self.getBaseline(feedback)}.\n\n"
-        if len(updated + fixable + unfixable) > 0:
-            details += "- ❌ means the library has issues that fail your objective.\n"
-            details += "- ⚠️ means the library has issues, but they are not severe enough to fail your objective.\n"
-            details += "- ✅ means everything is fine.\n\n"
-            details += "If you believe these findings are false positives, you can\n"
-            details += f"[exclude them in the Sigrid configuration]({OSH_EXCLUDE_DOCS}).\n\n"
-        if len(updated) > 0:
-            details += "## 👍 What went well?\n\n"
-            details += f"> You updated **{len(updated)}** open source libraries that previously had issues.\n\n"
-            details += self.generateFindingsTable(updated, options)
-        if len(fixable) > 0:
-            details += "## 👎 What could be better?\n\n"
-            details += f"> You have **{len(fixable)}** open source libraries with issues.\n\n"
-            details += self.generateFindingsTable(fixable, options)
-        if len(unfixable) > 0:
-            details += "## 😑 You have findings that need to be investigated\n\n"
-            details += f"> You have **{len(unfixable)}** open source libraries with issues that don't have an easy solution.  \n"
-            details += "> You'll need to investigate the risks, and discuss how to manage them accordingly.\n\n"
-            details += self.generateFindingsTable(unfixable, options)
-
-        sigridLink = f"{self.getSigridUrl(options)}/-/open-source-health"
-        return self.renderMarkdownTemplate(feedback, options, details, sigridLink)
-
-    def getSummary(self, feedback: dict, options: PublishOptions) -> list[str]:
+    def getSummary(self, feedback: dict, options: PublishOptions) -> list[Summary]:
         totalLibraryCount = len(feedback.get("components", []))
 
         if totalLibraryCount == 0:
-            return ["💭  Sigrid did not find any open source libraries."]
+            return [Summary("💭", "Sigrid did not find any open source libraries.")]
 
         relevantLibraries = list(self.processor.extractLibraries(feedback))
-
         summary = [self.getVulnerabilitySummary(relevantLibraries)]
         if self.licenseObjective:
             summary.append(self.getLicenseSummary(relevantLibraries))
         return summary
 
-    def getVulnerabilitySummary(self, libraries):
+    def getVulnerabilitySummary(self, libraries: list[Library]) -> Summary:
         objectiveDisplayName = f"{self.formatSeverity(self.vulnerabilityObjective)} open source vulnerabilities"
         fixable = [lib for lib in libraries if not lib.vulnerabilityRisk.meetsObjective and lib.fixable]
         unfixable = [lib for lib in libraries if not lib.vulnerabilityRisk.meetsObjective and not lib.fixable]
 
         if len(fixable) > 0:
-            return f"❌️  You failed to meet your objective of having {objectiveDisplayName}."
+            return Summary("❌️", f"You have {objectiveDisplayName}.")
         elif len(unfixable) > 0:
-            return f"😑  There are vulnerable open source libraries you need to investigate."
+            return Summary("😑 ", f"There are vulnerable open source libraries you need to investigate.")
         else:
-            return f"✅  You achieved your objective of having {objectiveDisplayName}."
+            return Summary("✅ ", f"You do not have {objectiveDisplayName}.")
 
-    def getLicenseSummary(self, libraries):
+    def getLicenseSummary(self, libraries: list[Library]) -> Summary:
         culprits = [lib for lib in libraries if not lib.licenseRisk.meetsObjective]
         if len(culprits) == 0:
-            return f"✅  You achieved your objective of having no open source libraries with license issues."
+            return Summary("✅ ", f"You have no license issues in open source libraries.")
         else:
-            return f"❌  You failed to meet your objective of having no open source libraries with license issues."
+            return Summary("❌", f"You have open source libraries with license issues.")
 
     def formatSeverity(self, objective):
         # We phrase objectives for findings as the "worst" severity
@@ -116,42 +77,6 @@ class OpenSourceHealthMarkdownReport(MarkdownRenderer, MarkdownFragment):
         index = Objective.SEVERITY_OBJECTIVE.index(objective)
         return f"no {Objective.SEVERITY_OBJECTIVE[index - 1].lower()}-severity"
 
-    def generateFindingsTable(self, libraries, options):
-        md = "| Vulnerabilities | License | Library | Latest version | Location(s) |\n"
-        md += "|----|----|----|----|----|\n"
-
-        for library in sorted(libraries, key=lambda lib: Objective.sortBySeverity(lib.vulnerabilityRisk.severity))[0:options.getMaxShownFindings()]:
-            vulnCheck = self.getVulnerabilityRiskSymbol(library)
-            licenseCheck = self.getLicenseRiskSymbol(library)
-            suffix = self.formatInfoLine(library)
-            locations = self.tableLineSeparator.join(self.decorateLink(options, file, file) for file in library.files)
-            md += f"| {vulnCheck} | {licenseCheck} | {library.name} {library.version}{suffix} | {library.latestVersion} | {locations} |\n"
-
-        if len(libraries) > options.getMaxShownFindings():
-            md += f"| | ... {len(libraries) - options.getMaxShownFindings()} more vulnerable open source libraries | |\n"
-
-        return f"{md}\n"
-
-    def getVulnerabilityRiskSymbol(self, library):
-        if library.vulnerabilityRisk.severity == "NONE":
-            return "✅"
-        elif library.vulnerabilityRisk.meetsObjective:
-            return "⚠️"
-        else:
-            return "❌"
-
-    def getLicenseRiskSymbol(self, library):
-        return "✅" if library.licenseRisk.meetsObjective else "❌"
-
-    def formatInfoLine(self, library):
-        info = "(Transitive) " if library.transitive else ""
-        if len(library.vulnerabilities) > 0:
-            formatVulnLink = lambda vuln: f"[{vuln.id}]({vuln.link})" if vuln.link else vuln.id
-            info += ", ".join(formatVulnLink(vuln) for vuln in library.vulnerabilities) + "."
-        if not library.licenseRisk.meetsObjective:
-            info += f"License: {', '.join(library.licenses)}."
-        return f"{self.tableLineSeparator}*{info}*" if info else ""
-
     def findUpdatedLibraries(self, previous, current):
         getKey = lambda library: f"{library.name}@{library.version}"
         currentKeys = set(getKey(lib) for lib in current)
@@ -165,9 +90,6 @@ class OpenSourceHealthMarkdownReport(MarkdownRenderer, MarkdownFragment):
     def getCapability(self) -> Capability:
         return OPEN_SOURCE_HEALTH
 
-    def getMarkdownFile(self, options: PublishOptions) -> str:
-        return os.path.abspath(f"{options.outputDir}/osh-feedback.md")
-
     def isObjectiveSuccess(self, feedback: dict, options: PublishOptions) -> bool:
         libraries = list(self.processor.extractLibraries(feedback))
         fixable = [lib for lib in libraries if not lib.meetsObjectives() and lib.fixable]
@@ -175,20 +97,32 @@ class OpenSourceHealthMarkdownReport(MarkdownRenderer, MarkdownFragment):
 
     def getFindings(self, feedback: dict, options: PublishOptions) -> Iterator[FeedbackFinding]:
         for lib in self.processor.extractLibraries(feedback):
-            transitive = " (Transitive)" if lib.transitive else ""
-            name = f"{lib.name} {lib.version}{transitive}"
-            locations = [Location(file) for file in lib.files]
-
-            if not lib.vulnerabilityRisk.meetsObjective:
-                title = f"{name} contains known vulnerabilities"
-                formatVulnLink = lambda vuln: f"[{vuln.id}]({vuln.link})" if vuln.link else vuln.id
-                details = ", ".join(formatVulnLink(vuln) for vuln in lib.vulnerabilities) + "."
-                yield FeedbackFinding(lib.vulnerabilityRisk.severity, OPEN_SOURCE_HEALTH, title, details, locations)
-
-            if not lib.licenseRisk.meetsObjective:
-                title = f"{name} has license risks"
-                details = "License: " + ", ".join(lib.licenses)
-                yield FeedbackFinding(lib.licenseRisk.severity, OPEN_SOURCE_HEALTH, title, details, locations)
+            yield from self.toFindings(lib)
 
     def getPositiveFindings(self, feedback: dict, options: PublishOptions) -> Iterator[FeedbackFinding]:
-        return []
+        libraries = list(self.processor.extractLibraries(feedback))
+        previousLibraries = list(self.processor.extractLibraries(self.previousFeedback))
+        for lib in self.findUpdatedLibraries(previousLibraries, libraries):
+            yield from self.toFindings(lib)
+
+    def toFindings(self, lib: Library) -> Iterator[FeedbackFinding]:
+        transitive = " (Transitive)" if lib.transitive else ""
+        name = f"`{self.formatLibName(lib)}` {lib.version}{transitive}"
+        locations = [Location(file) for file in lib.files]
+
+        if not lib.vulnerabilityRisk.meetsObjective:
+            title = f"{name} contains known vulnerabilities"
+            formatVulnLink = lambda vuln: f"[{vuln.id}]({vuln.link})" if vuln.link else vuln.id
+            details = ["Vulnerabilities:"] + [formatVulnLink(vuln) for vuln in lib.vulnerabilities]
+            yield FeedbackFinding(lib.vulnerabilityRisk.severity, OPEN_SOURCE_HEALTH, title, details, locations)
+
+        if not lib.licenseRisk.meetsObjective:
+            title = f"{name} has license risks"
+            details = ["Licenses:"] + lib.licenses
+            yield FeedbackFinding(lib.licenseRisk.severity, OPEN_SOURCE_HEALTH, title, details, locations)
+
+    def formatLibName(self, lib: Library) -> str:
+        if not ":" in lib.name:
+            return lib.name
+        return lib.name[lib.name.index(":") + 1:]
+

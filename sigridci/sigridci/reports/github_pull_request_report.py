@@ -19,7 +19,7 @@ import urllib.parse
 import urllib.request
 
 from .combined_markdown_feedback_report import CombinedMarkdownFeedbackReport
-from .report import Report, MarkdownRenderer
+from .report import Report
 from ..api_caller import ApiCaller
 from ..publish_options import RunMode, PublishOptions
 from ..upload_log import UploadLog

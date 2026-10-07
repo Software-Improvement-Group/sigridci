@@ -12,68 +12,31 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-import html
 import os
 from typing import Union, Iterator
 
-from .markdown_fragment import MarkdownFragment, FeedbackFinding
-from .report import MarkdownRenderer
+from .markdown_fragment import MarkdownFragment, FeedbackFinding, Location, Summary
+from .report import Report
 from ..capability import MAINTAINABILITY, Capability
 from ..objective import Objective, ObjectiveStatus
-from ..platform import Platform
 from ..publish_options import PublishOptions
 
 
-class MaintainabilityMarkdownReport(MarkdownRenderer, MarkdownFragment):
-    MAX_OCCURRENCES = 3
-
-    RISK_CATEGORY_SYMBOLS = {
-        "VERY_HIGH" : "🔴",
-        "HIGH" : "🟠",
-        "MODERATE" : "🟡",
-        "MEDIUM" : "🟡",
-        "LOW" : "🟢"
-    }
-
+class MaintainabilityMarkdownReport(MarkdownFragment, Report):
     def __init__(self, objectives: Union[None, dict[str, Union[float, None]]] = None):
-        super().__init__()
-
         if objectives is None:
             objectives = {"MAINTAINABILITY" : Objective.DEFAULT_RATING_OBJECTIVE}
         self.objective = {title: value for title, value in objectives.items() if title.startswith("MAINTAINABILITY")}
 
     def generate(self, analysisId: str, feedback: dict, options: PublishOptions) -> None:
-        with open(self.getMarkdownFile(options), "w", encoding="utf-8") as f:
-            markdown = self.renderMarkdown(analysisId, feedback, options)
-            f.write(markdown)
+        # This is now a no-op, this class only implements Report
+        # for backward compatibility.
+        pass
 
-    def renderMarkdown(self, analysisId: str, feedback: dict, options: PublishOptions) -> str:
-        sigridLink = self.getSigridUrl(options)
+    def getSummary(self, feedback: dict, options: PublishOptions) -> list[Summary]:
+        return [self.getSummaryForObjective(metric, target or 0, feedback) for metric, target in self.objective.items()]
 
-        md = f"# [Sigrid]({sigridLink}) maintainability feedback\n\n"
-        md += f"{self.renderSummary(feedback, options)}\n\n"
-
-        if not ObjectiveStatus.UNKNOWN in self.getObjectiveStatuses(feedback):
-            if Platform.isHtmlMarkdownSupported():
-                md += "<details><summary>Show details</summary>\n\n"
-            md += f"Sigrid compared your code against the baseline of {self.formatBaseline(feedback)}.\n\n"
-            md += self.renderRefactoringCandidates(feedback, options)
-            md += "## ⭐️ Sigrid ratings\n\n"
-            md += self.renderRatingsTable(feedback)
-            if Platform.isHtmlMarkdownSupported():
-                md += "</details>\n\n"
-
-        md += self.renderFooter(options, sigridLink)
-        return md
-
-    def renderSummary(self, feedback, options):
-        summaries = [self.getSummaryForObjective(metric, target, feedback) for metric, target in self.objective.items()]
-        return "\n\n".join(f"**{summary}**" for summary in summaries)
-
-    def getSummary(self, feedback: dict, options: PublishOptions) -> list[str]:
-        return [self.getSummaryForObjective(metric, target, feedback) for metric, target in self.objective.items()]
-
-    def getSummaryForObjective(self, metric, target, feedback):
+    def getSummaryForObjective(self, metric: str, target: float, feedback: dict) -> Summary:
         status = Objective.determineStatus(feedback, target, metric)
         targetText = f"{target:.1f} stars"
 
@@ -82,41 +45,18 @@ class MaintainabilityMarkdownReport(MarkdownRenderer, MarkdownFragment):
             objectiveName = "objective"
 
         if status == ObjectiveStatus.ACHIEVED:
-            return f"✅  You wrote maintainable code and achieved your {objectiveName} of {targetText}."
+            return Summary("✅ ", f"You wrote maintainable code and achieved your {objectiveName} of {targetText}.")
         elif status == ObjectiveStatus.IMPROVED:
-            return f"↗️  You improved your code towards your {objectiveName} of {targetText}."
+            return Summary("✅️ ", f"You improved your code towards your {objectiveName} of {targetText}.")
         elif status == ObjectiveStatus.UNCHANGED:
-            return f"⏸️️  You are still below your {objectiveName} of {targetText}."
+            return Summary("️⚠️️ ", f"You are still below your {objectiveName} of {targetText}.")
         elif status == ObjectiveStatus.WORSENED:
-            return f"⚠️  Your code did not improve towards your {objectiveName} of {targetText}."
+            return Summary("❌️", f"Your code did not improve towards your {objectiveName} of {targetText}.")
         else:
-            return "💭️  You did not change any files that are analyzed by Sigrid."
+            return Summary("💭️ ", f"You did not change any files that are analyzed by Sigrid.")
 
-    def renderRefactoringCandidates(self, feedback, options):
-        good = self.filterRefactoringCandidates(feedback, self.GOOD_CATEGORIES)
-        bad = self.filterRefactoringCandidates(feedback, self.BAD_CATEGORIES)
-        unchanged = self.filterRefactoringCandidates(feedback, self.UNCHANGED_CATEGORIES)
-
-        md = ""
-        md += "## 👍 What went well?\n\n"
-        md += f"> You fixed or improved **{len(good)}** refactoring candidates.\n\n"
-        md += self.renderRefactoringCandidatesTable(good, options) + "\n"
-
-        md += "## 👎 What could be better?\n\n"
-        if len(bad) > 0:
-            md += f"> Unfortunately, **{len(bad)}** refactoring candidates were introduced or got worse.\n\n"
-            md += self.renderRefactoringCandidatesTable(bad, options) + "\n"
-        else:
-            md += "> You did not introduce any technical debt during your changes, great job!\n\n"
-
-        md += "## 📚 Remaining technical debt\n\n"
-        md += f"> **{len(unchanged)}** refactoring candidates didn't get better or worse, but are still present in the code you touched.\n\n"
-        md += f"[View this system in Sigrid to explore your technical debt]({self.getSigridUrl(options)})\n\n"
-        return md
-
-    def renderRatingsTable(self, feedback):
-        md = ""
-        md += f"| System property | System on {self.formatBaseline(feedback)} | Before changes | New/changed code |\n"
+    def renderRatingsTable(self, feedback: dict) -> str:
+        md = f"| System property | System on {self.formatBaseline(feedback)} | Before changes | New/changed code |\n"
         md += f"|-----------------|-------------------------------------------|----------------|------------------|\n"
 
         for metric in Objective.SYSTEM_PROPERTIES + ["MAINTAINABILITY"]:
@@ -129,41 +69,6 @@ class MaintainabilityMarkdownReport(MarkdownRenderer, MarkdownFragment):
 
         return f"{md}\n"
 
-    def renderRefactoringCandidatesTable(self, refactoringCandidates, options):
-        if len(refactoringCandidates) == 0:
-            return ""
-
-        md = ""
-        md += "| Risk | System property | Location |\n"
-        md += "|------|-----------------|----------|\n"
-
-        for rc in refactoringCandidates[0:options.getMaxShownFindings()]:
-            symbol = self.RISK_CATEGORY_SYMBOLS[rc["riskCategory"]]
-            metricName = self.formatMetricName(rc["metric"])
-            metricInfo = f"**{metricName}**{self.tableLineSeparator}({rc['category'].title()})"
-            location = self.formatRefactoringCandidateLocation(rc, options)
-            md += f"| {symbol} | {metricInfo} | {location} |\n"
-
-        if len(refactoringCandidates) > options.getMaxShownFindings():
-            md += f"| ⚪️ | | + {len(refactoringCandidates) - options.getMaxShownFindings()} more |"
-
-        return md + "\n"
-
-    def formatRefactoringCandidateLocation(self, rc, options):
-        label = html.escape(rc["subject"]).replace("::", self.tableLineSeparator)
-        if not rc.get("occurrences"):
-            return label
-        occurrences = rc["occurrences"][0:self.MAX_OCCURRENCES]
-        md = self.tableLineSeparator.join(self.formatRefactoringCandidateOccurrence(options, label, rc, occ) for occ in occurrences)
-        if len(rc["occurrences"]) > self.MAX_OCCURRENCES:
-            md += f"{self.tableLineSeparator}+ {len(rc['occurrences']) - self.MAX_OCCURRENCES} occurrences"
-        return md
-
-    def formatRefactoringCandidateOccurrence(self, options, label, rc, occurrence):
-        if rc["metric"] == "DUPLICATION":
-            label = f"{occurrence['filePath']} line {occurrence['startLine']}-{occurrence['endLine']}"
-        return self.decorateLink(options, label, occurrence["filePath"], occurrence.get("startLine", 0))
-
     def getCapability(self) -> Capability:
         return MAINTAINABILITY
 
@@ -171,19 +76,32 @@ class MaintainabilityMarkdownReport(MarkdownRenderer, MarkdownFragment):
         return os.path.abspath(f"{options.outputDir}/feedback.md")
 
     def getObjectiveStatuses(self, feedback):
-        return [Objective.checkMaintainabilityRating(feedback, metric, target) for metric, target in self.objective.items()]
+        return [
+            Objective.checkMaintainabilityRating(feedback, metric, target or 0.0)
+            for metric, target
+            in self.objective.items()
+        ]
 
     def isObjectiveSuccess(self, feedback: dict, options: PublishOptions) -> bool:
         return not ObjectiveStatus.WORSENED in self.getObjectiveStatuses(feedback)
 
     def getFindings(self, feedback: dict, options: PublishOptions) -> Iterator[FeedbackFinding]:
-        for rc in self.filterRefactoringCandidates(feedback, self.BAD_CATEGORIES):
-            title = f"{self.formatMetricName(rc['metric'])} ({rc['category'].title()})"
-            details = ""
-            yield FeedbackFinding(rc["riskCategory"], MAINTAINABILITY, title, details, [])
+        return (self.toFinding(rc) for rc in self.filterRefactoringCandidates(feedback, self.BAD_CATEGORIES))
 
     def getPositiveFindings(self, feedback: dict, options: PublishOptions) -> Iterator[FeedbackFinding]:
-        for rc in self.filterRefactoringCandidates(feedback, self.GOOD_CATEGORIES):
-            title = f"{self.formatMetricName(rc['metric'])} ({rc['category'].title()})"
-            details = ""
-            yield FeedbackFinding(rc["riskCategory"], MAINTAINABILITY, title, details, [])
+        return (self.toFinding(rc) for rc in self.filterRefactoringCandidates(feedback, self.GOOD_CATEGORIES))
+
+    def toFinding(self, rc: dict) -> FeedbackFinding:
+        title = f"{self.formatMetricName(rc['metric'])} ({rc['category'].title()})"
+        details = self.formatSubject(rc)
+        locations = [Location(occ["filePath"], occ["startLine"]) for occ in rc["occurrences"]]
+        return FeedbackFinding(rc["riskCategory"], MAINTAINABILITY, title, details, locations)
+
+    def formatSubject(self, rc: dict) -> list[str]:
+        getFileName = lambda filePath: filePath.split("/")[-1].split("\\")[-1]
+        if rc["metric"] == "DUPLICATION":
+            return [f"{int(rc['value'])} duplicated lines across {len(rc['occurrences'])} occurences"]
+        elif "::" in rc["subject"]:
+            return [rc["subject"].split("::")[-1].split("(")[0]]
+        else:
+            return [getFileName(rc["subject"])]

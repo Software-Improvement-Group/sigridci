@@ -15,14 +15,12 @@
 import os
 from typing import Iterator
 
-from .markdown_fragment import MarkdownFragment, FeedbackFinding
-from .report import MarkdownRenderer
+from .markdown_fragment import MarkdownFragment, FeedbackFinding, Location, Summary
 from ..capability import ARCHITECTURE, Capability
-from ..platform import AQ_EXCLUDE_DOCS, AQ_UNDESIRABLE_DOCS, Platform
 from ..publish_options import PublishOptions
 
 
-class ArchitectureMarkdownReport(MarkdownRenderer, MarkdownFragment):
+class ArchitectureMarkdownReport(MarkdownFragment):
     FINDING_NAMES = {
         "UNDESIRABLE" : "Undesirable dependency",
         "CYCLIC" : "Cyclic dependency"
@@ -33,74 +31,25 @@ class ArchitectureMarkdownReport(MarkdownRenderer, MarkdownFragment):
         "CYCLIC" : "MEDIUM"
     }
 
-    def __init__(self):
-        super().__init__()
-        self.tableLineSeparator = "<br />" if Platform.isHtmlMarkdownSupported() else " • "
-
-    def generate(self, analysisId: str, feedback: dict, options: PublishOptions) -> None:
-        with open(self.getMarkdownFile(options), "w", encoding="utf-8") as f:
-            f.write(self.renderMarkdown(analysisId, feedback, options))
-
-    def renderMarkdown(self, analysisId: str, feedback: dict, options: PublishOptions) -> str:
-        positive = self.getPositiveFeedback(feedback)
-        negative = self.getNegativeFeedback(feedback)
-        remaining = self.getRemainingFeedback(feedback)
-        sigridLink = f"{self.getSigridUrl(options)}/-/architecture-quality/explorer"
-
-        md = f"Sigrid compared your code against the baseline of {feedback['baseline']} UTC.\n\n"
-
-        if len(positive) > 0 or len(negative) == 0:
-            md += "## 👍 What went well?\n\n"
-            if len(positive) > 0:
-                md += f"> You improved **{len(positive)}** architecture issues.\n\n"
-                md += f"{self.generateFindingsTable(positive, options)}\n"
-            elif len(negative) == 0:
-                md += "> You did not introduce any architecture issues during your changes, great job!\n\n"
-
-        if len(negative) > 0:
-            md += "## 👎 What could be better?\n\n"
-            md += f"> Unfortunately, you introduced **{len(negative)}** architecture issues.\n\n"
-            md += f"{self.generateFindingsTable(negative, options)}\n"
-            md += f"You can [configure undesirable dependencies]({AQ_UNDESIRABLE_DOCS}) "
-            md += "which Sigrid then checks and reports in this feedback.\n"
-            md += "If you believe these findings are false positives, "
-            md += f"you can [exclude the rule]({AQ_EXCLUDE_DOCS}) in the Sigrid configuration.\n\n"
-
-        if remaining > 0:
-            md += "## 📚 You have remaining technical debt\n\n"
-            md += f"> You have **{remaining}** architecture issues.\n"
-            md += f"[You can view these findings in Sigrid]({sigridLink}).\n\n"
-
-        return self.renderMarkdownTemplate(feedback, options, md, sigridLink)
-
-    def generateFindingsTable(self, findings, options):
-        if len(findings) == 0:
-            return ""
-
-        md = "| Issue | Location |\n"
-        md += "|---|---|\n"
-        for finding in findings[0:options.getMaxShownFindings()]:
-            type = self.FINDING_NAMES[finding["qualification"]]
-            activity = finding["activity"].title()
-            source = self.formatDependencyLocation(finding["sourceHierarchy"], options) + self.formatLines(finding)
-            target = self.formatDependencyLocation(finding["targetHierarchy"], options)
-            location = f"Source: {source}{self.tableLineSeparator}Target: {target}"
-            md += f"| **{type}**{self.tableLineSeparator}({activity}) | {location} |\n"
-        if len(findings) > options.getMaxShownFindings():
-            md += f"| ... and {len(findings) - options.getMaxShownFindings()} more findings | |\n"
-        return md
-
-    def formatDependencyLocation(self, hierarchy, options):
+    def formatDependencyLocation(self, hierarchy):
         topLevelComponent = hierarchy[0]
         file = next((se for se in hierarchy if se["type"] == "FILE"), None)
 
         location = topLevelComponent["shortName"]
         if file:
-            location += f" ▶ {self.decorateLink(options, file['shortName'], file['name'])}"
+            location += f" ▶ {file['shortName']}"
         return location
 
-    def formatLines(self, finding):
-        lines = finding.get("lines")
+    def getDependencyLocations(self, dependency) -> list[Location]:
+        file = next((se for se in dependency["sourceHierarchy"] if se["type"] == "FILE"), None)
+        if not file:
+            return []
+        lines = dependency.get("lines", [])
+        line = lines[0][0] if len(lines) > 0 else 0
+        return [Location(file["name"], line)]
+
+    def formatLines(self, dependency):
+        lines = dependency.get("lines")
         if not lines:
             return ""
         elif len(lines) == 1:
@@ -108,11 +57,11 @@ class ArchitectureMarkdownReport(MarkdownRenderer, MarkdownFragment):
         else:
             return f" (lines {', '.join(line[0] for line in lines)})"
 
-    def getSummary(self, feedback: dict, options: PublishOptions) -> list[str]:
+    def getSummary(self, feedback: dict, options: PublishOptions) -> list[Summary]:
         if len(self.getNegativeFeedback(feedback)) == 0:
-            return [f"✅  Your changes did not introduce any architecture issues"]
+            return [Summary("✅ ", "Your changes did not introduce any architecture issues")]
         else:
-            return [f"⚠️  Your changes introduced architecture issues"]
+            return [Summary("⚠️ ", "Your changes introduced architecture issues")]
 
     def getCapability(self) -> Capability:
         return ARCHITECTURE
@@ -152,4 +101,11 @@ class ArchitectureMarkdownReport(MarkdownRenderer, MarkdownFragment):
     def toFinding(self, dependency: dict) -> FeedbackFinding:
         severity = self.FINDING_SEVERITY.get(dependency["qualification"]) or "UNKNOWN"
         title = self.FINDING_NAMES.get(dependency["qualification"]) or dependency["qualification"].title()
-        return FeedbackFinding(severity, ARCHITECTURE, title, "???", [])
+        locations = self.getDependencyLocations(dependency)
+
+        details = [
+            f"Source: {self.formatDependencyLocation(dependency['sourceHierarchy'])}{self.formatLines(dependency)}",
+            f"Target: {self.formatDependencyLocation(dependency['targetHierarchy'])}"
+        ]
+
+        return FeedbackFinding(severity, ARCHITECTURE, title, details, locations)

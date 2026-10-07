@@ -17,7 +17,7 @@ import json
 import os
 from unittest import TestCase, mock
 
-from sigridci.sigridci.capability import Capability, ALL_CAPABILITIES
+from sigridci.sigridci.capability import Capability, ALL_CAPABILITIES, SECURITY
 from sigridci.sigridci.publish_options import PublishOptions, RunMode
 from sigridci.sigridci.reports.combined_markdown_feedback_report import CombinedMarkdownFeedbackReport
 
@@ -53,49 +53,32 @@ class CombinedMarkdownFeedbackReportTest(TestCase):
         report.decorateLinks = False
         markdown = report.renderMarkdown("1234", self.feedback, self.options)
 
-        expected = """
-            # [Sigrid](https://sigrid-says.com) objectives check: ❌ Failed
-
-            - ✅ **Maintainability** ⏸️️  You are still below your objective of 4.0 stars.
-            - ✅ **Architecture** ⚠️  Your changes introduced architecture issues
-            - ❌ **Open Source Health** ❌️  You failed to meet your objective of having no medium-severity open source vulnerabilities.
-            - ❌ **Security** ⚠️  You did not meet your objective of having no 🟣 critical security findings
-            
-            #### Failed checks
-            
-            | Risk | Finding | Details | Location | Actions |
-            |------|---------|---------|----------|---------|
-            | 🟣 | **Security** • ??? | Hard coded password | Example2.java | [Exclude file](https://docs.sigrid-says.com/reference/analysis-scope-configuration.html#excluding-files-and-directories-from-security-scanning) • [Exclude rule](https://docs.sigrid-says.com/reference/analysis-scope-configuration.html#excluding-security-rules) |
-            | 🟠 | **Architecture** • Cyclic dependency | ??? |  | [Exclude](https://docs.sigrid-says.com/reference/analysis-scope-configuration.html#manually-removing-architecture-dependencies) |
-            | 🟠 | **Open Source Health** • org.apache.logging.log4j:log4j-core 2.17.0 contains known vulnerabilities | [GHSA-6hg6-v5c8-fphq](https://nvd.nist.gov/vuln/detail/CVE-2026-34477), [GHSA-vc5p-v9hr-52mj](https://nvd.nist.gov/vuln/detail/CVE-2025-68161), [GHSA-8489-44mv-ggj8](https://nvd.nist.gov/vuln/detail/CVE-2021-44832), [GHSA-3pxv-7cmr-fjr4](https://nvd.nist.gov/vuln/detail/CVE-2026-34480). | build.gradle | [Exclude](https://docs.sigrid-says.com/reference/analysis-scope-configuration.html#exclude-open-source-health-risks) |
-            | 🔴 | **Maintainability** • Duplication (Introduced) |  |  |  |
-            | 🔴 | **Maintainability** • Duplication (Introduced) |  |  |  |
-            | 🔴 | **Maintainability** • Duplication (Introduced) |  |  |  |
-            | 🔴 | **Maintainability** • Duplication (Introduced) |  |  |  |
-            | 🔴 | **Maintainability** • Duplication (Introduced) |  |  |  |
-            | 🔴 | **Maintainability** • Duplication (Introduced) |  |  |  |
-            | 🔴 | **Maintainability** • Duplication (Introduced) |  |  |  |
-            | ⚪️ | ... and 54 more findings | | | |
-            
-            ----
-    
-            [**View this system in Sigrid**](https://sigrid-says.com/aap/noot)
-            
-            ![© Software Improvement Group](https://sigrid-says.com/usage/matomo.php?idsite=6&rec=1&ca=1&e_c=sigridci.feedbackview&e_a=sigridci.feedbackview&e_n=sig-aap-noot)
-        """
-
-        print("\n\n\n\n\n" + markdown + "\n\n\n\n\n")
+        with open("test/testdata/expected-combined-markdown-report.md", "r", encoding="utf8") as f:
+            expected = f.read()
 
         self.assertEqual(markdown.strip(), inspect.cleandoc(expected).strip())
 
-    @mock.patch.dict(os.environ, {"SIGRID_CI_MARKDOWN_HTML" : "false"})
-    def testPassQualityCheck(self):
-        pass
-
-    @mock.patch.dict(os.environ, {"SIGRID_CI_MARKDOWN_HTML" : "false"})
-    def testPositiveFindings(self):
-        pass
-
-    @mock.patch.dict(os.environ, {"SIGRID_CI_MARKDOWN_HTML" : "false"})
     def testExcludeCapabilitiesNotInScope(self):
-        pass
+        self.options.capabilities = [SECURITY]
+        report = CombinedMarkdownFeedbackReport(self.defaultObjectives)
+        fragments = list(report.prepareFragments(self.options))
+
+        self.assertEqual(len(fragments), 1)
+        self.assertEqual(fragments[0].getCapability(), SECURITY)
+
+    def testPositiveFindings(self):
+        self.options.capabilities = [SECURITY]
+
+        with open("test/testdata/security-sigrid-api-sarif.json", encoding="utf-8", mode="r") as f:
+            securityFeedback = {SECURITY : json.load(f)}
+
+        report = CombinedMarkdownFeedbackReport(self.defaultObjectives)
+        negative = report.getFindings(securityFeedback, self.options)
+        positive = report.getPositiveFindings(securityFeedback, self.options)
+
+        self.assertEqual(len(negative), 2)
+        self.assertEqual(negative[0].details, ["Puma4"])
+        self.assertEqual(negative[1].details, ["Puma2"])
+
+        self.assertEqual(len(positive), 1)
+        self.assertEqual(positive[0].details, ["Insecure_Randomness"])

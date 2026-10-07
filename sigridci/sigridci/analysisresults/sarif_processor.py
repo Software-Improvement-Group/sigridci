@@ -31,6 +31,7 @@ class FindingStatus(Enum):
 class Finding:
     fingerprint: str
     risk: str
+    title: str
     description: str
     file: str
     line: int
@@ -62,7 +63,10 @@ class SarifProcessor:
                     status = self.getFindingStatus(result)
 
                     if file is not None and risk in Objective.SEVERITY_OBJECTIVE:
-                        yield Finding(fingerprint, risk, result["message"]["text"], file, line, partOfObjective, status)
+                        tags = result.get("properties", {}).get("tags", [])
+                        title = tags[0] if len(tags) > 0 else ""
+                        details = result["message"]["text"]
+                        yield Finding(fingerprint, risk, title, details, file, line, partOfObjective, status)
 
     def isExcludedTool(self, run: dict) -> bool:
         return run["tool"]["driver"]["name"] in self.EXCLUDED_TOOLS

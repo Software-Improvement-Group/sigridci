@@ -13,6 +13,7 @@
 # limitations under the License.
 
 import os
+import re
 from typing import Any, Iterator
 
 from .architecture_markdown_report import ArchitectureMarkdownReport
@@ -48,6 +49,8 @@ class CombinedMarkdownFeedbackReport(Report):
         "UNKNOWN" : "⚪️"
     }
 
+    FILE_PATH_PATTERN = re.compile(r'[/\\]')
+
     def __init__(self, objectives: dict[str, Any]):
         self.objectives = objectives
         self.previousFeedback: dict[Capability, dict] = {}
@@ -72,15 +75,19 @@ class CombinedMarkdownFeedbackReport(Report):
         with open(os.path.abspath(f"{options.outputDir}/feedback.md"), "w", encoding="utf-8") as f:
             f.write(self.renderMarkdown(analysisId, feedback, options))
 
-    def getFindings(self, feedback: dict, options: PublishOptions) -> Iterator[FeedbackFinding]:
+    def getFindings(self, feedback: dict, options: PublishOptions) -> list[FeedbackFinding]:
+        findings = []
         for fragment in self.prepareFragments(options):
             capabilityFeedback = feedback[fragment.getCapability()]
-            yield from fragment.getFindings(capabilityFeedback, options)
+            findings.extend(fragment.getFindings(capabilityFeedback, options))
+        return sorted(findings, key=self.sortFindings)
 
-    def getPositiveFindings(self, feedback: dict, options: PublishOptions) -> Iterator[FeedbackFinding]:
+    def getPositiveFindings(self, feedback: dict, options: PublishOptions) -> list[FeedbackFinding]:
+        findings = []
         for fragment in self.prepareFragments(options):
             capabilityFeedback = feedback[fragment.getCapability()]
-            yield from fragment.getPositiveFindings(capabilityFeedback, options)
+            findings.extend(fragment.getPositiveFindings(capabilityFeedback, options))
+        return sorted(findings, key=self.sortFindings)
 
     def sortFindings(self, finding: FeedbackFinding) -> int:
         if finding.capability == MAINTAINABILITY:
@@ -91,8 +98,8 @@ class CombinedMarkdownFeedbackReport(Report):
             return severities.index(finding.severity) if finding.severity in severities else 999
 
     def renderMarkdown(self, analysisId: str, feedback: dict, options: PublishOptions) -> str:
-        negative = sorted(self.getFindings(feedback, options), key=self.sortFindings)
-        positive = sorted(self.getPositiveFindings(feedback, options), key=self.sortFindings)
+        negative = self.getFindings(feedback, options)
+        positive = self.getPositiveFindings(feedback, options)
 
         md = f"# [Sigrid]({options.sigridURL}) objectives check: {self.renderConclusion(feedback, options)}\n\n"
         md += self.renderObjectiveSummary(feedback, options)
@@ -103,6 +110,10 @@ class CombinedMarkdownFeedbackReport(Report):
             md += "#### What went well\n\n"
             md += self.renderDetailsStart("Things that went well")
             md += self.renderFindingsTable(positive, options)
+            md += self.renderDetailsEnd()
+        if MAINTAINABILITY in options.capabilities:
+            md += self.renderDetailsStart("Detailed maintainability ratings")
+            md += MaintainabilityMarkdownReport(self.objectives).renderRatingsTable(feedback[MAINTAINABILITY])
             md += self.renderDetailsEnd()
         md += self.renderFooter(options)
         return md
@@ -115,9 +126,8 @@ class CombinedMarkdownFeedbackReport(Report):
         md = ""
         for fragment in self.prepareFragments(options):
             capabilityFeedback = feedback[fragment.getCapability()]
-            for summaryLine in fragment.getSummary(capabilityFeedback, options):
-                symbol = "✅" if fragment.isObjectiveSuccess(capabilityFeedback, options) else "❌"
-                md += f"- {symbol} **{fragment.getCapability().displayName}** {summaryLine}\n"
+            for summary in fragment.getSummary(capabilityFeedback, options):
+                md += f"- {summary.symbol} **{fragment.getCapability().displayName}** {summary.text}\n"
         return f"{md}\n"
 
     def renderFindingsTable(self, findings: list[FeedbackFinding], options: PublishOptions) -> str:
@@ -126,9 +136,10 @@ class CombinedMarkdownFeedbackReport(Report):
         for finding in findings[0:options.getMaxShownFindings()]:
             symbol = self.renderSeverity(finding)
             title = f"**{finding.capability.displayName}**{self.tableLineSeparator}{finding.title}"
-            location = self.tableLineSeparator.join(self.renderLocation(loc, options) for loc in finding.locations)
+            details = self.tableLineSeparator.join(finding.details)
+            location = self.tableLineSeparator.join(self.renderLocation(loc, options) for loc in finding.locations[0:3])
             actions = self.renderActionLink(finding.capability)
-            md += f"| {symbol} | {title} | {finding.details} | {location} | {actions} |\n"
+            md += f"| {symbol} | {title} | {details} | {location} | {actions} |\n"
         if len(findings) > options.getMaxShownFindings():
             remaining = len(findings) - options.getMaxShownFindings()
             md += f"| ⚪️ | ... and {remaining} more findings | | | |\n"
@@ -151,11 +162,17 @@ class CombinedMarkdownFeedbackReport(Report):
         if options.subsystem and filePath.startswith(f"{options.subsystem}/"):
             filePath = filePath[len(options.subsystem) + 1:]
 
-        label = filePath.split("/")[-1].split("\\")[-1]
+        label = self.formatLocationLabel(location)
         link = Platform.createPullRequestFileURL(filePath, location.line)
         if not link or not self.decorateLinks:
             return label
         return f"[{self.escapeMarkdownLabel(label)}]({link})"
+
+    def formatLocationLabel(self, location: Location) -> str:
+        label = self.FILE_PATH_PATTERN.split(location.file)[-1]
+        if location.line > 1:
+            label += f" (line {location.line})"
+        return label
 
     def escapeMarkdownLabel(self, label: str) -> str:
         return label.replace("\\", "\\\\").replace("[", "\\[").replace("]", "\\]")

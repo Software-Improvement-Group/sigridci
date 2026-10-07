@@ -21,6 +21,12 @@ from ..publish_options import PublishOptions
 
 
 @dataclass(frozen=True)
+class Summary:
+    symbol: str
+    text: str
+
+
+@dataclass(frozen=True)
 class Location:
     file: str
     line: int = 0
@@ -31,7 +37,7 @@ class FeedbackFinding:
     severity: str
     capability: Capability
     title: str
-    details: str
+    details: list[str]
     locations: list[Location]
 
 
@@ -45,7 +51,7 @@ class MarkdownFragment(ABC):
         pass
 
     @abstractmethod
-    def getSummary(self, feedback: dict, options: PublishOptions) -> list[str]:
+    def getSummary(self, feedback: dict, options: PublishOptions) -> list[Summary]:
         pass
 
     @abstractmethod

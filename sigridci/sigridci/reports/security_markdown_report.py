@@ -15,26 +15,13 @@
 import os
 from typing import Iterator
 
-from .markdown_fragment import MarkdownFragment, FeedbackFinding, Location
-from .report import MarkdownRenderer
-from ..analysisresults.sarif_processor import SarifProcessor, FindingStatus
+from .markdown_fragment import MarkdownFragment, FeedbackFinding, Location, Summary
+from ..analysisresults.sarif_processor import SarifProcessor, FindingStatus, Finding
 from ..capability import SECURITY, Capability
-from ..objective import Objective
-from ..platform import SECURITY_EXCLUDE_RULE_DOCS, SECURITY_EXCLUDE_FILE_DOCS
 from ..publish_options import PublishOptions
 
 
-class SecurityMarkdownReport(MarkdownRenderer, MarkdownFragment):
-    SEVERITY_SYMBOLS = {
-        "CRITICAL" : "🟣",
-        "HIGH" : "🔴",
-        "MEDIUM" : "🟠",
-        "LOW" : "🟡",
-        "NONE" : "🟢",
-        "INFORMATION" : "🔵",
-        "UNKNOWN" : "⚪️"
-    }
-
+class SecurityMarkdownReport(MarkdownFragment):
     # We phrase objectives as the "worst" severity that is still allowed.
     # So an objective of HIGH means critical findings are not allowed,
     # but high findings are allowed.
@@ -48,90 +35,16 @@ class SecurityMarkdownReport(MarkdownRenderer, MarkdownFragment):
     }
 
     def __init__(self, options: PublishOptions, objective: str = "HIGH"):
-        super().__init__()
         self.objective = objective
         self.processor = SarifProcessor(options, objective)
         self.previousFeedback = None
 
-    def generate(self, analysisId: str, feedback: dict, options: PublishOptions) -> None:
-        with open(self.getMarkdownFile(options), "w", encoding="utf-8") as f:
-            f.write(self.renderMarkdown(analysisId, feedback, options))
-
-    def renderMarkdown(self, analysisId: str, feedback: dict, options: PublishOptions) -> str:
-        findings = self.extractFindings(feedback)
-        introduced = self.processor.filterStatus(findings, FindingStatus.INTRODUCED, partOfObjective=False)
-        fixed = self.processor.filterStatus(findings, FindingStatus.FIXED, partOfObjective=False)
-        remaining = self.processor.filterStatus(findings, FindingStatus.REMAINING, partOfObjective=False)
-        accepted = self.processor.filterStatus(findings, FindingStatus.ACCEPTED, partOfObjective=False)
-        sigridLink = f"{self.getSigridUrl(options)}/-/security"
-
-        details = ""
-        if feedback.get("baseline"):
-            details += f"Sigrid compared your code against the baseline of {feedback['baseline']} UTC.\n\n"
-
-        if len(introduced) + len(fixed) > 0:
-            details += "- ❌ means this finding fails your objective.\n"
-            details += "- ⚠️ means a finding exists, but is not severe enough to fail your objective.\n"
-            details += "- ✅ means everything is fine.\n\n"
-
-        if len(introduced) == 0 or len(fixed) > 0:
-            details += "## 👍 What went well?\n\n"
-            if len(introduced) == 0:
-                details += "> You did not introduce any security findings during your changes, great job!\n\n"
-            if len(fixed) > 0:
-                details += f"> You fixed **{len(fixed)}** security findings.\n\n"
-                details += self.generateFindingsTable(fixed, options)
-
-        if len(introduced) > 0:
-            details += "## 👎 What could be better?\n\n"
-            details += f"> Unfortunately, you introduced **{len(introduced)}** security findings.\n\n"
-            details += self.generateFindingsTable(introduced, options)
-            details += "If you believe these findings are false positives,\n"
-            details += f"you can [exclude the rule]({SECURITY_EXCLUDE_RULE_DOCS}) in the Sigrid configuration.\n"
-            details += "If these findings are located in files that should not be scanned, you can also\n"
-            details += f"[exclude the files and/or directories]({SECURITY_EXCLUDE_FILE_DOCS}) in the configuration.\n\n"
-
-        if len(remaining) + len(accepted) > 0:
-            details += "## 😑 You have remaining security findings\n\n"
-            details += f"> You have **{len(remaining)}** open security findings"
-            if len(accepted) > 0:
-                details += f" and **{len(accepted)}** security findings for which you have previously accepted the risk"
-            details += f".\n[You can view these findings in Sigrid]({sigridLink}).\n\n"
-
-        return self.renderMarkdownTemplate(feedback, options, details, sigridLink)
-
-    def getSummary(self, feedback: dict, options: PublishOptions) -> list[str]:
+    def getSummary(self, feedback: dict, options: PublishOptions) -> list[Summary]:
         severitySummary = self.OBJECTIVE_SEVERITY_SUMMARIES.get(self.objective) or "N/A"
         if self.isObjectiveSuccess(feedback, options):
-            return [f"✅  You achieved your objective of having {severitySummary} security findings"]
+            return [Summary("✅ ", f"You achieved your objective of having {severitySummary} security findings.")]
         else:
-            return [f"⚠️  You did not meet your objective of having {severitySummary} security findings"]
-
-    def generateFindingsTable(self, findings, options):
-        if len(findings) == 0:
-            return ""
-
-        md = "| Risk | Meets objective? | File | Finding |\n"
-        md += "|----|----|----|----|\n"
-
-        for finding in sorted(findings, key=lambda f: Objective.sortBySeverity(f.risk))[0:options.getMaxShownFindings()]:
-            severitySymbol = self.SEVERITY_SYMBOLS[finding.risk]
-            objectiveSymbol = self.formatObjectiveSymbol(finding)
-            link = self.decorateLink(options, f"{finding.file}:{finding.line}", finding.file, finding.line)
-            md += f"| {severitySymbol} {finding.risk.title()} | {objectiveSymbol} | {link} | {finding.description} |\n"
-
-        if len(findings) > options.getMaxShownFindings():
-            md += f"| | ... and {len(findings) - options.getMaxShownFindings()} more findings | | |\n"
-
-        return f"{md}\n"
-
-    def formatObjectiveSymbol(self, finding):
-        if finding.status == FindingStatus.FIXED:
-            return "✅"
-        elif finding.partOfObjective:
-            return "❌"
-        else:
-            return "⚠️"
+            return [Summary("❌️", f"You did not meet your objective of having {severitySummary} security findings.")]
 
     def getCapability(self) -> Capability:
         return SECURITY
@@ -144,7 +57,7 @@ class SecurityMarkdownReport(MarkdownRenderer, MarkdownFragment):
         relevantFindings = self.processor.filterStatus(allFindings, FindingStatus.INTRODUCED, partOfObjective=True)
         return len(relevantFindings) == 0
 
-    def extractFindings(self, feedback):
+    def extractFindings(self, feedback: dict) -> list[Finding]:
         findings = list(self.processor.extractFindings(feedback))
 
         if self.previousFeedback is not None:
@@ -162,11 +75,13 @@ class SecurityMarkdownReport(MarkdownRenderer, MarkdownFragment):
     def getFindings(self, feedback: dict, options: PublishOptions) -> Iterator[FeedbackFinding]:
         findings = self.extractFindings(feedback)
         for finding in self.processor.filterStatus(findings, FindingStatus.INTRODUCED, partOfObjective=False):
-            location = Location(finding.file, finding.line)
-            yield FeedbackFinding(finding.risk, SECURITY, "???", finding.description, [location])
+            yield self.convertFinding(finding)
 
     def getPositiveFindings(self, feedback: dict, options: PublishOptions) -> Iterator[FeedbackFinding]:
         findings = self.extractFindings(feedback)
         for finding in self.processor.filterStatus(findings, FindingStatus.FIXED, partOfObjective=False):
-            location = Location(finding.file, finding.line)
-            yield FeedbackFinding(finding.risk, SECURITY, "???", finding.description, [location])
+            yield self.convertFinding(finding)
+
+    def convertFinding(self, finding: Finding) -> FeedbackFinding:
+        location = Location(finding.file, finding.line)
+        return FeedbackFinding(finding.risk, SECURITY, finding.title, [finding.description], [location])
