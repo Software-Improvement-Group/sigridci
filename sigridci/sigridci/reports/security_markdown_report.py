@@ -75,8 +75,14 @@ class SecurityMarkdownReport(MarkdownFragment):
 
     def getFindings(self, feedback: dict, options: PublishOptions) -> Iterator[FeedbackFinding]:
         findings = self.extractFindings(feedback)
-        for finding in self.processor.filterStatus(findings, FindingStatus.INTRODUCED, partOfObjective=False):
+        for finding in self.processor.filterStatus(findings, FindingStatus.INTRODUCED, partOfObjective=True):
             yield self.convertFinding(finding)
+
+    def getNonUrgentFindings(self, feedback: dict, options: PublishOptions) -> Iterator[FeedbackFinding]:
+        findings = self.extractFindings(feedback)
+        for finding in self.processor.filterStatus(findings, FindingStatus.INTRODUCED, partOfObjective=False):
+            if not finding.partOfObjective:
+                yield self.convertFinding(finding)
 
     def getPositiveFindings(self, feedback: dict, options: PublishOptions) -> Iterator[FeedbackFinding]:
         findings = self.extractFindings(feedback)

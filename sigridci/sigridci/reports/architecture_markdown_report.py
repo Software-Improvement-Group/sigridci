@@ -95,6 +95,9 @@ class ArchitectureMarkdownReport(MarkdownFragment):
     def getFindings(self, feedback: dict, options: PublishOptions) -> Iterator[FeedbackFinding]:
         return (self.toFinding(dep) for dep in self.getNegativeFeedback(feedback))
 
+    def getNonUrgentFindings(self, feedback: dict, options: PublishOptions) -> Iterator[FeedbackFinding]:
+        return iter(())
+
     def getPositiveFindings(self, feedback: dict, options: PublishOptions) -> Iterator[FeedbackFinding]:
         return (self.toFinding(dep) for dep in self.getPositiveFeedback(feedback))
 

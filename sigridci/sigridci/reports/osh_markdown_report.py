@@ -15,13 +15,15 @@
 from typing import Any, Iterator
 
 from .markdown_fragment import MarkdownFragment, FeedbackFinding, Location, Summary
-from ..analysisresults.cyclonedx_processor import CycloneDXProcessor, Library
+from ..analysisresults.cyclonedx_processor import CycloneDXProcessor, Library, Risk
 from ..capability import OPEN_SOURCE_HEALTH, Capability
 from ..objective import Objective
 from ..publish_options import PublishOptions
 
 
 class OpenSourceHealthMarkdownReport(MarkdownFragment):
+    RELEVANT_RISK = ("CRITICAL", "HIGH", "MEDIUM")
+
     def __init__(self, options: PublishOptions, objectives: dict[str, Any]):
         self.options = options
         self.vulnerabilityObjective = objectives.get("OSH_MAX_SEVERITY") or Objective.DEFAULT_FINDING_OBJECTIVE
@@ -95,27 +97,35 @@ class OpenSourceHealthMarkdownReport(MarkdownFragment):
 
     def getFindings(self, feedback: dict, options: PublishOptions) -> Iterator[FeedbackFinding]:
         for lib in self.processor.extractLibraries(feedback):
-            yield from self.toFindings(lib)
+            yield from self.toFindings(lib, checkObjective=True)
+
+    def getNonUrgentFindings(self, feedback: dict, options: PublishOptions) -> Iterator[FeedbackFinding]:
+        for lib in self.processor.extractLibraries(feedback):
+            if lib.vulnerabilityRisk.meetsObjective and lib.licenseRisk.meetsObjective:
+                yield from self.toFindings(lib, checkObjective=False)
 
     def getPositiveFindings(self, feedback: dict, options: PublishOptions) -> Iterator[FeedbackFinding]:
         libraries = list(self.processor.extractLibraries(feedback))
         previousLibraries = list(self.processor.extractLibraries(self.previousFeedback))
         for lib in self.findUpdatedLibraries(previousLibraries, libraries):
-            yield from self.toFindings(lib)
+            yield from self.toFindings(lib, checkObjective=False)
 
-    def toFindings(self, lib: Library) -> Iterator[FeedbackFinding]:
+    def toFindings(self, lib: Library, *, checkObjective: bool) -> Iterator[FeedbackFinding]:
         locations = [Location(file) for file in lib.files]
 
-        if not lib.vulnerabilityRisk.meetsObjective:
+        if self.isRelevantRisk(lib.vulnerabilityRisk, checkObjective=checkObjective):
             title = f"{self.formatLibName(lib)} contains known vulnerabilities."
             formatVulnLink = lambda vuln: f"[{vuln.id}]({vuln.link})" if vuln.link else vuln.id
             details = ["Vulnerabilities:"] + [formatVulnLink(vuln) for vuln in lib.vulnerabilities]
             yield FeedbackFinding(lib.vulnerabilityRisk.severity, OPEN_SOURCE_HEALTH, title, details, locations)
 
-        if not lib.licenseRisk.meetsObjective:
+        if self.isRelevantRisk(lib.licenseRisk, checkObjective=checkObjective):
             title = f"{self.formatLibName(lib)} has license risks."
             details = ["Licenses:"] + lib.licenses
             yield FeedbackFinding(lib.licenseRisk.severity, OPEN_SOURCE_HEALTH, title, details, locations)
+
+    def isRelevantRisk(self, risk: Risk, *, checkObjective: bool) -> bool:
+        return not risk.meetsObjective or (not checkObjective and risk.severity in self.RELEVANT_RISK)
 
     def formatLibName(self, lib: Library) -> str:
         name = lib.name

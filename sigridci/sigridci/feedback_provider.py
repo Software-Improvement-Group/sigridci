@@ -12,6 +12,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
+import json
 import os
 
 from .capability import MAINTAINABILITY, Capability
@@ -64,6 +65,11 @@ class FeedbackProvider:
         if not os.path.exists(self.options.outputDir):
             os.mkdir(self.options.outputDir)
 
+        if not self.options.inlineResults:
+            for capability in self.capabilityFeedback:
+                with open(f"{self.options.outputDir}/{capability.shortName}.json", mode="w", encoding="utf-8") as f:
+                    json.dump(self.capabilityFeedback[capability], f, sort_keys=False, indent=4)
+
         # We have some legacy reports that are maintainability-only,
         # which we keep for backward compatibility.
         if MAINTAINABILITY in self.options.capabilities:
@@ -88,7 +94,7 @@ class FeedbackProvider:
             GitLabPullRequestReport(masterReport),
             AzurePullRequestReport(masterReport),
             BitBucketPullRequestReport(masterReport),
-            # Always goes last, so that the last thing you see
-            # in the command line output is the summary.
+            # The plain text output always goes last, so that the last thing
+            # you see in the command line output is the summary.
             CombinedTextReport(masterReport)
         ]

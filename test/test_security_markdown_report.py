@@ -33,12 +33,14 @@ class SecurityMarkdownReportTest(TestCase):
         report = SecurityMarkdownReport(self.options, {})
         summary = report.getSummary(self.feedback, self.options)
         negative = list(report.getFindings(self.feedback, self.options))
+        nonurgent = list(report.getNonUrgentFindings(self.feedback, self.options))
         positive = list(report.getPositiveFindings(self.feedback, self.options))
 
         self.assertEqual(summary[0].text, "You did not meet your objective of having no 🟣 critical security findings.")
-        self.assertEqual(len(negative), 2)
+        self.assertEqual(len(negative), 1)
         self.assertEqual(negative[0].details, ["Puma4"])
-        self.assertEqual(negative[1].details, ["Puma2"])
+        self.assertEqual(len(nonurgent), 1)
+        self.assertEqual(nonurgent[0].details, ["Puma2"])
         self.assertEqual(len(positive), 1)
         self.assertEqual(positive[0].details, ["Insecure_Randomness"])
 

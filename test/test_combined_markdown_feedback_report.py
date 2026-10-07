@@ -82,3 +82,6 @@ class CombinedMarkdownFeedbackReportTest(TestCase):
 
         self.assertEqual(len(positive), 1)
         self.assertEqual(positive[0].details, ["Insecure_Randomness"])
+
+    def testPositiveFindings(self):
+        pass

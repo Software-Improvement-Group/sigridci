@@ -31,7 +31,7 @@ class InlineResultsReport(Report):
 
     def generate(self, analysisId: str, feedback: dict, options: PublishOptions) -> None:
         fragments = {
-            MAINTAINABILITY : MaintainabilityInlineResultsReport(),
+            MAINTAINABILITY : MaintainabilityInlineResultsReport(self.objectives),
             ARCHITECTURE : ArchitectureInlineResultsReport(),
             OPEN_SOURCE_HEALTH : OpenSourceHealthInlineResultsReport(options, self.objectives),
             SECURITY : SecurityInlineResultsReport(options, self.objectives)

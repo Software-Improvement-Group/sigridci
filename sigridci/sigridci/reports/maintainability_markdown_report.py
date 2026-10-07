@@ -90,6 +90,11 @@ class MaintainabilityMarkdownReport(MarkdownFragment, Report):
             return iter(())
         return (self.toFinding(rc) for rc in self.filterRefactoringCandidates(feedback, self.BAD_CATEGORIES))
 
+    def getNonUrgentFindings(self, feedback: dict, options: PublishOptions) -> Iterator[FeedbackFinding]:
+        if not self.isObjectiveSuccess(feedback, options):
+            return iter(())
+        return (self.toFinding(rc) for rc in self.filterRefactoringCandidates(feedback, self.BAD_CATEGORIES))
+
     def getPositiveFindings(self, feedback: dict, options: PublishOptions) -> Iterator[FeedbackFinding]:
         return (self.toFinding(rc) for rc in self.filterRefactoringCandidates(feedback, self.GOOD_CATEGORIES))
 

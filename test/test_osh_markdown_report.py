@@ -37,10 +37,17 @@ class OpenSourceHealthMarkdownReportTest(TestCase):
         report = OpenSourceHealthMarkdownReport(self.options, {})
         summary = report.getSummary(self.feedback, self.options)
         negative = list(report.getFindings(self.feedback, self.options))
+        nonurgent = list(report.getNonUrgentFindings(self.feedback, self.options))
 
         self.assertEqual(summary[0].text, "You have no critical-severity open source vulnerabilities.")
+
         self.assertEqual(len(negative), 1)
         self.assertEqual(negative[0].title, "`log4j-core` 2.14.1 contains known vulnerabilities.")
+
+        self.assertEqual(len(nonurgent), 3)
+        self.assertEqual(nonurgent[0].title, "`commons-io` 2.9.0 contains known vulnerabilities.")
+        self.assertEqual(nonurgent[1].title, "`classgraph` 4.8.106 (transitive) contains known vulnerabilities.")
+        self.assertEqual(nonurgent[2].title, "`junit`  contains known vulnerabilities.")
 
     def testShowUpdatedLibraries(self):
         report = OpenSourceHealthMarkdownReport(self.options, {"OSH_MAX_SEVERITY" : "MEDIUM"})

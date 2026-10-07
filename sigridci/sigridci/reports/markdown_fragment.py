@@ -59,5 +59,9 @@ class MarkdownFragment(ABC):
         pass
 
     @abstractmethod
+    def getNonUrgentFindings(self, feedback: dict, options: PublishOptions) -> Iterator[FeedbackFinding]:
+        pass
+
+    @abstractmethod
     def getPositiveFindings(self, feedback: dict, options: PublishOptions) -> Iterator[FeedbackFinding]:
         pass

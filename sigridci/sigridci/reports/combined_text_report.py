@@ -25,7 +25,7 @@ class CombinedTextReport(Report):
     ANSI_GREEN = "\033[1m\033[92m"
     ANSI_YELLOW = "\033[1m\033[33m"
     ANSI_RED = "\033[1m\033[91m"
-    ANSI_BLUE = "\033[1m\033[96m"
+    ANSI_MAGENTA = "\033[1m\033[35m"
     ANSI_END = "\033[0m"
 
     def __init__(self, masterReport: CombinedMarkdownFeedbackReport, output: TextIO = sys.stdout):
@@ -34,15 +34,15 @@ class CombinedTextReport(Report):
 
     def generate(self, analysisId: str, feedback: dict, options: PublishOptions) -> None:
         print("", file=self.output)
-        print(f"{self.ANSI_BLUE}{'-' * 70}{self.ANSI_END}", file=self.output)
-        print(f"{self.ANSI_BLUE}Sigrid objectives check{self.ANSI_END}", file=self.output)
-        print(f"{self.ANSI_BLUE}{'-' * 70}{self.ANSI_END}", file=self.output)
+        print(f"{self.ANSI_MAGENTA}{'-' * 70}{self.ANSI_END}", file=self.output)
+        print(f"{self.ANSI_MAGENTA}Sigrid objectives check{self.ANSI_END}", file=self.output)
+        print(f"{self.ANSI_MAGENTA}{'-' * 70}{self.ANSI_END}", file=self.output)
         print("", file=self.output)
 
         self.printFindingsList(feedback, options)
         self.printConclusion(feedback, options)
 
-        print(f"{self.ANSI_BLUE}View this system in Sigrid:{self.ANSI_END}", file=self.output)
+        print(f"{self.ANSI_MAGENTA}View this system in Sigrid:{self.ANSI_END}", file=self.output)
         print(f"    {self.getSigridUrl(options)}", file=self.output)
         print("", file=self.output)
 
@@ -62,7 +62,7 @@ class CombinedTextReport(Report):
 
         if len(findings) > 0:
             print("", file=self.output)
-            print(f"{self.ANSI_BLUE}Failed checks{self.ANSI_END}", file=self.output)
+            print(f"{self.ANSI_MAGENTA}Failed checks{self.ANSI_END}", file=self.output)
             print("", file=self.output)
 
             for finding in findings[0:options.getMaxShownFindings()]:
@@ -78,7 +78,7 @@ class CombinedTextReport(Report):
         symbol = self.masterReport.renderSeverity(finding)
         capabilityName = finding.capability.displayName
 
-        print(f"    - {symbol} {self.ANSI_BLUE}{capabilityName}:{self.ANSI_END} {finding.title}", file=self.output)
+        print(f"    - {symbol} {self.ANSI_MAGENTA}{capabilityName}:{self.ANSI_END} {finding.title}", file=self.output)
         for detailLine in finding.details:
             print(f"         {detailLine}", file=self.output)
         for location in finding.locations[0:3]:

@@ -87,6 +87,13 @@ class CombinedMarkdownFeedbackReport(Report):
             findings.extend(fragment.getPositiveFindings(capabilityFeedback, options))
         return sorted(findings, key=self.sortFindings)
 
+    def getNonUrgentFindings(self, feedback: dict, options: PublishOptions) -> list[FeedbackFinding]:
+        findings: list[FeedbackFinding] = []
+        for fragment in self.prepareFragments(options):
+            capabilityFeedback = feedback[fragment.getCapability()]
+            findings.extend(fragment.getNonUrgentFindings(capabilityFeedback, options))
+        return sorted(findings, key=self.sortFindings)
+
     def sortFindings(self, finding: FeedbackFinding) -> int:
         if finding.capability == MAINTAINABILITY:
             severities = list(self.MAINTAINABILITY_SYMBOLS.keys())
@@ -97,6 +104,7 @@ class CombinedMarkdownFeedbackReport(Report):
 
     def renderMarkdown(self, analysisId: str, feedback: dict, options: PublishOptions) -> str:
         negative = self.getFindings(feedback, options)
+        nonurgent = self.getNonUrgentFindings(feedback, options)
         positive = self.getPositiveFindings(feedback, options)
 
         md = f"# [Sigrid]({options.sigridURL}) objectives check: {self.renderConclusion(feedback, options)}\n\n"
@@ -104,6 +112,11 @@ class CombinedMarkdownFeedbackReport(Report):
         if len(negative) > 0:
             md += "#### Failed checks\n\n"
             md += self.renderFindingsTable(negative, options)
+        if len(nonurgent) > 0:
+            md += self.renderDetailsStart("Non-urgent findings")
+            md += "These findings do not fail your objectives, but you might still want to look at them.\n\n"
+            md += self.renderFindingsTable(nonurgent, options)
+            md += self.renderDetailsEnd()
         if len(positive) > 0:
             md += self.renderDetailsStart(f"Things that went well: You fixed/improved {len(positive)} findings")
             md += self.renderFindingsTable(positive, options)
