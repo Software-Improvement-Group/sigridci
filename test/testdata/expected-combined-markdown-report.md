@@ -1,9 +1,9 @@
 # [Sigrid](https://sigrid-says.com) objectives check: ❌ Failed
 
-- ⚠️   **Maintainability** You are still below your objective of 4.0 stars.
-- ⚠️  **Architecture** Your changes introduced architecture issues.
-- ❌️  **Open Source Health** You have no medium-severity open source vulnerabilities.
-- ❌️  **Security** You did not meet your objective of having no 🟣 critical security findings.
+- ⚠️   **Maintainability:** You are still below your objective of 4.0 stars.
+- ⚠️  **Architecture:** Your changes introduced architecture issues.
+- ❌️  **Open Source Health:** You have no medium-severity open source vulnerabilities.
+- ❌️  **Security:** You did not meet your objective of having no 🟣 critical security findings.
 
 #### Failed checks
 
