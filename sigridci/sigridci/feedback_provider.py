@@ -35,7 +35,6 @@ class FeedbackProvider:
         self.analysisId = analysisId
         self.options = options
         self.objectives = self.prepareObjectives(objectives)
-        self.analysisId = "local"
         self.capabilityFeedback: dict[Capability, dict] = {}
         self.previousCapabilityFeedback: dict[Capability, dict] = {}
 
@@ -70,11 +69,11 @@ class FeedbackProvider:
                 with open(f"{self.options.outputDir}/{capability.shortName}.json", mode="w", encoding="utf-8") as f:
                     json.dump(self.capabilityFeedback[capability], f, sort_keys=False, indent=4)
 
-        # We have some legacy reports that are maintainability-only,
-        # which we keep for backward compatibility.
-        if MAINTAINABILITY in self.options.capabilities:
-            for maintainabilityReport in [JUnitFormatReport(), StaticHtmlReport(self.objectives)]:
-                maintainabilityReport.generate(self.analysisId, self.capabilityFeedback[MAINTAINABILITY], self.options)
+            # We have some legacy reports that are maintainability-only,
+            # which we keep for backward compatibility.
+            if MAINTAINABILITY in self.options.capabilities:
+                for maintainabilityReport in [JUnitFormatReport(), StaticHtmlReport(self.objectives)]:
+                    maintainabilityReport.generate(self.analysisId, self.capabilityFeedback[MAINTAINABILITY], self.options)
 
         masterReport = CombinedMarkdownFeedbackReport(self.objectives)
 

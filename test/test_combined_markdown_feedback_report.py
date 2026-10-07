@@ -76,12 +76,8 @@ class CombinedMarkdownFeedbackReportTest(TestCase):
         negative = report.getFindings(securityFeedback, self.options)
         positive = report.getPositiveFindings(securityFeedback, self.options)
 
-        self.assertEqual(len(negative), 2)
+        self.assertEqual(len(negative), 1)
         self.assertEqual(negative[0].details, ["Puma4"])
-        self.assertEqual(negative[1].details, ["Puma2"])
 
         self.assertEqual(len(positive), 1)
         self.assertEqual(positive[0].details, ["Insecure_Randomness"])
-
-    def testPositiveFindings(self):
-        pass

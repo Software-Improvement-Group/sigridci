@@ -24,11 +24,11 @@ from ..publish_options import PublishOptions
 class OpenSourceHealthMarkdownReport(MarkdownFragment):
     RELEVANT_RISK = ("CRITICAL", "HIGH", "MEDIUM")
 
-    def __init__(self, options: PublishOptions, objectives: dict[str, Any]):
+    def __init__(self, options: PublishOptions, objectives: dict[str, Any], previousFeedback: Any = None):
         self.options = options
         self.vulnerabilityObjective = objectives.get("OSH_MAX_SEVERITY") or Objective.DEFAULT_FINDING_OBJECTIVE
         self.licenseObjective = objectives.get("OSH_MAX_LICENSE_RISK")
-        self.previousFeedback = None
+        self.previousFeedback = previousFeedback
         self.processor = CycloneDXProcessor(options, self.vulnerabilityObjective, self.licenseObjective)
 
     def getSummary(self, feedback: dict, options: PublishOptions) -> list[Summary]:

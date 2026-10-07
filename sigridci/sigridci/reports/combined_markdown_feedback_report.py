@@ -12,6 +12,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
+import html
 import os
 import re
 from typing import Any, Iterator
@@ -65,9 +66,11 @@ class CombinedMarkdownFeedbackReport(Report):
         if ARCHITECTURE in options.capabilities:
             yield ArchitectureMarkdownReport()
         if OPEN_SOURCE_HEALTH in options.capabilities:
-            yield OpenSourceHealthMarkdownReport(options, self.objectives)
+            previous = self.previousFeedback.get(OPEN_SOURCE_HEALTH)
+            yield OpenSourceHealthMarkdownReport(options, self.objectives, previous)
         if SECURITY in options.capabilities:
-            yield SecurityMarkdownReport(options, self.objectives)
+            previous = self.previousFeedback.get(SECURITY)
+            yield SecurityMarkdownReport(options, self.objectives, previous)
 
     def generate(self, analysisId: str, feedback: dict, options: PublishOptions) -> None:
         with open(os.path.abspath(f"{options.outputDir}/feedback.md"), "w", encoding="utf-8") as f:
@@ -111,7 +114,7 @@ class CombinedMarkdownFeedbackReport(Report):
         md += self.renderObjectiveSummary(feedback, options)
         if len(negative) > 0:
             md += "#### Failed checks\n\n"
-            md += "Risk: 🟣 critical | 🔴 high | 🟠 | medium | 🟡 low |\n\n"
+            md += "Risk: 🟣 critical | 🔴 high | 🟠 medium | 🟡 low |\n\n"
             md += self.renderFindingsTable(negative, options)
         if len(nonurgent) > 0:
             md += self.renderDetailsStart("Non-urgent findings")

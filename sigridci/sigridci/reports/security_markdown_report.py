@@ -35,10 +35,10 @@ class SecurityMarkdownReport(MarkdownFragment):
         "NONE" : "no"
     }
 
-    def __init__(self, options: PublishOptions, objectives: dict[str, Any]):
+    def __init__(self, options: PublishOptions, objectives: dict[str, Any], previousFeedback: Any = None):
         self.objective = objectives.get("SECURITY_MAX_SEVERITY") or Objective.DEFAULT_FINDING_OBJECTIVE
         self.processor = SarifProcessor(options, self.objective)
-        self.previousFeedback = None
+        self.previousFeedback = previousFeedback
 
     def getSummary(self, feedback: dict, options: PublishOptions) -> list[Summary]:
         severitySummary = self.OBJECTIVE_SEVERITY_SUMMARIES.get(self.objective) or "N/A"

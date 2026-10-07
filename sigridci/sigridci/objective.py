@@ -82,7 +82,7 @@ class Objective:
         if objective == "CRITICAL":
             return False
         elif objective == "HIGH":
-            return severity in ("CRITICAL")
+            return severity == "CRITICAL"
         elif objective == "MEDIUM":
             return severity in ("CRITICAL", "HIGH")
         elif objective == "LOW":

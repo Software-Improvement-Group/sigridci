@@ -12,7 +12,6 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-import os
 from typing import Union, Iterator
 
 from .markdown_fragment import MarkdownFragment, FeedbackFinding, Location, Summary
@@ -72,12 +71,9 @@ class MaintainabilityMarkdownReport(MarkdownFragment, Report):
     def getCapability(self) -> Capability:
         return MAINTAINABILITY
 
-    def getMarkdownFile(self, options: PublishOptions) -> str:
-        return os.path.abspath(f"{options.outputDir}/feedback.md")
-
     def getObjectiveStatuses(self, feedback):
         return [
-            Objective.checkMaintainabilityRating(feedback, metric, target or 0.0)
+            Objective.checkMaintainabilityRating(feedback, metric.replace("_MAINTAINABILITY", ""), target or 0.0)
             for metric, target
             in self.objective.items()
         ]
@@ -107,7 +103,7 @@ class MaintainabilityMarkdownReport(MarkdownFragment, Report):
     def formatSubject(self, rc: dict) -> list[str]:
         getFileName = lambda filePath: filePath.split("/")[-1].split("\\")[-1]
         if rc["metric"] == "DUPLICATION":
-            return [f"{int(rc['value'])} duplicated lines across {len(rc['occurrences'])} occurences"]
+            return [f"{int(rc['value'])} duplicated lines across {len(rc['occurrences'])} occurrences"]
         elif "::" in rc["subject"]:
             return [rc["subject"].split("::")[-1].split("(")[0]]
         else:

@@ -20,7 +20,7 @@ from typing import Callable, Any
 
 from .capability import OPEN_SOURCE_HEALTH, SECURITY, Capability
 from .feedback_provider import FeedbackProvider
-from .platform import Platform, MISSING_SCOPE_URL
+from .platform import MISSING_SCOPE_URL
 from .publish_options import PublishOptions, RunMode
 from .sigrid_api_client import SigridApiClient
 from .telemetry import Telemetry

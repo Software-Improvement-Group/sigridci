@@ -7,7 +7,7 @@
 
 #### Failed checks
 
-Risk: 🟣 critical | 🔴 high | 🟠 | medium | 🟡 low |
+Risk: 🟣 critical | 🔴 high | 🟠 medium | 🟡 low |
 
 | Risk | Finding | Details | Location | Actions |
 |------|---------|---------|----------|---------|
@@ -21,16 +21,16 @@ These findings do not fail your objectives, but you might still want to look at 
 
 | Risk | Finding | Details | Location | Actions |
 |------|---------|---------|----------|---------|
-| 🔴 | **Maintainability** • Duplication (Introduced) | 74 duplicated lines across 2 occurences | Example.java (line 41) • Example2.java (line 39) |  |
-| 🔴 | **Maintainability** • Duplication (Introduced) | 57 duplicated lines across 2 occurences | Example.java (line 177) • Example2.java (line 162) |  |
-| 🔴 | **Maintainability** • Duplication (Introduced) | 49 duplicated lines across 2 occurences | Example.java (line 246) • Example2.java (line 237) |  |
-| 🔴 | **Maintainability** • Duplication (Introduced) | 40 duplicated lines across 2 occurences | Example.java (line 131) • Example2.java (line 110) |  |
-| 🔴 | **Maintainability** • Duplication (Introduced) | 17 duplicated lines across 2 occurences | Example.java (line 3) • Example2.java (line 15) |  |
-| 🔴 | **Maintainability** • Duplication (Introduced) | 390 duplicated lines across 27 occurences | Example2.java (line 318) • Example2.java (line 129) • Example.java (line 150) |  |
-| 🔴 | **Maintainability** • Duplication (Introduced) | 300 duplicated lines across 26 occurences | Example2.java (line 318) • Example2.java (line 129) • Example.java (line 150) |  |
-| 🔴 | **Maintainability** • Duplication (Introduced) | 34 duplicated lines across 14 occurences | Example.java (line 208) • Example2.java (line 155) • Example2.java (line 98) |  |
-| 🔴 | **Maintainability** • Duplication (Introduced) | 16 duplicated lines across 7 occurences | Example.java (line 112) • Example.java (line 131) • Example.java (line 169) |  |
-| 🔴 | **Maintainability** • Duplication (Introduced) | 19 duplicated lines across 12 occurences | Example.java (line 209) • Example2.java (line 156) • Example.java (line 259) |  |
+| 🔴 | **Maintainability** • Duplication (Introduced) | 74 duplicated lines across 2 occurrences | Example.java (line 41) • Example2.java (line 39) |  |
+| 🔴 | **Maintainability** • Duplication (Introduced) | 57 duplicated lines across 2 occurrences | Example.java (line 177) • Example2.java (line 162) |  |
+| 🔴 | **Maintainability** • Duplication (Introduced) | 49 duplicated lines across 2 occurrences | Example.java (line 246) • Example2.java (line 237) |  |
+| 🔴 | **Maintainability** • Duplication (Introduced) | 40 duplicated lines across 2 occurrences | Example.java (line 131) • Example2.java (line 110) |  |
+| 🔴 | **Maintainability** • Duplication (Introduced) | 17 duplicated lines across 2 occurrences | Example.java (line 3) • Example2.java (line 15) |  |
+| 🔴 | **Maintainability** • Duplication (Introduced) | 390 duplicated lines across 27 occurrences | Example2.java (line 318) • Example2.java (line 129) • Example.java (line 150) |  |
+| 🔴 | **Maintainability** • Duplication (Introduced) | 300 duplicated lines across 26 occurrences | Example2.java (line 318) • Example2.java (line 129) • Example.java (line 150) |  |
+| 🔴 | **Maintainability** • Duplication (Introduced) | 34 duplicated lines across 14 occurrences | Example.java (line 208) • Example2.java (line 155) • Example2.java (line 98) |  |
+| 🔴 | **Maintainability** • Duplication (Introduced) | 16 duplicated lines across 7 occurrences | Example.java (line 112) • Example.java (line 131) • Example.java (line 169) |  |
+| 🔴 | **Maintainability** • Duplication (Introduced) | 19 duplicated lines across 12 occurrences | Example.java (line 209) • Example2.java (line 156) • Example.java (line 259) |  |
 | ⚪️ | ... and 51 more findings | | | |
 
 
