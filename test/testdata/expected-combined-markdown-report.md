@@ -7,6 +7,8 @@
 
 #### Failed checks
 
+Risk: | 🟣 critical | 🔴 high | 🟠 | medium | 🟡 low |
+
 | Risk | Finding | Details | Location | Actions |
 |------|---------|---------|----------|---------|
 | 🟣 | **Security** • A07:2025 - Authentication Failures | Hard coded password | Example2.java (line 5) | [Exclude file](https://docs.sigrid-says.com/reference/analysis-scope-configuration.html#excluding-files-and-directories-from-security-scanning) • [Exclude rule](https://docs.sigrid-says.com/reference/analysis-scope-configuration.html#excluding-security-rules) |

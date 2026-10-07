@@ -111,6 +111,7 @@ class CombinedMarkdownFeedbackReport(Report):
         md += self.renderObjectiveSummary(feedback, options)
         if len(negative) > 0:
             md += "#### Failed checks\n\n"
+            md += "Risk: | 🟣 critical | 🔴 high | 🟠 | medium | 🟡 low |\n\n"
             md += self.renderFindingsTable(negative, options)
         if len(nonurgent) > 0:
             md += self.renderDetailsStart("Non-urgent findings")
