@@ -21,7 +21,9 @@
 | 🔴 | **Maintainability** • Duplication (Introduced) | 300 duplicated lines across 26 occurences | Example2.java (line 318) • Example2.java (line 129) • Example.java (line 150) |  |
 | ⚪️ | ... and 54 more findings | | | |
 
-**Detailed maintainability ratings**| System property | System on 2026-10-02 | Before changes | New/changed code |
+**Detailed maintainability ratings**
+
+| System property | System on 2026-10-02 | Before changes | New/changed code |
 |-----------------|-------------------------------------------|----------------|------------------|
 | Duplication | 5.5 | 5.5 | 0.5 |
 | Unit Size | 5.5 | 5.5 | 0.7 |

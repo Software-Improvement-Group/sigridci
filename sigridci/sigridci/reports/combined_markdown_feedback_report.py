@@ -147,9 +147,9 @@ class CombinedMarkdownFeedbackReport(Report):
 
     def renderDetailsStart(self, title: str) -> str:
         if Platform.isHtmlMarkdownSupported():
-            return f"<details><summary>**{title}**</summary>\n\n"
+            return f"<details><summary><strong>{title}</strong></summary>\n\n"
         else:
-            return f"**{title}**"
+            return f"**{title}**\n\n"
 
     def renderDetailsEnd(self) -> str:
         if Platform.isHtmlMarkdownSupported():
