@@ -7,7 +7,7 @@
 
 #### Failed checks
 
-Risk: | 🟣 critical | 🔴 high | 🟠 | medium | 🟡 low |
+Risk: 🟣 critical | 🔴 high | 🟠 | medium | 🟡 low |
 
 | Risk | Finding | Details | Location | Actions |
 |------|---------|---------|----------|---------|
