@@ -73,7 +73,7 @@ class MaintainabilityMarkdownReport(MarkdownFragment, Report):
 
     def getObjectiveStatuses(self, feedback):
         return [
-            Objective.checkMaintainabilityRating(feedback, metric.replace("_MAINTAINABILITY", ""), target or 0.0)
+            Objective.checkMaintainabilityRating(feedback, metric.replace("MAINTAINABILITY_", ""), target or 0.0)
             for metric, target
             in self.objective.items()
         ]

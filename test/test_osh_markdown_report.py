@@ -39,7 +39,7 @@ class OpenSourceHealthMarkdownReportTest(TestCase):
         negative = list(report.getFindings(self.feedback, self.options))
         nonurgent = list(report.getNonUrgentFindings(self.feedback, self.options))
 
-        self.assertEqual(summary[0].text, "You have no critical-severity open source vulnerabilities.")
+        self.assertEqual(summary[0].text, "You have vulnerable open source libraries.")
 
         self.assertEqual(len(negative), 1)
         self.assertEqual(negative[0].title, "`log4j-core` 2.14.1 contains known vulnerabilities.")
@@ -67,7 +67,7 @@ class OpenSourceHealthMarkdownReportTest(TestCase):
         summary = report.getSummary(self.feedback, self.options)
         negative = list(report.getFindings(self.feedback, self.options))
 
-        self.assertEqual(summary[0].text, "You do not have any open source vulnerabilities.")
+        self.assertEqual(summary[0].text, "You have no vulnerabilities in open source libraries.")
         self.assertEqual(summary[1].text, "You have open source libraries with license issues.")
         self.assertEqual(len(negative), 1)
         self.assertEqual(negative[0].title, "`mockito-junit-jupiter` 3.10.0 has license risks.")
@@ -127,7 +127,7 @@ class OpenSourceHealthMarkdownReportTest(TestCase):
         report = OpenSourceHealthMarkdownReport(self.options, objectives)
         summary = report.getSummary(emptyFeedback, self.options)
 
-        self.assertEqual(summary[0].text, "You do not have any open source vulnerabilities.")
+        self.assertEqual(summary[0].text, "You have no vulnerabilities in open source libraries.")
 
     def testOnlyReportIssuesRelevantToSubSystem(self):
         self.options.subsystem = "aap"
@@ -145,9 +145,9 @@ class OpenSourceHealthMarkdownReportTest(TestCase):
         report = OpenSourceHealthMarkdownReport(self.options, {})
         report.decorateLinks = False
 
-        self.assertEqual("any", report.formatSeverity("CRITICAL"))
-        self.assertEqual("no critical-severity", report.formatSeverity("HIGH"))
-        self.assertEqual("no high-severity", report.formatSeverity("MEDIUM"))
-        self.assertEqual("no medium-severity", report.formatSeverity("LOW"))
-        self.assertEqual("no low-severity", report.formatSeverity("INFORMATION"))
-        self.assertEqual("no", report.formatSeverity("NONE"))
+        self.assertEqual("no", report.formatSeverityObjective("CRITICAL"))
+        self.assertEqual("no critical", report.formatSeverityObjective("HIGH"))
+        self.assertEqual("no critical or high", report.formatSeverityObjective("MEDIUM"))
+        self.assertEqual("no critical, high, or medium", report.formatSeverityObjective("LOW"))
+        self.assertEqual("no", report.formatSeverityObjective("INFORMATION"))
+        self.assertEqual("no", report.formatSeverityObjective("NONE"))

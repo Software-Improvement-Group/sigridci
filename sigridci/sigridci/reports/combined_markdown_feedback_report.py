@@ -153,8 +153,8 @@ class CombinedMarkdownFeedbackReport(Report):
         md += "|------|---------|---------|----------|---------|\n"
         for finding in findings[0:options.getMaxShownFindings()]:
             symbol = self.renderSeverity(finding)
-            title = f"**{finding.capability.displayName}**{self.tableLineSeparator}{finding.title}"
-            details = self.tableLineSeparator.join(finding.details)
+            title = f"**{finding.capability.displayName}**{self.tableLineSeparator}{html.escape(finding.title)}"
+            details = self.tableLineSeparator.join(html.escape(d) for d in finding.details)
             location = self.tableLineSeparator.join(self.renderLocation(loc, options) for loc in finding.locations[0:3])
             actions = self.renderActionLink(finding.capability)
             md += f"| {symbol} | {title} | {details} | {location} | {actions} |\n"

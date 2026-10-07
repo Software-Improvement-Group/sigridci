@@ -44,16 +44,16 @@ class OpenSourceHealthMarkdownReport(MarkdownFragment):
         return summary
 
     def getVulnerabilitySummary(self, libraries: list[Library]) -> Summary:
-        objectiveDisplayName = f"{self.formatSeverity(self.vulnerabilityObjective)} open source vulnerabilities"
         fixable = [lib for lib in libraries if not lib.vulnerabilityRisk.meetsObjective and lib.fixable]
         unfixable = [lib for lib in libraries if not lib.vulnerabilityRisk.meetsObjective and not lib.fixable]
 
         if len(fixable) > 0:
-            return Summary("❌️", f"You have {objectiveDisplayName}.")
+            return Summary("❌️", f"You have vulnerable open source libraries.")
         elif len(unfixable) > 0:
             return Summary("😑 ", f"There are vulnerable open source libraries you need to investigate.")
         else:
-            return Summary("✅ ", f"You do not have {objectiveDisplayName}.")
+            severityLabel = self.formatSeverityObjective(self.vulnerabilityObjective)
+            return Summary("✅ ", f"You have {severityLabel} vulnerabilities in open source libraries.")
 
     def getLicenseSummary(self, libraries: list[Library]) -> Summary:
         culprits = [lib for lib in libraries if not lib.licenseRisk.meetsObjective]
@@ -62,20 +62,20 @@ class OpenSourceHealthMarkdownReport(MarkdownFragment):
         else:
             return Summary("❌", f"You have open source libraries with license issues.")
 
-    def formatSeverity(self, objective):
+    def formatSeverityObjective(self, severity: str) -> str:
         # We phrase objectives for findings as the "worst" severity
         # that is still allowed. So an objective of HIGH means high-severity
         # findings are allowed, but critical-severity findings are not allowed.
         # In the feedback, we want to phrase this in terms of goal, i.e. the
         # "least-worst" severity that is *not* allowed.
-        if objective == "INFORMATION":
-            return "no low-severity"
-        if objective == "CRITICAL" or objective not in Objective.SEVERITY_OBJECTIVE:
-            return "any"
-        if objective == "NONE":
+        if severity == "HIGH":
+            return "no critical"
+        elif severity == "MEDIUM":
+            return "no critical or high"
+        elif severity == "LOW":
+            return "no critical, high or medium"
+        else:
             return "no"
-        index = Objective.SEVERITY_OBJECTIVE.index(objective)
-        return f"no {Objective.SEVERITY_OBJECTIVE[index - 1].lower()}-severity"
 
     def findUpdatedLibraries(self, previous, current):
         getKey = lambda library: f"{library.name}@{library.version}"
