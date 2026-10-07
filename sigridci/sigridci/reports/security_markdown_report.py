@@ -13,11 +13,12 @@
 # limitations under the License.
 
 import os
-from typing import Iterator
+from typing import Any, Iterator
 
 from .markdown_fragment import MarkdownFragment, FeedbackFinding, Location, Summary
 from ..analysisresults.sarif_processor import SarifProcessor, FindingStatus, Finding
 from ..capability import SECURITY, Capability
+from ..objective import Objective
 from ..publish_options import PublishOptions
 
 
@@ -34,9 +35,9 @@ class SecurityMarkdownReport(MarkdownFragment):
         "NONE" : "no"
     }
 
-    def __init__(self, options: PublishOptions, objective: str = "HIGH"):
-        self.objective = objective
-        self.processor = SarifProcessor(options, objective)
+    def __init__(self, options: PublishOptions, objectives: dict[str, Any]):
+        self.objective = objectives.get("SECURITY_MAX_SEVERITY") or Objective.DEFAULT_FINDING_OBJECTIVE
+        self.processor = SarifProcessor(options, self.objective)
         self.previousFeedback = None
 
     def getSummary(self, feedback: dict, options: PublishOptions) -> list[Summary]:

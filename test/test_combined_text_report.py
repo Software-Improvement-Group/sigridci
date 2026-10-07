@@ -67,12 +67,12 @@ class CombinedMarkdownFeedbackReportTest(TestCase):
                      Hard coded password
                      Location: Example2.java (line 5)
             
-                - 🟠 Architecture: Cyclic dependency
+                - 🟠 Architecture: Cyclic dependency (Introduced)
                      Source: sigdelivery-sigrid-ci-example-dennis ▶ c.ts
                      Target: sigdelivery-sigrid-ci-example-dennis ▶ b.ts
                      Location: c.ts
             
-                - 🟠 Open Source Health: `log4j-core` 2.17.0 contains known vulnerabilities
+                - 🟠 Open Source Health: `log4j-core` 2.17.0 contains known vulnerabilities.
                      Vulnerabilities:
                      [GHSA-6hg6-v5c8-fphq](https://nvd.nist.gov/vuln/detail/CVE-2026-34477)
                      [GHSA-vc5p-v9hr-52mj](https://nvd.nist.gov/vuln/detail/CVE-2025-68161)
@@ -123,7 +123,7 @@ class CombinedMarkdownFeedbackReportTest(TestCase):
             Sigrid objectives: ❌ Failed
             
             - ️⚠️️  **Maintainability** You are still below your objective of 4.0 stars.
-            - ⚠️  **Architecture** Your changes introduced architecture issues
+            - ⚠️  **Architecture** Your changes introduced architecture issues.
             - ❌️ **Open Source Health** You have no medium-severity open source vulnerabilities.
             - ❌️ **Security** You did not meet your objective of having no 🟣 critical security findings.
             

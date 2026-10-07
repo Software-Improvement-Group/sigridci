@@ -94,7 +94,7 @@ class MaintainabilityMarkdownReport(MarkdownFragment, Report):
     def toFinding(self, rc: dict) -> FeedbackFinding:
         title = f"{self.formatMetricName(rc['metric'])} ({rc['category'].title()})"
         details = self.formatSubject(rc)
-        locations = [Location(occ["filePath"], occ["startLine"]) for occ in rc["occurrences"]]
+        locations = [Location(occ["filePath"], occ["startLine"]) for occ in rc.get("occurrences", [])]
         return FeedbackFinding(rc["riskCategory"], MAINTAINABILITY, title, details, locations)
 
     def formatSubject(self, rc: dict) -> list[str]:

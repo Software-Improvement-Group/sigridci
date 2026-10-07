@@ -12,7 +12,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-from typing import Union, Iterator
+from typing import Any, Iterator
 
 from .markdown_fragment import MarkdownFragment, FeedbackFinding, Location, Summary
 from ..analysisresults.cyclonedx_processor import CycloneDXProcessor, Library
@@ -22,12 +22,10 @@ from ..publish_options import PublishOptions
 
 
 class OpenSourceHealthMarkdownReport(MarkdownFragment):
-    def __init__(self, options: PublishOptions,
-                 vulnerabilityObjective: Union[str, None] = "HIGH",
-                 licenseObjective: Union[str, None] = None):
+    def __init__(self, options: PublishOptions, objectives: dict[str, Any]):
         self.options = options
-        self.vulnerabilityObjective = vulnerabilityObjective
-        self.licenseObjective = licenseObjective
+        self.vulnerabilityObjective = objectives.get("OSH_MAX_SEVERITY") or Objective.DEFAULT_FINDING_OBJECTIVE
+        self.licenseObjective = objectives.get("OSH_MAX_LICENSE_RISK")
         self.previousFeedback = None
         self.processor = CycloneDXProcessor(options, self.vulnerabilityObjective, self.licenseObjective)
 
@@ -106,23 +104,24 @@ class OpenSourceHealthMarkdownReport(MarkdownFragment):
             yield from self.toFindings(lib)
 
     def toFindings(self, lib: Library) -> Iterator[FeedbackFinding]:
-        transitive = " (Transitive)" if lib.transitive else ""
-        name = f"`{self.formatLibName(lib)}` {lib.version}{transitive}"
         locations = [Location(file) for file in lib.files]
 
         if not lib.vulnerabilityRisk.meetsObjective:
-            title = f"{name} contains known vulnerabilities"
+            title = f"{self.formatLibName(lib)} contains known vulnerabilities."
             formatVulnLink = lambda vuln: f"[{vuln.id}]({vuln.link})" if vuln.link else vuln.id
             details = ["Vulnerabilities:"] + [formatVulnLink(vuln) for vuln in lib.vulnerabilities]
             yield FeedbackFinding(lib.vulnerabilityRisk.severity, OPEN_SOURCE_HEALTH, title, details, locations)
 
         if not lib.licenseRisk.meetsObjective:
-            title = f"{name} has license risks"
+            title = f"{self.formatLibName(lib)} has license risks."
             details = ["Licenses:"] + lib.licenses
             yield FeedbackFinding(lib.licenseRisk.severity, OPEN_SOURCE_HEALTH, title, details, locations)
 
     def formatLibName(self, lib: Library) -> str:
-        if not ":" in lib.name:
-            return lib.name
-        return lib.name[lib.name.index(":") + 1:]
-
+        name = lib.name
+        if ":" in name:
+            name = name[name.index(":") + 1:]
+        name = f"`{name}` {lib.version}"
+        if lib.transitive:
+            name += " (transitive)"
+        return name

@@ -1,7 +1,7 @@
 # [Sigrid](https://sigrid-says.com) objectives check: ❌ Failed
 
 - ️⚠️️  **Maintainability** You are still below your objective of 4.0 stars.
-- ⚠️  **Architecture** Your changes introduced architecture issues
+- ⚠️  **Architecture** Your changes introduced architecture issues.
 - ❌️ **Open Source Health** You have no medium-severity open source vulnerabilities.
 - ❌️ **Security** You did not meet your objective of having no 🟣 critical security findings.
 
@@ -10,8 +10,8 @@
 | Risk | Finding | Details | Location | Actions |
 |------|---------|---------|----------|---------|
 | 🟣 | **Security** • A07:2025 - Authentication Failures | Hard coded password | Example2.java (line 5) | [Exclude file](https://docs.sigrid-says.com/reference/analysis-scope-configuration.html#excluding-files-and-directories-from-security-scanning) • [Exclude rule](https://docs.sigrid-says.com/reference/analysis-scope-configuration.html#excluding-security-rules) |
-| 🟠 | **Architecture** • Cyclic dependency | Source: sigdelivery-sigrid-ci-example-dennis ▶ c.ts • Target: sigdelivery-sigrid-ci-example-dennis ▶ b.ts | c.ts | [Exclude](https://docs.sigrid-says.com/reference/analysis-scope-configuration.html#manually-removing-architecture-dependencies) |
-| 🟠 | **Open Source Health** • `log4j-core` 2.17.0 contains known vulnerabilities | Vulnerabilities: • [GHSA-6hg6-v5c8-fphq](https://nvd.nist.gov/vuln/detail/CVE-2026-34477) • [GHSA-vc5p-v9hr-52mj](https://nvd.nist.gov/vuln/detail/CVE-2025-68161) • [GHSA-8489-44mv-ggj8](https://nvd.nist.gov/vuln/detail/CVE-2021-44832) • [GHSA-3pxv-7cmr-fjr4](https://nvd.nist.gov/vuln/detail/CVE-2026-34480) | build.gradle | [Exclude](https://docs.sigrid-says.com/reference/analysis-scope-configuration.html#exclude-open-source-health-risks) |
+| 🟠 | **Architecture** • Cyclic dependency (Introduced) | Source: sigdelivery-sigrid-ci-example-dennis ▶ c.ts • Target: sigdelivery-sigrid-ci-example-dennis ▶ b.ts | c.ts | [Exclude](https://docs.sigrid-says.com/reference/analysis-scope-configuration.html#manually-removing-architecture-dependencies) |
+| 🟠 | **Open Source Health** • `log4j-core` 2.17.0 contains known vulnerabilities. | Vulnerabilities: • [GHSA-6hg6-v5c8-fphq](https://nvd.nist.gov/vuln/detail/CVE-2026-34477) • [GHSA-vc5p-v9hr-52mj](https://nvd.nist.gov/vuln/detail/CVE-2025-68161) • [GHSA-8489-44mv-ggj8](https://nvd.nist.gov/vuln/detail/CVE-2021-44832) • [GHSA-3pxv-7cmr-fjr4](https://nvd.nist.gov/vuln/detail/CVE-2026-34480) | build.gradle | [Exclude](https://docs.sigrid-says.com/reference/analysis-scope-configuration.html#exclude-open-source-health-risks) |
 | 🔴 | **Maintainability** • Duplication (Introduced) | 74 duplicated lines across 2 occurences | Example.java (line 41) • Example2.java (line 39) |  |
 | 🔴 | **Maintainability** • Duplication (Introduced) | 57 duplicated lines across 2 occurences | Example.java (line 177) • Example2.java (line 162) |  |
 | 🔴 | **Maintainability** • Duplication (Introduced) | 49 duplicated lines across 2 occurences | Example.java (line 246) • Example2.java (line 237) |  |

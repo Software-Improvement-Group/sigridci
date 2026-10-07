@@ -59,9 +59,9 @@ class ArchitectureMarkdownReport(MarkdownFragment):
 
     def getSummary(self, feedback: dict, options: PublishOptions) -> list[Summary]:
         if len(self.getNegativeFeedback(feedback)) == 0:
-            return [Summary("✅ ", "Your changes did not introduce any architecture issues")]
+            return [Summary("✅ ", "Your changes did not introduce any architecture issues.")]
         else:
-            return [Summary("⚠️ ", "Your changes introduced architecture issues")]
+            return [Summary("⚠️ ", "Your changes introduced architecture issues.")]
 
     def getCapability(self) -> Capability:
         return ARCHITECTURE
@@ -101,6 +101,7 @@ class ArchitectureMarkdownReport(MarkdownFragment):
     def toFinding(self, dependency: dict) -> FeedbackFinding:
         severity = self.FINDING_SEVERITY.get(dependency["qualification"]) or "UNKNOWN"
         title = self.FINDING_NAMES.get(dependency["qualification"]) or dependency["qualification"].title()
+        suffix = dependency["activity"].title()
         locations = self.getDependencyLocations(dependency)
 
         details = [
@@ -108,4 +109,4 @@ class ArchitectureMarkdownReport(MarkdownFragment):
             f"Target: {self.formatDependencyLocation(dependency['targetHierarchy'])}"
         ]
 
-        return FeedbackFinding(severity, ARCHITECTURE, title, details, locations)
+        return FeedbackFinding(severity, ARCHITECTURE, f"{title} ({suffix})", details, locations)

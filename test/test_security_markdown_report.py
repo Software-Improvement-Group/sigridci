@@ -12,10 +12,9 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-import inspect
 import json
 import os
-from unittest import TestCase, mock
+from unittest import TestCase
 
 from sigridci.sigridci.publish_options import PublishOptions, RunMode
 from sigridci.sigridci.reports.security_markdown_report import SecurityMarkdownReport
@@ -30,210 +29,36 @@ class SecurityMarkdownReportTest(TestCase):
         with open(os.path.dirname(__file__) + "/testdata/security-sigrid-api-sarif.json", encoding="utf-8", mode="r") as f:
             self.feedback = json.load(f)
 
-    @mock.patch.dict(os.environ, {
-        "SIGRID_CI_MARKDOWN_HTML" : "false",
-        "CI_SERVER_URL" : "https://example.com",
-        "CI_PROJECT_PATH" : "aap/noot",
-        "CI_COMMIT_REF_NAME" : "mybranch",
-    })
-    def testCreateTableFromFindings(self):
-        report = SecurityMarkdownReport(self.options, "HIGH")
-        markdown = report.renderMarkdown("1234", self.feedback, self.options)
+    def testGetFindings(self):
+        report = SecurityMarkdownReport(self.options, {})
+        summary = report.getSummary(self.feedback, self.options)
+        negative = list(report.getFindings(self.feedback, self.options))
+        positive = list(report.getPositiveFindings(self.feedback, self.options))
 
-        expected = """
-            # [Sigrid](https://sigrid-says.com/aap/noot/-/security) Security feedback
-            
-            **⚠️  You did not meet your objective of having no 🟣 critical security findings**
-            
-            - ❌ means this finding fails your objective.
-            - ⚠️ means a finding exists, but is not severe enough to fail your objective.
-            - ✅ means everything is fine.
-            
-            ## 👍 What went well?
-            
-            > You fixed **1** security findings.
-            
-            | Risk | Meets objective? | File | Finding |
-            |----|----|----|----|
-            | 🟣 Critical | ✅ | [test:1](https://example.com/aap/noot/-/blob/mybranch/test#L1) | Insecure_Randomness |
-            
-            ## 👎 What could be better?
-            
-            > Unfortunately, you introduced **2** security findings.
-            
-            | Risk | Meets objective? | File | Finding |
-            |----|----|----|----|
-            | 🟣 Critical | ❌ | [neutron/neutron/db/sqlalchemytypes.py:51](https://example.com/aap/noot/-/blob/mybranch/neutron/neutron/db/sqlalchemytypes.py#L51) | Puma4 |
-            | 🔴 High | ⚠️ | [neutron/neutron/ipam/drivers/neutrondb_ipam/driver.py:51](https://example.com/aap/noot/-/blob/mybranch/neutron/neutron/ipam/drivers/neutrondb_ipam/driver.py#L51) | Puma2 |
-            
-            If you believe these findings are false positives,
-            you can [exclude the rule](https://docs.sigrid-says.com/reference/analysis-scope-configuration.html#excluding-security-rules) in the Sigrid configuration.
-            If these findings are located in files that should not be scanned, you can also
-            [exclude the files and/or directories](https://docs.sigrid-says.com/reference/analysis-scope-configuration.html#excluding-files-and-directories-from-security-scanning) in the configuration.
-            
-            ## 😑 You have remaining security findings
+        self.assertEqual(summary[0].text, "You did not meet your objective of having no 🟣 critical security findings.")
+        self.assertEqual(len(negative), 2)
+        self.assertEqual(negative[0].details, ["Puma4"])
+        self.assertEqual(negative[1].details, ["Puma2"])
+        self.assertEqual(len(positive), 1)
+        self.assertEqual(positive[0].details, ["Insecure_Randomness"])
 
-            > You have **0** open security findings and **1** security findings for which you have previously accepted the risk.
-            [You can view these findings in Sigrid](https://sigrid-says.com/aap/noot/-/security).
-            
-            ----
-            
-            [**View this system in Sigrid**](https://sigrid-says.com/aap/noot/-/security)
-        """
-
-        self.assertEqual(markdown.strip(), inspect.cleandoc(expected).strip())
-
-    @mock.patch.dict(os.environ, {"SIGRID_CI_MARKDOWN_HTML" : "false"})
     def testSpecialMessageWhenYouMeetObjective(self):
         with open(os.path.dirname(__file__) + "/testdata/security-nofindings.json", encoding="utf-8", mode="r") as f:
             noResults = json.load(f)
             noResults["baseline"] = "2026-03-20 12:00"
 
-        report = SecurityMarkdownReport(self.options, "HIGH")
-        report.decorateLinks = False
-        markdown = report.renderMarkdown("1234", noResults, self.options)
+        report = SecurityMarkdownReport(self.options, {})
+        summary = report.getSummary(noResults, self.options)
 
-        expected = """
-            # [Sigrid](https://sigrid-says.com/aap/noot/-/security) Security feedback
-            
-            **✅  You achieved your objective of having no 🟣 critical security findings**
-            
-            Sigrid compared your code against the baseline of 2026-03-20 12:00 UTC.
-            
-            ## 👍 What went well?
-            
-            > You did not introduce any security findings during your changes, great job!
-            
-            ----
-            
-            [**View this system in Sigrid**](https://sigrid-says.com/aap/noot/-/security)
-        """
+        self.assertEqual(summary[0].text, "You achieved your objective of having no 🟣 critical security findings.")
 
-        self.assertEqual(markdown.strip(), inspect.cleandoc(expected).strip())
-
-    @mock.patch.dict(os.environ, {"SIGRID_CI_MARKDOWN_HTML" : "false"})
     def testIgnoreFailedRun(self):
         with open(os.path.dirname(__file__) + "/testdata/security-failed-run.json", encoding="utf-8", mode="r") as f:
             noResults = json.load(f)
 
-        report = SecurityMarkdownReport(self.options, "HIGH")
-        report.decorateLinks = False
-        markdown = report.renderMarkdown("1234", noResults, self.options)
+        report = SecurityMarkdownReport(self.options, {})
+        summary = report.getSummary(noResults, self.options)
+        negative = list(report.getFindings(noResults, self.options))
 
-        expected = """
-            # [Sigrid](https://sigrid-says.com/aap/noot/-/security) Security feedback
-            
-            **✅  You achieved your objective of having no critical-severity security findings**
-            
-            ## 👍 What went well?
-            
-            > You fixed **0** security findings.
-            
-            ## 👎 What could be better?
-            
-            > You did not introduce any security findings during your changes, great job!
-            
-            ----
-            
-            [**View this system in Sigrid**](https://sigrid-says.com/aap/noot/-/security)
-        """
-
-        self.assertEqual(markdown.strip(), inspect.cleandoc(expected).strip())
-
-    @mock.patch.dict(os.environ, {"SIGRID_CI_MARKDOWN_HTML" : "false"})
-    def testIgnoreFailedRun(self):
-        with open(os.path.dirname(__file__) + "/testdata/security-onpremise-osh.json", encoding="utf-8", mode="r") as f:
-            previousFeedback = json.load(f)
-        with open(os.path.dirname(__file__) + "/testdata/security-onpremise.json", encoding="utf-8", mode="r") as f:
-            feedback = json.load(f)
-
-        report = SecurityMarkdownReport(self.options, "HIGH")
-        report.decorateLinks = False
-        report.previousFeedback = previousFeedback
-        markdown = report.renderMarkdown("1234", feedback, self.options)
-
-        expected = """
-            # [Sigrid](https://sigrid-says.com/aap/noot/-/security) Security feedback
-    
-            **✅  You achieved your objective of having no 🟣 critical security findings**
-            
-            - ❌ means this finding fails your objective.
-            - ⚠️ means a finding exists, but is not severe enough to fail your objective.
-            - ✅ means everything is fine.
-            
-            ## 👎 What could be better?
-            
-            > Unfortunately, you introduced **1** security findings.
-            
-            | Risk | Meets objective? | File | Finding |
-            |----|----|----|----|
-            | 🔴 High | ⚠️ | Aap.java:86 | InterruptedException and ThreadDeath should not be ignored |
-            
-            If you believe these findings are false positives,
-            you can [exclude the rule](https://docs.sigrid-says.com/reference/analysis-scope-configuration.html#excluding-security-rules) in the Sigrid configuration.
-            If these findings are located in files that should not be scanned, you can also
-            [exclude the files and/or directories](https://docs.sigrid-says.com/reference/analysis-scope-configuration.html#excluding-files-and-directories-from-security-scanning) in the configuration.
-            
-            ----
-            
-            [**View this system in Sigrid**](https://sigrid-says.com/aap/noot/-/security)
-        """
-
-        self.assertEqual(markdown.strip(), inspect.cleandoc(expected).strip())
-
-    @mock.patch.dict(os.environ, {"SIGRID_CI_MARKDOWN_HTML" : "false"})
-    def testLimitNumberOfFindingsByDetault(self):
-        report = SecurityMarkdownReport(self.options, "HIGH")
-        report.decorateLinks = False
-        originalFindings = report.extractFindings(self.feedback)
-        manyFindings = originalFindings + originalFindings + originalFindings + originalFindings
-        markdown = report.generateFindingsTable(manyFindings, self.options)
-
-        expected = """
-            | Risk | Meets objective? | File | Finding |
-            |----|----|----|----|
-            | 🟣 Critical | ❌ | neutron/neutron/db/sqlalchemytypes.py:51 | Puma4 |
-            | 🟣 Critical | ❌ | test:1 | Insecure_Randomness |
-            | 🟣 Critical | ✅ | test:1 | Insecure_Randomness |
-            | 🟣 Critical | ❌ | neutron/neutron/db/sqlalchemytypes.py:51 | Puma4 |
-            | 🟣 Critical | ❌ | test:1 | Insecure_Randomness |
-            | 🟣 Critical | ✅ | test:1 | Insecure_Randomness |
-            | 🟣 Critical | ❌ | neutron/neutron/db/sqlalchemytypes.py:51 | Puma4 |
-            | 🟣 Critical | ❌ | test:1 | Insecure_Randomness |
-            | | ... and 8 more findings | | |
-        """
-
-        self.assertEqual(markdown.strip(), inspect.cleandoc(expected).strip())
-
-    @mock.patch.dict(os.environ, {"SIGRID_CI_MARKDOWN_HTML" : "false"})
-    def testShowFullListOfFindingsBasedOnOption(self):
-        self.options.detailLevel = "full"
-
-        report = SecurityMarkdownReport(self.options, "HIGH")
-        report.decorateLinks = False
-        originalFindings = report.extractFindings(self.feedback)
-        manyFindings = originalFindings + originalFindings + originalFindings + originalFindings
-        markdown = report.generateFindingsTable(manyFindings, self.options)
-
-        expected = """
-            | Risk | Meets objective? | File | Finding |
-            |----|----|----|----|
-            | 🟣 Critical | ❌ | neutron/neutron/db/sqlalchemytypes.py:51 | Puma4 |
-            | 🟣 Critical | ❌ | test:1 | Insecure_Randomness |
-            | 🟣 Critical | ✅ | test:1 | Insecure_Randomness |
-            | 🟣 Critical | ❌ | neutron/neutron/db/sqlalchemytypes.py:51 | Puma4 |
-            | 🟣 Critical | ❌ | test:1 | Insecure_Randomness |
-            | 🟣 Critical | ✅ | test:1 | Insecure_Randomness |
-            | 🟣 Critical | ❌ | neutron/neutron/db/sqlalchemytypes.py:51 | Puma4 |
-            | 🟣 Critical | ❌ | test:1 | Insecure_Randomness |
-            | 🟣 Critical | ✅ | test:1 | Insecure_Randomness |
-            | 🟣 Critical | ❌ | neutron/neutron/db/sqlalchemytypes.py:51 | Puma4 |
-            | 🟣 Critical | ❌ | test:1 | Insecure_Randomness |
-            | 🟣 Critical | ✅ | test:1 | Insecure_Randomness |
-            | 🔴 High | ⚠️ | neutron/neutron/ipam/drivers/neutrondb_ipam/driver.py:51 | Puma2 |
-            | 🔴 High | ⚠️ | neutron/neutron/ipam/drivers/neutrondb_ipam/driver.py:51 | Puma2 |
-            | 🔴 High | ⚠️ | neutron/neutron/ipam/drivers/neutrondb_ipam/driver.py:51 | Puma2 |
-            | 🔴 High | ⚠️ | neutron/neutron/ipam/drivers/neutrondb_ipam/driver.py:51 | Puma2 |
-        """
-
-        self.assertEqual(markdown.strip(), inspect.cleandoc(expected).strip())
+        self.assertEqual(summary[0].text, "You achieved your objective of having no 🟣 critical security findings.")
+        self.assertEqual(len(negative), 0)

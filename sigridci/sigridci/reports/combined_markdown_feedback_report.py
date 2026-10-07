@@ -23,6 +23,7 @@ from .osh_markdown_report import OpenSourceHealthMarkdownReport
 from .report import Report
 from .security_markdown_report import SecurityMarkdownReport
 from ..capability import MAINTAINABILITY, Capability, ARCHITECTURE, OPEN_SOURCE_HEALTH, SECURITY
+from ..objective import ObjectiveStatus
 from ..platform import Platform, OSH_EXCLUDE_DOCS, SECURITY_EXCLUDE_RULE_DOCS, SECURITY_EXCLUDE_FILE_DOCS, \
     AQ_EXCLUDE_DOCS
 from ..publish_options import PublishOptions
@@ -64,12 +65,9 @@ class CombinedMarkdownFeedbackReport(Report):
         if ARCHITECTURE in options.capabilities:
             yield ArchitectureMarkdownReport()
         if OPEN_SOURCE_HEALTH in options.capabilities:
-            vulnerabilityObjective = self.objectives.get("OSH_MAX_SEVERITY")
-            licenseObjective = self.objectives.get("OSH_MAX_LICENSE_RISK")
-            yield OpenSourceHealthMarkdownReport(options, vulnerabilityObjective, licenseObjective)
+            yield OpenSourceHealthMarkdownReport(options, self.objectives)
         if SECURITY in options.capabilities:
-            securityObjective = self.objectives.get("SECURITY_MAX_SEVERITY")
-            yield SecurityMarkdownReport(options, securityObjective or "CRITICAL")
+            yield SecurityMarkdownReport(options, self.objectives)
 
     def generate(self, analysisId: str, feedback: dict, options: PublishOptions) -> None:
         with open(os.path.abspath(f"{options.outputDir}/feedback.md"), "w", encoding="utf-8") as f:
@@ -112,9 +110,11 @@ class CombinedMarkdownFeedbackReport(Report):
             md += self.renderFindingsTable(positive, options)
             md += self.renderDetailsEnd()
         if MAINTAINABILITY in options.capabilities:
-            md += self.renderDetailsStart("Detailed maintainability ratings")
-            md += MaintainabilityMarkdownReport(self.objectives).renderRatingsTable(feedback[MAINTAINABILITY])
-            md += self.renderDetailsEnd()
+            maintainabilityReport = MaintainabilityMarkdownReport(self.objectives)
+            if not ObjectiveStatus.UNKNOWN in maintainabilityReport.getObjectiveStatuses(feedback[MAINTAINABILITY]):
+                md += self.renderDetailsStart("Detailed maintainability ratings")
+                md += maintainabilityReport.renderRatingsTable(feedback[MAINTAINABILITY])
+                md += self.renderDetailsEnd()
         md += self.renderFooter(options)
         return md
 
