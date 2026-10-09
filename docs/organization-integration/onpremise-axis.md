@@ -21,6 +21,7 @@ sigrid-axis-frontend:
     repository: softwareimprovementgroup/sigrid-axis/frontend
     tag: 1.0.20261012 # e.g. use Renovate to update this tag regularly
   ingress:
+    enabled: true
     className: "nginx"  # Use the same ingress controller as the other Sigrid services
     annotations: { }  # Specify any ingress controller-specific annotations you need
     hosts:
@@ -29,14 +30,15 @@ sigrid-axis-frontend:
           enabled: true
     extraPaths:
       - path: /rest  # Transparently reach Sigrid's backend APIs even though the host is different
-        serviceName: my-sigrid-sigrid-stack-nginx
+        serviceName: my-sigrid-sigrid-stack-nginx  # <release-name>-sigrid-stack-nginx
 ```
 {% endraw %}
 
 The image is pulled from our Elastic Container Registry. See [using SIG's Elastic Container Registry](onpremise-aws-ecr.md) for the registry configuration.
 {: .attention }
 
-Axis is usually deployed on its own host name, as in the example above. If you prefer to serve it under a path of your existing Sigrid host, add that path to `hosts` instead and make sure the extra `/rest` path is still routed to the `nginx` service.
+Axis requires its own host name, as in the example above. It cannot be served under a path of your existing Sigrid host, because Axis serves its frontend from `/` of its host.
+{: .attention }
 {: .attention }
 
 ## The Axis metrics aggregator
