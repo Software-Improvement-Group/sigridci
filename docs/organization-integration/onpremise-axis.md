@@ -39,6 +39,26 @@ The image is pulled from our Elastic Container Registry. See [using SIG's Elasti
 
 Axis requires its own host name, as in the example above. It cannot be served under a path of your existing Sigrid host, because Axis serves its frontend from `/` of its host.
 {: .attention }
+
+## Logging in to Sigrid Axis
+
+Axis uses the same identity provider and OpenID Connect client as Sigrid, as configured in [Kubernetes Deployment](onpremise-kubernetes.md). Because Axis runs on its own host, it needs its own login callback. Register the Axis host as an additional registration in the `auth-api` configuration:
+
+{% raw %}
+```yaml
+auth-api:
+  config:
+    oauth2:
+      registration:
+        sigridmfa:
+          additionalRegistrations:
+            sigrid-axis: "axis.example.com"
+```
+{% endraw %}
+
+The label (`sigrid-axis` in the example) can be anything you like. Each host gets its own registration named `sigridmfa-` followed by the host name with dots replaced by dashes. This makes sure users return to Axis after logging in, instead of to Sigrid.
+
+You also need to allow the Axis callback URL as an additional redirect URI of the OpenID Connect client in your identity provider. The callback URL follows the pattern `https://<host>/rest/auth/login/oauth2/code/sigridmfa-<host with dots replaced by dashes>`. For the example above, this is `https://axis.example.com/rest/auth/login/oauth2/code/sigridmfa-axis-example-com`.
 {: .attention }
 
 ## The Axis metrics aggregator
