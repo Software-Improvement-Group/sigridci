@@ -29,7 +29,7 @@ The core of the managers’ workflow comes down to the following three steps:
 
 2. **Set quality objectives and continuously measure them**
 
-   Quality objective are non-functional goals that are linked to explicit quality targets. In the Sigrid platform those could be shared with all stakeholders via the [Portfolio Objectives page](../capabilities/portfolio-objectives.md). These objectives should be aligned with your business goals to ensure that technical efforts support overall business strategies (check the Objective eLearning in our Academy). The benchmark results can help you and your team to set realistic and achievable targets. This is better done when teams are involved in this process. 
+   Quality objective are non-functional goals that are linked to explicit quality targets. In the Sigrid platform those could be shared with all stakeholders via the [Portfolio Objectives page](../capabilities/portfolio-objectives.md). These objectives should be aligned with your business goals to ensure that technical efforts support overall business strategies. The benchmark results can help you and your team to set realistic and achievable targets. This is better done when teams are involved in this process. 
 
    It is a good practice to regularly review trends in software quality over time using Sigrid's trend analysis features. Pay particular attention to areas showing signs of degradation or those that have not been updated for a while. Use these insights to anticipate potential issues before they become critical. This process can be guarded by the software governance framework.  
 
