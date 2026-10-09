@@ -71,17 +71,20 @@ sigrid-api:
 
 Sigrid On-Premise needs access to the following images published on SIG's private AWS ECR registry:
 
-- `softwareimprovementgroup/ai-explanation-service`
-- `softwareimprovementgroup/auth-api-db-migration`
+- `softwareimprovementgroup/ai-explanation-service` (optional, required for AI explanations)
 - `softwareimprovementgroup/auth-api`
+- `softwareimprovementgroup/auth-api-db-migration`
+- `softwareimprovementgroup/inbound-api`
+- `softwareimprovementgroup/osh-kb-updater` (optional, required for Open Source Health)
 - `softwareimprovementgroup/quality-model-service`
-- `softwareimprovementgroup/sigrid-api-db-migration`
 - `softwareimprovementgroup/sigrid-api`
+- `softwareimprovementgroup/sigrid-api-db-migration`
+- `softwareimprovementgroup/sigrid-axis/frontend` (optional, required for Sigrid Axis)
+- `softwareimprovementgroup/sigrid-axis/metrics-aggregator` (optional, required for Sigrid Axis)
 - `softwareimprovementgroup/sigrid-frontend`
+- `softwareimprovementgroup/sigrid-integrations-onprem` (optional, required for LDAP group synchronization and automated database initialization)
 - `softwareimprovementgroup/sigrid-multi-analyzer`
 - `softwareimprovementgroup/sigrid-multi-importer`
-- `softwareimprovementgroup/osh-kb-updater` (required for OSH)
-- `softwareimprovementgroup/sigrid-integrations-onprem` (optional)
 
 In addition, if your deployment is completely air-gapped, please ensure these public images are also published to your internal image registry.
 - `nginxinc/nginx-unprivileged`
