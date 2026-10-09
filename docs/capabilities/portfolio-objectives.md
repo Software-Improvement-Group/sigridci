@@ -81,7 +81,3 @@ Then, during the day-to-day work, since one of these systems is being completely
 From this point onwards, the system-level override will be the only one in effect, and this particular system will not be affected by the portfolio-level target.
 Once the developers finish their work, they no longer require the objective to be there, so, they remove it.
 Upon removing it, the system-level override disappears, and, simultaneously, the portfolio-level objective comes into effect again, making the newly revamped system subjected to the higher quality standard set by the portfolio-level objective.
-
-
-## How to learn more
-* Go to SIG Academy and follow the [How to set objectives e-learning](https://sig.academy.sigrid-says.com/learner/courseinfo/id:157). You can access the SIG Academy via the graduation cap icon in the bottom left of your Sigrid window.
