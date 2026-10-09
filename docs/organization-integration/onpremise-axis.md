@@ -58,7 +58,7 @@ The metrics aggregator is **deployed automatically when the Axis frontend is ena
 
 ## Logging in to Sigrid Axis
 
-Sigrid Axis uses the same identity provider and OpenID Connect client as Sigrid, as configured in [Kubernetes Deployment](onpremise-kubernetes.md). Because Axis runs on its own host, it needs its own login callback. Register the Axis host as an additional registration in the `auth-api` configuration:
+Sigrid Axis uses the same identity provider and OpenID Connect client as Sigrid, as configured in [Kubernetes Deployment](onpremise-kubernetes.md). Because Axis requires its own hostname, it needs its own login callback. Register the Axis host as an additional registration in the `auth-api` configuration:
 
 {% raw %}
 ```yaml
