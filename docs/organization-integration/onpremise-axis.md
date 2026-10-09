@@ -72,7 +72,7 @@ auth-api:
 ```
 {% endraw %}
 
-The label (`sigrid-axis` in the example) can be anything you like. Each host gets its own registration named `sigridmfa-` followed by the host name with dots replaced by dashes. This makes sure users return to Axis after logging in, instead of to Sigrid.
+The label (`sigrid-axis` in the example) can be anything you like. Each host gets its own registration named `sigridmfa-` followed by the host name with dots replaced by dashes. This makes sure users return to Sigrid Axis after logging in, instead of to Sigrid Core.
 
 You also need to allow the Axis callback URL as an additional redirect URI of the OpenID Connect client in your identity provider. The callback URL follows the pattern `https://<host>/rest/auth/login/oauth2/code/sigridmfa-<host with dots replaced by dashes>`. For the example above, this is `https://axis.example.com/rest/auth/login/oauth2/code/sigridmfa-axis-example-com`.
 {: .attention }
