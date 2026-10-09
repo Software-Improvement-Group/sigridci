@@ -17,7 +17,7 @@ The Helm chart is published under the name `sigrid-stack`.
 
 ### Release 1.0.20261012
 
-**New:** [Sigrid Axis](onpremise-axis.md) is now available for on-premise deployments. The Axis frontend is a new optional subchart of `sigrid-stack`, disabled by default. When enabled, it automatically deploys the Axis metrics aggregator cronjob, which aggregates the weekly metrics shown in Axis. The aggregator can be disabled independently, for example when troubleshooting.
+**New:** [Sigrid Axis](onpremise-axis.md) is now available for on-premise deployments. The Axis frontend is a new optional subchart of `sigrid-stack`, disabled by default. When enabled, it automatically deploys the Axis metrics aggregator cronjob, which aggregates the metrics shown in Axis. The aggregator is required for Axis, but can be temporarily disabled when troubleshooting.
 
 <details markdown="1">
 <summary>Details</summary>
