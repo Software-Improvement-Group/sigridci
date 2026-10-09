@@ -5,7 +5,7 @@ SIG uses [continuous delivery](https://en.wikipedia.org/wiki/Continuous_delivery
 
 ### October 12, 2026
 
-- **Sigrid Axis:** Sigrid Axis is now available for on-premise Sigrid. The Axis frontend runs as an optional Helm component, and a cronjob aggregates the weekly metrics shown in Axis. See [Sigrid Axis for Sigrid On-Premise](../organization-integration/onpremise-axis.md) for how to enable it.
+- **Sigrid Axis:** Sigrid Axis is now available for on-premise Sigrid. The Axis frontend runs as an optional Helm component, and a cronjob aggregates the metrics shown in Axis. See [Sigrid Axis for Sigrid On-Premise](../organization-integration/onpremise-axis.md) for how to enable it.
 
 ### October 5, 2026
 
