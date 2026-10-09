@@ -27,13 +27,13 @@ global:
   onPremise:
     axisMetricsAggregator:
       image:
-        tag: 1.0.20261012 # e.g. use Renovate to update this tag regularly
+        tag: 1.0.20261012
 
 sigrid-axis-frontend:
   enabled: true
   image:
     repository: softwareimprovementgroup/sigrid-axis/frontend
-    tag: 1.0.20261012 # e.g. use Renovate to update this tag regularly
+    tag: 1.0.20261012
   ingress:
     enabled: true
     className: "nginx"  # Use the same ingress controller as the other Sigrid services
