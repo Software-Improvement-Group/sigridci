@@ -48,7 +48,7 @@ sigrid-axis-frontend:
 ```
 {% endraw %}
 
-If you're not pulling `softwareimprovementgroup/sigrid-axis/frontend` and `softwareimprovementgroup/sigrid-axis/metrics-aggregator` directly from our ECR, make sure to pull them from ECR and push them to your local registry for deployment. See [using SIG's Elastic Container Registry](onpremise-aws-ecr.md) for the registry configuration.
+If you're not pulling `softwareimprovementgroup/sigrid-axis/frontend` and `softwareimprovementgroup/sigrid-axis/metrics-aggregator` directly from our ECR onto your Kubernetes cluster nodes, make sure to pull them from ECR and push them to your local registry for deployment. See [using SIG's Elastic Container Registry](onpremise-aws-ecr.md) for the registry configuration.
 {: .attention }
 
 Axis requires its own host name, as in the example above. It cannot be served under a path of your existing Sigrid host, because Axis serves its frontend from `/` of its host.
