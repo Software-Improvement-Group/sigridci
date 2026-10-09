@@ -15,6 +15,16 @@ For a complete overview of all Sigrid changes, refer to the [general release not
 
 The Helm chart is published under the name `sigrid-stack`.
 
+### Release 1.0.20261012
+
+**New:** [Sigrid Axis](onpremise-axis.md) is now available for on-premise deployments. The Axis frontend is a new optional subchart of `sigrid-stack`, disabled by default. When enabled, it automatically deploys the Axis metrics aggregator cronjob, which aggregates the weekly metrics shown in Axis. The aggregator can be disabled independently, for example when troubleshooting.
+
+<details markdown="1">
+<summary>Details</summary>
+
+**Actions:** Update the Sigrid Helm chart, Sigrid deployment images, and Sigrid-Multi-Analyzer image. No configuration changes required unless you want to enable Sigrid Axis, in which case follow the [setup instructions](onpremise-axis.md).
+</details>
+
 ### Release 1.0.20260918
 
 **New:** The Sigrid MCP server is now available as an optional `mcp` subchart of `sigrid-stack`, disabled by default. See [Sigrid MCP server for Sigrid On-Premise](onpremise-mcp.md) for how to enable it.
