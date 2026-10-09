@@ -51,7 +51,7 @@ sigrid-axis-frontend:
 If you're not pulling `softwareimprovementgroup/sigrid-axis/frontend` and `softwareimprovementgroup/sigrid-axis/metrics-aggregator` directly from our ECR onto your Kubernetes cluster nodes, make sure to pull them from ECR and push them to your local registry for deployment. See [using SIG's Elastic Container Registry](onpremise-aws-ecr.md) for the registry configuration.
 {: .attention }
 
-Axis requires its own host name, as in the example above. It cannot be served under a path of your existing Sigrid host, because Axis serves its frontend from `/` of its host.
+Sigrid Axis requires its own host name, as in the example above. It cannot be served under a path of your existing Sigrid host, because Axis serves its frontend from `/` of its host.
 {: .attention }
 
 The metrics aggregator is **deployed automatically when the Axis frontend is enabled**. It connects to your PostgreSQL database as the same `import_user` used by the import jobs, reusing the secret from [the import job's PostgreSQL configuration](onpremise-kubernetes.md). Each run aggregates the most recent weeks for all systems, and the current week is re-measured on every run. Results are stored in the `axis_metrics` schema of your `sigriddb` database.
