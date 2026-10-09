@@ -12,7 +12,7 @@ No additional license is needed: Sigrid Axis is included in your Sigrid On-Premi
 
 ## Enabling Sigrid Axis
 
-Sigrid Axis is the frontend for agentic tooling: AI coding assistants use it to consult and improve your systems using Sigrid's analysis. See [the general Sigrid Axis documentation](../axis/README.md) for what Axis offers and how developers connect their tools. This page covers deploying Axis in your own cluster. Axis is disabled by default in `sigrid-stack`.
+Sigrid Axis is the product for agentic tooling: AI coding assistants use it to consult and improve your systems using Sigrid's analysis. See [the general Sigrid Axis documentation](../axis/README.md) for what Axis offers and how developers connect their tools. This page covers deploying Axis in your own cluster. Axis is disabled by default in `sigrid-stack`.
 
 Sigrid Axis consists of two components, which are both required:
 
