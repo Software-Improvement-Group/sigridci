@@ -29,89 +29,62 @@ from sigridci.sigridci.reports.security_markdown_report import SecurityMarkdownR
 
 class FeedbackProviderTest(TestCase):
 
-    def testConfigureReportsForCapability(self):
-        tempDir = tempfile.mkdtemp()
-        options = PublishOptions("aap", "noot", RunMode.FEEDBACK_ONLY, outputDir=tempDir)
-
-        maintainabilityFeedback = FeedbackProvider(MAINTAINABILITY, options, {})
-        oshFeedback = FeedbackProvider(OPEN_SOURCE_HEALTH, options, {})
-        securityFeedback = FeedbackProvider(SECURITY, options, {})
-
-        self.assertEqual(MaintainabilityMarkdownReport, type(maintainabilityFeedback.prepareMarkdownReport()))
-        self.assertEqual(OpenSourceHealthMarkdownReport, type(oshFeedback.prepareMarkdownReport()))
-        self.assertEqual(SecurityMarkdownReport, type(securityFeedback.prepareMarkdownReport()))
-
     def testGenerateReportsBasedOnCapability(self):
         tempDir = tempfile.mkdtemp()
         options = PublishOptions("aap", "noot", RunMode.FEEDBACK_ONLY, outputDir=tempDir)
+        options.capabilities = [OPEN_SOURCE_HEALTH]
 
-        oshFeedback = FeedbackProvider(OPEN_SOURCE_HEALTH, options, {})
-        oshFeedback.analysisId = "1234"
-        oshFeedback.feedback = {"components" : [], "metadata" : {"timestamp" : "2025-09-29"}}
+        oshFeedback = FeedbackProvider("1234", options, {})
+        oshFeedback.registerFeedback(OPEN_SOURCE_HEALTH, {"components" : [], "metadata" : {"timestamp" : "2025-09-29"}})
         oshFeedback.generateReports()
 
-        self.assertTrue(os.path.exists(f"{tempDir}/osh-feedback.md"))
-        self.assertFalse(os.path.exists(f"{tempDir}/security-feedback.md"))
-
-        securityFeedback = FeedbackProvider(SECURITY, options, {})
-        securityFeedback.analysisId = "1234"
-        securityFeedback.feedback = {"runs" : []}
-        securityFeedback.generateReports()
-
-        self.assertTrue(os.path.exists(f"{tempDir}/security-feedback.md"))
+        self.assertTrue(os.path.exists(f"{tempDir}/feedback.md"))
 
     def testInlineResultsPrintsJsonInsteadOfWritingFiles(self):
         tempDir = tempfile.mkdtemp()
         options = PublishOptions("aap", "noot", RunMode.FEEDBACK_ONLY, outputDir=tempDir, inlineResults=True)
+        options.capabilities = [OPEN_SOURCE_HEALTH]
 
-        oshFeedback = FeedbackProvider(OPEN_SOURCE_HEALTH, options, {})
-        oshFeedback.analysisId = "1234"
-        oshFeedback.feedback = {"components": [], "metadata": {"timestamp": "2025-09-29"}}
+        oshFeedback = FeedbackProvider("1234", options, {})
+        oshFeedback.registerFeedback(OPEN_SOURCE_HEALTH, {"components": [], "metadata": {"timestamp": "2025-09-29"}})
 
         with contextlib.redirect_stdout(io.StringIO()) as output:
-            objectiveMet = oshFeedback.generateReports()
+            exitCode = oshFeedback.generateReports()
 
-        self.assertTrue(objectiveMet)
-        self.assertFalse(os.path.exists(f"{tempDir}/osh-feedback.md"))
-        self.assertEqual([], os.listdir(tempDir))
+        self.assertEqual(exitCode, 0)
+        self.assertFalse(os.path.exists(f"{tempDir}/feedback.md"))
+        self.assertEqual(os.listdir(tempDir), [])
 
         lines = output.getvalue().splitlines()
         self.assertEqual(2, len(lines))
         self.assertEqual("Inline results: osh", lines[0])
         self.assertEqual("osh", json.loads(lines[1])["capability"])
 
-    def testGetMaintainabilityObjective(self):
+    def testApplyDefaultObjectives(self):
         tempDir = tempfile.mkdtemp()
         options = PublishOptions("aap", "noot", RunMode.FEEDBACK_ONLY, outputDir=tempDir)
-        feedbackProvider = FeedbackProvider(MAINTAINABILITY, options, {"MAINTAINABILITY" : 4.0})
+        feedbackProvider = FeedbackProvider("1234", options, {"MAINTAINABILITY" : 4.0})
 
-        self.assertEqual({"MAINTAINABILITY" : 4.0}, feedbackProvider.objectives)
+        expected = {
+            "MAINTAINABILITY" : 4.0,
+            "ARCHITECTURE_QUALITY" : 3.5,
+            "OSH_MAX_SEVERITY" : "HIGH",
+            "SECURITY_MAX_SEVERITY" : "HIGH"
+        }
+
+        self.assertEqual(feedbackProvider.objectives, expected)
 
     def testGetSystemPropertyObjectives(self):
         tempDir = tempfile.mkdtemp()
         options = PublishOptions("aap", "noot", RunMode.FEEDBACK_ONLY, outputDir=tempDir)
-        objectives = {"MAINTAINABILITY_UNIT_SIZE" : 4.0, "UNIT_COMPLEXITY" : 5.0}
-        feedbackProvider = FeedbackProvider(MAINTAINABILITY, options, objectives)
+        objectives = {"MAINTAINABILITY_UNIT_SIZE" : 4.0}
+        feedbackProvider = FeedbackProvider("1234", options, objectives)
 
-        self.assertEqual({"UNIT_SIZE" : 4.0, "UNIT_COMPLEXITY" : 5.0}, feedbackProvider.objectives)
+        expected = {
+            "MAINTAINABILITY_UNIT_SIZE" : 4.0,
+            "ARCHITECTURE_QUALITY" : 3.5,
+            "OSH_MAX_SEVERITY" : "HIGH",
+            "SECURITY_MAX_SEVERITY" : "HIGH"
+        }
 
-    def testDefaultMaintainabilityObjectiveIfNoneIsSet(self):
-        tempDir = tempfile.mkdtemp()
-        options = PublishOptions("aap", "noot", RunMode.FEEDBACK_ONLY, outputDir=tempDir)
-        feedbackProvider = FeedbackProvider(MAINTAINABILITY, options, {})
-
-        self.assertEqual({"MAINTAINABILITY" : 3.5}, feedbackProvider.objectives)
-
-    def testSetDefaultOshVulnerabilityObjective(self):
-        tempDir = tempfile.mkdtemp()
-        options = PublishOptions("aap", "noot", RunMode.FEEDBACK_ONLY, outputDir=tempDir)
-        feedbackProvider = FeedbackProvider(OPEN_SOURCE_HEALTH, options, {})
-
-        self.assertEqual({"OSH_MAX_SEVERITY" : "HIGH", "OSH_MAX_LICENSE_RISK" : None}, feedbackProvider.objectives)
-
-    def testUseOshLicenseObjectiveIfAvailable(self):
-        tempDir = tempfile.mkdtemp()
-        options = PublishOptions("aap", "noot", RunMode.FEEDBACK_ONLY, outputDir=tempDir)
-        feedbackProvider = FeedbackProvider(OPEN_SOURCE_HEALTH, options, {"OSH_MAX_LICENSE_RISK" : "LOW"})
-
-        self.assertEqual({"OSH_MAX_SEVERITY" : "HIGH", "OSH_MAX_LICENSE_RISK" : "LOW"}, feedbackProvider.objectives)
+        self.assertEqual(feedbackProvider.objectives, expected)

@@ -18,7 +18,7 @@ import json
 import os
 import sys
 from argparse import ArgumentParser, Namespace
-from typing import Any, Union
+from typing import Any
 
 from sigridci.capability import Capability, CAPABILITY_SHORT_NAMES, SECURITY
 from sigridci.cli_options import addSigridConnectionArguments
@@ -27,13 +27,13 @@ from sigridci.publish_options import PublishOptions, RunMode
 from sigridci.sigrid_api_client import SigridApiClient
 
 
-def parseFeedbackOptions(args: Namespace) -> PublishOptions:
+def parseFeedbackOptions(args: Namespace, capability: Capability) -> PublishOptions:
     options = PublishOptions(
         partner=args.partner,
         customer=args.customer,
         system=args.system,
         runMode=RunMode.FEEDBACK_ONLY,
-        capabilities=[CAPABILITY_SHORT_NAMES[args.capability.lower()]],
+        capabilities=[capability],
         detailLevel=args.detaillevel,
         outputDir=args.out,
         sigridURL=args.sigridurl
@@ -53,7 +53,7 @@ def determineObjectives(options: PublishOptions) -> dict:
     return apiClient.fetchObjectives()
 
 
-def loadPreviousAnalysisResults(capability: Capability, options: PublishOptions, origin: str) -> Union[Any, None]:
+def loadPreviousAnalysisResults(capability: Capability, options: PublishOptions, origin: str) -> Any:
     if not os.environ.get("SIGRID_CI_TOKEN"):
         return None
     elif capability == SECURITY and origin == "sigrid":
@@ -74,14 +74,15 @@ if __name__ == "__main__":
     parser.add_argument("--previousresults", type=str, help="Previous results for comparison, either a file or 'sigrid'.")
     args = parser.parse_args()
 
-    options = parseFeedbackOptions(args)
+    capability = CAPABILITY_SHORT_NAMES[args.capability.lower()]
+    options = parseFeedbackOptions(args, capability)
     objectives = determineObjectives(options)
-    capability = CAPABILITY_SHORT_NAMES[args.capability]
 
-    feedbackProvider = FeedbackProvider(capability, options, objectives)
-    feedbackProvider.loadLocalAnalysisResults(args.analysisresults)
+    feedbackProvider = FeedbackProvider("local", options, objectives)
+    with open(args.analysisresults, mode="r", encoding="utf-8") as f:
+        feedbackProvider.registerFeedback(capability, json.load(f))
     if args.previousresults:
-        feedbackProvider.previousFeedback = loadPreviousAnalysisResults(capability, options, args.previousresults)
-    success = feedbackProvider.generateReports()
+        previousFeedback = loadPreviousAnalysisResults(capability, options, args.previousresults)
+        feedbackProvider.registerPreviousFeedback(capability, previousFeedback)
 
-    sys.exit(0 if success else feedbackProvider.capability.exitCode)
+    sys.exit(feedbackProvider.generateReports())

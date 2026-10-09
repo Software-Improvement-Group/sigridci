@@ -1,0 +1,412 @@
+{
+    "runs": [
+        {
+            "tool": {
+                "driver": {
+                    "name": "SIG File Path Rules",
+                    "rules": [],
+                    "fullDescription": {
+                        "text": "SIG File Path Rules via Sigrid (Git commit: 66e9b8f)"
+                    }
+                }
+            },
+            "results": [],
+            "invocations": [
+                {
+                    "executionSuccessful": true
+                }
+            ]
+        },
+        {
+            "tool": {
+                "driver": {
+                    "name": "KICS",
+                    "rules": [],
+                    "fullDescription": {
+                        "text": "KICS via Sigrid (Git commit: 66e9b8f)"
+                    }
+                }
+            },
+            "results": [],
+            "invocations": [
+                {
+                    "executionSuccessful": true
+                }
+            ]
+        },
+        {
+            "tool": {
+                "driver": {
+                    "name": "SIG SAT Violations",
+                    "rules": [],
+                    "fullDescription": {
+                        "text": "SIG SAT Violations via Sigrid (Git commit: 66e9b8f)"
+                    }
+                }
+            },
+            "results": [],
+            "invocations": [
+                {
+                    "executionSuccessful": true
+                }
+            ]
+        },
+        {
+            "tool": {
+                "driver": {
+                    "name": "NodeJS Scan",
+                    "rules": [],
+                    "fullDescription": {
+                        "text": "NodeJS Scan via Sigrid (Git commit: 66e9b8f)"
+                    }
+                }
+            },
+            "results": [],
+            "invocations": [
+                {
+                    "executionSuccessful": true
+                }
+            ]
+        },
+        {
+            "tool": {
+                "driver": {
+                    "name": "SIG Mendix Security",
+                    "rules": [],
+                    "fullDescription": {
+                        "text": "SIG Mendix Security via Sigrid (Git commit: 66e9b8f)"
+                    }
+                }
+            },
+            "results": [],
+            "invocations": [
+                {
+                    "executionSuccessful": true
+                }
+            ]
+        },
+        {
+            "tool": {
+                "driver": {
+                    "name": "MobSF",
+                    "rules": [],
+                    "fullDescription": {
+                        "text": "MobSF via Sigrid (Git commit: 66e9b8f)"
+                    }
+                }
+            },
+            "results": [],
+            "invocations": [
+                {
+                    "executionSuccessful": true
+                }
+            ]
+        },
+        {
+            "tool": {
+                "driver": {
+                    "name": "SIG AI Finder",
+                    "rules": [],
+                    "fullDescription": {
+                        "text": "SIG AI Finder via Sigrid (Git commit: 66e9b8f)"
+                    }
+                }
+            },
+            "results": [],
+            "invocations": [
+                {
+                    "executionSuccessful": true
+                }
+            ]
+        },
+        {
+            "tool": {
+                "driver": {
+                    "name": "ESLint",
+                    "rules": [],
+                    "fullDescription": {
+                        "text": "ESLint via Sigrid (Git commit: 66e9b8f)"
+                    }
+                }
+            },
+            "results": [],
+            "invocations": [
+                {
+                    "executionSuccessful": true
+                }
+            ]
+        },
+        {
+            "tool": {
+                "driver": {
+                    "name": "SIG Salesforce Security",
+                    "rules": [],
+                    "fullDescription": {
+                        "text": "SIG Salesforce Security via Sigrid (Git commit: 66e9b8f)"
+                    }
+                }
+            },
+            "results": [],
+            "invocations": [
+                {
+                    "executionSuccessful": true
+                }
+            ]
+        },
+        {
+            "tool": {
+                "driver": {
+                    "name": "Bandit",
+                    "rules": [],
+                    "fullDescription": {
+                        "text": "Bandit via Sigrid (Git commit: 66e9b8f)"
+                    }
+                }
+            },
+            "results": [],
+            "invocations": [
+                {
+                    "executionSuccessful": true
+                }
+            ]
+        },
+        {
+            "tool": {
+                "driver": {
+                    "name": "SIG Code Patterns",
+                    "rules": [],
+                    "fullDescription": {
+                        "text": "SIG Code Patterns via Sigrid (Git commit: 66e9b8f)"
+                    }
+                }
+            },
+            "results": [],
+            "invocations": [
+                {
+                    "executionSuccessful": true
+                }
+            ]
+        },
+        {
+            "tool": {
+                "driver": {
+                    "name": "SIG Progress Security",
+                    "rules": [],
+                    "fullDescription": {
+                        "text": "SIG Progress Security via Sigrid (Git commit: 66e9b8f)"
+                    }
+                }
+            },
+            "results": [],
+            "invocations": [
+                {
+                    "executionSuccessful": true
+                }
+            ]
+        },
+        {
+            "tool": {
+                "driver": {
+                    "name": "Find Security Bugs Scala",
+                    "rules": [],
+                    "fullDescription": {
+                        "text": "Find Security Bugs Scala via Sigrid (Git commit: 66e9b8f)"
+                    }
+                }
+            },
+            "results": [],
+            "invocations": [
+                {
+                    "executionSuccessful": true
+                }
+            ]
+        },
+        {
+            "tool": {
+                "driver": {
+                    "name": "Gosec",
+                    "rules": [],
+                    "fullDescription": {
+                        "text": "Gosec via Sigrid (Git commit: 66e9b8f)"
+                    }
+                }
+            },
+            "results": [],
+            "invocations": [
+                {
+                    "executionSuccessful": true
+                }
+            ]
+        },
+        {
+            "tool": {
+                "driver": {
+                    "name": "FlawFinder",
+                    "rules": [],
+                    "fullDescription": {
+                        "text": "FlawFinder via Sigrid (Git commit: 66e9b8f)"
+                    }
+                }
+            },
+            "results": [],
+            "invocations": [
+                {
+                    "executionSuccessful": true
+                }
+            ]
+        },
+        {
+            "tool": {
+                "driver": {
+                    "name": "Semgrep",
+                    "rules": [],
+                    "fullDescription": {
+                        "text": "Semgrep via Sigrid (Git commit: 66e9b8f)"
+                    }
+                }
+            },
+            "results": [],
+            "invocations": [
+                {
+                    "executionSuccessful": true
+                }
+            ]
+        },
+        {
+            "tool": {
+                "driver": {
+                    "name": "Unknown",
+                    "rules": [],
+                    "fullDescription": {
+                        "text": "Unknown via Sigrid (Git commit: 66e9b8f)"
+                    }
+                }
+            },
+            "results": [],
+            "invocations": [
+                {
+                    "executionSuccessful": true
+                }
+            ]
+        },
+        {
+            "tool": {
+                "driver": {
+                    "name": "Google ErrorProne",
+                    "rules": [],
+                    "fullDescription": {
+                        "text": "Google ErrorProne via Sigrid (Git commit: 66e9b8f)"
+                    }
+                }
+            },
+            "results": [],
+            "invocations": [
+                {
+                    "executionSuccessful": true
+                }
+            ]
+        },
+        {
+            "tool": {
+                "driver": {
+                    "name": "SonarQube (Java)",
+                    "rules": [],
+                    "fullDescription": {
+                        "text": "SonarQube (Java) via Sigrid (Git commit: 66e9b8f)"
+                    }
+                }
+            },
+            "results": [],
+            "invocations": [
+                {
+                    "executionSuccessful": true
+                }
+            ]
+        },
+        {
+            "tool": {
+                "driver": {
+                    "name": "FindSecBugs",
+                    "rules": [],
+                    "fullDescription": {
+                        "text": "FindSecBugs via Sigrid (Git commit: 66e9b8f)"
+                    }
+                }
+            },
+            "results": [
+                {
+                    "level": "error",
+                    "ruleId": "HARD_CODE_PASSWORD",
+                    "message": {
+                        "text": "Hard coded password"
+                    },
+                    "locations": [
+                        {
+                            "physicalLocation": {
+                                "region": {
+                                    "endLine": 5,
+                                    "startLine": 5
+                                },
+                                "artifactLocation": {
+                                    "uri": "Example2.java"
+                                }
+                            }
+                        }
+                    ],
+                    "properties": {
+                        "tags": [
+                            "A07:2025 - Authentication Failures"
+                        ],
+                        "status": "RAW",
+                        "severity": "CRITICAL"
+                    },
+                    "fingerprints": {
+                        "sigFingerprint/v1": "7298b38ed40fa18540517680cd11bf60d69fd968d85f66d67dafcd012bc54bb8"
+                    },
+                    "baselineState": "new"
+                }
+            ],
+            "invocations": [
+                {
+                    "executionSuccessful": true
+                }
+            ]
+        },
+        {
+            "tool": {
+                "driver": {
+                    "name": "SpotBugs",
+                    "rules": [],
+                    "fullDescription": {
+                        "text": "SpotBugs via Sigrid (Git commit: 66e9b8f)"
+                    }
+                }
+            },
+            "results": [],
+            "invocations": [
+                {
+                    "executionSuccessful": true
+                }
+            ]
+        },
+        {
+            "tool": {
+                "driver": {
+                    "name": "FB Contrib",
+                    "rules": [],
+                    "fullDescription": {
+                        "text": "FB Contrib via Sigrid (Git commit: 66e9b8f)"
+                    }
+                }
+            },
+            "results": [],
+            "invocations": [
+                {
+                    "executionSuccessful": true
+                }
+            ]
+        }
+    ],
+    "version": "2.1.0",
+    "baseline": "2026-10-02 09:23"
+}

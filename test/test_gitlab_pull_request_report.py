@@ -14,14 +14,13 @@
 
 import json
 import os
-from tempfile import mkdtemp
 from unittest import TestCase, mock
 
 from sigridci.sigridci.publish_options import PublishOptions, RunMode
 from sigridci.sigridci.reports.gitlab_pull_request_report import GitLabPullRequestReport
-from sigridci.sigridci.reports.maintainability_markdown_report import MaintainabilityMarkdownReport
-from sigridci.sigridci.reports.security_markdown_report import SecurityMarkdownReport
 from sigridci.sigridci.upload_log import UploadLog
+from sigridci.sigridci.capability import MAINTAINABILITY
+from sigridci.sigridci.reports.combined_markdown_feedback_report import CombinedMarkdownFeedbackReport
 
 
 MOCK_GITLAB_ENV = {
@@ -35,36 +34,37 @@ class GitLabPullRequestReportTest(TestCase):
 
     def setUp(self):
         UploadLog.clear()
-        self.tempDir = mkdtemp()
-        self.options = PublishOptions("aap", "noot", RunMode.FEEDBACK_ONLY, outputDir=self.tempDir)
+        self.options = PublishOptions("aap", "noot", RunMode.FEEDBACK_ONLY, capabilities=[MAINTAINABILITY])
 
         self.feedback = {
-            "baseline": "20220110",
-            "baselineRatings": {"DUPLICATION": 4.0, "UNIT_SIZE": 4.0, "MAINTAINABILITY": 4.0},
-            "changedCodeBeforeRatings" : {"MAINTAINABILITY" : 2.6},
-            "changedCodeAfterRatings" : {"MAINTAINABILITY" : 2.8},
-            "newCodeRatings": {"DUPLICATION": 5.0, "UNIT_SIZE": 2.0, "MAINTAINABILITY": 3.0},
-            "overallRatings": {"DUPLICATION": 4.5, "UNIT_SIZE": 3.0, "MAINTAINABILITY": 3.4},
-            "refactoringCandidates": []
+            MAINTAINABILITY : {
+                "baseline": "20220110",
+                "baselineRatings": {"DUPLICATION": 4.0, "UNIT_SIZE": 4.0, "MAINTAINABILITY": 4.0},
+                "changedCodeBeforeRatings" : {"MAINTAINABILITY" : 2.6},
+                "changedCodeAfterRatings" : {"MAINTAINABILITY" : 2.8},
+                "newCodeRatings": {"DUPLICATION": 5.0, "UNIT_SIZE": 2.0, "MAINTAINABILITY": 3.0},
+                "overallRatings": {"DUPLICATION": 4.5, "UNIT_SIZE": 3.0, "MAINTAINABILITY": 3.4},
+                "refactoringCandidates": []
+            }
         }
 
     @mock.patch.dict(os.environ, MOCK_GITLAB_ENV)
     def testPostNewComment(self):
-        gitlab = MockGitLab(MaintainabilityMarkdownReport())
+        gitlab = MockGitLab(CombinedMarkdownFeedbackReport({}))
         gitlab.generate("1234", self.feedback, self.options)
 
-        self.assertEqual(["Published Maintainability feedback to GitLab"], UploadLog.history)
+        self.assertEqual(["Published feedback to GitLab"], UploadLog.history)
         self.assertEqual(["POST https://nonexistent-example.com/projects/1234/merge_requests/5678/notes"], gitlab.called)
 
     @mock.patch.dict(os.environ, MOCK_GITLAB_ENV)
     def testUpdateExistingComment(self):
-        gitlab = MockGitLab(MaintainabilityMarkdownReport())
+        gitlab = MockGitLab(CombinedMarkdownFeedbackReport({}))
         gitlab.generate("1234", self.feedback, self.options)
         gitlab.generate("1234", self.feedback, self.options)
 
         expectedLog = [
-            "Published Maintainability feedback to GitLab",
-            "Updated existing GitLab Maintainability feedback"
+            "Published feedback to GitLab",
+            "Updated existing GitLab feedback"
         ]
 
         expectedCalls = [
@@ -75,35 +75,15 @@ class GitLabPullRequestReportTest(TestCase):
         self.assertEqual(expectedLog, UploadLog.history)
         self.assertEqual(expectedCalls, gitlab.called)
 
-    @mock.patch.dict(os.environ, MOCK_GITLAB_ENV)
-    def testDoNotUpdateDifferentTypeOfFeedback(self):
-        gitlab = MockGitLab(MaintainabilityMarkdownReport())
-        gitlab.generate("1234", self.feedback, self.options)
-        gitlab.generate("1234", self.feedback, self.options)
-
-        other = MockGitLab(SecurityMarkdownReport(self.options))
-        other.generate("1234", {"runs" : []}, self.options)
-        other.generate("1234", {"runs" : []}, self.options)
-
-        expectedLog = [
-            "Published Maintainability feedback to GitLab",
-            "Updated existing GitLab Maintainability feedback",
-            "Published Security feedback to GitLab",
-            "Updated existing GitLab Security feedback"
-        ]
-
-        self.assertEqual(expectedLog, UploadLog.history)
-
     @mock.patch.dict(os.environ, MOCK_GITLAB_ENV | {"SIGRIDCI_GITLAB_COMMENT_TOKEN" : "1234"})
     def testDoNotExitOnFailingGitLabRequest(self):
-        gitlab = GitLabPullRequestReport(MaintainabilityMarkdownReport())
+        gitlab = GitLabPullRequestReport(CombinedMarkdownFeedbackReport({}))
         gitlab.generate("1234", self.feedback, self.options)
 
         self.assertTrue(message for message in UploadLog.history if any(message.startswith("Error contacting GitLab")))
 
 
 class MockGitLab(GitLabPullRequestReport):
-
     def __init__(self, markdownReport):
         super().__init__(markdownReport)
         self.called = []

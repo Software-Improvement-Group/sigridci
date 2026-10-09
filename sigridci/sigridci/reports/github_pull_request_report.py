@@ -18,7 +18,8 @@ import ssl
 import urllib.parse
 import urllib.request
 
-from .report import Report, MarkdownRenderer
+from .combined_markdown_feedback_report import CombinedMarkdownFeedbackReport
+from .report import Report
 from ..api_caller import ApiCaller
 from ..publish_options import RunMode, PublishOptions
 from ..upload_log import UploadLog
@@ -26,8 +27,8 @@ from ..upload_log import UploadLog
 
 class GitHubPullRequestReport(Report):
 
-    def __init__(self, markdownRenderer: MarkdownRenderer):
-        self.markdownRenderer = markdownRenderer
+    def __init__(self, masterReport: CombinedMarkdownFeedbackReport):
+        self.masterReport = masterReport
 
         certPath = os.getenv("SIGRID_GITHUB_CA_CERT_PATH")
         self.sslContext = ssl.create_default_context(cafile=certPath) if certPath else None
@@ -36,14 +37,14 @@ class GitHubPullRequestReport(Report):
         if self.isWithinGitHubPullRequestPipeline(options):
             try:
                 existingCommentId = self.findExistingCommentId()
-                body = self.buildRequestBody(self.markdownRenderer.renderMarkdown(analysisId, feedback, options))
+                body = self.buildRequestBody(self.masterReport.renderMarkdown(analysisId, feedback, options))
 
                 if existingCommentId is None:
                     self.callAPI("POST", self.buildCommentsURL(), body)
-                    UploadLog.log(f"Published {self.markdownRenderer.getCapability().displayName} feedback to GitHub")
+                    UploadLog.log("Published feedback to GitHub")
                 else:
                     self.callAPI("PATCH", self.buildCommentURL(existingCommentId), body)
-                    UploadLog.log(f"Updated existing GitHub {self.markdownRenderer.getCapability().displayName} feedback")
+                    UploadLog.log("Updated existing GitHub feedback")
             except SystemExit as e:
                 print(f"Failed to publish feedback to GitHub: {e}")
 
@@ -91,6 +92,5 @@ class GitHubPullRequestReport(Report):
                     return comment["id"]
 
     def isExistingComment(self, comment):
-        header = f"{self.markdownRenderer.getCapability().displayName} feedback"
         body = comment.get("body", "")
-        return body.startswith(("# Sigrid", "# [Sigrid]")) and header.lower() in body.lower()
+        return body.startswith(("# Sigrid", "# [Sigrid]"))

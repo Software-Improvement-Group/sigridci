@@ -1,0 +1,1692 @@
+{
+    "baseline": "20261002",
+    "newCodeLinesOfCode": 696,
+    "newCodePersonMonths": 0.93,
+    "baselineRatings": {
+        "VOLUME": null,
+        "DUPLICATION": 5.5,
+        "UNIT_SIZE": 5.5,
+        "UNIT_COMPLEXITY": 5.5,
+        "UNIT_INTERFACING": 5.5,
+        "MODULE_COUPLING": 5.5,
+        "COMPONENT_BALANCE_PROP": null,
+        "COMPONENT_INDEPENDENCE": 0.5,
+        "COMPONENT_ENTANGLEMENT": 1.9,
+        "MAINTAINABILITY": 3.4
+    },
+    "overallRatings": {
+        "VOLUME": null,
+        "DUPLICATION": 0.6,
+        "UNIT_SIZE": 0.6,
+        "UNIT_COMPLEXITY": 0.6,
+        "UNIT_INTERFACING": 4.2,
+        "MODULE_COUPLING": 5.5,
+        "COMPONENT_BALANCE_PROP": null,
+        "COMPONENT_INDEPENDENCE": 5.3,
+        "COMPONENT_ENTANGLEMENT": 1.3,
+        "MAINTAINABILITY": 1.5
+    },
+    "newCodeRatings": {
+        "DUPLICATION": 0.5,
+        "UNIT_SIZE": 0.7,
+        "UNIT_COMPLEXITY": 0.5,
+        "UNIT_INTERFACING": 4.0,
+        "MODULE_COUPLING": 5.4,
+        "COMPONENT_INDEPENDENCE": 5.4,
+        "MAINTAINABILITY": 1.6
+    },
+    "changedCodeBeforeRatings": {
+        "DUPLICATION": 5.5,
+        "UNIT_SIZE": 5.5,
+        "UNIT_COMPLEXITY": 5.5,
+        "UNIT_INTERFACING": 5.5,
+        "MODULE_COUPLING": null,
+        "COMPONENT_INDEPENDENCE": 0.5,
+        "MAINTAINABILITY": 2.6
+    },
+    "changedCodeAfterRatings": {
+        "DUPLICATION": 5.5,
+        "UNIT_SIZE": 5.5,
+        "UNIT_COMPLEXITY": 5.5,
+        "UNIT_INTERFACING": 5.5,
+        "MODULE_COUPLING": null,
+        "COMPONENT_INDEPENDENCE": 0.5,
+        "MAINTAINABILITY": 2.6
+    },
+    "refactoringCandidates": [
+        {
+            "subject": "Example.java (lines 41-126)\nExample2.java (lines 39-124)",
+            "category": "introduced",
+            "metric": "DUPLICATION",
+            "value": 74.0,
+            "riskCategory": "VERY_HIGH",
+            "occurrences": [
+                {
+                    "filePath": "Example.java",
+                    "qualifiedName": "source::Example.java",
+                    "startLine": 41,
+                    "endLine": 126,
+                    "technology": "java"
+                },
+                {
+                    "filePath": "Example2.java",
+                    "qualifiedName": "source::Example2.java",
+                    "startLine": 39,
+                    "endLine": 124,
+                    "technology": "java"
+                }
+            ]
+        },
+        {
+            "subject": "Example.java (lines 177-245)\nExample2.java (lines 162-229)",
+            "category": "introduced",
+            "metric": "DUPLICATION",
+            "value": 57.0,
+            "riskCategory": "VERY_HIGH",
+            "occurrences": [
+                {
+                    "filePath": "Example.java",
+                    "qualifiedName": "source::Example.java",
+                    "startLine": 177,
+                    "endLine": 245,
+                    "technology": "java"
+                },
+                {
+                    "filePath": "Example2.java",
+                    "qualifiedName": "source::Example2.java",
+                    "startLine": 162,
+                    "endLine": 229,
+                    "technology": "java"
+                }
+            ]
+        },
+        {
+            "subject": "Example.java (lines 246-303)\nExample2.java (lines 237-294)",
+            "category": "introduced",
+            "metric": "DUPLICATION",
+            "value": 49.0,
+            "riskCategory": "VERY_HIGH",
+            "occurrences": [
+                {
+                    "filePath": "Example.java",
+                    "qualifiedName": "source::Example.java",
+                    "startLine": 246,
+                    "endLine": 303,
+                    "technology": "java"
+                },
+                {
+                    "filePath": "Example2.java",
+                    "qualifiedName": "source::Example2.java",
+                    "startLine": 237,
+                    "endLine": 294,
+                    "technology": "java"
+                }
+            ]
+        },
+        {
+            "subject": "Example.java (lines 131-176)\nExample2.java (lines 110-155)",
+            "category": "introduced",
+            "metric": "DUPLICATION",
+            "value": 40.0,
+            "riskCategory": "VERY_HIGH",
+            "occurrences": [
+                {
+                    "filePath": "Example.java",
+                    "qualifiedName": "source::Example.java",
+                    "startLine": 131,
+                    "endLine": 176,
+                    "technology": "java"
+                },
+                {
+                    "filePath": "Example2.java",
+                    "qualifiedName": "source::Example2.java",
+                    "startLine": 110,
+                    "endLine": 155,
+                    "technology": "java"
+                }
+            ]
+        },
+        {
+            "subject": "Example.java (lines 3-22)\nExample2.java (lines 15-34)",
+            "category": "introduced",
+            "metric": "DUPLICATION",
+            "value": 17.0,
+            "riskCategory": "VERY_HIGH",
+            "occurrences": [
+                {
+                    "filePath": "Example.java",
+                    "qualifiedName": "source::Example.java",
+                    "startLine": 3,
+                    "endLine": 22,
+                    "technology": "java"
+                },
+                {
+                    "filePath": "Example2.java",
+                    "qualifiedName": "source::Example2.java",
+                    "startLine": 15,
+                    "endLine": 34,
+                    "technology": "java"
+                }
+            ]
+        },
+        {
+            "subject": "Example.java (lines 112-126)\nExample.java (lines 131-145)\nExample.java (lines 150-164)\nExample.java (lines 182-196)\nExample.java (lines 201-215)\nExample.java (lines 220-234)\nExample.java (lines 251-265)\nExample.java (lines 270-284)\nExample.java (lines 289-303)\nExample.java (lines 93-107)\nExample2.java (lines 110-124)\nExample2.java (lines 129-143)\nExample2.java (lines 148-162)\nExample2.java (lines 166-180)\nExample2.java (lines 185-199)\nExample2.java (lines 204-218)\nExample2.java (lines 223-237)\nExample2.java (lines 242-256)\nExample2.java (lines 261-275)\nExample2.java (lines 280-294)\nExample2.java (lines 299-313)\nExample2.java (lines 318-332)\nExample2.java (lines 337-351)\nExample2.java (lines 356-370)\nExample2.java (lines 375-389)\nExample2.java (lines 394-408)\nExample2.java (lines 91-105)",
+            "category": "introduced",
+            "metric": "DUPLICATION",
+            "value": 390.0,
+            "riskCategory": "VERY_HIGH",
+            "occurrences": [
+                {
+                    "filePath": "Example2.java",
+                    "qualifiedName": "source::Example2.java",
+                    "startLine": 318,
+                    "endLine": 332,
+                    "technology": "java"
+                },
+                {
+                    "filePath": "Example2.java",
+                    "qualifiedName": "source::Example2.java",
+                    "startLine": 129,
+                    "endLine": 143,
+                    "technology": "java"
+                },
+                {
+                    "filePath": "Example.java",
+                    "qualifiedName": "source::Example.java",
+                    "startLine": 150,
+                    "endLine": 164,
+                    "technology": "java"
+                },
+                {
+                    "filePath": "Example2.java",
+                    "qualifiedName": "source::Example2.java",
+                    "startLine": 261,
+                    "endLine": 275,
+                    "technology": "java"
+                },
+                {
+                    "filePath": "Example.java",
+                    "qualifiedName": "source::Example.java",
+                    "startLine": 201,
+                    "endLine": 215,
+                    "technology": "java"
+                },
+                {
+                    "filePath": "Example2.java",
+                    "qualifiedName": "source::Example2.java",
+                    "startLine": 394,
+                    "endLine": 408,
+                    "technology": "java"
+                },
+                {
+                    "filePath": "Example.java",
+                    "qualifiedName": "source::Example.java",
+                    "startLine": 270,
+                    "endLine": 284,
+                    "technology": "java"
+                },
+                {
+                    "filePath": "Example2.java",
+                    "qualifiedName": "source::Example2.java",
+                    "startLine": 204,
+                    "endLine": 218,
+                    "technology": "java"
+                },
+                {
+                    "filePath": "Example2.java",
+                    "qualifiedName": "source::Example2.java",
+                    "startLine": 337,
+                    "endLine": 351,
+                    "technology": "java"
+                },
+                {
+                    "filePath": "Example.java",
+                    "qualifiedName": "source::Example.java",
+                    "startLine": 131,
+                    "endLine": 145,
+                    "technology": "java"
+                },
+                {
+                    "filePath": "Example2.java",
+                    "qualifiedName": "source::Example2.java",
+                    "startLine": 148,
+                    "endLine": 162,
+                    "technology": "java"
+                },
+                {
+                    "filePath": "Example.java",
+                    "qualifiedName": "source::Example.java",
+                    "startLine": 251,
+                    "endLine": 265,
+                    "technology": "java"
+                },
+                {
+                    "filePath": "Example2.java",
+                    "qualifiedName": "source::Example2.java",
+                    "startLine": 280,
+                    "endLine": 294,
+                    "technology": "java"
+                },
+                {
+                    "filePath": "Example.java",
+                    "qualifiedName": "source::Example.java",
+                    "startLine": 112,
+                    "endLine": 126,
+                    "technology": "java"
+                },
+                {
+                    "filePath": "Example2.java",
+                    "qualifiedName": "source::Example2.java",
+                    "startLine": 91,
+                    "endLine": 105,
+                    "technology": "java"
+                },
+                {
+                    "filePath": "Example2.java",
+                    "qualifiedName": "source::Example2.java",
+                    "startLine": 223,
+                    "endLine": 237,
+                    "technology": "java"
+                },
+                {
+                    "filePath": "Example.java",
+                    "qualifiedName": "source::Example.java",
+                    "startLine": 182,
+                    "endLine": 196,
+                    "technology": "java"
+                },
+                {
+                    "filePath": "Example2.java",
+                    "qualifiedName": "source::Example2.java",
+                    "startLine": 166,
+                    "endLine": 180,
+                    "technology": "java"
+                },
+                {
+                    "filePath": "Example2.java",
+                    "qualifiedName": "source::Example2.java",
+                    "startLine": 356,
+                    "endLine": 370,
+                    "technology": "java"
+                },
+                {
+                    "filePath": "Example2.java",
+                    "qualifiedName": "source::Example2.java",
+                    "startLine": 110,
+                    "endLine": 124,
+                    "technology": "java"
+                },
+                {
+                    "filePath": "Example2.java",
+                    "qualifiedName": "source::Example2.java",
+                    "startLine": 299,
+                    "endLine": 313,
+                    "technology": "java"
+                },
+                {
+                    "filePath": "Example.java",
+                    "qualifiedName": "source::Example.java",
+                    "startLine": 289,
+                    "endLine": 303,
+                    "technology": "java"
+                },
+                {
+                    "filePath": "Example2.java",
+                    "qualifiedName": "source::Example2.java",
+                    "startLine": 242,
+                    "endLine": 256,
+                    "technology": "java"
+                },
+                {
+                    "filePath": "Example2.java",
+                    "qualifiedName": "source::Example2.java",
+                    "startLine": 185,
+                    "endLine": 199,
+                    "technology": "java"
+                },
+                {
+                    "filePath": "Example.java",
+                    "qualifiedName": "source::Example.java",
+                    "startLine": 220,
+                    "endLine": 234,
+                    "technology": "java"
+                },
+                {
+                    "filePath": "Example2.java",
+                    "qualifiedName": "source::Example2.java",
+                    "startLine": 375,
+                    "endLine": 389,
+                    "technology": "java"
+                },
+                {
+                    "filePath": "Example.java",
+                    "qualifiedName": "source::Example.java",
+                    "startLine": 93,
+                    "endLine": 107,
+                    "technology": "java"
+                }
+            ]
+        },
+        {
+            "subject": "Example.java (lines 131-142)\nExample.java (lines 150-161)\nExample.java (lines 182-193)\nExample.java (lines 201-212)\nExample.java (lines 220-231)\nExample.java (lines 251-262)\nExample.java (lines 270-281)\nExample.java (lines 289-300)\nExample.java (lines 42-53)\nExample.java (lines 59-70)\nExample.java (lines 76-87)\nExample2.java (lines 129-140)\nExample2.java (lines 148-159)\nExample2.java (lines 166-177)\nExample2.java (lines 185-196)\nExample2.java (lines 204-215)\nExample2.java (lines 223-234)\nExample2.java (lines 242-253)\nExample2.java (lines 261-272)\nExample2.java (lines 280-291)\nExample2.java (lines 299-310)\nExample2.java (lines 318-329)\nExample2.java (lines 337-348)\nExample2.java (lines 356-367)\nExample2.java (lines 375-386)\nExample2.java (lines 394-405)",
+            "category": "introduced",
+            "metric": "DUPLICATION",
+            "value": 300.0,
+            "riskCategory": "VERY_HIGH",
+            "occurrences": [
+                {
+                    "filePath": "Example2.java",
+                    "qualifiedName": "source::Example2.java",
+                    "startLine": 318,
+                    "endLine": 329,
+                    "technology": "java"
+                },
+                {
+                    "filePath": "Example2.java",
+                    "qualifiedName": "source::Example2.java",
+                    "startLine": 129,
+                    "endLine": 140,
+                    "technology": "java"
+                },
+                {
+                    "filePath": "Example.java",
+                    "qualifiedName": "source::Example.java",
+                    "startLine": 150,
+                    "endLine": 161,
+                    "technology": "java"
+                },
+                {
+                    "filePath": "Example2.java",
+                    "qualifiedName": "source::Example2.java",
+                    "startLine": 261,
+                    "endLine": 272,
+                    "technology": "java"
+                },
+                {
+                    "filePath": "Example.java",
+                    "qualifiedName": "source::Example.java",
+                    "startLine": 201,
+                    "endLine": 212,
+                    "technology": "java"
+                },
+                {
+                    "filePath": "Example.java",
+                    "qualifiedName": "source::Example.java",
+                    "startLine": 76,
+                    "endLine": 87,
+                    "technology": "java"
+                },
+                {
+                    "filePath": "Example2.java",
+                    "qualifiedName": "source::Example2.java",
+                    "startLine": 394,
+                    "endLine": 405,
+                    "technology": "java"
+                },
+                {
+                    "filePath": "Example.java",
+                    "qualifiedName": "source::Example.java",
+                    "startLine": 270,
+                    "endLine": 281,
+                    "technology": "java"
+                },
+                {
+                    "filePath": "Example2.java",
+                    "qualifiedName": "source::Example2.java",
+                    "startLine": 204,
+                    "endLine": 215,
+                    "technology": "java"
+                },
+                {
+                    "filePath": "Example.java",
+                    "qualifiedName": "source::Example.java",
+                    "startLine": 131,
+                    "endLine": 142,
+                    "technology": "java"
+                },
+                {
+                    "filePath": "Example2.java",
+                    "qualifiedName": "source::Example2.java",
+                    "startLine": 337,
+                    "endLine": 348,
+                    "technology": "java"
+                },
+                {
+                    "filePath": "Example2.java",
+                    "qualifiedName": "source::Example2.java",
+                    "startLine": 148,
+                    "endLine": 159,
+                    "technology": "java"
+                },
+                {
+                    "filePath": "Example.java",
+                    "qualifiedName": "source::Example.java",
+                    "startLine": 251,
+                    "endLine": 262,
+                    "technology": "java"
+                },
+                {
+                    "filePath": "Example.java",
+                    "qualifiedName": "source::Example.java",
+                    "startLine": 59,
+                    "endLine": 70,
+                    "technology": "java"
+                },
+                {
+                    "filePath": "Example2.java",
+                    "qualifiedName": "source::Example2.java",
+                    "startLine": 280,
+                    "endLine": 291,
+                    "technology": "java"
+                },
+                {
+                    "filePath": "Example2.java",
+                    "qualifiedName": "source::Example2.java",
+                    "startLine": 223,
+                    "endLine": 234,
+                    "technology": "java"
+                },
+                {
+                    "filePath": "Example.java",
+                    "qualifiedName": "source::Example.java",
+                    "startLine": 182,
+                    "endLine": 193,
+                    "technology": "java"
+                },
+                {
+                    "filePath": "Example2.java",
+                    "qualifiedName": "source::Example2.java",
+                    "startLine": 166,
+                    "endLine": 177,
+                    "technology": "java"
+                },
+                {
+                    "filePath": "Example2.java",
+                    "qualifiedName": "source::Example2.java",
+                    "startLine": 356,
+                    "endLine": 367,
+                    "technology": "java"
+                },
+                {
+                    "filePath": "Example.java",
+                    "qualifiedName": "source::Example.java",
+                    "startLine": 42,
+                    "endLine": 53,
+                    "technology": "java"
+                },
+                {
+                    "filePath": "Example.java",
+                    "qualifiedName": "source::Example.java",
+                    "startLine": 289,
+                    "endLine": 300,
+                    "technology": "java"
+                },
+                {
+                    "filePath": "Example2.java",
+                    "qualifiedName": "source::Example2.java",
+                    "startLine": 299,
+                    "endLine": 310,
+                    "technology": "java"
+                },
+                {
+                    "filePath": "Example2.java",
+                    "qualifiedName": "source::Example2.java",
+                    "startLine": 242,
+                    "endLine": 253,
+                    "technology": "java"
+                },
+                {
+                    "filePath": "Example2.java",
+                    "qualifiedName": "source::Example2.java",
+                    "startLine": 185,
+                    "endLine": 196,
+                    "technology": "java"
+                },
+                {
+                    "filePath": "Example.java",
+                    "qualifiedName": "source::Example.java",
+                    "startLine": 220,
+                    "endLine": 231,
+                    "technology": "java"
+                },
+                {
+                    "filePath": "Example2.java",
+                    "qualifiedName": "source::Example2.java",
+                    "startLine": 375,
+                    "endLine": 386,
+                    "technology": "java"
+                }
+            ]
+        },
+        {
+            "subject": "Example.java (lines 189-196)\nExample.java (lines 208-215)\nExample.java (lines 227-234)\nExample.java (lines 258-265)\nExample.java (lines 277-284)\nExample.java (lines 296-303)\nExample2.java (lines 117-124)\nExample2.java (lines 136-143)\nExample2.java (lines 155-162)\nExample2.java (lines 173-180)\nExample2.java (lines 192-199)\nExample2.java (lines 211-218)\nExample2.java (lines 230-237)\nExample2.java (lines 98-105)",
+            "category": "introduced",
+            "metric": "DUPLICATION",
+            "value": 34.0,
+            "riskCategory": "VERY_HIGH",
+            "occurrences": [
+                {
+                    "filePath": "Example.java",
+                    "qualifiedName": "source::Example.java",
+                    "startLine": 208,
+                    "endLine": 215,
+                    "technology": "java"
+                },
+                {
+                    "filePath": "Example2.java",
+                    "qualifiedName": "source::Example2.java",
+                    "startLine": 155,
+                    "endLine": 162,
+                    "technology": "java"
+                },
+                {
+                    "filePath": "Example2.java",
+                    "qualifiedName": "source::Example2.java",
+                    "startLine": 98,
+                    "endLine": 105,
+                    "technology": "java"
+                },
+                {
+                    "filePath": "Example.java",
+                    "qualifiedName": "source::Example.java",
+                    "startLine": 277,
+                    "endLine": 284,
+                    "technology": "java"
+                },
+                {
+                    "filePath": "Example2.java",
+                    "qualifiedName": "source::Example2.java",
+                    "startLine": 192,
+                    "endLine": 199,
+                    "technology": "java"
+                },
+                {
+                    "filePath": "Example2.java",
+                    "qualifiedName": "source::Example2.java",
+                    "startLine": 230,
+                    "endLine": 237,
+                    "technology": "java"
+                },
+                {
+                    "filePath": "Example.java",
+                    "qualifiedName": "source::Example.java",
+                    "startLine": 296,
+                    "endLine": 303,
+                    "technology": "java"
+                },
+                {
+                    "filePath": "Example2.java",
+                    "qualifiedName": "source::Example2.java",
+                    "startLine": 136,
+                    "endLine": 143,
+                    "technology": "java"
+                },
+                {
+                    "filePath": "Example2.java",
+                    "qualifiedName": "source::Example2.java",
+                    "startLine": 173,
+                    "endLine": 180,
+                    "technology": "java"
+                },
+                {
+                    "filePath": "Example.java",
+                    "qualifiedName": "source::Example.java",
+                    "startLine": 258,
+                    "endLine": 265,
+                    "technology": "java"
+                },
+                {
+                    "filePath": "Example.java",
+                    "qualifiedName": "source::Example.java",
+                    "startLine": 227,
+                    "endLine": 234,
+                    "technology": "java"
+                },
+                {
+                    "filePath": "Example2.java",
+                    "qualifiedName": "source::Example2.java",
+                    "startLine": 117,
+                    "endLine": 124,
+                    "technology": "java"
+                },
+                {
+                    "filePath": "Example2.java",
+                    "qualifiedName": "source::Example2.java",
+                    "startLine": 211,
+                    "endLine": 218,
+                    "technology": "java"
+                },
+                {
+                    "filePath": "Example.java",
+                    "qualifiedName": "source::Example.java",
+                    "startLine": 189,
+                    "endLine": 196,
+                    "technology": "java"
+                }
+            ]
+        },
+        {
+            "subject": "Example.java (lines 112-119)\nExample.java (lines 131-138)\nExample.java (lines 169-176)\nExample.java (lines 42-49)\nExample.java (lines 59-66)\nExample.java (lines 76-83)\nExample.java (lines 93-100)",
+            "category": "introduced",
+            "metric": "DUPLICATION",
+            "value": 16.0,
+            "riskCategory": "VERY_HIGH",
+            "occurrences": [
+                {
+                    "filePath": "Example.java",
+                    "qualifiedName": "source::Example.java",
+                    "startLine": 112,
+                    "endLine": 119,
+                    "technology": "java"
+                },
+                {
+                    "filePath": "Example.java",
+                    "qualifiedName": "source::Example.java",
+                    "startLine": 131,
+                    "endLine": 138,
+                    "technology": "java"
+                },
+                {
+                    "filePath": "Example.java",
+                    "qualifiedName": "source::Example.java",
+                    "startLine": 169,
+                    "endLine": 176,
+                    "technology": "java"
+                },
+                {
+                    "filePath": "Example.java",
+                    "qualifiedName": "source::Example.java",
+                    "startLine": 42,
+                    "endLine": 49,
+                    "technology": "java"
+                },
+                {
+                    "filePath": "Example.java",
+                    "qualifiedName": "source::Example.java",
+                    "startLine": 59,
+                    "endLine": 66,
+                    "technology": "java"
+                },
+                {
+                    "filePath": "Example.java",
+                    "qualifiedName": "source::Example.java",
+                    "startLine": 76,
+                    "endLine": 83,
+                    "technology": "java"
+                },
+                {
+                    "filePath": "Example.java",
+                    "qualifiedName": "source::Example.java",
+                    "startLine": 93,
+                    "endLine": 100,
+                    "technology": "java"
+                }
+            ]
+        },
+        {
+            "subject": "Example.java (lines 139-145)\nExample.java (lines 158-164)\nExample.java (lines 190-196)\nExample.java (lines 209-215)\nExample.java (lines 228-234)\nExample.java (lines 259-265)\nExample.java (lines 278-284)\nExample.java (lines 297-303)\nExample2.java (lines 118-124)\nExample2.java (lines 137-143)\nExample2.java (lines 156-162)\nExample2.java (lines 99-105)",
+            "category": "introduced",
+            "metric": "DUPLICATION",
+            "value": 19.0,
+            "riskCategory": "VERY_HIGH",
+            "occurrences": [
+                {
+                    "filePath": "Example.java",
+                    "qualifiedName": "source::Example.java",
+                    "startLine": 209,
+                    "endLine": 215,
+                    "technology": "java"
+                },
+                {
+                    "filePath": "Example2.java",
+                    "qualifiedName": "source::Example2.java",
+                    "startLine": 156,
+                    "endLine": 162,
+                    "technology": "java"
+                },
+                {
+                    "filePath": "Example.java",
+                    "qualifiedName": "source::Example.java",
+                    "startLine": 259,
+                    "endLine": 265,
+                    "technology": "java"
+                },
+                {
+                    "filePath": "Example.java",
+                    "qualifiedName": "source::Example.java",
+                    "startLine": 228,
+                    "endLine": 234,
+                    "technology": "java"
+                },
+                {
+                    "filePath": "Example.java",
+                    "qualifiedName": "source::Example.java",
+                    "startLine": 278,
+                    "endLine": 284,
+                    "technology": "java"
+                },
+                {
+                    "filePath": "Example2.java",
+                    "qualifiedName": "source::Example2.java",
+                    "startLine": 118,
+                    "endLine": 124,
+                    "technology": "java"
+                },
+                {
+                    "filePath": "Example2.java",
+                    "qualifiedName": "source::Example2.java",
+                    "startLine": 99,
+                    "endLine": 105,
+                    "technology": "java"
+                },
+                {
+                    "filePath": "Example.java",
+                    "qualifiedName": "source::Example.java",
+                    "startLine": 297,
+                    "endLine": 303,
+                    "technology": "java"
+                },
+                {
+                    "filePath": "Example2.java",
+                    "qualifiedName": "source::Example2.java",
+                    "startLine": 137,
+                    "endLine": 143,
+                    "technology": "java"
+                },
+                {
+                    "filePath": "Example.java",
+                    "qualifiedName": "source::Example.java",
+                    "startLine": 139,
+                    "endLine": 145,
+                    "technology": "java"
+                },
+                {
+                    "filePath": "Example.java",
+                    "qualifiedName": "source::Example.java",
+                    "startLine": 190,
+                    "endLine": 196,
+                    "technology": "java"
+                },
+                {
+                    "filePath": "Example.java",
+                    "qualifiedName": "source::Example.java",
+                    "startLine": 158,
+                    "endLine": 164,
+                    "technology": "java"
+                }
+            ]
+        },
+        {
+            "subject": "Example.java (lines 112-118)\nExample.java (lines 131-137)\nExample.java (lines 150-156)\nExample.java (lines 169-175)\nExample.java (lines 239-245)\nExample.java (lines 42-48)\nExample.java (lines 59-65)\nExample.java (lines 76-82)\nExample.java (lines 93-99)",
+            "category": "introduced",
+            "metric": "DUPLICATION",
+            "value": 14.0,
+            "riskCategory": "VERY_HIGH",
+            "occurrences": [
+                {
+                    "filePath": "Example.java",
+                    "qualifiedName": "source::Example.java",
+                    "startLine": 239,
+                    "endLine": 245,
+                    "technology": "java"
+                },
+                {
+                    "filePath": "Example.java",
+                    "qualifiedName": "source::Example.java",
+                    "startLine": 112,
+                    "endLine": 118,
+                    "technology": "java"
+                },
+                {
+                    "filePath": "Example.java",
+                    "qualifiedName": "source::Example.java",
+                    "startLine": 131,
+                    "endLine": 137,
+                    "technology": "java"
+                },
+                {
+                    "filePath": "Example.java",
+                    "qualifiedName": "source::Example.java",
+                    "startLine": 150,
+                    "endLine": 156,
+                    "technology": "java"
+                },
+                {
+                    "filePath": "Example.java",
+                    "qualifiedName": "source::Example.java",
+                    "startLine": 169,
+                    "endLine": 175,
+                    "technology": "java"
+                },
+                {
+                    "filePath": "Example.java",
+                    "qualifiedName": "source::Example.java",
+                    "startLine": 42,
+                    "endLine": 48,
+                    "technology": "java"
+                },
+                {
+                    "filePath": "Example.java",
+                    "qualifiedName": "source::Example.java",
+                    "startLine": 59,
+                    "endLine": 65,
+                    "technology": "java"
+                },
+                {
+                    "filePath": "Example.java",
+                    "qualifiedName": "source::Example.java",
+                    "startLine": 76,
+                    "endLine": 82,
+                    "technology": "java"
+                },
+                {
+                    "filePath": "Example.java",
+                    "qualifiedName": "source::Example.java",
+                    "startLine": 93,
+                    "endLine": 99,
+                    "technology": "java"
+                }
+            ]
+        },
+        {
+            "subject": "Example2.java::Example2.complexMethod8(int)",
+            "category": "introduced",
+            "metric": "UNIT_SIZE",
+            "value": 252.0,
+            "riskCategory": "VERY_HIGH",
+            "occurrences": [
+                {
+                    "filePath": "Example2.java",
+                    "qualifiedName": "java.unit::DefaultPackage.Example2.complexMethod8(int)_$file_Example2.java",
+                    "startLine": 147,
+                    "endLine": 412,
+                    "technology": "java"
+                }
+            ]
+        },
+        {
+            "subject": "Example2.java::Example2.complexMethod5(int)",
+            "category": "introduced",
+            "metric": "UNIT_SIZE",
+            "value": 18.0,
+            "riskCategory": "MEDIUM",
+            "occurrences": [
+                {
+                    "filePath": "Example2.java",
+                    "qualifiedName": "java.unit::DefaultPackage.Example2.complexMethod5(int)_$file_Example2.java",
+                    "startLine": 109,
+                    "endLine": 126,
+                    "technology": "java"
+                }
+            ]
+        },
+        {
+            "subject": "Example2.java::Example2.complexMethod2(int)",
+            "category": "introduced",
+            "metric": "UNIT_SIZE",
+            "value": 16.0,
+            "riskCategory": "MEDIUM",
+            "occurrences": [
+                {
+                    "filePath": "Example2.java",
+                    "qualifiedName": "java.unit::DefaultPackage.Example2.complexMethod2(int)_$file_Example2.java",
+                    "startLine": 56,
+                    "endLine": 71,
+                    "technology": "java"
+                }
+            ]
+        },
+        {
+            "subject": "Example2.java::Example2.complexMethod4(int)",
+            "category": "introduced",
+            "metric": "UNIT_SIZE",
+            "value": 18.0,
+            "riskCategory": "MEDIUM",
+            "occurrences": [
+                {
+                    "filePath": "Example2.java",
+                    "qualifiedName": "java.unit::DefaultPackage.Example2.complexMethod4(int)_$file_Example2.java",
+                    "startLine": 90,
+                    "endLine": 107,
+                    "technology": "java"
+                }
+            ]
+        },
+        {
+            "subject": "Example2.java::Example2.veryLongAndComplexMethod(int,int,int,int)",
+            "category": "introduced",
+            "metric": "UNIT_SIZE",
+            "value": 23.0,
+            "riskCategory": "MEDIUM",
+            "occurrences": [
+                {
+                    "filePath": "Example2.java",
+                    "qualifiedName": "java.unit::DefaultPackage.Example2.veryLongAndComplexMethod(int,int,int,int)_$file_Example2.java",
+                    "startLine": 15,
+                    "endLine": 37,
+                    "technology": "java"
+                }
+            ]
+        },
+        {
+            "subject": "Example2.java::Example2.complexMethod7(int)",
+            "category": "introduced",
+            "metric": "UNIT_SIZE",
+            "value": 18.0,
+            "riskCategory": "MEDIUM",
+            "occurrences": [
+                {
+                    "filePath": "Example2.java",
+                    "qualifiedName": "java.unit::DefaultPackage.Example2.complexMethod7(int)_$file_Example2.java",
+                    "startLine": 128,
+                    "endLine": 145,
+                    "technology": "java"
+                }
+            ]
+        },
+        {
+            "subject": "Example2.java::Example2.complexMethod3(int)",
+            "category": "introduced",
+            "metric": "UNIT_SIZE",
+            "value": 16.0,
+            "riskCategory": "MEDIUM",
+            "occurrences": [
+                {
+                    "filePath": "Example2.java",
+                    "qualifiedName": "java.unit::DefaultPackage.Example2.complexMethod3(int)_$file_Example2.java",
+                    "startLine": 73,
+                    "endLine": 88,
+                    "technology": "java"
+                }
+            ]
+        },
+        {
+            "subject": "Example2.java::Example2.complexMethod(int)",
+            "category": "introduced",
+            "metric": "UNIT_SIZE",
+            "value": 16.0,
+            "riskCategory": "MEDIUM",
+            "occurrences": [
+                {
+                    "filePath": "Example2.java",
+                    "qualifiedName": "java.unit::DefaultPackage.Example2.complexMethod(int)_$file_Example2.java",
+                    "startLine": 39,
+                    "endLine": 54,
+                    "technology": "java"
+                }
+            ]
+        },
+        {
+            "subject": "Example.java::Example.complexMethod10(int)",
+            "category": "introduced",
+            "metric": "UNIT_SIZE",
+            "value": 18.0,
+            "riskCategory": "MEDIUM",
+            "occurrences": [
+                {
+                    "filePath": "Example.java",
+                    "qualifiedName": "java.unit::DefaultPackage.Example.complexMethod10(int)_$file_Example.java",
+                    "startLine": 200,
+                    "endLine": 217,
+                    "technology": "java"
+                }
+            ]
+        },
+        {
+            "subject": "Example.java::Example.complexMethod7(int)",
+            "category": "introduced",
+            "metric": "UNIT_SIZE",
+            "value": 18.0,
+            "riskCategory": "MEDIUM",
+            "occurrences": [
+                {
+                    "filePath": "Example.java",
+                    "qualifiedName": "java.unit::DefaultPackage.Example.complexMethod7(int)_$file_Example.java",
+                    "startLine": 149,
+                    "endLine": 166,
+                    "technology": "java"
+                }
+            ]
+        },
+        {
+            "subject": "Example.java::Example.complexMethod15(int)",
+            "category": "introduced",
+            "metric": "UNIT_SIZE",
+            "value": 18.0,
+            "riskCategory": "MEDIUM",
+            "occurrences": [
+                {
+                    "filePath": "Example.java",
+                    "qualifiedName": "java.unit::DefaultPackage.Example.complexMethod15(int)_$file_Example.java",
+                    "startLine": 269,
+                    "endLine": 286,
+                    "technology": "java"
+                }
+            ]
+        },
+        {
+            "subject": "Example.java::Example.complexMethod3(int)",
+            "category": "introduced",
+            "metric": "UNIT_SIZE",
+            "value": 16.0,
+            "riskCategory": "MEDIUM",
+            "occurrences": [
+                {
+                    "filePath": "Example.java",
+                    "qualifiedName": "java.unit::DefaultPackage.Example.complexMethod3(int)_$file_Example.java",
+                    "startLine": 75,
+                    "endLine": 90,
+                    "technology": "java"
+                }
+            ]
+        },
+        {
+            "subject": "Example.java::Example.veryLongAndComplexMethod(int,int,int,int)",
+            "category": "introduced",
+            "metric": "UNIT_SIZE",
+            "value": 36.0,
+            "riskCategory": "HIGH",
+            "occurrences": [
+                {
+                    "filePath": "Example.java",
+                    "qualifiedName": "java.unit::DefaultPackage.Example.veryLongAndComplexMethod(int,int,int,int)_$file_Example.java",
+                    "startLine": 3,
+                    "endLine": 39,
+                    "technology": "java"
+                }
+            ]
+        },
+        {
+            "subject": "Example.java::Example.complexMethod5(int)",
+            "category": "introduced",
+            "metric": "UNIT_SIZE",
+            "value": 18.0,
+            "riskCategory": "MEDIUM",
+            "occurrences": [
+                {
+                    "filePath": "Example.java",
+                    "qualifiedName": "java.unit::DefaultPackage.Example.complexMethod5(int)_$file_Example.java",
+                    "startLine": 111,
+                    "endLine": 128,
+                    "technology": "java"
+                }
+            ]
+        },
+        {
+            "subject": "Example.java::Example.complexMethod11(int)",
+            "category": "introduced",
+            "metric": "UNIT_SIZE",
+            "value": 18.0,
+            "riskCategory": "MEDIUM",
+            "occurrences": [
+                {
+                    "filePath": "Example.java",
+                    "qualifiedName": "java.unit::DefaultPackage.Example.complexMethod11(int)_$file_Example.java",
+                    "startLine": 219,
+                    "endLine": 236,
+                    "technology": "java"
+                }
+            ]
+        },
+        {
+            "subject": "Example.java::Example.complexMethod6(int)",
+            "category": "introduced",
+            "metric": "UNIT_SIZE",
+            "value": 18.0,
+            "riskCategory": "MEDIUM",
+            "occurrences": [
+                {
+                    "filePath": "Example.java",
+                    "qualifiedName": "java.unit::DefaultPackage.Example.complexMethod6(int)_$file_Example.java",
+                    "startLine": 130,
+                    "endLine": 147,
+                    "technology": "java"
+                }
+            ]
+        },
+        {
+            "subject": "Example.java::Example.complexMethod(int)",
+            "category": "introduced",
+            "metric": "UNIT_SIZE",
+            "value": 16.0,
+            "riskCategory": "MEDIUM",
+            "occurrences": [
+                {
+                    "filePath": "Example.java",
+                    "qualifiedName": "java.unit::DefaultPackage.Example.complexMethod(int)_$file_Example.java",
+                    "startLine": 41,
+                    "endLine": 56,
+                    "technology": "java"
+                }
+            ]
+        },
+        {
+            "subject": "Example.java::Example.complexMethod9(int)",
+            "category": "introduced",
+            "metric": "UNIT_SIZE",
+            "value": 18.0,
+            "riskCategory": "MEDIUM",
+            "occurrences": [
+                {
+                    "filePath": "Example.java",
+                    "qualifiedName": "java.unit::DefaultPackage.Example.complexMethod9(int)_$file_Example.java",
+                    "startLine": 181,
+                    "endLine": 198,
+                    "technology": "java"
+                }
+            ]
+        },
+        {
+            "subject": "Example.java::Example.complexMethod16(int)",
+            "category": "introduced",
+            "metric": "UNIT_SIZE",
+            "value": 18.0,
+            "riskCategory": "MEDIUM",
+            "occurrences": [
+                {
+                    "filePath": "Example.java",
+                    "qualifiedName": "java.unit::DefaultPackage.Example.complexMethod16(int)_$file_Example.java",
+                    "startLine": 288,
+                    "endLine": 305,
+                    "technology": "java"
+                }
+            ]
+        },
+        {
+            "subject": "Example.java::Example.complexMethod2(int)",
+            "category": "introduced",
+            "metric": "UNIT_SIZE",
+            "value": 16.0,
+            "riskCategory": "MEDIUM",
+            "occurrences": [
+                {
+                    "filePath": "Example.java",
+                    "qualifiedName": "java.unit::DefaultPackage.Example.complexMethod2(int)_$file_Example.java",
+                    "startLine": 58,
+                    "endLine": 73,
+                    "technology": "java"
+                }
+            ]
+        },
+        {
+            "subject": "Example.java::Example.complexMethod4(int)",
+            "category": "introduced",
+            "metric": "UNIT_SIZE",
+            "value": 18.0,
+            "riskCategory": "MEDIUM",
+            "occurrences": [
+                {
+                    "filePath": "Example.java",
+                    "qualifiedName": "java.unit::DefaultPackage.Example.complexMethod4(int)_$file_Example.java",
+                    "startLine": 92,
+                    "endLine": 109,
+                    "technology": "java"
+                }
+            ]
+        },
+        {
+            "subject": "Example.java::Example.complexMethod14(int)",
+            "category": "introduced",
+            "metric": "UNIT_SIZE",
+            "value": 18.0,
+            "riskCategory": "MEDIUM",
+            "occurrences": [
+                {
+                    "filePath": "Example.java",
+                    "qualifiedName": "java.unit::DefaultPackage.Example.complexMethod14(int)_$file_Example.java",
+                    "startLine": 250,
+                    "endLine": 267,
+                    "technology": "java"
+                }
+            ]
+        },
+        {
+            "subject": "Example2.java::Example2.complexMethod8(int)",
+            "category": "introduced",
+            "metric": "UNIT_COMPLEXITY",
+            "value": 252.0,
+            "riskCategory": "VERY_HIGH",
+            "occurrences": [
+                {
+                    "filePath": "Example2.java",
+                    "qualifiedName": "java.unit::DefaultPackage.Example2.complexMethod8(int)_$file_Example2.java",
+                    "startLine": 147,
+                    "endLine": 412,
+                    "technology": "java"
+                }
+            ]
+        },
+        {
+            "subject": "Example2.java::Example2.complexMethod5(int)",
+            "category": "introduced",
+            "metric": "UNIT_COMPLEXITY",
+            "value": 18.0,
+            "riskCategory": "HIGH",
+            "occurrences": [
+                {
+                    "filePath": "Example2.java",
+                    "qualifiedName": "java.unit::DefaultPackage.Example2.complexMethod5(int)_$file_Example2.java",
+                    "startLine": 109,
+                    "endLine": 126,
+                    "technology": "java"
+                }
+            ]
+        },
+        {
+            "subject": "Example2.java::Example2.complexMethod2(int)",
+            "category": "introduced",
+            "metric": "UNIT_COMPLEXITY",
+            "value": 16.0,
+            "riskCategory": "HIGH",
+            "occurrences": [
+                {
+                    "filePath": "Example2.java",
+                    "qualifiedName": "java.unit::DefaultPackage.Example2.complexMethod2(int)_$file_Example2.java",
+                    "startLine": 56,
+                    "endLine": 71,
+                    "technology": "java"
+                }
+            ]
+        },
+        {
+            "subject": "Example2.java::Example2.complexMethod4(int)",
+            "category": "introduced",
+            "metric": "UNIT_COMPLEXITY",
+            "value": 18.0,
+            "riskCategory": "HIGH",
+            "occurrences": [
+                {
+                    "filePath": "Example2.java",
+                    "qualifiedName": "java.unit::DefaultPackage.Example2.complexMethod4(int)_$file_Example2.java",
+                    "startLine": 90,
+                    "endLine": 107,
+                    "technology": "java"
+                }
+            ]
+        },
+        {
+            "subject": "Example2.java::Example2.veryLongAndComplexMethod(int,int,int,int)",
+            "category": "introduced",
+            "metric": "UNIT_COMPLEXITY",
+            "value": 23.0,
+            "riskCategory": "MEDIUM",
+            "occurrences": [
+                {
+                    "filePath": "Example2.java",
+                    "qualifiedName": "java.unit::DefaultPackage.Example2.veryLongAndComplexMethod(int,int,int,int)_$file_Example2.java",
+                    "startLine": 15,
+                    "endLine": 37,
+                    "technology": "java"
+                }
+            ]
+        },
+        {
+            "subject": "Example2.java::Example2.complexMethod7(int)",
+            "category": "introduced",
+            "metric": "UNIT_COMPLEXITY",
+            "value": 18.0,
+            "riskCategory": "HIGH",
+            "occurrences": [
+                {
+                    "filePath": "Example2.java",
+                    "qualifiedName": "java.unit::DefaultPackage.Example2.complexMethod7(int)_$file_Example2.java",
+                    "startLine": 128,
+                    "endLine": 145,
+                    "technology": "java"
+                }
+            ]
+        },
+        {
+            "subject": "Example2.java::Example2.complexMethod3(int)",
+            "category": "introduced",
+            "metric": "UNIT_COMPLEXITY",
+            "value": 16.0,
+            "riskCategory": "HIGH",
+            "occurrences": [
+                {
+                    "filePath": "Example2.java",
+                    "qualifiedName": "java.unit::DefaultPackage.Example2.complexMethod3(int)_$file_Example2.java",
+                    "startLine": 73,
+                    "endLine": 88,
+                    "technology": "java"
+                }
+            ]
+        },
+        {
+            "subject": "Example2.java::Example2.complexMethod(int)",
+            "category": "introduced",
+            "metric": "UNIT_COMPLEXITY",
+            "value": 16.0,
+            "riskCategory": "HIGH",
+            "occurrences": [
+                {
+                    "filePath": "Example2.java",
+                    "qualifiedName": "java.unit::DefaultPackage.Example2.complexMethod(int)_$file_Example2.java",
+                    "startLine": 39,
+                    "endLine": 54,
+                    "technology": "java"
+                }
+            ]
+        },
+        {
+            "subject": "Example.java::Example.complexMethod10(int)",
+            "category": "introduced",
+            "metric": "UNIT_COMPLEXITY",
+            "value": 18.0,
+            "riskCategory": "HIGH",
+            "occurrences": [
+                {
+                    "filePath": "Example.java",
+                    "qualifiedName": "java.unit::DefaultPackage.Example.complexMethod10(int)_$file_Example.java",
+                    "startLine": 200,
+                    "endLine": 217,
+                    "technology": "java"
+                }
+            ]
+        },
+        {
+            "subject": "Example.java::Example.complexMethod7(int)",
+            "category": "introduced",
+            "metric": "UNIT_COMPLEXITY",
+            "value": 18.0,
+            "riskCategory": "HIGH",
+            "occurrences": [
+                {
+                    "filePath": "Example.java",
+                    "qualifiedName": "java.unit::DefaultPackage.Example.complexMethod7(int)_$file_Example.java",
+                    "startLine": 149,
+                    "endLine": 166,
+                    "technology": "java"
+                }
+            ]
+        },
+        {
+            "subject": "Example.java::Example.complexMethod15(int)",
+            "category": "introduced",
+            "metric": "UNIT_COMPLEXITY",
+            "value": 18.0,
+            "riskCategory": "HIGH",
+            "occurrences": [
+                {
+                    "filePath": "Example.java",
+                    "qualifiedName": "java.unit::DefaultPackage.Example.complexMethod15(int)_$file_Example.java",
+                    "startLine": 269,
+                    "endLine": 286,
+                    "technology": "java"
+                }
+            ]
+        },
+        {
+            "subject": "Example.java::Example.complexMethod8(int)",
+            "category": "introduced",
+            "metric": "UNIT_COMPLEXITY",
+            "value": 12.0,
+            "riskCategory": "MEDIUM",
+            "occurrences": [
+                {
+                    "filePath": "Example.java",
+                    "qualifiedName": "java.unit::DefaultPackage.Example.complexMethod8(int)_$file_Example.java",
+                    "startLine": 168,
+                    "endLine": 179,
+                    "technology": "java"
+                }
+            ]
+        },
+        {
+            "subject": "Example.java::Example.complexMethod3(int)",
+            "category": "introduced",
+            "metric": "UNIT_COMPLEXITY",
+            "value": 16.0,
+            "riskCategory": "HIGH",
+            "occurrences": [
+                {
+                    "filePath": "Example.java",
+                    "qualifiedName": "java.unit::DefaultPackage.Example.complexMethod3(int)_$file_Example.java",
+                    "startLine": 75,
+                    "endLine": 90,
+                    "technology": "java"
+                }
+            ]
+        },
+        {
+            "subject": "Example.java::Example.veryLongAndComplexMethod(int,int,int,int)",
+            "category": "introduced",
+            "metric": "UNIT_COMPLEXITY",
+            "value": 36.0,
+            "riskCategory": "MEDIUM",
+            "occurrences": [
+                {
+                    "filePath": "Example.java",
+                    "qualifiedName": "java.unit::DefaultPackage.Example.veryLongAndComplexMethod(int,int,int,int)_$file_Example.java",
+                    "startLine": 3,
+                    "endLine": 39,
+                    "technology": "java"
+                }
+            ]
+        },
+        {
+            "subject": "Example.java::Example.complexMethod5(int)",
+            "category": "introduced",
+            "metric": "UNIT_COMPLEXITY",
+            "value": 18.0,
+            "riskCategory": "HIGH",
+            "occurrences": [
+                {
+                    "filePath": "Example.java",
+                    "qualifiedName": "java.unit::DefaultPackage.Example.complexMethod5(int)_$file_Example.java",
+                    "startLine": 111,
+                    "endLine": 128,
+                    "technology": "java"
+                }
+            ]
+        },
+        {
+            "subject": "Example.java::Example.complexMethod11(int)",
+            "category": "introduced",
+            "metric": "UNIT_COMPLEXITY",
+            "value": 18.0,
+            "riskCategory": "HIGH",
+            "occurrences": [
+                {
+                    "filePath": "Example.java",
+                    "qualifiedName": "java.unit::DefaultPackage.Example.complexMethod11(int)_$file_Example.java",
+                    "startLine": 219,
+                    "endLine": 236,
+                    "technology": "java"
+                }
+            ]
+        },
+        {
+            "subject": "Example.java::Example.complexMethod6(int)",
+            "category": "introduced",
+            "metric": "UNIT_COMPLEXITY",
+            "value": 18.0,
+            "riskCategory": "HIGH",
+            "occurrences": [
+                {
+                    "filePath": "Example.java",
+                    "qualifiedName": "java.unit::DefaultPackage.Example.complexMethod6(int)_$file_Example.java",
+                    "startLine": 130,
+                    "endLine": 147,
+                    "technology": "java"
+                }
+            ]
+        },
+        {
+            "subject": "Example.java::Example.complexMethod(int)",
+            "category": "introduced",
+            "metric": "UNIT_COMPLEXITY",
+            "value": 16.0,
+            "riskCategory": "HIGH",
+            "occurrences": [
+                {
+                    "filePath": "Example.java",
+                    "qualifiedName": "java.unit::DefaultPackage.Example.complexMethod(int)_$file_Example.java",
+                    "startLine": 41,
+                    "endLine": 56,
+                    "technology": "java"
+                }
+            ]
+        },
+        {
+            "subject": "Example.java::Example.complexMethod9(int)",
+            "category": "introduced",
+            "metric": "UNIT_COMPLEXITY",
+            "value": 18.0,
+            "riskCategory": "HIGH",
+            "occurrences": [
+                {
+                    "filePath": "Example.java",
+                    "qualifiedName": "java.unit::DefaultPackage.Example.complexMethod9(int)_$file_Example.java",
+                    "startLine": 181,
+                    "endLine": 198,
+                    "technology": "java"
+                }
+            ]
+        },
+        {
+            "subject": "Example.java::Example.complexMethod16(int)",
+            "category": "introduced",
+            "metric": "UNIT_COMPLEXITY",
+            "value": 18.0,
+            "riskCategory": "HIGH",
+            "occurrences": [
+                {
+                    "filePath": "Example.java",
+                    "qualifiedName": "java.unit::DefaultPackage.Example.complexMethod16(int)_$file_Example.java",
+                    "startLine": 288,
+                    "endLine": 305,
+                    "technology": "java"
+                }
+            ]
+        },
+        {
+            "subject": "Example.java::Example.complexMethod2(int)",
+            "category": "introduced",
+            "metric": "UNIT_COMPLEXITY",
+            "value": 16.0,
+            "riskCategory": "HIGH",
+            "occurrences": [
+                {
+                    "filePath": "Example.java",
+                    "qualifiedName": "java.unit::DefaultPackage.Example.complexMethod2(int)_$file_Example.java",
+                    "startLine": 58,
+                    "endLine": 73,
+                    "technology": "java"
+                }
+            ]
+        },
+        {
+            "subject": "Example.java::Example.complexMethod4(int)",
+            "category": "introduced",
+            "metric": "UNIT_COMPLEXITY",
+            "value": 18.0,
+            "riskCategory": "HIGH",
+            "occurrences": [
+                {
+                    "filePath": "Example.java",
+                    "qualifiedName": "java.unit::DefaultPackage.Example.complexMethod4(int)_$file_Example.java",
+                    "startLine": 92,
+                    "endLine": 109,
+                    "technology": "java"
+                }
+            ]
+        },
+        {
+            "subject": "Example.java::Example.complexMethod13(int)",
+            "category": "introduced",
+            "metric": "UNIT_COMPLEXITY",
+            "value": 11.0,
+            "riskCategory": "MEDIUM",
+            "occurrences": [
+                {
+                    "filePath": "Example.java",
+                    "qualifiedName": "java.unit::DefaultPackage.Example.complexMethod13(int)_$file_Example.java",
+                    "startLine": 238,
+                    "endLine": 248,
+                    "technology": "java"
+                }
+            ]
+        },
+        {
+            "subject": "Example.java::Example.complexMethod14(int)",
+            "category": "introduced",
+            "metric": "UNIT_COMPLEXITY",
+            "value": 18.0,
+            "riskCategory": "HIGH",
+            "occurrences": [
+                {
+                    "filePath": "Example.java",
+                    "qualifiedName": "java.unit::DefaultPackage.Example.complexMethod14(int)_$file_Example.java",
+                    "startLine": 250,
+                    "endLine": 267,
+                    "technology": "java"
+                }
+            ]
+        },
+        {
+            "subject": "AapEntryPoint.java::AapEntryPoint.commence(HttpServletRequest,HttpServletResponse,AuthenticationException)",
+            "category": "introduced",
+            "metric": "UNIT_INTERFACING",
+            "value": 5.0,
+            "riskCategory": "MEDIUM",
+            "occurrences": [
+                {
+                    "filePath": "AapEntryPoint.java",
+                    "qualifiedName": "java.unit::aap.AapEntryPoint.commence(HttpServletRequest,HttpServletResponse,AuthenticationException)_$file_AapEntryPoint.java",
+                    "startLine": 14,
+                    "endLine": 19,
+                    "technology": "java"
+                }
+            ]
+        },
+        {
+            "subject": "Example2.java::Example2.veryLongAndComplexMethod(int,int,int,int)",
+            "category": "introduced",
+            "metric": "UNIT_INTERFACING",
+            "value": 23.0,
+            "riskCategory": "MEDIUM",
+            "occurrences": [
+                {
+                    "filePath": "Example2.java",
+                    "qualifiedName": "java.unit::DefaultPackage.Example2.veryLongAndComplexMethod(int,int,int,int)_$file_Example2.java",
+                    "startLine": 15,
+                    "endLine": 37,
+                    "technology": "java"
+                }
+            ]
+        },
+        {
+            "subject": "Example.java::Example.veryLongAndComplexMethod(int,int,int,int)",
+            "category": "introduced",
+            "metric": "UNIT_INTERFACING",
+            "value": 36.0,
+            "riskCategory": "MEDIUM",
+            "occurrences": [
+                {
+                    "filePath": "Example.java",
+                    "qualifiedName": "java.unit::DefaultPackage.Example.veryLongAndComplexMethod(int,int,int,int)_$file_Example.java",
+                    "startLine": 3,
+                    "endLine": 39,
+                    "technology": "java"
+                }
+            ]
+        },
+        {
+            "subject": "c/c.ts::c.ts",
+            "category": "worsened",
+            "metric": "COMPONENT_INDEPENDENCE",
+            "value": 4.0,
+            "riskCategory": "VERY_HIGH",
+            "occurrences": [
+                {
+                    "filePath": "c/c.ts",
+                    "qualifiedName": "source::c/c.ts",
+                    "startLine": 1,
+                    "endLine": 5,
+                    "technology": "typescript"
+                }
+            ]
+        }
+    ]
+}

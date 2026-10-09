@@ -20,7 +20,7 @@ from typing import Callable, Any
 
 from .capability import OPEN_SOURCE_HEALTH, SECURITY, Capability
 from .feedback_provider import FeedbackProvider
-from .platform import Platform
+from .platform import MISSING_SCOPE_URL
 from .publish_options import PublishOptions, RunMode
 from .sigrid_api_client import SigridApiClient
 from .telemetry import Telemetry
@@ -43,9 +43,6 @@ class SigridCiRunner:
         "isDevelopmentOnly",
         "remark"
     ]
-
-    DOCS_URL = "https://docs.sigrid-says.com"
-    MISSING_SCOPE_URL = f"{DOCS_URL}/reference/analysis-scope-configuration.html#removing-the-scope-configuration-file"
 
     def __init__(self, options: PublishOptions, apiClient: SigridApiClient):
         self.options = options
@@ -97,12 +94,13 @@ class SigridCiRunner:
 
     def displayFeedback(self, analysisId: str, metadata: dict[str, str]) -> int:
         objectives = self.apiClient.fetchObjectives()
-        exitCode = 0
+        feedbackProvider = FeedbackProvider(analysisId, self.options, objectives)
 
         self.displayMetadata(metadata)
 
         for capability in self.options.capabilities:
             feedback = self.apiClient.fetchAnalysisResults(analysisId, capability)
+
             if capability == SECURITY and not "baseline" in feedback:
                 # The security feedback response does not yet include the
                 # baseline, so we need to add it ourselves. We also need
@@ -111,15 +109,10 @@ class SigridCiRunner:
                 if baseline:
                     feedback["baseline"] = datetime.strptime(baseline, "%a, %d %b %Y %H:%M:%S %Z").strftime("%Y-%m-%d %H:%M")
 
-            feedbackProvider = FeedbackProvider(capability, self.options, objectives)
-            feedbackProvider.analysisId = analysisId
-            feedbackProvider.feedback = feedback
-            feedbackProvider.previousFeedback = self.loadFeedbackBaseline(capability)
+            feedbackProvider.registerFeedback(capability, feedback)
+            feedbackProvider.registerPreviousFeedback(capability, self.loadFeedbackBaseline(capability))
 
-            if not feedbackProvider.generateReports():
-                exitCode += capability.exitCode
-
-        return exitCode
+        return feedbackProvider.generateReports()
 
     def loadFeedbackBaseline(self, capability: Capability) -> Any:
         if capability == OPEN_SOURCE_HEALTH:
@@ -138,7 +131,7 @@ class SigridCiRunner:
             self.validateConfiguration(lambda: self.apiClient.validateScopeFile(scope), "scope configuration file")
 
         if scope is None and metadata.get("scopeFileInRepository") and not self.options.subsystem and not self.options.ignoreMissingScopeFile:
-            message = {"valid" : False, "notes" : ["Missing sigrid.yaml file", f"See {self.MISSING_SCOPE_URL}"]}
+            message = {"valid" : False, "notes" : ["Missing sigrid.yaml file", f"See {MISSING_SCOPE_URL}"]}
             self.validateConfiguration(lambda: message, "scope configuration file")
 
         metadataFile = self.options.readMetadataFile()
@@ -168,6 +161,7 @@ class SigridCiRunner:
             for key, value in metadata.items():
                 if value:
                     print(f"    {key}:".ljust(40) + str(value))
+            print("")
 
     def prepareMetadata(self) -> None:
         getMetadataValue = lambda field: os.environ.get(field.lower(), "")
@@ -182,31 +176,3 @@ class SigridCiRunner:
                 for name, value in metadata.items():
                     formattedValue = json.dumps([value]) if name in ["teamNames", "supplierNames"] else json.dumps(value)
                     writer.write(f"  {name}: {formattedValue}\n")
-
-
-def validateOptions(options: PublishOptions) -> None:
-    if not options.isValidSystemName():
-        maxNameLength = PublishOptions.SYSTEM_NAME_LENGTH.stop - (len(options.customer) + 1)
-        print(f"Invalid system name, system name should match '{PublishOptions.SYSTEM_NAME_PATTERN.pattern}' "
-              f", not completely numeric, and be {PublishOptions.SYSTEM_NAME_LENGTH.start} to {maxNameLength} characters long (inclusive).")
-        sys.exit(1)
-
-    if not options.isValidSubSystemName():
-        print(f"Invalid subsystem name, subsystem name should match '{PublishOptions.SUBSYSTEM_NAME_PATTERN.pattern}'"
-              ", must be at least two characters long and not contain consecutive dots or slashes.")
-        sys.exit(1)
-
-
-def runAnalysis(options: PublishOptions) -> None:
-    if not os.path.exists(options.sourceDir):
-        print(f"Source code directory not found: {options.sourceDir}")
-        sys.exit(1)
-
-    validateOptions(options)
-    Platform.checkEnvironment()
-
-    UploadLog.log("Starting Sigrid CI")
-    runner = SigridCiRunner(options, SigridApiClient(options))
-    exitCode = runner.run()
-    if options.runMode == RunMode.FEEDBACK_ONLY:
-        sys.exit(exitCode)

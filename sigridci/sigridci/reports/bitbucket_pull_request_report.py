@@ -17,15 +17,16 @@ import os
 import ssl
 import urllib.request
 
-from .report import Report, MarkdownRenderer
+from .combined_markdown_feedback_report import CombinedMarkdownFeedbackReport
+from .report import Report
 from ..api_caller import ApiCaller
 from ..publish_options import RunMode, PublishOptions
 from ..upload_log import UploadLog
 
 
 class BitBucketPullRequestReport(Report):
-    def __init__(self, markdownRenderer: MarkdownRenderer):
-        self.markdownRenderer = markdownRenderer
+    def __init__(self, masterReport: CombinedMarkdownFeedbackReport):
+        self.masterReport = masterReport
 
         certPath = os.getenv("SIGRID_BITBUCKET_CA_CERT_PATH")
         self.sslContext = ssl.create_default_context(cafile=certPath) if certPath else None
@@ -34,9 +35,9 @@ class BitBucketPullRequestReport(Report):
         if self.shouldPostComment(options):
             try:
                 existingCommentId = self.findExistingCommentId()
-                comment = self.markdownRenderer.renderMarkdown(analysisId, feedback, options)
+                comment = self.masterReport.renderMarkdown(analysisId, feedback, options)
                 self.postComment(comment, existingCommentId)
-                UploadLog.log(f"Posted {self.markdownRenderer.getCapability().displayName} BitBucket comment")
+                UploadLog.log("Posted BitBucket comment")
             except SystemExit as e:
                 print(f"Failed to publish feedback to Bitbucket: {e}")
 
@@ -78,6 +79,5 @@ class BitBucketPullRequestReport(Report):
                     return comment["id"]
 
     def isExistingComment(self, comment):
-        header = f"{self.markdownRenderer.getCapability().displayName} feedback"
         body = comment["content"]["raw"]
-        return body.startswith(("# Sigrid", "# [Sigrid]")) and header.lower() in body.lower()
+        return body.startswith(("# Sigrid", "# [Sigrid]"))

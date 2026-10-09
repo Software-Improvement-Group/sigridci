@@ -18,23 +18,39 @@ from abc import ABC, abstractmethod
 from .architecture_markdown_report import ArchitectureMarkdownReport
 from .maintainability_markdown_report import MaintainabilityMarkdownReport
 from .osh_markdown_report import OpenSourceHealthMarkdownReport
+from .report import Report
 from .security_markdown_report import SecurityMarkdownReport
+from ..capability import MAINTAINABILITY, ARCHITECTURE, OPEN_SOURCE_HEALTH, SECURITY
 from ..objective import Objective
 from ..publish_options import PublishOptions
 
 
-class InlineResultsReport(ABC):
-    def generate(self, analysisId: str, feedback: dict, options: PublishOptions) -> None:
-        payload = self.buildPayload(feedback, options)
-        print("Inline results: " + payload["capability"])
-        print(json.dumps(payload))
+class InlineResultsReport(Report):
+    def __init__(self, objectives: dict):
+        self.objectives = objectives
 
+    def generate(self, analysisId: str, feedback: dict, options: PublishOptions) -> None:
+        fragments = {
+            MAINTAINABILITY : MaintainabilityInlineResultsReport(self.objectives),
+            ARCHITECTURE : ArchitectureInlineResultsReport(),
+            OPEN_SOURCE_HEALTH : OpenSourceHealthInlineResultsReport(options, self.objectives),
+            SECURITY : SecurityInlineResultsReport(options, self.objectives)
+        }
+
+        for capability in options.capabilities:
+            fragment = fragments[capability]
+            payload = fragment.buildPayload(feedback[capability], options)
+            print("Inline results: " + payload["capability"])
+            print(json.dumps(payload))
+
+
+class InlineResultsFragment(ABC):
     @abstractmethod
     def buildPayload(self, feedback: dict, options: PublishOptions) -> dict:
         pass
 
 
-class MaintainabilityInlineResultsReport(InlineResultsReport, MaintainabilityMarkdownReport):
+class MaintainabilityInlineResultsReport(InlineResultsFragment, MaintainabilityMarkdownReport):
     # Ratings that are still tracked in older Sigrid systems but are no longer part of
     # the current quality model. See Objective.SYSTEM_PROPERTIES for the current metrics.
     CURRENT_METRICS = Objective.SYSTEM_PROPERTIES + ["MAINTAINABILITY"]
@@ -79,7 +95,7 @@ class MaintainabilityInlineResultsReport(InlineResultsReport, MaintainabilityMar
         return rc
 
 
-class OpenSourceHealthInlineResultsReport(InlineResultsReport, OpenSourceHealthMarkdownReport):
+class OpenSourceHealthInlineResultsReport(InlineResultsFragment, OpenSourceHealthMarkdownReport):
     def buildPayload(self, feedback: dict, options: PublishOptions) -> dict:
         libraries = list(self.processor.extractLibraries(feedback))
         return {
@@ -106,7 +122,7 @@ class OpenSourceHealthInlineResultsReport(InlineResultsReport, OpenSourceHealthM
         }
 
 
-class SecurityInlineResultsReport(InlineResultsReport, SecurityMarkdownReport):
+class SecurityInlineResultsReport(InlineResultsFragment, SecurityMarkdownReport):
     def buildPayload(self, feedback: dict, options: PublishOptions) -> dict:
         findings = self.extractFindings(feedback)
         return {
@@ -128,7 +144,7 @@ class SecurityInlineResultsReport(InlineResultsReport, SecurityMarkdownReport):
         }
 
 
-class ArchitectureInlineResultsReport(InlineResultsReport, ArchitectureMarkdownReport):
+class ArchitectureInlineResultsReport(InlineResultsFragment, ArchitectureMarkdownReport):
     def buildPayload(self, feedback, options):
         return {
             "capability": self.getCapability().shortName,
