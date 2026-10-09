@@ -87,7 +87,7 @@ Before deploying Sigrid On-Premise, ensure your environment meets the following 
 
 The Docker containers that form Sigrid On-Premise are distributed via AWS ECR registry. You will receive an account that allows you to access the container registry. The full list of containers is described in [Docker image registry](onpremise-kubernetes.md#a-docker-image-registry).
 
-As explained above, Sigrid consists of several Docker containers. The container `sigrid-multi-analyzer` runs directly in your development platform's continuous integration pipelines, all other containers are deployed to your Kubernetes cluster. These steps are explained in more detail in the following sections.
+As explained in the [high-level overview](#high-level-overview), Sigrid consists of several Docker containers. The container `sigrid-multi-analyzer` runs directly in your development platform's continuous integration pipelines, all other containers are deployed to your Kubernetes cluster. These steps are explained in more detail in the following sections.
 
 ## Installing and configuring on-premise Sigrid
 
