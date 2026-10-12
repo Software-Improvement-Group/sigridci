@@ -36,7 +36,7 @@ Before touching code, let the agent map how the system fits together: which comp
 
 The `architecture-explorer` agent answers from Sigrid Core's dependency graph, and reads files for what the graph cannot tell it. One call to the graph gives the counted answer that grepping imports only approximates. Giving the agent this context up front helps it respect the existing structure instead of introducing architecture drift.
 
-The graph describes the baseline branch as Sigrid last analyzed it. To check whether a local change already drifted, use `change-feedback architecture` instead; see [preventing architecture drift](../workflows/agents/preventing-architecture-drift.md).
+The graph describes the baseline branch as Sigrid last analyzed it. To check whether a local change already drifted, use the [`architecture-drift`](skills.md#architecture-drift) skill instead; see [preventing architecture drift](../workflows/agents/preventing-architecture-drift.md).
 
 ## Plan: diagnose maintainability and architecture
 

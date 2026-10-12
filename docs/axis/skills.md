@@ -26,6 +26,7 @@ Here are the skills, grouped by the [lifecycle phase](README.md#the-agentic-life
 |-------|-------|--------|
 | `setup` | None | None |
 | `change-feedback` | Prevent | maintainability, architecture, open-source, security |
+| `architecture-drift` | Prevent | None |
 | `explore-architecture` | Ground | None |
 | `diagnose` | Plan | maintainability, architecture |
 | `triage-findings` | Plan | security, reliability, open-source |
@@ -48,7 +49,19 @@ Setup only reads the repository and writes the profile. It never changes your co
 Gives you Sigrid's verdict on your local changes before you commit or push, without starting a remote pipeline or publishing anything to Sigrid. With no argument, it runs maintainability, open-source, and security.
 
 - **Maintainability, open-source, and security** run [Sigrid CI](../sigridci-integration/using-sigridci.md) on your working tree, in one run for all three. This needs Python 3.9 or later, network access to `github.com` to fetch the Sigrid CI scripts, and your token in a `SIGRID_CI_TOKEN` or `SIGRID_TOKEN` environment variable. A run can take up to 30 minutes.
-- **Architecture** finds the new references across directories in your diff, by default against the baseline branch, and checks each one against Sigrid's measured dependency graph. A reference that matches an existing dependency is clean. One that adds a dependency, closes a cycle, or goes around a facade is drift, and the report names the file it should route through instead. See [preventing architecture drift](../workflows/agents/preventing-architecture-drift.md).
+- **Architecture** runs the same check as [`architecture-drift`](#architecture-drift).
+
+### `architecture-drift`
+
+```
+/architecture-drift
+```
+
+Checks your local change for architecture drift before you push it. This is the diff-level check of [Guardrails](guardrails.md#set-up-the-architecture-drift-check), and it is the same check as `change-feedback architecture`.
+
+It finds the new references across directories in your diff and checks each one against Sigrid's measured dependency graph. By default it diffs against the baseline branch from your profile, as `<baseline>...HEAD`. Ask for the staged or unstaged changes instead if you have not committed yet. A reference that matches an existing dependency is clean. One that adds a dependency, closes a cycle, or goes around a facade is drift, and the report names the file it should route through instead.
+
+It checks at most about five top-level directories per run, starting with the ones the change touches most, and lists the ones it skipped. See [preventing architecture drift](../workflows/agents/preventing-architecture-drift.md).
 
 ### `explore-architecture`
 

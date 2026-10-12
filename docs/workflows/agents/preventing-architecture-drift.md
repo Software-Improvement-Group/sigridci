@@ -2,9 +2,9 @@
 
 <div><a href="{% link axis/README.md %}#the-agentic-lifecycle">{% include axis/lifecycle-strip.md active="ground,prevent" %}</a></div>
 
-This guide walks through checking an agent's diff for architecture drift before it merges: a new call across a directory boundary, a facade bypassed on the way to a database, a dependency cycle the change would close. The `change-feedback architecture` skill grounds that check in Sigrid's measured dependency graph, so the verdict comes from how your system is actually wired today and not from the few files the agent happened to open.
+This guide walks through checking an agent's diff for architecture drift before it merges: a new call across a directory boundary, a facade bypassed on the way to a database, a dependency cycle the change would close. The `architecture-drift` skill grounds that check in Sigrid's measured dependency graph, so the verdict comes from how your system is actually wired today and not from the few files the agent happened to open.
 
-Run it when a change touches more than one directory, on your own work or on a branch you are about to merge for someone else. It checks the diff and nothing more. [Guardrails](building-with-guardrails.md) covers each file as the agent writes it, and structure is exactly what a per-file check cannot see. To fix the structure that is already there, see [improving architecture](improving-architecture.md), and you can always open the graph yourself in the [architecture explorer](../../capabilities/architecture-quality.md).
+The check is one of the two that make up [Guardrails](../../axis/guardrails.md). Run it before you push, on your own work or on a branch you are about to merge for someone else. It checks the diff and nothing more. The other check, the [quality gate](building-with-guardrails.md), covers each file as the agent writes it, and structure is exactly what a per-file check cannot see. To fix the structure that is already there, see [improving architecture](improving-architecture.md), and you can always open the graph yourself in the [architecture explorer](../../capabilities/architecture-quality.md).
 
 ## Prerequisites
 
@@ -56,7 +56,7 @@ The plugin nudges your agent to use `architecture-explorer` for questions like t
 Say an agent has just finished a `checkout` feature, part of which writes a ledger entry. It got there by importing `billing.internal.LedgerWriter` straight into `checkout`, around the `BillingGateway` facade that everything else uses to reach billing. Check the branch before you push it:
 
 ```
-/change-feedback architecture
+/architecture-drift
 ```
 
 By default, the skill diffs `<baseline>...HEAD`, where the baseline is the branch in your profile. Ask for the staged or unstaged changes instead if you have not committed yet. It reads the added lines for new imports, calls, and type references that cross into another directory, spots the import, and takes it to the graph:
@@ -79,12 +79,11 @@ The skill checks at most about five top-level directories per run, starting with
 
 ## Run it without being asked
 
-Typing the command catches this once. An instruction in your agent's context file, next to the [quality gate for Guardrails](building-with-guardrails.md#2-add-the-quality-gate-in-other-tools), catches it in every session where the agent remembers to check:
+Typing the command catches this once. An instruction in your agent's context file catches it in every session where the agent remembers to check. No hook adds this one, so add it yourself, in `CLAUDE.md` in Claude Code and in `AGENTS.md` in other tools:
 
-```
-Before reporting a task that touches more than one directory as complete, run /change-feedback architecture.
-If it reports drift, either fix it or explain why the new reference is fine.
-```
+{% include axis/architecture-drift-prompt.md %}
+
+The instruction runs the check before every push, so a change that stays inside one directory gets checked too. The skill stops without calling the graph when it finds no references across directories, so for those changes the check is one `git diff`.
 
 An instruction is followed most of the time, and the agent is the one deciding whether it applies here, so treat this as your everyday check and not your only one.
 

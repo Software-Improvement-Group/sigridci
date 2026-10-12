@@ -5,17 +5,16 @@ redirect_from:
 
 # Guardrails
 
-Guardrails is the Sigrid Axis capability that stops an AI coding agent from introducing security and maintainability problems, by checking the code the agent writes against Sigrid Core's quality model while the agent is still working on it.
+Guardrails is the Sigrid Axis capability that stops an AI coding agent from introducing security, maintainability, and architecture problems, by checking the agent's work against Sigrid Core before it reaches a commit or a merge.
 
-The check reads your working tree, so the system does not have to be published to Sigrid first, and the code does not have to be committed. It is deterministic: the same metrics against the same thresholds every time, decided by Sigrid's quality model and not by a model's opinion of its own output.
+Guardrails runs two checks:
 
-Guardrails consists of three parts:
+- **The quality gate** checks each file the agent changed for maintainability and security, before it reports a task done, with the [`guardrails.quality_check`](tools.md#guardrails) MCP tool.
+- **The architecture drift check** checks the whole change for new dependencies, cycles, and bypassed facades, before you push, with the [`architecture-drift`](skills.md#architecture-drift) skill.
 
-- **The `guardrails.quality_check` MCP tool** checks one file at a time. It returns the maintainability guidelines the file violates, with a severity and a line range per unit, plus a separate list of security findings. Both lists empty means the file passes. See the [MCP tools reference](tools.md#guardrails).
-- **A standing instruction** tells the agent to run that check on the production code it changed before it reports a task done. See [set up the quality gate](#set-up-the-quality-gate).
-- **The [`change-feedback`](skills.md#change-feedback) skill** checks your whole local change before you push it, for the problems a check of one file cannot see.
+Each check runs on a standing instruction, which you [set up](#set-up-the-quality-gate) once. The quality gate works on uncommitted code in systems not yet published to Sigrid. The drift check needs a published system, because it compares your diff with Sigrid Core's dependency graph.
 
-For the problems that are already in your code, see [Auto-fix Agents](autofix-agents.md). For a walkthrough of Guardrails in day-to-day feature work, see [building with Guardrails](../workflows/agents/building-with-guardrails.md).
+For the problems that are already in your code, see [Auto-fix Agents](autofix-agents.md). For a walkthrough of each check in day-to-day work, see [building with Guardrails](../workflows/agents/building-with-guardrails.md) and [preventing architecture drift](../workflows/agents/preventing-architecture-drift.md).
 
 ## Supported technologies
 
@@ -31,7 +30,7 @@ The `guardrails.quality_check` tool supports these technologies:
 - Progress ABL
 - PHP
 
-The [technology support](../reference/technology-support.md#list-of-supported-technologies) page marks them with "MCP".
+The [technology support](../reference/technology-support.md#list-of-supported-technologies) page marks them with "Guardrails". The architecture drift check supports every technology marked with "Architecture" on that page.
 
 ## Set up the quality gate
 
@@ -39,7 +38,7 @@ Connecting the MCP server is half the setup. The agent does not call the tool un
 
 ### Claude Code
 
-Install the [Claude Code plugin](installation.md#install-the-claude-code-plugin). Its `UserPromptSubmit` hook adds the instruction below to every prompt you send, so there is nothing to add yourself. The hook is on by default. To turn it off, see [plugin options](configuration.md#plugin-options).
+Install the [Claude Code plugin](installation.md#install-the-claude-code-plugin). Its `UserPromptSubmit` hook adds the instruction below to every prompt you send, so for the quality gate there is nothing to add yourself. The hook is on by default. To turn it off, see [plugin options](configuration.md#plugin-options).
 
 ### Other tools
 
@@ -53,10 +52,18 @@ Two adjustments are worth making from the start. If your codebase follows specif
 
 For which wording in that prompt carries it, and a session where the agent refactors in response to a finding, see [building with Guardrails](../workflows/agents/building-with-guardrails.md).
 
+## Set up the architecture drift check
+
+No hook adds this instruction. Add it to `CLAUDE.md` in Claude Code, or to `AGENTS.md` in other tools:
+
+{% include axis/architecture-drift-prompt.md %}
+
+The check needs a published system and a [Sigrid profile](configuration.md#the-sigrid-profile) with your baseline branch, which [`setup`](skills.md#setup) writes. To run it yourself, type `/architecture-drift`. For an example session, see [preventing architecture drift](../workflows/agents/preventing-architecture-drift.md).
+
 ## What Guardrails does not see
 
-`guardrails.quality_check` reads one file at a time, so anything that only shows up across the whole system is invisible to it: architecture drift, vulnerable dependencies, and duplication spread across files.
+Neither check sees vulnerable dependencies or duplication spread across files. The quality gate reads one file at a time, and the drift check only looks at the references between directories.
 
-The `change-feedback` skill covers those before you push. With maintainability, open-source, or security, it runs Sigrid CI on your working tree, which finds vulnerable dependencies and duplication across files. With architecture, it checks your diff against Sigrid Core's measured dependency graph for new dependencies, cycles, and facades that were bypassed; see [preventing architecture drift](../workflows/agents/preventing-architecture-drift.md).
+The [`change-feedback`](skills.md#change-feedback) skill covers those before you push. It runs Sigrid CI on your working tree for maintainability, open-source, and security, which finds vulnerable dependencies and duplication across files.
 
 An instruction to the agent is followed most of the time, and the agent is the one who decides it has finished. [Sigrid CI](../sigridci-integration/using-sigridci.md) in a pre-commit hook or in your pipeline gives you a check the agent cannot decide it has already satisfied.

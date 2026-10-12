@@ -38,7 +38,7 @@ We think of agentic development as a cycle of four phases, and Sigrid Axis does 
 
 Sigrid Axis has two capabilities today.
 
-[Guardrails](guardrails.md) covers the Prevent phase. It checks the code an agent writes while the agent is still working on it, and it checks a local change against Sigrid before you push. It consists of the `guardrails.quality_check` MCP tool, a standing instruction that gets the agent to run that check, and the [`change-feedback`](skills.md#change-feedback) skill.
+[Guardrails](guardrails.md) covers the Prevent phase. It runs two checks: a quality gate on each file the agent changed, through the `guardrails.quality_check` MCP tool, and the [`architecture-drift`](skills.md#architecture-drift) skill on the whole change before you push it. A standing instruction tells the agent when to run each one. The [`change-feedback`](skills.md#change-feedback) skill runs Sigrid CI on a local change for what neither check sees.
 
 [Auto-fix Agents](autofix-agents.md) covers the other three phases, for the problems Sigrid Core has already found:
 
@@ -50,6 +50,6 @@ The [`setup`](skills.md#setup) skill sits outside both. It records which Sigrid 
 
 ## Get started
 
-Start with [installing Sigrid Axis](installation.md): connect the MCP server, install the skills, and add the Guardrails instruction, which the Claude Code plugin does for you.
+Start with [installing Sigrid Axis](installation.md): connect the MCP server, install the skills, and add the Guardrails instructions. The Claude Code plugin adds the one for the quality gate.
 
 Then pick the [guide](../workflows/agents/README.md) for the job in front of you. Each one follows that job through on a real codebase: what to configure, what a session looks like, and how to check what the agent did.
