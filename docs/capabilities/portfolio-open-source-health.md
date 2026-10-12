@@ -7,7 +7,10 @@ The Open Source Health overview page shows a summary of findings and estimated s
 From left to right, the tiles read as follows:
 * *Systems and libraries*: the totals of systems being scanned and the sum of identified (third party) libraries.
 * *Systems with vulnerability/legal/freshness/.. risk*: the count of systems with at least 1 identified risk, ordered by risk category (e.g. *low*, *medium*, *high* or *critical*).
-* *Libraries with vulnerability/legal/freshness/..risk*: the total count of libraries in each risk category, transcending systems. 
+* *Libraries with vulnerability/legal/freshness/..risk*: the total count of libraries in each risk category, transcending systems.
+
+Sigrid displays open source vulnerabilities found during the most recent scan. Since new open source vulnerabilities are discovered on a daily basis, it is recommended that you regularly publish your systems to Sigrid, to ensure your Open Source Health dashboard is up-to-date.
+{: .attention }
 
 ## 6 different risk areas
 It is important to know how Open Source Health groups its findings. Open Source Health scans for 6 different risk areas. For an elaboration, please [see the relevant paragraph in the page describing system-level view of Open Source Health](system-open-source-health.md#open-source-health-scans-for-6-different-risk-areas). Risks are then classified and colored as <img src="../images/system-security-icon-low1.png" class="inline" /> *low*, <img src="../images/system-security-icon-medium1.png" class="inline" /> *medium*, <img src="../images/system-security-icon-high1.png" class="inline" /> *high*, or <img src="../images/system-security-icon-critical1.png" class="inline"> *critical* based on their *CVSS score*. See also [our elaboration on how CVSS works](system-security.md#context-and-meaning-of-cvss-security-metrics-from-asset-to-risk) and on [how risks are visualized in Sigrid](system-security.md#cvss-scores-in-sigrid).
