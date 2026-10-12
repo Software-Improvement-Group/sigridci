@@ -29,18 +29,20 @@ If your deployment is entirely air-gapped or you just want to use your own inter
 
 1. Pull all container images required:
    From the AWS ECR registry:
-   - softwareimprovementgroup/ai-explanation-service
+   - softwareimprovementgroup/ai-explanation-service (optional, required for AI explanations)
    - softwareimprovementgroup/auth-api
    - softwareimprovementgroup/auth-api-db-migration
    - softwareimprovementgroup/inbound-api
+   - softwareimprovementgroup/osh-kb-updater (optional, required for Open Source Health)
    - softwareimprovementgroup/quality-model-service
    - softwareimprovementgroup/sigrid-api
    - softwareimprovementgroup/sigrid-api-db-migration
+   - softwareimprovementgroup/sigrid-axis/frontend (optional, required for Sigrid Axis)
+   - softwareimprovementgroup/sigrid-axis/metrics-aggregator (optional, required for Sigrid Axis)
    - softwareimprovementgroup/sigrid-frontend
+   - softwareimprovementgroup/sigrid-integrations-onprem (optional, required for LDAP group synchronization and automated database initialization)
    - softwareimprovementgroup/sigrid-multi-analyzer
    - softwareimprovementgroup/sigrid-multi-importer
-   - softwareimprovementgroup/osh-kb-updater (required for OSH)
-   - softwareimprovementgroup/sigrid-integrations-onprem (optional)
 
    Additionally, the following public images are required:
    - nginxinc/nginx-unprivileged

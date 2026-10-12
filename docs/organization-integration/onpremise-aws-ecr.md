@@ -52,14 +52,16 @@ IMAGES=(
   softwareimprovementgroup/auth-api
   softwareimprovementgroup/auth-api-db-migration
   softwareimprovementgroup/inbound-api
+  softwareimprovementgroup/osh-kb-updater
   softwareimprovementgroup/quality-model-service
   softwareimprovementgroup/sigrid-api
   softwareimprovementgroup/sigrid-api-db-migration
+  softwareimprovementgroup/sigrid-axis/frontend
+  softwareimprovementgroup/sigrid-axis/metrics-aggregator
   softwareimprovementgroup/sigrid-frontend
+  softwareimprovementgroup/sigrid-integrations-onprem
   softwareimprovementgroup/sigrid-multi-analyzer
   softwareimprovementgroup/sigrid-multi-importer
-  softwareimprovementgroup/osh-kb-updater
-  softwareimprovementgroup/sigrid-integrations-onprem
 )
 for IMAGE in "${IMAGES[@]}"; do
   docker pull $SIGRID_DOWNLOAD_REGISTRY/$IMAGE:$VERSION
