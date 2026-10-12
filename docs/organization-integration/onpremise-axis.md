@@ -8,8 +8,6 @@ This documentation covers on-premise Sigrid. It is not applicable for cloud-base
 - You should have already read the other Sigrid On-Premise documentation, in particular [Kubernetes Deployment](onpremise-kubernetes.md).
 - Sigrid On-Premise is installed and working, using the `sigrid-stack` Helm chart version 1.0.20261012 or later.
 
-No additional license is needed: Sigrid Axis is included in your Sigrid On-Premise license.
-
 ## Enabling Sigrid Axis
 
 Sigrid Axis is the product for agentic tooling: AI coding assistants use it to consult and improve your systems using Sigrid's analysis. See [the general Sigrid Axis documentation](../axis/README.md) for what Axis offers and how developers connect their tools. This page covers deploying Axis in your own cluster. Axis is disabled by default in `sigrid-stack`.
