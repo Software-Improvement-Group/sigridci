@@ -42,13 +42,13 @@ class ArchitectureMarkdownReport(MarkdownFragment):
     def formatComponentDependencyLocation(self, components: list[dict], file: dict) -> str:
         location = ""
         if len(components) >= 3:
-            location += f"{components[0]['shortName']} ▶ ... ▶ {components[-1]['shortName']}"
+            location += f"`{components[0]['shortName']}` ▶ ... ▶ `{components[-1]['shortName']}`"
         elif len(components) == 2:
-            location += f"{components[0]['shortName']} ▶ {components[1]['shortName']}"
+            location += f"`{components[0]['shortName']}` ▶ `{components[1]['shortName']}`"
         elif len(components) == 1:
-            location += components[0]["shortName"]
+            location += f"`{components[0]['shortName']}`"
         if file:
-            location += f" ▶ {file['shortName']}"
+            location += f" ▶ `{file['shortName']}`"
         return location
 
     def getDependencyLocations(self, dependency: dict) -> list[Location]:

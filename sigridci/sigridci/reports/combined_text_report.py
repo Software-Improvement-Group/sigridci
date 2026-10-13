@@ -80,7 +80,7 @@ class CombinedTextReport(Report):
 
         print(f"    - {symbol} {self.ANSI_MAGENTA}{capabilityName}:{self.ANSI_END} {finding.title}", file=self.output)
         for detailLine in finding.details:
-            print(f"         {detailLine}", file=self.output)
+            print(f"         {detailLine.replace('`', '')}", file=self.output)
         for location in finding.locations[0:3]:
             print(f"         Location: {self.masterReport.formatLocationLabel(location)}", file=self.output)
         print("", file=self.output)

@@ -12,7 +12,7 @@ Risk: 🟣 critical | 🔴 high | 🟠 medium | 🟡 low
 | Risk | Finding | Details | Location | Actions |
 |------|---------|---------|----------|---------|
 | 🟣 | **Security** • A07:2025 - Authentication Failures | Hard coded password | Example2.java (line 5) | [Exclude file](https://docs.sigrid-says.com/reference/analysis-scope-configuration.html#excluding-files-and-directories-from-security-scanning) • [Exclude rule](https://docs.sigrid-says.com/reference/analysis-scope-configuration.html#excluding-security-rules) |
-| 🟠 | **Architecture** • Cyclic dependency (Introduced) | Source: c ▶ c.ts • Target: b ▶ b.ts | c.ts | [Exclude](https://docs.sigrid-says.com/reference/analysis-scope-configuration.html#manually-removing-architecture-dependencies) |
+| 🟠 | **Architecture** • Cyclic dependency (Introduced) | Source: `c` ▶ `c.ts` • Target: `b` ▶ `b.ts` | c.ts | [Exclude](https://docs.sigrid-says.com/reference/analysis-scope-configuration.html#manually-removing-architecture-dependencies) |
 | 🟠 | **Open Source Health** • `log4j-core` 2.17.0 contains known vulnerabilities. | Vulnerabilities: • [GHSA-6hg6-v5c8-fphq](https://nvd.nist.gov/vuln/detail/CVE-2026-34477) • [GHSA-vc5p-v9hr-52mj](https://nvd.nist.gov/vuln/detail/CVE-2025-68161) • [GHSA-8489-44mv-ggj8](https://nvd.nist.gov/vuln/detail/CVE-2021-44832) • [GHSA-3pxv-7cmr-fjr4](https://nvd.nist.gov/vuln/detail/CVE-2026-34480) | build.gradle | [Exclude](https://docs.sigrid-says.com/reference/analysis-scope-configuration.html#exclude-open-source-health-risks) |
 
 **Non-urgent findings**

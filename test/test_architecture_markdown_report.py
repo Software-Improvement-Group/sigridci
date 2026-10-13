@@ -45,7 +45,7 @@ class ArchitectureMarkdownReportTest(TestCase):
         report = ArchitectureMarkdownReport()
         result = report.formatDependencyLocation(feedback["dependencyFeedback"][0]["sourceHierarchy"])
 
-        self.assertEqual(result, "c ▶ c.ts")
+        self.assertEqual(result, "`c` ▶ `c.ts`")
 
     def testFormatDependencyHierarchyForSubComponent(self):
         with open(os.path.dirname(__file__) + "/testdata/architecture.json", encoding="utf-8", mode="r") as f:
@@ -55,5 +55,5 @@ class ArchitectureMarkdownReportTest(TestCase):
         result1 = report.formatDependencyLocation(feedback["dependencyFeedback"][0]["sourceHierarchy"])
         result2 = report.formatDependencyLocation(feedback["dependencyFeedback"][1]["sourceHierarchy"])
 
-        self.assertEqual(result1, "b ▶ b1 ▶ b.ts")
-        self.assertEqual(result2, "b ▶ ... ▶ b11 ▶ b.ts")
+        self.assertEqual(result1, "`b` ▶ `b1` ▶ `b.ts`")
+        self.assertEqual(result2, "`b` ▶ ... ▶ `b11` ▶ `b.ts`")
