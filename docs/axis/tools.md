@@ -6,30 +6,30 @@ The skills call these tools for you. You need this page when you prompt the tool
 
 ## How tool names appear
 
-This page writes the tools in dotted form, such as `guardrails.quality_check`. Clients display them differently. Claude Code shows `guardrails_quality_check`, and with the plugin it adds the prefix `mcp__plugin_axis_axis__`, which is also the prefix to use in a permission allowlist. Match on the tool, not on the exact string.
+Some clients add a prefix to the tool name. In Claude Code, the plugin adds `mcp__plugin_axis_axis__`, so `guardrails_quality_check` shows up as `mcp__plugin_axis_axis__guardrails_quality_check`. Use the prefixed form in a permission allowlist.
 
-Every tool except `guardrails.quality_check` takes a `customer` and a `system`, the names in your Sigrid URL. The parameters below are the ones that shape the result.
+Every tool except `guardrails_quality_check` takes a `customer` and a `system`, the names in your Sigrid URL. The parameters below are the ones that shape the result.
 
 ## Tools at a glance
 
 | Tool | Capability |
 | --- | --- |
-| `guardrails.quality_check` | [Guardrails](guardrails.md) |
-| `maintainability.get_ratings` | [Auto-fix Agents](autofix-agents.md) |
-| `maintainability.get_findings` | [Auto-fix Agents](autofix-agents.md) |
-| `security.get_findings` | [Auto-fix Agents](autofix-agents.md) |
-| `reliability.get_findings` | [Auto-fix Agents](autofix-agents.md) |
-| `opensourcehealth.get_risks` | [Auto-fix Agents](autofix-agents.md) |
-| `opensourcehealth.get_vulnerabilities` | [Auto-fix Agents](autofix-agents.md) |
+| `guardrails_quality_check` | [Guardrails](guardrails.md) |
+| `maintainability_get_ratings` | [Auto-fix Agents](autofix-agents.md) |
+| `maintainability_get_findings` | [Auto-fix Agents](autofix-agents.md) |
+| `security_get_findings` | [Auto-fix Agents](autofix-agents.md) |
+| `reliability_get_findings` | [Auto-fix Agents](autofix-agents.md) |
+| `opensource_get_risks` | [Auto-fix Agents](autofix-agents.md) |
+| `opensource_get_vulnerabilities` | [Auto-fix Agents](autofix-agents.md) |
 | `get_finding` | [Auto-fix Agents](autofix-agents.md) |
 | `update_finding_status` | [Auto-fix Agents](autofix-agents.md) |
-| `architecture.get_internal` | [Auto-fix Agents](autofix-agents.md) |
-| `architecture.get_external_dependencies` | [Auto-fix Agents](autofix-agents.md) |
-| `architecture.get_worst_directories` | [Auto-fix Agents](autofix-agents.md) |
+| `architecture_get_internal` | [Auto-fix Agents](autofix-agents.md) |
+| `architecture_get_external_deps` | [Auto-fix Agents](autofix-agents.md) |
+| `architecture_get_worst_dirs` | [Auto-fix Agents](autofix-agents.md) |
 
 ## Guardrails
 
-`guardrails.quality_check` checks one file for maintainability and security issues. It returns the maintainability guidelines the file violates, with a severity and a line range per unit, plus a separate list of security findings. Both lists empty means a pass. It does not return a rating.
+`guardrails_quality_check` checks one file for maintainability and security issues. It returns the maintainability guidelines the file violates, with a severity and a line range per unit, plus a separate list of security findings. Both lists empty means a pass. It does not return a rating.
 
 - `filename`: the original file name, including the extension, so the right language rules apply.
 - `code_snippet`: the file's contents, exactly as written to disk, not a diff or a summary. For Java, pass a complete class that compiles, because the analyzer compiles it.
@@ -38,12 +38,12 @@ See [supported technologies](guardrails.md#supported-technologies).
 
 ## Maintainability
 
-`maintainability.get_ratings` returns the current maintainability ratings, on a scale from 0.5 to 5.5 stars, where 3.0 is the market average and 4.0 is the target for new development.
+`maintainability_get_ratings` returns the current maintainability ratings, on a scale from 0.5 to 5.5 stars, where 3.0 is the market average and 4.0 is the target for new development.
 
 - `component`: set to true for ratings per component instead of for the whole system.
 - `technology`: set to true to add statistics per technology.
 
-`maintainability.get_findings` returns the refactoring candidates for one [maintainability property](../reference/sig-quality-models.md), ranked by their weight in the rating. Each candidate has an `id` to pass to `update_finding_status`.
+`maintainability_get_findings` returns the refactoring candidates for one [maintainability property](../reference/sig-quality-models.md), ranked by their weight in the rating. Each candidate has an `id` to pass to `update_finding_status`.
 
 - `system_property`: one of `duplication`, `unitSize`, `unitComplexity`, `unitInterfacing`, `moduleCoupling`, `componentIndependence`, or `componentEntanglement`.
 - `count`: how many candidates to return. The default is 20.
@@ -52,7 +52,7 @@ See [supported technologies](guardrails.md#supported-technologies).
 
 ## Security and reliability
 
-`security.get_findings` returns open security findings, ranked by severity and then by exploitability, with CWE identifiers and file locations. `reliability.get_findings` does the same for reliability findings, such as error handling, concurrency, and resource management. Each finding has an `id` to pass to `get_finding` and `update_finding_status`. Both take the same parameters:
+`security_get_findings` returns open security findings, ranked by severity and then by exploitability, with CWE identifiers and file locations. `reliability_get_findings` does the same for reliability findings, such as error handling, concurrency, and resource management. Each finding has an `id` to pass to `get_finding` and `update_finding_status`. Both take the same parameters:
 
 - `severity_min`: `LOW` (the default), `MEDIUM`, `HIGH`, or `CRITICAL`.
 - `model`: the security model, one of `ow10`, `sigsec`, `5055sec`, `c25`, `pci4`, `owasvs4c`, `owasvs4s`, or `lcnc10`. For reliability, `sigrel` or `5055rel`. Leave it out for your organization's default.
@@ -62,13 +62,13 @@ See [supported technologies](guardrails.md#supported-technologies).
 
 ## Open source health
 
-`opensourcehealth.get_risks` returns open source dependency risks across six dimensions: vulnerability, freshness, legal, activity, stability, and management. It is the default tool for any question about open source health.
+`opensource_get_risks` returns open source dependency risks across six dimensions: vulnerability, freshness, legal, activity, stability, and management. It is the default tool for any question about open source health.
 
 - `risk_dimension`: only these dimensions. A dependency matches if any of them is at or above `risk_min`.
 - `risk_min`: `NONE`, `LOW`, `MEDIUM` (the default), `HIGH`, or `CRITICAL`.
 - `limit`: at most 100. The default is 25.
 
-`opensourcehealth.get_vulnerabilities` returns the known CVEs in your dependencies, ranked by CVSS score.
+`opensource_get_vulnerabilities` returns the known CVEs in your dependencies, ranked by CVSS score.
 
 - `severity_min`: `LOW`, `MEDIUM` (the default), `HIGH`, or `CRITICAL`.
 - `limit`: at most 100. The default is 25.
@@ -98,16 +98,16 @@ You have to pass at least one of `status` and `remark`. The valid statuses depen
 
 The architecture tools read Sigrid Core's dependency graph, which describes the baseline branch as Sigrid last analyzed it. Paths have to match Sigrid's own paths, which can differ from your local layout.
 
-`architecture.get_internal` shows how the parts inside a directory relate: which parts call which, and how often.
+`architecture_get_internal` shows how the parts inside a directory relate: which parts call which, and how often.
 
 - `path`: the directory. Leave it out for the system's top-level components.
 
-`architecture.get_external_dependencies` lists the direct dependencies of a file or directory, what it calls and what calls it, to find the blast radius of a change. It returns one hop per call.
+`architecture_get_external_deps` lists the direct dependencies of a file or directory, what it calls and what calls it, to find the blast radius of a change. It returns one hop per call.
 
 - `path`: the file or directory. This is required.
 - `direction`: `incoming`, `outgoing`, or `all` (the default).
 
-`architecture.get_worst_directories` returns up to 20 directories, ranked by structure rating, worst first. The ranking is weighted by volume, so a low rating on a large component outranks the same rating on a small one.
+`architecture_get_worst_dirs` returns up to 20 directories, ranked by structure rating, worst first. The ranking is weighted by volume, so a low rating on a large component outranks the same rating on a small one.
 
 - `path`: rank the directories inside this path instead of across the whole system.
 - `min_volume`: leave out directories at or below this volume in person-years. The default is 0.2. Lower it, for example to 0.01, to see leaf directories on a small system.
@@ -125,7 +125,7 @@ To restrict the tools in a session further, pass the `X-Enabled-Tools` header wi
       "url": "https://sigrid-says.com/mcp",
       "headers": {
         "Authorization": "Bearer <your_sigrid_token>",
-        "X-Enabled-Tools": "guardrails.quality_check, security.get_findings"
+        "X-Enabled-Tools": "guardrails_quality_check, security_get_findings"
       }
     }
   }

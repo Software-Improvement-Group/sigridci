@@ -38,7 +38,7 @@ We think of agentic development as a cycle of four phases, and Sigrid Axis does 
 
 Sigrid Axis has two capabilities today.
 
-[Guardrails](guardrails.md) covers the Prevent phase. It runs two checks: a quality gate on each file the agent changed, through the `guardrails.quality_check` MCP tool, and the [`architecture-drift`](skills.md#architecture-drift) skill on the whole change before you push it. A standing instruction tells the agent when to run each one. The [`change-feedback`](skills.md#change-feedback) skill runs Sigrid CI on a local change for what neither check sees.
+[Guardrails](guardrails.md) covers the Prevent phase. It runs two checks: a quality gate on each file the agent changed, through the `guardrails_quality_check` MCP tool, and the [`architecture-drift`](skills.md#architecture-drift) skill on the whole change before you push it. A standing instruction tells the agent when to run each one. The [`change-feedback`](skills.md#change-feedback) skill runs Sigrid CI on a local change for what neither check sees.
 
 [Auto-fix Agents](autofix-agents.md) covers the other three phases, for the problems Sigrid Core has already found:
 
