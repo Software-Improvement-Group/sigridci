@@ -5,7 +5,7 @@ redirect_from:
 
 # Installing Sigrid Axis
 
-Sigrid Axis consists of the Sigrid Axis MCP server and a set of skills. Both follow open standards, so Axis works in any agentic tool that supports MCP and skills. Installing it means connecting the MCP server, installing the skills, and [adding the Guardrails instruction](#4-add-the-guardrails-instruction) to your repository. In Claude Code, a plugin does all three in one step.
+Sigrid Axis consists of the Sigrid Axis MCP server and a set of skills. Both follow open standards, so Axis works in any agentic tool that supports MCP and skills. Installing it means connecting the MCP server, installing the skills, and [adding the Guardrails instructions](#4-add-the-guardrails-instruction) to your repository. In Claude Code, a plugin does all three in one step, except the instruction for the architecture drift check.
 
 ## Prerequisites
 
@@ -458,6 +458,12 @@ Put this text in `AGENTS.md` at the root of your repository, which Cursor, GitHu
 
 In Claude Code without the plugin, put it in `CLAUDE.md`. To adjust the instruction to your codebase, see [set up the quality gate](guardrails.md#set-up-the-quality-gate).
 
+The second Guardrails check, for architecture drift, has no hook in any tool, including Claude Code with the plugin. Add this to `AGENTS.md`, or to `CLAUDE.md` in Claude Code:
+
+{% include axis/architecture-drift-prompt.md %}
+
+See [set up the architecture drift check](guardrails.md#set-up-the-architecture-drift-check) for what it needs.
+
 <!-- Remove this section after the Sigrid Axis launch of October 1, 2026. -->
 ## Upgrade from the Sigrid AI Toolkit
 
@@ -499,7 +505,7 @@ The skills are now one skill per job, and an argument picks the model. They also
 | Old skill | New skill |
 |-----------|-----------|
 | `change-feedback` | `change-feedback` |
-| `architecture-drift` | `change-feedback architecture` |
+| `architecture-drift` | `architecture-drift` |
 | `explore-codebase` (agent) | `architecture-explorer` (agent) and `explore-architecture` |
 | `sigrid-diagnose` | `diagnose maintainability` |
 | `architecture-diagnose` | `diagnose architecture` |
@@ -510,7 +516,7 @@ The skills are now one skill per job, and an argument picks the model. They also
 | `setup` | `setup`, now per repository |
 | `osh-researcher` (agent) | `osh-researcher` (agent) |
 
-Reliability findings are new: `triage-findings reliability` and `autofix reliability`. The old `architecture-drift` still works for now, as an alias of `change-feedback architecture`.
+Reliability findings are new: `triage-findings reliability` and `autofix reliability`.
 
 ### Manual MCP configurations
 

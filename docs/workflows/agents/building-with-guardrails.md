@@ -2,7 +2,7 @@
 
 <div><a href="{% link axis/README.md %}#the-agentic-lifecycle">{% include axis/lifecycle-strip.md active="prevent" %}</a></div>
 
-This guide walks through putting [Guardrails](../../axis/guardrails.md) in your coding agent's build loop, so the agent checks the maintainability and security of every file it writes and fixes what it finds before you see the diff.
+This guide walks through putting [Guardrails](../../axis/guardrails.md) in your coding agent's build loop, so the agent checks the maintainability and security of every file it writes and fixes what it finds before you see the diff, then checks the whole change for architecture drift before you push.
 
 Guardrails gives the agent the same analysis Sigrid Core runs, on the files it just changed, while it is still working on them. The checks are deterministic: the same metrics against the same thresholds every time, decided by Sigrid's quality model and not by a model's opinion of its own output.
 
@@ -18,7 +18,7 @@ For clearing out technical debt that is already there, which is a different job 
 - A Sigrid API token, which the plugin asks for once.
 - A codebase in one of the [supported technologies](../../axis/guardrails.md#supported-technologies).
 
-Guardrails reads the code in your working tree, so the system does not have to be published to Sigrid first and the code does not have to be committed.
+The quality gate reads the code in your working tree, so for that check the system does not have to be published to Sigrid first and the code does not have to be committed. The architecture drift check in step 3 compares your diff with Sigrid's dependency graph, so it needs a published system.
 
 ## Why the agent needs help
 
@@ -69,6 +69,14 @@ An instruction is followed most of the time, and the agent is the one who decide
 Use the model you already code with, and keep the checks in your session. To fix what a check finds, a subagent would have to read the file again, and without your session's context it tends to make changes you did not want or skip findings for reasons it made up. See [Choose a model](README.md#choose-a-model).
 {: .model }
 
+### 3. Add the architecture drift check
+
+The quality gate reads one file at a time, so it cannot see a new dependency between two directories. The [`architecture-drift`](../../axis/skills.md#architecture-drift) skill checks the whole diff against Sigrid's dependency graph for that. No hook adds this instruction in any tool, Claude Code included, so put it in `CLAUDE.md` in Claude Code and in `AGENTS.md` elsewhere:
+
+{% include axis/architecture-drift-prompt.md %}
+
+The check needs a system published to Sigrid and a [Sigrid profile](../../axis/configuration.md#the-sigrid-profile) with your baseline branch, which the `setup` skill writes. For what a drift report looks like, see [preventing architecture drift](preventing-architecture-drift.md).
+
 ## What a session looks like
 
 Say you are adding a retrying file copy to a `FileUtil` class, and you ask for it like this:
@@ -87,7 +95,7 @@ Length and nesting are what Sigrid measures, so the check picks it up. The findi
 
 The second check is the part worth reading. It still reports two medium-severity findings, and the agent leaves both with a reason: `copyFileWithRetry` is around 20 lines, reasonable for something that validates input, loops, and handles exceptions, and its three parameters are the minimum the operation needs. No security findings.
 
-Before you push, run the check that sees the whole change:
+Before you push, run the checks that see the whole change. `/architecture-drift` finds no references across directories, because the change stays inside `FileUtil`, and says so. For vulnerable dependencies and duplication, run Sigrid CI:
 
 ```
 /change-feedback
@@ -105,9 +113,9 @@ Which files did you run the quality check on? List them against the files you ch
 
 ## Where to go next
 
-Guardrails only ever looks at the files in front of it. Architecture drift, vulnerable dependencies, and duplication spread across files need the analysis of the whole system, which is what `change-feedback` runs before you push. From there:
+Vulnerable dependencies and duplication spread across files need the analysis of the whole system, which is what `change-feedback` runs before you push. From there:
 
-- [Preventing architecture drift](preventing-architecture-drift.md) for the structural check that runs alongside this one
+- [Preventing architecture drift](preventing-architecture-drift.md) for a session where the drift check catches a bypassed facade
 - [Reducing technical debt](reducing-technical-debt.md) for the debt that is already there
 - [Triaging security and reliability findings](triaging-security-and-reliability-findings.md) for the findings Sigrid already knows about
 - [Guardrails](../../axis/guardrails.md) for supported technologies and the tool itself
