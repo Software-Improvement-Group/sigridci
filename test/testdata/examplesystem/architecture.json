@@ -17,9 +17,9 @@
             "sourceHierarchy": [
                 {
                     "id": "bf17027d62d69cace9854d3c9ce1903f78b6244c913d88b5567bc12b226ac625",
-                    "name": "sigdelivery-sigrid-ci-example-dennis",
+                    "name": "example",
                     "type": "SYSTEM",
-                    "shortName": "sigdelivery-sigrid-ci-example-dennis"
+                    "shortName": "example"
                 },
                 {
                     "id": "ee3468917e6c4b98018d7df2e937103edcf9f5ff4d227007a77b9f8695649fbb",
@@ -37,9 +37,9 @@
             "targetHierarchy": [
                 {
                     "id": "bf17027d62d69cace9854d3c9ce1903f78b6244c913d88b5567bc12b226ac625",
-                    "name": "sigdelivery-sigrid-ci-example-dennis",
+                    "name": "example",
                     "type": "SYSTEM",
-                    "shortName": "sigdelivery-sigrid-ci-example-dennis"
+                    "shortName": "example"
                 },
                 {
                     "id": "c3f928b9df8ce11aeb58ffea7e72d35f546fefd24b51a7191659ca077068cf4d",

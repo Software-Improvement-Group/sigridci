@@ -37,3 +37,23 @@ class ArchitectureMarkdownReportTest(TestCase):
         self.assertEqual(len(negative), 2)
         self.assertEqual(negative[0].title, "Undesirable dependency (Increased)")
         self.assertEqual(negative[1].title, "Cyclic dependency (Introduced)")
+
+    def testFormatDependencyHierarchyShouldExcludeSystem(self):
+        with open(os.path.dirname(__file__) + "/testdata/examplesystem/architecture.json", encoding="utf-8", mode="r") as f:
+            feedback = json.load(f)
+
+        report = ArchitectureMarkdownReport()
+        result = report.formatDependencyLocation(feedback["dependencyFeedback"][0]["sourceHierarchy"])
+
+        self.assertEqual(result, "c ▶ c.ts")
+
+    def testFormatDependencyHierarchyForSubComponent(self):
+        with open(os.path.dirname(__file__) + "/testdata/architecture.json", encoding="utf-8", mode="r") as f:
+            feedback = json.load(f)
+
+        report = ArchitectureMarkdownReport()
+        result1 = report.formatDependencyLocation(feedback["dependencyFeedback"][0]["sourceHierarchy"])
+        result2 = report.formatDependencyLocation(feedback["dependencyFeedback"][1]["sourceHierarchy"])
+
+        self.assertEqual(result1, "b ▶ b1 ▶ b.ts")
+        self.assertEqual(result2, "b ▶ ... ▶ b11 ▶ b.ts")

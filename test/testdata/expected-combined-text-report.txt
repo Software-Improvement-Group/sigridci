@@ -10,8 +10,8 @@ Failed checks
          Location: Example2.java (line 5)
 
     - 🟠 Architecture: Cyclic dependency (Introduced)
-         Source: sigdelivery-sigrid-ci-example-dennis ▶ c.ts
-         Target: sigdelivery-sigrid-ci-example-dennis ▶ b.ts
+         Source: c ▶ c.ts
+         Target: b ▶ b.ts
          Location: c.ts
 
     - 🟠 Open Source Health: `log4j-core` 2.17.0 contains known vulnerabilities.

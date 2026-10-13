@@ -31,11 +31,22 @@ class ArchitectureMarkdownReport(MarkdownFragment):
         "CYCLIC" : "MEDIUM"
     }
 
-    def formatDependencyLocation(self, hierarchy):
-        topLevelComponent = hierarchy[0]
-        file = next((se for se in hierarchy if se["type"] == "FILE"), None)
+    def formatDependencyLocation(self, hierarchy: list[dict]) -> str:
+        if len(hierarchy) >= 2 and hierarchy[0]["type"] == "SYSTEM":
+            hierarchy = hierarchy[1:]
 
-        location = topLevelComponent["shortName"]
+        components = [se for se in hierarchy if se["type"] == "CODE_COMPONENT"]
+        file = next((se for se in hierarchy if se["type"] == "FILE"), None)
+        return self.formatComponentDependencyLocation(components, file)
+
+    def formatComponentDependencyLocation(self, components: list[dict], file: dict) -> str:
+        location = ""
+        if len(components) >= 3:
+            location += f"{components[0]['shortName']} ▶ ... ▶ {components[-1]['shortName']}"
+        elif len(components) == 2:
+            location += f"{components[0]['shortName']} ▶ {components[1]['shortName']}"
+        elif len(components) == 1:
+            location += components[0]["shortName"]
         if file:
             location += f" ▶ {file['shortName']}"
         return location
@@ -48,7 +59,7 @@ class ArchitectureMarkdownReport(MarkdownFragment):
         line = lines[0][0] if len(lines) > 0 else 0
         return [Location(file["name"], line)]
 
-    def formatLines(self, dependency):
+    def formatLines(self, dependency: dict) -> str:
         lines = dependency.get("lines")
         if not lines:
             return ""
