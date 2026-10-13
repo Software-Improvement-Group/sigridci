@@ -3,8 +3,10 @@ Sigrid release notes
 
 SIG uses [continuous delivery](https://en.wikipedia.org/wiki/Continuous_delivery), meaning that every change to Sigrid or the underlying analysis is released once our development pipeline has completed. On average, we release somewhere between 10 and 20 times per day. This page therefore doesn't list every single change, since that would quickly lead to an excessively long list of small changes. Instead, this page lists Sigrid and analysis changes that we consider noteworthy for the typical Sigrid user.
 
-### October 12, 2026
+### October 19, 2026
 
+- **Sigrid CI:** Sigrid CI now includes architecture feedback! The focus is on feedback that is simple, practical, and uncontroversial. Find out more in [the Sigrid CI documentation](../sigridci-integration/using-sigridci.md).
+- **Sigrid CI:** Sigrid CI has been redesigned. Now that Sigrid is adding more and more feedback, the focus should be helpful guidance how to improve, not flood you with lists of things to do. Especially now that there are more reviews than ever due to AI.
 - **Sigrid Axis:** Sigrid Axis is now available for on-premise Sigrid. The Axis frontend runs as an optional Helm component, and a cronjob aggregates the metrics shown in Axis. See [Sigrid Axis for Sigrid On-Premise](../organization-integration/onpremise-axis.md) for how to enable it.
 
 ### October 5, 2026
