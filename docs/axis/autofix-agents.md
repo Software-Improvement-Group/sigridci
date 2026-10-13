@@ -104,9 +104,9 @@ The agent investigated eight coupling findings, concluded the high fan-in was de
 
 The three `architecture.*` tools are read-only, so they inform a plan without changing anything. We would reach for them in this order:
 
-1. `architecture.get_worst_directories` to find where restructuring pays off. The ranking is weighted by volume, so a low rating on a large component outranks the same rating on a small one.
-2. `architecture.get_internal` to see how a directory hangs together. Call it without a path first for the system's top-level components, then drill into the one you care about.
-3. `architecture.get_external_dependencies` on whatever you plan to change, for its blast radius. It returns one hop per call, so follow a returned path with another call to go deeper.
+1. `architecture_get_worst_dirs` to find where restructuring pays off. The ranking is weighted by volume, so a low rating on a large component outranks the same rating on a small one.
+2. `architecture_get_internal` to see how a directory hangs together. Call it without a path first for the system's top-level components, then drill into the one you care about.
+3. `architecture_get_external_deps` on whatever you plan to change, for its blast radius. It returns one hop per call, so follow a returned path with another call to go deeper.
 
 Here are two prompts that use them:
 

@@ -9,7 +9,7 @@ Guardrails is the Sigrid Axis capability that stops an AI coding agent from intr
 
 Guardrails runs two checks:
 
-- **The quality gate** checks each file the agent changed for maintainability and security, before it reports a task done, with the [`guardrails.quality_check`](tools.md#guardrails) MCP tool.
+- **The quality gate** checks each file the agent changed for maintainability and security, before it reports a task done, with the [`guardrails_quality_check`](tools.md#guardrails) MCP tool.
 - **The architecture drift check** checks the whole change for new dependencies, cycles, and bypassed facades, before you push, with the [`architecture-drift`](skills.md#architecture-drift) skill.
 
 Each check runs on a standing instruction, which you [set up](#set-up-the-quality-gate) once. The quality gate works on uncommitted code in systems not yet published to Sigrid. The drift check needs a published system, because it compares your diff with Sigrid Core's dependency graph.
@@ -18,7 +18,7 @@ For the problems that are already in your code, see [Auto-fix Agents](autofix-ag
 
 ## Supported technologies
 
-The `guardrails.quality_check` tool supports these technologies:
+The `guardrails_quality_check` tool supports these technologies:
 
 - Java
 - Python

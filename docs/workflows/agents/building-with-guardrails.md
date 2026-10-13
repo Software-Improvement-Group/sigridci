@@ -40,7 +40,7 @@ The plugin configures the Sigrid Axis MCP server and the skills together:
 
 {% include axis/plugin-install.md %}
 
-The plugin asks for your Sigrid API token once and stores it in your system keychain. See [authentication tokens](../../organization-integration/authentication-tokens.md) for how to get one. In another agentic tool, [connect the MCP server](../../axis/installation.md#1-connect-the-mcp-server) instead. You need at least the `guardrails.quality_check` tool.
+The plugin asks for your Sigrid API token once and stores it in your system keychain. See [authentication tokens](../../organization-integration/authentication-tokens.md) for how to get one. In another agentic tool, [connect the MCP server](../../axis/installation.md#1-connect-the-mcp-server) instead. You need at least the `guardrails_quality_check` tool.
 
 The plugin's hook adds an instruction to every prompt you send: before reporting a task done, run the Guardrails check on the production code you changed, and fix the maintainability findings, leaving one only when the code already honors the principles. See [the exact text](../../axis/guardrails.md#other-tools). Other tools need that trigger added by hand; see [set up the quality gate](../../axis/guardrails.md#other-tools).
 
@@ -105,7 +105,7 @@ It runs Sigrid CI on your working tree for maintainability, open-source, and sec
 
 ## Check that the gate fired
 
-Your CLI shows tool calls, so look for at least one `guardrails.quality_check` call after the last edit. Look at the file list too: the tool takes one file per call, so a four-file change means four calls, and if only one shows up then the gate covered a quarter of your work.
+Your CLI shows tool calls, so look for at least one `guardrails_quality_check` call after the last edit. Look at the file list too: the tool takes one file per call, so a four-file change means four calls, and if only one shows up then the gate covered a quarter of your work.
 
 ```
 Which files did you run the quality check on? List them against the files you changed.
