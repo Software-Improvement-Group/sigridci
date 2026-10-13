@@ -13,7 +13,7 @@
 # limitations under the License.
 
 import os
-from typing import Iterator
+from typing import Iterator, Union
 
 from .markdown_fragment import MarkdownFragment, FeedbackFinding, Location, Summary
 from ..capability import ARCHITECTURE, Capability
@@ -39,7 +39,7 @@ class ArchitectureMarkdownReport(MarkdownFragment):
         file = next((se for se in hierarchy if se["type"] == "FILE"), None)
         return self.formatComponentDependencyLocation(components, file)
 
-    def formatComponentDependencyLocation(self, components: list[dict], file: dict) -> str:
+    def formatComponentDependencyLocation(self, components: list[dict], file: Union[dict, None]) -> str:
         location = ""
         if len(components) >= 3:
             location += f"`{components[0]['shortName']}` ▶ ... ▶ `{components[-1]['shortName']}`"
