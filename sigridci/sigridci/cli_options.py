@@ -16,7 +16,7 @@ import os
 import sys
 from argparse import SUPPRESS, ArgumentParser
 
-from .capability import CAPABILITY_SHORT_NAMES, Capability
+from .capability import CAPABILITY_SHORT_NAMES, Capability, ALL_CAPABILITIES
 from .platform import Platform
 from .publish_options import PublishOptions, RunMode
 from .sigrid_api_client import SigridApiClient
@@ -24,7 +24,7 @@ from .sigridci_runner import SigridCiRunner
 from .upload_log import UploadLog
 
 
-DEFAULT_CAPABILITIES = "maintainability,osh,security"
+DEFAULT_CAPABILITIES = ",".join(cap.shortName for cap in ALL_CAPABILITIES)
 CAPABILITY_HELP = ", ".join(CAPABILITY_SHORT_NAMES.keys())
 
 

@@ -13,11 +13,11 @@ inputs:
     required: false
     default: "."
   capability:
-    description: "Comma-separated list of Sigrid capabilities (maintainability,osh,security). Default is based on your Sigrid license."
+    description: "Comma-separated list of Sigrid capabilities (maintainability,architecture,osh,security). Default is based on your Sigrid license."
     required: false
-    default: "maintainability"
+    default: "maintainability,architecture,osh,security"
   disablecapability:
-    description: "Comma-separated list of capabilities to disable (maintainability,osh,security). Reverse of 'capability'."
+    description: "Comma-separated list of capabilities to disable (maintainability,architecture,osh,security). Reverse of 'capability'."
     required: false
   publish:
     description: "Publishes your source code to Sigrid (true/false)."
