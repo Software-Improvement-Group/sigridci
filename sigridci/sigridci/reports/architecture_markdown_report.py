@@ -66,7 +66,7 @@ class ArchitectureMarkdownReport(MarkdownFragment):
         elif len(lines) == 1:
             return f" (line {lines[0][0]})"
         else:
-            return f" (lines {', '.join(line[0] for line in lines)})"
+            return f" (lines {', '.join(str(line[0]) for line in lines)})"
 
     def getSummary(self, feedback: dict, options: PublishOptions) -> list[Summary]:
         if len(self.getNegativeFeedback(feedback)) == 0:

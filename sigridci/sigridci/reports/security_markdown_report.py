@@ -12,7 +12,6 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-import os
 from typing import Any, Iterator
 
 from .markdown_fragment import MarkdownFragment, FeedbackFinding, Location, Summary
@@ -50,9 +49,6 @@ class SecurityMarkdownReport(MarkdownFragment):
     def getCapability(self) -> Capability:
         return SECURITY
 
-    def getMarkdownFile(self, options: PublishOptions) -> str:
-        return os.path.abspath(f"{options.outputDir}/security-feedback.md")
-
     def isObjectiveSuccess(self, feedback: dict, options: PublishOptions) -> bool:
         allFindings = self.extractFindings(feedback)
         relevantFindings = self.processor.filterStatus(allFindings, FindingStatus.INTRODUCED, partOfObjective=True)
@@ -65,7 +61,7 @@ class SecurityMarkdownReport(MarkdownFragment):
             # For on-premise Sigrid we need to check for new findings ourselves,
             # since we don't have an end point to perform that logic.
             previousFindings = list(self.processor.extractFindings(self.previousFeedback))
-            previousFingerprints = [finding.fingerprint for finding in previousFindings]
+            previousFingerprints = {finding.fingerprint for finding in previousFindings}
 
             for finding in findings:
                 if finding.status == FindingStatus.REMAINING and finding.fingerprint not in previousFingerprints:

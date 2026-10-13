@@ -34,9 +34,10 @@ class MaintainabilityMarkdownReport(MarkdownFragment, Report):
 
     def getSummary(self, feedback: dict, options: PublishOptions) -> list[Summary]:
         return [
-            self.getSummaryForObjective(metric.removeprefix("MAINTAINABILITY_"), target or 0, feedback)
+            self.getSummaryForObjective(metric.removeprefix("MAINTAINABILITY_"), target, feedback)
             for metric, target
             in self.objective.items()
+            if target is not None
         ]
 
     def getSummaryForObjective(self, metric: str, target: float, feedback: dict) -> Summary:
@@ -77,9 +78,10 @@ class MaintainabilityMarkdownReport(MarkdownFragment, Report):
 
     def getObjectiveStatuses(self, feedback):
         return [
-            Objective.checkMaintainabilityRating(feedback, metric.removeprefix("MAINTAINABILITY_"), target or 0.0)
+            Objective.checkMaintainabilityRating(feedback, metric.removeprefix("MAINTAINABILITY_"), target)
             for metric, target
             in self.objective.items()
+            if target is not None
         ]
 
     def isObjectiveSuccess(self, feedback: dict, options: PublishOptions) -> bool:
