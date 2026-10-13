@@ -11,7 +11,7 @@ The check is one of the two that make up [Guardrails](../../axis/guardrails.md).
 You need the following before you start:
 
 - A system published to Sigrid, so Sigrid Core has analyzed its architecture.
-- The [Claude Code plugin](../../axis/installation.md#install-the-claude-code-plugin), or another agentic tool with the skills and the Sigrid Axis MCP server. The check uses `architecture.get_external_dependencies`.
+- The [Claude Code plugin](../../axis/installation.md#install-the-claude-code-plugin), or another agentic tool with the skills and the Sigrid Axis MCP server. The check uses `architecture_get_external_deps`.
 - A [Sigrid profile](../../axis/configuration.md#the-sigrid-profile) in the repository, with your baseline branch.
 - A feature branch, or a staged or unstaged change, to check.
 
@@ -62,7 +62,7 @@ Say an agent has just finished a `checkout` feature, part of which writes a ledg
 By default, the skill diffs `<baseline>...HEAD`, where the baseline is the branch in your profile. Ask for the staged or unstaged changes instead if you have not committed yet. It reads the added lines for new imports, calls, and type references that cross into another directory, spots the import, and takes it to the graph:
 
 ```
-architecture.get_external_dependencies(acme, payment-platform,
+architecture_get_external_deps(acme, payment-platform,
     path="billing/internal", direction="all")
 ```
 
