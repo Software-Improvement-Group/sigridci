@@ -695,7 +695,9 @@ The customer-level endpoint retuns an array with each element identical to the s
 
 For reporting purposes, using the [end point for architecture quality ratings](#architecture-quality-ratings) is usually sufficient. However, some advanced use cases require the full Architecture Quality data, beyond just the ratings.
 
-The end point `GET https://sigrid-says.com/rest/analysis-results/api/v1/architecture-quality/{customer}/{system}/raw` will generate the *full* Architecture Quality analysis results, in JSON format. This end point is intended for system-to-system integration, where one of your own systems needs to process this data without relying on the Sigrid user interface. 
+The end point `GET https://sigrid-says.com/rest/analysis-results/api/v1/architecture-quality/{customer}/{system}/raw` will generate the *full* Architecture Quality analysis results, in JSON format. This end point is intended for system-to-system integration, where one of your own systems needs to process this data without relying on the Sigrid user interface.
+
+By default, this end point returns the current architecture graph. You can add an optional query parameter `endDate` to control the time period. For example, adding `?endDate=2026-02-01` will make the end point return the architecture graph as of February 1, 2026.
 
 This end point will return the "raw" architecture graph, which is documented in the [Architecture Quality documentation](../reference/aq-json-export-format.md).
 

@@ -8,6 +8,7 @@ SIG uses [continuous delivery](https://en.wikipedia.org/wiki/Continuous_delivery
 - **Sigrid CI:** Sigrid CI now includes architecture feedback! The focus is on feedback that is simple, practical, and uncontroversial. Find out more in [the Sigrid CI documentation](../sigridci-integration/using-sigridci.md).
 - **Sigrid CI:** Sigrid CI has been redesigned. Now that Sigrid is adding more and more feedback, the focus should be helpful guidance how to improve, not flood you with lists of things to do. Especially now that there are more reviews than ever due to AI.
 - **Sigrid Axis:** Sigrid Axis is now available for on-premise Sigrid. The Axis frontend runs as an optional Helm component, and a cronjob aggregates the metrics shown in Axis. See [Sigrid Axis for Sigrid On-Premise](../organization-integration/onpremise-axis.md) for how to enable it.
+- **Sigrid API:** The [end point to retrieve the architecture graph](../integrations/sigrid-api-documentation.md#architecture-quality-data) now allows you to select a date. Previously, this end point could only be used to retrieve the current state.
 
 ### October 5, 2026
 
