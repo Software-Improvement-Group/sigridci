@@ -61,10 +61,10 @@ class FeedbackProvider:
         self.previousCapabilityFeedback[capability] = feedback
 
     def generateReports(self) -> int:
-        if not os.path.exists(self.options.outputDir):
-            os.mkdir(self.options.outputDir)
-
         if not self.options.inlineResults:
+            if not os.path.exists(self.options.outputDir):
+                os.mkdir(self.options.outputDir)
+
             for capability in self.capabilityFeedback:
                 with open(f"{self.options.outputDir}/{capability.shortName}.json", mode="w", encoding="utf-8") as f:
                     json.dump(self.capabilityFeedback[capability], f, sort_keys=False, indent=4)
