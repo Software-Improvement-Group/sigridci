@@ -60,6 +60,19 @@ class FeedbackProviderTest(TestCase):
         self.assertEqual("Inline results: osh", lines[0])
         self.assertEqual("osh", json.loads(lines[1])["capability"])
 
+    def testInlineResultsDoesNotCreateOutputDir(self):
+        outputDir = f"{tempfile.mkdtemp()}/sigrid-ci-output"
+        options = PublishOptions("aap", "noot", RunMode.FEEDBACK_ONLY, outputDir=outputDir, inlineResults=True)
+        options.capabilities = [OPEN_SOURCE_HEALTH]
+
+        oshFeedback = FeedbackProvider("1234", options, {})
+        oshFeedback.registerFeedback(OPEN_SOURCE_HEALTH, {"components": [], "metadata": {"timestamp": "2025-09-29"}})
+
+        with contextlib.redirect_stdout(io.StringIO()):
+            oshFeedback.generateReports()
+
+        self.assertFalse(os.path.exists(outputDir))
+
     def testApplyDefaultObjectives(self):
         tempDir = tempfile.mkdtemp()
         options = PublishOptions("aap", "noot", RunMode.FEEDBACK_ONLY, outputDir=tempDir)
