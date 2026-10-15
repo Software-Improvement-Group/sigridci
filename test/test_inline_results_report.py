@@ -21,7 +21,7 @@ from unittest import TestCase
 from sigridci.sigridci.publish_options import PublishOptions, RunMode
 from sigridci.sigridci.reports.inline_results_report import MaintainabilityInlineResultsReport, \
     OpenSourceHealthInlineResultsReport, SecurityInlineResultsReport, InlineResultsReport
-from sigridci.sigridci.capability import ARCHITECTURE, MAINTAINABILITY
+from sigridci.sigridci.capability import ARCHITECTURE, MAINTAINABILITY, OPEN_SOURCE_HEALTH
 
 
 class InlineResultsReportTest(TestCase):
@@ -207,3 +207,22 @@ class InlineResultsReportTest(TestCase):
         output = json.loads(output.getvalue().strip().split("\n")[1])
 
         self.assertEqual(len(output["findings"]), 2)
+
+    def testOpenSourceHealthFeedbackShouldBeRelativeToPrevious(self):
+        self.options.capabilities = [OPEN_SOURCE_HEALTH]
+
+        with open(os.path.dirname(__file__) + "/testdata/osh-junit.json", encoding="utf-8", mode="r") as f:
+            feedback = {OPEN_SOURCE_HEALTH : json.load(f)}
+
+        with open(os.path.dirname(__file__) + "/testdata/osh-junit-previous.json", encoding="utf-8", mode="r") as f:
+            previousFeedback = {OPEN_SOURCE_HEALTH : json.load(f)}
+
+        report = InlineResultsReport({})
+        report.previousFeedback = previousFeedback
+
+        with contextlib.redirect_stdout(io.StringIO()) as output:
+            report.generate("1234", feedback, self.options)
+
+        output = json.loads(output.getvalue().strip().split("\n")[1])
+
+        self.assertEqual(output["baseline"], "2025-09-18")

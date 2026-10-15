@@ -28,12 +28,13 @@ from ..publish_options import PublishOptions
 class InlineResultsReport(Report):
     def __init__(self, objectives: dict):
         self.objectives = objectives
+        self.previousFeedback = {}
 
     def generate(self, analysisId: str, feedback: dict, options: PublishOptions) -> None:
         fragments = {
             MAINTAINABILITY : MaintainabilityInlineResultsReport(self.objectives),
             ARCHITECTURE : ArchitectureInlineResultsReport(),
-            OPEN_SOURCE_HEALTH : OpenSourceHealthInlineResultsReport(options, self.objectives),
+            OPEN_SOURCE_HEALTH : OpenSourceHealthInlineResultsReport(options, self.objectives, self.previousFeedback.get(OPEN_SOURCE_HEALTH)),
             SECURITY : SecurityInlineResultsReport(options, self.objectives)
         }
 
