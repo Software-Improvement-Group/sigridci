@@ -2,7 +2,7 @@
 
 <div><a href="{% link axis/README.md %}#the-agentic-lifecycle">{% include axis/lifecycle-strip.md active="ground,prevent" %}</a></div>
 
-This guide walks through checking an agent's diff for architecture drift before it merges: a new call across a directory boundary, a facade bypassed on the way to a database, a dependency cycle the change would close. The `architecture-drift` skill grounds that check in Sigrid's measured dependency graph, so the verdict comes from how your system is actually wired today and not from the few files the agent happened to open.
+This guide walks through checking an agent's diff for architecture drift before it merges: a new call across a directory boundary, a facade bypassed on the way to a database, a dependency cycle the change would close. The `architecture-drift` skill grounds that check in Sigrid's measured dependency graph, so the verdict comes from how your system is wired today, including the parts the agent never opened.
 
 The check is one of the two that make up [Guardrails](../../axis/guardrails.md). Run it before you push, on your own work or on a branch you are about to merge for someone else. It checks the diff and nothing more. The other check, the [quality gate](building-with-guardrails.md), covers each file as the agent writes it, and structure is exactly what a per-file check cannot see. To fix the structure that is already there, see [improving architecture](improving-architecture.md), and you can always open the graph yourself in the [architecture explorer](../../capabilities/architecture-quality.md).
 
@@ -23,7 +23,7 @@ Picture a small reporting change that needs a total out of the orders table. Eve
 
 The import is plausible, and plausibility is what the agent is good at: the same line appears in a million repositories, most of them fine. What makes it wrong is a fact about your system, and that fact was in code the agent had no reason to read. The next session starts from a clean context and reasons its way to the same place on a different file. A shortcut like this, once, is a review comment. A steady supply of them is how the structure you designed stops describing the code you have.
 
-We've made this argument before: [our post on architectural debt](https://www.softwareimprovementgroup.com/blog/architectural-debt-ai/) describes an agent as a very fast, very clever intern, good at a bounded task like writing one function, and out of its depth on an unbounded one like deciding how a new component should connect to the rest of a system. Skipping the repository layer is the second kind of decision, wearing the costume of the first.
+We've made this argument before: [our post on architectural debt](https://www.softwareimprovementgroup.com/blog/architectural-debt-ai/) describes an agent as a very fast, very clever intern, good at a bounded task like writing one function, and out of its depth on an unbounded one like deciding how a new component should connect to the rest of a system. Skipping the repository layer is the second kind. It looks like a one-line import, and it decides how reporting reaches persistence.
 
 Sigrid already has the map that no amount of reading will produce. We build a dependency graph of your codebase down to the calls between individual files, rolled up per directory and per component, the same graphs you can browse yourself. Grounding a diff check in that graph turns a judgment call into a lookup: this reference is new, and here is everything that reaches this directory today.
 
@@ -31,7 +31,7 @@ Sigrid already has the map that no amount of reading will produce. We build a de
 
 {% include axis/primitives.md %}
 
-Running the check needs the second and third rows, the tools and the skill. The fourth is what gets it run on the day nobody thinks to ask for it.
+Running the check needs the second and third rows, the tools and the skill. The first, a line in your context file, is what gets it run on the day nobody thinks to ask for it. That line is covered in [run it without being asked](#run-it-without-being-asked).
 
 ### Install the plugin and record your profile
 

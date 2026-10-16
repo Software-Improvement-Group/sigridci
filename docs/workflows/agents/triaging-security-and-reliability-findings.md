@@ -7,13 +7,9 @@ redirect_from:
 
 <div><a href="{% link axis/README.md %}#the-agentic-lifecycle">{% include axis/lifecycle-strip.md active="plan,improve" %}</a></div>
 
-Somewhere in your backlog there is a command injection finding on a deployment script. You already know it is fine. The script only runs from CI, the value it interpolates comes from a pipeline variable you control, and there is no route to it from outside the network. Deciding that takes you about four seconds.
+This guide walks through working down a backlog of security and reliability findings with two skills: `triage-findings` decides what to do with each finding and writes that decision back to Sigrid with its evidence, and `autofix` fixes the findings marked to fix, as local commits.
 
-Sigrid cannot decide it at all, because none of those three facts are in the code. It sees a shell call built from a variable and reports exactly what it sees, correctly.
-
-Now multiply by two hundred findings. The work is repetitive more than difficult, and the fact that settles each case is usually not on the screen. That is why security backlogs sit.
-
-This guide walks through working down that backlog with two skills. `triage-findings` reads each finding at its file and line, decides what to do with it, and writes the decision back to Sigrid with the evidence attached. `autofix` then fixes the findings triage decided to fix, as local commits. The guide covers what the skills cannot do alone: what you need to give them, what a session looks like, and how to tell afterwards whether you can trust the result.
+Most of the decisions depend on facts about your system that are not in the code, so most of this guide is about handing the agent those facts once and checking afterwards how it used them. For maintainability findings, see [reducing technical debt](reducing-technical-debt.md).
 
 ## Prerequisites
 
@@ -22,12 +18,15 @@ You need the following before you start:
 - A system published to Sigrid, with security or reliability findings waiting on it.
 - The [Claude Code plugin](../../axis/installation.md#install-the-claude-code-plugin), or another agentic tool with the skills and the Sigrid Axis MCP server.
 - A [Sigrid profile](../../axis/configuration.md#the-sigrid-profile) in the repository, written with `/setup`, so you are not naming the customer and system on every run.
+- A local checkout on a branch that is up to date with the branch Sigrid analyzes, so the findings match your code.
 
 ## Why this is worth doing
 
-Triage is a context problem more than a code reading problem. Sigrid can find the sink. It cannot see that the endpoint sits behind an internal load balancer, or that the input was already validated two layers up.
+Somewhere in your backlog there is a command injection finding on a deployment script, and you already know it is fine. The script only runs from CI, the value it interpolates comes from a pipeline variable you control, and nothing outside the network can reach it. Deciding that takes you about four seconds.
 
-For as long as we have been shipping findings to customers, that has meant a person reading all two hundred of them to apply about five facts. Most of the reading is wasted. You learn nothing at finding 140 that you did not know at finding 12. You are checking the same handful of conditions again, with worse attention than the first time.
+Sigrid cannot decide it at all, because none of those three facts are in the code. It sees a shell call built from a variable and reports exactly what it sees, correctly. The same goes for an endpoint behind an internal load balancer, or input that was already validated two layers up.
+
+Now multiply by two hundred findings. For as long as we have been shipping findings to customers, that has meant a person reading every one of them to apply about five facts. You learn nothing at finding 140 that you did not know at finding 12. You are checking the same handful of conditions again, with worse attention than the first time, and that is why security backlogs sit.
 
 An agent inverts the labor. It does the reading, at full attention, on all two hundred, and you supply the five facts. Your job becomes stating your system's security context precisely enough that someone else can triage for you. You should be able to do that anyway, and if you sit down to try it, you will probably find you cannot without checking a few things.
 
@@ -76,6 +75,8 @@ We recommend a `SECURITY-CONTEXT.md` file in the repository, next to the code it
 ```
 
 Every line in that file is a claim the agent will suppress findings on, so treat it that way. "Internal-only" has to name the thing that enforces it, not the thing you intend. A route that is internal because no one has published the URL is not internal, and an agent cannot tell that apart from a network policy unless you say so.
+
+The accepted risks section is where you speak for someone else. Agree with your security owner up front which categories you may accept on their behalf, and which go to them.
 
 ## What a session looks like
 
@@ -143,14 +144,6 @@ Here are four checks, in order of how much they matter:
 2. **Review the diff normally.** There is one commit per finding, with the finding ID in the message. It goes through your merge request process like anyone else's.
 3. **Drain the `REFINED` list.** Everything the agent could not settle mechanically is there, with a named blocker.
 4. **Compare against yourself.** On a first run, triage ten findings by hand before you look at what the agent did. If it disagrees with you on more than one or two, the context file is the problem.
-
-## Things to watch out for
-
-Keep these in mind across runs:
-
-- Work on a branch that is up to date with the branch Sigrid analyzes, so the findings match your code.
-- If you promoted findings to `FIXED` and the branch is abandoned, set them back to `WILL_FIX`.
-- Agree with your security owner up front which categories you may accept on their behalf, and which go to them.
 
 ## Where to go next
 
