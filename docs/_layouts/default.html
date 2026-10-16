@@ -13,8 +13,8 @@
             {% include lifecycle.css %}
         </style>
         
-        <script src="https://cdn.jsdelivr.net/npm/lunr@2.3.9/lunr.js"></script>
-        <script src="https://cdn.jsdelivr.net/npm/awesomplete@1.1.7/awesomplete.min.js"></script>
+               <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@docsearch/css@5.1.0/dist/style.css" />
+        <script src="https://cdn.jsdelivr.net/npm/@docsearch/js@5.1.0/dist/umd/docsearch.js"></script>
     </head>
     
     <body>
@@ -71,7 +71,13 @@
             {% include section-links.js %}
             {% include tables.js %}
             {% include stats.js %}
-            {% include search.js %}
+                        docsearch({
+                container: "#docsearch",
+                appId: "19YBXPNK1F",
+                apiKey: "b8d1705a0909515fb80af13bd77f8a70",
+                indices: ["Sigrid Docs"],
+                placeholder: "Search documentation"
+            });
         </script>
     </body>
 </html>
