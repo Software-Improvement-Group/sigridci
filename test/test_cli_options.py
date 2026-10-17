@@ -15,7 +15,7 @@
 from unittest import TestCase
 
 from sigridci.sigridci.capability import MAINTAINABILITY, OPEN_SOURCE_HEALTH, SECURITY
-from sigridci.sigridci.cli_options import parseCapabilities
+from sigridci.sigridci.cli_options import DEFAULT_CAPABILITIES, parseCapabilities
 
 
 class CliOptionsTest(TestCase):
@@ -33,3 +33,6 @@ class CliOptionsTest(TestCase):
         self.assertEqual(parseCapabilities("maintainability,security", None), [MAINTAINABILITY, SECURITY])
         self.assertEqual(parseCapabilities("maintainability,security", ""), [MAINTAINABILITY, SECURITY])
         self.assertEqual(parseCapabilities("maintainability,security", "security"), [MAINTAINABILITY])
+
+    def testAllCapabilitiesAreEnabledByDefault(self):
+        self.assertEqual(DEFAULT_CAPABILITIES, "maintainability,architecture,osh,security")

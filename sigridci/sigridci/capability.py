@@ -15,7 +15,7 @@
 from dataclasses import dataclass
 
 
-@dataclass
+@dataclass(frozen=True)
 class Capability:
     name: str
     displayName: str

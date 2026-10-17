@@ -33,6 +33,9 @@ run the code natively. This makes portability the top concern:
 - The sub-package `sigridci.reports` contains all feedback. Everything that produces output to the user is
   referred to as a "report". Command line output is considered a report, Markdown feedback communicated via a
   GitHub pull request comment is also considered a report.
+  - Reports can cover a single capability or combine multiple categories. 
+  - For reports that combine multiple capabilities, each "part" of the report that provides input for one of the
+    capabilities is called a "fragment".
 - The sub-package `sigridci.analysisresults` is for parsing the analysis results received from Sigrid. 
 
 ## Code style
@@ -41,3 +44,4 @@ run the code natively. This makes portability the top concern:
   allowed if it is already the dominant style in the project.
 - Do use type hints, but only type hints supported by Python 3.9. So that means you cannot use `str | None`,
   you have to use `Union[str, None]`.
+- Prefer double-quoted strings.
