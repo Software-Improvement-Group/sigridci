@@ -26,6 +26,7 @@ from sigridci.sigridci.capability import MAINTAINABILITY, OPEN_SOURCE_HEALTH, SE
 from sigridci.sigridci.publish_options import PublishOptions, RunMode
 from sigridci.sigridci.sigrid_api_client import SigridApiClient
 from sigridci.sigridci.sigridci_runner import SigridCiRunner
+from sigridci.sigridci.telemetry import Telemetry
 from sigridci.sigridci.upload_log import UploadLog
 
 
@@ -776,6 +777,37 @@ class SigridCiRunnerTest(TestCase):
 
         self.assertEqual(apiClient.called, expectedCalls)
 
+    def testNoTelemetryIfNotTransitive(self):
+        self.createTempFile(self.tempDir, "sigrid.yaml", "version: 1")
+        self.createTempFile(self.tempDir, "pom.xml", self.RANDOM_STRING)
+
+        runner = SigridCiRunner(self.options, None)
+        runner.telemetry = MockTelemetry(self.options)
+        runner.logCommonIssues()
+
+        self.assertEqual(runner.telemetry.logged, [])
+
+    def testNoTelemetryIfTransitiveWithMavenTree(self):
+        self.createTempFile(self.tempDir, "sigrid.yaml", "transitive: true")
+        self.createTempFile(self.tempDir, "pom.xml", self.RANDOM_STRING)
+        self.createTempFile(self.tempDir, "maven.tree", self.RANDOM_STRING)
+
+        runner = SigridCiRunner(self.options, None)
+        runner.telemetry = MockTelemetry(self.options)
+        runner.logCommonIssues()
+
+        self.assertEqual(runner.telemetry.logged, [])
+
+    def testTelemetryIfTransitiveWithoutMavenTree(self):
+        self.createTempFile(self.tempDir, "sigrid.yaml", "transitive: true")
+        self.createTempFile(self.tempDir, "pom.xml", self.RANDOM_STRING)
+
+        runner = SigridCiRunner(self.options, None)
+        runner.telemetry = MockTelemetry(self.options)
+        runner.logCommonIssues()
+
+        self.assertEqual(runner.telemetry.logged, ["transitive-maven-without-tree"])
+
     def createTempFile(self, dir, name, contents):
         with open(f"{dir}/{name}", "w") as fileRef:
             fileRef.write(contents)
@@ -822,3 +854,11 @@ class MockApiClient(SigridApiClient):
         else:
             raise urllib.error.HTTPError("/upload", 503, "", Message(), None)
      
+
+class MockTelemetry(Telemetry):
+    def __init__(self, options: PublishOptions):
+        super().__init__(options)
+        self.logged = []
+
+    def trackCommonIssue(self, name: str) -> None:
+        self.logged.append(name)

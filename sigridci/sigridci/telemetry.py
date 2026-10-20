@@ -45,6 +45,9 @@ class Telemetry:
         used = [cap.name for cap in self.options.capabilities]
         return capability.name in licenses and capability.name not in used and not capability.beta
 
+    def trackCommonIssue(self, name: str) -> None:
+        self.sendEvent("sigridci.commonissue", name)
+
     def sendEvent(self, category: str, details: str) -> None:
         if self.options.feedbackURL:
             try:
