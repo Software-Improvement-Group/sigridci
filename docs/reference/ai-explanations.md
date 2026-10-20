@@ -8,9 +8,9 @@ The Sigrid platform performs comprehensive quality analysis across over 300 tech
 
 ### Where can I find AI Static Explanations?
 AI Static Explanations are integrated throughout the Sigrid platform. The following capabilities currently include AI-powered insights:
-- [Maintainability](../../docs/capabilities/system-maintainability.md) (Refactoring Candidates)
-- [Open Source Health](../../docs/capabilities/system-open-source-health.md) (License implications)
-- [Security findings](../../docs/capabilities/system-security.md)
+- [Maintainability](../capabilities/system-maintainability.md) (Refactoring Candidates)
+- [Open Source Health](../capabilities/system-open-source-health.md) (License implications)
+- [Security findings](../capabilities/system-security.md)
 - Reliability findings
 - Cloud Readiness findings
 - Green Code findings
@@ -136,7 +136,7 @@ Architecture quality explanations are perfect for:
 - **Strategic planning** by understanding architectural dependencies and reinforcement
 - **Knowledge sharing** when explaining why certain components are architecturally strong or problematic
 
-For deeper context on architecture quality, see the [Architecture Quality](../../docs/capabilities/architecture-quality.md) documentation.
+For deeper context on architecture quality, see the [Architecture Quality](../capabilities/architecture-quality.md) documentation.
 
 #### Open Source Health
 
@@ -156,7 +156,7 @@ Perfect for:
 - **Compliance and risk management** connecting technical vulnerabilities to business and regulatory consequences
 - **Decision-makers** weighing the cost and urgency of dependency updates against business priorities
 
-For deeper context on open source health, see the [Open Source Health](../../docs/capabilities/system-open-source-health.md) documentation.
+For deeper context on open source health, see the [Open Source Health](../capabilities/system-open-source-health.md) documentation.
 
 ### Which technologies are covered by the GenAI Explanations?
 Technology availability for GenAI Explanations depends on the capability you are evaluating.
