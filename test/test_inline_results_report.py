@@ -15,11 +15,13 @@
 import contextlib
 import io
 import json
+import os
 from unittest import TestCase
 
 from sigridci.sigridci.publish_options import PublishOptions, RunMode
 from sigridci.sigridci.reports.inline_results_report import MaintainabilityInlineResultsReport, \
-    OpenSourceHealthInlineResultsReport, SecurityInlineResultsReport
+    OpenSourceHealthInlineResultsReport, SecurityInlineResultsReport, InlineResultsReport
+from sigridci.sigridci.capability import ARCHITECTURE, MAINTAINABILITY, OPEN_SOURCE_HEALTH
 
 
 class InlineResultsReportTest(TestCase):
@@ -125,7 +127,7 @@ class InlineResultsReportTest(TestCase):
             ]
         }
 
-        report = OpenSourceHealthInlineResultsReport(self.options)
+        report = OpenSourceHealthInlineResultsReport(self.options, {})
         payload = report.buildPayload(feedback, self.options)
 
         self.assertEqual("osh", payload["capability"])
@@ -163,7 +165,7 @@ class InlineResultsReportTest(TestCase):
             ]
         }
 
-        report = SecurityInlineResultsReport(self.options)
+        report = SecurityInlineResultsReport(self.options, {})
         payload = report.buildPayload(feedback, self.options)
 
         self.assertEqual("security", payload["capability"])
@@ -180,14 +182,47 @@ class InlineResultsReportTest(TestCase):
         self.assertEqual("Introduced", finding["status"])
 
     def testGeneratePrintsCapabilityNameThenCompactSingleLineJson(self):
+        self.options.capabilities = [MAINTAINABILITY]
         feedback = {"baseline": "20220110", "baselineRatings": {}, "newCodeRatings": {}, "refactoringCandidates": []}
-        report = MaintainabilityInlineResultsReport()
+        report = InlineResultsReport({})
 
         with contextlib.redirect_stdout(io.StringIO()) as output:
-            report.generate("1234", feedback, self.options)
+            report.generate("1234", {MAINTAINABILITY : feedback}, self.options)
 
         lines = output.getvalue().splitlines()
         self.assertEqual(2, len(lines))
         self.assertEqual("Inline results: maintainability", lines[0])
         parsed = json.loads(lines[1])
         self.assertEqual("maintainability", parsed["capability"])
+
+    def testGenerateArchitectureFeedback(self):
+        self.options.capabilities = [ARCHITECTURE]
+        with open(os.path.dirname(__file__) + "/testdata/architecture.json", encoding="utf-8", mode="r") as f:
+            feedback = json.load(f)
+        report = InlineResultsReport({})
+
+        with contextlib.redirect_stdout(io.StringIO()) as output:
+            report.generate("1234", {ARCHITECTURE : feedback}, self.options)
+
+        output = json.loads(output.getvalue().strip().split("\n")[1])
+
+        self.assertEqual(len(output["findings"]), 2)
+
+    def testOpenSourceHealthFeedbackShouldBeRelativeToPrevious(self):
+        self.options.capabilities = [OPEN_SOURCE_HEALTH]
+
+        with open(os.path.dirname(__file__) + "/testdata/osh-junit.json", encoding="utf-8", mode="r") as f:
+            feedback = {OPEN_SOURCE_HEALTH : json.load(f)}
+
+        with open(os.path.dirname(__file__) + "/testdata/osh-junit-previous.json", encoding="utf-8", mode="r") as f:
+            previousFeedback = {OPEN_SOURCE_HEALTH : json.load(f)}
+
+        report = InlineResultsReport({})
+        report.previousFeedback = previousFeedback
+
+        with contextlib.redirect_stdout(io.StringIO()) as output:
+            report.generate("1234", feedback, self.options)
+
+        output = json.loads(output.getvalue().strip().split("\n")[1])
+
+        self.assertEqual(output["baseline"], "2025-09-18")

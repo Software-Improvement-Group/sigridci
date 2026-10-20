@@ -20,16 +20,17 @@ from unittest.mock import patch
 
 from sigridci.sigridci.publish_options import PublishOptions, RunMode
 from sigridci.sigridci.reports.azure_pull_request_report import AzurePullRequestReport
-from sigridci.sigridci.reports.maintainability_markdown_report import MaintainabilityMarkdownReport
+from sigridci.sigridci.capability import MAINTAINABILITY
+from sigridci.sigridci.reports.combined_markdown_feedback_report import CombinedMarkdownFeedbackReport
 
 
 class AzurePullRequestReportTest(TestCase):
 
     def testCommentIsDependentOnStatus(self):
-        options = PublishOptions("aap", "noot", RunMode.FEEDBACK_ONLY)
-        good = {"newCodeRatings" : {"MAINTAINABILITY" : 5.0}}
-        bad = {"newCodeRatings" : {"MAINTAINABILITY" : 2.0}}
-        report = AzurePullRequestReport(MaintainabilityMarkdownReport())
+        options = PublishOptions("aap", "noot", RunMode.FEEDBACK_ONLY, capabilities=[MAINTAINABILITY])
+        good = {MAINTAINABILITY : {"newCodeRatings" : {"MAINTAINABILITY" : 5.0}}}
+        bad = {MAINTAINABILITY : {"newCodeRatings" : {"MAINTAINABILITY" : 2.0}}}
+        report = AzurePullRequestReport(CombinedMarkdownFeedbackReport({}))
 
         self.assertEqual("closed", report.buildRequestBody("", good, options)["status"])
         self.assertEqual("closed", report.buildRequestBody("", bad, options)["status"])
@@ -52,8 +53,8 @@ class AzurePullRequestReportTest(TestCase):
         }
 
         azure = MockAzure(mockAzureResponse)
-        options = PublishOptions("aap", "noot", RunMode.FEEDBACK_ONLY, tempDir, outputDir=tempDir)
-        feedback = {"newCodeRatings": {}, "baselineRatings": {}}
+        options = PublishOptions("aap", "noot", RunMode.FEEDBACK_ONLY, tempDir, capabilities=[MAINTAINABILITY])
+        feedback = {MAINTAINABILITY : {"newCodeRatings": {}, "baselineRatings": {}, "changedCodeBeforeRatings" : {}}}
         azure.generate("1234", feedback, options)
 
         self.assertEqual(["GET", "POST"], azure.calledEndPoints)
@@ -65,7 +66,7 @@ class AzurePullRequestReportTest(TestCase):
         "SYSTEM_PULLREQUEST_PULLREQUESTID": "123",
     }, clear=True)
     def testBuildURLEncodesRepositoryNameWithSpaces(self):
-        report = AzurePullRequestReport(MaintainabilityMarkdownReport())
+        report = AzurePullRequestReport(CombinedMarkdownFeedbackReport({}))
         url = report.buildURL(None)
 
         self.assertNotIn(" ", url)
@@ -79,7 +80,7 @@ class AzurePullRequestReportTest(TestCase):
         "SYSTEM_PULLREQUEST_PULLREQUESTID": "123",
     }, clear=True)
     def testBuildURLPrefersRepositoryId(self):
-        report = AzurePullRequestReport(MaintainabilityMarkdownReport())
+        report = AzurePullRequestReport(CombinedMarkdownFeedbackReport({}))
         url = report.buildURL(None)
 
         self.assertIn("00000000-0000-0000-0000-000000000000", url)
@@ -103,8 +104,8 @@ class AzurePullRequestReportTest(TestCase):
         }
 
         azure = MockAzure(mockAzureResponse)
-        options = PublishOptions("aap", "noot", RunMode.FEEDBACK_ONLY, tempDir, outputDir=tempDir)
-        feedback = {"newCodeRatings": {}, "baselineRatings": {}}
+        options = PublishOptions("aap", "noot", RunMode.FEEDBACK_ONLY, tempDir, capabilities=[MAINTAINABILITY])
+        feedback = {MAINTAINABILITY : {"newCodeRatings": {}, "baselineRatings": {}, "changedCodeBeforeRatings" : {}}}
         azure.generate("1234", feedback, options)
 
         self.assertEqual(["GET", "PATCH"], azure.calledEndPoints)
@@ -112,7 +113,7 @@ class AzurePullRequestReportTest(TestCase):
 
 class MockAzure(AzurePullRequestReport):
     def __init__(self, response):
-        super().__init__(MaintainabilityMarkdownReport())
+        super().__init__(CombinedMarkdownFeedbackReport({}))
         self.response = response
         self.calledEndPoints = []
 

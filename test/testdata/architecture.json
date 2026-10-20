@@ -19,6 +19,12 @@
           "type": "CODE_COMPONENT"
         },
         {
+          "id": "c3f928b9df8ce11aeb58ffea7e72d35f546fefd24b51a7191659ca077068cf4d",
+          "name": "b1",
+          "shortName": "b1",
+          "type": "CODE_COMPONENT"
+        },
+        {
           "id": "cc643a40462568f1cc2d4a1427050d33f00b9c1cc47438a98fc868bb84bfc24b",
           "name": "b/b.ts",
           "shortName": "b.ts",
@@ -68,6 +74,18 @@
           "id": "c3f928b9df8ce11aeb58ffea7e72d35f546fefd24b51a7191659ca077068cf4d",
           "name": "b",
           "shortName": "b",
+          "type": "CODE_COMPONENT"
+        },
+        {
+          "id": "c3f928b9df8ce11aeb58ffea7e72d35f546fefd24b51a7191659ca077068cf4d",
+          "name": "b1",
+          "shortName": "b1",
+          "type": "CODE_COMPONENT"
+        },
+        {
+          "id": "c3f928b9df8ce11aeb58ffea7e72d35f546fefd24b51a7191659ca077068cf4d",
+          "name": "b11",
+          "shortName": "b11",
           "type": "CODE_COMPONENT"
         },
         {
