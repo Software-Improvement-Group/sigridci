@@ -68,6 +68,7 @@ class SigridCiRunner:
 
         self.prepareMetadata()
         self.validateConfigurationFiles(metadata)
+        self.logCommonIssues()
         analysisId = self.apiClient.submitUpload(systemExists)
 
         if not systemExists:
@@ -176,3 +177,20 @@ class SigridCiRunner:
                 for name, value in metadata.items():
                     formattedValue = json.dumps([value]) if name in ["teamNames", "supplierNames"] else json.dumps(value)
                     writer.write(f"  {name}: {formattedValue}\n")
+
+    def logCommonIssues(self) -> None:
+        scope = self.options.readScopeFile()
+
+        # We can't use a YAML library to parse the scope
+        # file, but checking for this flag is not particularly
+        # error-prone.
+        if scope and "transitive: true" in scope:
+            if self.isMissingRequiredFile(["pom.xml"], "maven.tree"):
+                self.telemetry.trackCommonIssue("transitive-maven-without-tree")
+            if self.isMissingRequiredFile(["build.gradle", "build.gradle.kts"], "maven.tree"):
+                self.telemetry.trackCommonIssue("transitive-gradle-without-tree")
+
+    def isMissingRequiredFile(self, indicatingFileNames: list[str], requiredFileName: str) -> bool:
+        sourceDir = self.options.sourceDir
+        hasIndicatingFile = any(name for name in indicatingFileNames if os.path.exists(f"{sourceDir}/{name}"))
+        return hasIndicatingFile and not os.path.exists(f"{sourceDir}/{requiredFileName}")
