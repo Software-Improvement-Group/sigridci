@@ -537,7 +537,7 @@ sig-toc .h4 {
     cursor: pointer;
 }
 
-.awesomplete li::before {
+.awesomplete li::before, .DocSearch-Modal li::before {
     content: '';
 }
 
