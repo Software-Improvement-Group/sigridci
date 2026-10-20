@@ -3,6 +3,7 @@
     <head>
         <meta charset="UTF-8" />
         <title>Sigrid documentation</title>
+        <link rel="canonical" href="https://docs.sigrid-says.com{{ page.url }}" />
         <meta name="viewport" content="initial-scale=1.0, width=device-width, user-scalable=no">
         <link rel="shortcut icon" type="image/x-icon" href="/images/favicon.png" />
         <link rel="apple-touch-icon" href="/images/favicon-ios.png" />
@@ -13,8 +14,8 @@
             {% include lifecycle.css %}
         </style>
         
-        <script src="https://cdn.jsdelivr.net/npm/lunr@2.3.9/lunr.js"></script>
-        <script src="https://cdn.jsdelivr.net/npm/awesomplete@1.1.7/awesomplete.min.js"></script>
+               <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@docsearch/css@5.1.0/dist/style.css" />
+        <script src="https://cdn.jsdelivr.net/npm/@docsearch/js@5.1.0/dist/umd/docsearch.js"></script>
     </head>
     
     <body>
@@ -71,7 +72,13 @@
             {% include section-links.js %}
             {% include tables.js %}
             {% include stats.js %}
-            {% include search.js %}
+                        docsearch({
+                container: "#docsearch",
+                appId: "19YBXPNK1F",
+                apiKey: "b8d1705a0909515fb80af13bd77f8a70",
+                indices: ["Sigrid Docs"],
+                placeholder: "Search documentation"
+            });
         </script>
     </body>
 </html>
