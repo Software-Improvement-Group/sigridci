@@ -16,6 +16,7 @@ import base64
 import json
 import os
 import ssl
+import urllib.parse
 import urllib.request
 from dataclasses import asdict, dataclass
 from io import StringIO
@@ -71,7 +72,10 @@ class GerritReport(Report):
         )
 
     def postGerritComment(self, credentials: GerritCredentials, comment: str) -> None:
-        url = f"{credentials.baseURL}/a/changes/{credentials.repo}~{credentials.branch}~{credentials.changeID}/revisions/current/review"
+        repo = urllib.parse.quote(credentials.repo, safe="")
+        branch = urllib.parse.quote(credentials.branch, safe="")
+
+        url = f"{credentials.baseURL}/a/changes/{repo}~{branch}~{credentials.changeID}/revisions/current/review"
         body = {"message" : comment}
         basicAuth = base64.b64encode(f"{credentials.user}:{credentials.password}".encode("utf8"))
 
@@ -79,5 +83,8 @@ class GerritReport(Report):
         request.add_header("Content-Type", "application/json")
         request.add_header("Authorization", f"Basic {basicAuth}")
 
-        api = ApiCaller("Gerrit", pollInterval=5)
-        return api.retryRequest(lambda: urllib.request.urlopen(request, context=self.sslContext))
+        try:
+            api = ApiCaller("Gerrit", pollInterval=5)
+            api.retryRequest(lambda: urllib.request.urlopen(request, context=self.sslContext))
+        except SystemExit as e:
+            print(f"Failed to publish feedback to Gerrit: {e}")
