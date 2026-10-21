@@ -59,7 +59,7 @@ class GerritReport(Report):
         buffer = StringIO()
         plainTextReport = CombinedTextReport(self.masterReport, output=buffer)
         plainTextReport.generate(analysisId, feedback, options)
-        self.postGerritComment(credentials, plainTextReport.ANSI_PATTERN.sub("", buffer.getvalue()))
+        self.postGerritComment(credentials, self.masterReport.renderMarkdown(analysisId, feedback, options))
 
     def getCredentials(self) -> GerritCredentials:
         return GerritCredentials(
