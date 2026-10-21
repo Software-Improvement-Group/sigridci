@@ -15,7 +15,6 @@
 import base64
 import json
 import os
-import re
 import ssl
 import urllib.parse
 import urllib.request
@@ -78,7 +77,7 @@ class GerritReport(Report):
 
         url = f"{credentials.baseURL}/a/changes/{repo}~{branch}~{credentials.changeID}/revisions/current/review"
         body = {"message" : comment}
-        basicAuth = base64.b64encode(f"{credentials.user}:{credentials.password}".encode("utf8"))
+        basicAuth = base64.b64encode(f"{credentials.user}:{credentials.password}".encode("utf8")).decode("ascii")
 
         request = urllib.request.Request(url, json.dumps(body).encode("utf-8"))
         request.add_header("Content-Type", "application/json")
