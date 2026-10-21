@@ -80,7 +80,7 @@ SIG uses [continuous delivery](https://en.wikipedia.org/wiki/Continuous_delivery
 
 ### June 15, 2026
 
-- **IDE integrations:** The Sigrid extension for [Visual Studio Code](https://github.com/Software-Improvement-Group/sigrid-vscode-extension) now allows you to export Sigrid findings to [https://www.atlassian.com/software/jira](JIRA). You can use this in a process where you first triage Sigrid findings in your IDE, then mark certain findings as "will fix", then automatically create a JIRA issue based on those findings.
+- **IDE integrations:** The Sigrid extension for [Visual Studio Code](https://github.com/Software-Improvement-Group/sigrid-vscode-extension) now allows you to export Sigrid findings to [JIRA](https://www.atlassian.com/software/jira). You can use this in a process where you first triage Sigrid findings in your IDE, then mark certain findings as "will fix", then automatically create a JIRA issue based on those findings.
 - **IDE integrations:** A beta version of the [Sigrid extension for JetBrains IDEs](https://github.com/Software-Improvement-Group/sigrid-jetbrains-plugin) is now available. It offers similar functionality as the Sigrid IDE integrations for Visual Studio Code and Mendix Studio Pro. Instructions and downloads for the beta version are available from GitHub. 
 - **On-premise:** The support page in the Sigrid UI now shows the Sigrid version number for on-premise deployments, instead of only a commit SHA. See the [On-premise release notes](../organization-integration/onpremise-release-notes.md) for details.
 
@@ -500,8 +500,8 @@ SIG uses [continuous delivery](https://en.wikipedia.org/wiki/Continuous_delivery
 
 ### November 20, 2023
 
-- **Dashboard:** It is now possible to view progress towards your portfolio objectives in two ways: Via the overall Sigrid portfolio dashboard (which already existed), and via the newly added "objectives" page. The latter gives you a more high-level overview of your overall objectives, without diving into the specifics regarding teams or systems. You can find more information in the [portfolio objectives documentation](..//capabilities/portfolio-objectives.md).
-- **Open Source Health:** Sigrid is now able to import SBOM (Software Bill Of Materials) produced by other tools. The [SBOM standard](https://en.wikipedia.org/wiki/Software_supply_chain) is emerging as the de-facto standard for software supply chains. Sigrid was already able to *export* SBOM information, but it is now also able to *import* SBOMs. Instructions are available on how to [import SBOMs into Sigrid](../integrations/integration-sbom/md).
+- **Dashboard:** It is now possible to view progress towards your portfolio objectives in two ways: Via the overall Sigrid portfolio dashboard (which already existed), and via the newly added "objectives" page. The latter gives you a more high-level overview of your overall objectives, without diving into the specifics regarding teams or systems. You can find more information in the [portfolio objectives documentation](../capabilities/portfolio-objectives.md).
+- **Open Source Health:** Sigrid is now able to import SBOM (Software Bill Of Materials) produced by other tools. The [SBOM standard](https://en.wikipedia.org/wiki/Software_supply_chain) is emerging as the de-facto standard for software supply chains. Sigrid was already able to *export* SBOM information, but it is now also able to *import* SBOMs. Instructions are available on how to [import SBOMs into Sigrid](../integrations/integration-sbom.md).
 
 ### November 6, 2023
 
