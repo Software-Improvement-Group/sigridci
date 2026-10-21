@@ -19,9 +19,7 @@ import ssl
 import urllib.parse
 import urllib.request
 from dataclasses import asdict, dataclass
-from io import StringIO
 
-from .combined_text_report import CombinedTextReport
 from .report import Report
 from ..api_caller import ApiCaller
 from ..publish_options import PublishOptions, RunMode
@@ -56,10 +54,8 @@ class GerritReport(Report):
             UploadLog.log("Incomplete Gerrit credentials, skipping Gerrit integration.")
             return
 
-        buffer = StringIO()
-        plainTextReport = CombinedTextReport(self.masterReport, output=buffer)
-        plainTextReport.generate(analysisId, feedback, options)
-        self.postGerritComment(credentials, self.masterReport.renderMarkdown(analysisId, feedback, options))
+        markdown = self.masterReport.renderMarkdown(analysisId, feedback, options)
+        self.postGerritComment(credentials, markdown)
 
     def getCredentials(self) -> GerritCredentials:
         return GerritCredentials(
