@@ -14,7 +14,6 @@
 
 import inspect
 import json
-import re
 from io import StringIO
 from unittest import TestCase
 
@@ -26,8 +25,6 @@ from sigridci.sigridci.reports.combined_text_report import CombinedTextReport
 
 class CombinedMarkdownFeedbackReportTest(TestCase):
     maxDiff = None
-
-    ANSI_PATTERN = re.compile(r'\x1b\[[0-9;]*m')
 
     def setUp(self):
         self.options = PublishOptions(
@@ -58,4 +55,4 @@ class CombinedMarkdownFeedbackReportTest(TestCase):
         with open("test/testdata/expected-combined-text-report.txt", "r", encoding="utf8") as f:
             expected = f.read()
 
-        self.assertEqual(inspect.cleandoc(expected), self.ANSI_PATTERN.sub("", buffer.getvalue().strip()))
+        self.assertEqual(inspect.cleandoc(expected), report.ANSI_PATTERN.sub("", buffer.getvalue().strip()))

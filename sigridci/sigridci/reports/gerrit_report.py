@@ -15,6 +15,7 @@
 import base64
 import json
 import os
+import re
 import ssl
 import urllib.parse
 import urllib.request
@@ -59,7 +60,7 @@ class GerritReport(Report):
         buffer = StringIO()
         plainTextReport = CombinedTextReport(self.masterReport, output=buffer)
         plainTextReport.generate(analysisId, feedback, options)
-        self.postGerritComment(credentials, buffer.getvalue())
+        self.postGerritComment(credentials, plainTextReport.ANSI_PATTERN.sub("", buffer.getvalue()))
 
     def getCredentials(self) -> GerritCredentials:
         return GerritCredentials(
