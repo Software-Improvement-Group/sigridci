@@ -635,8 +635,31 @@ The `status` field is an enum. The possible values depend on the type of finding
 
 These values correspond to the finding status you see in the Sigrid user interface.
 
+For security and reliability findings, you can also update the severity, impact, and exploitability of a finding. These
+fields are part of the same request body:
+
+```json
+{
+  "severity": "HIGH",
+  "impact": "HIGH",
+  "exploitability": "MEDIUM"
+}
+```
+
+Each of these fields accepts the following values, listed from most to least severe:
+
+- `CRITICAL`
+- `HIGH`
+- `MEDIUM`
+- `LOW`
+- `INFORMATION`
+
+When you update the severity, impact, or exploitability, you must send all three values in the same request. Do not send
+only one or two of them.
+
 All of the fields in the request body are optional. If you do not specify a field, the finding will retain its
-existing value for that field. If you want to explicitly clear a field, you can set it to `null`.
+existing value for that field. If you want to explicitly clear a field, you can set it to `null`. The exception is
+severity, impact, and exploitability, which are always updated as a group, as described above.
 
 This end point returns HTTP status 204 upon success, there is no response body.
 
