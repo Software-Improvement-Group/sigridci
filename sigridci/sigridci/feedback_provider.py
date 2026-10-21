@@ -22,6 +22,7 @@ from .reports.azure_pull_request_report import AzurePullRequestReport
 from .reports.bitbucket_pull_request_report import BitBucketPullRequestReport
 from .reports.combined_markdown_feedback_report import CombinedMarkdownFeedbackReport
 from .reports.combined_text_report import CombinedTextReport
+from .reports.gerrit_report import GerritReport
 from .reports.github_pull_request_report import GitHubPullRequestReport
 from .reports.gitlab_pull_request_report import GitLabPullRequestReport
 from .reports.inline_results_report import InlineResultsReport
@@ -93,6 +94,7 @@ class FeedbackProvider:
             GitLabPullRequestReport(masterReport),
             AzurePullRequestReport(masterReport),
             BitBucketPullRequestReport(masterReport),
+            GerritReport(masterReport),
             # The plain text output always goes last, so that the last thing
             # you see in the command line output is the summary.
             CombinedTextReport(masterReport)
