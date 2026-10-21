@@ -86,6 +86,6 @@ class GerritReport(Report):
         try:
             api = ApiCaller("Gerrit", pollInterval=5)
             api.retryRequest(lambda: urllib.request.urlopen(request, context=self.sslContext))
-            UploadLog.log("Posted feeback to Gerrit")
+            UploadLog.log("Posted feedback to Gerrit")
         except SystemExit as e:
             UploadLog.log(f"Failed to publish feedback to Gerrit: {e}")
