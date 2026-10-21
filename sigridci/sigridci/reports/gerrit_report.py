@@ -76,7 +76,11 @@ class GerritReport(Report):
         branch = urllib.parse.quote(credentials.branch, safe="")
 
         url = f"{credentials.baseURL}/a/changes/{repo}~{branch}~{credentials.changeID}/revisions/current/review"
-        body = {"message" : comment}
+        body = {
+            "comments": {
+                "/PATCHSET_LEVEL": [{"message": comment, "unresolved": False}]
+            }
+        }
         basicAuth = base64.b64encode(f"{credentials.user}:{credentials.password}".encode("utf8")).decode("ascii")
 
         request = urllib.request.Request(url, json.dumps(body).encode("utf-8"))
