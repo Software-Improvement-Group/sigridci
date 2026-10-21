@@ -73,10 +73,11 @@ class GerritReport(Report):
     def postGerritComment(self, credentials: GerritCredentials, comment: str) -> None:
         url = f"{credentials.baseURL}/a/changes/{credentials.repo}~{credentials.branch}~{credentials.changeID}/revisions/current/review"
         body = {"message" : comment}
+        basicAuth = base64.b64encode(f"{credentials.user}:{credentials.password}".encode("utf8"))
 
         request = urllib.request.Request(url, json.dumps(body).encode("utf-8"))
         request.add_header("Content-Type", "application/json")
-        request.add_header("Authorization", f"Basic {base64.b64encode(f"{credentials.user}:{credentials.password}".encode()).decode()}")
+        request.add_header("Authorization", f"Basic {basicAuth}")
 
         api = ApiCaller("Gerrit", pollInterval=5)
         return api.retryRequest(lambda: urllib.request.urlopen(request, context=self.sslContext))
