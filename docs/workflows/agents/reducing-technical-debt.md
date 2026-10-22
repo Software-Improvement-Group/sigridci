@@ -26,7 +26,7 @@ Ask an agent to "improve maintainability in this repository" and it will do some
 
 An agent picks its targets from the files it has read. On a large codebase, that is a handful out of thousands, and nothing says those are the ones that matter.
 
-It also does not know what counts. Sigrid's rating is based on how much of your code is in bad shape, so one enormous method can weigh more than twenty small ones. An agent judging by eye goes for the findings that look worst, or the ones that are quickest to close. It can close eleven small findings, report a successful run, and leave the rating exactly where it was.
+It also does not know what counts. Sigrid's rating is based on how much of your code is in bad shape, so one enormous method can weigh more than twenty small ones. An agent judging by eye goes for the findings that look worst, or the ones that are quickest to close. Eleven small findings closed reads like a successful run.
 
 Sigrid knows which property is weakest, which code carries the most weight, and which pieces show up under several properties at once, where one fix improves more than one rating. You know what no rating can tell it: the conventions of your codebase, and how much change you are willing to review in one go.
 
@@ -63,7 +63,7 @@ The session takes two commands, and the order matters. The first one plans:
 /diagnose maintainability
 ```
 
-The skill fetches the ratings of all seven maintainability properties, pulls the top candidates for each, and reasons across them. On a system whose duplication is weakest, what comes back is not just "duplication is 1.3 stars" but the shape behind it: a concentrated cluster of a few enormous clones, or a long tail of medium ones. Those call for different work. A cluster of near-identical DAO classes is one structural fix, not eleven separate ones. Candidates that appear under two or more properties come first, since a 300-line method that is also a duplication finding improves two ratings at once.
+The skill fetches the ratings of all seven maintainability properties, pulls the top candidates for each, and reasons across them. On a system whose duplication is weakest, the report goes past "duplication is 1.3 stars" to the shape behind it: a concentrated cluster of a few enormous clones, or a long tail of medium ones. Those call for different work. A cluster of near-identical DAO classes is one structural fix, not eleven separate ones. Candidates that appear under two or more properties come first, since a 300-line method that is also a duplication finding improves two ratings at once.
 
 The report names one primary candidate and the runner-ups, each as a problem and a solution in terms of the code. It also lists the candidates it rejected and the rule that removed each one: generated or test code, a finding your team already marked `ACCEPTED`, a fix that would make another property worse, or a fix that needs a change to a public API or a serialized format.
 
