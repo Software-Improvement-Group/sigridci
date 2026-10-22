@@ -50,7 +50,7 @@ to use the SIG Upload Portal in situations where you are unable to use Sigrid CI
 ## Uploading multiple Git repositories as a single Sigrid system
 
 If you need to combine several Git repositories into one Sigrid system for a one-off upload, 
-you can use [multi repository upload script](../../multi-repository-upload/README.md) provided by SIG
+you can use [multi repository upload script](https://github.com/Software-Improvement-Group/sigridci/tree/main/multi-repository-upload) provided by SIG
 on GitHub. The project documentation contains more instructions and examples on how to use this script.
 
 ## Contact and support

@@ -87,4 +87,4 @@ class PublishOptions:
     def getMaxShownFindings(self) -> int:
         if self.detailLevel == "full":
             return 9999
-        return 8
+        return 10
