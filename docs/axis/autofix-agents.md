@@ -58,7 +58,7 @@ Security, reliability, and open source health are findings-based models: they pr
 /triage-findings security under src/payments/
 ```
 
-`triage-findings` reads each flagged location and decides: false positive, accepted risk, needs a person, or will fix. A false positive or an accepted risk has to cite a file and a line. For security and reliability, each decision goes back to Sigrid as a finding status with a re-evaluated severity, and the evidence goes in the remark. What needs a person comes back as a list, with the blocker for each. [Triaging security and reliability findings](../workflows/agents/triaging-security-and-reliability-findings.md) walks through a session.
+`triage-findings` reads each flagged location and decides: false positive, accepted risk, needs a person, or will fix. A false positive or an accepted risk has to cite a file and a line. For security and reliability, each decision goes back to Sigrid as a finding status, and the evidence goes in the remark. Findings other than false positives also get a re-evaluated severity. What needs a person comes back as a list, with the blocker for each. [Triaging security and reliability findings](../workflows/agents/triaging-security-and-reliability-findings.md) walks through a session.
 
 For open source findings, it groups the findings per dependency and researches the remediation options in public advisories and registries. See [`triage-findings`](skills.md#triage-findings) in the skills reference.
 
