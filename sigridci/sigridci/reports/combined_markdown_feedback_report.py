@@ -201,7 +201,7 @@ class CombinedMarkdownFeedbackReport(Report):
     def renderFooter(self, options: PublishOptions) -> str:
         md = "----\n\n"
         md += f"[**View this system in Sigrid**]({self.getSigridUrl(options)})\n\n"
-        if options.feedbackURL:
+        if options.feedbackURL and Platform.isMarkdownImagesSupported():
             telemetry = Telemetry(options)
             url = telemetry.getURL("sigridci.feedbackview", "sigridci.feedbackview")
             md += f"![© Software Improvement Group]({url})"
