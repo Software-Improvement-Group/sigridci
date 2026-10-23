@@ -73,6 +73,10 @@ class Platform:
         return Platform.isGitHub() or Platform.isGitLab() or Platform.isAzureDevOps()
 
     @staticmethod
+    def isMarkdownImagesSupported() -> bool:
+        return "GERRIT_BASE_URL" not in os.environ
+
+    @staticmethod
     def createPullRequestFileURL(file: str, line: int = 0) -> Union[str, None]:
         encodePath = lambda value: urllib.parse.quote(value, safe="/")
 

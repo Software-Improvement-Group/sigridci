@@ -12,6 +12,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
+import re
 import sys
 from typing import TextIO
 
@@ -27,6 +28,7 @@ class CombinedTextReport(Report):
     ANSI_RED = "\033[1m\033[91m"
     ANSI_MAGENTA = "\033[1m\033[35m"
     ANSI_END = "\033[0m"
+    ANSI_PATTERN = re.compile(r'\x1b\[[0-9;]*m')
 
     def __init__(self, masterReport: CombinedMarkdownFeedbackReport, output: TextIO = sys.stdout):
         self.masterReport = masterReport
