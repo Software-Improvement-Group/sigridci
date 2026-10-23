@@ -10,7 +10,7 @@ Guided runs come out measurably better. We built the same system 20 times with C
 
 Use it whenever an agent writes code. How closely you read the result is a separate question from whether the code has to be secure and maintainable: anything you deploy, or come back to in six months, has to be both. If you read every diff, Guardrails saves you the review comments you were about to write. If you are vibe coding, it is the only thing between you and whatever the agent happened to produce.
 
-For clearing out technical debt that is already there, which is a different job with a different setup, see [reducing technical debt](reducing-technical-debt.md).
+To clear out technical debt that is already there, see [reducing technical debt](reducing-technical-debt.md).
 
 ## Prerequisites
 
@@ -42,7 +42,7 @@ The plugin configures the Sigrid Axis MCP server and the skills together:
 
 The plugin asks for your Sigrid API token once and stores it in your system keychain. See [authentication tokens](../../organization-integration/authentication-tokens.md) for how to get one. In another agentic tool, [connect the MCP server](../../axis/installation.md#1-connect-the-mcp-server) instead. You need at least the `guardrails_quality_check` tool.
 
-The plugin's hook adds an instruction to every prompt you send: before reporting a task done, run the Guardrails check on the production code you changed, and fix the maintainability findings, leaving one only when the code already honors the principles. See [the exact text](../../axis/guardrails.md#other-tools). Other tools need that trigger added by hand; see [set up the quality gate](../../axis/guardrails.md#other-tools).
+The plugin's hook adds the quality gate to every prompt you send: before reporting a task done, run the Guardrails check on the production code you changed, and fix the maintainability findings, leaving one only when the code already honors the principles. Step 2 shows the exact text, for tools that need it added by hand.
 
 Check it works before you rely on it:
 
@@ -54,7 +54,7 @@ The tool takes one file at a time, and returns the maintainability guidelines th
 
 ### 2. Add the quality gate in other tools
 
-On Claude Code, the hook already adds the quality gate, so skip this step. In another tool, this step is where the trigger comes from, so put this block in `AGENTS.md`:
+On Claude Code, the hook already adds this text, so skip this step. In another tool, nothing adds it for you, so put it in `AGENTS.md`:
 
 {% include axis/quality-gate-prompt.md %}
 
@@ -113,7 +113,7 @@ Which files did you run the quality check on? List them against the files you ch
 
 ## Where to go next
 
-Vulnerable dependencies and duplication spread across files need the analysis of the whole system, which is what `change-feedback` runs before you push. From there:
+Guardrails keeps new problems out of the code the agent writes. For the drift check in a real session, and for the problems your system already has, see:
 
 - [Preventing architecture drift](preventing-architecture-drift.md) for a session where the drift check catches a bypassed facade
 - [Reducing technical debt](reducing-technical-debt.md) for the debt that is already there

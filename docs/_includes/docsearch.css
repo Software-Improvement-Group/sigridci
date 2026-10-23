@@ -1,0 +1,29 @@
+:root {
+    --docsearch-primary-color: var(--sig-blue);
+    --docsearch-highlight-color: var(--sig-blue);
+    --docsearch-focus-color: var(--sig-blue);
+    --docsearch-text-color: var(--sig-text-black);
+    --docsearch-hit-color: var(--sig-text-gray);
+    --docsearch-secondary-text-color: var(--sig-text-gray);
+    --docsearch-key-color: var(--sig-text-gray);
+    --docsearch-icon-color: var(--sig-text-gray);
+    --docsearch-muted-color: var(--sig-dark-gray);
+    --docsearch-subtle-color: var(--sig-border-gray);
+    --docsearch-background-color: var(--sig-light);
+    --docsearch-font-family: inherit;
+    --docsearch-border-radius: 8px;
+    --docsearch-modal-radius: 8px;
+}
+
+.searchForm {
+    display: grid;
+    padding: 24px 16px 16px 16px;
+}
+
+.searchForm #docsearch {
+    display: grid;
+}
+
+.searchForm .DocSearch-Button-Placeholder {
+    font-size: 14px;
+}

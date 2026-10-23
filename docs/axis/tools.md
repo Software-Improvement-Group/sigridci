@@ -22,7 +22,7 @@ Every tool except `guardrails_quality_check` takes a `customer` and a `system`, 
 | `opensource_get_risks` | [Auto-fix Agents](autofix-agents.md) |
 | `opensource_get_vulnerabilities` | [Auto-fix Agents](autofix-agents.md) |
 | `get_finding` | [Auto-fix Agents](autofix-agents.md) |
-| `update_finding_status` | [Auto-fix Agents](autofix-agents.md) |
+| `update_finding` | [Auto-fix Agents](autofix-agents.md) |
 | `architecture_get_internal` | [Auto-fix Agents](autofix-agents.md) |
 | `architecture_get_external_deps` | [Auto-fix Agents](autofix-agents.md) |
 | `architecture_get_worst_dirs` | [Auto-fix Agents](autofix-agents.md) |
@@ -43,7 +43,7 @@ See [supported technologies](guardrails.md#supported-technologies).
 - `component`: set to true for ratings per component instead of for the whole system.
 - `technology`: set to true to add statistics per technology.
 
-`maintainability_get_findings` returns the refactoring candidates for one [maintainability property](../reference/sig-quality-models.md), ranked by their weight in the rating. Each candidate has an `id` to pass to `update_finding_status`.
+`maintainability_get_findings` returns the refactoring candidates for one [maintainability property](../reference/sig-quality-models.md), ranked by their weight in the rating. Each candidate has an `id` to pass to `update_finding`.
 
 - `system_property`: one of `duplication`, `unitSize`, `unitComplexity`, `unitInterfacing`, `moduleCoupling`, `componentIndependence`, or `componentEntanglement`.
 - `count`: how many candidates to return. The default is 20.
@@ -52,9 +52,9 @@ See [supported technologies](guardrails.md#supported-technologies).
 
 ## Security and reliability
 
-`security_get_findings` returns open security findings, ranked by severity and then by exploitability, with CWE identifiers and file locations. `reliability_get_findings` does the same for reliability findings, such as error handling, concurrency, and resource management. Each finding has an `id` to pass to `get_finding` and `update_finding_status`. Both take the same parameters:
+`security_get_findings` returns open security findings, ranked by severity and then by exploitability, with CWE identifiers and file locations. `reliability_get_findings` does the same for reliability findings, such as error handling, concurrency, and resource management. Each finding has an `id` to pass to `get_finding` and `update_finding`. Both take the same parameters:
 
-- `severity_min`: `LOW` (the default), `MEDIUM`, `HIGH`, or `CRITICAL`.
+- `severity_min`: `INFORMATION`, `LOW` (the default), `MEDIUM`, `HIGH`, or `CRITICAL`. The default leaves out `INFORMATION`.
 - `model`: the security model, one of `ow10`, `sigsec`, `5055sec`, `c25`, `pci4`, `owasvs4c`, `owasvs4s`, or `lcnc10`. For reliability, `sigrel` or `5055rel`. Leave it out for your organization's default.
 - `path_prefix`: only findings under this file path. Long, specific prefixes work best.
 - `limit`: at most 100. The default is 25.
@@ -70,7 +70,7 @@ See [supported technologies](guardrails.md#supported-technologies).
 
 `opensource_get_vulnerabilities` returns the known CVEs in your dependencies, ranked by CVSS score.
 
-- `severity_min`: `LOW`, `MEDIUM` (the default), `HIGH`, or `CRITICAL`.
+- `severity_min`: `INFORMATION`, `LOW`, `MEDIUM` (the default), `HIGH`, or `CRITICAL`.
 - `limit`: at most 100. The default is 25.
 
 ## Findings
@@ -81,13 +81,21 @@ See [supported technologies](guardrails.md#supported-technologies).
 - `finding_type`: `security`, `reliability`, or `maintainability`.
 - `system_property`: required when `finding_type` is `maintainability`.
 
-`update_finding_status` sets the status or the remark of a finding, so Sigrid reflects the agent's decision. Open source health findings do not have a status, so this tool does not work for them.
+`update_finding` sets the status, the remark, or the impact and exploitability of a finding, so Sigrid reflects the agent's decision. Open source health findings cannot be updated, so this tool does not work for them.
 
 - `finding_id`: the `id` returned with the finding.
 - `status`: the new status, from the table below.
-- `remark`: a note to attach to the finding.
+- `remark`: a note to attach to the finding. It replaces the current remark, so leave it out to keep the current one.
+- `impact`: the new impact of the finding, one of `CRITICAL`, `HIGH`, `MEDIUM`, `LOW`, or `INFORMATION`.
+- `exploitability`: the new exploitability of the finding, with the same values as `impact`.
 
-You have to pass at least one of `status` and `remark`. The valid statuses depend on the type of finding:
+You have to pass at least one of `status`, `remark`, `impact`, and `exploitability`. Changing `impact` and `exploitability` follows these rules:
+
+- It works for security and reliability findings only.
+- You have to pass `impact` and `exploitability` together.
+- You cannot set the severity directly. Sigrid computes it from the two.
+
+The valid statuses depend on the type of finding:
 
 | Finding type | Valid statuses |
 | --- | --- |
