@@ -483,11 +483,6 @@ sig-toc .h4 {
     margin-left: 20px;
 }
 
-.searchForm {
-    background-color: var(--sig-white);
-    padding: 32px 16px 24px 16px;
-}
-
 .searchForm img {
     position: absolute;
     margin: 3px 0px 0px 28px;
