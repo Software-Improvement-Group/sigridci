@@ -1,7 +1,22 @@
 Integrating Sigrid CI with Gerrit
 =================================
 
+[Gerrit](https://www.gerritcodereview.com) is a code review platform. Unlike other development platforms (e.g. GitHub),
+Gerrit does not include a Continuous Integration pipeline. This means Gerrit is typically used in combination with
+a Continuous Integration platform, such as [Jenkins](https://plugins.jenkins.io/gerrit-trigger/).
+
+Since Sigrid CI runs as part of your Continuous Integration pipeline, this makes the integration for Gerrit a bit
+different from other platforms:
+
+- Make sure Sigrid CI is integrated into your Continuous Integration pipeline. For example, if you are using Gerrit
+  in combination with Jenkins, follow the instructions for [Jenkins](../sigridci-integration/jenkins.md).
+- Next, follow the instructions below so that Sigrid CI understands you are using Jenkins in combination with Gerrit.
+
 ## Required environment variables
+
+If you add the following environment variables, Sigrid CI will automatically send feedback to Gerrit as part of
+every run. Remember, you need to define these environment variables in your Continuous Integration pipeline,
+e.g. Jenkins, since that is where Sigrid CI "lives".
 
 | Name                  | Description                                                            |
 |-----------------------|------------------------------------------------------------------------|
@@ -14,6 +29,14 @@ Integrating Sigrid CI with Gerrit
 
 [1] Sigrid CI cannot use the newer token-based authentication that was introduced in Gerrit 3.13, to retain
 backward compatibility with older Gerrit versions.
+
+## Usage
+
+If you have configured the integration between Sigrid CI, Gerrit, and Jenkins based on the instructions above,
+you will automatically receive feedback from Sigrid CI in Gerrit. The feedback is structured as explained in the
+[Sigrid CI documentation](../sigridci-integration/using-sigridci.md).
+
+<img src="../images/ci/gerrit-feedback.png" width="400" />
 
 ## Contact and support
 
