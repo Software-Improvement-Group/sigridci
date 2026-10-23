@@ -99,7 +99,7 @@ A false positive or an accepted risk needs evidence: a file, a line, and one sen
 
 Once a finding is ruled out as a false positive, the skill scores its severity again. A false positive has no real issue to score. The skill ignores the severity the analysis assigned and sets two labels, impact and exploitability, each `INFORMATION`, `LOW`, `MEDIUM`, `HIGH`, or `CRITICAL`. Sigrid derives the severity from those two. A finding that comes out at `INFORMATION`, such as test-only or unreachable code, is proposed as an accepted risk.
 
-The skill writes `WILL_FIX` and `REFINED` to Sigrid straight away. It proposes each false positive and accepted risk to you with its evidence, and writes it only after you confirm. Each finding gets one update with its status, scores, and remark, so a status never changes without its scores. The remark holds the evidence, followed by the justification for the scores.
+The skill writes `WILL_FIX` and `REFINED` to Sigrid straight away. It proposes each false positive and accepted risk to you with its evidence, and writes it only after you confirm. Each finding gets one update with its status and remark. For false positives, the remark holds the evidence and no new scores are included. For other findings, the update also includes the scores, and the remark holds the evidence followed by the justification for the scores.
 
 Your job is to say no to the wrong proposals, and to notice why they were wrong. Usually it is a missing fact rather than bad reasoning, and the fix goes in `SECURITY-CONTEXT.md`. Expect to reject something on a first run because the context was incomplete.
 
