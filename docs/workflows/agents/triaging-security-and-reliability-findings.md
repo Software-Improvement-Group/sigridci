@@ -86,26 +86,30 @@ Start small and scoped, because a first run is really a calibration run: you are
 /triage-findings security under src/import/
 ```
 
-The skill fetches the open findings under that path, with status `RAW`, `REFINED`, or `WILL_FIX`. Findings your team already accepted stay out, unless you ask to revisit them. With more than one finding, it hands each one to a subagent of its own, about eight at a time. You can also give it a single finding ID, or paste a finding from Sigrid.
+The skill fetches the findings under that path. Which statuses it includes comes from your request, or otherwise from the **Triage status scope** field in your [Sigrid profile](../../axis/configuration.md#the-sigrid-profile). If neither says, the skill asks. We recommend including only `RAW`, so findings that were already evaluated are not triaged again. Adding `REFINED` and `WILL_FIX` also picks up findings still waiting for work, but every later run then triages them again.
 
 Each finding gets read at its file and line and put through the same sequence of checks:
 
 - **False positive:** the check itself is wrong, and the best fix would be to the check, not to the flagged code. If the fix you would reach for is a code change, it is not a false positive.
-- **Accepted risk:** the issue is real, but the risk is acceptable at Sigrid's original severity, and the evidence names the context that mitigates it.
+- **Accepted risk:** the issue is real, but the risk is acceptable at the re-evaluated severity (see below), and the evidence names the context that mitigates it.
 - **Needs a person** (`REFINED`): neither of the above has evidence, and something blocks a mechanical fix. The blockers are a design or product decision, a change to the access control decision itself, an action outside the working tree such as rotating a secret, code the analysis could not locate, or a fix that changes an exported signature or touches more than three files.
 - **Will fix:** the default, when nothing above applies.
 
 A false positive or an accepted risk needs evidence: a file, a line, and one sentence. Without it, the finding falls through to one of the last two. The checks are mechanical, with a named trigger for each, and none of them rests on how confident the agent feels.
 
-The skill writes `WILL_FIX` and `REFINED` to Sigrid straight away. It proposes each false positive and accepted risk to you with its evidence, and writes it only after you confirm. Your job is to say no to the wrong ones, and to notice why they were wrong. Usually it is a missing fact rather than bad reasoning, and the fix goes in `SECURITY-CONTEXT.md`. Expect to reject something on a first run because the context was incomplete.
+Once a finding is ruled out as a false positive, the skill scores its severity again. A false positive has no real issue to score. The skill ignores the severity the analysis assigned and sets two labels, impact and exploitability, each `INFORMATION`, `LOW`, `MEDIUM`, `HIGH`, or `CRITICAL`. Sigrid derives the severity from those two. A finding that comes out at `INFORMATION`, such as test-only or unreachable code, is proposed as an accepted risk.
 
-At the end, the skill lists every finding that needs a person, with its blocker, and offers a [handover](../../axis/skills.md#handovers) for the findings to fix. Take it, and fix them:
+The skill writes `WILL_FIX` and `REFINED` to Sigrid straight away. It proposes each false positive and accepted risk to you with its evidence, and writes it only after you confirm. Each finding gets one update with its status, scores, and remark, so a status never changes without its scores. The remark holds the evidence, followed by the justification for the scores.
+
+Your job is to say no to the wrong proposals, and to notice why they were wrong. Usually it is a missing fact rather than bad reasoning, and the fix goes in `SECURITY-CONTEXT.md`. Expect to reject something on a first run because the context was incomplete.
+
+At the end, the skill lists every finding that needs a person, with its blocker, and offers a [handover](../../axis/skills.md#handovers) for the findings to fix. The handover carries each finding's scores and justification, so you can fix the most severe first. Take it, and fix them:
 
 ```
 /autofix security
 ```
 
-For each finding, `autofix` checks that the code still matches the finding, writes the fix, runs Guardrails on the changed code, and commits it on its own, with the message `Fix: <title> (Sigrid <id>)`. A fix that turns out to hit one of the blockers above is reverted, and the finding goes to `REFINED` with the blocker as its remark.
+For each finding, `autofix` checks that the code still matches the finding, writes the fix, runs Guardrails on the changed code, and commits it on its own, with the message `Fix: <title> (Sigrid <id>)`. A fix that turns out to hit one of the blockers above is reverted, and the finding goes to `REFINED`. The blocker is added to the end of the existing remark, so the justification for the scores stays.
 
 Run triage on a reasoning model, because each classification depends on how your system works, such as whether an input is reachable from outside. Its per-finding subagents run on your session's model too. You can switch to a mid-sized model for `autofix`: once a finding is decided, the fix is procedural, and fixes that need a design decision have already gone to a person. See [Choose a model](README.md#choose-a-model).
 {: .model }
@@ -130,8 +134,9 @@ Triage never sets `FIXED`. Committed fixes stay on `WILL_FIX`, and at the end of
 
 ## Reliability findings
 
-Reliability findings go through the same loop, with `/triage-findings reliability` and `/autofix reliability`. Three things differ:
+Reliability findings go through the same loop, with `/triage-findings reliability` and `/autofix reliability`. Four things differ:
 
+- Scoring is about failure in normal operation, not about attacks. Exploitability is the likelihood that the defect triggers, and the justification leaves security out. The skill assumes the system is business critical unless you say otherwise.
 - An accepted risk is about impact, not attack surface. The evidence names why the failure cannot occur or is harmless here, such as "the collection is never empty, built from a constant list at `config.py:12`".
 - A waived run needs a severity ceiling and your acknowledgement, but no reachability facts.
 - A fix that would change behavior callers may rely on, such as error types or retry and timeout semantics, is one more blocker, so the finding goes to `REFINED`.
@@ -140,7 +145,7 @@ Reliability findings go through the same loop, with `/triage-findings reliabilit
 
 Here are four checks, in order of how much they matter:
 
-1. **Audit the suppressions first.** Pull everything the run marked `FALSE_POSITIVE` or `ACCEPTED` out of Sigrid, and read each remark against the code it cites.
+1. **Audit the suppressions first.** Pull everything the run marked `FALSE_POSITIVE` or `ACCEPTED` out of Sigrid, and read each remark against the code it cites. For accepted risks, check that the scores in the justification match what you know about the system, because the risk was accepted at the severity they produce.
 2. **Review the diff normally.** There is one commit per finding, with the finding ID in the message. It goes through your merge request process like anyone else's.
 3. **Drain the `REFINED` list.** Everything the agent could not settle mechanically is there, with a named blocker.
 4. **Compare against yourself.** On a first run, triage ten findings by hand before you look at what the agent did. If it disagrees with you on more than one or two, the context file is the problem.
