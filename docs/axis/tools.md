@@ -31,7 +31,6 @@ Every tool takes a `customer` and a `system`, the names in your Sigrid URL. The 
 
 `guardrails_quality_check` checks one file for maintainability and security issues. It returns the maintainability guidelines the file violates, with a severity and a line range per unit, plus a separate list of security findings. Both lists empty means a pass. It does not return a rating.
 
-- `customer` and `system`: the Sigrid system the file belongs to.
 - `filename`: the original file name, including the extension, so the right language rules apply.
 - `code_snippet`: the file's contents, exactly as written to disk, not a diff or a summary. For Java, pass a complete class that compiles, because the analyzer compiles it.
 
