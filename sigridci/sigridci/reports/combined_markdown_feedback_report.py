@@ -112,7 +112,8 @@ class CombinedMarkdownFeedbackReport(Report):
         nonurgent = self.getNonUrgentFindings(feedback, options)
         positive = self.getPositiveFindings(feedback, options)
 
-        md = f"# [Sigrid]({options.sigridURL}) objectives check: {self.renderConclusion(feedback, options)}\n\n"
+        md = self.renderSurveyBanner()
+        md += f"# [Sigrid]({options.sigridURL}) objectives check: {self.renderConclusion(feedback, options)}\n\n"
         md += self.renderObjectiveSummary(feedback, options)
         if len(negative) > 0:
             md += "#### Failed checks\n\n"
@@ -133,7 +134,6 @@ class CombinedMarkdownFeedbackReport(Report):
                 md += self.renderDetailsStart("Detailed maintainability ratings")
                 md += maintainabilityReport.renderRatingsTable(feedback[MAINTAINABILITY])
                 md += self.renderDetailsEnd()
-        md += self.renderSurveyBanner()
         md += self.renderFooter(options)
         return md
 
