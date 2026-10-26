@@ -48,6 +48,8 @@ These findings do not fail your objectives, but you might still want to look at 
 | **Maintainability** | **3.4** | **2.6** | **1.6** |
 
 
+> 💬 **Help us improve Sigrid CI:** [Take our short survey](https://forms.cloud.microsoft/Pages/ResponsePage.aspx?id=Yobk-k43V02UxuPspGx5q-jaZbCSPpJKv5Dq5dhLaHxUQk5PNDE4SzVNSFRONkhZU00yNE1LMklaUy4u)
+
 ----
 
 [**View this system in Sigrid**](https://sigrid-says.com/aap/noot)

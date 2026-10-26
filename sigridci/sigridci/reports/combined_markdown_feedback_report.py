@@ -53,6 +53,8 @@ class CombinedMarkdownFeedbackReport(Report):
 
     FILE_PATH_PATTERN = re.compile(r'[/\\]')
 
+    SURVEY_URL = "https://forms.cloud.microsoft/Pages/ResponsePage.aspx?id=Yobk-k43V02UxuPspGx5q-jaZbCSPpJKv5Dq5dhLaHxUQk5PNDE4SzVNSFRONkhZU00yNE1LMklaUy4u"
+
     def __init__(self, objectives: dict[str, Any]):
         self.objectives = objectives
         self.previousFeedback: dict[Capability, dict] = {}
@@ -131,6 +133,7 @@ class CombinedMarkdownFeedbackReport(Report):
                 md += self.renderDetailsStart("Detailed maintainability ratings")
                 md += maintainabilityReport.renderRatingsTable(feedback[MAINTAINABILITY])
                 md += self.renderDetailsEnd()
+        md += self.renderSurveyBanner()
         md += self.renderFooter(options)
         return md
 
@@ -197,6 +200,9 @@ class CombinedMarkdownFeedbackReport(Report):
 
     def escapeMarkdownLabel(self, label: str) -> str:
         return label.replace("\\", "\\\\").replace("[", "\\[").replace("]", "\\]")
+
+    def renderSurveyBanner(self) -> str:
+        return f"> 💬 **Help us improve Sigrid CI:** [Take our short survey]({self.SURVEY_URL})\n\n"
 
     def renderFooter(self, options: PublishOptions) -> str:
         md = "----\n\n"
