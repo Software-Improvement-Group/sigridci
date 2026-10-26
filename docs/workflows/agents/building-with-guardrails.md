@@ -38,9 +38,9 @@ On Claude Code, the plugin covers tool access and automatic enforcement together
 
 The plugin configures the Sigrid Axis MCP server and the skills together:
 
-{% include axis/plugin-install.md %}
+{% include axis/plugin-install.md setup=true %}
 
-The plugin asks for your Sigrid API token once and stores it in your system keychain. See [authentication tokens](../../organization-integration/authentication-tokens.md) for how to get one. In another agentic tool, [connect the MCP server](../../axis/installation.md#1-connect-the-mcp-server) instead. You need at least the `guardrails_quality_check` tool.
+The plugin asks for your Sigrid API token once and stores it in your system keychain. See [authentication tokens](../../organization-integration/authentication-tokens.md) for how to get one. The `setup` skill records your Sigrid customer and system in `.sigrid/profile.md`, which the agent passes to every Guardrails check. See [the Sigrid profile](../../axis/configuration.md#the-sigrid-profile). In another agentic tool, [connect the MCP server](../../axis/installation.md#1-connect-the-mcp-server) instead. You need at least the `guardrails_quality_check` tool.
 
 The plugin's hook adds the quality gate to every prompt you send: before reporting a task done, run the Guardrails check on the production code you changed, and fix the maintainability findings, leaving one only when the code already honors the principles. Step 2 shows the exact text, for tools that need it added by hand.
 
