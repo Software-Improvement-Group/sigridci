@@ -1,4 +1,4 @@
-> 💬 **Help us improve Sigrid CI:** [Take our short survey](https://forms.cloud.microsoft/Pages/ResponsePage.aspx?id=Yobk-k43V02UxuPspGx5q-jaZbCSPpJKv5Dq5dhLaHxUQk5PNDE4SzVNSFRONkhZU00yNE1LMklaUy4u)
+> 💬 **What do you think of the latest Sigrid CI updates?** [Share your feedback in our 1-minute survey](https://forms.cloud.microsoft/Pages/ResponsePage.aspx?id=Yobk-k43V02UxuPspGx5q-jaZbCSPpJKv5Dq5dhLaHxUQk5PNDE4SzVNSFRONkhZU00yNE1LMklaUy4u)
 
 # [Sigrid](https://sigrid-says.com) objectives check: ❌ Failed
 

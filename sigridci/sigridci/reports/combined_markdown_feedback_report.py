@@ -202,7 +202,7 @@ class CombinedMarkdownFeedbackReport(Report):
         return label.replace("\\", "\\\\").replace("[", "\\[").replace("]", "\\]")
 
     def renderSurveyBanner(self) -> str:
-        return f"> 💬 **Help us improve Sigrid CI:** [Take our short survey]({self.SURVEY_URL})\n\n"
+        return f"> 💬 **What do you think of the latest Sigrid CI updates?** [Share your feedback in our 1-minute survey]({self.SURVEY_URL})\n\n"
 
     def renderFooter(self, options: PublishOptions) -> str:
         md = "----\n\n"
