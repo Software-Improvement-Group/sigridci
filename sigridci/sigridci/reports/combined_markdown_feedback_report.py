@@ -112,8 +112,8 @@ class CombinedMarkdownFeedbackReport(Report):
         nonurgent = self.getNonUrgentFindings(feedback, options)
         positive = self.getPositiveFindings(feedback, options)
 
-        md = self.renderSurveyBanner()
-        md += f"# [Sigrid]({options.sigridURL}) objectives check: {self.renderConclusion(feedback, options)}\n\n"
+        md = f"# [Sigrid]({options.sigridURL}) objectives check: {self.renderConclusion(feedback, options)}\n\n"
+        md += self.renderSurveyBanner()
         md += self.renderObjectiveSummary(feedback, options)
         if len(negative) > 0:
             md += "#### Failed checks\n\n"
