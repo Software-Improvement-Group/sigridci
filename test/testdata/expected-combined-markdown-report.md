@@ -54,4 +54,6 @@ These findings do not fail your objectives, but you might still want to look at 
 
 [**View this system in Sigrid**](https://sigrid-says.com/aap/noot)
 
+*Sigrid CI feedback for Maintainability, Architecture, Open Source Health, Security.*
+
 ![© Software Improvement Group](https://sigrid-says.com/usage/matomo.php?idsite=6&rec=1&ca=1&e_c=sigridci.feedbackview&e_a=sigridci.feedbackview&e_n=sig-aap-noot)

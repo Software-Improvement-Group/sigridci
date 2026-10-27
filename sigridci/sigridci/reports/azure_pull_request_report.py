@@ -17,6 +17,7 @@ import os
 import ssl
 import urllib.parse
 import urllib.request
+from typing import Union
 
 from .combined_markdown_feedback_report import CombinedMarkdownFeedbackReport
 from .report import Report
@@ -46,7 +47,7 @@ class AzurePullRequestReport(Report):
             # We want to update the existing comment, to avoid spamming people with new
             # comments every time they make a commit. We have no way to persist this,
             # so we need to check the existing comments.
-            existingId = self.findExistingSigridCommentThreadId()
+            existingId = self.findExistingSigridCommentThreadId(options)
 
             if existingId == None:
                 self.callAzure("POST", self.buildRequestBody(markdown, feedback, options), None)
@@ -62,20 +63,15 @@ class AzurePullRequestReport(Report):
             "SYSTEM_PULLREQUEST_PULLREQUESTID" in os.environ and \
             options.runMode == RunMode.FEEDBACK_ONLY
 
-    def findExistingSigridCommentThreadId(self):
+    def findExistingSigridCommentThreadId(self, options: PublishOptions) -> Union[str, None]:
         existingThreads = json.load(self.callAzure("GET", None, None))
 
         for thread in existingThreads["value"]:
             for comment in thread["comments"]:
-                if self.isExistingComment(comment):
+                if self.masterReport.isExistingFeedback(options, comment.get("content")):
                     return thread["id"]
 
         return None
-
-    def isExistingComment(self, comment):
-        if not comment.get("content"):
-            return False
-        return comment["content"].startswith(("# Sigrid", "# [Sigrid]"))
 
     def callAzure(self, method, body, threadId):
         request = urllib.request.Request(self.buildURL(threadId), json.dumps(body).encode("utf-8"))

@@ -19,7 +19,7 @@ from unittest import TestCase, mock
 from sigridci.sigridci.publish_options import PublishOptions, RunMode
 from sigridci.sigridci.reports.gitlab_pull_request_report import GitLabPullRequestReport
 from sigridci.sigridci.upload_log import UploadLog
-from sigridci.sigridci.capability import MAINTAINABILITY
+from sigridci.sigridci.capability import MAINTAINABILITY, SECURITY
 from sigridci.sigridci.reports.combined_markdown_feedback_report import CombinedMarkdownFeedbackReport
 
 
@@ -75,6 +75,26 @@ class GitLabPullRequestReportTest(TestCase):
         self.assertEqual(expectedLog, UploadLog.history)
         self.assertEqual(expectedCalls, gitlab.called)
 
+    @mock.patch.dict(os.environ, MOCK_GITLAB_ENV)
+    def testCreateNewCommentIfForDifferentCapabilities(self):
+        gitlab = MockGitLab(CombinedMarkdownFeedbackReport({}))
+        gitlab.generate("1234", self.feedback, self.options)
+        self.options.capabilities = [SECURITY]
+        gitlab.generate("1234", self.feedback | {SECURITY : {}}, self.options)
+
+        expectedLog = [
+            "Published feedback to GitLab",
+            "Published feedback to GitLab"
+        ]
+
+        expectedCalls = [
+            "POST https://nonexistent-example.com/projects/1234/merge_requests/5678/notes",
+            "POST https://nonexistent-example.com/projects/1234/merge_requests/5678/notes"
+        ]
+
+        self.assertEqual(expectedLog, UploadLog.history)
+        self.assertEqual(expectedCalls, gitlab.called)
+
     @mock.patch.dict(os.environ, MOCK_GITLAB_ENV | {"SIGRIDCI_GITLAB_COMMENT_TOKEN" : "1234"})
     def testDoNotExitOnFailingGitLabRequest(self):
         gitlab = GitLabPullRequestReport(CombinedMarkdownFeedbackReport({}))
@@ -98,8 +118,9 @@ class MockGitLab(GitLabPullRequestReport):
     def isWithinGitLabMergeRequestPipeline(self, options):
         return True
 
-    def findExistingCommentId(self):
-        return next((comment["id"] for comment in self.comments if self.isExistingComment(comment)), None)
+    def findExistingCommentId(self, options):
+        return next((comment["id"] for comment in self.comments
+                     if self.masterReport.isExistingFeedback(options, comment["body"])), None)
 
     def read(self):
         return "test"

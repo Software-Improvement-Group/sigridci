@@ -96,7 +96,7 @@ class AzurePullRequestReportTest(TestCase):
                     "comments": [
                         {
                             "id": 2,
-                            "content": "# Sigrid Maintainability feedback"
+                            "content": "# Sigrid Maintainability feedback\n\n*Sigrid CI feedback for Maintainability.*"
                         }
                     ]
                 }
@@ -109,6 +109,30 @@ class AzurePullRequestReportTest(TestCase):
         azure.generate("1234", feedback, options)
 
         self.assertEqual(["GET", "PATCH"], azure.calledEndPoints)
+
+    def testPostNewCommentIfExistingCommentIsForDifferentCapabilities(self):
+        tempDir = mkdtemp()
+
+        mockAzureResponse = {
+            "value": [
+                {
+                    "id": 1,
+                    "comments": [
+                        {
+                            "id": 2,
+                            "content": "# Sigrid Security feedback\n\n*Sigrid CI feedback for Security.*"
+                        }
+                    ]
+                }
+            ]
+        }
+
+        azure = MockAzure(mockAzureResponse)
+        options = PublishOptions("aap", "noot", RunMode.FEEDBACK_ONLY, tempDir, capabilities=[MAINTAINABILITY])
+        feedback = {MAINTAINABILITY : {"newCodeRatings": {}, "baselineRatings": {}, "changedCodeBeforeRatings" : {}}}
+        azure.generate("1234", feedback, options)
+
+        self.assertEqual(["GET", "POST"], azure.calledEndPoints)
 
 
 class MockAzure(AzurePullRequestReport):

@@ -15,7 +15,7 @@
 import html
 import os
 import re
-from typing import Any, Iterator
+from typing import Any, Iterator, Union
 
 from .architecture_markdown_report import ArchitectureMarkdownReport
 from .maintainability_markdown_report import MaintainabilityMarkdownReport
@@ -52,7 +52,6 @@ class CombinedMarkdownFeedbackReport(Report):
     }
 
     FILE_PATH_PATTERN = re.compile(r'[/\\]')
-
     SURVEY_URL = "https://forms.cloud.microsoft/Pages/ResponsePage.aspx?id=Yobk-k43V02UxuPspGx5q-jaZbCSPpJKv5Dq5dhLaHxUQk5PNDE4SzVNSFRONkhZU00yNE1LMklaUy4u"
 
     def __init__(self, objectives: dict[str, Any]):
@@ -207,6 +206,7 @@ class CombinedMarkdownFeedbackReport(Report):
     def renderFooter(self, options: PublishOptions) -> str:
         md = "----\n\n"
         md += f"[**View this system in Sigrid**]({self.getSigridUrl(options)})\n\n"
+        md += f"*{self.getSignOff(options)}*\n\n"
         if options.feedbackURL and Platform.isMarkdownImagesSupported():
             telemetry = Telemetry(options)
             url = telemetry.getURL("sigridci.feedbackview", "sigridci.feedbackview")
@@ -230,6 +230,15 @@ class CombinedMarkdownFeedbackReport(Report):
             return f"{excludeFile}{self.tableLineSeparator}{excludeRule}"
         else:
             return ""
+
+    def getSignOff(self, options: PublishOptions) -> str:
+        capabilityNames = [capability.displayName for capability in options.capabilities]
+        return f"Sigrid CI feedback for {', '.join(capabilityNames)}."
+
+    def isExistingFeedback(self, options: PublishOptions, comment: Union[str, None]) -> bool:
+        if not comment:
+            return False
+        return comment.startswith(("# Sigrid", "# [Sigrid]")) and self.getSignOff(options) in comment
 
     def getExitCode(self, feedback: dict[Capability, dict], options: PublishOptions) -> int:
         exitCode = 0

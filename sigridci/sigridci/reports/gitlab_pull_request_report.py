@@ -16,6 +16,7 @@ import json
 import os
 import ssl
 import urllib.request
+from typing import Union
 
 from .combined_markdown_feedback_report import CombinedMarkdownFeedbackReport
 from .report import Report
@@ -35,7 +36,7 @@ class GitLabPullRequestReport(Report):
     def generate(self, analysisId: str, feedback: dict, options: PublishOptions) -> None:
         if self.isWithinGitLabMergeRequestPipeline(options):
             try:
-                existingCommentId = self.findExistingCommentId()
+                existingCommentId = self.findExistingCommentId(options)
                 body = self.buildRequestBody(self.masterReport.renderMarkdown(analysisId, feedback, options))
 
                 if existingCommentId is None:
@@ -75,7 +76,7 @@ class GitLabPullRequestReport(Report):
         body = {"body" : markdown}
         return json.dumps(body).encode("utf-8")
 
-    def findExistingCommentId(self):
+    def findExistingCommentId(self, options: PublishOptions) -> Union[str, None]:
         baseURL = os.environ["CI_API_V4_URL"]
         projectId = os.environ["CI_MERGE_REQUEST_PROJECT_ID"]
         mergeRequestId = os.environ["CI_MERGE_REQUEST_IID"]
@@ -83,8 +84,6 @@ class GitLabPullRequestReport(Report):
 
         with self.callAPI("GET", url, None) as f:
             for comment in json.load(f):
-                if self.isExistingComment(comment):
+                if self.masterReport.isExistingFeedback(options, comment.get("body", "")):
                     return comment["id"]
-
-    def isExistingComment(self, comment):
-        return comment["body"].startswith(("# Sigrid", "# [Sigrid]"))
+        return None
