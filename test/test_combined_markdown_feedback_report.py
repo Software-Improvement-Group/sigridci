@@ -81,3 +81,33 @@ class CombinedMarkdownFeedbackReportTest(TestCase):
 
         self.assertEqual(len(positive), 1)
         self.assertEqual(positive[0].details, ["Insecure_Randomness"])
+
+    def testRecognizeExistingFeedbackForSameCapabilities(self):
+        self.options.capabilities = [SECURITY]
+        report = CombinedMarkdownFeedbackReport(self.defaultObjectives)
+
+        self.assertTrue(report.isExistingFeedback(self.options, "# Sigrid\n\n*Sigrid CI feedback for Security.*"))
+        self.assertTrue(report.isExistingFeedback(self.options, "# [Sigrid](x)\n\n*Sigrid CI feedback for Security.*"))
+
+    def testDoNotRecognizeExistingFeedbackForDifferentCapabilities(self):
+        self.options.capabilities = [SECURITY]
+        report = CombinedMarkdownFeedbackReport(self.defaultObjectives)
+
+        self.assertFalse(report.isExistingFeedback(self.options, "# Sigrid\n\n*Sigrid CI feedback for Maintainability.*"))
+        self.assertFalse(report.isExistingFeedback(self.options,
+            "# Sigrid\n\n*Sigrid CI feedback for Maintainability, Architecture, Open Source Health, Security.*"))
+
+    def testDoNotRecognizeUnrelatedComments(self):
+        self.options.capabilities = [SECURITY]
+        report = CombinedMarkdownFeedbackReport(self.defaultObjectives)
+
+        self.assertFalse(report.isExistingFeedback(self.options, None))
+        self.assertFalse(report.isExistingFeedback(self.options, ""))
+        self.assertFalse(report.isExistingFeedback(self.options, "Some comment\n\n*Sigrid CI feedback for Security.*"))
+        self.assertFalse(report.isExistingFeedback(self.options, "# Sigrid feedback from an older Sigrid CI version"))
+
+    def testRenderedMarkdownIsRecognizedAsExistingFeedback(self):
+        report = CombinedMarkdownFeedbackReport(self.defaultObjectives)
+        markdown = report.renderMarkdown("1234", self.feedback, self.options)
+
+        self.assertTrue(report.isExistingFeedback(self.options, markdown))

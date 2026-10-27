@@ -17,6 +17,7 @@ import os
 import ssl
 import urllib.parse
 import urllib.request
+from typing import Union
 
 from .combined_markdown_feedback_report import CombinedMarkdownFeedbackReport
 from .report import Report
@@ -36,7 +37,7 @@ class GitHubPullRequestReport(Report):
     def generate(self, analysisId: str, feedback: dict, options: PublishOptions) -> None:
         if self.isWithinGitHubPullRequestPipeline(options):
             try:
-                existingCommentId = self.findExistingCommentId()
+                existingCommentId = self.findExistingCommentId(options)
                 body = self.buildRequestBody(self.masterReport.renderMarkdown(analysisId, feedback, options))
 
                 if existingCommentId is None:
@@ -85,12 +86,9 @@ class GitHubPullRequestReport(Report):
     def buildRequestBody(self, markdown):
         return json.dumps({"body": markdown}).encode("utf-8")
 
-    def findExistingCommentId(self):
+    def findExistingCommentId(self, options: PublishOptions) -> Union[str, None]:
         with self.callAPI("GET", self.buildCommentsURL(), None) as f:
             for comment in json.load(f):
-                if self.isExistingComment(comment):
+                if self.masterReport.isExistingFeedback(options, comment.get("body", "")):
                     return comment["id"]
-
-    def isExistingComment(self, comment):
-        body = comment.get("body", "")
-        return body.startswith(("# Sigrid", "# [Sigrid]"))
+        return None

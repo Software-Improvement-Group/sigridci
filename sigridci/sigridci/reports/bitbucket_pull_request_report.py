@@ -16,6 +16,7 @@ import json
 import os
 import ssl
 import urllib.request
+from typing import Union
 
 from .combined_markdown_feedback_report import CombinedMarkdownFeedbackReport
 from .report import Report
@@ -34,7 +35,7 @@ class BitBucketPullRequestReport(Report):
     def generate(self, analysisId: str, feedback: dict, options: PublishOptions) -> None:
         if self.shouldPostComment(options):
             try:
-                existingCommentId = self.findExistingCommentId()
+                existingCommentId = self.findExistingCommentId(options)
                 comment = self.masterReport.renderMarkdown(analysisId, feedback, options)
                 self.postComment(comment, existingCommentId)
                 UploadLog.log("Posted BitBucket comment")
@@ -72,12 +73,9 @@ class BitBucketPullRequestReport(Report):
         pullRequestId = os.environ["BITBUCKET_PR_ID"]
         return f"{baseURL}/repositories/{workspace}/{slug}/pullrequests/{pullRequestId}/comments"
 
-    def findExistingCommentId(self):
+    def findExistingCommentId(self, options: PublishOptions) -> Union[str, None]:
         with self.callAPI("GET", self.getCommentsURL(), None) as f:
             for comment in json.load(f)["values"]:
-                if self.isExistingComment(comment):
+                if self.masterReport.isExistingFeedback(options, comment["content"]["raw"]):
                     return comment["id"]
-
-    def isExistingComment(self, comment):
-        body = comment["content"]["raw"]
-        return body.startswith(("# Sigrid", "# [Sigrid]"))
+        return None
