@@ -3,6 +3,11 @@ Sigrid release notes
 
 SIG uses [continuous delivery](https://en.wikipedia.org/wiki/Continuous_delivery), meaning that every change to Sigrid or the underlying analysis is released once our development pipeline has completed. On average, we release somewhere between 10 and 20 times per day. This page therefore doesn't list every single change, since that would quickly lead to an excessively long list of small changes. Instead, this page lists Sigrid and analysis changes that we consider noteworthy for the typical Sigrid user.
 
+### November 2, 2026
+
+- **Sigrid CI:** Sigrid CI now supports integration with [Gerrit](https://www.gerritcodereview.com). The [Sigrid CI documentation](../sigridci-integration/gerrit.md) contains instructions on how to set this up.
+- **IDE integrations:** Architecture findings are now available in the Sigrid IDE integrations for JetBrains and Visual Studio Code. 
+
 ### October 19, 2026
 
 - **Sigrid CI:** Sigrid CI now includes architecture feedback! The focus is on feedback that is simple, practical, and uncontroversial. Find out more in [the Sigrid CI documentation](../sigridci-integration/using-sigridci.md).
