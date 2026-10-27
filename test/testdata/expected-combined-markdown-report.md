@@ -1,5 +1,7 @@
 # [Sigrid](https://sigrid-says.com) objectives check: ❌ Failed
 
+> 💬 **What do you think of the latest Sigrid CI updates?** [Share your feedback in our 1-minute survey](https://forms.cloud.microsoft/Pages/ResponsePage.aspx?id=Yobk-k43V02UxuPspGx5q-jaZbCSPpJKv5Dq5dhLaHxUQk5PNDE4SzVNSFRONkhZU00yNE1LMklaUy4u)
+
 - ⚠️   **Maintainability:** You are still below your objective of 4.0 stars.
 - ⚠️  **Architecture (Beta):** Your changes introduced architecture issues.
 - ❌️  **Open Source Health:** You have vulnerable open source libraries.

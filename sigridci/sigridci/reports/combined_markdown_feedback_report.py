@@ -53,6 +53,8 @@ class CombinedMarkdownFeedbackReport(Report):
 
     FILE_PATH_PATTERN = re.compile(r'[/\\]')
 
+    SURVEY_URL = "https://forms.cloud.microsoft/Pages/ResponsePage.aspx?id=Yobk-k43V02UxuPspGx5q-jaZbCSPpJKv5Dq5dhLaHxUQk5PNDE4SzVNSFRONkhZU00yNE1LMklaUy4u"
+
     def __init__(self, objectives: dict[str, Any]):
         self.objectives = objectives
         self.previousFeedback: dict[Capability, dict] = {}
@@ -111,6 +113,7 @@ class CombinedMarkdownFeedbackReport(Report):
         positive = self.getPositiveFindings(feedback, options)
 
         md = f"# [Sigrid]({options.sigridURL}) objectives check: {self.renderConclusion(feedback, options)}\n\n"
+        md += self.renderSurveyBanner()
         md += self.renderObjectiveSummary(feedback, options)
         if len(negative) > 0:
             md += "#### Failed checks\n\n"
@@ -197,6 +200,9 @@ class CombinedMarkdownFeedbackReport(Report):
 
     def escapeMarkdownLabel(self, label: str) -> str:
         return label.replace("\\", "\\\\").replace("[", "\\[").replace("]", "\\]")
+
+    def renderSurveyBanner(self) -> str:
+        return f"> 💬 **What do you think of the latest Sigrid CI updates?** [Share your feedback in our 1-minute survey]({self.SURVEY_URL})\n\n"
 
     def renderFooter(self, options: PublishOptions) -> str:
         md = "----\n\n"
