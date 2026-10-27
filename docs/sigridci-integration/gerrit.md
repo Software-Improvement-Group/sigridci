@@ -38,6 +38,18 @@ you will automatically receive feedback from Sigrid CI in Gerrit. The feedback i
 
 <img src="../images/ci/gerrit-feedback.png" width="400" />
 
+## Using Gerrit in combination with on-premise Sigrid
+
+The following section is only relevant if you are using on-premise Sigrid. If you are using cloud-based Sigrid,
+source code will just show up in Sigrid without the need for any special instructions.
+{: .attention }
+
+The previous sections were about displaying Sigrid feedback in Gerrit. If you also want to link from on-premise
+Sigrid to Gerrit, you will need to make sure you have installed the
+[Gitiles plugin for Gerrit](https://gerrit.googlesource.com/gitiles/), which allows you to view source code within
+Gerrit. If this plugin is available, Sigrid's [Code Explorer](../capabilities/system-code-explorer.md) will link
+to the source code in Gerrit.
+
 ## Contact and support
 
 Feel free to contact [SIG's support team](mailto:support@softwareimprovementgroup.com) for any questions or issues
