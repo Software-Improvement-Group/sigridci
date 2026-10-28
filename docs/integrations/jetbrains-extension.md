@@ -8,14 +8,18 @@ This plugin also includes a **Fix with AI** feature, described below, that hands
 
 What you can do with it:
 
-- Browse Maintainability, Security, and Open Source Health findings directly in your IDE
+- Browse Maintainability, Security, Open Source Health, and Architecture findings directly in your IDE
+- See a **Prioritized tab** that merges findings from all capabilities into a single ranked list, and shows a high-priority findings list, so you know where to start
 - Filter by risk level or status, or search across all findings
 - See only the findings for the file you're currently editing
+- See **your files first** — findings in files you've changed on your branch are pinned at the top
+- Group findings by file for a structural overview
 - Triage findings — update status and add remarks — without opening Sigrid in your browser
 - Double-click a finding to jump straight to the relevant line of code
 - Open the full finding detail page in Sigrid when you need more context
 - Fix findings with AI. Send one or more findings to Claude Code, using the **Fix with AI** toolbar button or the right-click **Fix it with Claude Code** menu, to have them fixed for you without leaving your IDE.
 - Create Jira or Azure DevOps issues directly from one or more findings, via a unified "Create Issue" button
+- **Onboard a new system** — if your system isn't in Sigrid yet, the plugin offers an Onboard button to upload it directly from the IDE
 
 ## Requirements
 
@@ -78,6 +82,86 @@ When working with a large number of findings it can be hard to focus on what mat
 You can combine the active file filter, risk, status, and search filters at the same time.
 
 <img src="../images/ide/jetbrains-open-ource-health.png" width="700" />
+
+### Prioritized tab
+
+The Prioritized tab shows a single, ranked list of findings across all capabilities — Security, Reliability, Open Source Health, and Maintainability — ordered by what matters most. Instead of switching between tabs to decide where to start, you get one list with the most important findings at the top.
+
+The panel has tabs for **Prioritized**, **Maintainability**, **Security**, and **Open Source Health**. The Prioritized tab combines findings from the other tabs into one ranked view. The capability-specific tabs still work exactly as before.
+
+<img src="../images/ide/jetbrains-prio-tab.png" width="700" />
+
+#### How findings are ranked
+
+Findings are ranked in the following order:
+
+1. **Security findings and OSH vulnerabilities** — always at the top, regardless of severity. Only OSH dependencies with a known vulnerability are included, ranked by vulnerability risk (real CVE/CVSS data). Duplicate vulnerabilities and dependencies sharing a library name are collapsed into one finding.
+2. **Reliability findings** — ranked below Security, above Maintainability.
+3. **Duplication findings** — sequenced before other Maintainability findings when their files overlap with files that also have other Maintainability findings. Sorted by the number of duplicated lines (largest first), since their severity is always the same.
+4. **Other Maintainability findings** — ranked by severity, then by size (unit size by weight, unit complexity by McCabe, unit interfacing by parameter count, module coupling by fan-in). Findings with the same priority, category, and location are ordered by start line.
+
+The **Why** column explains why each finding appears where it does — for example, "Security objective met — Security findings are always prioritized" or "Ranked by severity, then size."
+
+#### Objectives awareness
+
+Findings in a capability whose quality objective is already met are dampened by one severity tier. Security and Reliability findings are always prioritized regardless of whether their objective is met.
+
+For Maintainability, the plugin compares the current rating against the configured target. If no target is set, it falls back to a 3.0-star market benchmark. Open Source Health also compares against the market benchmark. The Maintainability rating is fetched once when the project opens and refreshed when Sigrid settings change.
+
+#### Your files
+
+When you're working on a branch, the Prioritized tab pins findings in files you've changed at the top of the list, in a **"Your files"** section. This includes files with committed changes since the branch left the default branch, and files with uncommitted edits. The section updates in real time as you work.
+
+This requires the Git plugin for detecting which files changed on the branch. Uncommitted changes are detected with any VCS.
+
+Files listed in "Your files" are never deprioritized, even if they have no recent activity in Sigrid's change history. The Why column shows "Prioritized because you modified this file."
+
+#### Deprioritization of inactive files
+
+Maintainability findings in files with no recent Git activity are deprioritized — they drop one severity tier and appear lower in the list instead of being hidden. The **Why** column shows the reason, including the date range checked.
+
+When the Git plugin is available, the plugin checks the local Git history over the last 12 months before deprioritizing a file. Without the Git plugin, only Sigrid's shorter change-history window is used.
+
+Security and Reliability findings are never deprioritized based on activity.
+
+#### Exclusion and test-code filtering
+
+Findings in vendored, generated, or config files are excluded from the Prioritized tab. Findings in test code are routed to a separate lane and do not appear in the main list.
+
+#### Progressive disclosure
+
+The Prioritized tab shows the **top 50 findings** by default. A **"Show all"** button at the bottom of the list reveals the rest, and a **"Show top 50"** button collapses it again. The total count is always visible — for example, "Showing top 50 of 535 findings."
+
+Searching and filtering always cover every finding, not just the visible 50. You don't need to click "Show all" before searching.
+
+#### Group by file
+
+A toggle nests Prioritized findings under expandable file rows. Each finding appears under its first file location. Expand/collapse state is kept across searches, filters, and refreshes.
+
+#### Line numbers
+
+Security and Reliability findings show the file and line number in the Location column (for example, `GroupsAPI.java:54`). When multiple findings appear in the same file, they are sorted by line number. The line number is also included in the search and in the title when using Fix with AI.
+
+---
+
+### Architecture tab
+
+The Architecture tab lists undesirable and cyclic dependencies between components, derived from the raw architecture graph of your system. It shows which components have problematic dependencies so you can address structural issues.
+
+The architecture graph is shared with the Prioritized tab in a single request, and responses are cached between tabs until you press **Refresh**.
+
+Architecture findings support **Fix with AI** — select one or more findings and use the Fix with AI button to generate a prompt for resolving the dependency issue.
+
+---
+
+### Onboarding a system from the IDE
+
+When the configured system does not exist in Sigrid yet, the plugin's tool window explains this and offers an **"Onboard"** button. Clicking it uploads the repository to Sigrid, respecting your `.gitignore` to skip files that shouldn't be included.
+
+Onboarding takes a few minutes. Use **Refresh** to check whether analysis has completed.
+
+<img src="../images/ide/jetbrains-arch-tab.png" width="700" />
+
 
 ## Editing findings
 
