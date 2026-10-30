@@ -8,7 +8,7 @@ The skills call these tools for you. You need this page when you prompt the tool
 
 Some clients add a prefix to the tool name. In Claude Code, the plugin adds `mcp__plugin_axis_axis__`, so `guardrails_quality_check` shows up as `mcp__plugin_axis_axis__guardrails_quality_check`. Use the prefixed form in a permission allowlist.
 
-Every tool takes a `customer` and a `system`, the names in your Sigrid URL. The parameters below are the ones that shape the result.
+Every tool takes a `customer` and a `system`, the names in your Sigrid URL. For `guardrails_quality_check` only `customer` is required. The parameters below are the ones that shape the result.
 
 ## Tools at a glance
 
@@ -33,6 +33,7 @@ Every tool takes a `customer` and a `system`, the names in your Sigrid URL. The 
 
 - `filename`: the original file name, including the extension, so the right language rules apply.
 - `code_snippet`: the file's contents, exactly as written to disk, not a diff or a summary. For Java, pass a complete class that compiles, because the analyzer compiles it.
+- `system`: optional. The name of an onboarded system in Sigrid, omit otherwise.
 
 See [supported technologies](guardrails.md#supported-technologies).
 
