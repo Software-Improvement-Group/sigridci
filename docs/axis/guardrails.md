@@ -29,6 +29,12 @@ The `guardrails_quality_check` tool supports these technologies:
 - Kotlin
 - Progress ABL
 - PHP
+- Mendix microflows and nanoflows
+- Dart
+- X++, for both Dynamics AX and Dynamics 365
+- Navision (Dynamics NAV, AL)
+
+For Dart, X++, and Navision, the tool checks maintainability only, and does not check security. For Mendix, the tool checks the JSON representation of a microflow or nanoflow, in a file with the `.mx.json` extension.
 
 The [technology support](../reference/technology-support.md#list-of-supported-technologies) page marks them with "Guardrails". The architecture drift check supports every technology marked with "Architecture" on that page.
 
