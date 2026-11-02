@@ -7,6 +7,8 @@ SIG uses [continuous delivery](https://en.wikipedia.org/wiki/Continuous_delivery
 
 - **Sigrid CI:** Sigrid CI now supports integration with [Gerrit](https://www.gerritcodereview.com). The [Sigrid CI documentation](../sigridci-integration/gerrit.md) contains instructions on how to set this up.
 - **IDE integrations:** Architecture findings are now available in the Sigrid IDE integrations for JetBrains and Visual Studio Code. 
+- **AI Code Governance:** AI generated code detection now also covers C++, Kotlin, PHP, Swift, TypeScript, and Vue, in addition to Java, Python, and C#. This gives you insight into AI coding adoption across more of your portfolio. See the [technology support documentation](technology-support.md#list-of-supported-technologies) for the full list.
+- **Sigrid Axis:** The Guardrails quality gate now also supports Mendix microflows and nanoflows, Dart, X++, and Navision, so agents working in these technologies get the same feedback before they report a task done. Dart, X++, and Navision are checked for maintainability only. See [Guardrails](../axis/guardrails.md#supported-technologies) for details.
 
 ### October 19, 2026
 
