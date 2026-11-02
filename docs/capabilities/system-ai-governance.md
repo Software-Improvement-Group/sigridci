@@ -98,8 +98,8 @@ In a large system it is not unusual to have a number of incorrectly identified c
 The goal of Sigrid's AI Governance is not to identify every single AI-generated code snippet correctly, but to 
 provide high level insights at portfolio level with enough accuracy (>95%) to perform AI Governance activities.
 
-The [technology support documentation](../reference/technology-support.md) contains more information about which
-technologies are currently supported by this feature.
+The [technology support documentation](../reference/technology-support.md#list-of-supported-technologies) marks the
+technologies currently supported by this feature with "AI Detection".
 
 ## Frequently asked questions
 
