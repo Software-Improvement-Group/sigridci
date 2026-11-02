@@ -111,6 +111,28 @@ Both the `pyproject.toml` and the lockfile are recommended to be included in the
 
 [Poetry](https://python-poetry.org) is an alternative Python dependency management tool. Poetry also uses `pyproject.toml`, and generates its own lockfile called `poetry.lock`. This lockfile needs to be included in the codebase that is published to Sigrid, and is then analyzed automatically. If you are choosing a tool for a new project, we recommend `pylock.toml` or `uv.lock` instead, but Poetry remains fully supported.
 
+## NuGet
+
+NuGet dependencies are defined in project files such as `.csproj`, or in `packages.config`. Sigrid will pick up these files automatically, but they only list the *direct* dependencies of your project.
+
+### NuGet lock files and restore output
+
+Transitive NuGet dependencies do not appear in your project files. They are only available in the output of `dotnet restore`, which is a file called `project.assets.json`, or in a NuGet [lockfile](https://learn.microsoft.com/en-us/nuget/consume-packages/package-references-in-project-files#locking-dependencies) called `packages.lock.json`. If your upload contains one of these files, Sigrid will use it to extract the transitive dependencies. Sigrid will only consider these files when [transitive scanning](../reference/analysis-scope-configuration.md#open-source-health) is set to true. If your upload only contains project files, Sigrid will only show direct dependencies, even when transitive scanning is enabled.
+
+To generate a lockfile, enable `RestorePackagesWithLockFile` in your project file. Using a lockfile is a best practice even without considering Sigrid, as this allows for fully reproducible builds.
+
+    <PropertyGroup>
+        <RestorePackagesWithLockFile>true</RestorePackagesWithLockFile>
+    </PropertyGroup>
+
+If you prefer not to commit these files, you can run `dotnet restore` in your pipeline to generate `project.assets.json`. Note you will need to run this command *before* Sigrid CI, otherwise the file will not end up in the upload.
+
+    dotnet restore
+
+### Missing transitive dependencies
+
+If you expect a transitive NuGet dependency but Sigrid only shows the direct dependencies, check that transitive scanning is enabled in your configuration, and that `project.assets.json` or `packages.lock.json` was included in the upload.
+
 ## Other dependency management tools
 
 This page provides some additional instructions and explanation for commonly used dependency management tools. For the complete list of all supportec technologies, refer to the [supported dependency management tools and open source ecosystems](../reference/technology-support.md).
