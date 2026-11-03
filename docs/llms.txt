@@ -1,0 +1,163 @@
+# Sigrid documentation
+
+- Assume cloud-based Sigrid unless the user says otherwise. The "Sigrid On-Premise" pages only apply to on-premise installations.
+- The Markdown source of these pages is in the `docs/` directory of https://github.com/Software-Improvement-Group/sigridci.
+
+## Getting started
+
+- [Introduction](https://docs.sigrid-says.com/)
+- [Roles & usage](https://docs.sigrid-says.com/getting-started/roles.html)
+- [Our approach](https://docs.sigrid-says.com/getting-started/approach.html)
+
+## Setting up Sigrid
+
+- [How to set up Sigrid](https://docs.sigrid-says.com/organization-integration/onboarding-steps.html)
+- [User management](https://docs.sigrid-says.com/organization-integration/usermanagement.html)
+- [Authentication tokens](https://docs.sigrid-says.com/organization-integration/authentication-tokens.html)
+- [Uploading your source code](https://docs.sigrid-says.com/organization-integration/upload-instructions.html)
+- [Adding context using metadata](https://docs.sigrid-says.com/organization-integration/metadata.html)
+- [Mapping repositories to systems](https://docs.sigrid-says.com/organization-integration/systems.html)
+
+## Sigrid On-Premise
+
+- [Sigrid On-Premise Integration](https://docs.sigrid-says.com/organization-integration/onpremise-integration.html)
+- [QSM On-Premise](https://docs.sigrid-says.com/organization-integration/onpremise-qsm.html)
+- [Infrastructure & Resource Requirements](https://docs.sigrid-says.com/organization-integration/onpremise-requirements.html)
+- [Kubernetes Deployment](https://docs.sigrid-says.com/organization-integration/onpremise-kubernetes.html)
+- [Using SIG's Elastic Container Registry](https://docs.sigrid-says.com/organization-integration/onpremise-aws-ecr.html)
+- [OSH Knowledge Base Updater](https://docs.sigrid-says.com/organization-integration/onpremise-osh-knowledgebase-updater.html)
+- [LDAP Group Synchronization](https://docs.sigrid-says.com/organization-integration/onpremise-ldap-group-sync.html)
+- [Automated Database Initialization](https://docs.sigrid-says.com/organization-integration/onpremise-automated-database-initialization.html)
+- [AI Explanation Service](https://docs.sigrid-says.com/organization-integration/onpremise-ai-explanations.html)
+- [Sigrid Axis](https://docs.sigrid-says.com/organization-integration/onpremise-axis.html)
+- [Sigrid Axis MCP server](https://docs.sigrid-says.com/organization-integration/onpremise-mcp.html)
+- [Analysis Configuration](https://docs.sigrid-says.com/organization-integration/onpremise-analysis.html)
+- [Using Open Source Health on Sigrid On-Premise](https://docs.sigrid-says.com/organization-integration/onpremise-osh-analysis.html)
+- [Operations](https://docs.sigrid-says.com/organization-integration/onpremise-operations.html)
+- [Installation](https://docs.sigrid-says.com/organization-integration/runbook-onpremise-installation.html)
+- [Updating](https://docs.sigrid-says.com/organization-integration/runbook-onpremise-updating.html)
+- [On-Premise Release Notes](https://docs.sigrid-says.com/organization-integration/onpremise-release-notes.html)
+
+## Sigrid Local
+
+- [Sigrid Local for IT Due Diligence](https://docs.sigrid-says.com/organization-integration/sigrid-local.html)
+
+## Sigrid: Portfolio-level capabilities
+
+- [Portfolio Overview](https://docs.sigrid-says.com/capabilities/portfolio-dashboard-plans.html)
+- [Objectives](https://docs.sigrid-says.com/capabilities/portfolio-objectives.html)
+- [Open Source Health](https://docs.sigrid-says.com/capabilities/portfolio-open-source-health.html)
+- [Library management](https://docs.sigrid-says.com/capabilities/portfolio-library-management.html)
+- [Management dashboard](https://docs.sigrid-says.com/capabilities/management-dashboard.html)
+- [Rules management](https://docs.sigrid-says.com/capabilities/portfolio-rules-management.html)
+- [Generated offline reports](https://docs.sigrid-says.com/capabilities/generated-reports.html)
+
+## Sigrid: System-level capabilities
+
+- [Overview](https://docs.sigrid-says.com/capabilities/system-overview.html)
+- [Objectives](https://docs.sigrid-says.com/capabilities/objectives.html)
+- [Maintainability](https://docs.sigrid-says.com/capabilities/system-maintainability.html)
+- [Delta Quality](https://docs.sigrid-says.com/capabilities/system-delta-quality.html)
+- [Architecture Quality](https://docs.sigrid-says.com/capabilities/architecture-quality.html)
+- [Configuration](https://docs.sigrid-says.com/reference/analysis-scope-configuration.html#architecture-quality)
+- [Frequently Asked Questions](https://docs.sigrid-says.com/capabilities/faq-architecture.html)
+- [AI Governance](https://docs.sigrid-says.com/capabilities/system-ai-governance.html)
+- [Frequently Asked Questions](https://docs.sigrid-says.com/capabilities/faq-ai-code-governance.html)
+- [Security](https://docs.sigrid-says.com/capabilities/system-security.html)
+- [Frequently Asked Questions](https://docs.sigrid-says.com/capabilities/faq-security.html)
+- [Open Source Health](https://docs.sigrid-says.com/capabilities/system-open-source-health.html)
+- [Code Explorer](https://docs.sigrid-says.com/capabilities/system-code-explorer.html)
+- [Generated offline reports](https://docs.sigrid-says.com/capabilities/generated-reports.html)
+
+## Sigrid Axis
+
+- [Overview](https://docs.sigrid-says.com/axis/)
+- [Guardrails](https://docs.sigrid-says.com/axis/guardrails.html)
+- [Auto-fix Agents](https://docs.sigrid-says.com/axis/autofix-agents.html)
+- [Installation](https://docs.sigrid-says.com/axis/installation.html)
+- [Configuration](https://docs.sigrid-says.com/axis/configuration.html)
+- [Skills reference](https://docs.sigrid-says.com/axis/skills.html)
+- [MCP tools reference](https://docs.sigrid-says.com/axis/tools.html)
+
+## Guidelines
+
+- [For (enterprise) architects](https://docs.sigrid-says.com/workflows/architect.html)
+- [For managers](https://docs.sigrid-says.com/workflows/manager.html)
+- [For developers](https://docs.sigrid-says.com/workflows/developer.html)
+- [For using agents](https://docs.sigrid-says.com/workflows/agents/)
+- [Building with Guardrails](https://docs.sigrid-says.com/workflows/agents/building-with-guardrails.html)
+- [Preventing architecture drift](https://docs.sigrid-says.com/workflows/agents/preventing-architecture-drift.html)
+- [Improving architecture](https://docs.sigrid-says.com/workflows/agents/improving-architecture.html)
+- [Reducing technical debt](https://docs.sigrid-says.com/workflows/agents/reducing-technical-debt.html)
+- [Triaging security and reliability findings](https://docs.sigrid-says.com/workflows/agents/triaging-security-and-reliability-findings.html)
+- [For product owners](https://docs.sigrid-says.com/workflows/product-owner.html)
+- [For your agile development process](https://docs.sigrid-says.com/workflows/agile-development-process.html)
+- [How to organize for quality software](https://docs.sigrid-says.com/workflows/best-practices-organization.html)
+- [For using Objectives](https://docs.sigrid-says.com/workflows/best-practices-objectives.html)
+- [For healthy use of Open Source](https://docs.sigrid-says.com/workflows/best-practices-osh.html)
+- [For managing Security](https://docs.sigrid-says.com/workflows/best-practices-security.html)
+- [For designing a component architecture](https://docs.sigrid-says.com/workflows/best-practices-architecture.html)
+- [For performing Tech Due Diligence](https://docs.sigrid-says.com/workflows/tech-dd-introduction.html)
+- [Tech DD: Results interpretation](https://docs.sigrid-says.com/workflows/tech-dd-guide-interpretation.html)
+- [Tech DD: Reporting](https://docs.sigrid-says.com/workflows/tech-dd-guide-reporting.html)
+
+## Sigrid CI: Pipeline integration
+
+- [Using Sigrid CI](https://docs.sigrid-says.com/sigridci-integration/using-sigridci.html)
+- [Sigrid CI & development workflows](https://docs.sigrid-says.com/sigridci-integration/development-workflows.html)
+- [GitHub Actions](https://docs.sigrid-says.com/sigridci-integration/github-actions.html)
+- [GitLab](https://docs.sigrid-says.com/sigridci-integration/gitlab.html)
+- [Bitbucket Pipelines](https://docs.sigrid-says.com/sigridci-integration/bitbucket-pipelines.html)
+- [Jenkins](https://docs.sigrid-says.com/sigridci-integration/jenkins.html)
+- [Azure DevOps](https://docs.sigrid-says.com/sigridci-integration/azure-devops.html)
+- [TeamCity](https://docs.sigrid-says.com/sigridci-integration/teamcity.html)
+- [Gerrit](https://docs.sigrid-says.com/sigridci-integration/gerrit.html)
+- [Mendix Team Server](https://docs.sigrid-says.com/sigridci-integration/mendix-teamserver.html)
+- [Mendix Pipelines](https://docs.sigrid-says.com/sigridci-integration/mendix-pipelines.html)
+- [Mendix on GitHub](https://docs.sigrid-says.com/sigridci-integration/mendix-github-actions.html)
+- [Mendix on GitLab](https://docs.sigrid-says.com/sigridci-integration/mendix-gitlab.html)
+- [Mendix on Azure DevOps](https://docs.sigrid-says.com/sigridci-integration/mendix-azure.html)
+- [Other environments](https://docs.sigrid-says.com/sigridci-integration/integration.html)
+
+## External integrations
+
+- [Sigrid REST API](https://docs.sigrid-says.com/integrations/sigrid-api-documentation.html)
+- [Visual Studio Code extension](https://docs.sigrid-says.com/integrations/vscode-extension.html)
+- [JetBrains extension](https://docs.sigrid-says.com/integrations/jetbrains-extension.html)
+- [Mendix Studio Pro extension](https://docs.sigrid-says.com/integrations/mendix-studio-pro-extension.html)
+- [Publishing your dependencies](https://docs.sigrid-says.com/capabilities/osh-upload-instructions.html)
+- [Import SBOMs into Sigrid](https://docs.sigrid-says.com/integrations/integration-sbom.html)
+- [Import custom findings using SARIF](https://docs.sigrid-says.com/integrations/integration-sarif.html)
+- [Importing security findings](https://docs.sigrid-says.com/integrations/integration-security.html)
+- [Importing findings from Fortify](https://docs.sigrid-says.com/integrations/integration-security-fortify.html)
+- [Importing findings from Checkmarx](https://docs.sigrid-says.com/integrations/integration-security-checkmarx.html)
+- [Sigrid Report Generator](https://github.com/Software-Improvement-Group/sigrid-report-generator)
+- [Objectives report](https://docs.sigrid-says.com/capabilities/reports/objectives-report.html)
+- [Modernization report](https://docs.sigrid-says.com/capabilities/reports/modernization-report.html)
+- [Sigrid integration on GitHub](https://github.com/Software-Improvement-Group/sigrid-integrations)
+- [Security findings in Slack](https://github.com/Software-Improvement-Group/sigrid-integrations/tree/main/slack-security-findings)
+- [Security findings in MS Teams](https://github.com/Software-Improvement-Group/sigrid-integrations/tree/main/teams-security-findings)
+- [Get/Update scope configuration file](https://github.com/Software-Improvement-Group/sigrid-integrations/tree/main/get-scope-file)
+- [Siemens Polarion integration](https://github.com/Software-Improvement-Group/sigrid-integrations/tree/main/polarion-integration)
+- [Sigrid LDAP group synchronization](https://github.com/Software-Improvement-Group/sigrid-integrations/tree/main/ldap-group-sync)
+
+## Reference
+
+- [Sigrid CI options](https://docs.sigrid-says.com/reference/client-script-usage.html)
+- [Scope configuration](https://docs.sigrid-says.com/reference/analysis-scope-configuration.html)
+- [Technology support](https://docs.sigrid-says.com/reference/technology-support.html)
+- [SIG Quality Model documentation](https://docs.sigrid-says.com/reference/sig-quality-models.html)
+- [Key changes in the 2026 model](https://docs.sigrid-says.com/reference/quality-model-documents/2026-model-changes.html)
+- [SIG Maintainability model](https://softwareimprovementgroup.com/wp-content/uploads/SIG-TUViT-Evaluation-Criteria-Trusted-Product-Maintainability-Guidance-for-producers.pdf)
+- [SIG Architecture model](https://www.softwareimprovementgroup.com/wp-content/uploads/Guidance-for-producers-Architecture-Quality-Model.pdf)
+- [SIG Open Source Health quality model](https://docs.sigrid-says.com/reference/quality-model-documents/open-source-health.html)
+- [SIG Security quality model](https://docs.sigrid-says.com/reference/quality-model-documents/security.html)
+- [Mendix QSM quick-start guide](https://docs.sigrid-says.com/reference/quick-start-for-mendix-teamserver.html)
+- [Sigrid AI Explanations](https://docs.sigrid-says.com/reference/ai-explanations.html)
+- [Frequently Asked Questions](https://docs.sigrid-says.com/capabilities/faq.html)
+- [Glossary](https://docs.sigrid-says.com/reference/glossary.html)
+
+## What's new?
+
+- [Release notes](https://docs.sigrid-says.com/reference/release-notes.html)
+- [Roadmap](https://docs.sigrid-says.com/reference/roadmap.html)

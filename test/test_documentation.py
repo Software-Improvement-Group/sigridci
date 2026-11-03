@@ -19,6 +19,7 @@ import yaml
 from bs4 import BeautifulSoup
 from datetime import datetime
 from unittest import TestCase
+from urllib.parse import urljoin
 
 
 class DocumentationTest(TestCase):
@@ -86,7 +87,17 @@ class DocumentationTest(TestCase):
             if not menuLink["href"].startswith("https://"):
                 linkedFile = f"docs{menuLink['href']}".split("#")[0].replace(".html", ".md")
                 self.assertTrue(os.path.exists(linkedFile), f"Dead menu link to {linkedFile}")
-                
+
+    def testLlmsTxtMatchesMenu(self):
+        with open("docs/_includes/menu.html", "r") as f:
+            dom = BeautifulSoup(f.read(), features="html.parser")
+        menuUrls = {urljoin("https://docs.sigrid-says.com", menuLink["href"]) for menuLink in dom.select("a.page")}
+
+        with open("docs/llms.txt", "r") as f:
+            llmsUrls = {url for name, url in self.LINK.findall(f.read())}
+
+        self.assertEqual(menuUrls, llmsUrls, "docs/llms.txt should list the same pages as menu.html")
+
     def testFileNamesAreLowercase(self):
         for file, contents in self.readDocumentationPages():
             if not file.lower().endswith("readme.md"):
