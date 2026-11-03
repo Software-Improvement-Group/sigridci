@@ -40,7 +40,7 @@ docker run --rm -v "$(pwd)/docs:/srv/jekyll" -v sigridci-docs-gems:/usr/local/bu
   add it to `llms.txt` under the same category.
   - Unlike the Markdown pages, `llms.txt` uses absolute URLs to the HTML version of each page.
   - Do not add front matter, so Jekyll copies the file as-is instead of processing it with Liquid.
-  - The unit tests check the format, dead links, and that every menu page is listed.
+  - The unit tests check that `llms.txt` lists exactly the same pages as `menu.html`.
 - All images should be located in the `docs/images` directory.
   - This is checked by the unit tests.
 - All images should have an explicit width set using the `<img src="..." width="123" />` notation.

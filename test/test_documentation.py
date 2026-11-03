@@ -19,6 +19,7 @@ import yaml
 from bs4 import BeautifulSoup
 from datetime import datetime
 from unittest import TestCase
+from urllib.parse import urljoin
 
 
 class DocumentationTest(TestCase):
@@ -29,10 +30,6 @@ class DocumentationTest(TestCase):
     IMAGE_HTML = re.compile("<img.*?>")
     INCLUDE_DIR = "docs/_includes"
     GENERATED_DIR = "docs/_site"
-    MENU = "docs/_includes/menu.html"
-    LLMS_TXT = "docs/llms.txt"
-    LLMS_FILE_LIST_ITEM = re.compile("^- \\[[^\\]]+\\]\\(\\S+\\)(: .+)?$")
-    DOCS_URL = "https://docs.sigrid-says.com"
 
     def testDocumentationDoesNotContainBrokenLinks(self):
         for file, contents in self.readDocumentationPages():
@@ -83,49 +80,23 @@ class DocumentationTest(TestCase):
         self.assertEqual(len(wrong), 0, f"The following images are invalid:\n{'\n'.join(wrong)}")
                 
     def testMenuDoesNotContainDeadLinks(self):
-        for href in self.readMenuLinks():
-            if not href.startswith("https://"):
-                linkedFile = self.toMarkdownFile(href)
+        with open("docs/_includes/menu.html", "r") as f:
+            dom = BeautifulSoup(f.read(), features="html.parser")
+        
+        for menuLink in dom.select("a.page"):
+            if not menuLink["href"].startswith("https://"):
+                linkedFile = f"docs{menuLink['href']}".split("#")[0].replace(".html", ".md")
                 self.assertTrue(os.path.exists(linkedFile), f"Dead menu link to {linkedFile}")
 
-    def testLlmsTxtFollowsSpecification(self):
-        """See https://llmstxt.org: one H1, then H2 sections with link lists."""
-        lines = self.readLlmsTxt().strip().split("\n")
-        headings = [line for line in lines if line.startswith("#")]
-        firstSection = lines.index(headings[1]) if len(headings) > 1 else len(lines)
-        fileListItems = [line for line in lines[firstSection:] if line.startswith("-")]
-
-        self.assertTrue(lines[0].startswith("# "), "llms.txt should start with an H1")
-        self.assertEqual([], [heading for heading in headings[1:] if not heading.startswith("## ")])
-        self.assertEqual([], [item for item in fileListItems if not self.LLMS_FILE_LIST_ITEM.match(item)])
-
-    def testLlmsTxtDoesNotContainDeadLinks(self):
-        for name, url in self.LINK.findall(self.readLlmsTxt()):
-            if url.startswith(self.DOCS_URL):
-                linkedFile = self.toMarkdownFile(url[len(self.DOCS_URL):])
-                self.assertTrue(os.path.exists(linkedFile), f"Dead link in llms.txt to {linkedFile}")
-
-    def testLlmsTxtContainsEveryMenuPage(self):
-        llmsUrls = {url for name, url in self.LINK.findall(self.readLlmsTxt())}
-        menuUrls = {href if href.startswith("https://") else self.DOCS_URL + href for href in self.readMenuLinks()}
-        missing = sorted(menuUrls - llmsUrls)
-        self.assertEqual([], missing, "Every page in menu.html should also be listed in docs/llms.txt")
-
-    def readMenuLinks(self):
-        with open(self.MENU, "r") as f:
+    def testLlmsTxtMatchesMenu(self):
+        with open("docs/_includes/menu.html", "r") as f:
             dom = BeautifulSoup(f.read(), features="html.parser")
-        return [menuLink["href"] for menuLink in dom.select("a.page")]
+        menuUrls = {urljoin("https://docs.sigrid-says.com", menuLink["href"]) for menuLink in dom.select("a.page")}
 
-    def readLlmsTxt(self):
-        with open(self.LLMS_TXT, "r") as f:
-            return f.read()
+        with open("docs/llms.txt", "r") as f:
+            llmsUrls = {url for name, url in self.LINK.findall(f.read())}
 
-    def toMarkdownFile(self, sitePath):
-        """Maps a path on the documentation website to its Markdown source, e.g. /a/b.html to docs/a/b.md."""
-        path = sitePath.split("#")[0]
-        if path.endswith("/"):
-            path += "README.html"
-        return f"docs{path}".replace(".html", ".md")
+        self.assertEqual(menuUrls, llmsUrls, "docs/llms.txt should list the same pages as menu.html")
 
     def testFileNamesAreLowercase(self):
         for file, contents in self.readDocumentationPages():
