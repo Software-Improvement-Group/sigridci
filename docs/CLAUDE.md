@@ -35,6 +35,12 @@ docker run --rm -v "$(pwd)/docs:/srv/jekyll" -v sigridci-docs-gems:/usr/local/bu
 - All links to elsewhere in the documentation should use a relative URL and point to Markdown files.
   - The only exception is `menu.html`, which is the template that points to the HTML version of each page.
   - This is checked by the unit tests.
+- `docs/llms.txt` is the [llms.txt](https://llmstxt.org) index for AI agents, published at
+  `https://docs.sigrid-says.com/llms.txt`. It is an outline of the menu, so when you add a page to `menu.html`, also
+  add it to `llms.txt` under the same category.
+  - Unlike the Markdown pages, `llms.txt` uses absolute URLs to the HTML version of each page.
+  - Do not add front matter, so Jekyll copies the file as-is instead of processing it with Liquid.
+  - The unit tests check the format, dead links, and that every menu page is listed.
 - All images should be located in the `docs/images` directory.
   - This is checked by the unit tests.
 - All images should have an explicit width set using the `<img src="..." width="123" />` notation.
