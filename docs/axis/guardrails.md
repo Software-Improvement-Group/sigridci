@@ -18,7 +18,7 @@ For the problems that are already in your code, see [Auto-fix Agents](autofix-ag
 
 ## Supported technologies
 
-The `guardrails_quality_check` tool checks maintainability for every technology that Sigrid detects automatically. The [technology support](../reference/technology-support.md#list-of-supported-technologies) page marks them with "Guardrails". The tool works out the technology from the file it receives, so there is nothing to configure.
+The `guardrails_quality_check` tool checks maintainability for every technology that Sigrid detects automatically. These are the technologies with a ✅ in the "Auto-detect" column of the [technology support](../reference/technology-support.md#list-of-supported-technologies) page, apart from data and configuration formats such as JSON, XML, and YAML. The tool works out the technology from the file it receives, so there is nothing to configure.
 
 The tool recognizes most technologies by file extension. A few also need something in the file itself:
 

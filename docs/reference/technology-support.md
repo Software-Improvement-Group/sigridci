@@ -11,309 +11,308 @@ This page provides an overview of all technologies that can be analyzed by Sigri
 - In the list of supported capabilities:
   - "GenAI" indicates the technologies for which Sigrid offers AI-generated explanations on the source code. See the [GenAI Explanations](../reference/ai-explanations.md#genai-explanations) documentation for more information.
   - "Static AI" indicates the technologies for which Sigrid offers static explanations on the Maintainability findings. Support for other Static AI explanations on other Sigrid's capability depends on whether the technology is supported by the specific Sigrid capability. See the [AI Static Explanations](../reference/ai-explanations.md#ai-static-explanations) documentation for more information.
-  - "Guardrails" indicates technologies supported by the live quality check in [Guardrails](../axis/guardrails.md)'s MCP tool in Sigrid Axis.
   - "AI Detection" indicates technologies supported by [AI Generated Code Detection](../capabilities/system-ai-governance.md#technology-support).
 
-<a>Sigrid</a> \| <a>On-premise Sigrid</a> \| <a>Sigrid Local</a> \| <a>Sigrid Axis</a>
+<a>Sigrid</a> \| <a>On-premise Sigrid</a> \| <a>Sigrid Local</a>
 {: .technologySupportCategories }
 
 | Name in configuration file    | Technology name(s)                     | Auto-detect | Supported Sigrid capabilities                                           | Notes                                       |
 |-------------------------------|----------------------------------------|-------------|-------------------------------------------------------------------------|---------------------------------------------|
-| `abap`                        | ABAP (SAP)                             | ✅          | Maintainability, Static AI, GenAI, Guardrails                           |
-| `abapcds`                     | ABAP Core Data Services                | ✅          | Maintainability, Guardrails                                             |
+| `abap`                        | ABAP (SAP)                             | ✅          | Maintainability, Static AI, GenAI                                       |
+| `abapcds`                     | ABAP Core Data Services                | ✅          | Maintainability                                                         |
 | `abapsmartforms`              | ABAP SmartForms                        | ⚠️          | Maintainability, Architecture                                           |
-| `abl`                         | Abl (OpenEdge)                         | ✅          | Maintainability, Architecture, Static AI, GenAI, Guardrails             |
-| `acl`                         | ACL                                    | ✅          | Maintainability, Guardrails                                             |
-| `accell`                      | Accell                                 | ✅          | Maintainability, Architecture, Guardrails                               |
+| `abl`                         | Abl (OpenEdge)                         | ✅          | Maintainability, Architecture, Static AI, GenAI                         |
+| `acl`                         | ACL                                    | ✅          | Maintainability                                                         |
+| `accell`                      | Accell                                 | ✅          | Maintainability, Architecture                                           |
 | `actionscript`                | ActionScript                           | ⚠️          | Maintainability, Architecture, GenAI                                    |
-| `actionscript3`               | ActionScript 3                         | ✅          | Maintainability, Architecture, GenAI, Guardrails                        |
-| `ada`                         | Ada                                    | ✅          | Maintainability, Architecture, GenAI, Guardrails                        |
+| `actionscript3`               | ActionScript 3                         | ✅          | Maintainability, Architecture, GenAI                                    |
+| `ada`                         | Ada                                    | ✅          | Maintainability, Architecture, GenAI                                    |
 | `adabasnatural`               | Adabas Natural                         | ⚠️          | Maintainability, Architecture, GenAI                                    |
 | `adfxml`                      | ADF XML                                | ⚠️          | Maintainability                                                         |
 | `agilepoint`                  | AgilePoint                             | ⚠️          | Maintainability, Architecture                                           |
-| `altovauml`                   | Altova UML                             | ✅          | Maintainability, Architecture, Guardrails                               | [(4)](#notes), [(8)](#notes)                |
-| `ansible`                     | Ansible                                | ✅          | Maintainability, Security, GenAI, Guardrails                            |
-| `apachecamel`                 | Apache Camel                           | ✅          | Maintainability, Architecture, Guardrails                               |
+| `altovauml`                   | Altova UML                             | ✅          | Maintainability, Architecture                                           | [(4)](#notes), [(8)](#notes)                |
+| `ansible`                     | Ansible                                | ✅          | Maintainability, Security, GenAI                                        |
+| `apachecamel`                 | Apache Camel                           | ✅          | Maintainability, Architecture                                           |
 | `apex`                        | Oracle APEX                            | ⚠️          | Maintainability, Architecture, GenAI                                    | [(4)](#notes), [(8)](#notes)                |
-| `aps`                         | APS                                    | ✅          | Maintainability, Architecture, GenAI, Guardrails                        |
-| `applicationmaster`           | Application Master                     | ✅          | Maintainability, Architecture, Guardrails                               |
+| `aps`                         | APS                                    | ✅          | Maintainability, Architecture, GenAI                                    |
+| `applicationmaster`           | Application Master                     | ✅          | Maintainability, Architecture                                           |
 | `ash`                         | ArtosScript (ash)                      | ⚠️          | Maintainability, Architecture                                           |
-| `asp`                         | ASP                                    | ✅          | Maintainability, Architecture, Guardrails                               |
-| `aspx`                        | ASP.NET                                | ✅          | Maintainability, Architecture, Security [(7)](#notes), Static AI, Guardrails |
-| `assembly`                    | Assembly                               | ✅          | Maintainability, Architecture, GenAI, Guardrails                        |
-| `aura`                        | Aura                                   | ✅          | Maintainability, Architecture, Guardrails                               |
-| `axway`                       | Axway                                  | ✅          | Maintainability, Architecture, Guardrails                               | [(4)](#notes), [(8)](#notes)                |
-| `axystudio`                   | AxyStudio functions                    | ✅          | Maintainability, Guardrails                                             | [(4)](#notes), [(8)](#notes)                |
-| `axyworkflow`                 | AxyStudio workflows                    | ✅          | Maintainability, Architecture, Guardrails                               |
-| `baan`                        | Baan                                   | ✅          | Maintainability, Guardrails                                             | [(4)](#notes), [(8)](#notes)                |
+| `asp`                         | ASP                                    | ✅          | Maintainability, Architecture                                           |
+| `aspx`                        | ASP.NET                                | ✅          | Maintainability, Architecture, Security [(7)](#notes), Static AI        |
+| `assembly`                    | Assembly                               | ✅          | Maintainability, Architecture, GenAI                                    |
+| `aura`                        | Aura                                   | ✅          | Maintainability, Architecture                                           |
+| `axway`                       | Axway                                  | ✅          | Maintainability, Architecture                                           | [(4)](#notes), [(8)](#notes)                |
+| `axystudio`                   | AxyStudio functions                    | ✅          | Maintainability                                                         | [(4)](#notes), [(8)](#notes)                |
+| `axyworkflow`                 | AxyStudio workflows                    | ✅          | Maintainability, Architecture                                           |
+| `baan`                        | Baan                                   | ✅          | Maintainability                                                         | [(4)](#notes), [(8)](#notes)                |
 | `basic`                       | BASIC                                  | ⚠️          | Maintainability, Architecture, GenAI                                    |
-| `batch`                       | Batch                                  | ✅          | Maintainability, Architecture, Guardrails                               |
-| `beanshell`                   | BeanShell                              | ✅          | Maintainability, Guardrails                                             |
-| `beinformed`                  | Be Informed case management            | ✅          | Maintainability, Architecture, Guardrails                               | [(4)](#notes), [(8)](#notes)                |
-| `beinformedknowledgemodels`   | Be Informed knowledge models           | ✅          | Maintainability, Architecture, Guardrails                               | [(4)](#notes), [(8)](#notes)                |
-| `biztalk`                     | BizTalk                                | ✅          | Maintainability, Architecture, Guardrails                               |
-| `biztalkrules`                | BizTalk Rules Engine                   | ✅          | Maintainability, Guardrails                                             |
-| `blazerules`                  | Blaze BRM                              | ✅          | Maintainability, Guardrails                                             | [(4)](#notes), [(8)](#notes)                |
-| `blueprism`                   | Blue Prism                             | ✅          | Maintainability, Architecture, Guardrails                               |
-| `blueriq`                     | Blueriq flows/processes                | ✅          | Maintainability, Architecture, Guardrails                               | [(4)](#notes), [(8)](#notes)                |
-| `blueriqexpressions`          | Blueriq expressions                    | ✅          | Maintainability, Architecture, Guardrails                               | [(4)](#notes), [(8)](#notes)                |
-| `bpel`                        | BPEL                                   | ✅          | Maintainability, Architecture, Guardrails                               |
+| `batch`                       | Batch                                  | ✅          | Maintainability, Architecture                                           |
+| `beanshell`                   | BeanShell                              | ✅          | Maintainability                                                         |
+| `beinformed`                  | Be Informed case management            | ✅          | Maintainability, Architecture                                           | [(4)](#notes), [(8)](#notes)                |
+| `beinformedknowledgemodels`   | Be Informed knowledge models           | ✅          | Maintainability, Architecture                                           | [(4)](#notes), [(8)](#notes)                |
+| `biztalk`                     | BizTalk                                | ✅          | Maintainability, Architecture                                           |
+| `biztalkrules`                | BizTalk Rules Engine                   | ✅          | Maintainability                                                         |
+| `blazerules`                  | Blaze BRM                              | ✅          | Maintainability                                                         | [(4)](#notes), [(8)](#notes)                |
+| `blueprism`                   | Blue Prism                             | ✅          | Maintainability, Architecture                                           |
+| `blueriq`                     | Blueriq flows/processes                | ✅          | Maintainability, Architecture                                           | [(4)](#notes), [(8)](#notes)                |
+| `blueriqexpressions`          | Blueriq expressions                    | ✅          | Maintainability, Architecture                                           | [(4)](#notes), [(8)](#notes)                |
+| `bpel`                        | BPEL                                   | ✅          | Maintainability, Architecture                                           |
 | `bpm`                         | BPMN                                   | ⚠️          | Maintainability, Architecture                                           |
-| `brail`                       | Brail                                  | ✅          | Maintainability, Guardrails                                             |
-| `bsp`                         | Bsp                                    | ✅          | Maintainability, Architecture, Guardrails                               |
-| `c`                           | C                                      | ✅          | Maintainability, Architecture, Security, Static AI, GenAI, Guardrails   |
+| `brail`                       | Brail                                  | ✅          | Maintainability                                                         |
+| `bsp`                         | Bsp                                    | ✅          | Maintainability, Architecture                                           |
+| `c`                           | C                                      | ✅          | Maintainability, Architecture, Security, Static AI, GenAI               |
 | `cache`                       | Cache                                  | ⚠️          | Maintainability, Architecture                                           |
-| `cacheobjectscript`           | Cache ObjectScript                     | ✅          | Maintainability, Architecture, GenAI, Guardrails                        |
+| `cacheobjectscript`           | Cache ObjectScript                     | ✅          | Maintainability, Architecture, GenAI                                    |
 | `ccl`                         | CCL                                    | ⚠️          | Maintainability, Architecture, GenAI                                    |
 | `cgdc`                        | CGDC                                   | ⚠️          | Maintainability, Architecture                                           |
-| `cgt`                         | CGT                                    | ✅          | Maintainability, Architecture, Guardrails                               |
-| `cicode`                      | Cicode                                 | ✅          | Maintainability, Architecture, Guardrails                               |
+| `cgt`                         | CGT                                    | ✅          | Maintainability, Architecture                                           |
+| `cicode`                      | Cicode                                 | ✅          | Maintainability, Architecture                                           |
 | `cl`                          | CL                                     | ⚠️          | Maintainability, Architecture                                           |
-| `clearbasic`                  | Clearbasic                             | ✅          | Maintainability, Architecture, Guardrails                               |
-| `clojure`                     | Clojure                                | ✅          | Maintainability, Guardrails                                             |
-| `cobol`                       | Cobol                                  | ✅          | Maintainability, Architecture, Static AI, GenAI, Guardrails             |
-| `coffeescript`                | CoffeeScript                           | ✅          | Maintainability, Architecture, GenAI, Guardrails                        |
-| `coldfusion`                  | ColdFusion                             | ✅          | Maintainability, Architecture, GenAI, Guardrails                        |
-| `configuration`               | Configuration                          | ✅          | Maintainability, Guardrails                                             | [(5)](#notes)                               |
+| `clearbasic`                  | Clearbasic                             | ✅          | Maintainability, Architecture                                           |
+| `clojure`                     | Clojure                                | ✅          | Maintainability                                                         |
+| `cobol`                       | Cobol                                  | ✅          | Maintainability, Architecture, Static AI, GenAI                         |
+| `coffeescript`                | CoffeeScript                           | ✅          | Maintainability, Architecture, GenAI                                    |
+| `coldfusion`                  | ColdFusion                             | ✅          | Maintainability, Architecture, GenAI                                    |
+| `configuration`               | Configuration                          | ✅          | Maintainability                                                         | [(5)](#notes)                               |
 | `coolgenc`                    | CoolGen C                              | ⚠️          | Maintainability, Architecture, GenAI                                    |
 | `coolgencobol`                | CoolGen Cobol                          | ⚠️          | Maintainability, Architecture, GenAI                                    |
-| `cpp`                         | C++                                    | ✅          | Maintainability, Architecture, Security, Static AI, GenAI, Guardrails, AI Detection |
-| `csharp`                      | C#                                     | ✅          | Maintainability, Architecture, Security, Static AI, GenAI, Guardrails, AI Detection |
-| `csp`                         | CSP                                    | ✅          | Maintainability, Architecture, Guardrails                               |
-| `css`                         | CSS                                    | ✅          | Maintainability, Architecture, Static AI, Guardrails                    |
-| `cypher`                      | Cypher                                 | ✅          | Maintainability, Architecture, Guardrails                               |
-| `cucumber`                    | Cucumber                               | ✅          | Maintainability, Architecture, GenAI, Guardrails                        |
-| `dart`                        | Dart (includes Flutter)                | ✅          | Maintainability, Architecture, Static AI, GenAI, Guardrails             |
-| `datastage`                   | Datastage                              | ✅          | Maintainability, Architecture, Guardrails                               |
-| `datastageetl`                | DatastageETL                           | ✅          | Maintainability, Architecture, Guardrails                               |
-| `datastageworkflow`           | DatastageWorkflow                      | ✅          | Maintainability, Architecture, Guardrails                               |
+| `cpp`                         | C++                                    | ✅          | Maintainability, Architecture, Security, Static AI, GenAI, AI Detection             |
+| `csharp`                      | C#                                     | ✅          | Maintainability, Architecture, Security, Static AI, GenAI, AI Detection             |
+| `csp`                         | CSP                                    | ✅          | Maintainability, Architecture                                           |
+| `css`                         | CSS                                    | ✅          | Maintainability, Architecture, Static AI                                |
+| `cypher`                      | Cypher                                 | ✅          | Maintainability, Architecture                                           |
+| `cucumber`                    | Cucumber                               | ✅          | Maintainability, Architecture, GenAI                                    |
+| `dart`                        | Dart (includes Flutter)                | ✅          | Maintainability, Architecture, Static AI, GenAI                         |
+| `datastage`                   | Datastage                              | ✅          | Maintainability, Architecture                                           |
+| `datastageetl`                | DatastageETL                           | ✅          | Maintainability, Architecture                                           |
+| `datastageworkflow`           | DatastageWorkflow                      | ✅          | Maintainability, Architecture                                           |
 | `db2`                         | DB2                                    | ⚠️          | Maintainability, Architecture, GenAI                                    |
-| `dcl`                         | Dcl                                    | ✅          | Maintainability, Architecture, Guardrails                               |
-| `delphi`                      | Delphi                                 | ✅          | Maintainability, Architecture, Static AI, GenAI, Guardrails             |
-| `delphiforms`                 | Delphi Forms                           | ✅          | Maintainability, Architecture, Guardrails                               |
-| `deltacobol`                  | Delta/Cobol                            | ✅          | Maintainability, Architecture, GenAI, Guardrails                        |
-| `docker`                      | Docker                                 | ✅          | Maintainability, Architecture, Security, Static AI, GenAI, Guardrails   |
-| `documentumxcp`               | Documentum xCP                         | ✅          | Maintainability, Architecture, Guardrails                               |
-| `drools`                      | Drools                                 | ✅          | Maintainability, Guardrails                                             |
-| `dscript`                     | Dscript                                | ✅          | Maintainability, Guardrails                                             |
-| `easytrieve`                  | Easytrieve                             | ✅          | Maintainability, Architecture, GenAI, Guardrails                        |
-| `egl`                         | EGL                                    | ✅          | Maintainability, Architecture, GenAI, Guardrails                        |
-| `ejs`                         | EJS                                    | ✅          | Maintainability, Architecture, Guardrails                               |
-| `elixir`                      | Elixir                                 | ✅          | Maintainability, Architecture, Static AI, GenAI, Guardrails             |
+| `dcl`                         | Dcl                                    | ✅          | Maintainability, Architecture                                           |
+| `delphi`                      | Delphi                                 | ✅          | Maintainability, Architecture, Static AI, GenAI                         |
+| `delphiforms`                 | Delphi Forms                           | ✅          | Maintainability, Architecture                                           |
+| `deltacobol`                  | Delta/Cobol                            | ✅          | Maintainability, Architecture, GenAI                                    |
+| `docker`                      | Docker                                 | ✅          | Maintainability, Architecture, Security, Static AI, GenAI               |
+| `documentumxcp`               | Documentum xCP                         | ✅          | Maintainability, Architecture                                           |
+| `drools`                      | Drools                                 | ✅          | Maintainability                                                         |
+| `dscript`                     | Dscript                                | ✅          | Maintainability                                                         |
+| `easytrieve`                  | Easytrieve                             | ✅          | Maintainability, Architecture, GenAI                                    |
+| `egl`                         | EGL                                    | ✅          | Maintainability, Architecture, GenAI                                    |
+| `ejs`                         | EJS                                    | ✅          | Maintainability, Architecture                                           |
+| `elixir`                      | Elixir                                 | ✅          | Maintainability, Architecture, Static AI, GenAI                         |
 | `embeddedsql`                 | C++ Embedded SQL                       | ⚠️          | Maintainability, Architecture, GenAI                                    |
-| `erb`                         | ERB                                    | ✅          | Maintainability, Architecture, Guardrails                               |
-| `erlang`                      | Erlang                                 | ✅          | Maintainability, Security, Guardrails                                   |
-| `esql`                        | ESQL                                   | ✅          | Maintainability, Architecture, Guardrails                               |
-| `filetab`                     | File Tab                               | ✅          | Maintainability, Guardrails                                             |
+| `erb`                         | ERB                                    | ✅          | Maintainability, Architecture                                           |
+| `erlang`                      | Erlang                                 | ✅          | Maintainability, Security                                               |
+| `esql`                        | ESQL                                   | ✅          | Maintainability, Architecture                                           |
+| `filetab`                     | File Tab                               | ✅          | Maintainability                                                         |
 | `finacle`                     | Finacle                                | ⚠️          | Maintainability, Architecture                                           |
 | `freeformatcobol`             | Freeformat Cobol                       | ⚠️          | Maintainability, Architecture, GenAI                                    |
-| `freemarker`                  | Freemarker                             | ✅          | Maintainability, Architecture, Guardrails                               |
-| `fme`                         | FME                                    | ✅          | Maintainability, Architecture, Guardrails                               | [(4)](#notes), [(8)](#notes)                |
-| `fortran`                     | FORTRAN                                | ✅          | Maintainability, Architecture, GenAI, Guardrails                        |
-| `gensym`                      | Gensym                                 | ✅          | Maintainability, Architecture, Guardrails                               |
-| `grpc`                        | gRPC                                   | ✅          | Maintainability, Architecture, Guardrails                               |
-| `go`                          | Go (AKA GoLang)                        | ✅          | Maintainability, Architecture, Static AI, GenAI, Guardrails             |
+| `freemarker`                  | Freemarker                             | ✅          | Maintainability, Architecture                                           |
+| `fme`                         | FME                                    | ✅          | Maintainability, Architecture                                           | [(4)](#notes), [(8)](#notes)                |
+| `fortran`                     | FORTRAN                                | ✅          | Maintainability, Architecture, GenAI                                    |
+| `gensym`                      | Gensym                                 | ✅          | Maintainability, Architecture                                           |
+| `grpc`                        | gRPC                                   | ✅          | Maintainability, Architecture                                           |
+| `go`                          | Go (AKA GoLang)                        | ✅          | Maintainability, Architecture, Static AI, GenAI                         |
 | `gosu`                        | Gosu                                   | ⚠️          | Maintainability, Architecture, Security                                 |
-| `groovy`                      | Groovy                                 | ✅          | Maintainability, Architecture, Security, Static AI, GenAI, Guardrails   |
-| `gsp`                         | GSP                                    | ✅          | Maintainability, Architecture, Guardrails                               |
-| `guidefinition`               | GUI Definition                         | ✅          | Maintainability, Guardrails                                             | [(5)](#notes)                               |
-| `gupta`                       | Gupta                                  | ✅          | Maintainability, Architecture, Guardrails                               |
-| `haml`                        | Haml                                   | ✅          | Maintainability, Architecture, Guardrails                               |
-| `html`                        | HTML                                   | ✅          | Maintainability, Architecture, Guardrails                               | [(7)](#notes)                               |
-| `hql`                         | HQL                                    | ✅          | Maintainability, Architecture, Guardrails                               |
-| `ibmace`                      | IBM ACE                                | ✅          | Maintainability, Guardrails                                             |
-| `ibmbpmbpd`                   | IBM BPM (BPD)                          | ✅          | Maintainability, Architecture, Guardrails                               | [(4)](#notes), [(8)](#notes)                |
-| `ibmbpmprocess`               | IBM BPM (Process)                      | ✅          | Maintainability, Architecture, Guardrails                               | [(4)](#notes), [(8)](#notes)                |
-| `ideal`                       | Ideal                                  | ✅          | Maintainability, Architecture, Guardrails                               |
-| `informatica`                 | Informatica                            | ✅          | Maintainability, GenAI, Guardrails                                      |
-| `informix4gl`                 | Informix 4GL                           | ✅          | Maintainability, Architecture, GenAI, Guardrails                        |
+| `groovy`                      | Groovy                                 | ✅          | Maintainability, Architecture, Security, Static AI, GenAI               |
+| `gsp`                         | GSP                                    | ✅          | Maintainability, Architecture                                           |
+| `guidefinition`               | GUI Definition                         | ✅          | Maintainability                                                         | [(5)](#notes)                               |
+| `gupta`                       | Gupta                                  | ✅          | Maintainability, Architecture                                           |
+| `haml`                        | Haml                                   | ✅          | Maintainability, Architecture                                           |
+| `html`                        | HTML                                   | ✅          | Maintainability, Architecture                                           | [(7)](#notes)                               |
+| `hql`                         | HQL                                    | ✅          | Maintainability, Architecture                                           |
+| `ibmace`                      | IBM ACE                                | ✅          | Maintainability                                                         |
+| `ibmbpmbpd`                   | IBM BPM (BPD)                          | ✅          | Maintainability, Architecture                                           | [(4)](#notes), [(8)](#notes)                |
+| `ibmbpmprocess`               | IBM BPM (Process)                      | ✅          | Maintainability, Architecture                                           | [(4)](#notes), [(8)](#notes)                |
+| `ideal`                       | Ideal                                  | ✅          | Maintainability, Architecture                                           |
+| `informatica`                 | Informatica                            | ✅          | Maintainability, GenAI                                                  |
+| `informix4gl`                 | Informix 4GL                           | ✅          | Maintainability, Architecture, GenAI                                    |
 | `informixsql`                 | Informix SQL                           | ⚠️          | Maintainability, Architecture                                           |
 | `ingres`                      | Ingres                                 | ⚠️          | Maintainability                                                         |
 | `intershoppipeline`           | Intershop (Pipeline)                   | ⚠️          | Maintainability, Architecture                                           |
-| `jasperreports`               | Jasper Reports                         | ✅          | Maintainability, Architecture, Guardrails                               |
-| `jade`                        | Jade                                   | ✅          | Maintainability, Architecture, Guardrails                               |
-| `java`                        | Java                                   | ✅          | Maintainability, Architecture, Security, Static AI, GenAI, Guardrails, AI Detection |
-| `javafx`                      | Java FX                                | ✅          | Maintainability, Architecture, Guardrails                               |
-| `javascript`                  | JavaScript (includes NodeJS)           | ✅          | Maintainability, Architecture, Security, Static AI, GenAI, Guardrails   | [(3)](#notes)                               | 
-| `jbc`                         | JBC                                    | ✅          | Maintainability, Architecture, Guardrails                               |
-| `jbpm`                        | jBPM                                   | ✅          | Maintainability, Architecture, Guardrails                               |
-| `jcl`                         | JCL                                    | ✅          | Maintainability, Architecture, GenAI, Guardrails                        |
-| `jcs`                         | JCS                                    | ✅          | Maintainability, Architecture, Guardrails                               |
-| `jde`                         | JDE                                    | ✅          | Maintainability, Guardrails                                             |
-| `jinja`                       | Jinja                                  | ✅          | Maintainability, Architecture, Guardrails                               |
-| `jsf`                         | JSF                                    | ✅          | Maintainability, Architecture, Guardrails                               |
+| `jasperreports`               | Jasper Reports                         | ✅          | Maintainability, Architecture                                           |
+| `jade`                        | Jade                                   | ✅          | Maintainability, Architecture                                           |
+| `java`                        | Java                                   | ✅          | Maintainability, Architecture, Security, Static AI, GenAI, AI Detection             |
+| `javafx`                      | Java FX                                | ✅          | Maintainability, Architecture                                           |
+| `javascript`                  | JavaScript (includes NodeJS)           | ✅          | Maintainability, Architecture, Security, Static AI, GenAI               | [(3)](#notes)                               | 
+| `jbc`                         | JBC                                    | ✅          | Maintainability, Architecture                                           |
+| `jbpm`                        | jBPM                                   | ✅          | Maintainability, Architecture                                           |
+| `jcl`                         | JCL                                    | ✅          | Maintainability, Architecture, GenAI                                    |
+| `jcs`                         | JCS                                    | ✅          | Maintainability, Architecture                                           |
+| `jde`                         | JDE                                    | ✅          | Maintainability                                                         |
+| `jinja`                       | Jinja                                  | ✅          | Maintainability, Architecture                                           |
+| `jsf`                         | JSF                                    | ✅          | Maintainability, Architecture                                           |
 | `json`                        | JSON                                   | ✅          | Maintainability, Architecture                                           | [(5)](#notes)                               |
-| `jsp`                         | JSP                                    | ✅          | Maintainability, Architecture, Security [(7)](#notes), Static AI, Guardrails |
-| `kotlin`                      | Kotlin                                 | ✅          | Maintainability, Architecture, Security, Static AI, GenAI, Guardrails, AI Detection |
-| `less`                        | Less                                   | ✅          | Maintainability, Architecture, Guardrails                               |
-| `linc`                        | LINC                                   | ✅          | Maintainability, Architecture, Guardrails                               | [(4)](#notes), [(8)](#notes)                |
-| `lion`                        | Lion                                   | ✅          | Maintainability, Architecture, Guardrails                               | [(4)](#notes), [(8)](#notes)                |
-| `lodestar`                    | Lodestar                               | ✅          | Maintainability, Architecture, Guardrails                               |
+| `jsp`                         | JSP                                    | ✅          | Maintainability, Architecture, Security [(7)](#notes), Static AI        |
+| `kotlin`                      | Kotlin                                 | ✅          | Maintainability, Architecture, Security, Static AI, GenAI, AI Detection             |
+| `less`                        | Less                                   | ✅          | Maintainability, Architecture                                           |
+| `linc`                        | LINC                                   | ✅          | Maintainability, Architecture                                           | [(4)](#notes), [(8)](#notes)                |
+| `lion`                        | Lion                                   | ✅          | Maintainability, Architecture                                           | [(4)](#notes), [(8)](#notes)                |
+| `lodestar`                    | Lodestar                               | ✅          | Maintainability, Architecture                                           |
 | `logicapps`                   | Logic Apps                             | ⚠️          | Maintainability, GenAI                                                  |
-| `logicnets`                   | LogicNets                              | ✅          | Maintainability, Architecture, Guardrails                               |
-| `lotusscript`                 | LotusScript                            | ✅          | Maintainability, Architecture, Guardrails                               |
-| `lua`                         | Lua                                    | ✅          | Maintainability, Architecture, Static AI, GenAI, Guardrails             |
-| `magic`                       | Magic                                  | ✅          | Maintainability, Architecture, Guardrails                               |
-| `magik`                       | Magik                                  | ✅          | Maintainability, Architecture, Guardrails                               |
-| `magnum`                      | Magnum                                 | ✅          | Maintainability, Architecture, Guardrails                               |
+| `logicnets`                   | LogicNets                              | ✅          | Maintainability, Architecture                                           |
+| `lotusscript`                 | LotusScript                            | ✅          | Maintainability, Architecture                                           |
+| `lua`                         | Lua                                    | ✅          | Maintainability, Architecture, Static AI, GenAI                         |
+| `magic`                       | Magic                                  | ✅          | Maintainability, Architecture                                           |
+| `magik`                       | Magik                                  | ✅          | Maintainability, Architecture                                           |
+| `magnum`                      | Magnum                                 | ✅          | Maintainability, Architecture                                           |
 | `matlab`                      | Matlab                                 | ⚠️          | Maintainability, Architecture                                           |
-| `mediationflows`              | Mediation Flows                        | ✅          | Maintainability, Architecture, Guardrails                               |
-| `mendix`                      | Mendix                                 | ✅          | Maintainability, Architecture, Security, Static AI, Guardrails          | [(9)](#notes), [(4)](#notes)                |
-| `mendixflow`                  | Mendix microflows/nanoflows            | ✅          | Maintainability, Architecture, Security, Guardrails                     | [(11)](#notes)                              |
-| `messagebuilder`              | MessageBuilder                         | ✅          | Maintainability, Architecture, Guardrails                               |
-| `mpsbehavior`                 | MPS Behavior                           | ✅          | Maintainability, Guardrails                                             | [(4)](#notes), [(8)](#notes)                |
-| `mpsclass`                    | MPS Class                              | ✅          | Maintainability, Guardrails                                             | [(4)](#notes), [(8)](#notes)                |
-| `mpstranslator`               | MPS Translator                         | ✅          | Maintainability, Guardrails                                             | [(4)](#notes), [(8)](#notes)                |
-| `mule`                        | Mule                                   | ✅          | Maintainability, Architecture, Guardrails                               |
-| `mtwize`                      | MtWize                                 | ✅          | Maintainability, Architecture, Guardrails                               |
-| `murexdatadictionary`         | Murex Data Dictionary                  | ✅          | Maintainability, Architecture, Guardrails                               |
-| `murexlookuptable`            | Murex Lookup Table                     | ✅          | Maintainability, Architecture, Guardrails                               |
-| `murexscript`                 | Murex Script                           | ✅          | Maintainability, Architecture, Guardrails                               |
-| `murexworkflow`               | Murex Workflow                         | ✅          | Maintainability, Architecture, Guardrails                               |
-| `mustache`                    | Mustache (includes Handlebars)         | ✅          | Maintainability, Architecture, Guardrails                               |
-| `nabsic`                      | Nabsic                                 | ✅          | Maintainability, Architecture, Guardrails                               | [(4)](#notes), [(8)](#notes)                |
-| `navascript`                  | NavaScript                             | ✅          | Maintainability, Guardrails                                             |
+| `mediationflows`              | Mediation Flows                        | ✅          | Maintainability, Architecture                                           |
+| `mendix`                      | Mendix                                 | ✅          | Maintainability, Architecture, Security, Static AI                      | [(9)](#notes), [(4)](#notes)                |
+| `mendixflow`                  | Mendix microflows/nanoflows            | ✅          | Maintainability, Architecture, Security                                 | [(11)](#notes)                              |
+| `messagebuilder`              | MessageBuilder                         | ✅          | Maintainability, Architecture                                           |
+| `mpsbehavior`                 | MPS Behavior                           | ✅          | Maintainability                                                         | [(4)](#notes), [(8)](#notes)                |
+| `mpsclass`                    | MPS Class                              | ✅          | Maintainability                                                         | [(4)](#notes), [(8)](#notes)                |
+| `mpstranslator`               | MPS Translator                         | ✅          | Maintainability                                                         | [(4)](#notes), [(8)](#notes)                |
+| `mule`                        | Mule                                   | ✅          | Maintainability, Architecture                                           |
+| `mtwize`                      | MtWize                                 | ✅          | Maintainability, Architecture                                           |
+| `murexdatadictionary`         | Murex Data Dictionary                  | ✅          | Maintainability, Architecture                                           |
+| `murexlookuptable`            | Murex Lookup Table                     | ✅          | Maintainability, Architecture                                           |
+| `murexscript`                 | Murex Script                           | ✅          | Maintainability, Architecture                                           |
+| `murexworkflow`               | Murex Workflow                         | ✅          | Maintainability, Architecture                                           |
+| `mustache`                    | Mustache (includes Handlebars)         | ✅          | Maintainability, Architecture                                           |
+| `nabsic`                      | Nabsic                                 | ✅          | Maintainability, Architecture                                           | [(4)](#notes), [(8)](#notes)                |
+| `navascript`                  | NavaScript                             | ✅          | Maintainability                                                         |
 | `naviscript`                  | Naviscript                             | ⚠️          | Maintainability, Architecture                                           |
-| `navision`                    | Navision (AKA Dynamics NAV, AL)        | ✅          | Maintainability, Architecture, Guardrails                               |
-| `netiqidmpolicy`              | NetIQ IDM Policy                       | ✅          | Maintainability, Guardrails                                             | [(4)](#notes), [(8)](#notes)                |
-| `netiqidmrequest`             | NetIQ IDM Request                      | ✅          | Maintainability, Guardrails                                             | [(4)](#notes), [(8)](#notes)                |
-| `netiqidmworkflow`            | NetIQ IDM Workflow                     | ✅          | Maintainability, Guardrails                                             | [(4)](#notes), [(8)](#notes)                |
-| `netweaveridm`                | NetweaverIDM                           | ✅          | Maintainability, Architecture, Guardrails                               |
-| `nonstopsql`                  | Nonstop SQL                            | ✅          | Maintainability, Architecture, GenAI, Guardrails                        |
-| `normalizedsystemsjava`       | Normalized Systems Java                | ✅          | Maintainability, Architecture, Guardrails                               |
-| `normalizedsystemsjavascript` | Normalized Systems JavaScript          | ✅          | Maintainability, Guardrails                                             |
-| `normalizedsystemsmodel`      | Normalized Systems Model               | ✅          | Maintainability, Architecture, Guardrails                               |
-| `normalizedsystemstypescript` | Normalized Systems TypeScript          | ✅          | Maintainability, Guardrails                                             |
-| `objectivec`                  | Objective-C                            | ✅          | Maintainability, Architecture, Static AI, GenAI, Guardrails             |
+| `navision`                    | Navision (AKA Dynamics NAV, AL)        | ✅          | Maintainability, Architecture                                           |
+| `netiqidmpolicy`              | NetIQ IDM Policy                       | ✅          | Maintainability                                                         | [(4)](#notes), [(8)](#notes)                |
+| `netiqidmrequest`             | NetIQ IDM Request                      | ✅          | Maintainability                                                         | [(4)](#notes), [(8)](#notes)                |
+| `netiqidmworkflow`            | NetIQ IDM Workflow                     | ✅          | Maintainability                                                         | [(4)](#notes), [(8)](#notes)                |
+| `netweaveridm`                | NetweaverIDM                           | ✅          | Maintainability, Architecture                                           |
+| `nonstopsql`                  | Nonstop SQL                            | ✅          | Maintainability, Architecture, GenAI                                    |
+| `normalizedsystemsjava`       | Normalized Systems Java                | ✅          | Maintainability, Architecture                                           |
+| `normalizedsystemsjavascript` | Normalized Systems JavaScript          | ✅          | Maintainability                                                         |
+| `normalizedsystemsmodel`      | Normalized Systems Model               | ✅          | Maintainability, Architecture                                           |
+| `normalizedsystemstypescript` | Normalized Systems TypeScript          | ✅          | Maintainability                                                         |
+| `objectivec`                  | Objective-C                            | ✅          | Maintainability, Architecture, Static AI, GenAI                         |
 | `odi`                         | ODI                                    | ⚠️          | Maintainability, Architecture                                           |
-| `odm`                         | ODM                                    | ✅          | Maintainability, Architecture, Guardrails                               |
-| `omt`                         | OMT                                    | ✅          | Maintainability, Architecture, Guardrails                               |
-| `opa`                         | OPA                                    | ✅          | Maintainability, Architecture, Guardrails                               |
-| `opc`                         | OPC                                    | ✅          | Maintainability, Guardrails                                             |
+| `odm`                         | ODM                                    | ✅          | Maintainability, Architecture                                           |
+| `omt`                         | OMT                                    | ✅          | Maintainability, Architecture                                           |
+| `opa`                         | OPA                                    | ✅          | Maintainability, Architecture                                           |
+| `opc`                         | OPC                                    | ✅          | Maintainability                                                         |
 | `openroad`                    | OpenROAD 4GL                           | ⚠️          | Maintainability                                                         |
-| `oraclebpm`                   | Oracle BPM                             | ✅          | Maintainability, Architecture, Guardrails                               |
-| `oracleofsaa`                 | Oracle OFSAA                           | ✅          | Maintainability, Architecture, Guardrails                               |
-| `oracleworkflow`              | Oracle Workflow                        | ✅          | Maintainability, Architecture, Guardrails                               |
+| `oraclebpm`                   | Oracle BPM                             | ✅          | Maintainability, Architecture                                           |
+| `oracleofsaa`                 | Oracle OFSAA                           | ✅          | Maintainability, Architecture                                           |
+| `oracleworkflow`              | Oracle Workflow                        | ✅          | Maintainability, Architecture                                           |
 | `ords`                        | ORDS                                   | ⚠️          | Maintainability                                                         |
-| `osb`                         | OSB                                    | ✅          | Maintainability, Architecture, Guardrails                               | [(4)](#notes), [(8)](#notes)                |
-| `osbproxy`                    | OSB Proxy                              | ✅          | Maintainability, Architecture, Guardrails                               | [(4)](#notes), [(8)](#notes)                |
+| `osb`                         | OSB                                    | ✅          | Maintainability, Architecture                                           | [(4)](#notes), [(8)](#notes)                |
+| `osbproxy`                    | OSB Proxy                              | ✅          | Maintainability, Architecture                                           | [(4)](#notes), [(8)](#notes)                |
 | `osmprocess`                  | OSM Process                            | ⚠️          | Maintainability, Architecture                                           |
-| `osmtask`                     | OSM Task                               | ✅          | Maintainability, Architecture, Guardrails                               |
-| `outsystems`                  | OutSystems                             | ✅          | Maintainability, Architecture, GenAI, Guardrails                        | [(1)](#notes), [(4)](#notes), [(9)](#notes) |
+| `osmtask`                     | OSM Task                               | ✅          | Maintainability, Architecture                                           |
+| `outsystems`                  | OutSystems                             | ✅          | Maintainability, Architecture, GenAI                                    | [(1)](#notes), [(4)](#notes), [(9)](#notes) |
 | `pascal`                      | Pascal                                 | ⚠️          | Maintainability, Architecture, GenAI                                    |
-| `pega`                        | Pega                                   | ✅          | Maintainability, Guardrails                                             | [(1)](#notes), [(9)](#notes)                |
-| `perl`                        | Perl                                   | ✅          | Maintainability, Architecture, Security [(7)](#notes), GenAI, Guardrails |
-| `php`                         | PHP                                    | ✅          | Maintainability, Architecture, Security, Static AI, GenAI, Guardrails, AI Detection |
-| `plc`                         | PLC                                    | ✅          | Maintainability, Architecture, GenAI, Guardrails                        | [(4)](#notes), [(8)](#notes)                |
-| `plcfbd`                      | PLC Functional Block Diagram           | ✅          | Maintainability, Guardrails                                             |
-| `plcil`                       | PLC Instruction List                   | ✅          | Maintainability, Guardrails                                             |
-| `plcld`                       | PLC Ladder Diagram                     | ✅          | Maintainability, Guardrails                                             |
-| `plcsfc`                      | PLC Sequential Function Chart          | ✅          | Maintainability, Guardrails                                             |
-| `plcst`                       | PLC Structured Text                    | ✅          | Maintainability, GenAI, Guardrails                                      |
-| `pli`                         | PL/I                                   | ✅          | Maintainability, Architecture, GenAI, Guardrails                        |
-| `plsql`                       | Oracle PL/SQL                          | ✅          | Maintainability, Architecture, Static AI, GenAI, Guardrails             |
-| `plsqlforms`                  | Oracle PL/SQL Forms                    | ✅          | Maintainability, Guardrails                                             | [(4)](#notes), [(8)](#notes)                |
-| `plsqlreports`                | Oracle PL/SQL Reports                  | ✅          | Maintainability, Guardrails                                             |
-| `pluk`                        | PLUK                                   | ✅          | Maintainability, Architecture, Guardrails                               |
-| `polymertemplates`            | Polymer Templates                      | ✅          | Maintainability, Architecture, Guardrails                               | [(4)](#notes), [(8)](#notes)                |
-| `powerbuilder`                | Powerbuilder                           | ✅          | Maintainability, Architecture, Guardrails                               |
-| `powercenter`                 | PowerCenter                            | ✅          | Maintainability, Architecture, Guardrails                               | [(4)](#notes), [(8)](#notes)                |
-| `powerfx`                     | Power Fx (AKA Microsoft Power Apps)    | ✅          | Maintainability, GenAI, Guardrails                                      |
-| `powershell`                  | Powershell                             | ✅          | Maintainability, Architecture, Static AI, GenAI, Guardrails             |
-| `progress`                    | Progress (OpenEdge)                    | ✅          | Maintainability, Architecture, Security, Static AI, GenAI, Guardrails   |
-| `prt`                         | PRT                                    | ✅          | Maintainability, Guardrails                                             |
-| `puppet`                      | Puppet                                 | ✅          | Maintainability, Architecture, GenAI, Guardrails                        |
-| `python`                      | Python                                 | ✅          | Maintainability, Architecture, Security, Static AI, GenAI, Guardrails, AI Detection |
-| `r`                           | R                                      | ✅          | Maintainability, Architecture, GenAI, Guardrails                        |
-| `radience`                    | Radience                               | ✅          | Maintainability, Architecture, Guardrails                               | [(4)](#notes), [(8)](#notes)                |
-| `razor`                       | Razor                                  | ✅          | Maintainability, Architecture, Static AI, Guardrails                    |
-| `regelspraak`                 | ALEF Regelspraak                       | ✅          | Maintainability, Architecture, Guardrails                               | [(4)](#notes), [(8)](#notes)                |
-| `regelspraakhtml`             | ALEF Regelspraak (HTML export)         | ✅          | Maintainability, Architecture, Guardrails                               | [(4)](#notes), [(8)](#notes)                |
+| `pega`                        | Pega                                   | ✅          | Maintainability                                                         | [(1)](#notes), [(9)](#notes)                |
+| `perl`                        | Perl                                   | ✅          | Maintainability, Architecture, Security [(7)](#notes), GenAI            |
+| `php`                         | PHP                                    | ✅          | Maintainability, Architecture, Security, Static AI, GenAI, AI Detection             |
+| `plc`                         | PLC                                    | ✅          | Maintainability, Architecture, GenAI                                    | [(4)](#notes), [(8)](#notes)                |
+| `plcfbd`                      | PLC Functional Block Diagram           | ✅          | Maintainability                                                         |
+| `plcil`                       | PLC Instruction List                   | ✅          | Maintainability                                                         |
+| `plcld`                       | PLC Ladder Diagram                     | ✅          | Maintainability                                                         |
+| `plcsfc`                      | PLC Sequential Function Chart          | ✅          | Maintainability                                                         |
+| `plcst`                       | PLC Structured Text                    | ✅          | Maintainability, GenAI                                                  |
+| `pli`                         | PL/I                                   | ✅          | Maintainability, Architecture, GenAI                                    |
+| `plsql`                       | Oracle PL/SQL                          | ✅          | Maintainability, Architecture, Static AI, GenAI                         |
+| `plsqlforms`                  | Oracle PL/SQL Forms                    | ✅          | Maintainability                                                         | [(4)](#notes), [(8)](#notes)                |
+| `plsqlreports`                | Oracle PL/SQL Reports                  | ✅          | Maintainability                                                         |
+| `pluk`                        | PLUK                                   | ✅          | Maintainability, Architecture                                           |
+| `polymertemplates`            | Polymer Templates                      | ✅          | Maintainability, Architecture                                           | [(4)](#notes), [(8)](#notes)                |
+| `powerbuilder`                | Powerbuilder                           | ✅          | Maintainability, Architecture                                           |
+| `powercenter`                 | PowerCenter                            | ✅          | Maintainability, Architecture                                           | [(4)](#notes), [(8)](#notes)                |
+| `powerfx`                     | Power Fx (AKA Microsoft Power Apps)    | ✅          | Maintainability, GenAI                                                  |
+| `powershell`                  | Powershell                             | ✅          | Maintainability, Architecture, Static AI, GenAI                         |
+| `progress`                    | Progress (OpenEdge)                    | ✅          | Maintainability, Architecture, Security, Static AI, GenAI               |
+| `prt`                         | PRT                                    | ✅          | Maintainability                                                         |
+| `puppet`                      | Puppet                                 | ✅          | Maintainability, Architecture, GenAI                                    |
+| `python`                      | Python                                 | ✅          | Maintainability, Architecture, Security, Static AI, GenAI, AI Detection             |
+| `r`                           | R                                      | ✅          | Maintainability, Architecture, GenAI                                    |
+| `radience`                    | Radience                               | ✅          | Maintainability, Architecture                                           | [(4)](#notes), [(8)](#notes)                |
+| `razor`                       | Razor                                  | ✅          | Maintainability, Architecture, Static AI                                |
+| `regelspraak`                 | ALEF Regelspraak                       | ✅          | Maintainability, Architecture                                           | [(4)](#notes), [(8)](#notes)                |
+| `regelspraakhtml`             | ALEF Regelspraak (HTML export)         | ✅          | Maintainability, Architecture                                           | [(4)](#notes), [(8)](#notes)                |
 | `rexx`                        | Rexx                                   | ⚠️          | Maintainability, Architecture, GenAI                                    |
-| `robot`                       | Robot                                  | ✅          | Maintainability, Guardrails                                             |
-| `rpg`                         | RPG                                    | ✅          | Maintainability, Architecture, GenAI, Guardrails                        |
-| `ruby`                        | Ruby (includes Ruby on Rails)          | ✅          | Maintainability, Architecture, Security, Static AI, GenAI, Guardrails   |
-| `rust`                        | Rust                                   | ✅          | Maintainability, Architecture, Static AI, GenAI, Guardrails             | [(4)](#notes), [(8)](#notes)                |
-| `salesforceapex`              | Salesforce Apex                        | ✅          | Maintainability, Architecture, GenAI, Guardrails                        |
-| `salesforceflow`              | Salesforce Flow                        | ✅          | Maintainability, Architecture, Guardrails                               |
-| `salesforceprocessbuilder`    | Salesforce Process Builder             | ✅          | Maintainability, Guardrails                                             |
-| `sappo`                       | SAP PO                                 | ✅          | Maintainability, Architecture, Guardrails                               | [(4)](#notes), [(8)](#notes)                |
-| `sas`                         | SAS                                    | ✅          | Maintainability, Architecture, Guardrails                               |
-| `sasflows`                    | SAS Flows                              | ✅          | Maintainability, Guardrails                                             | [(4)](#notes), [(8)](#notes)                |
-| `sass`                        | Sass                                   | ✅          | Maintainability, Architecture, Static AI, Guardrails                    |
-| `scala`                       | Scala                                  | ✅          | Maintainability, Architecture, Security, Static AI, GenAI, Guardrails   |
+| `robot`                       | Robot                                  | ✅          | Maintainability                                                         |
+| `rpg`                         | RPG                                    | ✅          | Maintainability, Architecture, GenAI                                    |
+| `ruby`                        | Ruby (includes Ruby on Rails)          | ✅          | Maintainability, Architecture, Security, Static AI, GenAI               |
+| `rust`                        | Rust                                   | ✅          | Maintainability, Architecture, Static AI, GenAI                         | [(4)](#notes), [(8)](#notes)                |
+| `salesforceapex`              | Salesforce Apex                        | ✅          | Maintainability, Architecture, GenAI                                    |
+| `salesforceflow`              | Salesforce Flow                        | ✅          | Maintainability, Architecture                                           |
+| `salesforceprocessbuilder`    | Salesforce Process Builder             | ✅          | Maintainability                                                         |
+| `sappo`                       | SAP PO                                 | ✅          | Maintainability, Architecture                                           | [(4)](#notes), [(8)](#notes)                |
+| `sas`                         | SAS                                    | ✅          | Maintainability, Architecture                                           |
+| `sasflows`                    | SAS Flows                              | ✅          | Maintainability                                                         | [(4)](#notes), [(8)](#notes)                |
+| `sass`                        | Sass                                   | ✅          | Maintainability, Architecture, Static AI                                |
+| `scala`                       | Scala                                  | ✅          | Maintainability, Architecture, Security, Static AI, GenAI               |
 | `scl`                         | SCL                                    | ⚠️          | Maintainability, Architecture                                           |
-| `scr`                         | SCR                                    | ✅          | Maintainability, Architecture, Guardrails                               |
-| `script`                      | Shell script                           | ✅          | Maintainability, Architecture, GenAI, Guardrails                        |
-| `servicenow`                  | ServiceNow                             | ✅          | Maintainability, Architecture, Guardrails                               | [(4)](#notes), [(8)](#notes)                |
+| `scr`                         | SCR                                    | ✅          | Maintainability, Architecture                                           |
+| `script`                      | Shell script                           | ✅          | Maintainability, Architecture, GenAI                                    |
+| `servicenow`                  | ServiceNow                             | ✅          | Maintainability, Architecture                                           | [(4)](#notes), [(8)](#notes)                |
 | `siebeldeclarative`           | Siebel Declarative                     | ⚠️          | Maintainability, Architecture                                           | [(4)](#notes), [(8)](#notes)                |
 | `siebeljs`                    | Siebel JS                              | ⚠️          | Maintainability, Architecture                                           | [(4)](#notes), [(8)](#notes)                |
 | `siebelscripted`              | Siebel Scripted                        | ⚠️          | Maintainability, Architecture                                           | [(4)](#notes), [(8)](#notes)                |
 | `siebelworkflow`              | Siebel Workflow                        | ⚠️          | Maintainability, Architecture                                           | [(4)](#notes), [(8)](#notes)                |
 | `siebeltbui`                  | Siebel TBUI                            | ⚠️          | Maintainability, Architecture                                           | [(4)](#notes), [(8)](#notes)                |
-| `slim`                        | Slim                                   | ✅          | Maintainability, Guardrails                                             |
+| `slim`                        | Slim                                   | ✅          | Maintainability                                                         |
 | `smalltalk`                   | Smalltalk                              | ⚠️          | Maintainability, Architecture, GenAI                                    |
-| `solidity`                    | Solidity                               | ✅          | Maintainability, Architecture, GenAI, Guardrails                        |
-| `sonicesb`                    | Sonic ESB                              | ✅          | Maintainability, Architecture, Guardrails                               |
-| `spl`                         | SPL                                    | ✅          | Maintainability, Guardrails                                             |
-| `sqlj`                        | SQLJ                                   | ✅          | Maintainability, Architecture, Guardrails                               |
+| `solidity`                    | Solidity                               | ✅          | Maintainability, Architecture, GenAI                                    |
+| `sonicesb`                    | Sonic ESB                              | ✅          | Maintainability, Architecture                                           |
+| `spl`                         | SPL                                    | ✅          | Maintainability                                                         |
+| `sqlj`                        | SQLJ                                   | ✅          | Maintainability, Architecture                                           |
 | `sqr`                         | SQR                                    | ⚠️          | Maintainability, Architecture                                           |
-| `ssis`                        | SSIS                                   | ✅          | Maintainability, Architecture, Guardrails                               |
-| `starlimssql`                 | StarLIMS                               | ✅          | Maintainability, Architecture, Guardrails                               |
-| `streamserve`                 | StreamServe                            | ✅          | Maintainability, Architecture, Guardrails                               |
+| `ssis`                        | SSIS                                   | ✅          | Maintainability, Architecture                                           |
+| `starlimssql`                 | StarLIMS                               | ✅          | Maintainability, Architecture                                           |
+| `streamserve`                 | StreamServe                            | ✅          | Maintainability, Architecture                                           |
 | `synapse`                     | Synapse                                | ⚠️          | Maintainability                                                         |
-| `synon`                       | Synon                                  | ✅          | Maintainability, Architecture, Guardrails                               |
-| `swift`                       | Swift                                  | ✅          | Maintainability, Architecture, Security, Static AI, GenAI, Guardrails, AI Detection |
-| `t4`                          | T4                                     | ✅          | Maintainability, Guardrails                                             |
-| `tacl`                        | TACL                                   | ✅          | Maintainability, Architecture, GenAI, Guardrails                        |
-| `tal`                         | TAL                                    | ✅          | Maintainability, Guardrails                                             |
-| `tandem`                      | Tandem                                 | ✅          | Maintainability, Architecture, GenAI, Guardrails                        | [(4)](#notes), [(8)](#notes)                |
-| `tapestry`                    | Tapestry                               | ✅          | Maintainability, Architecture, Guardrails                               |
-| `terraform`                   | Terraform                              | ✅          | Maintainability, Architecture, Security, Static AI, GenAI, Guardrails   |
-| `thrift`                      | Thrift                                 | ✅          | Maintainability, Architecture, Guardrails                               |
-| `thymeleaf`                   | Thymeleaf                              | ✅          | Maintainability, Architecture, Guardrails                               |
-| `tibco`                       | TIBCO BW                               | ✅          | Maintainability, Architecture, Guardrails                               |
-| `tibcobe`                     | TIBCO BE (XML)                         | ✅          | Maintainability, Architecture, Guardrails                               |
-| `tibcobejava`                 | TIBCO BE (Java)                        | ✅          | Maintainability, Architecture, Guardrails                               |
-| `tibcobestatemachine`         | TIBCO BE (State Machine)               | ✅          | Maintainability, Architecture, Guardrails                               |
-| `tibcobw6`                    | TIBCO BW6                              | ✅          | Maintainability, Architecture, Guardrails                               |
-| `tripleforms`                 | TriplEforms                            | ✅          | Maintainability, Guardrails                                             |
-| `trs`                         | TRS                                    | ✅          | Maintainability, Guardrails                                             | [(4)](#notes), [(8)](#notes)                |
-| `tsql`                        | T-SQL (Microsoft SQL Server, MS SQL))  | ✅          | Maintainability, Architecture, Static AI, GenAI, Guardrails             |
-| `turtle`                      | Turtle                                 | ✅          | Maintainability, Guardrails                                             |
-| `twig`                        | Twig                                   | ✅          | Maintainability, Guardrails                                             |
-| `typescript`                  | TypeScript (includes React/TypeScript) | ✅          | Maintainability, Architecture, Security, Static AI, GenAI, Guardrails, AI Detection | [(10)](#notes)                              |
-| `uil`                         | UIL (Motif)                            | ✅          | Maintainability, Architecture, Guardrails                               |
-| `uniface`                     | Uniface                                | ✅          | Maintainability, Architecture, Guardrails                               | [(4)](#notes), [(8)](#notes)                |
+| `synon`                       | Synon                                  | ✅          | Maintainability, Architecture                                           |
+| `swift`                       | Swift                                  | ✅          | Maintainability, Architecture, Security, Static AI, GenAI, AI Detection |
+| `t4`                          | T4                                     | ✅          | Maintainability                                                         |
+| `tacl`                        | TACL                                   | ✅          | Maintainability, Architecture, GenAI                                    |
+| `tal`                         | TAL                                    | ✅          | Maintainability                                                         |
+| `tandem`                      | Tandem                                 | ✅          | Maintainability, Architecture, GenAI                                    | [(4)](#notes), [(8)](#notes)                |
+| `tapestry`                    | Tapestry                               | ✅          | Maintainability, Architecture                                           |
+| `terraform`                   | Terraform                              | ✅          | Maintainability, Architecture, Security, Static AI, GenAI               |
+| `thrift`                      | Thrift                                 | ✅          | Maintainability, Architecture                                           |
+| `thymeleaf`                   | Thymeleaf                              | ✅          | Maintainability, Architecture                                           |
+| `tibco`                       | TIBCO BW                               | ✅          | Maintainability, Architecture                                           |
+| `tibcobe`                     | TIBCO BE (XML)                         | ✅          | Maintainability, Architecture                                           |
+| `tibcobejava`                 | TIBCO BE (Java)                        | ✅          | Maintainability, Architecture                                           |
+| `tibcobestatemachine`         | TIBCO BE (State Machine)               | ✅          | Maintainability, Architecture                                           |
+| `tibcobw6`                    | TIBCO BW6                              | ✅          | Maintainability, Architecture                                           |
+| `tripleforms`                 | TriplEforms                            | ✅          | Maintainability                                                         |
+| `trs`                         | TRS                                    | ✅          | Maintainability                                                         | [(4)](#notes), [(8)](#notes)                |
+| `tsql`                        | T-SQL (Microsoft SQL Server, MS SQL))  | ✅          | Maintainability, Architecture, Static AI, GenAI                         |
+| `turtle`                      | Turtle                                 | ✅          | Maintainability                                                         |
+| `twig`                        | Twig                                   | ✅          | Maintainability                                                         |
+| `typescript`                  | TypeScript (includes React/TypeScript) | ✅          | Maintainability, Architecture, Security, Static AI, GenAI, AI Detection             | [(10)](#notes)                              |
+| `uil`                         | UIL (Motif)                            | ✅          | Maintainability, Architecture                                           |
+| `uniface`                     | Uniface                                | ✅          | Maintainability, Architecture                                           | [(4)](#notes), [(8)](#notes)                |
 | `until`                       | Until                                  | ⚠️          | Maintainability, Architecture                                           |
-| `vag`                         | Visual Age                             | ✅          | Maintainability, Architecture, Guardrails                               |
-| `vagrecord`                   | Visual Age Record                      | ✅          | Maintainability, Architecture, Guardrails                               |
-| `vb`                          | Visual Basic                           | ✅          | Maintainability, Architecture, Security [(7)](#notes), Static AI, GenAI, Guardrails |
-| `vbnet`                       | Visual Basic .NET                      | ✅          | Maintainability, Architecture, Security [(7)](#notes), Static AI, GenAI, Guardrails |
-| `velocity`                    | Velocity                               | ✅          | Maintainability, Architecture, Guardrails                               |
-| `vgl`                         | VGL                                    | ✅          | Maintainability, Guardrails                                             |
-| `visualforce`                 | VisualForce                            | ✅          | Maintainability, Guardrails                                             |
+| `vag`                         | Visual Age                             | ✅          | Maintainability, Architecture                                           |
+| `vagrecord`                   | Visual Age Record                      | ✅          | Maintainability, Architecture                                           |
+| `vb`                          | Visual Basic                           | ✅          | Maintainability, Architecture, Security [(7)](#notes), Static AI, GenAI |
+| `vbnet`                       | Visual Basic .NET                      | ✅          | Maintainability, Architecture, Security [(7)](#notes), Static AI, GenAI |
+| `velocity`                    | Velocity                               | ✅          | Maintainability, Architecture                                           |
+| `vgl`                         | VGL                                    | ✅          | Maintainability                                                         |
+| `visualforce`                 | VisualForce                            | ✅          | Maintainability                                                         |
 | `visualfoxpro`                | Visual FoxPro                          | ⚠️          | Maintainability                                                         |
-| `visualrpg`                   | Visual RPG                             | ✅          | Maintainability, Architecture, Guardrails                               |
+| `visualrpg`                   | Visual RPG                             | ✅          | Maintainability, Architecture                                           |
 | `visualobjects`               | Visual Objects                         | ⚠️          | Maintainability, Architecture                                           |
-| `vue`                         | Vue                                    | ✅          | Maintainability, Architecture, Security, Static AI, GenAI, Guardrails, AI Detection | [(2)](#notes)                               |
+| `vue`                         | Vue                                    | ✅          | Maintainability, Architecture, Security, Static AI, GenAI, AI Detection | [(2)](#notes)                               |
 | `vulcan`                      | Vulcan.NET                             | ⚠️          | Maintainability, Architecture                                           |
-| `webfocus`                    | WebFocus                               | ✅          | Maintainability, Architecture, Guardrails                               |
-| `webmethods`                  | WebMethods                             | ✅          | Maintainability, Architecture, Guardrails                               |
-| `websmart`                    | WebSmart                               | ✅          | Maintainability, Architecture, Guardrails                               | [(4)](#notes), [(8)](#notes)                |
-| `websmartpanels`              | WebSmart Panels                        | ✅          | Maintainability, Guardrails                                             |
-| `wonderware`                  | Wonderware                             | ✅          | Maintainability, Guardrails                                             |
+| `webfocus`                    | WebFocus                               | ✅          | Maintainability, Architecture                                           |
+| `webmethods`                  | WebMethods                             | ✅          | Maintainability, Architecture                                           |
+| `websmart`                    | WebSmart                               | ✅          | Maintainability, Architecture                                           | [(4)](#notes), [(8)](#notes)                |
+| `websmartpanels`              | WebSmart Panels                        | ✅          | Maintainability                                                         |
+| `wonderware`                  | Wonderware                             | ✅          | Maintainability                                                         |
 | `wsdl`                        | WSDL                                   | ✅          | Maintainability, Architecture                                           |
 | `wtx`                         | WTX                                    | ⚠️          | Maintainability                                                         |
-| `xaml`                        | XAML                                   | ✅          | Maintainability, Architecture, Guardrails                               |
+| `xaml`                        | XAML                                   | ✅          | Maintainability, Architecture                                           |
 | `xml`                         | XML                                    | ✅          | Maintainability, Architecture                                           | [(5)](#notes)                               |
-| `xpdl`                        | Tibco ActiveMatrix BPM                 | ✅          | Maintainability, Guardrails                                             |
-| `xpp`                         | X++ AX                                 | ✅          | Maintainability, Architecture, GenAI, Guardrails                        | [(4)](#notes), [(8)](#notes)                |
-| `xpp365`                      | X++ for Dynamics 365                   | ✅          | Maintainability, Architecture, GenAI, Guardrails                        | [(4)](#notes), [(8)](#notes)                |
-| `xquery`                      | Xquery                                 | ✅          | Maintainability, Architecture, GenAI, Guardrails                        |
+| `xpdl`                        | Tibco ActiveMatrix BPM                 | ✅          | Maintainability                                                         |
+| `xpp`                         | X++ AX                                 | ✅          | Maintainability, Architecture, GenAI                                    | [(4)](#notes), [(8)](#notes)                |
+| `xpp365`                      | X++ for Dynamics 365                   | ✅          | Maintainability, Architecture, GenAI                                    | [(4)](#notes), [(8)](#notes)                |
+| `xquery`                      | Xquery                                 | ✅          | Maintainability, Architecture, GenAI                                    |
 | `xsd`                         | XSD                                    | ✅          | Maintainability, Architecture                                           |
-| `xslt`                        | XSLT                                   | ✅          | Maintainability, Architecture, Guardrails                               |
-| `xul`                         | XUL                                    | ✅          | Maintainability, Guardrails                                             |
+| `xslt`                        | XSLT                                   | ✅          | Maintainability, Architecture                                           |
+| `xul`                         | XUL                                    | ✅          | Maintainability                                                         |
 | `yaml`                        | YAML                                   | ✅          | Maintainability, Architecture                                           | [(5)](#notes)                               |
 {: .technologySupportTable }
 
