@@ -281,7 +281,7 @@ You can use the `exclude` option to exclude certain files and directories from t
         - ".*/stub/.*"
 
 Like other include/exclude patterns in Sigrid, these options are defined using
-[refular expressions](#defining-include-and-exclude-patterns).
+[regular expressions](#defining-include-and-exclude-patterns).
 The example above will therefore exclude all files in the directory `stub`.
 
 ### Excluding security rules
@@ -323,6 +323,7 @@ The `architecture` section of the scope file supports the following options:
 | `history_period_months`    | No       | See [Analyzing your repository history](#analyzing-your-repository-history).                                                                 |
 | `history_start`            | No       | See [Analyzing your repository history](#analyzing-your-repository-history).                                                                 |
 | `history_end`              | No       | See [Analyzing your repository history](#analyzing-your-repository-history).                                                                 |
+| `disabled_metrics`         | No       | See [Excluding process-related metrics](#excluding-process-related-metrics).                                                                 |
 
 ### Analyzing your repository history
       
@@ -432,6 +433,15 @@ At the time, one role is able to be assigned to a component, `Utility. This labe
         - role: utility
           include:
             - ".*core-.*"
+
+### Excluding process-related metrics
+
+In some cases, the process-related metrics of the Architecture model don't represent your development situation accurately. For example, when you have AI agents commit code, or when you squash commits, the author of commits does not accurately represent the actual number of authors, and as a result can lead to inaccurate measurements for the Knowledge Awareness and Team Stability metrics. If that applies to your situation, you can disable these metrics for your system Architecture measurements by using `disabled_metrics`. See an example below:
+
+    architecture:
+      disabled_metrics:
+        - knowledge_awareness
+        - team_stability
 
 ## Enabling experimental analysis features
 

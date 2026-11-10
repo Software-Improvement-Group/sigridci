@@ -48,6 +48,21 @@ Sigrid Axis has two capabilities today.
 
 The [`setup`](skills.md#setup) skill sits outside both. It records which Sigrid system a repository belongs to, and every other skill reads that.
 
+## Technology support
+
+Each part of Axis supports the technologies of the Sigrid Core capability it works from. The [technology support](../reference/technology-support.md#list-of-supported-technologies) page lists those capabilities for every technology.
+
+| Axis feature | Supported technologies |
+|---|---|
+| Guardrails quality check (`guardrails_quality_check`) | Maintainability for every technology Sigrid detects automatically, and security for a subset. See [Guardrails](guardrails.md#supported-technologies). |
+| [`architecture-drift`](skills.md#architecture-drift), [`explore-architecture`](skills.md#explore-architecture), and [`diagnose`](skills.md#diagnose) for architecture | Technologies with Architecture |
+| [`diagnose`](skills.md#diagnose) and [`autofix`](skills.md#autofix) for maintainability | Technologies with Maintainability |
+| [`triage-findings`](skills.md#triage-findings) and [`autofix`](skills.md#autofix) for security and reliability | Technologies with Security |
+| [`triage-findings`](skills.md#triage-findings) and [`autofix`](skills.md#autofix) for open source health | [Supported open source ecosystems](../reference/technology-support.md#supported-open-source-ecosystems) |
+| [`change-feedback`](skills.md#change-feedback) | The technologies [Sigrid CI](../sigridci-integration/using-sigridci.md) supports for each capability |
+
+The Guardrails quality check is the only part of Axis that checks code Sigrid Core has not seen yet: it runs Sigrid Core's analysis on the files the agent just changed. That is why its list differs from the others. Every other part works from the results Sigrid Core already has for your system.
+
 ## Get started
 
 Start with [installing Sigrid Axis](installation.md): connect the MCP server, install the skills, and add the Guardrails instructions. The Claude Code plugin adds the one for the quality gate.
