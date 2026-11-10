@@ -18,25 +18,16 @@ For the problems that are already in your code, see [Auto-fix Agents](autofix-ag
 
 ## Supported technologies
 
-The `guardrails_quality_check` tool supports these technologies:
+The `guardrails_quality_check` tool checks maintainability for every technology that Sigrid detects automatically. These are the technologies with a ✅ in the "Auto-detect" column of the [technology support](../reference/technology-support.md#list-of-supported-technologies) page, apart from data and configuration formats such as JSON, XML, and YAML. The tool works out the technology from the file it receives, so there is nothing to configure.
 
-- Java
-- Python
-- C/C++
-- C#
-- JavaScript
-- TypeScript
-- Kotlin
-- Progress ABL
-- PHP
-- Mendix microflows and nanoflows
-- Dart
-- X++, for both Dynamics AX and Dynamics 365
-- Navision (Dynamics NAV, AL)
+The tool recognizes most technologies by file extension. A few also need something in the file itself:
 
-For Dart, X++, and Navision, the tool checks maintainability only, and does not check security. For Mendix, the tool checks the JSON representation of a microflow or nanoflow, in a file with the `.mx.json` extension.
+- For Mendix, the tool checks the JSON representation of a microflow or nanoflow, in a file with the `.mx.json` extension.
+- For Progress ABL, the tool recognizes procedures by the `.p`, `.w`, and `.i` extensions, and classes by the `.cls` extension together with a `USING` statement near the top of the file.
 
-The [technology support](../reference/technology-support.md#list-of-supported-technologies) page marks them with "Guardrails". The architecture drift check supports every technology marked with "Architecture" on that page.
+The security check uses dedicated rules for Java, C#, Python, JavaScript, TypeScript, Kotlin, PHP, and Mendix, and a smaller set of generic rules for most other technologies. For Dart, Go, X++, and Navision, the tool checks maintainability only.
+
+The architecture drift check supports every technology marked with "Architecture" on the technology support page.
 
 ## Set up the quality gate
 

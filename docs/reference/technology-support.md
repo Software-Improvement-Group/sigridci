@@ -11,10 +11,9 @@ This page provides an overview of all technologies that can be analyzed by Sigri
 - In the list of supported capabilities:
   - "GenAI" indicates the technologies for which Sigrid offers AI-generated explanations on the source code. See the [GenAI Explanations](../reference/ai-explanations.md#genai-explanations) documentation for more information.
   - "Static AI" indicates the technologies for which Sigrid offers static explanations on the Maintainability findings. Support for other Static AI explanations on other Sigrid's capability depends on whether the technology is supported by the specific Sigrid capability. See the [AI Static Explanations](../reference/ai-explanations.md#ai-static-explanations) documentation for more information.
-  - "Guardrails" indicates technologies supported by the live quality check in [Guardrails](../axis/guardrails.md)'s MCP tool in Sigrid Axis.
   - "AI Detection" indicates technologies supported by [AI Generated Code Detection](../capabilities/system-ai-governance.md#technology-support).
 
-<a>Sigrid</a> \| <a>On-premise Sigrid</a> \| <a>Sigrid Local</a> \| <a>Sigrid Axis</a>
+<a>Sigrid</a> \| <a>On-premise Sigrid</a> \| <a>Sigrid Local</a>
 {: .technologySupportCategories }
 
 | Name in configuration file    | Technology name(s)                     | Auto-detect | Supported Sigrid capabilities                                           | Notes                                       |
@@ -22,7 +21,7 @@ This page provides an overview of all technologies that can be analyzed by Sigri
 | `abap`                        | ABAP (SAP)                             | ✅          | Maintainability, Static AI, GenAI                                       |
 | `abapcds`                     | ABAP Core Data Services                | ✅          | Maintainability                                                         |
 | `abapsmartforms`              | ABAP SmartForms                        | ⚠️          | Maintainability, Architecture                                           |
-| `abl`                         | Abl (OpenEdge)                         | ✅          | Maintainability, Architecture, Static AI, GenAI, Guardrails             |
+| `abl`                         | Abl (OpenEdge)                         | ✅          | Maintainability, Architecture, Static AI, GenAI                         |
 | `acl`                         | ACL                                    | ✅          | Maintainability                                                         |
 | `accell`                      | Accell                                 | ✅          | Maintainability, Architecture                                           |
 | `actionscript`                | ActionScript                           | ⚠️          | Maintainability, Architecture, GenAI                                    |
@@ -77,13 +76,13 @@ This page provides an overview of all technologies that can be analyzed by Sigri
 | `configuration`               | Configuration                          | ✅          | Maintainability                                                         | [(5)](#notes)                               |
 | `coolgenc`                    | CoolGen C                              | ⚠️          | Maintainability, Architecture, GenAI                                    |
 | `coolgencobol`                | CoolGen Cobol                          | ⚠️          | Maintainability, Architecture, GenAI                                    |
-| `cpp`                         | C++                                    | ✅          | Maintainability, Architecture, Security, Static AI, GenAI, Guardrails, AI Detection |
-| `csharp`                      | C#                                     | ✅          | Maintainability, Architecture, Security, Static AI, GenAI, Guardrails, AI Detection |
+| `cpp`                         | C++                                    | ✅          | Maintainability, Architecture, Security, Static AI, GenAI, AI Detection             |
+| `csharp`                      | C#                                     | ✅          | Maintainability, Architecture, Security, Static AI, GenAI, AI Detection             |
 | `csp`                         | CSP                                    | ✅          | Maintainability, Architecture                                           |
 | `css`                         | CSS                                    | ✅          | Maintainability, Architecture, Static AI                                |
 | `cypher`                      | Cypher                                 | ✅          | Maintainability, Architecture                                           |
 | `cucumber`                    | Cucumber                               | ✅          | Maintainability, Architecture, GenAI                                    |
-| `dart`                        | Dart (includes Flutter)                | ✅          | Maintainability, Architecture, Static AI, GenAI, Guardrails             |
+| `dart`                        | Dart (includes Flutter)                | ✅          | Maintainability, Architecture, Static AI, GenAI                         |
 | `datastage`                   | Datastage                              | ✅          | Maintainability, Architecture                                           |
 | `datastageetl`                | DatastageETL                           | ✅          | Maintainability, Architecture                                           |
 | `datastageworkflow`           | DatastageWorkflow                      | ✅          | Maintainability, Architecture                                           |
@@ -132,9 +131,9 @@ This page provides an overview of all technologies that can be analyzed by Sigri
 | `intershoppipeline`           | Intershop (Pipeline)                   | ⚠️          | Maintainability, Architecture                                           |
 | `jasperreports`               | Jasper Reports                         | ✅          | Maintainability, Architecture                                           |
 | `jade`                        | Jade                                   | ✅          | Maintainability, Architecture                                           |
-| `java`                        | Java                                   | ✅          | Maintainability, Architecture, Security, Static AI, GenAI, Guardrails, AI Detection |
+| `java`                        | Java                                   | ✅          | Maintainability, Architecture, Security, Static AI, GenAI, AI Detection             |
 | `javafx`                      | Java FX                                | ✅          | Maintainability, Architecture                                           |
-| `javascript`                  | JavaScript (includes NodeJS)           | ✅          | Maintainability, Architecture, Security, Static AI, GenAI, Guardrails   | [(3)](#notes)                               | 
+| `javascript`                  | JavaScript (includes NodeJS)           | ✅          | Maintainability, Architecture, Security, Static AI, GenAI               | [(3)](#notes)                               | 
 | `jbc`                         | JBC                                    | ✅          | Maintainability, Architecture                                           |
 | `jbpm`                        | jBPM                                   | ✅          | Maintainability, Architecture                                           |
 | `jcl`                         | JCL                                    | ✅          | Maintainability, Architecture, GenAI                                    |
@@ -144,7 +143,7 @@ This page provides an overview of all technologies that can be analyzed by Sigri
 | `jsf`                         | JSF                                    | ✅          | Maintainability, Architecture                                           |
 | `json`                        | JSON                                   | ✅          | Maintainability, Architecture                                           | [(5)](#notes)                               |
 | `jsp`                         | JSP                                    | ✅          | Maintainability, Architecture, Security [(7)](#notes), Static AI        |
-| `kotlin`                      | Kotlin                                 | ✅          | Maintainability, Architecture, Security, Static AI, GenAI, Guardrails, AI Detection |
+| `kotlin`                      | Kotlin                                 | ✅          | Maintainability, Architecture, Security, Static AI, GenAI, AI Detection             |
 | `less`                        | Less                                   | ✅          | Maintainability, Architecture                                           |
 | `linc`                        | LINC                                   | ✅          | Maintainability, Architecture                                           | [(4)](#notes), [(8)](#notes)                |
 | `lion`                        | Lion                                   | ✅          | Maintainability, Architecture                                           | [(4)](#notes), [(8)](#notes)                |
@@ -159,7 +158,7 @@ This page provides an overview of all technologies that can be analyzed by Sigri
 | `matlab`                      | Matlab                                 | ⚠️          | Maintainability, Architecture                                           |
 | `mediationflows`              | Mediation Flows                        | ✅          | Maintainability, Architecture                                           |
 | `mendix`                      | Mendix                                 | ✅          | Maintainability, Architecture, Security, Static AI                      | [(9)](#notes), [(4)](#notes)                |
-| `mendixflow`                  | Mendix microflows/nanoflows            | ✅          | Maintainability, Architecture, Security, Guardrails                     | [(11)](#notes)                              |
+| `mendixflow`                  | Mendix microflows/nanoflows            | ✅          | Maintainability, Architecture, Security                                 | [(11)](#notes)                              |
 | `messagebuilder`              | MessageBuilder                         | ✅          | Maintainability, Architecture                                           |
 | `mpsbehavior`                 | MPS Behavior                           | ✅          | Maintainability                                                         | [(4)](#notes), [(8)](#notes)                |
 | `mpsclass`                    | MPS Class                              | ✅          | Maintainability                                                         | [(4)](#notes), [(8)](#notes)                |
@@ -174,7 +173,7 @@ This page provides an overview of all technologies that can be analyzed by Sigri
 | `nabsic`                      | Nabsic                                 | ✅          | Maintainability, Architecture                                           | [(4)](#notes), [(8)](#notes)                |
 | `navascript`                  | NavaScript                             | ✅          | Maintainability                                                         |
 | `naviscript`                  | Naviscript                             | ⚠️          | Maintainability, Architecture                                           |
-| `navision`                    | Navision (AKA Dynamics NAV, AL)        | ✅          | Maintainability, Architecture, Guardrails                               |
+| `navision`                    | Navision (AKA Dynamics NAV, AL)        | ✅          | Maintainability, Architecture                                           |
 | `netiqidmpolicy`              | NetIQ IDM Policy                       | ✅          | Maintainability                                                         | [(4)](#notes), [(8)](#notes)                |
 | `netiqidmrequest`             | NetIQ IDM Request                      | ✅          | Maintainability                                                         | [(4)](#notes), [(8)](#notes)                |
 | `netiqidmworkflow`            | NetIQ IDM Workflow                     | ✅          | Maintainability                                                         | [(4)](#notes), [(8)](#notes)                |
@@ -203,7 +202,7 @@ This page provides an overview of all technologies that can be analyzed by Sigri
 | `pascal`                      | Pascal                                 | ⚠️          | Maintainability, Architecture, GenAI                                    |
 | `pega`                        | Pega                                   | ✅          | Maintainability                                                         | [(1)](#notes), [(9)](#notes)                |
 | `perl`                        | Perl                                   | ✅          | Maintainability, Architecture, Security [(7)](#notes), GenAI            |
-| `php`                         | PHP                                    | ✅          | Maintainability, Architecture, Security, Static AI, GenAI, Guardrails, AI Detection |
+| `php`                         | PHP                                    | ✅          | Maintainability, Architecture, Security, Static AI, GenAI, AI Detection             |
 | `plc`                         | PLC                                    | ✅          | Maintainability, Architecture, GenAI                                    | [(4)](#notes), [(8)](#notes)                |
 | `plcfbd`                      | PLC Functional Block Diagram           | ✅          | Maintainability                                                         |
 | `plcil`                       | PLC Instruction List                   | ✅          | Maintainability                                                         |
@@ -220,10 +219,10 @@ This page provides an overview of all technologies that can be analyzed by Sigri
 | `powercenter`                 | PowerCenter                            | ✅          | Maintainability, Architecture                                           | [(4)](#notes), [(8)](#notes)                |
 | `powerfx`                     | Power Fx (AKA Microsoft Power Apps)    | ✅          | Maintainability, GenAI                                                  |
 | `powershell`                  | Powershell                             | ✅          | Maintainability, Architecture, Static AI, GenAI                         |
-| `progress`                    | Progress (OpenEdge)                    | ✅          | Maintainability, Architecture, Security, Static AI, GenAI, Guardrails   |
+| `progress`                    | Progress (OpenEdge)                    | ✅          | Maintainability, Architecture, Security, Static AI, GenAI               |
 | `prt`                         | PRT                                    | ✅          | Maintainability                                                         |
 | `puppet`                      | Puppet                                 | ✅          | Maintainability, Architecture, GenAI                                    |
-| `python`                      | Python                                 | ✅          | Maintainability, Architecture, Security, Static AI, GenAI, Guardrails, AI Detection |
+| `python`                      | Python                                 | ✅          | Maintainability, Architecture, Security, Static AI, GenAI, AI Detection             |
 | `r`                           | R                                      | ✅          | Maintainability, Architecture, GenAI                                    |
 | `radience`                    | Radience                               | ✅          | Maintainability, Architecture                                           | [(4)](#notes), [(8)](#notes)                |
 | `razor`                       | Razor                                  | ✅          | Maintainability, Architecture, Static AI                                |
@@ -282,7 +281,7 @@ This page provides an overview of all technologies that can be analyzed by Sigri
 | `tsql`                        | T-SQL (Microsoft SQL Server, MS SQL))  | ✅          | Maintainability, Architecture, Static AI, GenAI                         |
 | `turtle`                      | Turtle                                 | ✅          | Maintainability                                                         |
 | `twig`                        | Twig                                   | ✅          | Maintainability                                                         |
-| `typescript`                  | TypeScript (includes React/TypeScript) | ✅          | Maintainability, Architecture, Security, Static AI, GenAI, Guardrails, AI Detection | [(10)](#notes)                              |
+| `typescript`                  | TypeScript (includes React/TypeScript) | ✅          | Maintainability, Architecture, Security, Static AI, GenAI, AI Detection             | [(10)](#notes)                              |
 | `uil`                         | UIL (Motif)                            | ✅          | Maintainability, Architecture                                           |
 | `uniface`                     | Uniface                                | ✅          | Maintainability, Architecture                                           | [(4)](#notes), [(8)](#notes)                |
 | `until`                       | Until                                  | ⚠️          | Maintainability, Architecture                                           |
@@ -308,8 +307,8 @@ This page provides an overview of all technologies that can be analyzed by Sigri
 | `xaml`                        | XAML                                   | ✅          | Maintainability, Architecture                                           |
 | `xml`                         | XML                                    | ✅          | Maintainability, Architecture                                           | [(5)](#notes)                               |
 | `xpdl`                        | Tibco ActiveMatrix BPM                 | ✅          | Maintainability                                                         |
-| `xpp`                         | X++ AX                                 | ✅          | Maintainability, Architecture, GenAI, Guardrails                        | [(4)](#notes), [(8)](#notes)                |
-| `xpp365`                      | X++ for Dynamics 365                   | ✅          | Maintainability, Architecture, GenAI, Guardrails                        | [(4)](#notes), [(8)](#notes)                |
+| `xpp`                         | X++ AX                                 | ✅          | Maintainability, Architecture, GenAI                                    | [(4)](#notes), [(8)](#notes)                |
+| `xpp365`                      | X++ for Dynamics 365                   | ✅          | Maintainability, Architecture, GenAI                                    | [(4)](#notes), [(8)](#notes)                |
 | `xquery`                      | Xquery                                 | ✅          | Maintainability, Architecture, GenAI                                    |
 | `xsd`                         | XSD                                    | ✅          | Maintainability, Architecture                                           |
 | `xslt`                        | XSLT                                   | ✅          | Maintainability, Architecture                                           |
