@@ -87,13 +87,31 @@ VS Code asks for the token the first time it starts the server. Check that `axis
   <summary>Visual Studio</summary>
   <div markdown="1" id="visual-studio">
 
-To connect Visual Studio with GitHub Copilot:
+Visual Studio reads the same configuration as VS Code. Put it in `.mcp.json` in your solution folder, or in `%USERPROFILE%\.mcp.json` for all solutions. Visual Studio asks for the token when it first starts the server, so the file is safe to commit:
 
-1. Connect your GitHub account and open GitHub Copilot.
-2. Below the chat box, at the bottom left, select **Agent** mode.
-3. Click the **+** button to add an MCP server. Enter the name `axis` and the URL `https://sigrid-says.com/mcp`.
-4. Choose **Additional headers** and add `Authorization: Bearer <your_sigrid_token>`.
-5. Save and close the window. If the token is valid, the server appears in the tools list.
+```json
+{
+  "inputs": [
+    {
+      "type": "promptString",
+      "id": "sigrid-token",
+      "description": "Sigrid API token",
+      "password": true
+    }
+  ],
+  "servers": {
+    "axis": {
+      "type": "http",
+      "url": "https://sigrid-says.com/mcp",
+      "headers": {
+        "Authorization": "Bearer ${input:sigrid-token}"
+      }
+    }
+  }
+}
+```
+
+Open GitHub Copilot in **Agent** mode and check that `axis` appears in the tools list. Visual Studio also reads `.vscode/mcp.json`, so you can reuse an existing VS Code configuration.
 
   </div>
 </details>
