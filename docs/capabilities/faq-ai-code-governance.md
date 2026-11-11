@@ -37,6 +37,8 @@ Sigrid identifies AI generated code at the level of units, which are methods and
 
 Methods and functions that are smaller than 5 lines of code are ignored, because they do not provide enough signal to determine whether they were AI generated or human written.
 
+Note that, because of this level of granularity and attribution threshold, only a fraction of the code is attributable, as stated in the Sigrid platform.
+
 ### Why does Sigrid identify fragments of code that have been manually written as AI generated?
 
 Sigrid uses a machine learning classification model with an accuracy of over 95%. This means that roughly 19 out of 20 code fragments are classified correctly. In large codebases, this can still result in a noticeable number of false positives being identified as AI generated.
