@@ -584,3 +584,50 @@ sig-toc .h4 {
     color: #584814;
     text-decoration: underline;
 }
+
+.announcementArea {
+    padding: 0 50px;
+}
+
+.container .content {
+    flex: 1 1 auto;
+    min-width: 0;
+}
+
+.stickyBanner {
+    position: sticky;
+    top: 64px;
+    z-index: 1;
+    box-sizing: border-box;
+    width: calc(100% - 100px);
+    max-width: 822px; /* Same total width as the .attention cards: 750px + padding + border. */
+    margin: 16px auto 0 auto;
+    padding: 12px 20px 12px 50px;
+    background-color: #1a3680;
+    border-radius: 8px;
+    box-shadow: 0 6px 16px rgba(0, 0, 0, 0.3);
+    color: #ffffff;
+}
+
+.stickyBanner::before {
+    content: "";
+    position: absolute;
+    left: 12px;
+    top: 12px;
+    width: 24px;
+    height: 24px;
+    background-color: #ffffff;
+    -webkit-mask: url("/images/icon-attention.svg") no-repeat center / contain;
+    mask: url("/images/icon-attention.svg") no-repeat center / contain;
+}
+
+.stickyBanner a {
+    color: inherit;
+    font-weight: 700;
+    text-decoration: underline;
+}
+
+/* Keep headings clear of the sticky banner when jumping to an anchor. */
+.hasStickyBanner h1, .hasStickyBanner h2, .hasStickyBanner h3, .hasStickyBanner h4, .hasStickyBanner h5 {
+    scroll-margin-top: 170px;
+}
