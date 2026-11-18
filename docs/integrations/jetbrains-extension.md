@@ -44,7 +44,7 @@ You'll also need a Sigrid account with API access.
 
 ## Setting it up
 
-Most settings are global, configured once and shared across all your projects. Go to **Settings → Tools → Sigrid** and fill in your **API Key** and **Portfolio Name**. If you're on a self-hosted Sigrid instance, add your URL there too — otherwise leave it blank and it'll default to `https://sigrid-says.com`.
+Most settings are global, configured once and shared across all your projects. Go to **Settings → Tools → Sigrid** and fill in your **API Key** and **Customer Name**. If you're on a self-hosted Sigrid instance, add your URL there too — otherwise leave it blank and it'll default to `https://sigrid-says.com`.
 
 <img src="../images/ide/jetbrains-setting-global-.png" width="700" />
 
@@ -52,7 +52,7 @@ At the project level (**Settings → Tools → Sigrid → Project**), you need t
 
 <img src="../images/ide/jetbrains-setting-global-project.png" width="700" />
 
-You can leave **API Key**, **Portfolio Name**, and **Sigrid URL** blank at the project level — the plugin automatically falls back to your global settings, so you don't have to repeat them for every project. You'd only override them here if you have a separate Sigrid account for this specific project, which is rare.
+You can leave **API Key**, **Customer Name**, and **Sigrid URL** blank at the project level — the plugin automatically falls back to your global settings, so you don't have to repeat them for every project. You'd only override them here if you have a separate Sigrid account for this specific project, which is rare.
 
 
 ## Opening the plugin
