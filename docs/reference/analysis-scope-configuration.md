@@ -434,6 +434,14 @@ At the time, one role is able to be assigned to a component, `Utility. This labe
           include:
             - ".*core-.*"
 
+You can also use this option to *remove* architecture roles from components, including architecture roles that were auto-detected by Sigrid. For example, the following configuration will remove the "utility component" label from all components:
+
+    architecture:
+      component_roles:
+        - role: utility
+          exclude:
+            - ".*"
+
 ### Excluding process-related metrics
 
 In some cases, the process-related metrics of the Architecture model don't represent your development situation accurately. For example, when you have AI agents commit code, or when you squash commits, the author of commits does not accurately represent the actual number of authors, and as a result can lead to inaccurate measurements for the Knowledge Awareness and Team Stability metrics. If that applies to your situation, you can disable these metrics for your system Architecture measurements by using `disabled_metrics`. See an example below:
