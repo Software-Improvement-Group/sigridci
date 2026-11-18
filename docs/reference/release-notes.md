@@ -3,6 +3,12 @@ Sigrid release notes
 
 SIG uses [continuous delivery](https://en.wikipedia.org/wiki/Continuous_delivery), meaning that every change to Sigrid or the underlying analysis is released once our development pipeline has completed. On average, we release somewhere between 10 and 20 times per day. This page therefore doesn't list every single change, since that would quickly lead to an excessively long list of small changes. Instead, this page lists Sigrid and analysis changes that we consider noteworthy for the typical Sigrid user.
 
+### November 16, 2026
+
+- **Sigrid Axis:** The Axis portfolio view has been redesigned. A new Dashboard tab gives you one overview of AI adoption, speed, and output quality across your portfolio. The other tabs are now called AI Adoption, Speed, and Output Quality, and all modules now share the same look and feel.
+- **AI Code Governance:** The percentage of AI-generated code is now based only on the code that Sigrid could classify, instead of all code. This gives a more accurate picture of AI adoption.
+- **Technology support:** Dependency detection for Rust has been improved.
+
 ### November 2, 2026
 
 - **Sigrid CI:** Sigrid CI now supports integration with [Gerrit](https://www.gerritcodereview.com). The [Sigrid CI documentation](../sigridci-integration/gerrit.md) contains instructions on how to set this up.
