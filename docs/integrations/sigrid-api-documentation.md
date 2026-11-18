@@ -1138,7 +1138,7 @@ The end point requires the following request body:
 
 ### Deleting users
 
-Administrators can use the following end point to delete users from Sigrid entirely, without needing to use the user interface:
+Administrators can use the following end point to remove users from a portfolio, without needing to use the user interface. If the user only belongs to this portfolio the user is deleted from Sigrid. If the user also belongs to other portfolios, the user is only detached from this portfolio:
 
     DELETE https://sigrid-says.com/rest/auth/api/user-management/{customer}/users/{userId}
 
