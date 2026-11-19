@@ -141,144 +141,130 @@ SIG will set up Single Sign-On (SSO) for you, providing you with a unique, custo
 https://customername.sigrid-says.com
 
 # Authorization in Sigrid
-While Sigrid requires minimal adminstration to gather insights in your software's quality, there are a number of tasks that must be performed to ensure your organization gets the most out of their Sigrid experience. Most important of which is the management of other user's access to system details, findings and source code within Sigrid. The following section describes the functions in place to provide this control to users.
+While Sigrid requires minimal administration to gather insights in your software's quality, there are a number of tasks that must be performed to ensure your organization gets the most out of their Sigrid experience. Most important of which is the management of other user's access to system details, findings and source code within Sigrid. The following section describes the functions in place to provide this control to users.
 
 ### Types of users
-Sigrid utilizes role-based authorization with three roles assignable to users: 
-- **Normal users:** Default Sigrid users. Can view all details of systems they've been granted access to, as well as view and edit related findings.
-- **Administrators:** Power users that have the ability to edit all details of all users within the portfolio, have access to all systems, and can set portfolio wide objectives that affect all systems in a given portfolio.
-- **Maintainers:** These users are localized administrators. Maintainers can perform administrative actions on systems they have explicit access to, but not over the entire portfolio.
+Sigrid has two types of users:
+- **Normal users:** Can see the systems they have been granted a role on, and can do what that role allows. See [system groups](#system-groups) for the roles.
+- **Administrators:** Power users that can manage all users and authorization groups in the portfolio, have access to all systems, and can set portfolio-wide objectives that affect all systems.
 
-While normal users have the typical rights to access 1 to all systems in the Sigrid portfolio, Administrator and Maintainer users have additional edit capabilities over other users within the portfolio and are considered admin-level users in Sigrid. Only Administrator users have access to the entirety of the systems within their portfolio by default.
+Often organizations require a degree of control to prevent improper disclosure of sensitive information between users and teams. Sigrid does this by giving normal users access only to the systems they have been granted a role on. Because administrators can see every system, finding and source code in the portfolio, we recommend keeping the number of administrators small, and using the owner role of a [system group](#system-groups) to delegate the management of a part of the portfolio.
 
-Often organizations require a degree of control to prevent improper disclosure of sensitive information between users and teams. In order to achieve this control, Sigrid offers several admin-level roles that can be assigned to normal users, granting them access to new actions within the platform.
-
-Tasks unique to Admin-level users beyond User Management include:
+Tasks unique to administrators beyond user management include:
 - [Setting and using Sigrid Objectives](../capabilities/objectives.md)
 - [Adding business context to a system using metadata](metadata.md)
 
-#### Administrators vs Maintainers
-
-Once portfolios hit a certain size, it can become difficult for a single admin of a large organization to perform user management effectively by themsleves. When faced with multiple systems and multiple development teams, often it is the case a single administrator user is unaware of who exactly should be granted access to which systems. Likewise, having multiple Administrators within a single Sigrid instance is typically not advised as these are permitted to access every system, finding and source code for all systems in the portfolio, which can be a point of concern for organizations that wish to restrict access based on their own internal organizational structure.
-
-In order to mitigate this pain and allow for some delegation of this work, we have introduced a new user type that behaves as a localized administrator to handle administrative tasks for only those systems relevant to their scope of the portfolio. These local administrators, which we refer to as Maintainers, are able to partially take over the tasks of authorizing users access to systems in the portfolio, as well as configuring system-related details that enhance the ability to track quality improvements and/or setting quality goals to achieve.
-
-Maintainer users have the very similar rights as Administrators in performing administrative tasks, *but only on the subset of systems* the Maintainer has been granted explicit access to by the Administrator. Naturally this means if no system has been made accessible to the Maintainer, this user effectively can not perform any administrative tasks in Sigrid - their ability to perform tasks such as setting of metadata, defining system level objectives, or authorizing users to systems is tied directly to their own authorized access.
-
-Similarly, while Maintainers enjoy additional admin-level permissions on those systems that are accessible to them, there are still limitations on specific actions that are reserved for Administrator users only. This includes the following: 
-- Maintainer users cannot authorize themselves for new systems
-- Maintainer users cannot modify or create portfolio-level objectives
-- Maintainer users cannot change the role for any user, themselves included
-- Maintainer users cannot grant or revoke the 'access to all systems' permission
-- Maintainer users cannot update access rights for Administrator users, nor are they able to adjust the system access rights of other users for systems they themselves do not have access to
-- Maintainer users cannot update user details or security settings
-- Maintainer users cannot delete users, and cannot create or delete authorization groups
-
 ### Authorized Actions based on User Type
 
-For a full breakdown of tasks able to be performed by each user type, please refer to the following authorized actions table. *Note:* These actions refer to both manual actions within the Sigrid web interface as well as actions allowed [via the Sigrid API](../integrations/sigrid-api-documentation.md#managing-user-permissions-via-API):
+For a full breakdown of what each type of user can do, see the following table. *Note:* These actions refer to both manual actions within the Sigrid web interface as well as actions allowed [via the Sigrid API](../integrations/sigrid-api-documentation.md#managing-individual-user-permissions). The viewer, contributor and owner columns show the role a normal user has on a system. 
 
-| Action | Normal User | Maintainer | Administrator |
-| :--- | :---: | :---: | :---: |
-| **Portfolio Overview**
-| View Dashboard | ✅ | ✅ | ✅✅ |
-| View Systems | ✅ | ✅ | ✅✅ |
-| **Capability Specific Overviews**
-| View Dashboards | ✅ | ✅ | ✅✅ |
-| View Ratings | ✅ | ✅ | ✅✅ |
-| Favorite Systems | ✅ | ✅ | ✅✅ |
-| **Findings and Refactoring Candidates**
-| View Findings | ✅ | ✅ | ✅✅ |
-| Edit Findings | ✅ | ✅ | ✅✅ |
-| View Finding Audit Trails | ✅ | ✅ | ✅✅ |
-| Create Manual Findings | | ✅ | ✅✅ |
-| **Source Code**
-| View Source Code | ✅ | ✅ | ✅✅ |
-| **Meta-data**
-| View metadata | ✅ | ✅ | ✅✅ |
-| Configure metadata | | ✅ | ✅✅ |
-| **Objectives**
-| View objectives | ✅ | ✅ | ✅✅ |
-| Configure system-level objectives | | ✅ | ✅✅ |
-| Configure portfolio-level objectives | | | ✅✅ |
-| **User Management**
-| View Users | ✅ | ✅ | ✅✅ |
-| Create Users | | ✅ | ✅✅ |
-| Delete Users | | | ✅✅ |
-| Edit User Permissions | | ✅ | ✅✅ |
-| Edit User Details (other than self) | | | ✅✅ |
-| View User Status Details | | | ✅✅ |
-| Edit User Role | | | ✅✅ |
-| Reset User Password / MFA | | | ✅✅ |
-| Create / Delete Authorization Groups | | | ✅✅ |
-| Edit Authorization Group Permissions | | ✅ | ✅✅ |
-| Edit Authorization Group Members | | ✅(1) | ✅✅ |
-| Edit Authorization Group Details | | ✅(1) | ✅✅ |
+| Action                                       | Viewer | Contributor | Owner | Administrator |
+|:---------------------------------------------|:------:|:-----------:|:-----:|:-------------:|
+| **Portfolio Overview**                       |        |             |       |               |
+| View Dashboard                               |   ✅   |     ✅      |  ✅   |     ✅✅      |
+| View Systems                                 |   ✅   |     ✅      |  ✅   |     ✅✅      |
+| **Capability Specific Overviews**            |        |             |       |               |
+| View Dashboards                              |   ✅   |     ✅      |  ✅   |     ✅✅      |
+| View Ratings                                 |   ✅   |     ✅      |  ✅   |     ✅✅      |
+| Favorite Systems                             |   ✅   |     ✅      |  ✅   |     ✅✅      |
+| **Findings and Refactoring Candidates**      |        |             |       |               |
+| View Findings                                |   ✅   |     ✅      |  ✅   |     ✅✅      |
+| View Finding Audit Trails                    |   ✅   |     ✅      |  ✅   |     ✅✅      |
+| Edit Findings                                |        |     ✅      |  ✅   |     ✅✅      |
+| Create Manual Findings                       |        |     ✅      |  ✅   |     ✅✅      |
+| **Source Code**                              |        |             |       |               |
+| View Source Code                             |   ✅   |     ✅      |  ✅   |     ✅✅      |
+| **Meta-data**                                |        |             |       |               |
+| View metadata                                |   ✅   |     ✅      |  ✅   |     ✅✅      |
+| Configure metadata                           |        |             |  ✅   |     ✅✅      |
+| **Objectives**                               |        |             |       |               |
+| View objectives                              |   ✅   |     ✅      |  ✅   |     ✅✅      |
+| Configure system-level objectives            |        |             |  ✅   |     ✅✅      |
+| Configure portfolio-level objectives         |        |             |       |     ✅✅      |
+| **User Management**                          |        |             |       |               |
+| View Users                                   |   ✅   |     ✅      |  ✅   |     ✅✅      |
+| Grant and revoke access on a system group    |        |             |  ✅   |     ✅✅      |
+| Create / Delete Users                        |        |             |       |     ✅✅      |
+| Edit User Details (other than self)          |        |             |       |     ✅✅      |
+| View User Status Details                     |        |             |       |     ✅✅      |
+| Edit User Role                               |        |             |       |     ✅✅      |
+| Reset User Password / MFA                    |        |             |       |     ✅✅      |
+| Create / Delete Authorization Groups         |        |             |       |     ✅✅      |
+| Edit Authorization Group Members and Details |        |             |       |     ✅✅      |
 
-✅ **Limited Scope:** User is only able to perform this action on systems that are explicitly accessible to the user  
-✅✅ **Global Scope**: User is able to perform this action across any system in the portfolio  
-(1) Only for Groups the Maintainer is a member of
+✅ **Limited Scope:** User is only able to perform this action on the system groups and systems they have been granted the role on, and on everything below those system groups  
+✅✅ **Global Scope**: User is able to perform this action across any system in the portfolio
 
-### System level access
+### System groups
 
-Generally speaking, users are authorized to perform actions based on the scope of systems they have been granted access to via Sigrid's User Management module. Administrators always have access to every system within their portfolio, so naturally they can perform all actions specified in the above table across every system present within their portfolio. Conversely, Normal and Maintainer users can only perform authorized actions on systems they have been explicitly granted access to and are granted no system access by default.
+System groups are how you decide who can see which systems. Your systems are organized in a tree, and every node in that tree is a system group. If you give someone access to a system group, they get access to everything below it.
 
-Administrator and Maintainer users can specify on system level the access any user in the portfolio has - Maintainers are able to authorize users based on their own system access while administrators are able to grant access for any system within the portfolio. Once access has been granted to a user, they will be able to view all Sigrid content for the selected system. 
+Every system group has a type:
 
-#### Bulk assigning system access
-When creating or editing a user, it is possible to assign system access in bulk via several new system access controls. These system access controls are based on the metadata supplied for systems, allowing a user to receive access to all systems labeled with Division, Team or Supplier metadata.
+- **Portfolio:** The top of the tree, contains both systems and system groups.
+- **Subgroup:** A system group that you create yourself to organize your systems, for example per division, department or team. A subgroup can contain other subgroups and systems.
+- **System:** The system group that represents one of your systems. Every system in your portfolio has one. Systems are at the bottom of the tree, so they cannot contain other system (groups).
 
-<img src="../images/um-bulk-system-access-controls.png" height="600"  />
+You give access by granting a user (or an [authorization group](#authorization-groups)) a role on a system group. There are three roles:
 
-Upon selection of one of the filters, the user will be presented with a list of system groups based on the assigned metadata. From here you have the ability to add a group as a whole, or expand the group to add specific systems to the user's access.
-Important to note is that these bulk assignments are not currently "sticky" for the user, in the sense that if you assign access to a system group to a user, only those systems currently present in the system group will be accessible to the user. If a new system is then added to this group, the user will need to reassign the group as a whole to the user.
+- **Owner:** Can do what a contributor can, and can also manage the system group itself: create and move subgroups, and decide who has access. For a system, this includes administrative tasks such as [configuring metadata](metadata.md). 
+- **Contributor:** Can do what a viewer can, and can also edit findings.
+- **Viewer:** Can look at the system, but cannot edit findings.
 
-This is helpful when trying to assign a logical grouping of systems for a new user, without having to identify and add the systems one by one.
+Roles flow downwards. If you make someone a viewer of a subgroup, they are a viewer of every system in it, including systems that are added later. You do not have to grant access again for every new system.
 
-For more information on assigning metadata to systems, please see the separate [Metadata page](metadata.md)
+A few things that are good to know:
 
-__Note:__ Bulk assignment of system access can be done both when assigning permissions to a single user, as well as when defining permissions for authorization groups.
+- You can combine roles at different levels, for example viewer on a whole department and owner on one team below it. Granting a role that is lower than what someone already inherits is rejected, because it would not change anything.
+- Administrators, SIG employees and partner users can already access everything, so you cannot (and do not need to) grant them a role.
+- There is no maintainer role. If you want someone to manage access for part of the portfolio, make them the owner of a subgroup.
+- You cannot edit or delete the portfolio group or the system groups that represent a system. The technical name of a subgroup cannot be changed after it has been created.
+
+#### Which one should I use?
+
+Grant access as high up in the tree as makes sense, and let inheritance do the rest:
+
+- **A team needs access to all of its systems:** Create a subgroup for the team, put the team's systems in it, and give the team's authorization group a role on the subgroup. When you add a system to the subgroup later, the team can see it without any further changes.
+- **One person needs access to one system:** Grant that person a role on the system's own system group. This is also how you change the access of a single person.
+- **Someone needs to manage access for part of the portfolio:** Make them the owner of a subgroup.
+
+You can manage system groups in Sigrid and through the Sigrid API. For the API, see [managing system group permissions](../integrations/sigrid-api-documentation.md#managing-system-group-permissions).
 
 ### Authorization groups
-Administrators and maintainers also have the ability to specify system access in bulk for groups of users, by creating an authorization group entity by which users can be added to this group along with a permission set. All users added to a defined authorization group will inherit access rights to systems authorized for the group. 
+Authorization groups let administrators manage access for a number of users at once. You put users in an authorization group, and then grant a role on a [system group](#system-groups) to the group as a whole. All members of the group get that role.
 
 #### Creating groups in User Management
 
 You can find the user group table on the User Management page by switching to the "Groups" tab above the User Permissions table.
 
-<img src="../images/um-user-group-table.png" width="600" />
+<img src="../images/um-user-group-table.png" alt="Groups tab on the User Management page, showing a table of user groups with name, description, number of users and systems, and an Add user group button" width="600" />
 
-Creating a new user group is simple and follows a very similar process for assigning permissions to users. From the "Groups" tab, simply click the "Add user group" button and this will trigger a new dialog to appear.
+Creating a new user group is simple. From the "Groups" tab, click the "Add user group" button and this will trigger a new dialog to appear.
 
 From here you can input a descriptive name for the new authorization group as well as a description of the responsibility of this group.
 
-<img src="../images/um-group-details-dialog.png" width="600" />
+<img src="../images/um-group-details-dialog.png" alt="User group dialog with the Details section open, showing the name and description fields and the Discard and Save buttons" width="600" />
 
-Upon saving of the group details, the authorization group is created. At this state the group will have no users or system access, but the group entity does exist and will populate the User Groups table.
+Upon saving of the group details, the authorization group is created. At this state the group will have no users or access to any systems, but the group entity does exist and will populate the User Groups table.
 
-<img src="../images/um-group-created.png" width="600" />
+<img src="../images/um-group-created.png" alt="User groups table including the newly created group with 0 users and no systems, with edit and delete icons on each row" width="600" />
 
 At this point the user is free to delete the group (done via clicking the red "X" icon to the right of the entry in the table) edit the group (via clicking on the pencil icon to the right of the entry in the table).
 
 Switching to the Members section in the edit group dialog, the user can freely allocate group membership to other users within the portfolio. Important to note is that users will only be added to the group when clicking "save", closing the dialog without saving will result in users not being added to the group.
 
-<img src="../images/um-groups-adding-users.png" width="600" />
+<img src="../images/um-groups-adding-users.png" alt="User group dialog with the Members section open, showing a list of users on the left and the users added to the group on the right" width="600" />
 
-The final step for the group is to grant system access, which is done via the Permissions section in the Edit User Group dialog. Here you'll find a very familiar process as adding system access for users, the main controls are the same.
+The authorization group does not give access to any system yet. For that, grant the group a role on a [system group](#system-groups).
 
-System assignment can be done one-by-one, or in bulk using the metadata based bulk assignments. Any system added to the group will be accessible by all group members for the lifetime of the group or until the user is removed from the group. 
-
-<img src="../images/um-groups-assigning-permissions.png" width="600" />
-
-Naturally, any change in the permissions of a group will be reflected in the permissions of all users present in the group. Some key things to keep in mind when assigning permissions via authorization groups are the following:
-- Inherited access rights to systems are in addition to any current rights the a user may have, it does not overwrite existing authorization rights of the user.
-- Users can be part of multiple groups, and will inherit all access rights of any groups they are a part of. Again, inheritance of one group's access rights does not overwrite the inheritance another group's access rights, these access rights are simply combined in total. Any overlap in access will simply see the user retain access right to the overlapped system.
-- Inherited access rights are not possible to be revoked piece-wise, to remove inherited system access from a group requires the user to be removed from said group.
-- System level access for the group is defined in the same manner as it is for an individual, and includes the same ability to bulk assign systems to a group via the use of the access control filters for teams. suppliers or divisions.
+Some key things to keep in mind when assigning access via authorization groups:
+- A role that a user gets through a group is in addition to any role the user has directly. It does not overwrite it.
+- Users can be part of multiple groups. A user gets the highest role of everything that applies to them, so overlapping access never causes a problem.
+- Access that comes from a group cannot be revoked for a single member. To remove it, either remove the user from the group, or revoke the role of the group.
 
 ### User Management via Sigrid API
 
-Apart from the web-based user interface of Sigrid, users and authorization groups can be managed via several endpoints available in the Sigrid API. Please see [how to manage user permission](../integrations/sigrid-api-documentation.md#managing-user-permissions-via-API) via API for more information.
+Apart from the web-based user interface of Sigrid, users and authorization groups can be managed via several endpoints available in the Sigrid API. Please see [how to manage user permission](../integrations/sigrid-api-documentation.md#managing-individual-user-permissions) via API for more information. Access to systems is granted through [system groups](#system-groups); see [managing system group permissions](../integrations/sigrid-api-documentation.md#managing-system-group-permissions).
 
 ### Passwords
 The administrator can help users by resending a forgotten password or the initial temporary password.

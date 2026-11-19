@@ -1229,7 +1229,7 @@ The response format upon successful request of a single authorization group look
 }
 ```
 
-The `PUT .../groups/{groupID}/permissions` endpoint is deprecated: access to systems is no longer part of an authorization group, and is granted through [system groups](#managing-system-group-permissions) instead. The deprecated `systems`, `accessToAll`, `updatedAt` and `updatedByUser` fields are only present while the legacy permission model is active, and the `systems` and `accessToAll` fields are ignored when creating a group.
+The `PUT .../groups/{groupID}/permissions` endpoint is deprecated: access to systems is no longer part of an authorization group, and is granted through [system groups](#managing-system-group-permissions) instead. The deprecated `systems`, `accessToAll`, `updateAt` and `updatedByUser` fields are only present while the legacy permission model is active, and the `systems` and `accessToAll` fields are ignored when creating a group.
 
 The process for updating membership to a group is done in a very similar manner when using the `PUT https://sigrid-says.com/rest/auth/api/user-management/{customer}/groups/{groupID}/members` endpoint. Again the request body is required and must contain valid unique IDs for the users to be assigned to the group.
 
@@ -1263,9 +1263,18 @@ Successful response format of this request would look like the following, with t
 
 ### Managing system group permissions
 
-Access to systems is managed through system groups. A system group is either a portfolio, a subgroup or a system, and users and authorization groups are granted a role on a system group (`OWNER`, `CONTRIBUTOR` or `VIEWER`). 
-These endpoints replace the deprecated `PUT .../users/{userID}/permissions` and `PUT .../groups/{groupID}/permissions` endpoints. Note that this is not a one-to-one replacement: the deprecated endpoints _replace_ the full set of systems of a user or group, 
-whereas the system group endpoints _grant_ or _revoke_ a role on one system group at a time.
+In Sigrid, access to systems is managed through system groups. Your systems are organized in a tree, and every node in that tree is a system group, with a `type` of `PORTFOLIO`, `SUBGROUP` or `SYSTEM`. You give access by granting a user or an authorization group a role (`OWNER`, `CONTRIBUTOR` or `VIEWER`) on a system group, and the role also applies to everything below it. If you are new to this, read [what system groups are and how roles work](../organization-integration/usermanagement.md#system-groups) first.
+
+These endpoints replace the deprecated `PUT .../users/{userID}/permissions` and `PUT .../groups/{groupID}/permissions` endpoints. They do not work the same way, so you cannot simply swap one for the other. The deprecated endpoints _replace_ the complete list of systems a user or group has access to. The system group endpoints _grant_ or _revoke_ a role on one system group at a time.
+
+#### Changing the access of a single user
+
+There is no separate endpoint for changing the permissions of one specific user. Since the user permissions endpoint is deprecated, you do this through the system group endpoints as well. Every system is a system group of its own, so giving someone access to a system means granting them a role on that system's system group. Taking the access away again works the same way, using `batch-delete`.
+
+1. Find the system group of the system with `GET .../system-groups`. Look for the entry with `type` `SYSTEM` and the name of your system in `name`.
+2. Grant the role with `POST .../system-groups/{systemgroupId}/permissions/users:batch-create`, or revoke it with `users:batch-delete`. There are examples of both below.
+
+If you grant the role on a subgroup instead, the user gets access to every system in that subgroup.
 
 The following endpoints are available:
 
