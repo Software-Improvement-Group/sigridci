@@ -1138,7 +1138,7 @@ The end point requires the following request body:
 
 ### Deleting users
 
-Administrators can use the following end point to delete users from Sigrid entirely, without needing to use the user interface:
+Administrators can use the following end point to remove users from a portfolio, without needing to use the user interface. If the user only belongs to this portfolio the user is deleted from Sigrid. If the user also belongs to other portfolios, the user is only detached from this portfolio:
 
     DELETE https://sigrid-says.com/rest/auth/api/user-management/{customer}/users/{userId}
 
@@ -1148,7 +1148,7 @@ A number of endpoints are available that make managing existing users within the
 
 - `GET https://sigrid-says.com/rest/auth/api/user-management/{customer}/users`: Returns a list all users within a portfolio
 - `GET https://sigrid-says.com/rest/auth/api/user-management/{customer}/users/{userId}`: Returns a user based on their unique identifier
-- `PUT https://sigrid-says.com/rest/auth/api/user-management/{customer}/users/{userID}/permissions`: Updates the permissions granted to a specific user
+- `PUT https://sigrid-says.com/rest/auth/api/user-management/{customer}/users/{userID}/permissions`: Updates the permissions granted to a specific user. __Deprecated:__ use the [system group endpoints](#managing-system-group-permissions) instead.
 
 The path parameters `{customer}` and `{userID}` refer to your Sigrid account name and a unique user ID respectively.
 
@@ -1160,73 +1160,13 @@ The response format upon successful request of a single user looks like the foll
   "firstName": "string",
   "lastName": "string",
   "email": "string",
-  "isAdmin": true,
-    "accessToAll": true,
-    "systems": [
-      {
-        "systemName": "string"
-      }
-    ],
-  "lastLoginAt": "2024-03-07T16:54:33.438Z"
-}
-```
-
-Of particular interest is the `systems` field in the response, which contains the set of systems that the user can access from the portfolio. Each systems is denoted by a `string` that relates to the name of the system when it was onboarded in Sigrid. 
-- __NOTE:__ This name can be different from the display name seen in Sigrid, be sure to use the name the sytem was attributed during onboarding. 
-- __NOTE:__ This does not include the permissions inherited from user groups.
-
-When leveraging the `PUT https://sigrid-says.com/rest/auth/api/user-management/{customer}/users/{userID}/permissions` endpoint, the user must include in the request body the permissions to be updated. 
-
-An example request could be the following:
-
-```shell
-$ curl 'https://sigrid-says.com/rest/auth/api/user-management/{customer}/users/{userID}/permissions' -X PUT \
-  -H 'Content-Type: application/json' \
-  -H 'Authorization: Bearer {SIGRID_PERSONAL_TOKEN}' \
-  -d '{
-    "accessToAll": false,
-    "systems": [ 
-      {
-        "systemName": "system-a"
-      },
-      {
-        "systemName": "system-b"
-      },
-      {
-        "systemName": "system-c"
-      }
-    ]
-  }'
-```
-
-This request will _replace_ the set of system permissions granted to the specified user with the set provided in the request body consisting of 3 systems - system-a, system-b and system-c. No other change is made, so user details such as firstName / lastName / email all will remain as-is upon successful request of this endpoint.
-
-Upon succesful request of the above endpoint for a user with id `d987c69d-464f-4276-bea8-5780cc782b97`, the response format for `GET https://sigrid-says.com/rest/auth/api/user-management/{customer}/users/d987c69d-464f-4276-bea8-5780cc782b97` :
-
-```json
-{
-  "id": "d987c69d-464f-4276-bea8-5780cc782b97",
-  "firstName": "string",
-  "lastName": "string",
-  "email": "string",
+  "role": "USER",
   "isAdmin": false,
-  "accessToAll": false,
-  "systems": [
-    {
-      "systemName": "system-a"
-    },
-    {
-      "systemName": "system-b"
-    },
-    {
-      "systemName": "system-c"
-    }
-  ],
   "lastLoginAt": "2024-03-07T16:54:33.438Z"
 }
 ```
 
-Related to this is the `accessToAll` boolean field, which indicates if a user has the explicit right to access every system in the portfolio, both for systems that are currently onboarded and those that will be onboarded in the future. This permission is typically reserved for administrators of the Sigrid account, however this option can be applied to all users within a portfolio. 
+The `role` field is `ADMIN` or `USER`. The deprecated `MAINTAINER` role is only returned while the legacy permission model is active. Access to systems is no longer part of the user: it is granted through [system groups](#managing-system-group-permissions), and the `PUT .../users/{userID}/permissions` endpoint is deprecated. The deprecated `systems` and `accessToAll` fields are only present while the legacy permission model is active.
 
 For more information, see the detailed section on [user management in Sigrid.](../organization-integration/usermanagement.md)
 
@@ -1248,11 +1188,6 @@ For creating groups, the request format is:
   "description": "string",
   "users": [
     "string($uuid)"
-  ],
-  "systems": [
-    {
-      "systemName": "string"
-    }
   ]
 }
 ```
@@ -1261,8 +1196,6 @@ Users can provide a number of fields when creating groups.
 - The `name` field is simply whatever name the administrator chooses for the group. We recommend a descriptive name either based on which team, division, or responsibility scope this group relates to within your own organization.
 - The `description` field is then the description of the group for traceability purposes. We recommend descriptions that describe the group's intended responsibility and/or scope of the portfolio they will manage in Sigrid.
 - The `users` field contains the set of users that are members of the authorization group and will inherit the permissions granted to the group. A user is denoted by a UUID representing their unique identifier hash.
-- The `systems`field contains the set of systems authorized to be accessible by the group, similar to how it is defined for an individual user. System are denoted by their system name when onboarded in sigrid. 
-    - __NOTE:__ This name can be different from the display name seen in Sigrid, be sure to use the name the sytem was attributed during onboarding. 
 
 A typical response upon group creation has the following format:
 
@@ -1273,21 +1206,14 @@ A typical response upon group creation has the following format:
   "description": "string",
   "users": [
     "string($uuid)"
-  ],
-  "systems": [
-    {
-      "systemName": "string"
-    }
-  ],
-  "updatedAt": "2025-03-26T16:54:22.440Z",
-  "updatedByUser": "string($uuid)"
+  ]
 }
 ```
 
 Additional available endpoints include for managing permissions on groups:
 - `GET https://sigrid-says.com/rest/auth/api/user-management/{customer}/groups`: Returns a list all authorization groups defined within a portfolio
 - `GET https://sigrid-says.com/rest/auth/api/user-management/{customer}/groups/{groupID}`: Returns an authorization group based on their unique identifier
-- `PUT https://sigrid-says.com/rest/auth/api/user-management/{customer}/groups/{groupID}/permissions`: Updates the permissions granted to the authorization group, with all users within the group inheriting the updated permissions
+- `PUT https://sigrid-says.com/rest/auth/api/user-management/{customer}/groups/{groupID}/permissions`: Updates the permissions granted to the authorization group, with all users within the group inheriting the updated permissions. __Deprecated:__ use the [system group endpoints](#managing-system-group-permissions) instead.
 - `PUT https://sigrid-says.com/rest/auth/api/user-management/{customer}/groups/{groupID}/members`: Updates the set of users that are part of the authorization group
 
 The response format upon successful request of a single authorization group looks like the following:
@@ -1299,69 +1225,13 @@ The response format upon successful request of a single authorization group look
   "description": "string",
   "users": [
       "string($uuid)"
-    ],
-  "systems": [
-      {
-      "systemName": "string"
-      }
-  ],
-  "updatedAt": "2024-03-07T17:41:59.278Z",
-  "updatedByUser": "string($uuid)"
+    ]
 }
 ```
 
-When leveraging the `PUT https://sigrid-says.com/rest/auth/api/user-management/{customer}/groups/{groupID}/permissions` endpoint, the user must include in the request body the permissions to be updated. 
+The `PUT .../groups/{groupID}/permissions` endpoint is deprecated: access to systems is no longer part of an authorization group, and is granted through [system groups](#managing-system-group-permissions) instead. The deprecated `systems`, `accessToAll`, `updateAt` and `updatedByUser` fields are only present while the legacy permission model is active, and the `systems` and `accessToAll` fields are ignored when creating a group.
 
-An example request could be the following:
-
-```shell
-$ curl 'https://sigrid-says.com/rest/auth/api/user-management/{customer}/groups/{groupID}/permissions' -X PUT \
-  -H 'Content-Type: application/json' \
-  -H 'Authorization: Bearer {SIGRID_PERSONAL_TOKEN}' \
-  -d '{
-  "systems": [ 
-    {
-      "systemName": "system-x"
-    },
-    {
-      "systemName": "system-y"
-    },
-    {
-      "systemName": "system-z"
-    }
-  ]
-}'
-```
-
-This request will _replace_ the set of system permissions granted to the specified authorization group with the set provided in the request body consisting of 3 systems - system-x, system-y and system-z.
-
-Upon succesful request of the above endpoint for a group with id `f4a702ac-b998-44e1-a271-840a3f75e6d2`, the response format for `GET https://sigrid-says.com/rest/auth/api/user-management/{customer}/groups/f4a702ac-b998-44e1-a271-840a3f75e6d2` :
-
-```json
-{
-  "id": "f4a702ac-b998-44e1-a271-840a3f75e6d2",
-  "name": "string",
-  "description": "string",
-  "users": [
-    "string($uuid)"
-    ],
-  "systems": [
-    {
-      "systemName": "system-x"
-    },
-    {
-      "systemName": "system-y"
-    },
-    {
-      "systemName": "system-z"
-    }
-  ],
-  "updatedAt": "2024-03-07T17:41:59.278Z",
-  "updatedByUser": "string($uuid)"
-}
-```
-
-The process for updating membership to a group is done in a very similar manner when leveraing the `PUT https://sigrid-says.com/rest/auth/api/user-management/{customer}/groups/{groupID}/permissions`endpoint. Again the request body is required and must contain valid unique IDs for the users to be assigned to the group.
+The process for updating membership to a group is done in a very similar manner when using the `PUT https://sigrid-says.com/rest/auth/api/user-management/{customer}/groups/{groupID}/members` endpoint. Again the request body is required and must contain valid unique IDs for the users to be assigned to the group.
 
 An example request on the same group could be the following:
 
@@ -1377,7 +1247,7 @@ $ curl 'https://sigrid-says.com/rest/auth/api/user-management/{customer}/groups/
   }'
 ```
 
-Successful response format of this request would look like the following, with the updated members now inheriting the permissions assigned in the previous example:
+Successful response format of this request would look like the following, with the updated members now being part of the group:
 
 ```json
 {
@@ -1387,21 +1257,114 @@ Successful response format of this request would look like the following, with t
   "users": [
       "d987c69d-464f-4276-bea8-5780cc782b97",
       "3fa85f64-5717-4562-b3fc-2c963f66afa6" 
-    ],
-    "systems": [
+    ]
+}
+```
+
+### Managing system group permissions
+
+In Sigrid, access to systems is managed through system groups. Your systems are organized in a tree, and every node in that tree is a system group, with a `type` of `PORTFOLIO`, `SUBGROUP` or `SYSTEM`. You give access by granting a user or an authorization group a role (`OWNER`, `CONTRIBUTOR` or `VIEWER`) on a system group, and the role also applies to everything below it. If you are new to this, read [what system groups are and how roles work](../organization-integration/usermanagement.md#system-groups) first.
+
+These endpoints replace the deprecated `PUT .../users/{userID}/permissions` and `PUT .../groups/{groupID}/permissions` endpoints. They do not work the same way, so you cannot simply swap one for the other. The deprecated endpoints _replace_ the complete list of systems a user or group has access to. The system group endpoints _grant_ or _revoke_ a role on one system group at a time.
+
+#### Changing the access of a single user
+
+There is no separate endpoint for changing the permissions of one specific user. Since the user permissions endpoint is deprecated, you do this through the system group endpoints as well. Every system is a system group of its own, so giving someone access to a system means granting them a role on that system's system group. Taking the access away again works the same way, using `batch-delete`.
+
+1. Find the system group of the system with `GET .../system-groups`. Look for the entry with `type` `SYSTEM` and the name of your system in `name`.
+2. Grant the role with `POST .../system-groups/{systemgroupId}/permissions/users:batch-create`, or revoke it with `users:batch-delete`. There are examples of both below.
+
+If you grant the role on a subgroup instead, the user gets access to every system in that subgroup.
+
+The following endpoints are available:
+
+- `GET https://sigrid-says.com/rest/auth/api/user-management/{customer}/system-groups`: Returns all system groups of the portfolio that you can access
+- `GET https://sigrid-says.com/rest/auth/api/user-management/{customer}/system-groups/{systemgroupId}`: Returns a system group based on its unique identifier
+- `POST https://sigrid-says.com/rest/auth/api/user-management/{customer}/system-groups`: Creates a system group below an existing parent
+- `PATCH https://sigrid-says.com/rest/auth/api/user-management/{customer}/system-groups/{systemgroupId}`: Updates the display name and/or description of a system group
+- `PUT https://sigrid-says.com/rest/auth/api/user-management/{customer}/system-groups/{systemgroupId}/parent`: Moves a system group below another parent
+- `DELETE https://sigrid-says.com/rest/auth/api/user-management/{customer}/system-groups/{systemgroupId}`: Deletes a system group
+- `POST https://sigrid-says.com/rest/auth/api/user-management/{customer}/system-groups/{systemgroupId}/permissions/users:batch-create`: Grants roles to users
+- `POST https://sigrid-says.com/rest/auth/api/user-management/{customer}/system-groups/{systemgroupId}/permissions/users:batch-delete`: Revokes the access of users
+- `POST https://sigrid-says.com/rest/auth/api/user-management/{customer}/system-groups/{systemgroupId}/permissions/user-groups:batch-create`: Grants roles to authorization groups
+- `POST https://sigrid-says.com/rest/auth/api/user-management/{customer}/system-groups/{systemgroupId}/permissions/user-groups:batch-delete`: Revokes the access of authorization groups
+
+The response format upon successful request of a single system group looks like the following:
+
+```json
+{
+  "id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
+  "name": "string",
+  "displayName": "string",
+  "description": "string",
+  "type": "SUBGROUP",
+  "parentId": "9b2c0e0a-1c1d-4f6e-8a55-0d3f2a9d6b11",
+  "users": [
     {
-      "systemName": "system-x"
-    },
-    {
-      "systemName": "system-y"
-    },
-    {
-      "systemName": "system-z"
+      "id": "d987c69d-464f-4276-bea8-5780cc782b97",
+      "role": "OWNER"
     }
   ],
-  "updatedAt": "2024-03-07T17:41:59.278Z",
-  "updatedByUser": "3fa85f64-5717-4562-b3fc-2c963f66afa6"
+  "userGroups": [
+    {
+      "id": "f4a702ac-b998-44e1-a271-840a3f75e6d2",
+      "role": "VIEWER"
+    }
+  ]
 }
+```
+
+- The `type` field is one of `PORTFOLIO`, `SUBGROUP` or `SYSTEM`. The `parentId` field is `null` for the portfolio (root) group.
+- The `name` field is the technical name, which is the same name as used elsewhere in the API. The `displayName` is the name that is shown in Sigrid.
+- The `users` and `userGroups` fields contain the roles that are granted _directly_ on this system group. This does not include permissions inherited from a parent system group.
+
+`GET .../system-groups` returns the system groups wrapped in an object, where each element has the format shown above:
+
+```json
+{
+  "systemGroups": [ ]
+}
+```
+
+`POST` returns `201` with the created system group and a `Location` header, and `PATCH` returns `200` with the updated system group. 
+`PUT .../parent`, `DELETE` and the four `batch-create` / `batch-delete` endpoints return `204` without a response body.
+
+The following rules apply, and violating them results in a `400` response:
+
+- Only subgroups can be edited with `PATCH`. The portfolio (root) and the system groups that represent a system cannot be edited, and the `name` is immutable.
+- A role that is lower than the role a user or authorization group already inherits from a parent system group is rejected, because it would have no effect.
+- Users that already have access to everything (administrators, SIG employees and partner users) cannot be granted a role.
+- The list passed to the `batch-create` and `batch-delete` endpoints cannot be empty.
+
+To create a system group, use the following request body. The `description` is optional.
+
+```json
+{
+  "name": "string",
+  "displayName": "string",
+  "description": "string",
+  "parentId": "9b2c0e0a-1c1d-4f6e-8a55-0d3f2a9d6b11"
+}
+```
+
+To grant roles, send a non-empty list to `users:batch-create` or `user-groups:batch-create`:
+
+```shell
+$ curl 'https://sigrid-says.com/rest/auth/api/user-management/{customer}/system-groups/{systemgroupId}/permissions/users:batch-create' -X POST \
+  -H 'Content-Type: application/json' \
+  -H 'Authorization: Bearer {SIGRID_PERSONAL_TOKEN}' \
+  -d '[
+    { "id": "d987c69d-464f-4276-bea8-5780cc782b97", "role": "VIEWER" }
+  ]'
+```
+
+To revoke access, send a non-empty list of IDs to `users:batch-delete` or `user-groups:batch-delete`:
+
+```shell
+$ curl 'https://sigrid-says.com/rest/auth/api/user-management/{customer}/system-groups/{systemgroupId}/permissions/users:batch-delete' -X POST \
+  -H 'Content-Type: application/json' \
+  -H 'Authorization: Bearer {SIGRID_PERSONAL_TOKEN}' \
+  -d '[ "d987c69d-464f-4276-bea8-5780cc782b97" ]'
 ```
 
 ## Contact and support
