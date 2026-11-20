@@ -135,7 +135,7 @@
 - [Importing security findings](https://docs.sigrid-says.com/integrations/integration-security.html)
 - [Importing findings from Fortify](https://docs.sigrid-says.com/integrations/integration-security-fortify.html)
 - [Importing findings from Checkmarx](https://docs.sigrid-says.com/integrations/integration-security-checkmarx.html)
-- [Siemens Polarion integration](https://github.com/Software-Improvement-Group/sigrid-integrations/tree/main/polarion-integration)
+- [Siemens Polarion integration](https://docs.sigrid-says.com/integrations/polarion.html)
 - [Sigrid Report Generator](https://github.com/Software-Improvement-Group/sigrid-report-generator)
 - [Objectives report](https://docs.sigrid-says.com/capabilities/reports/objectives-report.html)
 - [Modernization report](https://docs.sigrid-says.com/capabilities/reports/modernization-report.html)
