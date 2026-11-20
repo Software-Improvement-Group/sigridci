@@ -373,11 +373,9 @@ on: [pull_request]
 
 ### Azure DevOps
 
-Azure DevOps uses the built-in `SYSTEM_ACCESSTOKEN` — no separate token variable is needed. Enable it in your pipeline by setting `persistCredentials: true` in the checkout step:
+Azure DevOps uses the built-in `SYSTEM_ACCESSTOKEN` — no separate token variable is needed. Pass it to the analysis step as an environment variable:
 
 ```yaml
-- checkout: self
-  persistCredentials: true
 env:
   SYSTEM_ACCESSTOKEN: $(System.AccessToken)
 ```
