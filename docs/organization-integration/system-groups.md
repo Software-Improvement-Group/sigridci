@@ -47,7 +47,7 @@ System groups launch alongside the existing [system metadata](metadata.md) field
 
 You manage system groups in **Portfolio settings > Structure and access**. Group management can be performed by Admin users, which always have full permissions on the whole portfolio, and by users with the Owner role on a group. Owners can create and manage the groups they are owner of, as well as sub-groups within those groups.
 
-In the *Structure and access* overview, system groups are indicated by a folder icon and systems are indicated by a hexagon icon.
+In the *Structure and access* overview, system groups are indicated by a folder icon (<img src="../images/system-groups-folder-icon.png" class="inline" />) and systems are indicated by a hexagon icon (<img src="../images/system-groups-hexagon-icon.png" class="inline" />).
 
 ### Create a system group
 
@@ -55,12 +55,14 @@ In the *Structure and access* overview, system groups are indicated by a folder 
 2. By default, the overview opens on portfolio level (top-level). If you want to create a system group within deeper existing system groups, first navigate into the existing system group within which you want to create a new group.
 3. Click [+ Subgroup], enter a unique name, and save. Note that creating top-level groups (directly in the portfolio) can only be done by Admin users.
 
+<img src="../images/system-groups-add-subgroup.png" width="700" />
+
 A new group is empty. Nobody has access to it except Admins and people who have a role on one of its parent groups, through inheritance.
 
 ### Add systems or groups into another group
 
 1. Navigate to the location in the hierarchy where the system or group you want to move is visible.
-2. In the row of the item you want to move, click the Move icon.
+2. In the row of the item you want to move, click the Move icon (<img src="../images/system-groups-move-icon.png" class="inline" />).
 3. In the dialog that appears, select into which parent you want to move the item.
 4. Save.
 
@@ -77,6 +79,8 @@ System groups can be deleted by portfolio Admin users, or by users with the Owne
 Groups must be empty before they can be deleted. Specifically, they can't contain systems or sub-groups, including sub-groups that are empty themselves.
 
 Deleting a group can be done from within the Group detail page, with the buttons at the top of the screen.
+
+<img src="../images/system-groups-group-actions.png" width="450" />
 
 Deleting a system group removes the access that came with it. An Owner who deletes the highest-level group they own (only possible when it is empty) loses their Owner rights and cannot create new groups. An Admin must restore access. For now this is the intended behavior.
 {: .attention }

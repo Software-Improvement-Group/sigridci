@@ -112,6 +112,8 @@ Admins can grant access on any group. Owners can grant access only within the gr
 3. Select a user or user group, and choose a role.
 4. Click [Grant] to save.
 
+<img src="../images/system-groups-grant-access.png" width="500" />
+
 ### Changing a role
 
 You cannot edit a role in place. To change someone's role:
