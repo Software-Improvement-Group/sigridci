@@ -292,6 +292,9 @@ Naturally, any change in the permissions of a group will be reflected in the per
 
 ### User Management via Sigrid API
 
+The user management API endpoints will offer limited functionality after the release of system groups on **30 November 2026**, because permissions are then managed on system groups. A new API that works with the new permission management structure is in development, and will become available as soon as possible. Until then, the permission-related functionality of these endpoints is temporarily unavailable. See [Migrating to system groups](system-groups-migration.md).
+{: .warning }
+
 Apart from the web-based user interface of Sigrid, users and authorization groups can be managed via several endpoints available in the Sigrid API. Please see [how to manage user permission](../integrations/sigrid-api-documentation.md#managing-user-permissions-via-API) via API for more information.
 
 ### Passwords

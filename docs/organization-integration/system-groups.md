@@ -83,4 +83,6 @@ Deleting a system group removes the access that came with it. An Owner who delet
 
 ## Managing system groups via the API
 
+Because the way permissions are managed changes fundamentally with system groups, the user management API endpoints need to be redeveloped. The redesigned user management endpoints, and the endpoints for managing system groups, will be finalized and released after system groups launch.
+
 See [System groups API availability](../integrations/sigrid-api-documentation.md#system-groups-api-availability) for managing system groups via the API.
