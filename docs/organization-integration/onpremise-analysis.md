@@ -373,14 +373,17 @@ on: [pull_request]
 
 ### Azure DevOps
 
-Azure DevOps uses the built-in `SYSTEM_ACCESSTOKEN` — no separate token variable is needed. Enable it in your pipeline by setting `persistCredentials: true` in the checkout step:
+Azure DevOps uses the built-in `SYSTEM_ACCESSTOKEN` — no separate token variable is needed. Pass it to the analysis step as an environment variable:
 
 ```yaml
-- checkout: self
-  persistCredentials: true
 env:
   SYSTEM_ACCESSTOKEN: $(System.AccessToken)
 ```
+
+Two Azure DevOps settings are easy to miss. Without them, no pipeline runs for pull requests, or Sigrid cannot create comments:
+
+- **Build validation:** Azure DevOps does not run pipelines for pull requests by default. Enable this per branch with a build policy that uses *Build validation*. See the [Azure DevOps documentation](https://learn.microsoft.com/en-us/azure/devops/repos/git/branch-policies?view=azure-devops&tabs=browser#build-validation).
+- **Build Service permission:** The `<repo name> Build Service` user needs the *Contribute to pull requests* permission on the repository. See the [Azure DevOps documentation](https://learn.microsoft.com/en-us/azure/devops/repos/git/set-git-repository-permissions?view=azure-devops).
 
 ## Contact and support
 

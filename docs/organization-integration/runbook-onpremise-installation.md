@@ -45,10 +45,10 @@ If your deployment is entirely air-gapped or you just want to use your own inter
    - softwareimprovementgroup/sigrid-multi-importer
 
    Additionally, the following public images are required:
-   - nginxinc/nginx-unprivileged
-   - redis:7.2.4-alpine
-   - haproxy:2.9.4-alpine
-   - aws-cli:2.31.13 (required only for the ECR pull secret refresher)
+   - docker.io/nginx/nginx-unprivileged:mainline-alpine
+   - public.ecr.aws/docker/library/redis:7.2.7-alpine
+   - public.ecr.aws/docker/library/haproxy:3.0.8-alpine
+   - public.ecr.aws/aws-cli/aws-cli:2.34.32 (required only when using the ECR pull secret refresher)
 2. Tag the downloaded containers with their tag from AWS ECR registry (e.g. 1.0.20260309).
 3. Re-tag and push the containers to your internal image registry.
 
@@ -205,7 +205,7 @@ If your deployment is air-gapped, adjust the values below.
 {% raw %}
 ```yaml
 image.registry: ""
-image.repository: "nginxinc/nginx-unprivileged"
+image.repository: "nginx/nginx-unprivileged"
 ```
 {% endraw %}
 Provide full URL to your registry and container image.
