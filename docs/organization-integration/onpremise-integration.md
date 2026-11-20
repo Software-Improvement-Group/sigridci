@@ -10,7 +10,7 @@ This document covers everything you need to integrate Sigrid On-Premise in your 
 From a deployment perspective, on-premise Sigrid consists of two "parts":
 
 - **Sigrid** is the Sigrid web application, which you access from your browser.
-- **Sigrid-Multi-Analyzer** runs within your development platform (e.g. GitHub). It performs the analyses and then publishes the results to Sigrid.
+- **Sigrid-Multi-Analyzer** runs within your development platform (e.g. GitHub). It analyzes your source code and sends the analysis to Sigrid.
 
 <img src="../images/onpremise-overview.png" width="100%" />
 
@@ -19,7 +19,7 @@ From a deployment perspective, on-premise Sigrid consists of two "parts":
   - Analysis containers that run from a build pipeline within your development platform.
 - SIG provides the necessary images through a container registry. The section [obtaining Sigrid on-premise](#obtaining-sigrid-on-premise) contains more information on how you can obtain and update these Docker containers.
 - Authentication is based on your identity provider, using [OpenID Connect](https://openid.net/developers/how-connect-works/). Alternatively, [SAML](https://en.wikipedia.org/wiki/SAML_2.0) or [LDAP](https://en.wikipedia.org/wiki/Lightweight_Directory_Access_Protocol) are also supported, through [Dex](https://dexidp.io/).
-- Analyses are triggered from a build pipeline. Sigrid-Multi-Analyzer analyzes your source code and publishes the results to Sigrid. Sigrid stores them in an [S3-compatible object store](https://aws.amazon.com/s3/) and starts an import job (Sigrid-Multi-Importer), which imports the results into a Postgres database, so they can be viewed in Sigrid.
+- Analyses are triggered from a build pipeline. Sigrid-Multi-Analyzer analyzes your source code and sends the analysis to Sigrid. Sigrid stores it in an [S3-compatible object store](https://aws.amazon.com/s3/) and starts an import job (Sigrid-Multi-Importer), which imports the results into a Postgres database, so they can be viewed in Sigrid.
 - Sigrid sends feedback on the analysis back to Sigrid-Multi-Analyzer, which can post it as a comment on your merge or pull request. See [pull request comment feedback](onpremise-analysis.md#pull-request-comment-feedback).
 - The web interface and Sigrid Axis do not access the database directly. Their frontends call the Sigrid backend APIs, which read and write Postgres.
 - Postgres holds two databases: `sigriddb` for the analysis results and the Open Source Health knowledge base, and `sigridauthdb` for users and permissions.
