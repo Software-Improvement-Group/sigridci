@@ -13,10 +13,14 @@
 
 - [How to set up Sigrid](https://docs.sigrid-says.com/organization-integration/onboarding-steps.html)
 - [User management](https://docs.sigrid-says.com/organization-integration/usermanagement.html)
+- [Roles and access](https://docs.sigrid-says.com/organization-integration/system-groups-access.html)
 - [Authentication tokens](https://docs.sigrid-says.com/organization-integration/authentication-tokens.html)
+- [Group-level tokens](https://docs.sigrid-says.com/organization-integration/authentication-tokens-group.html)
 - [Uploading your source code](https://docs.sigrid-says.com/organization-integration/upload-instructions.html)
 - [Adding context using metadata](https://docs.sigrid-says.com/organization-integration/metadata.html)
 - [Mapping repositories to systems](https://docs.sigrid-says.com/organization-integration/systems.html)
+- [System groups](https://docs.sigrid-says.com/organization-integration/system-groups.html)
+- [Migrating to system groups](https://docs.sigrid-says.com/organization-integration/system-groups-migration.html)
 
 ## Sigrid On-Premise
 

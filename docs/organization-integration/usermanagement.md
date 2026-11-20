@@ -1,3 +1,7 @@
+---
+stickyBanner: 'Access management in Sigrid will change with the release of System groups, planned for <strong>30 November 2026</strong>.<br />See <a href="/organization-integration/system-groups-migration.html">Migrating to system groups</a> for what changes and how to prepare.'
+---
+
 User management in Sigrid
 ===========================================
 
@@ -176,6 +180,9 @@ Similarly, while Maintainers enjoy additional admin-level permissions on those s
 
 ### Authorized Actions based on User Type
 
+User roles and their permissions will change with the release of system groups, planned for **30 November 2026**. The authorized actions described in this section will be replaced. See [Migrating to system groups](system-groups-migration.md) and [Roles and access](system-groups-access.md).
+{: .warning }
+
 For a full breakdown of tasks able to be performed by each user type, please refer to the following authorized actions table. *Note:* These actions refer to both manual actions within the Sigrid web interface as well as actions allowed [via the Sigrid API](../integrations/sigrid-api-documentation.md#managing-user-permissions-via-API):
 
 | Action | Normal User | Maintainer | Administrator |
@@ -221,6 +228,9 @@ For a full breakdown of tasks able to be performed by each user type, please ref
 
 ### System level access
 
+User roles and their permissions will change with the release of system groups, planned for **30 November 2026**. Appointing system access will then be done on system groups instead of on individual systems. See [Migrating to system groups](system-groups-migration.md).
+{: .warning }
+
 Generally speaking, users are authorized to perform actions based on the scope of systems they have been granted access to via Sigrid's User Management module. Administrators always have access to every system within their portfolio, so naturally they can perform all actions specified in the above table across every system present within their portfolio. Conversely, Normal and Maintainer users can only perform authorized actions on systems they have been explicitly granted access to and are granted no system access by default.
 
 Administrator and Maintainer users can specify on system level the access any user in the portfolio has - Maintainers are able to authorize users based on their own system access while administrators are able to grant access for any system within the portfolio. Once access has been granted to a user, they will be able to view all Sigrid content for the selected system. 
@@ -240,6 +250,10 @@ For more information on assigning metadata to systems, please see the separate [
 __Note:__ Bulk assignment of system access can be done both when assigning permissions to a single user, as well as when defining permissions for authorization groups.
 
 ### Authorization groups
+
+User roles and their permissions will change with the release of system groups, planned for **30 November 2026**. Authorization groups will become user groups, which no longer carry system access of their own. See [Migrating to system groups](system-groups-migration.md).
+{: .warning }
+
 Administrators and maintainers also have the ability to specify system access in bulk for groups of users, by creating an authorization group entity by which users can be added to this group along with a permission set. All users added to a defined authorization group will inherit access rights to systems authorized for the group. 
 
 #### Creating groups in User Management
@@ -277,6 +291,9 @@ Naturally, any change in the permissions of a group will be reflected in the per
 - System level access for the group is defined in the same manner as it is for an individual, and includes the same ability to bulk assign systems to a group via the use of the access control filters for teams. suppliers or divisions.
 
 ### User Management via Sigrid API
+
+The user management API endpoints will offer limited functionality after the release of system groups on **30 November 2026**, because permissions are then managed on system groups. A new API that works with the new permission management structure is in development, and will become available as soon as possible. Until then, the permission-related functionality of these endpoints is temporarily unavailable. See [Migrating to system groups](system-groups-migration.md).
+{: .warning }
 
 Apart from the web-based user interface of Sigrid, users and authorization groups can be managed via several endpoints available in the Sigrid API. Please see [how to manage user permission](../integrations/sigrid-api-documentation.md#managing-user-permissions-via-API) via API for more information.
 
