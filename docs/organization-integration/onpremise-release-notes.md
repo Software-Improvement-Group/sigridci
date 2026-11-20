@@ -15,6 +15,40 @@ For a complete overview of all Sigrid changes, refer to the [general release not
 
 The Helm chart is published under the name `sigrid-stack`.
 
+### Release 1.0.20261120
+
+**Security:** This release addresses the upstream nginx vulnerabilities known as "NGINX2Root" (CVE-2026-123007 and related CVEs) in the two places where Sigrid uses nginx:
+- The `sigrid-frontend` and `sigrid-axis/frontend` images have been rebuilt on a patched nginx base image.
+- The nginx reverse proxy in `sigrid-stack` now uses the public image `nginx/nginx-unprivileged` by default, instead of `nginxinc/nginx-unprivileged`. The `nginxinc` location is deprecated: newer nginx versions, including the patched one, are only published under `nginx`. Please start using the new location.
+
+<details markdown="1">
+<summary>Details</summary>
+
+The new default for the nginx reverse proxy in the `sigrid-stack` Helm chart:
+
+{% raw %}
+```yaml
+nginx:
+  image:
+    registry: "docker.io"
+    repository: "nginx/nginx-unprivileged"
+    tag: "mainline-alpine"
+```
+{% endraw %}
+
+This is not a breaking change, but whether you need to act depends on where your deployment gets the nginx image from:
+- **You use the chart default:** No configuration changes required. After the Helm chart update, the nginx pods pull the image from the new location.
+- **You publish the public images to your internal registry (for example because your deployment is air-gapped):** Updating the Helm chart does not update the copy in your registry. Pull `nginx/nginx-unprivileged:mainline-alpine` again, publish it to your internal registry, and point `nginx.image.repository` to it. If you only override `nginx.image.registry`, make sure the image is available under the new repository path `nginx/nginx-unprivileged`, otherwise the new nginx pods cannot pull their image.
+
+To verify, check the nginx version of the reverse proxy. It should report 1.31.9 or later:
+
+```bash
+kubectl exec deploy/<release-name>-sigrid-stack-nginx -n sigrid -- nginx -v
+```
+
+**Actions:** Update the Sigrid Helm chart, Sigrid deployment images, and Sigrid-Multi-Analyzer image. If you publish `nginx-unprivileged` to your internal registry, also update that image from the new location as described above.
+</details>
+
 ### Release 1.0.20261012
 
 **New:** [Sigrid Axis](onpremise-axis.md) is now available for on-premise deployments. The Axis frontend is a new optional subchart of `sigrid-stack`, disabled by default. When enabled, it automatically deploys the Axis metrics aggregator cronjob, which aggregates the metrics shown in Axis. The aggregator is required for Axis, but can be temporarily disabled when troubleshooting.
