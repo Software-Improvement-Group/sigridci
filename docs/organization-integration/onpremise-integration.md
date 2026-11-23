@@ -10,17 +10,23 @@ This document covers everything you need to integrate Sigrid On-Premise in your 
 From a deployment perspective, on-premise Sigrid consists of two "parts":
 
 - **Sigrid** is the Sigrid web application, which you access from your browser.
-- **Sigrid-Multi-Analyzer** runs within your development platform (e.g. GitHub). It performs the analyses and then publishes the results to Sigrid.
+- **Sigrid-Multi-Analyzer** runs within your development platform (e.g. GitHub). It analyzes your source code and sends the analysis to Sigrid.
 
-<img src="../images/onpremise-overview.png" width="60%" />
+<img src="../images/onpremise-overview.png" width="70%" />
 
 - Sigrid On-Premise is based on [Docker containers](https://en.wikipedia.org/wiki/Docker_%28software%29). There are two types of containers:
   - Application containers that should be deployed permanently in a [Kubernetes](https://en.wikipedia.org/wiki/Kubernetes) cluster, based on a [Helm chart](https://helm.sh) that is provided by SIG.
   - Analysis containers that run from a build pipeline within your development platform.
 - SIG provides the necessary images through a container registry. The section [obtaining Sigrid on-premise](#obtaining-sigrid-on-premise) contains more information on how you can obtain and update these Docker containers.
 - Authentication is based on your identity provider, using [OpenID Connect](https://openid.net/developers/how-connect-works/). Alternatively, [SAML](https://en.wikipedia.org/wiki/SAML_2.0) or [LDAP](https://en.wikipedia.org/wiki/Lightweight_Directory_Access_Protocol) are also supported, through [Dex](https://dexidp.io/).
-- Analyses are triggered from a build pipeline. The analysis results are then imported into a Postgres database, so they can be viewed in Sigrid.
-- Large files are stored in an [S3-compatible object store](https://aws.amazon.com/s3/).
+- Analyses are triggered from a build pipeline. Sigrid-Multi-Analyzer analyzes your source code and sends the analysis to Sigrid. Sigrid stores it in an [S3-compatible object store](https://aws.amazon.com/s3/) and starts an import job (Sigrid-Multi-Importer), which imports the results into a Postgres database, so they can be viewed in Sigrid.
+- Sigrid sends feedback on the analysis back to Sigrid-Multi-Analyzer, which can post it as a comment on your merge or pull request. See [pull request comment feedback](onpremise-analysis.md#pull-request-comment-feedback).
+- The web interface and Sigrid Axis do not access the database directly. Their frontends call the Sigrid backend APIs, which read and write Postgres.
+- Postgres holds two databases: `sigriddb` for the analysis results and the Open Source Health knowledge base, and `sigridauthdb` for users and permissions.
+- Besides the web interface, developers can use Sigrid from their IDE. The optional Sigrid IDE plugins for [JetBrains](../integrations/jetbrains-extension.md), [VS Code](../integrations/vscode-extension.md) and [Mendix Studio Pro](../integrations/mendix-studio-pro-extension.md) connect to your on-premise Sigrid with an [authentication token](authentication-tokens.md).
+- AI coding assistants, running in the IDE or in a terminal, connect to the optional Sigrid Axis MCP server.
+
+In the diagram, blue marks the components of Sigrid Core and green marks the components of Sigrid Axis. Everything with a dark outline is provided by you.
 
 Some Sigrid On-Premise features are *optional*.
 
@@ -30,9 +36,10 @@ The most commonly deployed optional features are:
 - **Source code view** - Displays source code within Sigrid. Requires a web-accessible code repository integrated via [OAuth](https://oauth.net/2/), using the same identity provider as Sigrid authentication.
 - **Custom CA certificates** - Supports organizations using internal certificate authorities.
 - **AI Explanations** - Pre-generated explanations tailored to each finding type.
+- **Sigrid Axis** - The product for agentic tooling, with its own web frontend on its own host name. See [Sigrid Axis for Sigrid On-Premise](onpremise-axis.md).
 - **Sigrid Axis MCP server** - Integrates Sigrid's analysis into AI coding assistants. See [Sigrid Axis MCP server for Sigrid On-Premise](onpremise-mcp.md).
 
-<img src="../images/onpremise-optional-features.png" width="60%" />
+<img src="../images/onpremise-optional-features.png" width="70%" />
 
 These features vary in their deployment complexity. Some require only a few configuration lines in your Helm values file, while others need additional container images or more service configuration. For deployment details, refer to [Kubernetes deployment](onpremise-kubernetes.md) and it's child pages.
 
