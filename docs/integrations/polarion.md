@@ -19,7 +19,7 @@ This then allows you to manage Sigrid data in Polarion.
     - Using the Docker container in this repository, which requires Docker.
     - By directly running the code in your environment, which requires Python 3.11+.
 
-## Usage
+## Configuration
 
 You need to add this integration to your environment, so that Sigrid data is periodically synchronized to Polarion.
 *When* you should schedule this synchronization depends on your development process. For example, if you use a
@@ -45,6 +45,14 @@ You can then run the integration using the following command line arguments:
 | `--polarionurl`      | Yes      | The base URL for your Polarion instance.                                        |
 | `--polarionproject`  | Yes      | The name of the Polarion project that you want to synchronize with Sigrid.      |
 | `--systemworkitem`   | Yes      | The ID of the Polarion work item that should act as the "root" for Sigrid data. |
+
+## Usage
+
+When you have successfully completed the steps above, you will start to see work items from Sigrid appear
+throughout Polarion in the configured location. These work items are automatically updated whenever you 
+publish your source code to Sigrid.
+
+<img src="../images/polarion-list.png" width="450" />
 
 ## Contact and support
 
