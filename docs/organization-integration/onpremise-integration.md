@@ -12,7 +12,7 @@ From a deployment perspective, on-premise Sigrid consists of two "parts":
 - **Sigrid** is the Sigrid web application, which you access from your browser.
 - **Sigrid-Multi-Analyzer** runs within your development platform (e.g. GitHub). It analyzes your source code and sends the analysis to Sigrid.
 
-<img src="../images/onpremise-overview.png" width="100%" />
+<img src="../images/onpremise-overview.png" width="70%" />
 
 - Sigrid On-Premise is based on [Docker containers](https://en.wikipedia.org/wiki/Docker_%28software%29). There are two types of containers:
   - Application containers that should be deployed permanently in a [Kubernetes](https://en.wikipedia.org/wiki/Kubernetes) cluster, based on a [Helm chart](https://helm.sh) that is provided by SIG.
@@ -39,7 +39,7 @@ The most commonly deployed optional features are:
 - **Sigrid Axis** - The product for agentic tooling, with its own web frontend on its own host name. See [Sigrid Axis for Sigrid On-Premise](onpremise-axis.md).
 - **Sigrid Axis MCP server** - Integrates Sigrid's analysis into AI coding assistants. See [Sigrid Axis MCP server for Sigrid On-Premise](onpremise-mcp.md).
 
-<img src="../images/onpremise-optional-features.png" width="60%" />
+<img src="../images/onpremise-optional-features.png" width="70%" />
 
 These features vary in their deployment complexity. Some require only a few configuration lines in your Helm values file, while others need additional container images or more service configuration. For deployment details, refer to [Kubernetes deployment](onpremise-kubernetes.md) and it's child pages.
 
