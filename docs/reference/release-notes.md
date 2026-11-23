@@ -3,6 +3,11 @@ Sigrid release notes
 
 SIG uses [continuous delivery](https://en.wikipedia.org/wiki/Continuous_delivery), meaning that every change to Sigrid or the underlying analysis is released once our development pipeline has completed. On average, we release somewhere between 10 and 20 times per day. This page therefore doesn't list every single change, since that would quickly lead to an excessively long list of small changes. Instead, this page lists Sigrid and analysis changes that we consider noteworthy for the typical Sigrid user.
 
+### November 30, 2026
+
+- **System groups:** Access management in Sigrid has moved to system groups. System groups let you organize your systems into a hierarchy, for example one that reflects your organization. Access is managed on these groups and cascades down to the systems and groups below them, which makes access management easier and more consistent. Existing users, roles and systems are migrated by SIG, and current access permissions are retained. See [System groups](../organization-integration/system-groups.md) and [Migrating to system groups](../organization-integration/system-groups-migration.md).
+- **User roles:** User roles have been renamed, but their permissions remain largely the same. A new Viewer role has been introduced, with read-only access: Viewers can see everything a Contributor can see, but cannot make changes such as editing findings. No users are automatically migrated to this role, you can assign it manually. For more details about the roles and their permissions, see [roles and access](../organization-integration/system-groups-access.md).
+
 ### November 16, 2026
 
 - **Sigrid Axis:** The Axis portfolio view has been redesigned. A new Dashboard tab gives you one overview of AI adoption, speed, and output quality across your portfolio. The other tabs are now called AI Adoption, Speed, and Output Quality, and all modules now share the same look and feel.
