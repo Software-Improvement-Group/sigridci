@@ -379,6 +379,23 @@ article img.inline {
     width: 25px;
 }
 
+/* Image on the right side of the page, with the text flowing around it on the left. */
+article img.floatRight {
+    float: right;
+    margin: 4px 0 16px 24px;
+}
+
+article h2 {
+    clear: both;
+}
+
+@media (max-width: 900px) {
+    article img.floatRight {
+        float: none;
+        margin: 16px auto;
+    }
+}
+
 article .sectionLink {
     cursor: pointer;
     display: inline-block;
