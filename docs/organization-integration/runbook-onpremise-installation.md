@@ -48,7 +48,7 @@ If your deployment is entirely air-gapped or you just want to use your own inter
    - docker.io/nginx/nginx-unprivileged:mainline-alpine
    - public.ecr.aws/docker/library/redis:7.2.7-alpine
    - public.ecr.aws/docker/library/haproxy:3.0.8-alpine
-   - public.ecr.aws/aws-cli/aws-cli:2.34.32 (required only when using the ECR pull secret refresher)
+   - public.ecr.aws/aws-cli/aws-cli:2.42.2 (required only when using the ECR pull secret refresher)
 2. Tag the downloaded containers with their tag from AWS ECR registry (e.g. 1.0.20260309).
 3. Re-tag and push the containers to your internal image registry.
 
