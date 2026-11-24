@@ -3,6 +3,8 @@
 **Upcoming:** access management in Sigrid will move to system groups on **30 November 2026**. See [Migrating to system groups](system-groups-migration.md) for what changes for existing users and how to prepare.
 {: .attention }
 
+<img src="../images/system-groups-structure-and-access.png" width="520" class="floatRight" />
+
 System groups make it possible to organize the systems in a Sigrid portfolio into a hierarchy, one that reflects the organizational structure or any other hierarchy of choice, for example divisions, departments and teams. Every system is part of a group, and groups can contain other groups. System groups offer a new step in navigating and reviewing the software portfolio, as well as a better and easier way to manage access to systems in Sigrid.
 
 Access management is the first feature that is available for system groups. Instead of granting users access to individual systems, access is granted on a group. All users with access to a group automatically have access to the systems and groups below it. When a system is added to a group, the right users can see it straight away. When the organization changes, a system is moved to another group instead of updating permissions one by one. This provides a clearer overview of who has access to what, and takes less effort to keep up to date.
