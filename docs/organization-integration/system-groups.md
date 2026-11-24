@@ -1,7 +1,15 @@
 # System groups
 
-**Upcoming:** system groups will be available from **30 November 2026**. System groups let you organize the systems in your Sigrid portfolio into a hierarchy – one that reflects your organizational structure, or any other hierarchy of your choosing. System groups offer a new step in navigating and reviewing your software portfolio, as well as a better and easier way to manage access to systems in Sigrid. Access management is the first feature that will be available for system groups, but more features that benefit from system groups will be rolled out in the future.
+**Upcoming:** access management in Sigrid will move to system groups on **30 November 2026**. See [Migrating to system groups](system-groups-migration.md) for what changes for existing users and how to prepare.
 {: .attention }
+
+<img src="../images/system-groups-structure-and-access.png" width="520" class="floatRight" />
+
+System groups make it possible to organize the systems in a Sigrid portfolio into a hierarchy, one that reflects the organizational structure or any other hierarchy of choice, for example divisions, departments and teams. Every system is part of a group, and groups can contain other groups. System groups offer a new step in navigating and reviewing the software portfolio, as well as a better and easier way to manage access to systems in Sigrid.
+
+Access management is the first feature that is available for system groups. Instead of granting users access to individual systems, access is granted on a group. All users with access to a group automatically have access to the systems and groups below it. When a system is added to a group, the right users can see it straight away. When the organization changes, a system is moved to another group instead of updating permissions one by one. This provides a clearer overview of who has access to what, and takes less effort to keep up to date.
+
+The hierarchy that system groups provide is also the foundation for further capabilities. More features that benefit from system groups will be rolled out in the future, giving better insights across Sigrid.
 
 ## The added value of system groups
 
@@ -87,6 +95,6 @@ Deleting a system group removes the access that came with it. An Owner who delet
 
 ## Managing system groups via the API
 
-Because the way permissions are managed changes fundamentally with system groups, the user management API endpoints need to be redeveloped. The redesigned user management endpoints, and the endpoints for managing system groups, will be finalized and released after system groups launch.
+Because the way permissions are managed changes fundamentally with system groups, the user management API endpoints need to be redeveloped. The endpoints for managing system groups will be released together with system groups. The adjusted user management endpoints will be released soon after, by 7 December 2026.
 
-See [System groups API availability](../integrations/sigrid-api-documentation.md#system-groups-api-availability) for managing system groups via the API.
+Documentation for these endpoints will be available as soon as they have been released. For general information about the API, see the [Sigrid API documentation](../integrations/sigrid-api-documentation.md).
