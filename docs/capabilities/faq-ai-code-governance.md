@@ -15,7 +15,23 @@ Sigrid uses a self-trained local machine learning classification model on code m
 
 ### Which programming languages are supported?
 
-See the [Technology Support section](../capabilities/system-ai-governance.md#technology-support).
+AI Generated Code Detection is currently available for the following technologies:
+
+| Name in configuration file | Technology name(s)                     |
+|----------------------------|----------------------------------------|
+| `cpp`                      | C++                                    |
+| `csharp`                   | C#                                     |
+| `java`                     | Java                                   |
+| `kotlin`                   | Kotlin                                 |
+| `php`                      | PHP                                    |
+| `python`                   | Python                                 |
+| `swift`                    | Swift                                  |
+| `typescript`               | TypeScript (includes React/TypeScript) |
+| `vue`                      | Vue                                    |
+
+The first column is how the technology is named in Sigrid's [scope configuration file](../reference/analysis-scope-configuration.md), the second column is the technology as it is presented in Sigrid.
+
+See the [Technology Support section](../capabilities/system-ai-governance.md#technology-support) for more information.
 
 ### Which coding assistants are supported?
 
