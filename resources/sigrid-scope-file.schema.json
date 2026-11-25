@@ -229,6 +229,10 @@
         }
       },
       "required": ["role"],
+      "anyOf": [
+        {"required": ["include"]},
+        {"required": ["exclude"]}
+      ],
       "additionalProperties": false
     },
     "architecture_component_role_list": {
