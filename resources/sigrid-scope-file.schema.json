@@ -228,7 +228,7 @@
           "$ref": "#/definitions/file_pattern_list"
         }
       },
-      "required": ["role", "include"],
+      "required": ["role"],
       "additionalProperties": false
     },
     "architecture_component_role_list": {

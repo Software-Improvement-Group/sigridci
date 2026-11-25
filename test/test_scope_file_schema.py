@@ -151,6 +151,20 @@ class ScopeFileSchemaTest(TestCase):
         parsedScope = yaml.load(scope, Loader=yaml.FullLoader)
         jsonschema.validate(instance=parsedScope, schema=self.schema)
 
+    def testArchitectureRoleExcludeOnly(self):
+        scope = """
+            languages:
+              - Python
+            architecture:
+              component_roles:
+                - role: utility
+                  exclude:
+                    - ".*"
+            """
+
+        parsedScope = yaml.load(scope, Loader=yaml.FullLoader)
+        jsonschema.validate(instance=parsedScope, schema=self.schema)
+
     def testDanglingExcludeOptionIsError(self):
         scope = """
             languages:
