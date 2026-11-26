@@ -73,6 +73,17 @@
 - [Code Explorer](https://docs.sigrid-says.com/capabilities/system-code-explorer.html)
 - [Generated offline reports](https://docs.sigrid-says.com/capabilities/generated-reports.html)
 
+## Sigrid Axis Dashboard
+
+- [Introduction](https://docs.sigrid-says.com/axis-dashboard/)
+- [The tabs of Axis Dashboard](https://docs.sigrid-says.com/axis-dashboard/overview.html)
+- [Navigating Axis Dashboard](https://docs.sigrid-says.com/axis-dashboard/navigating.html)
+- [The Dashboard tab](https://docs.sigrid-says.com/axis-dashboard/dashboard.html)
+- [The AI Adoption tab](https://docs.sigrid-says.com/axis-dashboard/ai-adoption.html)
+- [The Speed tab](https://docs.sigrid-says.com/axis-dashboard/speed.html)
+- [The Output Quality tab](https://docs.sigrid-says.com/axis-dashboard/output-quality.html)
+- [Axis Dashboard definitions](https://docs.sigrid-says.com/axis-dashboard/definitions.html)
+
 ## Sigrid Axis
 
 - [Overview](https://docs.sigrid-says.com/axis/)
