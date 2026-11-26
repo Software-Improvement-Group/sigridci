@@ -123,7 +123,7 @@ Notes:
 - `SIGRID_SOURCES_REGISTRATION_ID`: the ID of the OAuth client registration provided in `values.yaml` of Sigrid's Helm chart.
 - `CICD_COMMENT_TOKEN`: Token used to post Sigrid feedback as a merge/pull request comment on your CI/CD platform.
   GitLab: personal access token with `api` scope. GitHub: personal access token with `pull-requests: write` permission.
-  Not needed for Azure DevOps, which uses the built-in pipeline token. See [PR comment feedback](#pull-request-comment-feedback) below.
+  Not needed for Azure DevOps, which uses the built-in pipeline token. See [PR comment feedback](#platform-specific-setup) below.
 
 #### Using Custom Certificates in Your Pipeline
 
@@ -281,7 +281,7 @@ The endpoints discussed in this section are thin wrappers around the [equivalent
 
 It is also possible to *manually* start an analysis, and then publish the analysis results to Sigrid. You can use this option when your system doesn't have a pipeline, or when you need to import a system in Sigrid ad-hoc.
 
-We recommend you integrate Sigrid-Multi-Analyzer into your pipeline. This ensures the results you see in Sigrid are always "live", since the analysis will run after every commit. It also allows for developers to receive Sigrid feedback directly in their pull requests. See [PR comment feedback](#pull-request-comment-feedback) for how to enable this per platform.
+We recommend you integrate Sigrid-Multi-Analyzer into your pipeline. This ensures the results you see in Sigrid are always "live", since the analysis will run after every commit. It also allows for developers to receive Sigrid feedback directly in their pull requests. See [PR comment feedback](#platform-specific-setup) for how to enable this per platform.
 {: .warning }
 
 You can run the analysis and publish the analysis results using the same Docker container. If you run Sigrid-Multi-Analyzer ad-hoc, you will still need to provide the [Sigrid-Multi-Analyzer environment variables](#sigrid-multi-analyzer-environment-variables). Since there are quite some environment variables, it's easiest to use Docker's `--env-file` option for this. This option is explained in the [Docker documentation](https://docs.docker.com/reference/cli/docker/container/run/).
@@ -320,70 +320,25 @@ Please provide the following environment variables:
   Given the project's repository branch: https://github.example.com/api/v3/repos/Software-Improvement-Group/sigridci/branches/patch_20250123
   Example value: `patch_20250123`
 
-## Pull request comment feedback
+## Platform-specific setup
 
-Sigrid can post analysis feedback directly as a comment on merge/pull requests. This requires setting a token that allows Sigrid to call your source code platform's API. If your CI/CD platform uses a certificate from an internal CA not in the default trust store, set `CICD_CA_CERT` to that CA certificate. If Sigrid and your CI/CD platform share the same CA, `SIGRID_CA_CERT` is sufficient — `CICD_CA_CERT` falls back to it automatically.
+Sigrid-Multi-Analyzer runs in any CI/CD platform that can run Docker containers. For the platforms below, it
+recognizes the pipeline, takes the source code settings from it, and can post Sigrid's feedback on merge or pull
+requests. Each page has a complete example:
 
-### GitLab
+| Platform | Feedback is posted with |
+|---|---|
+| [GitLab CI/CD](onpremise-analysis-gitlab.md) | `CICD_COMMENT_TOKEN` |
+| [GitHub Actions](onpremise-analysis-github.md) | `CICD_COMMENT_TOKEN` |
+| [Azure DevOps, cloud and Server](onpremise-analysis-azure-devops.md) | The pipeline's built-in `System.AccessToken` |
+| [Gerrit with Jenkins](onpremise-analysis-gerrit-jenkins.md) | `GERRIT_USER` and `GERRIT_PASSWORD` |
 
-Set the following variables in your pipeline:
+On other CI/CD platforms, the analysis runs as well, but Sigrid does not post feedback. Provide the source code
+settings yourself, as for [manual publishing](#manually-publishing-a-system-to-sigrid).
 
-| Variable                      | Description |
-|-------------------------------|-------------|
-| `CICD_COMMENT_TOKEN` | GitLab personal access token with `api` scope |
-
-To create the token:
-
-- In GitLab, go to your user (or a service account's) *Preferences → Access Tokens*, or use a [project or group access token](https://docs.gitlab.com/ee/user/project/settings/project_access_tokens.html).
-- Create a token with the `api` scope. The token owner needs sufficient rights to post merge request comments in the target projects.
-- In your project or group *Settings → CI/CD → Variables*, add a variable named `CICD_COMMENT_TOKEN` with the token as value. Use type "Variable" (not "File"), and do *not* mark it as protected, otherwise it is not available in merge request pipelines from unprotected branches.
-
-Sigrid will automatically detect merge request pipelines via the `CI_MERGE_REQUEST_IID` variable set by GitLab CI and post or update a comment on the merge request.
-
-Note that `CI_MERGE_REQUEST_IID` is only available in merge request pipelines, so the analysis job needs a rule that makes it run in them:
-
-{% raw %}
-```yaml
-  rules:
-    - if: '$CI_PIPELINE_SOURCE == "merge_request_event"'
-```
-{% endraw %}
-
-### GitHub
-
-Set the following variables in your pipeline:
-
-| Variable                      | Description |
-|-------------------------------|-------------|
-| `CICD_COMMENT_TOKEN` | GitHub personal access token (classic) or fine-grained token with `pull-requests: write` permission |
-
-To create the token:
-
-- In GitHub, go to *Settings → Developer settings → Personal access tokens* (for your user or a service account).
-- Create a fine-grained token with *Pull requests: Read and write* permission for the target repositories, or a classic token with the `repo` scope.
-- In your repository or organization *Settings → Secrets and variables → Actions*, add a secret named `CICD_COMMENT_TOKEN` with the token as value, and pass it to the analysis job as an environment variable.
-
-Sigrid will automatically detect pull request pipelines via the `GITHUB_EVENT_NAME` variable set by GitHub Actions and post or update a comment on the pull request. The `GITHUB_API_URL` variable set by GitHub Actions is used as the API endpoint, so this works for both github.com and GitHub Enterprise Server without extra configuration.
-
-Note that `GITHUB_EVENT_NAME` is only defined as `pull_request` when the workflow is triggered by a pull request event, so the workflow running the analysis needs:
-
-```yaml
-on: [pull_request]
-```
-
-### Azure DevOps
-
-Azure DevOps uses the built-in `SYSTEM_ACCESSTOKEN` — no separate token variable is needed. Pass it to the analysis step as an environment variable:
-
-```yaml
-env:
-  SYSTEM_ACCESSTOKEN: $(System.AccessToken)
-```
-
-Two Azure DevOps settings are easy to miss. Without them, no pipeline runs for pull requests, or Sigrid cannot create comments:
-
-- **Build validation:** Azure DevOps does not run pipelines for pull requests by default. Enable this per branch with a build policy that uses *Build validation*. See the [Azure DevOps documentation](https://learn.microsoft.com/en-us/azure/devops/repos/git/branch-policies?view=azure-devops&tabs=browser#build-validation).
-- **Build Service permission:** The `<repo name> Build Service` user needs the *Contribute to pull requests* permission on the repository. See the [Azure DevOps documentation](https://learn.microsoft.com/en-us/azure/devops/repos/git/set-git-repository-permissions?view=azure-devops).
+If your CI/CD platform uses a certificate from an internal CA not in the default trust store, set `CICD_CA_CERT` to
+that CA certificate. If Sigrid and your CI/CD platform share the same CA, `SIGRID_CA_CERT` is sufficient, since
+`CICD_CA_CERT` falls back to it automatically. Gerrit uses its own variables for this, see its page.
 
 ## Contact and support
 

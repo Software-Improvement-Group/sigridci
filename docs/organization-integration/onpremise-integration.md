@@ -20,7 +20,7 @@ From a deployment perspective, on-premise Sigrid consists of two "parts":
 - SIG provides the necessary images through a container registry. The section [obtaining Sigrid on-premise](#obtaining-sigrid-on-premise) contains more information on how you can obtain and update these Docker containers.
 - Authentication is based on your identity provider, using [OpenID Connect](https://openid.net/developers/how-connect-works/). Alternatively, [SAML](https://en.wikipedia.org/wiki/SAML_2.0) or [LDAP](https://en.wikipedia.org/wiki/Lightweight_Directory_Access_Protocol) are also supported, through [Dex](https://dexidp.io/).
 - Analyses are triggered from a build pipeline. Sigrid-Multi-Analyzer analyzes your source code and sends the analysis to Sigrid. Sigrid stores it in an [S3-compatible object store](https://aws.amazon.com/s3/) and starts an import job (Sigrid-Multi-Importer), which imports the results into a Postgres database, so they can be viewed in Sigrid.
-- Sigrid sends feedback on the analysis back to Sigrid-Multi-Analyzer, which can post it as a comment on your merge or pull request. See [pull request comment feedback](onpremise-analysis.md#pull-request-comment-feedback).
+- Sigrid sends feedback on the analysis back to Sigrid-Multi-Analyzer, which can post it as a comment on your merge or pull request. See [pull request comment feedback](onpremise-analysis.md#platform-specific-setup).
 - The web interface and Sigrid Axis do not access the database directly. Their frontends call the Sigrid backend APIs, which read and write Postgres.
 - Postgres holds two databases: `sigriddb` for the analysis results and the Open Source Health knowledge base, and `sigridauthdb` for users and permissions.
 - Besides the web interface, developers can use Sigrid from their IDE. The optional Sigrid IDE plugins for [JetBrains](../integrations/jetbrains-extension.md), [VS Code](../integrations/vscode-extension.md) and [Mendix Studio Pro](../integrations/mendix-studio-pro-extension.md) connect to your on-premise Sigrid with an [authentication token](authentication-tokens.md).
@@ -33,7 +33,7 @@ Some Sigrid On-Premise features are *optional*.
 The most commonly deployed optional features are:
 
 - **Open Source Health (OSH)** - Provides vulnerability scanning and open source risk management. This service imports vulnerability data into Sigrid. The rest of Sigrid remains fully functional even if OSH is not enabled.
-- **Source code view** - Displays source code within Sigrid. Requires a web-accessible code repository integrated via [OAuth](https://oauth.net/2/), using the same identity provider as Sigrid authentication.
+- **Source code view** - Displays source code within Sigrid for GitLab, GitHub and Azure DevOps (cloud), which requires an [OAuth](https://oauth.net/2/) connection to the repository. For Azure DevOps Server and Gerrit, Sigrid links to the file in the source code platform instead. See [connecting source code repositories](onpremise-kubernetes.md#g-optional-connection-to-source-code-repositories).
 - **Custom CA certificates** - Supports organizations using internal certificate authorities.
 - **AI Explanations** - Pre-generated explanations tailored to each finding type.
 - **Sigrid Axis** - The product for agentic tooling, with its own web frontend on its own host name. See [Sigrid Axis for Sigrid On-Premise](onpremise-axis.md).
@@ -59,12 +59,23 @@ Before deploying Sigrid On-Premise, ensure your environment meets the following 
   - Images can be pulled directly or mirrored into your own container registry.
 - All required services, including Postgres, the CI/CD platform, identity provider, S3-compatible object store, and container registry, must either be within the same network as the Sigrid deployment or be able to establish reliable inbound and outbound connections with it. This ensures seamless communication and data transfer between components.
 
-### CI/CD Integration
-- You use one of the following CI/CD platforms:
-  - GitHub
-  - GitLab
-  - Azure DevOps (cloud version only)
-- Your CI/CD environment supports running Docker containers for Sigrid analyses.
+### Version control and CI/CD
+
+Sigrid-Multi-Analyzer runs in any CI/CD platform that can run Docker containers. What Sigrid can do with your source
+code depends on your version control platform:
+
+| Version control platform | Source code view | Merge or pull request feedback | Analysis setup |
+|---|---|---|---|
+| GitLab | In Sigrid | Yes | [GitLab CI/CD](onpremise-analysis-gitlab.md) |
+| GitHub | In Sigrid | Yes | [GitHub Actions](onpremise-analysis-github.md) |
+| Azure DevOps (cloud) | In Sigrid | Yes | [Azure DevOps](onpremise-analysis-azure-devops.md) |
+| Azure DevOps Server | Link | Yes | [Azure DevOps](onpremise-analysis-azure-devops.md) |
+| Gerrit | Link | Yes, with Jenkins as CI/CD platform | [Gerrit with Jenkins](onpremise-analysis-gerrit-jenkins.md) |
+
+- **In Sigrid:** Sigrid fetches the file from the platform through an OAuth connection, and shows it in the Code Explorer next to the findings.
+- **Link:** the Code Explorer shows an *Open in external VCS* button, which opens the file in the platform in a new browser tab. Sigrid does not show the file itself. GitLab, GitHub and Azure DevOps (cloud) also show this button when no OAuth connection is configured.
+
+Sigrid can analyze code from other version control platforms as well, but it does not show the source code or post feedback for them.
 
 ### Identity & Access Management
 - You have an identity provider supporting one of the following protocols:
@@ -87,7 +98,7 @@ Before deploying Sigrid On-Premise, ensure your environment meets the following 
   - Kubernetes
   - Docker
   - PostgreSQL
-  - CI/CD platforms (GitHub, GitLab, or Azure DevOps)
+  - Your CI/CD and version control platforms
   - Identity protocols (e.g. OpenID Connect)
 
 ## Obtaining Sigrid on-premise

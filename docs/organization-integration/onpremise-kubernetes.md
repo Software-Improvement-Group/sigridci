@@ -29,8 +29,7 @@ Sigrid requires:
 - (F) Access to an S3-compatible object store (e.g., Amazon's own S3 or [MinIO](https://min.io)).
 
 Optional dependencies:
-- (G) OAuth connection to one or more source code repositories (can be GitLab, GitHub, Azure 
-  DevOps, or a combination).
+- (G) OAuth connection to one or more source code repositories (can be GitLab, GitHub, Azure DevOps (cloud), or a combination).
 
 ## (A) Docker image registry
 
@@ -614,12 +613,13 @@ Sigrid. Consequently, to view source code fragments in Sigrid's UI, Sigrid needs
 access the API of the code repository in which the code lives. This is best illustrated with an 
 example. 
 
-Sigrid can connect to GitLab, GitHub and Azure DevOps, each via OAuth2. This requires to first 
-configure the code repository as an OAuth2 provider:
+Sigrid can show source code files for GitLab, GitHub and Azure DevOps (cloud). It connects to these platforms via OAuth2, which
+requires you to first configure the code repository as an OAuth2 provider:
 - For GitLab, see ["Configure GitLab as an OAuth 2.0 authentication identity provider"](https://docs.gitlab.com/ee/integration/oauth_provider.html).
 - For GitHub, see ["Creating an OAuth app"](https://docs.github.com/en/apps/oauth-apps/building-oauth-apps/creating-an-oauth-app).
-- For Azure DevOps, the modern way is via Microsoft Entra, see ["Quickstart: Register an application with the Microsoft identity platform"](https://learn.microsoft.com/en-us/entra/identity-platform/quickstart-register-app?tabs=certificate).
-  - For viewing source code fragments, only the cloud version of Azure DevOps is supported.
+- For Azure DevOps (cloud), see ["Quickstart: Register an application with the Microsoft identity platform"](https://learn.microsoft.com/en-us/entra/identity-platform/quickstart-register-app?tabs=certificate).
+
+For Azure DevOps Server and Gerrit, Sigrid does not show the files, see [source code links](#source-code-links-for-azure-devops-server-and-gerrit) below.
 
 The newly created client registration can then be configured in the Helm chart like so:
 
@@ -663,6 +663,12 @@ Notes:
    - GitHub: `repo`
    - Azure DevOps: `vso.code`
    These scopes provide read permissions to projects and source code, which are necessary for Sigrid to display source code fragments in the UI.
+
+### Source code links for Azure DevOps Server and Gerrit
+
+When Sigrid cannot fetch a file, the Code Explorer shows an *Open in external VCS* button instead, which opens the file in the source code platform in a new browser tab. This is always the case for Azure DevOps Server and Gerrit, which don't support OAuth. For GitLab, GitHub and Azure DevOps (cloud), it happens when no OAuth connection is configured. These links do not need a registration in the Helm chart, but the user has to be able to access the repository in that platform.
+
+For Gerrit, the link opens the file in the [Gitiles plugin](https://gerrit.googlesource.com/gitiles/), so that plugin must be installed. See [Using Gerrit in combination with on-premise Sigrid](../sigridci-integration/gerrit.md#using-gerrit-in-combination-with-on-premise-sigrid).
 
 ### (H) Optional: Configure Custom Certificates
 To enable secure communication between services using Sigrid, you may need to add custom certificates. These certificates can be defined in the following three components: `auth-api`, `sigrid-api`, and `inbound-api`. You can configure this using the `customCertificates` option in the Helm chart.
