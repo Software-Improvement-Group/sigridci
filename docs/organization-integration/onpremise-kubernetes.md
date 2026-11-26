@@ -89,7 +89,7 @@ In addition, if your deployment is completely air-gapped, please ensure these pu
 - `docker.io/nginx/nginx-unprivileged:mainline-alpine`
 - `public.ecr.aws/docker/library/redis:7.2.7-alpine`
 - `public.ecr.aws/docker/library/haproxy:3.0.8-alpine`
-- `public.ecr.aws/aws-cli/aws-cli:2.34.32` (required only when using the ECR pull secret refresher)
+- `public.ecr.aws/aws-cli/aws-cli:2.42.2` (required only when using the ECR pull secret refresher)
 
 For the avoidance of doubt: the AI Explanation Service (first image in the list) does NOT contact any LLM by default. 
 It just serves pre-computed explanations.
