@@ -136,6 +136,12 @@ class DocumentationTest(TestCase):
             if tech["context"] not in [row[0] for row in supportTable] and tech["context"] != "unknown":
                 self.fail(f"Technology '{tech['context']}' is not defined in technology support table")
 
+    def testTechnologySupportListIsCentralized(self):
+        for file, contents in self.readDocumentationPages():
+            for line in contents.split("\n"):
+                if "| Java" in line and not file.endswith("technology-support.md"):
+                    self.fail(f"{file} should not define its own technology support table, this should be centralized")
+
     def testPublicRoadmapIsPeriodicallyUpdated(self):
         command = ["git", "log", "-1", "--pretty=\"%ci\"", "resources/roadmap.png"]
         output = subprocess.run(command, stdout=subprocess.PIPE).stdout.decode("utf8", "ignore")
