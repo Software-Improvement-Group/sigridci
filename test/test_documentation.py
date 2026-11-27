@@ -124,17 +124,23 @@ class DocumentationTest(TestCase):
             technologyMap = {tech["context"]: tech for tech in technologyList}
 
         with open("docs/reference/technology-support.md", "r") as f:
-            rows = [line for line in f.readlines() if line.startswith("| `")]
+            rows = [line for line in f.readlines() if line.startswith("| ") and "| `" in line and line.count("|") > 3]
             getCells = lambda row: [cell.replace("`", "").strip() for cell in row.split("|") if cell != ""]
             supportTable = [getCells(row) for row in rows]
 
         for row in supportTable:
-            if row[0] not in technologyMap:
-                self.fail(f"Technology '{row[0]}' is not defined in technologies.yaml")
+            if row[1] not in technologyMap:
+                self.fail(f"Technology '{row[1]}' is not defined in technologies.yaml")
 
         for tech in technologyList:
-            if tech["context"] not in [row[0] for row in supportTable] and tech["context"] != "unknown":
+            if tech["context"] not in [row[1] for row in supportTable] and tech["context"] != "unknown":
                 self.fail(f"Technology '{tech['context']}' is not defined in technology support table")
+
+    def testTechnologySupportListIsCentralized(self):
+        for file, contents in self.readDocumentationPages():
+            for line in contents.split("\n"):
+                if "| Java" in line and not file.endswith("technology-support.md"):
+                    self.fail(f"{file} should not define its own technology support table, this should be centralized")
 
     def testPublicRoadmapIsPeriodicallyUpdated(self):
         command = ["git", "log", "-1", "--pretty=\"%ci\"", "resources/roadmap.png"]

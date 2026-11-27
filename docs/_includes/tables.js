@@ -31,8 +31,8 @@ document.addEventListener("DOMContentLoaded", () => {
     if (table) {
         if (technologySupportLinks.length >= 3) {
             technologySupportLinks[0].addEventListener("click", e => toggleRowVisibility(table, 0, ""));
-            technologySupportLinks[1].addEventListener("click", e => toggleRowVisibility(table, 1, "(1)"));
-            technologySupportLinks[2].addEventListener("click", e => toggleRowVisibility(table, 2, "(4)"));
+            technologySupportLinks[1].addEventListener("click", e => toggleRowVisibility(table, 1, "(8)"));
+            technologySupportLinks[3].addEventListener("click", e => toggleRowVisibility(table, 3, "(4)"));
         }
 
         toggleRowVisibility(table, 0, "");
