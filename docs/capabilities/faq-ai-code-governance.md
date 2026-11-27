@@ -15,7 +15,7 @@ Sigrid uses a self-trained local machine learning classification model on code m
 
 ### Which programming languages are supported?
 
-AI Generated Code Detection support is indicated in the [technology support table](../capabilities/system-ai-governance.md#technology-support).
+AI Generated Code Detection support is indicated in the [technology support table](../reference/technology-support.md#list-of-supported-technologies).
 Look for technologies marked with "AI detection".
 
 ### Which coding assistants are supported?
